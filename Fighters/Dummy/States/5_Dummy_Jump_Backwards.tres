@@ -1,0 +1,57 @@
+[gd_resource type="Resource" script_class="FighterState" load_steps=8 format=3 uid="uid://c5kxcyr8bh3f2"]
+
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="1_a7nuk"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/StatePhysics.cs" id="2_46pii"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/StateTransitionSettings.cs" id="3_5oqrn"]
+
+[sub_resource type="Resource" id="Resource_aim2h"]
+script = ExtResource("2_46pii")
+frame = 0
+UseLateralSpeed = true
+LateralSpeed = 0
+UseVerticalSpeed = true
+VerticalSpeed = 0
+UseGravity = true
+Gravity = 0
+UseInertia = false
+
+[sub_resource type="Resource" id="Resource_nbfu2"]
+script = ExtResource("2_46pii")
+frame = 5
+UseLateralSpeed = true
+LateralSpeed = -17000
+UseVerticalSpeed = true
+VerticalSpeed = 65000
+UseGravity = true
+Gravity = 0
+UseInertia = false
+
+[sub_resource type="Resource" id="Resource_8eh53"]
+script = ExtResource("2_46pii")
+frame = 6
+UseLateralSpeed = false
+LateralSpeed = 0
+UseVerticalSpeed = false
+VerticalSpeed = 0
+UseGravity = true
+Gravity = 400000
+UseInertia = false
+
+[sub_resource type="Resource" id="Resource_gult3"]
+script = ExtResource("3_5oqrn")
+StateIndex = 6
+Condition = 0
+AtFrame = -1
+
+[resource]
+script = ExtResource("1_a7nuk")
+StateName = ""
+Type = 1
+OffTheGround = false
+Duration = 20
+Loop = false
+LoopStartFrame = 0
+LoopEndFrame = 0
+HitStunFrameLimit = -1
+statePhysics = Array[Object]([SubResource("Resource_aim2h"), SubResource("Resource_nbfu2"), SubResource("Resource_8eh53")])
+stateTransitions = Array[Object]([SubResource("Resource_gult3")])

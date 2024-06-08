@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://dr8cly8qy5pg2"]
+
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Game/GameManager.cs" id="1_ocl0l"]
+[ext_resource type="PackedScene" uid="uid://3reeyb4tcc1i" path="res://Fighters/Dummy/Instances/Dummy_Fighter.tscn" id="2_dt18i"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_6ubbf"]
+
+[sub_resource type="Sky" id="Sky_cdy3g"]
+sky_material = SubResource("ProceduralSkyMaterial_6ubbf")
+
+[sub_resource type="Environment" id="Environment_kf882"]
+background_mode = 2
+sky = SubResource("Sky_cdy3g")
+ambient_light_source = 3
+reflected_light_source = 2
+
+[node name="Scene" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2034, 4.65161)
+
+[node name="Stage" type="Node3D" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Stage"]
+transform = Transform3D(0.722436, 0.540801, -0.430836, 0, 0.623102, 0.782141, 0.691437, -0.565047, 0.450151, 0, 2.2674, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Stage"]
+environment = SubResource("Environment_kf882")
+
+[node name="GameManager" type="Node" parent="."]
+script = ExtResource("1_ocl0l")
+Spawns = Array[PackedScene]([ExtResource("2_dt18i"), ExtResource("2_dt18i")])

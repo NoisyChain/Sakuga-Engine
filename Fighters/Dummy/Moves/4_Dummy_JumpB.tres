@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="MoveSettings" load_steps=3 format=3 uid="uid://b2cbxtxb3b5qj"]
+
+[ext_resource type="Resource" uid="uid://c32pkpr0yh81p" path="res://Fighters/Shared/Inputs/3_Input_7.tres" id="1_1vlup"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_qovlc"]
+
+[resource]
+script = ExtResource("2_qovlc")
+MoveName = "Backwards Jump"
+MoveState = 5
+Command = ExtResource("1_1vlup")
+MoveEnd = 0
+MoveEndState = -1
+SuperGaugeRequired = 0
+MinimumHealth = 0
+MaximumHealth = 99999
+SpendHealth = 0
+ChangeStance = -1
+IsSequenceFromStates = PackedInt32Array()
+CancelsTo = PackedInt32Array()
+KaraCancelsTo = PackedInt32Array()
+buttonChargeSequence = null
+SuperFlash = 0
+CanBeOverrided = true
+Priority = 1
+UseOnGround = true
+UseOnAir = false

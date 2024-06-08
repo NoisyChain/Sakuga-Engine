@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="MoveSettings" load_steps=3 format=3 uid="uid://bq6rlhndqo3wp"]
+
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="1_il0iu"]
+[ext_resource type="Resource" uid="uid://blmhxklxcq4l6" path="res://Fighters/Shared/Inputs/16_Input_[4]6A.tres" id="1_pasm3"]
+
+[resource]
+script = ExtResource("1_il0iu")
+MoveName = "Move Forward"
+MoveState = 1
+Command = ExtResource("1_pasm3")
+MoveEnd = 1
+MoveEndState = 0
+SuperGaugeRequired = 0
+MinimumHealth = 0
+MaximumHealth = 99999
+SpendHealth = 0
+ChangeStance = -1
+IsSequenceFromStates = PackedInt32Array()
+CancelsTo = PackedInt32Array()
+KaraCancelsTo = PackedInt32Array()
+buttonChargeSequence = null
+SuperFlash = 0
+CanBeOverrided = true
+Priority = 0
+UseOnGround = true
+UseOnAir = false
