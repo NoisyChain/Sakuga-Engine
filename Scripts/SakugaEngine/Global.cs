@@ -24,7 +24,7 @@ public static class Global
     public const int INPUT_FACE_D = 1 << 7;
 
     //Global enumerators
-    public enum ButtonMode { PRESS = 0, RELEASE = 1 }
+    public enum ButtonMode { PRESS = 0, HOLD = 1, RELEASE = 2 }
     public enum MoveEndCondition { STATE_END = 0, RELEASE_BUTTON = 1, STATE_TYPE_CHANGE = 2 }
     public enum StateType { NULL, MOVEMENT, COMBAT, BLOCKING, HIT_REACTION }
     public enum TransitionCondition 

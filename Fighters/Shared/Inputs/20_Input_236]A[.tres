@@ -29,7 +29,7 @@ script = ExtResource("1_7prag")
 Directional = 5
 Buttons = 1
 DirectionalMode = 0
-ButtonMode = 1
+ButtonMode = 2
 
 [resource]
 script = ExtResource("2_jtyoh")

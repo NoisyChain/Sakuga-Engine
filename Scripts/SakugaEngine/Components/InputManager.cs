@@ -7,12 +7,12 @@ namespace SakugaEngine
     [GlobalClass]
     public partial class InputManager : Node
     {
-        public FighterButton h;
-        public FighterButton v;
-        public FighterButton b1;
-        public FighterButton b2;
-        public FighterButton b3;
-        public FighterButton b4;
+        //public FighterButton h;
+        //public FighterButton v;
+        //public FighterButton b1;
+        //public FighterButton b2;
+        //public FighterButton b3;
+        //public FighterButton b4;
         public InputRegistry[] InputHistory = new InputRegistry[Global.InputHistorySize];
         private int CurrentHistory = 0;
         public int InputSide;
@@ -96,7 +96,6 @@ namespace SakugaEngine
             for (int i = 0; i < motion.Inputs.Length; i++)
             {
                 int HistoryIndex = (startingInput + i) % Global.InputHistorySize;
-                //InputRegistry currentInput = InputHistory[HistoryIndex];
 
                 int directionNumber = (int)motion.Inputs[i].Directional;
                 int buttonNumber = (int)motion.Inputs[i].Buttons;
@@ -133,16 +132,22 @@ namespace SakugaEngine
             switch (buttonMode)
             {
                 case 0:
+                    _left = WasPressed(index, Global.INPUT_LEFT);
+                    _right = WasPressed(index, Global.INPUT_RIGHT);
+                    up = WasPressed(index, Global.INPUT_UP);
+                    down = WasPressed(index, Global.INPUT_DOWN);
+                    break;
+                case 1:
                     _left = IsBeingPressed(index, Global.INPUT_LEFT);
                     _right = IsBeingPressed(index, Global.INPUT_RIGHT);
                     up = IsBeingPressed(index, Global.INPUT_UP);
                     down = IsBeingPressed(index, Global.INPUT_DOWN);
                     break;
-                case 1:
-                    _left = WasBeingPressed(index, Global.INPUT_LEFT);
-                    _right = WasBeingPressed(index, Global.INPUT_RIGHT);
-                    up = WasBeingPressed(index, Global.INPUT_UP);
-                    down = WasBeingPressed(index, Global.INPUT_DOWN);
+                case 2:
+                    _left = WasReleased(index, Global.INPUT_LEFT);
+                    _right = WasReleased(index, Global.INPUT_RIGHT);
+                    up = WasReleased(index, Global.INPUT_UP);
+                    down = WasReleased(index, Global.INPUT_DOWN);
                     break;
             }
 
@@ -179,6 +184,12 @@ namespace SakugaEngine
                     action_b4 = WasPressed(index, Global.INPUT_FACE_D);
                     break;
                 case 1:
+                    action_b1 = IsBeingPressed(index, Global.INPUT_FACE_A);
+                    action_b2 = IsBeingPressed(index, Global.INPUT_FACE_B);
+                    action_b3 = IsBeingPressed(index, Global.INPUT_FACE_C);
+                    action_b4 = IsBeingPressed(index, Global.INPUT_FACE_D);
+                    break;
+                case 2:
                     action_b1 = WasReleased(index, Global.INPUT_FACE_A);
                     action_b2 = WasReleased(index, Global.INPUT_FACE_B);
                     action_b3 = WasReleased(index, Global.INPUT_FACE_C);
@@ -266,7 +277,7 @@ namespace SakugaEngine
                 InputHistory[index].duration == 1;
         }
 
-        public void Serialize(BinaryWriter bw)
+        /*public void Serialize(BinaryWriter bw)
         {
             h.Serialize(bw);
             v.Serialize(bw);
@@ -294,7 +305,7 @@ namespace SakugaEngine
             hashCode = hashCode * -1521134295 + b3.GetHashCode();
             hashCode = hashCode * -1521134295 + b4.GetHashCode();
             return hashCode;
-        }
+        }*/
     }
 }
 

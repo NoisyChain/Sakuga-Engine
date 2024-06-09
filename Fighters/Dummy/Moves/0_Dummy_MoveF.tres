@@ -1,13 +1,13 @@
 [gd_resource type="Resource" script_class="MoveSettings" load_steps=3 format=3 uid="uid://bq6rlhndqo3wp"]
 
+[ext_resource type="Resource" uid="uid://bee5nhkcto5wb" path="res://Fighters/Shared/Inputs/0_Input_6.tres" id="1_8ymxh"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="1_il0iu"]
-[ext_resource type="Resource" uid="uid://blmhxklxcq4l6" path="res://Fighters/Shared/Inputs/16_Input_[4]6A.tres" id="1_pasm3"]
 
 [resource]
 script = ExtResource("1_il0iu")
 MoveName = "Move Forward"
 MoveState = 1
-Command = ExtResource("1_pasm3")
+Command = ExtResource("1_8ymxh")
 MoveEnd = 1
 MoveEndState = 0
 SuperGaugeRequired = 0

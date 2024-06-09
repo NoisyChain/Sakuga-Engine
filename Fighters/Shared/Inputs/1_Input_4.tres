@@ -7,7 +7,7 @@
 script = ExtResource("1_n8xoi")
 Directional = 4
 Buttons = 0
-DirectionalMode = 0
+DirectionalMode = 1
 ButtonMode = 0
 
 [resource]
