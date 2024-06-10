@@ -19,80 +19,13 @@ namespace SakugaEngine
 
         public bool IsNeutral() => InputHistory[CurrentHistory].IsNull;
 
-        public void Parse(ushort rawInput)
-        {         
-            //if (rawInput == 0) { isNeutral = true; return; }
-            
-            /*sbyte _h, _v;
-
-            if ((rawInputs & Global.INPUT_RIGHT) != 0)
-                _h = 1;
-            else if ((rawInputs & Global.INPUT_LEFT) != 0)
-                _h = -1;
-            else
-                _h = 0;
-
-            if ((rawInputs & Global.INPUT_DOWN) != 0)
-                _v = -1;
-            else if ((rawInputs & Global.INPUT_UP) != 0)
-                _v = 1;
-            else
-                _v = 0;
-            
-            bool b_1 = (rawInputs & Global.INPUT_FACE_A) != 0;
-            bool b_2 = (rawInputs & Global.INPUT_FACE_B) != 0;
-            bool b_3 = (rawInputs & Global.INPUT_FACE_C) != 0;
-            bool b_4 = (rawInputs & Global.INPUT_FACE_D) != 0;
-
-            InputRegistry input = new InputRegistry
-            {
-                h = _h,
-                v = _v,
-                b_a = b_1,
-                b_b = b_2,
-                b_c = b_3,
-                b_d = b_4,
-                duration = 0
-            };*/
-
-            InsertToHistory(rawInput);
-        }
-
-        /*public void Update()
-        {
-            h.Update();
-            v.Update();
-            b1.Update();
-            b2.Update();
-            b3.Update();
-            b4.Update();
-        }
-
-        public bool AnyButtonWasPressed()
-        {
-            return b1.wasPressed() || b2.wasPressed() || b3.wasPressed() || b4.wasPressed();
-        }
-
-        public bool AnyButtonIsBeingPressed()
-        {
-            return b1.isBeingPressed() || b2.isBeingPressed() || b3.isBeingPressed() || b4.isBeingPressed();
-        }
-
-        public bool AnyButtonWasReleased()
-        {
-            return b1.wasReleased() || b2.wasReleased() || b3.wasReleased() || b4.wasReleased();
-        }
-
-        public bool IsNeutral()
-        {
-            return h.isNull() && v.isNull() && b1.isNull() && b2.isNull() && b3.isNull() && b4.isNull();
-        }*/
-
         public bool CheckMotionInputs(MotionInputs motion)
         {
+            //Define the first input to check
+            //If the result is less than 0, cycle it to the end
             int startingInput = (CurrentHistory - motion.Inputs.Length) + 1;
             if (startingInput < 0) startingInput += Global.InputHistorySize;
-            //GD.Print(startingInput);
+
             for (int i = 0; i < motion.Inputs.Length; i++)
             {
                 int HistoryIndex = (startingInput + i) % Global.InputHistorySize;
@@ -117,17 +50,15 @@ namespace SakugaEngine
                     return false;
             }
             
-            //if (InputHistory[CurrentHistory].duration > 1) return false;
-
             return true;
         }
 
         public bool CheckDirectionalInputs(int index, int buttonNumber, int buttonMode, bool absDirection)
         {
-            bool _left = false;// = IsBeingPressed(index, Global.INPUT_LEFT);//(inputs.rawInput & Global.INPUT_LEFT) != 0;
-            bool _right = false;// = IsBeingPressed(index, Global.INPUT_RIGHT);//(inputs.rawInput & Global.INPUT_RIGHT) != 0;
-            bool up = false;// = IsBeingPressed(index, Global.INPUT_UP);//(inputs.rawInput & Global.INPUT_UP) != 0;
-            bool down = false;// = IsBeingPressed(index, Global.INPUT_DOWN);//(inputs.rawInput & Global.INPUT_DOWN) != 0;
+            bool _left = false;
+            bool _right = false;
+            bool up = false;
+            bool down = false;
 
             switch (buttonMode)
             {
@@ -149,13 +80,22 @@ namespace SakugaEngine
                     up = WasReleased(index, Global.INPUT_UP);
                     down = WasReleased(index, Global.INPUT_DOWN);
                     break;
+                case 3:
+                    _left = WasBeingPressed(index, Global.INPUT_LEFT);
+                    _right = WasBeingPressed(index, Global.INPUT_RIGHT);
+                    up = WasBeingPressed(index, Global.INPUT_UP);
+                    down = WasBeingPressed(index, Global.INPUT_DOWN);
+                    break;
             }
 
-            bool left = InputSide == 0 ? false : (InputSide > 0 ? _left : _right);
-            bool right = InputSide == 0 ? false : (InputSide > 0 ? _right : left);
+            bool left = _left;
+            if (InputSide < 0) left = _right;
+
+            bool right = _right;
+            if (InputSide < 0) right = _left;
             
             bool absV = absDirection ? !up && !down : true;
-            bool absH = absDirection? !left && !right : true;
+            bool absH = absDirection ? !left && !right : true;
 
             return (buttonNumber == 2 && down && !up && absH) ||
                 (buttonNumber == 4 && absV && left && !right) ||
@@ -170,10 +110,10 @@ namespace SakugaEngine
 
         public bool CheckButtonInputs(int index, int buttonNumber, int buttonMode)
         {
-            bool action_b1 = false;//(inputs.rawInput & Global.INPUT_FACE_A) != 0;
-            bool action_b2 = false;//(inputs.rawInput & Global.INPUT_FACE_B) != 0;
-            bool action_b3 = false;//(inputs.rawInput & Global.INPUT_FACE_C) != 0;
-            bool action_b4 = false;//(inputs.rawInput & Global.INPUT_FACE_D) != 0;
+            bool action_b1 = false;
+            bool action_b2 = false;
+            bool action_b3 = false;
+            bool action_b4 = false;
 
             switch (buttonMode)
             {
@@ -195,6 +135,12 @@ namespace SakugaEngine
                     action_b3 = WasReleased(index, Global.INPUT_FACE_C);
                     action_b4 = WasReleased(index, Global.INPUT_FACE_D);
                     break;
+                case 3:
+                    action_b1 = WasBeingPressed(index, Global.INPUT_FACE_A);
+                    action_b2 = WasBeingPressed(index, Global.INPUT_FACE_B);
+                    action_b3 = WasBeingPressed(index, Global.INPUT_FACE_C);
+                    action_b4 = WasBeingPressed(index, Global.INPUT_FACE_D);
+                    break;
             }
 
             return (buttonNumber == 0 && !action_b1 && !action_b2 && !action_b3 && !action_b4) ||
@@ -212,13 +158,17 @@ namespace SakugaEngine
 
         public bool CheckChargeInputs(int index, int buttonNumber, int DirectionalChargeLimit)
         {
-            bool _left = IsBeingPressed(index, Global.INPUT_LEFT);//(inputs.rawInput & Global.INPUT_LEFT) != 0;
-            bool _right = IsBeingPressed(index, Global.INPUT_RIGHT);//(inputs.rawInput & Global.INPUT_RIGHT) != 0;
+            bool _left = IsBeingPressed(index, Global.INPUT_LEFT);
+            bool _right = IsBeingPressed(index, Global.INPUT_RIGHT);
             
-            bool left = InputSide == 0 ? false : (InputSide > 0 ? _left : _right);
-            //bool right = InputSide == 0 ? false : (InputSide > 0 ? _right : left);
-            bool up = IsBeingPressed(index, Global.INPUT_UP);//(inputs.rawInput & Global.INPUT_UP) != 0;
-            bool down = IsBeingPressed(index, Global.INPUT_DOWN);//(inputs.rawInput & Global.INPUT_DOWN) != 0;
+            bool left = _left;
+            if (InputSide < 0) left = _right;
+
+            bool right = _right;
+            if (InputSide < 0) right = _left;
+            
+            bool up = IsBeingPressed(index, Global.INPUT_UP);
+            bool down = IsBeingPressed(index, Global.INPUT_DOWN);
 
             bool checkInputs = (buttonNumber == 10 && left) ||
                 (buttonNumber == 11 && down) ||
@@ -238,14 +188,13 @@ namespace SakugaEngine
 
                 InputHistory[CurrentHistory].rawInput = input;
                 InputHistory[CurrentHistory].duration = 0;
-                //GD.Print(CurrentHistory + "::" + InputHistory[CurrentHistory].rawInput);
             }
 
             InputHistory[CurrentHistory].duration++;
             
             //GD.Print(CurrentHistory + "::" + InputHistory[CurrentHistory].ToString());
         }
-
+        
         public bool IsBeingPressed(int index, int input)
         {
             return (InputHistory[index].rawInput & input) != 0;
@@ -309,6 +258,7 @@ namespace SakugaEngine
     }
 }
 
+[System.Serializable]
 public struct InputRegistry
 {
     public ushort rawInput;

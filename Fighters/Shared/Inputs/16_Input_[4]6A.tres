@@ -14,7 +14,7 @@ ButtonMode = 0
 script = ExtResource("1_gwj4k")
 Directional = 4
 Buttons = 0
-DirectionalMode = 2
+DirectionalMode = 3
 ButtonMode = 0
 
 [sub_resource type="Resource" id="Resource_qh82a"]

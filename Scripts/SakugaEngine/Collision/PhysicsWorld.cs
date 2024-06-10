@@ -64,40 +64,43 @@ public class PhysicsWorld
                     if (bodyA.Pushbox.IsOverlapping(bodyB.Pushbox))
                     {
                         Vector2I depth = GetDepth(bodyA.Pushbox, bodyB.Pushbox);
+                        Vector2I normal = Vector2I.Zero;
                         
                         if (bodyA.FixedPosition.X > bodyB.FixedPosition.X)
                         {
-                            bodyA.PlayerSide = -1;
-                            bodyB.PlayerSide = 1;
+                            normal.X = -1;
+                            //bodyA.PlayerSide = -1;
+                            //bodyB.PlayerSide = 1;
                         }
                         else if (bodyA.FixedPosition.X < bodyB.FixedPosition.X)
                         {
-                            bodyA.PlayerSide = 1;
-                            bodyB.PlayerSide = -1;
+                            normal.X = 1;
+                            //bodyA.PlayerSide = 1;
+                            //bodyB.PlayerSide = -1;
                         }
                         
-                        Vector2I pushDirectionA = new Vector2I(bodyA.PlayerSide, 0);
-                        Vector2I pushDirectionB = new Vector2I(bodyB.PlayerSide, 0);
+                        //Vector2I pushDirectionA = new Vector2I(bodyA.PlayerSide, 0);
+                        //Vector2I pushDirectionB = new Vector2I(bodyB.PlayerSide, 0);
 
                         if (bodyA.IsStatic)
-                            bodyB.Resolve(pushDirectionB * depth);
+                            bodyB.Resolve(-normal * depth);
                             //bodyB.Resolve(normal * depth);
                         else if (bodyB.IsStatic)
-                            bodyA.Resolve(pushDirectionA * depth);
+                            bodyA.Resolve(normal * depth);
                             //bodyA.Resolve(-normal * depth);
                         else
                         {
                             //bodyA.Resolve(-normal * (depth / Fix64.Two));
                             //bodyB.Resolve(normal * (depth / Fix64.Two));
                             if (Unpushable(bodyA, bodyB))
-                                bodyA.Resolve(pushDirectionA * depth);
+                                bodyA.Resolve(normal * depth);
                             else
-                                bodyA.Resolve(pushDirectionA * (depth / 2));
+                                bodyA.Resolve(normal * (depth / 2));
 
                             if (Unpushable(bodyB, bodyA))
-                                bodyB.Resolve(pushDirectionB * depth);
+                                bodyB.Resolve(-normal * depth);
                             else
-                                bodyB.Resolve(pushDirectionB * (depth / 2));
+                                bodyB.Resolve(-normal * (depth / 2));
                         }
                     }
                 }

@@ -23,13 +23,12 @@ namespace SakugaEngine
 
         public void ParseInputs(ushort rawInputs)
         {
-            //Inputs.InsertToHistory(rawInputs);
-            Inputs.Parse(rawInputs);
+            Inputs.InsertToHistory(rawInputs);
         }
 
         public void Initialize(int StartingPosition)
         {
-            PlayerSide = -Mathf.Sign(StartingPosition);
+            //IsLeftSide = -Mathf.Sign(StartingPosition);
             CurrentStance = 0;
             CurrentState = GetCurrentStance().NeutralState;
             FixedPosition.X = StartingPosition;
@@ -42,9 +41,10 @@ namespace SakugaEngine
 
         public void Tick()
         {
+            Inputs.InputSide = IsLeftSide ? 1 : -1;
+
             //Inputs.ChargeDirectionalInputs();
             if (GetCurrentStance().MoveBuffer > 0) GetCurrentStance().MoveBuffer--;
-            Inputs.InputSide = PlayerSide;
             Animator.RunState();
             StateTransitions();
             Animator.LoopState();
@@ -81,7 +81,7 @@ namespace SakugaEngine
                 if (Animator.Frame >= GetCurrentState().statePhysics[i].frame && Animator.Frame < nextFrame)
                 {
                     if (GetCurrentState().statePhysics[i].UseLateralSpeed)
-                        SetLateralVelocity(GetCurrentState().statePhysics[i].LateralSpeed * PlayerSide);
+                        SetLateralVelocity(GetCurrentState().statePhysics[i].LateralSpeed * Inputs.InputSide);
                     if (GetCurrentState().statePhysics[i].UseVerticalSpeed)
                         SetVerticalVelocity(GetCurrentState().statePhysics[i].VerticalSpeed);
                     if (GetCurrentState().statePhysics[i].UseGravity)

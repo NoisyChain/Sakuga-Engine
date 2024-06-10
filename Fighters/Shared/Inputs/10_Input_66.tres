@@ -7,14 +7,14 @@
 script = ExtResource("1_vo63w")
 Directional = 6
 Buttons = 0
-DirectionalMode = 0
+DirectionalMode = 1
 ButtonMode = 0
 
 [sub_resource type="Resource" id="Resource_1ej8t"]
 script = ExtResource("1_vo63w")
-Directional = 5
+Directional = 6
 Buttons = 0
-DirectionalMode = 0
+DirectionalMode = 3
 ButtonMode = 0
 
 [sub_resource type="Resource" id="Resource_7buxr"]

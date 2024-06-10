@@ -24,9 +24,14 @@ public static class Global
     public const int INPUT_FACE_D = 1 << 7;
 
     //Global enumerators
-    public enum ButtonMode { PRESS = 0, HOLD = 1, RELEASE = 2 }
+    public enum AnimationStage {Startup, Active, Recovery}
+    public enum ButtonMode { PRESS = 0, HOLD = 1, RELEASE = 2, UNPRESSED = 3 }
     public enum MoveEndCondition { STATE_END = 0, RELEASE_BUTTON = 1, STATE_TYPE_CHANGE = 2 }
     public enum StateType { NULL, MOVEMENT, COMBAT, BLOCKING, HIT_REACTION }
+    public enum HitboxType{ DAMAGE, PROXIMITY_BLOCK, PROJECTILE, THROW, COUNTER, DEFLECT, PARRY }
+    public enum HitType{ HIGH, MEDIUM, LOW, UNBLOCKABLE }
+    public enum HitstunType { DEFAULT, KNOCKDOWN, HARD_KNOCKDOWN, STAGGER }
+    public enum SoundType{ SFX, Voice }
     public enum TransitionCondition 
     {
         STATE_END = 0,

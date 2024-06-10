@@ -27,6 +27,11 @@ namespace SakugaEngine.Game
 
         public override void _PhysicsProcess(double delta)
         {
+            if (Fighters[0].FixedPosition.X < Fighters[1].FixedPosition.X)
+            { Fighters[0].IsLeftSide = true; Fighters[1].IsLeftSide = false; }
+            else if (Fighters[0].FixedPosition.X > Fighters[1].FixedPosition.X)
+            { Fighters[0].IsLeftSide = false; Fighters[1].IsLeftSide = true; }
+
             for (int i = 0; i < Fighters.Length; i++)
                 Fighters[i].ParseInputs(ReadInputs(i));
             

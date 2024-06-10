@@ -9,7 +9,7 @@ public partial class PhysicsBody : Node3D
     public Collider Pushbox = new Collider();
     public Vector2I FixedPosition;
     public Vector2I FixedVelocity;
-    public int PlayerSide;
+    public bool IsLeftSide;
     public bool IsOnGround => FixedPosition.Y <= 0;
     public bool IsOnLeftWall => FixedPosition.X <= -Global.WallLimit;
     public bool IsOnRightWall => FixedPosition.X >= Global.WallLimit;

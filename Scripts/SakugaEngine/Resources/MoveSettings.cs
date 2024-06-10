@@ -22,6 +22,7 @@ namespace SakugaEngine.Resources
         [Export] public ButtonChargeSequence[] buttonChargeSequence;
         [Export] public int SuperFlash = 0;
         [Export] public bool CanBeOverrided;
+        [Export] public bool CanOverrideToSelf;
         [Export] public int Priority = 0;
         [Export] public bool UseOnGround, UseOnAir;
         //[Export] public bool AllowJumpCancel, AllowDashCancel;

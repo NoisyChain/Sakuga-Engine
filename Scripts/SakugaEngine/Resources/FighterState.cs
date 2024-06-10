@@ -14,12 +14,10 @@ namespace SakugaEngine.Resources
         [Export] public int LoopEndFrame;
         [Export] public int HitStunFrameLimit = -1;
         [Export] public StatePhysics[] statePhysics;
-        /*
         [Export] public HitboxState[] hitboxStates;
         [Export] public AnimationEvents[] animationEvents;
         [Export] public ThrowPivot[] throwPivot;
         [Export] public SoundEvents[] soundEvents;
-        */
         [Export] public StateTransitionSettings[] stateTransitions;
     }
 }
