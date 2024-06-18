@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://3reeyb4tcc1i"]
+[gd_scene load_steps=26 format=3 uid="uid://3reeyb4tcc1i"]
 
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/FrameTimer.cs" id="1_5hpi4"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/FighterBody.cs" id="1_dqfls"]
@@ -17,6 +17,7 @@
 [ext_resource type="Resource" uid="uid://cxmaourpexvxm" path="res://Fighters/Dummy/States/12_Dummy_AirDash_Forward.tres" id="9_suail"]
 [ext_resource type="Resource" uid="uid://blm0xqfd2tk0v" path="res://Fighters/Dummy/Moves/1_Dummy_MoveB.tres" id="10_3ir2e"]
 [ext_resource type="Resource" uid="uid://c2qjtpci8vusc" path="res://Fighters/Dummy/States/13_Dummy_AirDash_Backwards.tres" id="10_7fd13"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Collision/PhysicsBody.cs" id="12_bham4"]
 [ext_resource type="Resource" uid="uid://dnygtxtib12ur" path="res://Fighters/Dummy/Moves/2_Dummy_JumpN.tres" id="12_ctliq"]
 [ext_resource type="Resource" uid="uid://c5650qv0sevep" path="res://Fighters/Dummy/Moves/3_Dummy_JumpF.tres" id="16_dw6x3"]
 [ext_resource type="Resource" uid="uid://b2cbxtxb3b5qj" path="res://Fighters/Dummy/Moves/4_Dummy_JumpB.tres" id="17_cf6dx"]
@@ -35,14 +36,17 @@ height = 0.5
 radial_segments = 12
 rings = 8
 
-[node name="Dummy_Fighter" type="Node3D" node_paths=PackedStringArray("Inputs", "Variables", "Animator", "Stances")]
+[node name="Dummy_Fighter" type="Node3D" node_paths=PackedStringArray("Body", "Inputs", "Variables", "Animator", "Stances", "HitStun", "HitStop", "MoveBuffer")]
 script = ExtResource("1_dqfls")
+Body = NodePath("PhysicsBody")
 Inputs = NodePath("InputManager")
 Variables = NodePath("Variables")
 Animator = NodePath("Graphics/Base")
 States = Array[Object]([ExtResource("2_758vt"), ExtResource("3_l5gy8"), ExtResource("4_kvkao"), ExtResource("5_vkokb"), ExtResource("6_4hqol"), ExtResource("7_6wx58"), ExtResource("8_g1etv"), ExtResource("9_suail"), ExtResource("10_7fd13")])
 Stances = [NodePath("Stances/Stance_Main")]
-StayOnBounds = true
+HitStun = NodePath("Timers/HitStun")
+HitStop = NodePath("Timers/HitStop")
+MoveBuffer = NodePath("Timers/MoveBuffer")
 
 [node name="Graphics" type="Node3D" parent="."]
 
@@ -60,6 +64,10 @@ mesh = SubResource("SphereMesh_8pohn")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Graphics/Base"]
 
+[node name="PhysicsBody" type="Node" parent="."]
+script = ExtResource("12_bham4")
+StayOnBounds = true
+
 [node name="InputManager" type="Node" parent="."]
 script = ExtResource("2_ujbvg")
 
@@ -74,5 +82,12 @@ Moves = Array[Object]([ExtResource("9_cu0r2"), ExtResource("10_3ir2e"), ExtResou
 
 [node name="Timers" type="Node" parent="."]
 
-[node name="FrameTimer" type="Node" parent="Timers"]
+[node name="HitStun" type="Node" parent="Timers"]
 script = ExtResource("1_5hpi4")
+
+[node name="HitStop" type="Node" parent="Timers"]
+script = ExtResource("1_5hpi4")
+
+[node name="MoveBuffer" type="Node" parent="Timers"]
+script = ExtResource("1_5hpi4")
+WaitTime = 10

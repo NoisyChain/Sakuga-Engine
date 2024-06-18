@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="HitboxSettings" load_steps=6 format=3 uid="uid://b5x4otrs0q04d"]
+
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HurtboxElement.cs" id="1_2wxdn"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxSettings.cs" id="1_17v5l"]
+
+[sub_resource type="Resource" id="Resource_v7fke"]
+script = ExtResource("1_2wxdn")
+Center = Vector2i(0, 0)
+Size = Vector2i(0, 0)
+
+[sub_resource type="Resource" id="Resource_5bs8b"]
+script = ExtResource("1_2wxdn")
+Center = Vector2i(0, 0)
+Size = Vector2i(0, 0)
+
+[sub_resource type="Resource" id="Resource_ufh64"]
+script = ExtResource("1_2wxdn")
+Center = Vector2i(0, 0)
+Size = Vector2i(0, 0)
+
+[resource]
+script = ExtResource("1_17v5l")
+PushboxCenter = Vector2i(0, 0)
+PushboxSize = Vector2i(0, 0)
+Hurtboxes = [SubResource("Resource_v7fke"), SubResource("Resource_5bs8b"), SubResource("Resource_ufh64")]
+Hitboxes = []

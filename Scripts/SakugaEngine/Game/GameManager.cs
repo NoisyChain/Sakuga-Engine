@@ -20,17 +20,17 @@ namespace SakugaEngine.Game
                 Node temp = Spawns[i].Instantiate();
                 AddChild(temp);
                 Fighters[i] = temp as FighterBody;
-                World.AddBody(Fighters[i]);
+                World.AddBody(Fighters[i].Body);
                 Fighters[i].Initialize(Global.StartingPosition * (-1 + (i * 2)));
             }
         }
 
         public override void _PhysicsProcess(double delta)
         {
-            if (Fighters[0].FixedPosition.X < Fighters[1].FixedPosition.X)
-            { Fighters[0].IsLeftSide = true; Fighters[1].IsLeftSide = false; }
-            else if (Fighters[0].FixedPosition.X > Fighters[1].FixedPosition.X)
-            { Fighters[0].IsLeftSide = false; Fighters[1].IsLeftSide = true; }
+            if (Fighters[0].Body.FixedPosition.X < Fighters[1].Body.FixedPosition.X)
+            { Fighters[0].ChangeSide(true); Fighters[1].ChangeSide(false); }
+            else if (Fighters[0].Body.FixedPosition.X > Fighters[1].Body.FixedPosition.X)
+            { Fighters[0].ChangeSide(false); Fighters[1].ChangeSide(true); }
 
             for (int i = 0; i < Fighters.Length; i++)
                 Fighters[i].ParseInputs(ReadInputs(i));

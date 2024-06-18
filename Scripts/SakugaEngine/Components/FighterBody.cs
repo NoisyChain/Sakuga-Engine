@@ -5,8 +5,10 @@ using System.Data;
 
 namespace SakugaEngine
 {
-    public partial class FighterBody : PhysicsBody
+    [GlobalClass]
+    public partial class FighterBody : SakugaNode
     {
+        [Export] public PhysicsBody Body;
         [Export] public InputManager Inputs;
         [Export] public FighterVariables Variables;
         [Export] public FrameAnimator Animator;
@@ -14,12 +16,16 @@ namespace SakugaEngine
         [Export] public FighterStance[] Stances;
         public int CurrentState;
         public int CurrentStance;
-        //[Export] public int RunSpeed;
-        //[Export] public int JumpSpeed;
-        //[Export] public int Gravity;
-        public int HitStun;
-        public int HitStop;
+        [Export] public FrameTimer HitStun;
+        [Export] public FrameTimer HitStop;
+        [Export] public FrameTimer  MoveBuffer;
         public bool SuperStop;
+        private bool isBeingPushed;
+
+        public override void _Process(double delta)
+        {
+            Position = Global.ToScaledVector3(Body.FixedPosition);
+        }
 
         public void ParseInputs(ushort rawInputs)
         {
@@ -28,10 +34,9 @@ namespace SakugaEngine
 
         public void Initialize(int StartingPosition)
         {
-            //IsLeftSide = -Mathf.Sign(StartingPosition);
             CurrentStance = 0;
             CurrentState = GetCurrentStance().NeutralState;
-            FixedPosition.X = StartingPosition;
+            Body.FixedPosition.X = StartingPosition;
             CallState(CurrentState);
             Animator.Frame = -1;
             Variables.Initialize();
@@ -39,40 +44,32 @@ namespace SakugaEngine
                 stance.Initialize(this);
         }
 
+        public void ChangeSide(bool leftSide)
+        {
+            Body.IsLeftSide = leftSide;
+        }
+
         public void Tick()
         {
-            Inputs.InputSide = IsLeftSide ? 1 : -1;
+            Inputs.InputSide = Body.IsLeftSide ? 1 : -1;
 
-            //Inputs.ChargeDirectionalInputs();
-            if (GetCurrentStance().MoveBuffer > 0) GetCurrentStance().MoveBuffer--;
-            Animator.RunState();
-            StateTransitions();
-            Animator.LoopState();
-            GetCurrentStance().CheckMoves();
-            /*if (IsOnGround)
+            if (!HitStop.IsRunning())
             {
-                if (Inputs.v.isPositive())
-                    SetVerticalVelocity(JumpSpeed);
-                else
-                    SetVerticalVelocity(0);
-                
-                if (Inputs.h.isPositive())
-                    SetLateralVelocity(RunSpeed);
-                else if (Inputs.h.isNegative())
-                    SetLateralVelocity(-RunSpeed);
-                else
-                    SetLateralVelocity(0);
+                HitStun.Run();
+                Animator.RunState();
+                StateTransitions();
+                Animator.LoopState();
             }
-            else
-            {
-                AddGravity(Gravity);
-            }*/
+            HitStop.Run();
+            MoveBuffer.Run();
+            GetCurrentStance().CheckMoves();
             UpdateFighterPhysics();
         }
 
         private void UpdateFighterPhysics()
         {
-            //if (isBeingPushed) return;
+            if (isBeingPushed) return;
+
             if (GetCurrentState().statePhysics.Length == 0) return;
 
             for(int i = 0; i < GetCurrentState().statePhysics.Length; ++i)
@@ -81,11 +78,11 @@ namespace SakugaEngine
                 if (Animator.Frame >= GetCurrentState().statePhysics[i].frame && Animator.Frame < nextFrame)
                 {
                     if (GetCurrentState().statePhysics[i].UseLateralSpeed)
-                        SetLateralVelocity(GetCurrentState().statePhysics[i].LateralSpeed * Inputs.InputSide);
+                        Body.SetLateralVelocity(GetCurrentState().statePhysics[i].LateralSpeed * Inputs.InputSide);
                     if (GetCurrentState().statePhysics[i].UseVerticalSpeed)
-                        SetVerticalVelocity(GetCurrentState().statePhysics[i].VerticalSpeed);
+                        Body.SetVerticalVelocity(GetCurrentState().statePhysics[i].VerticalSpeed);
                     if (GetCurrentState().statePhysics[i].UseGravity)
-                        AddGravity(GetCurrentState().statePhysics[i].Gravity);
+                        Body.AddGravity(GetCurrentState().statePhysics[i].Gravity);
                 }
             }
         }
@@ -115,13 +112,13 @@ namespace SakugaEngine
                         ValidTransition = Animator.Frame >= GetCurrentState().stateTransitions[i].AtFrame;
                         break;
                     case 2: //On Ground
-                        ValidTransition = IsOnGround;
+                        ValidTransition = Body.IsOnGround;
                         break;
                     case 3: //On Walls
-                        ValidTransition = IsOnWall;
+                        ValidTransition = Body.IsOnWall;
                         break;
                     case 4: //On Fall
-                        ValidTransition = FixedVelocity.Y < 0;
+                        ValidTransition = Body.FixedVelocity.Y < 0;
                         break;
                     case 5: //On K.O. (For Fighters)
                         ValidTransition = Variables.CurrentHealth == 0;

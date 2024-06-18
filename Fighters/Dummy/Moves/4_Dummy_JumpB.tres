@@ -7,7 +7,7 @@
 script = ExtResource("2_qovlc")
 MoveName = "Backwards Jump"
 MoveState = 5
-Command = ExtResource("1_1vlup")
+ValidInputs = Array[Object]([ExtResource("1_1vlup")])
 MoveEnd = 0
 MoveEndState = -1
 SuperGaugeRequired = 0
@@ -21,6 +21,7 @@ KaraCancelsTo = PackedInt32Array()
 buttonChargeSequence = null
 SuperFlash = 0
 CanBeOverrided = true
+CanOverrideToSelf = false
 Priority = 1
 UseOnGround = true
 UseOnAir = false

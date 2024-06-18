@@ -7,7 +7,7 @@
 script = ExtResource("2_sgxra")
 MoveName = "Backwards Air Dash"
 MoveState = 8
-Command = ExtResource("1_s3xvh")
+ValidInputs = Array[Object]([ExtResource("1_s3xvh")])
 MoveEnd = 0
 MoveEndState = -1
 SuperGaugeRequired = 0
@@ -21,6 +21,7 @@ KaraCancelsTo = PackedInt32Array()
 buttonChargeSequence = null
 SuperFlash = 0
 CanBeOverrided = false
+CanOverrideToSelf = false
 Priority = 2
 UseOnGround = false
 UseOnAir = true

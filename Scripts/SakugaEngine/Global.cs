@@ -28,7 +28,7 @@ public static class Global
     public enum ButtonMode { PRESS = 0, HOLD = 1, RELEASE = 2, UNPRESSED = 3 }
     public enum MoveEndCondition { STATE_END = 0, RELEASE_BUTTON = 1, STATE_TYPE_CHANGE = 2 }
     public enum StateType { NULL, MOVEMENT, COMBAT, BLOCKING, HIT_REACTION }
-    public enum HitboxType{ DAMAGE, PROXIMITY_BLOCK, PROJECTILE, THROW, COUNTER, DEFLECT, PARRY }
+    public enum HitboxType{ HURTBOX, HITBOX, PROXIMITY_BLOCK, PROJECTILE, THROW, COUNTER, DEFLECT, PARRY }
     public enum HitType{ HIGH, MEDIUM, LOW, UNBLOCKABLE }
     public enum HitstunType { DEFAULT, KNOCKDOWN, HARD_KNOCKDOWN, STAGGER }
     public enum SoundType{ SFX, Voice }

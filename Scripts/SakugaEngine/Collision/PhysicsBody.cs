@@ -1,12 +1,16 @@
 using Godot;
 using System;
 
-public partial class PhysicsBody : Node3D
+[GlobalClass]
+public partial class PhysicsBody : Node
 {
     [Export] public bool IsStatic;
     [Export] public bool StayOnBounds;
+    [Export] public int FixedAcceleration;
+    [Export] public int FixedDeceleration;
     public uint ID;
     public Collider Pushbox = new Collider();
+    public Collider[] Hitboxes;
     public Vector2I FixedPosition;
     public Vector2I FixedVelocity;
     public bool IsLeftSide;
@@ -15,10 +19,6 @@ public partial class PhysicsBody : Node3D
     public bool IsOnRightWall => FixedPosition.X >= Global.WallLimit;
     public bool IsOnWall => IsOnLeftWall || IsOnRightWall;
 
-    public override void _Process(double delta)
-    {
-        Position = Global.ToScaledVector3(FixedPosition);
-    }
     public void SetID(uint newID)
     {
         ID = newID;

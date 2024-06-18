@@ -53,6 +53,27 @@ namespace SakugaEngine
             return true;
         }
 
+        public bool CheckInputEnd(MotionInputs motion)
+        {
+            int directionNumber = (int)motion.Inputs[motion.Inputs.Length - 1].Directional;
+            int buttonNumber = (int)motion.Inputs[motion.Inputs.Length - 1].Buttons;
+
+            bool validInput;
+
+            if (directionNumber != 5 && buttonNumber == 0)
+                validInput = CheckDirectionalInputs(CurrentHistory, directionNumber, 3, motion.AbsoluteDirection);
+            else if (directionNumber == 5 && buttonNumber > 0)
+                validInput = CheckButtonInputs(CurrentHistory, buttonNumber, 3);
+            else
+                validInput = CheckDirectionalInputs(CurrentHistory, directionNumber, 3, motion.AbsoluteDirection) &&
+                CheckButtonInputs(CurrentHistory, buttonNumber, 3);
+
+            if (!validInput) 
+                return false;
+            
+            return true;
+        }
+
         public bool CheckDirectionalInputs(int index, int buttonNumber, int buttonMode, bool absDirection)
         {
             bool _left = false;

@@ -7,7 +7,7 @@
 script = ExtResource("1_il0iu")
 MoveName = "Move Forward"
 MoveState = 1
-Command = ExtResource("1_8ymxh")
+ValidInputs = Array[Object]([ExtResource("1_8ymxh")])
 MoveEnd = 1
 MoveEndState = 0
 SuperGaugeRequired = 0
@@ -21,6 +21,7 @@ KaraCancelsTo = PackedInt32Array()
 buttonChargeSequence = null
 SuperFlash = 0
 CanBeOverrided = true
+CanOverrideToSelf = false
 Priority = 0
 UseOnGround = true
 UseOnAir = false

@@ -1,6 +1,6 @@
 using Godot;
 
-public class Collider
+public partial class Collider
 {
     [Export] public Vector2I Center;
     [Export] public Vector2I Size;
@@ -27,4 +27,4 @@ public class Collider
         Center = center;
         Size = size;
     }
-}
+};

@@ -7,7 +7,7 @@
 script = ExtResource("1_jm03a")
 MoveName = "Move Backwards"
 MoveState = 2
-Command = ExtResource("1_2obma")
+ValidInputs = Array[Object]([ExtResource("1_2obma")])
 MoveEnd = 1
 MoveEndState = 0
 SuperGaugeRequired = 0
@@ -21,6 +21,7 @@ KaraCancelsTo = PackedInt32Array()
 buttonChargeSequence = null
 SuperFlash = 0
 CanBeOverrided = true
+CanOverrideToSelf = false
 Priority = 0
 UseOnGround = true
 UseOnAir = false

@@ -48,8 +48,8 @@ public class PhysicsWorld
 
         for (int st = 0; st < Steps; st++)
         {
-            foreach (PhysicsBody body in bodies)
-                body.Move();
+            for (int i = 0; i < bodies.Count; i++)
+                bodies[i].Move();
             
             for (int i = 0; i < bodies.Count; i++)
             {
