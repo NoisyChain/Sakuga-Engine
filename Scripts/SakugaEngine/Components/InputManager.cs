@@ -68,7 +68,7 @@ namespace SakugaEngine
                 validInput = CheckDirectionalInputs(CurrentHistory, directionNumber, 3, motion.AbsoluteDirection) &&
                 CheckButtonInputs(CurrentHistory, buttonNumber, 3);
 
-            if (!validInput) 
+            if (!validInput)
                 return false;
             
             return true;
@@ -76,44 +76,44 @@ namespace SakugaEngine
 
         public bool CheckDirectionalInputs(int index, int buttonNumber, int buttonMode, bool absDirection)
         {
-            bool _left = false;
-            bool _right = false;
+            bool left = false;
+            bool right = false;
             bool up = false;
             bool down = false;
+
+            int _left = Global.INPUT_LEFT;
+            if (InputSide < 0) _left = Global.INPUT_RIGHT;
+
+            int _right = Global.INPUT_RIGHT;
+            if (InputSide < 0) _right = Global.INPUT_LEFT;
 
             switch (buttonMode)
             {
                 case 0:
-                    _left = WasPressed(index, Global.INPUT_LEFT);
-                    _right = WasPressed(index, Global.INPUT_RIGHT);
+                    left = WasPressed(index, _left);
+                    right = WasPressed(index, _right);
                     up = WasPressed(index, Global.INPUT_UP);
                     down = WasPressed(index, Global.INPUT_DOWN);
                     break;
                 case 1:
-                    _left = IsBeingPressed(index, Global.INPUT_LEFT);
-                    _right = IsBeingPressed(index, Global.INPUT_RIGHT);
+                    left = IsBeingPressed(index, _left);
+                    right = IsBeingPressed(index, _right);
                     up = IsBeingPressed(index, Global.INPUT_UP);
                     down = IsBeingPressed(index, Global.INPUT_DOWN);
                     break;
                 case 2:
-                    _left = WasReleased(index, Global.INPUT_LEFT);
-                    _right = WasReleased(index, Global.INPUT_RIGHT);
+                    left = WasReleased(index, _left);
+                    right = WasReleased(index, _right);
                     up = WasReleased(index, Global.INPUT_UP);
                     down = WasReleased(index, Global.INPUT_DOWN);
                     break;
                 case 3:
-                    _left = WasBeingPressed(index, Global.INPUT_LEFT);
-                    _right = WasBeingPressed(index, Global.INPUT_RIGHT);
+                    left = WasBeingPressed(index, _left);
+                    right = WasBeingPressed(index, _right);
                     up = WasBeingPressed(index, Global.INPUT_UP);
                     down = WasBeingPressed(index, Global.INPUT_DOWN);
                     break;
             }
-
-            bool left = _left;
-            if (InputSide < 0) left = _right;
-
-            bool right = _right;
-            if (InputSide < 0) right = _left;
             
             bool absV = absDirection ? !up && !down : true;
             bool absH = absDirection ? !left && !right : true;
@@ -245,6 +245,13 @@ namespace SakugaEngine
             return (InputHistory[index].rawInput & input) == 0 &&
                 (InputHistory[previousInput % Global.InputHistorySize].rawInput & input) != 0 &&
                 InputHistory[index].duration == 1;
+        }
+        public bool IsDifferentInputs(int index)
+        {
+            int previousInput = index - 1;
+            if (previousInput < 0) previousInput += Global.InputHistorySize;
+
+            return InputHistory[index].rawInput != InputHistory[previousInput % Global.InputHistorySize].rawInput;
         }
 
         /*public void Serialize(BinaryWriter bw)

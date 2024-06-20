@@ -1,24 +1,29 @@
 using Godot;
 using SakugaEngine.Resources;
 using System;
-using System.Data;
+using SakugaEngine.Collision;
 
 namespace SakugaEngine
 {
     [GlobalClass]
     public partial class FighterBody : SakugaNode
     {
+        [ExportCategory("Components")]
         [Export] public PhysicsBody Body;
         [Export] public InputManager Inputs;
         [Export] public FighterVariables Variables;
         [Export] public FrameAnimator Animator;
-        [Export] public FighterState[] States;
-        [Export] public FighterStance[] Stances;
-        public int CurrentState;
-        public int CurrentStance;
+        [Export] public StanceManager Stance;
+    
+        [ExportCategory("Timers")]
         [Export] public FrameTimer HitStun;
         [Export] public FrameTimer HitStop;
         [Export] public FrameTimer  MoveBuffer;
+
+        [ExportCategory("Variables")]
+        [Export] public FighterState[] States;
+
+        public int CurrentState;
         public bool SuperStop;
         private bool isBeingPushed;
 
@@ -34,19 +39,24 @@ namespace SakugaEngine
 
         public void Initialize(int StartingPosition)
         {
-            CurrentStance = 0;
-            CurrentState = GetCurrentStance().NeutralState;
+            CurrentState = Stance.GetCurrentStance().NeutralState;
+            Body.Initialize();
             Body.FixedPosition.X = StartingPosition;
             CallState(CurrentState);
             Animator.Frame = -1;
             Variables.Initialize();
-            foreach (FighterStance stance in Stances)
-                stance.Initialize(this);
+            Stance.Initialize(this);
         }
 
         public void ChangeSide(bool leftSide)
         {
+            if (!Body.IsOnGround) return;
+            if (!Stance.CanAutoTurn()) return;
+
             Body.IsLeftSide = leftSide;
+
+            if (Stance.currentMove >= 0 &&(int)Stance.GetCurrentMove().SideChange == 2)
+                Stance.ResetStance();
         }
 
         public void Tick()
@@ -62,7 +72,7 @@ namespace SakugaEngine
             }
             HitStop.Run();
             MoveBuffer.Run();
-            GetCurrentStance().CheckMoves();
+            Stance.CheckMoves();
             UpdateFighterPhysics();
         }
 
@@ -138,7 +148,6 @@ namespace SakugaEngine
 #region Return functions
         public FighterState GetCurrentState() => States[CurrentState];
         public int StateType() => (int)GetCurrentState().Type;
-        public FighterStance GetCurrentStance() => Stances[CurrentStance];
 #endregion
     }
 }

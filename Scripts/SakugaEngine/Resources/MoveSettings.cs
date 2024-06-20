@@ -8,6 +8,7 @@ namespace SakugaEngine.Resources
         [Export] public string MoveName;
         [Export] public int MoveState;
         [Export] public MotionInputs[] ValidInputs;
+        [Export] public Global.SideChangeMode SideChange;
         [Export] public Global.MoveEndCondition MoveEnd;
         [Export] public int MoveEndState = -1;
         [Export] public int SuperGaugeRequired = 0;

@@ -14,6 +14,8 @@ VerticalSpeed = 0
 UseGravity = true
 Gravity = 0
 UseInertia = false
+UseHorizontalInput = false
+UseVerticalInput = false
 
 [sub_resource type="Resource" id="Resource_nbfu2"]
 script = ExtResource("2_46pii")
@@ -25,6 +27,8 @@ VerticalSpeed = 65000
 UseGravity = true
 Gravity = 0
 UseInertia = false
+UseHorizontalInput = false
+UseVerticalInput = false
 
 [sub_resource type="Resource" id="Resource_8eh53"]
 script = ExtResource("2_46pii")
@@ -36,6 +40,8 @@ VerticalSpeed = 0
 UseGravity = true
 Gravity = 400000
 UseInertia = false
+UseHorizontalInput = false
+UseVerticalInput = false
 
 [sub_resource type="Resource" id="Resource_gult3"]
 script = ExtResource("3_5oqrn")

@@ -13,6 +13,8 @@ VerticalSpeed = 0
 UseGravity = false
 Gravity = 0
 UseInertia = false
+UseHorizontalInput = false
+UseVerticalInput = false
 
 [resource]
 script = ExtResource("1_54d2f")

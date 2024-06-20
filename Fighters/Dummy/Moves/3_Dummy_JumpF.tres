@@ -8,6 +8,7 @@ script = ExtResource("2_oij7r")
 MoveName = "Forward Jump"
 MoveState = 4
 ValidInputs = Array[Object]([ExtResource("1_7v8ft")])
+SideChange = 0
 MoveEnd = 0
 MoveEndState = -1
 SuperGaugeRequired = 0

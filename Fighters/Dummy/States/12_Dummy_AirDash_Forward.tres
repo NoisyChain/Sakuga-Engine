@@ -14,6 +14,8 @@ VerticalSpeed = 0
 UseGravity = true
 Gravity = 0
 UseInertia = false
+UseHorizontalInput = false
+UseVerticalInput = false
 
 [sub_resource type="Resource" id="Resource_s7ds2"]
 script = ExtResource("2_3p74b")
@@ -25,6 +27,8 @@ VerticalSpeed = 0
 UseGravity = true
 Gravity = 0
 UseInertia = false
+UseHorizontalInput = false
+UseVerticalInput = false
 
 [sub_resource type="Resource" id="Resource_tgva5"]
 script = ExtResource("3_pwwsg")

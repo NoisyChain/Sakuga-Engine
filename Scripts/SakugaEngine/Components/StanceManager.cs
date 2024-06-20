@@ -4,12 +4,13 @@ using System;
 namespace SakugaEngine.Resources
 {
     [GlobalClass]
-    public partial class FighterStance : Node
+    public partial class StanceManager : Node
     {
         private FighterBody owner;
-        [Export] public int NeutralState = 0;
-        [Export] public MoveSettings[] Moves;
+        [Export] public int DefaultStance = 0;
+        [Export] public FighterStance[] Stances;
         [Export] public int[] HitReactions;
+        public int CurrentStance;
         public int bufferedMove = -1;
         public int currentMove = -1;
         public bool canMoveCancel;
@@ -17,6 +18,7 @@ namespace SakugaEngine.Resources
         public void Initialize(FighterBody owner)
         {
             this.owner = owner;
+            CurrentStance = DefaultStance;
         }
 
         public bool CheckMoveConditions(int index)
@@ -118,7 +120,7 @@ namespace SakugaEngine.Resources
                 }
             }
 
-            //if (canMoveCancel && owner.StateType() != 2) canMoveCancel = false;
+            if (canMoveCancel && owner.StateType() != 3) canMoveCancel = false;
         }
 
         private void CheckMoveEndConndition()
@@ -129,12 +131,21 @@ namespace SakugaEngine.Resources
                 (int)GetCurrentMove().MoveEnd == 1 && owner.Inputs.CheckInputEnd(GetCurrentMove().ValidInputs[0]) ||
                 (int)GetCurrentMove().MoveEnd == 2 && owner.StateType() != (int)owner.States[GetCurrentMove().MoveState].Type)
             {
-                if (GetCurrentMove().MoveEndState >= 0)
-                    owner.CallState(GetCurrentMove().MoveEndState, false);
-                if (GetCurrentMove().ChangeStance >= 0)
-                    owner.CurrentStance = GetCurrentMove().ChangeStance;
-                currentMove = -1;
+                ResetStance();
             }
+        }
+
+        public void ResetStance()
+        {
+            if (GetCurrentMove().MoveEndState >= 0)
+                owner.CallState(GetCurrentMove().MoveEndState, false);
+            
+            if (GetCurrentMove().ChangeStance >= 0)
+            {
+                CurrentStance = GetCurrentMove().ChangeStance;
+                bufferedMove = -1;
+            }
+            currentMove = -1;
         }
 
         public bool CheckOwnerState(int index) 
@@ -169,9 +180,11 @@ namespace SakugaEngine.Resources
             return false;
         }
 
-        public MoveSettings GetMove(int index) => Moves[index];
+        public FighterStance GetCurrentStance() => Stances[CurrentStance];
+        public MoveSettings GetMove(int index) => GetCurrentStance().Moves[index];
         public MoveSettings GetCurrentMove() => GetMove(currentMove);
-        public int GetMoveListLength() => Moves.Length;
+        public int GetMoveListLength() => GetCurrentStance().Moves.Length;
+        public bool CanAutoTurn() => currentMove < 0 || (int)GetCurrentMove().SideChange > 0;
     }
 }
 

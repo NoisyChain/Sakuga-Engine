@@ -13,5 +13,7 @@ namespace SakugaEngine.Resources
         [Export] public bool UseGravity;
         [Export] public int Gravity = 0;
         [Export] public bool UseInertia;
+        [Export] public bool UseHorizontalInput;
+        [Export] public bool UseVerticalInput;
     }
 }

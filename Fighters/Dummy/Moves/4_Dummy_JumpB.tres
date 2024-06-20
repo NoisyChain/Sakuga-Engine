@@ -8,6 +8,7 @@ script = ExtResource("2_qovlc")
 MoveName = "Backwards Jump"
 MoveState = 5
 ValidInputs = Array[Object]([ExtResource("1_1vlup")])
+SideChange = 0
 MoveEnd = 0
 MoveEndState = -1
 SuperGaugeRequired = 0

@@ -8,6 +8,7 @@ script = ExtResource("1_jm03a")
 MoveName = "Move Backwards"
 MoveState = 2
 ValidInputs = Array[Object]([ExtResource("1_2obma")])
+SideChange = 2
 MoveEnd = 1
 MoveEndState = 0
 SuperGaugeRequired = 0
