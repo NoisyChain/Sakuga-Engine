@@ -14,7 +14,7 @@ namespace SakugaEngine
         //public FighterButton b3;
         //public FighterButton b4;
         public InputRegistry[] InputHistory = new InputRegistry[Global.InputHistorySize];
-        private int CurrentHistory = 0;
+        public int CurrentHistory = 0;
         public int InputSide;
 
         public bool IsNeutral() => InputHistory[CurrentHistory].IsNull;
@@ -254,35 +254,24 @@ namespace SakugaEngine
             return InputHistory[index].rawInput != InputHistory[previousInput % Global.InputHistorySize].rawInput;
         }
 
-        /*public void Serialize(BinaryWriter bw)
+        
+        public void Serialize(BinaryWriter bw)
         {
-            h.Serialize(bw);
-            v.Serialize(bw);
-            b1.Serialize(bw);
-            b2.Serialize(bw);
-            b3.Serialize(bw);
-            b4.Serialize(bw);
+            for (int i = 0; i < Global.InputHistorySize; i++)
+                InputHistory[i].Serialize(bw);
+            
+            bw.Write(CurrentHistory);
+            bw.Write(InputSide);
         }
+
         public void Deserialize(BinaryReader br)
         {
-            h.Deserialize(br);
-            v.Deserialize(br);
-            b1.Deserialize(br);
-            b2.Deserialize(br);
-            b3.Deserialize(br);
-            b4.Deserialize(br);
+            for (int i = 0; i < Global.InputHistorySize; i++)
+                InputHistory[i].Deserialize(br);
+            
+            CurrentHistory = br.ReadInt32();
+            InputSide = br.ReadInt32();
         }
-        public override int GetHashCode()
-        {
-            int hashCode = 1858597544;
-            hashCode = hashCode * -1521134295 + h.GetHashCode();
-            hashCode = hashCode * -1521134295 + v.GetHashCode();
-            hashCode = hashCode * -1521134295 + b1.GetHashCode();
-            hashCode = hashCode * -1521134295 + b2.GetHashCode();
-            hashCode = hashCode * -1521134295 + b3.GetHashCode();
-            hashCode = hashCode * -1521134295 + b4.GetHashCode();
-            return hashCode;
-        }*/
     }
 }
 
@@ -294,8 +283,21 @@ public struct InputRegistry
 
     public bool IsNull => rawInput == 0;
 
-    /*public override string ToString()
+    public void Serialize(BinaryWriter bw)
     {
-        return $"({h}, {v}, {b_a}, {b_b}, {b_c}, {b_d}, {duration})";
-    }*/
+        bw.Write(rawInput);
+        bw.Write(duration);
+    }
+
+    public void Deserialize(BinaryReader br)
+    {
+        rawInput = br.ReadUInt16();
+        duration = br.ReadUInt16();
+    }
+    
+    public override string ToString()
+    {
+        return $"({rawInput}, {duration})";
+    }
+
 };

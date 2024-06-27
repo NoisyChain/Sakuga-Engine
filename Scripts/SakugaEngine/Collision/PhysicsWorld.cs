@@ -1,4 +1,5 @@
 using Godot;
+using SakugaEngine.Resources;
 using System.Collections.Generic;
 
 namespace SakugaEngine.Collision
@@ -69,31 +70,18 @@ namespace SakugaEngine.Collision
                             Vector2I normal = Vector2I.Zero;
                             
                             if (bodyA.FixedPosition.X > bodyB.FixedPosition.X)
-                            {
                                 normal.X = -1;
-                                //bodyA.PlayerSide = -1;
-                                //bodyB.PlayerSide = 1;
-                            }
                             else if (bodyA.FixedPosition.X < bodyB.FixedPosition.X)
-                            {
                                 normal.X = 1;
-                                //bodyA.PlayerSide = 1;
-                                //bodyB.PlayerSide = -1;
-                            }
-                            
-                            //Vector2I pushDirectionA = new Vector2I(bodyA.PlayerSide, 0);
-                            //Vector2I pushDirectionB = new Vector2I(bodyB.PlayerSide, 0);
+                            else
+                                normal.X = bodyA.IsLeftSide ? 1 : -1;
 
                             if (bodyA.IsStatic)
                                 bodyB.Resolve(-normal * depth);
-                                //bodyB.Resolve(normal * depth);
                             else if (bodyB.IsStatic)
                                 bodyA.Resolve(normal * depth);
-                                //bodyA.Resolve(-normal * depth);
                             else
                             {
-                                //bodyA.Resolve(-normal * (depth / Fix64.Two));
-                                //bodyB.Resolve(normal * (depth / Fix64.Two));
                                 if (Unpushable(bodyA, bodyB))
                                     bodyA.Resolve(normal * depth);
                                 else
@@ -108,7 +96,99 @@ namespace SakugaEngine.Collision
                     }
                 }
             }
+
+            for (int i = 0; i < bodies.Count; i++)
+            {
+                PhysicsBody bodyA = bodies[i];
+                for (int j = 0; j < bodies.Count; j++)
+                {
+                    PhysicsBody bodyB = bodies[j];
+
+                    if (i == j) continue;
+                    HitboxesCheck(bodyA, bodyB);
+                }
+            }
         }
+
+        private void HitboxesCheck(PhysicsBody bodyA, PhysicsBody bodyB)
+		{
+			for (int i = 0; i < bodyA.Hitboxes.Length; i++)
+			{	
+				Collider hitboxA = bodyA.Hitboxes[i];
+                if (!hitboxA.Active) continue;
+
+				for (int j = 0; j < bodyB.Hitboxes.Length; j++)
+				{
+					Collider hitboxB = bodyB.Hitboxes[j];
+                    if (!hitboxB.Active) continue;
+
+					if (hitboxA.IsOverlapping(hitboxB))
+					{
+						if (bodyA.HitConfirmed) return;
+						if (bodyB.HitConfirmed) return;
+
+                        //Get current hitbox settings to reference the correct hitbox element
+						HitboxElement boxSettingsA = bodyA.GetCurrentHitbox().Hitboxes[i];
+						HitboxElement boxSettingsB = bodyB.GetCurrentHitbox().Hitboxes[j];
+
+						int myType = (int)boxSettingsA.HitboxType;
+						int otType = (int)boxSettingsB.HitboxType;
+
+                        Vector2I ContactPoint = GetContactPoint(hitboxA, hitboxB);
+
+						if (myType == 1 /*Hitbox*/  && otType == 0  /*Hurtbox*/ ) {
+							//Basic damage
+							bodyA.Parent.BaseDamage(boxSettingsA, ContactPoint);
+						}
+
+						if (myType == 1 /*Hitbox*/ && otType == 1 /*Hitbox*/ ) {
+                            //Hitboxes clash
+							if (boxSettingsA.Priority == boxSettingsB.Priority)
+							{
+                            	bodyA.Parent.HitboxClash(boxSettingsA, ContactPoint, boxSettingsA.Priority);
+                            	bodyB.Parent.HitboxClash(boxSettingsA, ContactPoint, boxSettingsB.Priority);
+							}
+						}
+
+                        if (myType == 5 /*Counter*/ && otType == 1 /*Hitbox*/) {
+                            //Counterattack
+                            bodyA.Parent.CounterHit(boxSettingsA, ContactPoint);
+                        }
+
+                        if (myType == 2 /*Projectile*/ && otType == 0 /*Hurtbox*/ ) {
+							//Projectile damage
+                            bodyA.Parent.BaseDamage(boxSettingsA, ContactPoint);
+                        }
+
+                        if (myType == 2 /*Projectile*/ && otType == 2 /*Projectile*/ ) {
+							//Projectile clash
+                            bodyA.Parent.ProjectileDamage(boxSettingsA, ContactPoint, boxSettingsA.Priority);
+                            bodyB.Parent.ProjectileDamage(boxSettingsA, ContactPoint, boxSettingsB.Priority);
+                        }
+
+                        if (myType == 2 /*Projectile*/ && otType == 6 /*Deflect*/ ) {
+                            //Deflect projectiles
+                            bodyA.Parent.ProjectileDeflect(boxSettingsA);
+                        }
+
+                        if (myType == 3 /*Proximity Block*/ && otType == 0 /*Hurtbox*/ ) {
+                            //Proximity block (Not working yet)
+                            //other.Parent.ProximityBlock();
+                        }
+
+                        if (myType == 4 /*Throw*/ && otType == 0 /*Hurtbox*/ ) {
+							//Throw
+                            bodyA.Parent.ThrowDamage(boxSettingsA);
+                        }
+
+                        if (myType == 7 /*Parry*/ && otType == 1 /*Hitbox*/ ) {
+							//Parry (needs implementation)
+                        }
+						//GD.Print("Hitbox Collided at " + (Vector2)hitboxA.ContactPoint);
+					}
+				}
+			}
+		}
 
         public Vector2I GetContactPoint(Collider A, Collider B)
         {

@@ -1,4 +1,5 @@
 using Godot;
+using System.IO;
 
 namespace SakugaEngine
 {
@@ -22,5 +23,19 @@ namespace SakugaEngine
 
         public bool IsRunning() => TimeLeft > 0 && !Paused;
         public bool IsPaused() => Paused;
+
+        public void Serialize(BinaryWriter bw)
+        {
+            bw.Write(WaitTime);
+            bw.Write(TimeLeft);
+            bw.Write(Paused);
+        }
+
+        public void Deserialize(BinaryReader br)
+        {
+            WaitTime = br.ReadUInt32();
+            TimeLeft = br.ReadUInt32();
+            Paused = br.ReadBoolean();
+        }
     }
 }

@@ -6,8 +6,8 @@ namespace SakugaEngine.Resources
     public partial class HitboxElement : Resource
     {
         // Hitbox settings
-        [Export] private Vector2I Center = Vector2I.Zero;
-        [Export] private Vector2I Size = Vector2I.Zero;
+        [Export] public Vector2I Center = Vector2I.Zero;
+        [Export] public Vector2I Size = Vector2I.Zero;
         [Export] public Global.HitboxType HitboxType;
         [Export] public Global.HitType HitType;
 

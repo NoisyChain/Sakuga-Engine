@@ -1,0 +1,55 @@
+[gd_scene load_steps=3 format=3 uid="uid://cjtsw7lf6uyuy"]
+
+[ext_resource type="Texture2D" uid="uid://bsm11bo4seb7b" path="res://Sprites/Pads.png" id="1"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/UI/InputHistoryElement.cs" id="2"]
+
+[node name="InputHistory_Pref" type="Control"]
+layout_mode = 3
+anchor_left = 0.5
+anchor_top = 0.1
+anchor_right = 0.5
+anchor_bottom = 0.1
+script = ExtResource("2")
+
+[node name="Dir" type="Sprite2D" parent="."]
+position = Vector2(-28, 0)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("1")
+hframes = 5
+vframes = 4
+
+[node name="A" type="Sprite2D" parent="."]
+position = Vector2(-8, -8)
+texture = ExtResource("1")
+hframes = 5
+vframes = 4
+frame = 10
+
+[node name="B" type="Sprite2D" parent="."]
+position = Vector2(8, -8)
+texture = ExtResource("1")
+hframes = 5
+vframes = 4
+frame = 11
+
+[node name="C" type="Sprite2D" parent="."]
+position = Vector2(-8, 8)
+texture = ExtResource("1")
+hframes = 5
+vframes = 4
+frame = 15
+
+[node name="D" type="Sprite2D" parent="."]
+position = Vector2(8, 8)
+texture = ExtResource("1")
+hframes = 5
+vframes = 4
+frame = 16
+
+[node name="Frames" type="Label" parent="."]
+layout_mode = 0
+offset_left = 17.0
+offset_top = -12.0
+offset_right = 106.0
+offset_bottom = 11.0
+text = "0"

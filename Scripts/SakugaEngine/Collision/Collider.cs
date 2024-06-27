@@ -2,13 +2,11 @@ using Godot;
 
 namespace SakugaEngine.Collision
 {
-    public partial class Collider
+    public partial struct Collider
     {
         [Export] public Vector2I Center;
         [Export] public Vector2I Size;
         public bool Active => Size != Vector2I.Zero;
-
-        public Collider() {}
 
         public bool IsOverlapping(Collider other)
         {
@@ -29,5 +27,5 @@ namespace SakugaEngine.Collision
             Center = center;
             Size = size;
         }
-    }
+    };
 }

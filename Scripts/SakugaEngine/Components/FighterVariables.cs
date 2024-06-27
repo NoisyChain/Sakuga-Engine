@@ -1,5 +1,5 @@
 using Godot;
-using System;
+using System.IO;
 
 namespace SakugaEngine
 {
@@ -16,12 +16,15 @@ namespace SakugaEngine
         [Export] public uint CornerMaxDamageScaling;
         
         public uint CurrentHealth;
+        public uint LostHealth;
         public uint CurrentSuperGauge;
         public uint CurrentAttack;
         public uint CurrentDefense;
-        public uint CurrentDamageScaling;
+        public uint CurrentBaseDamageScaling;
+        public uint CurrentCornerDamageScaling;
         public uint CurrentDamageProration = 100;
         public uint CurrentGravityProration = 100;
+        public uint SuperArmor = 0;
 
         public void Initialize()
         {
@@ -41,6 +44,40 @@ namespace SakugaEngine
             if (CurrentSuperGauge + value < 0) CurrentSuperGauge = 0;
             else if (CurrentSuperGauge + value > MaxSuperGauge) CurrentSuperGauge = MaxSuperGauge;
             else CurrentSuperGauge += value;
+        }
+
+        public void AddSuperArmor(uint value)
+        {
+            if (SuperArmor + value < 0) SuperArmor = 0;
+            else SuperArmor += value;
+        }
+
+        public void Serialize(BinaryWriter bw)
+        {
+            bw.Write(CurrentHealth);
+            bw.Write(LostHealth);
+            bw.Write(CurrentSuperGauge);
+            bw.Write(CurrentAttack);
+            bw.Write(CurrentDefense);
+            bw.Write(CurrentBaseDamageScaling);
+            bw.Write(CurrentCornerDamageScaling);
+            bw.Write(CurrentDamageProration);
+            bw.Write(CurrentGravityProration);
+            bw.Write(SuperArmor);
+        }
+
+        public void Deserialize(BinaryReader br)
+        {
+            CurrentHealth = br.ReadUInt32();
+            LostHealth = br.ReadUInt32();
+            CurrentSuperGauge = br.ReadUInt32();
+            CurrentAttack = br.ReadUInt32();
+            CurrentDefense = br.ReadUInt32();
+            CurrentBaseDamageScaling = br.ReadUInt32();
+            CurrentCornerDamageScaling = br.ReadUInt32();
+            CurrentDamageProration = br.ReadUInt32();
+            CurrentGravityProration = br.ReadUInt32();
+            SuperArmor = br.ReadUInt32();
         }
     }
 }

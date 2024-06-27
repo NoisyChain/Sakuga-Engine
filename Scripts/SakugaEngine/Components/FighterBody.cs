@@ -1,12 +1,12 @@
 using Godot;
+using System.IO;
 using SakugaEngine.Resources;
-using System;
 using SakugaEngine.Collision;
 
 namespace SakugaEngine
 {
     [GlobalClass]
-    public partial class FighterBody : SakugaNode
+    public partial class FighterBody : SakugaNode, IDamage
     {
         [ExportCategory("Components")]
         [Export] public PhysicsBody Body;
@@ -14,6 +14,7 @@ namespace SakugaEngine
         [Export] public FighterVariables Variables;
         [Export] public FrameAnimator Animator;
         [Export] public StanceManager Stance;
+        [Export] public CombatTracker Tracker;
     
         [ExportCategory("Timers")]
         [Export] public FrameTimer HitStun;
@@ -26,6 +27,10 @@ namespace SakugaEngine
         public int CurrentState;
         public bool SuperStop;
         private bool isBeingPushed;
+        private FighterBody _opponent;
+
+        public FighterBody GetOpponent() => _opponent;
+        public void SetOpponent(FighterBody opponent) { _opponent = opponent; }
 
         public override void _Process(double delta)
         {
@@ -40,7 +45,7 @@ namespace SakugaEngine
         public void Initialize(int StartingPosition)
         {
             CurrentState = Stance.GetCurrentStance().NeutralState;
-            Body.Initialize();
+            Body.Initialize(this);
             Body.FixedPosition.X = StartingPosition;
             CallState(CurrentState);
             Animator.Frame = -1;
@@ -50,6 +55,7 @@ namespace SakugaEngine
 
         public void ChangeSide(bool leftSide)
         {
+            if (Body.IsLeftSide == leftSide) return;
             if (!Body.IsOnGround) return;
             if (!Stance.CanAutoTurn()) return;
 
@@ -73,6 +79,7 @@ namespace SakugaEngine
             HitStop.Run();
             MoveBuffer.Run();
             Stance.CheckMoves();
+            UpdateHitboxes();
             UpdateFighterPhysics();
         }
 
@@ -93,6 +100,17 @@ namespace SakugaEngine
                         Body.SetVerticalVelocity(GetCurrentState().statePhysics[i].VerticalSpeed);
                     if (GetCurrentState().statePhysics[i].UseGravity)
                         Body.AddGravity(GetCurrentState().statePhysics[i].Gravity);
+                }
+            }
+        }
+
+        public void UpdateHitboxes()
+        {
+            for (int i = 0; i < GetCurrentState().hitboxStates.Length; ++i)
+            {
+                if (Animator.Frame == GetCurrentState().hitboxStates[i].Frame)
+                {
+                    Body.CurrentHitbox = GetCurrentState().hitboxStates[i].HitboxIndex;
                 }
             }
         }
@@ -148,6 +166,60 @@ namespace SakugaEngine
 #region Return functions
         public FighterState GetCurrentState() => States[CurrentState];
         public int StateType() => (int)GetCurrentState().Type;
+        public bool IsKO() => Variables.CurrentHealth <= 0;
+#endregion
+
+#region Interface functions
+        public void BaseDamage(HitboxElement box, Vector2I contact){}
+        public void ThrowDamage(HitboxElement box){}
+        public void ProjectileDamage(HitboxElement box, Vector2I contact, int priority){}
+        public void HitboxClash(HitboxElement box, Vector2I contact, int priority){}
+        public void ProjectileDeflect(HitboxElement box){}
+        public void CounterHit(HitboxElement box, Vector2I contact){}
+        public void ProximityBlock(){}
+        public void OnHitboxExit(){}
+#endregion
+
+#region Game State
+        public override void Serialize(BinaryWriter bw)
+        {
+            //Components
+            Body.Serialize(bw);
+            Inputs.Serialize(bw);
+            Variables.Serialize(bw);
+            Animator.Serialize(bw);
+            Stance.Serialize(bw);
+            Tracker.Serialize(bw);
+            //Timers
+            HitStun.Serialize(bw);
+            HitStop.Serialize(bw);
+            MoveBuffer.Serialize(bw);
+            //Variables
+            bw.Write(CurrentState);
+            bw.Write(SuperStop);
+            bw.Write(isBeingPushed);
+        }
+
+        public override void Deserialize(BinaryReader br)
+        {
+            //Components
+            Body.Deserialize(br);
+            Inputs.Deserialize(br);
+            Variables.Deserialize(br);
+            Animator.Deserialize(br);
+            Stance.Deserialize(br);
+            Tracker.Deserialize(br);
+            //Timers
+            HitStun.Deserialize(br);
+            HitStop.Deserialize(br);
+            MoveBuffer.Deserialize(br);
+            //Variables
+            CurrentState = br.ReadInt32();
+            SuperStop = br.ReadBoolean();
+            isBeingPushed = br.ReadBoolean();
+
+            Body.UpdateColliders();
+        }
 #endregion
     }
 }

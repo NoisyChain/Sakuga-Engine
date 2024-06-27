@@ -1,6 +1,6 @@
 using Godot;
 using SakugaEngine.Resources;
-using System;
+using System.IO;
 
 namespace SakugaEngine
 {
@@ -13,6 +13,9 @@ namespace SakugaEngine
 
         public override void _Process(double delta)
         {
+            if (ActiveState.StateName != "")
+                player.Play(ActiveState.StateName);
+            
             player.Seek(Frame / (float)Global.TicksPerSecond, true);
         }
 
@@ -22,7 +25,7 @@ namespace SakugaEngine
             {
                 ActiveState = state;
                 Frame = 0;
-                if (ActiveState.StateName != "") player.Play(ActiveState.StateName);
+                
             }
             else if (reset)
                 Frame = 0;
@@ -44,6 +47,16 @@ namespace SakugaEngine
                 else
                     Frame = frameLimit;
             }
+        }
+
+        public void Serialize(BinaryWriter bw)
+        {
+            bw.Write(Frame);
+        }
+
+        public void Deserialize(BinaryReader br)
+        {
+            Frame = br.ReadInt32();
         }
     }
 }

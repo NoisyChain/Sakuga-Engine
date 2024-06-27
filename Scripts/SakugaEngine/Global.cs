@@ -7,11 +7,13 @@ public static class Global
     public const int SubSteps = 4;
     public const int Delta = TicksPerSecond * SubSteps;
     public const int SimulationScale = 10000;
-    public const int WallLimit = 120000;
-    public const int CeilingLimit = 70000;
+    public const int WallLimit = 70000;
+    public const int CeilingLimit = 120000;
     public const int StartingPosition = 15000;
     public const int InputHistorySize = 16;
     public const int KaraCancelWindow = 3;
+    public const int RoundsToWin = 2;
+    public const int GameTimer = 99;
 
     //Global inputs
     public const int INPUT_UP = 1 << 0;
@@ -33,6 +35,7 @@ public static class Global
     public enum HitType{ HIGH, MEDIUM, LOW, UNBLOCKABLE }
     public enum HitstunType { DEFAULT, KNOCKDOWN, HARD_KNOCKDOWN, STAGGER }
     public enum SoundType{ SFX, VOICE }
+    public enum FadeScreenMode {NONE, FADE_IN, FADE_OUT}
     public enum TransitionCondition 
     {
         STATE_END = 0,

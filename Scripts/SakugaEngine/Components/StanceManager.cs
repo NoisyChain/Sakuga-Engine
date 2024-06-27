@@ -1,5 +1,5 @@
 using Godot;
-using System;
+using System.IO;
 
 namespace SakugaEngine.Resources
 {
@@ -185,6 +185,22 @@ namespace SakugaEngine.Resources
         public MoveSettings GetCurrentMove() => GetMove(currentMove);
         public int GetMoveListLength() => GetCurrentStance().Moves.Length;
         public bool CanAutoTurn() => currentMove < 0 || (int)GetCurrentMove().SideChange > 0;
+
+        public void Serialize(BinaryWriter bw)
+        {
+            bw.Write(CurrentStance);
+            bw.Write(bufferedMove);
+            bw.Write(currentMove);
+            bw.Write(canMoveCancel);
+        }
+
+        public void Deserialize(BinaryReader br)
+        {
+            CurrentStance = br.ReadInt32();
+            bufferedMove = br.ReadInt32();
+            currentMove = br.ReadInt32();
+            canMoveCancel = br.ReadBoolean();
+        }
     }
 }
 

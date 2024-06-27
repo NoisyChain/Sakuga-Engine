@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://3reeyb4tcc1i"]
+[gd_scene load_steps=22 format=3 uid="uid://3reeyb4tcc1i"]
 
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/FrameTimer.cs" id="1_5hpi4"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/FighterBody.cs" id="1_dqfls"]
@@ -15,8 +15,10 @@
 [ext_resource type="Resource" uid="uid://cxmaourpexvxm" path="res://Fighters/Dummy/States/12_Dummy_AirDash_Forward.tres" id="9_suail"]
 [ext_resource type="Resource" uid="uid://c2qjtpci8vusc" path="res://Fighters/Dummy/States/13_Dummy_AirDash_Backwards.tres" id="10_7fd13"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Collision/PhysicsBody.cs" id="12_bham4"]
+[ext_resource type="Resource" uid="uid://b5x4otrs0q04d" path="res://Fighters/Dummy/Hitboxes/0_Hitbox_Basic.tres" id="13_41tll"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/StanceManager.cs" id="15_h2acr"]
 [ext_resource type="Resource" uid="uid://cjsr2weyqwopy" path="res://Fighters/Dummy/Stances/0_Dummy_Stance_Main.tres" id="16_pa8cl"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/CombatTracker.cs" id="18_2fc62"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_a468o"]
 radius = 0.3
@@ -30,13 +32,14 @@ height = 0.5
 radial_segments = 12
 rings = 8
 
-[node name="Dummy_Fighter" type="Node3D" node_paths=PackedStringArray("Body", "Inputs", "Variables", "Animator", "Stance", "HitStun", "HitStop", "MoveBuffer")]
+[node name="Dummy_Fighter" type="Node3D" node_paths=PackedStringArray("Body", "Inputs", "Variables", "Animator", "Stance", "Tracker", "HitStun", "HitStop", "MoveBuffer")]
 script = ExtResource("1_dqfls")
 Body = NodePath("PhysicsBody")
 Inputs = NodePath("InputManager")
 Variables = NodePath("Variables")
 Animator = NodePath("Graphics/Base")
 Stance = NodePath("Stances")
+Tracker = NodePath("CombatTracker")
 HitStun = NodePath("Timers/HitStun")
 HitStop = NodePath("Timers/HitStop")
 MoveBuffer = NodePath("Timers/MoveBuffer")
@@ -61,6 +64,7 @@ mesh = SubResource("SphereMesh_8pohn")
 [node name="PhysicsBody" type="Node" parent="."]
 script = ExtResource("12_bham4")
 StayOnBounds = true
+HitboxPresets = Array[Object]([ExtResource("13_41tll")])
 
 [node name="InputManager" type="Node" parent="."]
 script = ExtResource("2_ujbvg")
@@ -71,6 +75,9 @@ script = ExtResource("7_08r4i")
 [node name="Stances" type="Node" parent="."]
 script = ExtResource("15_h2acr")
 Stances = Array[Object]([ExtResource("16_pa8cl")])
+
+[node name="CombatTracker" type="Node" parent="."]
+script = ExtResource("18_2fc62")
 
 [node name="Timers" type="Node" parent="."]
 
