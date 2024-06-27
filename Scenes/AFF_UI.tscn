@@ -803,6 +803,7 @@ offset_bottom = 226.0
 text = "Offline Game"
 
 [node name="Button_Replay" type="Button" parent="PleaseResync_UI/Connection_Panel"]
+visible = false
 layout_mode = 0
 offset_left = 22.0
 offset_top = 235.0
