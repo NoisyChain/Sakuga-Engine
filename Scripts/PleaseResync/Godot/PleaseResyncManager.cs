@@ -38,7 +38,7 @@ namespace PleaseResync
         List<PlayerInputs[]> RecordedInputs = new List<PlayerInputs[]>();
 
         System.Threading.Thread PingThread;
-        Ping p;
+        Ping p = new Ping();
         PingReply r;
 
         private void StartPinging(string pingIP)
