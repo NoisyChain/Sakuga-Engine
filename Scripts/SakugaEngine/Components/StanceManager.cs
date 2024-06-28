@@ -52,7 +52,7 @@ namespace SakugaEngine.Resources
 
         public void CheckMoves()
         {
-            if (owner.StateType() > 3) return;
+            if (owner.Animator.StateType() > 3) return;
 
             for (int i = GetMoveListLength() - 1; i >= 0; i--)
             {
@@ -80,8 +80,8 @@ namespace SakugaEngine.Resources
 
             if (GetMove(moveIndex).SuperFlash > 0 && !owner.SuperStop)
             {
-                //owner.GetOpponent().SuperStop = true;
-                //owner.GetOpponent().HitStop = GetMove(moveIndex).TimeFreeze;
+                owner.GetOpponent().SuperStop = true;
+                owner.GetOpponent().HitStop.Start((uint)GetMove(moveIndex).SuperFlash);
             }
 
             owner.CallState(GetMove(moveIndex).MoveState, true);
@@ -119,17 +119,15 @@ namespace SakugaEngine.Resources
                     else GD.Print("Move " + GetMove(bufferedMove).MoveName + " Buffered!");
                 }
             }
-
-            if (canMoveCancel && owner.StateType() != 3) canMoveCancel = false;
         }
 
         private void CheckMoveEndConndition()
         {
             if (currentMove < 0) return;
 
-            if ((int)GetCurrentMove().MoveEnd == 0 && owner.CurrentState != GetCurrentMove().MoveState ||
+            if ((int)GetCurrentMove().MoveEnd == 0 && owner.Animator.CurrentState != GetCurrentMove().MoveState ||
                 (int)GetCurrentMove().MoveEnd == 1 && owner.Inputs.CheckInputEnd(GetCurrentMove().ValidInputs[0]) ||
-                (int)GetCurrentMove().MoveEnd == 2 && owner.StateType() != (int)owner.States[GetCurrentMove().MoveState].Type)
+                (int)GetCurrentMove().MoveEnd == 2 && owner.Animator.StateType() != (int)owner.Animator.States[GetCurrentMove().MoveState].Type)
             {
                 ResetStance();
             }
@@ -139,6 +137,8 @@ namespace SakugaEngine.Resources
         {
             if (GetCurrentMove().MoveEndState >= 0)
                 owner.CallState(GetCurrentMove().MoveEndState, false);
+            
+            if (canMoveCancel) canMoveCancel = false;
             
             if (GetCurrentMove().ChangeStance >= 0)
             {
@@ -152,7 +152,7 @@ namespace SakugaEngine.Resources
         {
             foreach (int possibleStates in GetMove(index).IsSequenceFromStates)
             {
-                if (owner.CurrentState == possibleStates)
+                if (owner.Animator.CurrentState == possibleStates)
                     return true;
             }
             return false;

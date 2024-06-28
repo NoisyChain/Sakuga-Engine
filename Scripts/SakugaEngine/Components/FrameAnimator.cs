@@ -7,23 +7,29 @@ namespace SakugaEngine
     [GlobalClass]
     public partial class FrameAnimator : Node
     {
-        [Export] private AnimationPlayer player;
-        public FighterState ActiveState;
+        [Export] private AnimationPlayer[] players;
+        [Export] private string[] prefix;
+        [Export] public FighterState[] States;
+
+        public int CurrentState;
         public int Frame;
 
         public override void _Process(double delta)
         {
-            if (ActiveState.StateName != "")
-                player.Play(ActiveState.StateName);
-            
-            player.Seek(Frame / (float)Global.TicksPerSecond, true);
+            for (int a = 0; a < players.Length; a++)
+            {
+                if (GetCurrentState().StateName != "")
+                    players[a].Play(prefix[a] + GetCurrentState().StateName);
+                
+                players[a].Seek(Frame / (float)Global.TicksPerSecond, true);
+            }
         }
 
-        public void PlayState(FighterState state, bool reset)
+        public void PlayState(int state, bool reset)
         {
-            if (ActiveState != state)
+            if (CurrentState != state)
             {
-                ActiveState = state;
+                CurrentState = state;
                 Frame = 0;
                 
             }
@@ -38,12 +44,12 @@ namespace SakugaEngine
 
         public void LoopState()
         {
-            bool canLoop = ActiveState.Loop && ActiveState.LoopStartFrame >= 0 && ActiveState.LoopEndFrame > 0;
-            int frameLimit = canLoop ? ActiveState.LoopEndFrame : ActiveState.Duration - 1;
+            bool canLoop = GetCurrentState().Loop && GetCurrentState().LoopStartFrame >= 0 && GetCurrentState().LoopEndFrame > 0;
+            int frameLimit = canLoop ? GetCurrentState().LoopEndFrame : GetCurrentState().Duration - 1;
             if (Frame > frameLimit)
             {
                 if (canLoop)
-                    Frame = ActiveState.LoopStartFrame;
+                    Frame = GetCurrentState().LoopStartFrame;
                 else
                     Frame = frameLimit;
             }
@@ -52,11 +58,17 @@ namespace SakugaEngine
         public void Serialize(BinaryWriter bw)
         {
             bw.Write(Frame);
+            bw.Write(CurrentState);
+
         }
 
         public void Deserialize(BinaryReader br)
         {
             Frame = br.ReadInt32();
+            CurrentState = br.ReadInt32();
         }
+
+        public FighterState GetCurrentState() => States[CurrentState];
+        public int StateType() => (int)GetCurrentState().Type;
     }
 }

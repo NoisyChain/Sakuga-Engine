@@ -21,10 +21,9 @@ namespace SakugaEngine
         [Export] public FrameTimer HitStop;
         [Export] public FrameTimer  MoveBuffer;
 
-        [ExportCategory("Variables")]
-        [Export] public FighterState[] States;
-
-        public int CurrentState;
+        //[ExportCategory("Variables")]
+        
+        //public int CurrentState;
         public bool SuperStop;
         private bool isBeingPushed;
         private FighterBody _opponent;
@@ -44,10 +43,9 @@ namespace SakugaEngine
 
         public void Initialize(int StartingPosition)
         {
-            CurrentState = Stance.GetCurrentStance().NeutralState;
             Body.Initialize(this);
             Body.FixedPosition.X = StartingPosition;
-            CallState(CurrentState);
+            CallState(Stance.GetCurrentStance().NeutralState);
             Animator.Frame = -1;
             Variables.Initialize();
             Stance.Initialize(this);
@@ -87,57 +85,59 @@ namespace SakugaEngine
         {
             if (isBeingPushed) return;
 
-            if (GetCurrentState().statePhysics.Length == 0) return;
+            if (Animator.GetCurrentState().statePhysics.Length == 0) return;
 
-            for(int i = 0; i < GetCurrentState().statePhysics.Length; ++i)
+            for(int i = 0; i < Animator.GetCurrentState().statePhysics.Length; ++i)
             {
-                int nextFrame = i + 1 < GetCurrentState().statePhysics.Length ? GetCurrentState().statePhysics[i + 1].frame : GetCurrentState().Duration;
-                if (Animator.Frame >= GetCurrentState().statePhysics[i].frame && Animator.Frame < nextFrame)
+                int nextFrame = i + 1 < Animator.GetCurrentState().statePhysics.Length ? 
+                                        Animator.GetCurrentState().statePhysics[i + 1].frame : 
+                                        Animator.GetCurrentState().Duration;
+                if (Animator.Frame >= Animator.GetCurrentState().statePhysics[i].frame && Animator.Frame < nextFrame)
                 {
-                    if (GetCurrentState().statePhysics[i].UseLateralSpeed)
-                        Body.SetLateralVelocity(GetCurrentState().statePhysics[i].LateralSpeed * Inputs.InputSide);
-                    if (GetCurrentState().statePhysics[i].UseVerticalSpeed)
-                        Body.SetVerticalVelocity(GetCurrentState().statePhysics[i].VerticalSpeed);
-                    if (GetCurrentState().statePhysics[i].UseGravity)
-                        Body.AddGravity(GetCurrentState().statePhysics[i].Gravity);
+                    if (Animator.GetCurrentState().statePhysics[i].UseLateralSpeed)
+                        Body.SetLateralVelocity(Animator.GetCurrentState().statePhysics[i].LateralSpeed * Inputs.InputSide);
+                    if (Animator.GetCurrentState().statePhysics[i].UseVerticalSpeed)
+                        Body.SetVerticalVelocity(Animator.GetCurrentState().statePhysics[i].VerticalSpeed);
+                    if (Animator.GetCurrentState().statePhysics[i].UseGravity)
+                        Body.AddGravity(Animator.GetCurrentState().statePhysics[i].Gravity);
                 }
             }
         }
 
         public void UpdateHitboxes()
         {
-            for (int i = 0; i < GetCurrentState().hitboxStates.Length; ++i)
+            for (int i = 0; i < Animator.GetCurrentState().hitboxStates.Length; ++i)
             {
-                if (Animator.Frame == GetCurrentState().hitboxStates[i].Frame)
+                if (Animator.Frame == Animator.GetCurrentState().hitboxStates[i].Frame)
                 {
-                    Body.CurrentHitbox = GetCurrentState().hitboxStates[i].HitboxIndex;
+                    Body.CurrentHitbox = Animator.GetCurrentState().hitboxStates[i].HitboxIndex;
+                    Body.HitConfirmed = false;
                 }
             }
         }
 
         public void CallState(int index, bool reset = false)
         {
-            CurrentState = index;
-            Animator.PlayState(GetCurrentState(), reset);
+            Animator.PlayState(index, reset);
         }
 
         public void StateTransitions()
         {
-            if (GetCurrentState().stateTransitions.Length <= 0) return;
+            if (Animator.GetCurrentState().stateTransitions.Length <= 0) return;
 
             bool ValidTransition = false;
 
-            for (int i = 0; i < GetCurrentState().stateTransitions.Length; i++)
+            for (int i = 0; i < Animator.GetCurrentState().stateTransitions.Length; i++)
             {
-                if (GetCurrentState().stateTransitions[i].StateIndex < 0) continue;
+                if (Animator.GetCurrentState().stateTransitions[i].StateIndex < 0) continue;
                 
-                switch ((int)GetCurrentState().stateTransitions[i].Condition)
+                switch ((int)Animator.GetCurrentState().stateTransitions[i].Condition)
                 {
                     case 0: //State End
-                        ValidTransition = Animator.Frame >= GetCurrentState().Duration;
+                        ValidTransition = Animator.Frame >= Animator.GetCurrentState().Duration;
                         break;
                     case 1: //At Frame
-                        ValidTransition = Animator.Frame >= GetCurrentState().stateTransitions[i].AtFrame;
+                        ValidTransition = Animator.Frame >= Animator.GetCurrentState().stateTransitions[i].AtFrame;
                         break;
                     case 2: //On Ground
                         ValidTransition = Body.IsOnGround;
@@ -155,17 +155,15 @@ namespace SakugaEngine
                         //TODO
                         break;
                     case 7: //On Input Command
-                        ValidTransition = Inputs.CheckMotionInputs(GetCurrentState().stateTransitions[i].Inputs);
+                        ValidTransition = Inputs.CheckMotionInputs(Animator.GetCurrentState().stateTransitions[i].Inputs);
                         break;
                 }
 
-                if (ValidTransition) CallState(GetCurrentState().stateTransitions[i].StateIndex);
+                if (ValidTransition) CallState(Animator.GetCurrentState().stateTransitions[i].StateIndex);
             }
         }
 
 #region Return functions
-        public FighterState GetCurrentState() => States[CurrentState];
-        public int StateType() => (int)GetCurrentState().Type;
         public bool IsKO() => Variables.CurrentHealth <= 0;
 #endregion
 
@@ -195,7 +193,6 @@ namespace SakugaEngine
             HitStop.Serialize(bw);
             MoveBuffer.Serialize(bw);
             //Variables
-            bw.Write(CurrentState);
             bw.Write(SuperStop);
             bw.Write(isBeingPushed);
         }
@@ -214,7 +211,6 @@ namespace SakugaEngine
             HitStop.Deserialize(br);
             MoveBuffer.Deserialize(br);
             //Variables
-            CurrentState = br.ReadInt32();
             SuperStop = br.ReadBoolean();
             isBeingPushed = br.ReadBoolean();
 

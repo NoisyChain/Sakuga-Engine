@@ -155,23 +155,23 @@ namespace SakugaEngine.Collision
                             bodyA.Parent.CounterHit(boxSettingsA, ContactPoint);
                         }
 
-                        if (myType == 2 /*Projectile*/ && otType == 0 /*Hurtbox*/ ) {
+                        if (myType == 3 /*Projectile*/ && otType == 0 /*Hurtbox*/ ) {
 							//Projectile damage
                             bodyA.Parent.BaseDamage(boxSettingsA, ContactPoint);
                         }
 
-                        if (myType == 2 /*Projectile*/ && otType == 2 /*Projectile*/ ) {
+                        if (myType == 3 /*Projectile*/ && otType == 3 /*Projectile*/ ) {
 							//Projectile clash
                             bodyA.Parent.ProjectileDamage(boxSettingsA, ContactPoint, boxSettingsA.Priority);
                             bodyB.Parent.ProjectileDamage(boxSettingsA, ContactPoint, boxSettingsB.Priority);
                         }
 
-                        if (myType == 2 /*Projectile*/ && otType == 6 /*Deflect*/ ) {
+                        if (myType == 3 /*Projectile*/ && otType == 6 /*Deflect*/ ) {
                             //Deflect projectiles
                             bodyA.Parent.ProjectileDeflect(boxSettingsA);
                         }
 
-                        if (myType == 3 /*Proximity Block*/ && otType == 0 /*Hurtbox*/ ) {
+                        if (myType == 2 /*Proximity Block*/ && otType == 0 /*Hurtbox*/ ) {
                             //Proximity block (Not working yet)
                             //other.Parent.ProximityBlock();
                         }

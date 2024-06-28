@@ -53,6 +53,9 @@ namespace SakugaEngine.Game
                 Fighters[i].Initialize(Global.StartingPosition * (-1 + (i * 2)));
             }
 
+            Fighters[0].SetOpponent(Fighters[1]);
+            Fighters[1].SetOpponent(Fighters[0]);
+
             healthHUD.Setup(Fighters);
             metersHUD.Setup(Fighters);
         }

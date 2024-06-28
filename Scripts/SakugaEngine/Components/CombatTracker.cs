@@ -46,11 +46,11 @@ namespace SakugaEngine
 
         public void UpdateFrameData(FighterBody owner)
         {
-            FrameData = owner.StateType() == 1 ? 0 : owner.GetCurrentState().Duration - owner.Animator.Frame;
-            FrameAdvantage = (owner.StateType() == 3 || owner.GetOpponent().StateType() == 3) ? 
+            FrameData = owner.Animator.StateType() == 1 ? 0 : owner.Animator.GetCurrentState().Duration - owner.Animator.Frame;
+            FrameAdvantage = (owner.Animator.StateType() == 3 || owner.GetOpponent().Animator.StateType() == 3) ? 
                         HitFrame - owner.GetOpponent().Tracker.HitFrame : 0;
 
-            FrameData = Mathf.Clamp(FrameData, 0, owner.GetCurrentState().Duration);
+            FrameData = Mathf.Clamp(FrameData, 0, owner.Animator.GetCurrentState().Duration);
         }
 
         public void Reset()

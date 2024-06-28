@@ -43,13 +43,14 @@ Tracker = NodePath("CombatTracker")
 HitStun = NodePath("Timers/HitStun")
 HitStop = NodePath("Timers/HitStop")
 MoveBuffer = NodePath("Timers/MoveBuffer")
-States = Array[Object]([ExtResource("2_758vt"), ExtResource("3_l5gy8"), ExtResource("4_kvkao"), ExtResource("5_vkokb"), ExtResource("6_4hqol"), ExtResource("7_6wx58"), ExtResource("8_g1etv"), ExtResource("9_suail"), ExtResource("10_7fd13")])
 
 [node name="Graphics" type="Node3D" parent="."]
 
-[node name="Base" type="Node3D" parent="Graphics" node_paths=PackedStringArray("player")]
+[node name="Base" type="Node3D" parent="Graphics" node_paths=PackedStringArray("players")]
 script = ExtResource("5_nddkw")
-player = NodePath("AnimationPlayer")
+players = [NodePath("AnimationPlayer")]
+prefix = PackedStringArray("")
+States = Array[Object]([ExtResource("2_758vt"), ExtResource("3_l5gy8"), ExtResource("4_kvkao"), ExtResource("5_vkokb"), ExtResource("6_4hqol"), ExtResource("7_6wx58"), ExtResource("8_g1etv"), ExtResource("9_suail"), ExtResource("10_7fd13")])
 
 [node name="Body" type="MeshInstance3D" parent="Graphics/Base"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
