@@ -3,20 +3,19 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cq4kjdi28thw7"
-path.s3tc="res://.godot/imported/SPR_Hitbox.png-13cff5d3a8e2041d113373ee6ba37ab1.s3tc.ctex"
+path="res://.godot/imported/SPR_Hitbox.png-13cff5d3a8e2041d113373ee6ba37ab1.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://Sprites/SPR_Hitbox.png"
-dest_files=["res://.godot/imported/SPR_Hitbox.png-13cff5d3a8e2041d113373ee6ba37ab1.s3tc.ctex"]
+dest_files=["res://.godot/imported/SPR_Hitbox.png-13cff5d3a8e2041d113373ee6ba37ab1.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
@@ -26,10 +25,10 @@ mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
-process/fix_alpha_border=true
+process/fix_alpha_border=false
 process/premult_alpha=false
 process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0

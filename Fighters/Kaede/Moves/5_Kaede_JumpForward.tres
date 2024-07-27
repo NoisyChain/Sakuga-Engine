@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="MoveSettings" load_steps=3 format=3 uid="uid://2aifytfjpp26"]
+
+[ext_resource type="Resource" uid="uid://diuo4je084p3s" path="res://Fighters/Shared/Inputs/4_Input_9.tres" id="1_vj153"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_xouv3"]
+
+[resource]
+script = ExtResource("2_xouv3")
+MoveName = "Forward Jump"
+MoveState = 4
+Inputs = ExtResource("1_vj153")
+SideChange = 0
+MoveEnd = 0
+MoveEndState = -1
+SuperGaugeRequired = 0
+HealthThreshold = Vector2i(0, 99999)
+SpendHealth = 0
+ChangeStance = -1
+IsSequenceFromStates = PackedInt32Array()
+CancelsTo = PackedInt32Array()
+KaraCancelsTo = PackedInt32Array()
+buttonChargeSequence = null
+SuperFlash = 0
+CanBeOverrided = true
+CanOverrideToSelf = false
+Priority = 1
+UseOnGround = true
+UseOnAir = false

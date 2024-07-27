@@ -22,17 +22,22 @@ namespace SakugaEngine.Collision
         public Vector2I FixedPosition;
         public Vector2I FixedVelocity;
         public bool IsLeftSide;
+        public bool IsMovable = true;
         public bool HitConfirmed;
         public int CurrentHitbox = -1;
         
         public bool IsOnGround => FixedPosition.Y <= 0;
         public bool IsOnLeftWall => FixedPosition.X <= -Global.WallLimit;
         public bool IsOnRightWall => FixedPosition.X >= Global.WallLimit;
+        public bool IsFalling => !IsOnGround && FixedVelocity.Y < 0;
+        public bool JustLanded => IsOnGround && FixedVelocity.Y < 0;
         public bool IsOnWall => IsOnLeftWall || IsOnRightWall;
         
 
         public void Initialize(IDamage owner)
         {
+            FixedPosition = Vector2I.Zero;
+            FixedVelocity = Vector2I.Zero;
             Parent = owner;
             Hitboxes = new Collider[HitboxesLimit];
         }
@@ -58,6 +63,9 @@ namespace SakugaEngine.Collision
         }
         public void MoveTo(Vector2I destination)
         {
+            if (IsStatic) return;
+            if (!IsMovable) return;
+            
             FixedPosition = destination;
             UpdateColliders();
         }
@@ -68,6 +76,9 @@ namespace SakugaEngine.Collision
         }
         public void Move()
         {
+            if (IsStatic) return;
+            if (!IsMovable) return;
+
             FixedPosition += FixedVelocity / Global.Delta;
             UpdateColliders();
         }
@@ -113,6 +124,7 @@ namespace SakugaEngine.Collision
             bw.Write(FixedVelocity.X);
             bw.Write(FixedVelocity.Y);
             bw.Write(IsLeftSide);
+            bw.Write(IsMovable);
             bw.Write(HitConfirmed);
             bw.Write(CurrentHitbox);
         }
@@ -124,6 +136,7 @@ namespace SakugaEngine.Collision
             FixedVelocity.X = br.ReadInt32();
             FixedVelocity.Y = br.ReadInt32();
             IsLeftSide = br.ReadBoolean();
+            IsMovable = br.ReadBoolean();
             HitConfirmed = br.ReadBoolean();
             CurrentHitbox = br.ReadInt32();
         }

@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="MoveSettings" load_steps=3 format=3 uid="uid://bjy4bx4dv4qd6"]
+
+[ext_resource type="Resource" uid="uid://cgu3jrjka1a8d" path="res://Fighters/Shared/Inputs/10_Input_66.tres" id="1_bpg1k"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_t35im"]
+
+[resource]
+script = ExtResource("2_t35im")
+MoveName = "Forward Air Dash"
+MoveState = 14
+Inputs = ExtResource("1_bpg1k")
+SideChange = 0
+MoveEnd = 0
+MoveEndState = -1
+SuperGaugeRequired = 0
+HealthThreshold = Vector2i(0, 99999)
+SpendHealth = 0
+ChangeStance = -1
+IsSequenceFromStates = PackedInt32Array()
+CancelsTo = PackedInt32Array()
+KaraCancelsTo = PackedInt32Array()
+buttonChargeSequence = null
+SuperFlash = 0
+CanBeOverrided = false
+CanOverrideToSelf = false
+Priority = 4
+UseOnGround = false
+UseOnAir = true

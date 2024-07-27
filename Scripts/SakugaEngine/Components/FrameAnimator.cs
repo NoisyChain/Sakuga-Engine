@@ -44,12 +44,12 @@ namespace SakugaEngine
 
         public void LoopState()
         {
-            bool canLoop = GetCurrentState().Loop && GetCurrentState().LoopStartFrame >= 0 && GetCurrentState().LoopEndFrame > 0;
-            int frameLimit = canLoop ? GetCurrentState().LoopEndFrame : GetCurrentState().Duration - 1;
+            bool canLoop = GetCurrentState().Loop && GetCurrentState().LoopFrames.X >= 0 && GetCurrentState().LoopFrames.Y > 0;
+            int frameLimit = canLoop ? GetCurrentState().LoopFrames.Y : GetCurrentState().Duration - 1;
             if (Frame > frameLimit)
             {
                 if (canLoop)
-                    Frame = GetCurrentState().LoopStartFrame;
+                    Frame = GetCurrentState().LoopFrames.X;
                 else
                     Frame = frameLimit;
             }

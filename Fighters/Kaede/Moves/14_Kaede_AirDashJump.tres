@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="MoveSettings" load_steps=3 format=3 uid="uid://ddc7uhufmshbk"]
+
+[ext_resource type="Resource" uid="uid://b27cxpfq2cn4o" path="res://Fighters/Shared/Inputs/7_Input_tap9.tres" id="1_tpqo4"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_qasg4"]
+
+[resource]
+script = ExtResource("2_qasg4")
+MoveName = "Air Dash Jump"
+MoveState = 54
+Inputs = ExtResource("1_tpqo4")
+SideChange = 0
+MoveEnd = 0
+MoveEndState = -1
+SuperGaugeRequired = 0
+HealthThreshold = Vector2i(0, 99999)
+SpendHealth = 0
+ChangeStance = -1
+IsSequenceFromStates = PackedInt32Array(54)
+CancelsTo = PackedInt32Array()
+KaraCancelsTo = PackedInt32Array()
+buttonChargeSequence = null
+SuperFlash = 0
+CanBeOverrided = true
+CanOverrideToSelf = true
+IgnoreSamePriority = false
+Priority = 4
+UseOnGround = false
+UseOnAir = true

@@ -1,0 +1,68 @@
+[gd_resource type="Resource" load_steps=4 format=2]
+
+[ext_resource path="res://Scripts/AFF/Resources/HitboxSettings.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/AFF/Resources/HitboxElement.cs" type="Script" id=2]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 2 )
+Center = Vector2( 0, 0 )
+Size = Vector2( 0, 0 )
+_HitboxType = 2
+_HitType = 1
+BaseDamage = 150
+ChipDamage = 0
+ChipDeath = false
+KillingBlow = true
+GuardCrush = false
+SelfMeterGain = 25
+OpponentMeterGain = 10
+ArmorDamage = 1
+Priority = 0
+HitStopDuration = 12
+BlockStopDuration = 12
+CounterHitStopDuration = 20
+ClashHitStopDuration = 20
+DamageScalingSubtract = 15
+HitEffectIndex = 0
+BlockEffectIndex = 1
+ClashEffectIndex = 2
+ArmorHitEffectIndex = 3
+GroundHitstunType = 0
+GroundHitReaction = 0
+CrouchHitReaction = 1
+GroundDamageKnockback = Vector2( -5, 0 )
+GroundBlockKnockback = Vector2( 0, 0 )
+GroundDamageKnockbackGravity = 0.0
+GroundBlockKnockbackGravity = 0.0
+GroundHitKnockbackTime = 8
+GroundBlockKnockbackTime = 8
+GroundHitStun = 8
+GroundBlockStun = 8
+AirHitstunType = 0
+AirHitReaction = 2
+AirDamageKnockback = Vector2( -3, 8 )
+AirBlockKnockback = Vector2( 0, 0 )
+AirDamageKnockbackGravity = 30.0
+AirBlockKnockbackGravity = 30.0
+AirHitKnockbackTime = 8
+AirBlockKnockbackTime = 8
+AirHitStun = 8
+AirBlockStun = 8
+PostThrowKnockback = false
+GroundThrow = false
+AirThrow = false
+AllowSelfPushback = true
+SelfPushbackForce = 0.0
+SelfPushbackDuration = 0
+HitConfirmState = -1
+AllowInertia = true
+BounceXTime = 0
+BounceXIntensity = 0.0
+BounceYTime = 0
+BounceYIntensity = 0.0
+
+[resource]
+script = ExtResource( 1 )
+PushboxCenter = Vector2( 0, 0 )
+PushboxSize = Vector2( 0, 0 )
+Hitboxes = [ SubResource( 1 ) ]

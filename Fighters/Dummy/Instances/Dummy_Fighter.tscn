@@ -1,9 +1,10 @@
-[gd_scene load_steps=22 format=3 uid="uid://3reeyb4tcc1i"]
+[gd_scene load_steps=24 format=3 uid="uid://3reeyb4tcc1i"]
 
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/FrameTimer.cs" id="1_5hpi4"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/FighterBody.cs" id="1_dqfls"]
 [ext_resource type="Resource" uid="uid://dmfn50x0ch85i" path="res://Fighters/Dummy/States/0_Dummy_Neutral.tres" id="2_758vt"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/InputManager.cs" id="2_ujbvg"]
+[ext_resource type="Resource" uid="uid://dfma5gqaldi8g" path="res://Fighters/Dummy/Dummy_Profile.tres" id="2_vgqb8"]
 [ext_resource type="Resource" uid="uid://dorfl234p1ked" path="res://Fighters/Dummy/States/1_Dummy_MoveF.tres" id="3_l5gy8"]
 [ext_resource type="Resource" uid="uid://m6lyvybvjhw" path="res://Fighters/Dummy/States/2_Dummy_MoveB.tres" id="4_kvkao"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/FrameAnimator.cs" id="5_nddkw"]
@@ -16,6 +17,7 @@
 [ext_resource type="Resource" uid="uid://c2qjtpci8vusc" path="res://Fighters/Dummy/States/13_Dummy_AirDash_Backwards.tres" id="10_7fd13"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Collision/PhysicsBody.cs" id="12_bham4"]
 [ext_resource type="Resource" uid="uid://b5x4otrs0q04d" path="res://Fighters/Dummy/Hitboxes/0_Hitbox_Basic.tres" id="13_41tll"]
+[ext_resource type="PackedScene" uid="uid://dduf0jsq56ggk" path="res://Scenes/HitboxViewer.tscn" id="14_1fhq1"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/StanceManager.cs" id="15_h2acr"]
 [ext_resource type="Resource" uid="uid://cjsr2weyqwopy" path="res://Fighters/Dummy/Stances/0_Dummy_Stance_Main.tres" id="16_pa8cl"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/CombatTracker.cs" id="18_2fc62"]
@@ -32,35 +34,48 @@ height = 0.5
 radial_segments = 12
 rings = 8
 
-[node name="Dummy_Fighter" type="Node3D" node_paths=PackedStringArray("Body", "Inputs", "Variables", "Animator", "Stance", "Tracker", "HitStun", "HitStop", "MoveBuffer")]
+[node name="Dummy_Fighter" type="Node3D" node_paths=PackedStringArray("Body", "Inputs", "Variables", "Animator", "Stance", "Tracker", "HitStun", "HitStop", "MoveBuffer", "PushForce", "HorizontalBounce", "VerticalBounce", "Graphics")]
 script = ExtResource("1_dqfls")
 Body = NodePath("PhysicsBody")
 Inputs = NodePath("InputManager")
 Variables = NodePath("Variables")
-Animator = NodePath("Graphics/Base")
+Animator = NodePath("Graphics/Mesh")
 Stance = NodePath("Stances")
 Tracker = NodePath("CombatTracker")
 HitStun = NodePath("Timers/HitStun")
 HitStop = NodePath("Timers/HitStop")
 MoveBuffer = NodePath("Timers/MoveBuffer")
+PushForce = NodePath("Timers/Pushback")
+HorizontalBounce = NodePath("Timers/HBounce")
+VerticalBounce = NodePath("Timers/VBounce")
+Profile = ExtResource("2_vgqb8")
+Graphics = [NodePath("Graphics/Mesh/Pivot")]
 
 [node name="Graphics" type="Node3D" parent="."]
 
-[node name="Base" type="Node3D" parent="Graphics" node_paths=PackedStringArray("players")]
+[node name="Mesh" type="Node3D" parent="Graphics" node_paths=PackedStringArray("players")]
 script = ExtResource("5_nddkw")
-players = [NodePath("AnimationPlayer")]
+players = [NodePath("Pivot/AnimationPlayer")]
 prefix = PackedStringArray("")
 States = Array[Object]([ExtResource("2_758vt"), ExtResource("3_l5gy8"), ExtResource("4_kvkao"), ExtResource("5_vkokb"), ExtResource("6_4hqol"), ExtResource("7_6wx58"), ExtResource("8_g1etv"), ExtResource("9_suail"), ExtResource("10_7fd13")])
 
-[node name="Body" type="MeshInstance3D" parent="Graphics/Base"]
+[node name="Pivot" type="Node3D" parent="Graphics/Mesh"]
+
+[node name="Body" type="MeshInstance3D" parent="Graphics/Mesh/Pivot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 mesh = SubResource("CapsuleMesh_a468o")
+skeleton = NodePath("../..")
 
-[node name="Head" type="MeshInstance3D" parent="Graphics/Base"]
+[node name="Head" type="MeshInstance3D" parent="Graphics/Mesh/Pivot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35, 0)
 mesh = SubResource("SphereMesh_8pohn")
+skeleton = NodePath("../..")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Graphics/Base"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Graphics/Mesh/Pivot"]
+root_node = NodePath("../..")
+
+[node name="HitboxViewer" parent="." node_paths=PackedStringArray("body") instance=ExtResource("14_1fhq1")]
+body = NodePath("../PhysicsBody")
 
 [node name="PhysicsBody" type="Node" parent="."]
 script = ExtResource("12_bham4")
@@ -89,5 +104,17 @@ script = ExtResource("1_5hpi4")
 script = ExtResource("1_5hpi4")
 
 [node name="MoveBuffer" type="Node" parent="Timers"]
+script = ExtResource("1_5hpi4")
+WaitTime = 10
+
+[node name="Pushback" type="Node" parent="Timers"]
+script = ExtResource("1_5hpi4")
+WaitTime = 10
+
+[node name="HBounce" type="Node" parent="Timers"]
+script = ExtResource("1_5hpi4")
+WaitTime = 10
+
+[node name="VBounce" type="Node" parent="Timers"]
 script = ExtResource("1_5hpi4")
 WaitTime = 10

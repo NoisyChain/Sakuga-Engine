@@ -11,6 +11,7 @@ namespace SakugaEngine.Game
         [Export] public PackedScene[] Spawns;
         [Export] private CanvasLayer FighterUI;
         [Export] private FighterCamera Camera;
+        public uint InputSize;
 
         private FighterBody[] Fighters;
         private PhysicsWorld World;
@@ -18,7 +19,7 @@ namespace SakugaEngine.Game
         private HealthHUD healthHUD;
         private MetersHUD metersHUD;
 
-        private int Frame = -1;
+        private int Frame = 0;
         //private uint Checksum;
 
         public override void _Ready()
@@ -40,6 +41,16 @@ namespace SakugaEngine.Game
 
         public void Setup()
         {
+            if (GetChildren().Count > 0)
+            {
+                foreach (Node child in GetChildren())
+                {
+                    child.QueueFree();
+                }
+            }
+
+            Frame = 0;
+
             Monitor = new GameMonitor(Global.GameTimer, 2);
             World = new PhysicsWorld();
 
@@ -50,7 +61,7 @@ namespace SakugaEngine.Game
                 AddChild(temp);
                 Fighters[i] = temp as FighterBody;
                 World.AddBody(Fighters[i].Body);
-                Fighters[i].Initialize(Global.StartingPosition * (-1 + (i * 2)));
+                Fighters[i].Initialize(i);
             }
 
             Fighters[0].SetOpponent(Fighters[1]);
@@ -60,7 +71,7 @@ namespace SakugaEngine.Game
             metersHUD.Setup(Fighters);
         }
 
-        public void GameLoop(PlayerInputs[] playerInput)
+        public void GameLoop(byte[] playerInput)
         {
             Frame++;
 
@@ -72,18 +83,35 @@ namespace SakugaEngine.Game
             { Fighters[0].ChangeSide(false); Fighters[1].ChangeSide(true); }
 
             for (int i = 0; i < Fighters.Length; i++)
-                Fighters[i].ParseInputs(playerInput[i].rawInput);
+            {
+                ushort combinedInput = 0;
+                combinedInput |= playerInput[i * InputSize];
+                combinedInput |= (ushort)(playerInput[(i * InputSize) + 1] << 8);
+                Fighters[i].ParseInputs(combinedInput);
+            }
             
             for (int i = 0; i < Fighters.Length; i++)
                 Fighters[i].Tick();
             
             World.Simulate();
+
+            for (int i = 0; i < Fighters.Length; i++)
+            {
+                Fighters[i].Body.FixedPosition.X = Mathf.Clamp(
+                    Fighters[i].Body.FixedPosition.X,
+                    center - Global.MaxPlayersDistance / 2,
+                    center + Global.MaxPlayersDistance / 2
+                );
+            }
+
             Monitor.Tick(Fighters);
         }
 
-        public ushort ReadInputs(int id)
+        // Generate inputs for your game
+        //NOTICE: for every 8 inputs you need to change the index
+        public byte[] ReadInputs(int id, int inputSize)
         {
-            ushort input = 0;
+            byte[] input = new byte[inputSize];
             string prexif = "";
 
             switch (id)
@@ -97,28 +125,28 @@ namespace SakugaEngine.Game
             }
 
             if (Input.IsActionPressed(prexif + "_up") && !Input.IsActionPressed(prexif + "_down"))
-                    input |= Global.INPUT_UP;
+                    input[0] |= Global.INPUT_UP;
 
                 if (!Input.IsActionPressed(prexif + "_up") && Input.IsActionPressed(prexif + "_down"))
-                    input |= Global.INPUT_DOWN;
+                    input[0] |= Global.INPUT_DOWN;
 
                 if (Input.IsActionPressed(prexif + "_left") && !Input.IsActionPressed(prexif + "_right"))
-                    input |= Global.INPUT_LEFT;
+                    input[0] |= Global.INPUT_LEFT;
 
                 if (!Input.IsActionPressed(prexif + "_left") && Input.IsActionPressed(prexif + "_right"))
-                    input |= Global.INPUT_RIGHT;
+                    input[0] |= Global.INPUT_RIGHT;
 
                 if (Input.IsActionPressed(prexif + "_face_a"))
-                    input |= Global.INPUT_FACE_A;
+                    input[0] |= Global.INPUT_FACE_A;
 
                 if (Input.IsActionPressed(prexif + "_face_b"))
-                    input |= Global.INPUT_FACE_B;
+                    input[0] |= Global.INPUT_FACE_B;
 
                 if (Input.IsActionPressed(prexif + "_face_c"))
-                    input |= Global.INPUT_FACE_C;
+                    input[0] |= Global.INPUT_FACE_C;
 
                 if (Input.IsActionPressed(prexif + "_face_d"))
-                    input |= Global.INPUT_FACE_D;
+                    input[0] |= Global.INPUT_FACE_D;
 
                 /*if (Input.IsActionPressed(prexif + "_macro_ab"))
                     input |= Global.INPUT_FACE_A | Global.INPUT_FACE_B;
@@ -135,7 +163,7 @@ namespace SakugaEngine.Game
                 if (Input.IsActionPressed(prexif + "_macro_abcd"))
                     input |= Global.INPUT_FACE_A | Global.INPUT_FACE_B | Global.INPUT_FACE_C | Global.INPUT_FACE_D;*/
             
-
+            
             return input;
         }
 
@@ -155,15 +183,11 @@ namespace SakugaEngine.Game
                 Fighters[i].Deserialize(br);
         }
 
-        public PlayerInputs GetLocalInput(int PlayerID)
+        public byte[] GetLocalInput(int PlayerID, int InputSize)
         {
-            PlayerInputs result = new PlayerInputs();
-            result.rawInput = ReadInputs(PlayerID);
+            byte[] result = ReadInputs(PlayerID, InputSize);
 
             return result;
         }
-
-        public int StateFrame() => Frame;
-        //public uint StateChecksum() => Checksum;
     }
 }

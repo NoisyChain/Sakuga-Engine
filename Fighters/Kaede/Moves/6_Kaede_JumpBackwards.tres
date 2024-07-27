@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="MoveSettings" load_steps=3 format=3 uid="uid://c7bfv24bbrpki"]
+
+[ext_resource type="Resource" uid="uid://c32pkpr0yh81p" path="res://Fighters/Shared/Inputs/3_Input_7.tres" id="1_yd4op"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_niv4w"]
+
+[resource]
+script = ExtResource("2_niv4w")
+MoveName = "Backwards Jump"
+MoveState = 5
+Inputs = ExtResource("1_yd4op")
+SideChange = 0
+MoveEnd = 0
+MoveEndState = -1
+SuperGaugeRequired = 0
+HealthThreshold = Vector2i(0, 99999)
+SpendHealth = 0
+ChangeStance = -1
+IsSequenceFromStates = PackedInt32Array()
+CancelsTo = PackedInt32Array()
+KaraCancelsTo = PackedInt32Array()
+buttonChargeSequence = null
+SuperFlash = 0
+CanBeOverrided = true
+CanOverrideToSelf = false
+Priority = 1
+UseOnGround = true
+UseOnAir = false

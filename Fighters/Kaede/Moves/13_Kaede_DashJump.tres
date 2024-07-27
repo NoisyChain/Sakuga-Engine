@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="MoveSettings" load_steps=3 format=3 uid="uid://1ji2x5eipcmv"]
+
+[ext_resource type="Resource" uid="uid://diuo4je084p3s" path="res://Fighters/Shared/Inputs/4_Input_9.tres" id="1_hdl2k"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_d667q"]
+
+[resource]
+script = ExtResource("2_d667q")
+MoveName = "Dash Jump"
+MoveState = 54
+Inputs = ExtResource("1_hdl2k")
+SideChange = 0
+MoveEnd = 0
+MoveEndState = -1
+SuperGaugeRequired = 0
+HealthThreshold = Vector2i(0, 99999)
+SpendHealth = 0
+ChangeStance = -1
+IsSequenceFromStates = PackedInt32Array(12)
+CancelsTo = PackedInt32Array()
+KaraCancelsTo = PackedInt32Array()
+buttonChargeSequence = null
+SuperFlash = 0
+CanBeOverrided = true
+CanOverrideToSelf = false
+Priority = 3
+UseOnGround = true
+UseOnAir = false

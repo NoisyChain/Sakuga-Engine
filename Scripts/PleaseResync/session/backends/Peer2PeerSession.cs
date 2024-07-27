@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Diagnostics;
 using System.Collections.Generic;
+using Godot;
 
 namespace PleaseResync
 {
@@ -18,11 +19,11 @@ namespace PleaseResync
         private Sync _sync;
         private Device _localDevice;
 
-        public Peer2PeerSession(uint inputSize, uint deviceCount, uint totalPlayerCount, SessionAdapter adapter) : base(inputSize, deviceCount, totalPlayerCount)
+        public Peer2PeerSession(uint inputSize, uint deviceCount, uint totalPlayerCount, bool offline, SessionAdapter adapter) : base(inputSize, deviceCount, totalPlayerCount, offline)
         {
             _allDevices = new Device[deviceCount];
             _sessionAdapter = adapter;
-            _sync = new Sync(_allDevices, inputSize);
+            _sync = new Sync(_allDevices, inputSize, offline);
         }
 
         public override void SetLocalDevice(uint deviceId, uint playerCount, uint frameDelay)
@@ -34,6 +35,8 @@ namespace PleaseResync
             _localDevice = new Device(this, deviceId, playerCount, Device.DeviceType.Local);
             _allDevices[deviceId] = LocalDevice;
             _sync.SetLocalDevice(deviceId, playerCount, frameDelay);
+
+            if (OfflinePlay) _localDevice.State = Device.DeviceState.Running;
         }
 
         public override void AddRemoteDevice(uint deviceId, uint playerCount, object remoteConfiguration)
@@ -48,8 +51,23 @@ namespace PleaseResync
             _sync.AddRemoteDevice(deviceId, playerCount);
         }
 
+        public override void AddSpectatorDevice(uint deviceId, object remoteConfiguration)
+        {
+            Debug.Assert(deviceId >= 0 && deviceId < DeviceCount, $"DeviceId {deviceId} should be between [0,  {DeviceCount}[");
+            Debug.Assert(LocalDevice != null, "SetLocalDevice must be called before any call to AddSpectatorDevice.");
+            Debug.Assert(_allDevices[deviceId] == null, $"Spectator device {deviceId} was already set.");
+
+            _sessionAdapter.AddRemote(deviceId, remoteConfiguration);
+            _allDevices[deviceId] = new Device(this, deviceId, 1, Device.DeviceType.Spectator);
+            _allDevices[deviceId].StartSyncing();
+            _sync.AddSpectatorDevice(deviceId);
+        }
+
         public override void Poll()
         {
+            //We don't wanna deal with networking if we're playing offline
+            if (OfflinePlay) return;
+
             Debug.Assert(_allDevices.All(device => device != null), "All devices must be Set/Added before calling Poll");
 
             if (!IsRunning())
@@ -60,7 +78,19 @@ namespace PleaseResync
                 }
             }
 
+            _sync.LookForDisconnectedDevices();
+
             var messages = _sessionAdapter.ReceiveFrom();
+            if (messages.Count == 0)
+            {
+                foreach (Device device in _allDevices)
+                {
+                    if (device.Type == Device.DeviceType.Remote)
+                        device.TestConnection();
+                }
+                return;
+            }
+
             foreach (var (_, deviceId, message) in messages)
             {
                 //Godot.GD.Print($"Received message from remote device {deviceId}: {message}");
@@ -73,7 +103,7 @@ namespace PleaseResync
             return _allDevices.All(device => device.State == Device.DeviceState.Running);
         }
 
-        public override List<SessionAction> AdvanceFrame(PlayerInputs[] localInput)
+        public override List<SessionAction> AdvanceFrame(byte[] localInput)
         {
             Debug.Assert(IsRunning(), "Session must be running before calling AdvanceFrame");
             Debug.Assert(localInput != null);
@@ -103,7 +133,7 @@ namespace PleaseResync
             int inputIndex = 0;
             for (uint i = message.StartFrame; i <= message.EndFrame; i++)
             {
-                PlayerInputs[] inputsForFrame = new PlayerInputs[message.Input.Length / inputCount];
+                byte[] inputsForFrame = new byte[message.Input.Length / inputCount];
 
                 System.Array.Copy(message.Input, inputIndex * inputSize, inputsForFrame, 0, inputSize);
                 _sync.AddRemoteInput(deviceId, (int)i, inputsForFrame);
@@ -115,5 +145,6 @@ namespace PleaseResync
         public override int Frame() => _sync.Frame();
         public override int FrameAdvantage() => _sync.FramesAhead();
         public override uint RollbackFrames() => _sync.RollbackFrames();
+        public override int State() => (int)_sync.State();
     }
 }

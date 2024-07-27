@@ -1,0 +1,28 @@
+[gd_resource type="Resource" load_steps=3 format=3]
+
+[ext_resource type="Resource" path="res://Fighters/Shared/Inputs/Input_5A.tres" id="1"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2"]
+
+[resource]
+script = ExtResource( 2 )
+MoveName = "j.5A"
+MoveState = 50
+MoveType = 1
+MeterRequired = 0
+MinimumHealth = 0
+MaximumHealth = 99999
+SpendHealth = 0
+ChangeStance = -1
+IsSequenceFromStates = null
+CheckOpponentStates = null
+CancelsTo = null
+KaraCancelsTo = null
+MoveEndCondition = 0
+MoveEndState = -1
+Command = ExtResource( 1 )
+buttonChargeSequence = null
+TimeFreeze = 0
+UseOnGround = false
+UseOnAir = true
+AllowJumpCancel = false
+AllowDashCancel = false

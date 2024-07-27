@@ -70,11 +70,11 @@ namespace SakugaEngine.Resources
         //Extra settings
         [Export] public int HitConfirmState = -1;
         [Export] public bool AllowInertia = true;
-        [Export] public int BounceXTime;
-        [Export] public int BounceXIntensity;
-        [Export] public int BounceXState;
-        [Export] public int BounceYTime;
-        [Export] public int BounceYIntensity;
-        [Export] public int BounceYState;
+        [Export] public int BounceXTime = 0;
+        [Export] public int BounceXIntensity = 100;
+        [Export] public int BounceXState = -1;
+        [Export] public int BounceYTime = 0;
+        [Export] public int BounceYIntensity = 100;
+        [Export] public int BounceYState = -1;
     }
 }

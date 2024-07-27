@@ -7,9 +7,9 @@ namespace SakugaEngine
     public partial class CombatTracker : Node
     {
         public int HitCombo;
-        public int LastDamage;
-        public int CurrentCombo;
-        public int HighestCombo;
+        public uint LastDamage;
+        public uint CurrentCombo;
+        public uint HighestCombo;
         public int TotalFrames;
         public int FrameData;
         public int FrameAdvantage;
@@ -30,7 +30,7 @@ namespace SakugaEngine
             LastHitType = 0;
             invalidHit = false;
         }
-        public void UpdateTrackers(int damage, int hitFrame, int hitType, bool isInvalid) 
+        public void UpdateTrackers(uint damage, int hitFrame, int hitType, bool isInvalid)
         {
             if (isInvalid)
                 invalidHit = true;
@@ -79,9 +79,9 @@ namespace SakugaEngine
         public void Deserialize(BinaryReader br)
         {
             HitCombo = br.ReadInt32();
-            LastDamage = br.ReadInt32();
-            CurrentCombo = br.ReadInt32();
-            HighestCombo = br.ReadInt32();
+            LastDamage = br.ReadUInt32();
+            CurrentCombo = br.ReadUInt32();
+            HighestCombo = br.ReadUInt32();
 			TotalFrames = br.ReadInt32();
 			FrameData = br.ReadInt32();
             FrameAdvantage = br.ReadInt32();

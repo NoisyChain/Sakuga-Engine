@@ -10,6 +10,7 @@ public static class Global
     public const int WallLimit = 70000;
     public const int CeilingLimit = 120000;
     public const int StartingPosition = 15000;
+    public const int MaxPlayersDistance = 70000;
     public const int InputHistorySize = 16;
     public const int KaraCancelWindow = 3;
     public const int RoundsToWin = 2;
@@ -90,13 +91,22 @@ public static class Global
             vector.Y / (float)SimulationScale
         );
     }
-    public static Vector3 ToScaledVector3(Vector2I vector)
+    public static Vector3 ToScaledVector3(Vector2I vector, float zScale = 0f)
     {
         return new Vector3
         (
             vector.X / (float)SimulationScale,
             vector.Y / (float)SimulationScale,
-            0f
+            zScale
+        );
+    }
+     public static Vector3 ToScaledVector3(Vector3I vector)
+    {
+        return new Vector3
+        (
+            vector.X / (float)SimulationScale,
+            vector.Y / (float)SimulationScale,
+            vector.Z / (float)SimulationScale
         );
     }
     public static float ToScaledFloat(int value)

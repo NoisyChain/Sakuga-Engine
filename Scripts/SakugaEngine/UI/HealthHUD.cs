@@ -25,10 +25,18 @@ namespace SakugaEngine.UI
         {
             P1Health.MaxValue = fighters[0].Variables.MaxHealth;
             P2Health.MaxValue = fighters[1].Variables.MaxHealth;
-            //P1Portrait.Texture = fighters[0].GetSettings().Profile.Portrait;
-            //P2Portrait.Texture = fighters[1].GetSettings().Profile.Portrait;
-            //P1Name.Text = fighters[0].GetSettings().Profile.ShortName;
-            //P2Name.Text = fighters[1].GetSettings().Profile.ShortName;
+            
+            if (fighters[0].Profile.Portrait != null)
+            {
+                P1Portrait.Texture = fighters[0].Profile.Portrait;
+                P1Name.Text = fighters[0].Profile.ShortName;
+            }
+
+            if (fighters[1].Profile.Portrait != null)
+            {
+                P2Portrait.Texture = fighters[1].Profile.Portrait;
+                P2Name.Text = fighters[1].Profile.ShortName;
+            }
         }
 
         public void UpdateHealthBars(FighterBody[] fighters, int[] rounds)

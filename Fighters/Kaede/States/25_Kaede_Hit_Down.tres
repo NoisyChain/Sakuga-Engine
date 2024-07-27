@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="FighterState" load_steps=2 format=3 uid="uid://cue353xq5of0f"]
+
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="1"]
+
+[resource]
+script = ExtResource("1")
+StateName = "Hit_Down"
+Type = 4
+OffTheGround = false
+Duration = 16
+Loop = false
+LoopFrames = Vector2i(0, 0)
+TurnState = 0
+RoundFinishDuration = 0
+HitStunFrameLimit = -1
+statePhysics = null
+hitboxStates = null
+animationEvents = null
+throwPivot = null
+soundEvents = null
+stateTransitions = null

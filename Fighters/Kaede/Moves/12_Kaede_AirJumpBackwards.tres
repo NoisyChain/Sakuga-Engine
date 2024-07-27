@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="MoveSettings" load_steps=3 format=3 uid="uid://bsh6kfdelh82f"]
+
+[ext_resource type="Resource" uid="uid://bmg8pgc425utd" path="res://Fighters/Shared/Inputs/6_Input_tap7.tres" id="1_72xkb"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_j60kw"]
+
+[resource]
+script = ExtResource("2_j60kw")
+MoveName = "Backwards Air Jump"
+MoveState = 5
+Inputs = ExtResource("1_72xkb")
+SideChange = 0
+MoveEnd = 0
+MoveEndState = -1
+SuperGaugeRequired = 0
+HealthThreshold = Vector2i(0, 99999)
+SpendHealth = 0
+ChangeStance = -1
+IsSequenceFromStates = PackedInt32Array()
+CancelsTo = PackedInt32Array()
+KaraCancelsTo = PackedInt32Array()
+buttonChargeSequence = null
+SuperFlash = 0
+CanBeOverrided = true
+CanOverrideToSelf = true
+IgnoreSamePriority = false
+Priority = 4
+UseOnGround = false
+UseOnAir = true

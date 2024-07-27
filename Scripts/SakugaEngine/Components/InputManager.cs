@@ -7,12 +7,6 @@ namespace SakugaEngine
     [GlobalClass]
     public partial class InputManager : Node
     {
-        //public FighterButton h;
-        //public FighterButton v;
-        //public FighterButton b1;
-        //public FighterButton b2;
-        //public FighterButton b3;
-        //public FighterButton b4;
         public InputRegistry[] InputHistory = new InputRegistry[Global.InputHistorySize];
         public int CurrentHistory = 0;
         public int InputSide;
@@ -21,42 +15,53 @@ namespace SakugaEngine
 
         public bool CheckMotionInputs(MotionInputs motion)
         {
-            //Define the first input to check
-            //If the result is less than 0, cycle it to the end
-            int startingInput = (CurrentHistory - motion.Inputs.Length) + 1;
-            if (startingInput < 0) startingInput += Global.InputHistorySize;
+            if (motion == null) return false;
+            if (motion.ValidInputs == null) return false;
+            
+            bool inputFound = false;
 
-            for (int i = 0; i < motion.Inputs.Length; i++)
+            for (int i = 0; i < motion.ValidInputs.Length; i++)
             {
-                int HistoryIndex = (startingInput + i) % Global.InputHistorySize;
+                //Define the first input to check
+                //If the result is less than 0, cycle it to the end
+                int startingInput = (CurrentHistory - motion.ValidInputs[i].Inputs.Length) + 1;
+                if (startingInput < 0) startingInput += Global.InputHistorySize;
 
-                int directionNumber = (int)motion.Inputs[i].Directional;
-                int buttonNumber = (int)motion.Inputs[i].Buttons;
+                for (int j = 0; j < motion.ValidInputs[i].Inputs.Length; j++)
+                {
+                    int HistoryIndex = (startingInput + j) % Global.InputHistorySize;
 
-                bool validBuffer = motion.InputBuffer == 0 ||
-                    InputHistory[HistoryIndex].duration <= motion.InputBuffer;
+                    int directionNumber = (int)motion.ValidInputs[i].Inputs[j].Directional;
+                    int buttonNumber = (int)motion.ValidInputs[i].Inputs[j].Buttons;
 
-                bool validInput;
+                    bool validBuffer = motion.InputBuffer == 0 ||
+                        InputHistory[HistoryIndex].duration <= motion.InputBuffer;
 
-                if (directionNumber != 5 && buttonNumber == 0)
-                    validInput = CheckDirectionalInputs(HistoryIndex, directionNumber, (int)motion.Inputs[i].DirectionalMode, motion.AbsoluteDirection);
-                else if (directionNumber == 5 && buttonNumber > 0)
-                    validInput = CheckButtonInputs(HistoryIndex, buttonNumber, (int)motion.Inputs[i].ButtonMode);
-                else
-                    validInput = CheckDirectionalInputs(HistoryIndex, directionNumber, (int)motion.Inputs[i].DirectionalMode, motion.AbsoluteDirection) &&
-                    CheckButtonInputs(HistoryIndex, buttonNumber, (int)motion.Inputs[i].ButtonMode);
+                    bool validInput;
 
-                if ((!validBuffer || !validInput) && !CheckChargeInputs(HistoryIndex, directionNumber, motion.DirectionalChargeLimit)) 
-                    return false;
+                    if (directionNumber != 5 && buttonNumber == 0)
+                        validInput = CheckDirectionalInputs(HistoryIndex, directionNumber, (int)motion.ValidInputs[i].Inputs[j].DirectionalMode, motion.AbsoluteDirection) ||
+                        CheckChargeInputs(HistoryIndex, directionNumber, motion.DirectionalChargeLimit);
+                    else if (directionNumber == 5 && buttonNumber > 0)
+                        validInput = CheckButtonInputs(HistoryIndex, buttonNumber, (int)motion.ValidInputs[i].Inputs[j].ButtonMode);
+                    else
+                        validInput = (CheckDirectionalInputs(HistoryIndex, directionNumber, (int)motion.ValidInputs[i].Inputs[j].DirectionalMode, motion.AbsoluteDirection) ||
+                        CheckChargeInputs(HistoryIndex, directionNumber, motion.DirectionalChargeLimit)) &&
+                        CheckButtonInputs(HistoryIndex, buttonNumber, (int)motion.ValidInputs[i].Inputs[j].ButtonMode);
+
+                    inputFound = validBuffer && validInput;
+                    if (!inputFound) break;
+                }
+                if (inputFound) break;
             }
             
-            return true;
+            return inputFound;
         }
 
         public bool CheckInputEnd(MotionInputs motion)
         {
-            int directionNumber = (int)motion.Inputs[motion.Inputs.Length - 1].Directional;
-            int buttonNumber = (int)motion.Inputs[motion.Inputs.Length - 1].Buttons;
+            int directionNumber = (int)motion.ValidInputs[0].Inputs[motion.ValidInputs[0].Inputs.Length - 1].Directional;
+            int buttonNumber = (int)motion.ValidInputs[0].Inputs[motion.ValidInputs[0].Inputs.Length - 1].Buttons;
 
             bool validInput;
 

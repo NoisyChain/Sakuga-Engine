@@ -83,7 +83,7 @@ namespace PleaseResync
     {
         public uint StartFrame;
         public uint EndFrame;
-        public PlayerInputs[] Input;
+        public byte[] Input;
 
         public DeviceInputMessage(){ID = 3;}
 
@@ -100,7 +100,7 @@ namespace PleaseResync
             bw.Write(EndFrame);
             bw.Write(Input.Length);
             for (int i = 0; i < Input.Length; i++)
-                Input[i].Serialize(bw);
+                bw.Write(Input[i]);
         }
 
         public override void Deserialize(BinaryReader br)
@@ -109,9 +109,9 @@ namespace PleaseResync
             SequenceNumber = br.ReadUInt32();
             StartFrame = br.ReadUInt32();
             EndFrame = br.ReadUInt32();
-            Input = new PlayerInputs[br.ReadInt32()];
+            Input = new byte[br.ReadInt32()];
             for (int i = 0; i < Input.Length; i++)
-                Input[i].Deserialize(br);
+                Input[i] = br.ReadByte();
         }
         public override string ToString() { return $"{typeof(DeviceInputMessage)}: {new { StartFrame, EndFrame, Input }}"; }
     }
@@ -145,7 +145,7 @@ namespace PleaseResync
 
     public class HealthCheckMessage : DeviceMessage
     {
-        public uint Frame;
+        public int Frame;
         public uint Checksum;
 
         public HealthCheckMessage(){ID = 5;}
@@ -165,7 +165,7 @@ namespace PleaseResync
         public override void Deserialize(BinaryReader br)
         {
             SequenceNumber = br.ReadUInt32();
-            Frame = br.ReadUInt32();
+            Frame = br.ReadInt32();
             Checksum = br.ReadUInt32();
         }
 

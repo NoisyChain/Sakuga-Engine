@@ -1,0 +1,31 @@
+[gd_resource type="Resource" load_steps=4 format=2]
+
+[ext_resource path="res://Scripts/AFF/Resources/SpawnableState.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/AFF/Resources/StatePhysics.cs" type="Script" id=2]
+
+[sub_resource type="Resource" id=2]
+script = ExtResource( 2 )
+frame = 0
+UseLateralSpeed = true
+LateralSpeed = 6.0
+UseVerticalSpeed = true
+VerticalSpeed = 0.0
+UseGravity = false
+Gravity = 0.0
+
+[resource]
+script = ExtResource( 1 )
+StateName = "Travel"
+Duration = 40
+StartCountdown = false
+Loop = true
+LoopStartFrame = 0
+LoopEndFrame = 40
+statePhysics = [ SubResource( 2 ) ]
+hitboxStates = null
+soundEvents = null
+AutoTransitionTo = -1
+AutoTransitionOnGround = -1
+AutoTransitionOnWalls = -1
+AutoTransitionFalling = -1
+AutoTransitionDeath = 2

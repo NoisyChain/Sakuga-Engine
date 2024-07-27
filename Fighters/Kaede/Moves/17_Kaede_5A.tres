@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="MoveSettings" load_steps=2 format=3 uid="uid://dleyoipqsmi1b"]
+
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="1"]
+
+[resource]
+script = ExtResource("1")
+MoveName = "5A"
+MoveState = 44
+ValidInputs = Array[Object]([])
+SideChange = 0
+MoveEnd = 0
+MoveEndState = -1
+SuperGaugeRequired = 0
+HealthThreshold = Vector2i(0, 99999)
+SpendHealth = 0
+ChangeStance = -1
+IsSequenceFromStates = null
+CancelsTo = PackedInt32Array(1)
+KaraCancelsTo = null
+buttonChargeSequence = null
+SuperFlash = 0
+CanBeOverrided = false
+CanOverrideToSelf = false
+Priority = 0
+UseOnGround = true
+UseOnAir = false

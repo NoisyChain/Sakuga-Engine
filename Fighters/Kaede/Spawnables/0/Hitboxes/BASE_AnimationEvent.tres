@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/AFF/Resources/AnimationEvents.cs" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+Frame = 5
+eventType = 0
+Index = 0
+Value = 0
+SetActive = false
+Origin = Vector2( 0.8, 1 )
+xRelativeTo = 1
+yRelativeTo = 1

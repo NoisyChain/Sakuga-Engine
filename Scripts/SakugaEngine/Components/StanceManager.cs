@@ -9,7 +9,7 @@ namespace SakugaEngine.Resources
         private FighterBody owner;
         [Export] public int DefaultStance = 0;
         [Export] public FighterStance[] Stances;
-        [Export] public int[] HitReactions;
+
         public int CurrentStance;
         public int bufferedMove = -1;
         public int currentMove = -1;
@@ -41,8 +41,8 @@ namespace SakugaEngine.Resources
             //bool isOpponentCorrectState = GetMove(index).CheckOpponentStates.Length <= 0 || CheckOpponentState(index);
             //if (!isOpponentCorrectState) return false;
 
-            bool isDesiredHealth = owner.Variables.CurrentHealth >= GetMove(index).MinimumHealth &&
-                owner.Variables.CurrentHealth <= GetMove(index).MaximumHealth;
+            bool isDesiredHealth = owner.Variables.CurrentHealth >= GetMove(index).HealthThreshold.X &&
+                owner.Variables.CurrentHealth <= GetMove(index).HealthThreshold.Y;
             if (!isDesiredHealth) return false;
             
             if (owner.Variables.CurrentSuperGauge < GetMove(index).SuperGaugeRequired) return false;
@@ -57,17 +57,14 @@ namespace SakugaEngine.Resources
             for (int i = GetMoveListLength() - 1; i >= 0; i--)
             {
                 if (!CheckMoveConditions(i)) continue;
-                for(int j = 0; j < GetMove(i).ValidInputs.Length; j++)
+                if (owner.Inputs.CheckMotionInputs(GetMove(i).Inputs))
                 {
-                    if (owner.Inputs.CheckMotionInputs(GetMove(i).ValidInputs[j]))
-                    {
-                        bufferedMove = i;
-                        owner.MoveBuffer.Start();
-                        break;
-                    }
+                    bufferedMove = i;
+                    owner.MoveBuffer.Start();
+                    break;
                 }
             }
-            CheckMoveEndConndition();
+            CheckMoveEndCondition();
             AttackBufferStorage();
         }
 
@@ -103,10 +100,11 @@ namespace SakugaEngine.Resources
                     GD.Print("Buffer Cleaned!");
                 }
                 else if (!owner.HitStop.IsRunning())
-                {
-                    bool CanOverride = currentMove == -1 || 
-                                GetCurrentMove().CanBeOverrided && 
-                                GetMove(bufferedMove).Priority > GetCurrentMove().Priority;
+                {                    
+                    bool CanOverride = currentMove == -1 || (GetCurrentMove().CanBeOverrided && 
+                                        (GetCurrentMove().IgnoreSamePriority ? 
+                                        GetMove(bufferedMove).Priority > GetCurrentMove().Priority : 
+                                        GetMove(bufferedMove).Priority >= GetCurrentMove().Priority));
                     
                     bool canCancelThis = (canMoveCancel && CanCancel()) || 
                                 (owner.Animator.Frame < Global.KaraCancelWindow && CanKaraCancel());
@@ -121,12 +119,12 @@ namespace SakugaEngine.Resources
             }
         }
 
-        private void CheckMoveEndConndition()
+        private void CheckMoveEndCondition()
         {
             if (currentMove < 0) return;
 
             if ((int)GetCurrentMove().MoveEnd == 0 && owner.Animator.CurrentState != GetCurrentMove().MoveState ||
-                (int)GetCurrentMove().MoveEnd == 1 && owner.Inputs.CheckInputEnd(GetCurrentMove().ValidInputs[0]) ||
+                (int)GetCurrentMove().MoveEnd == 1 && owner.Inputs.CheckInputEnd(GetCurrentMove().Inputs) ||
                 (int)GetCurrentMove().MoveEnd == 2 && owner.Animator.StateType() != (int)owner.Animator.States[GetCurrentMove().MoveState].Type)
             {
                 ResetStance();

@@ -6,7 +6,7 @@ namespace SakugaEngine.Resources
     public partial class ThrowPivot : Resource
     {
         [Export] public int Frame;
-        [Export] private Vector2I PivotPosition = Vector2I.Zero;
+        [Export] public Vector2I PivotPosition = Vector2I.Zero;
     }
 }
 //TODO: Considering to add interpolation support for this thing

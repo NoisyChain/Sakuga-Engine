@@ -1,0 +1,152 @@
+[gd_scene load_steps=4 format=3 uid="uid://dduf0jsq56ggk"]
+
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Utils/HitboxViewer.cs" id="1"]
+[ext_resource type="Texture2D" uid="uid://cq4kjdi28thw7" path="res://Sprites/SPR_Hitbox.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://b6o81hgy21rv1" path="res://Sprites/Pivot.png" id="2_dg03u"]
+
+[node name="HitboxViewer" type="Node3D" node_paths=PackedStringArray("hitboxGraphics")]
+script = ExtResource("1")
+hitboxGraphics = [NodePath("Box_0"), NodePath("Box_1"), NodePath("Box_2"), NodePath("Box_3"), NodePath("Box_4"), NodePath("Box_5"), NodePath("Box_6"), NodePath("Box_7"), NodePath("Box_8"), NodePath("Box_9"), NodePath("Box_10"), NodePath("Box_11"), NodePath("Box_12"), NodePath("Box_13"), NodePath("Box_14"), NodePath("Box_15"), NodePath("Box_16")]
+
+[node name="Pivot" type="Sprite3D" parent="."]
+layers = 16
+sorting_offset = 10.0
+no_depth_test = true
+texture_filter = 0
+texture = ExtResource("2_dg03u")
+
+[node name="Box_0" type="Sprite3D" parent="."]
+visible = false
+layers = 16
+pixel_size = 0.004
+no_depth_test = true
+texture_filter = 0
+texture = ExtResource("2")
+
+[node name="Box_1" type="Sprite3D" parent="."]
+visible = false
+layers = 16
+pixel_size = 0.004
+no_depth_test = true
+texture_filter = 0
+texture = ExtResource("2")
+
+[node name="Box_2" type="Sprite3D" parent="."]
+visible = false
+layers = 16
+pixel_size = 0.004
+no_depth_test = true
+texture_filter = 0
+texture = ExtResource("2")
+
+[node name="Box_3" type="Sprite3D" parent="."]
+visible = false
+layers = 16
+pixel_size = 0.004
+no_depth_test = true
+texture_filter = 0
+texture = ExtResource("2")
+
+[node name="Box_4" type="Sprite3D" parent="."]
+visible = false
+layers = 16
+pixel_size = 0.004
+no_depth_test = true
+texture_filter = 0
+texture = ExtResource("2")
+
+[node name="Box_5" type="Sprite3D" parent="."]
+visible = false
+layers = 16
+pixel_size = 0.004
+no_depth_test = true
+texture_filter = 0
+texture = ExtResource("2")
+
+[node name="Box_6" type="Sprite3D" parent="."]
+visible = false
+layers = 16
+pixel_size = 0.004
+no_depth_test = true
+texture_filter = 0
+texture = ExtResource("2")
+
+[node name="Box_7" type="Sprite3D" parent="."]
+visible = false
+layers = 16
+pixel_size = 0.004
+no_depth_test = true
+texture_filter = 0
+texture = ExtResource("2")
+
+[node name="Box_8" type="Sprite3D" parent="."]
+visible = false
+layers = 16
+pixel_size = 0.004
+no_depth_test = true
+texture_filter = 0
+texture = ExtResource("2")
+
+[node name="Box_9" type="Sprite3D" parent="."]
+visible = false
+layers = 16
+pixel_size = 0.004
+no_depth_test = true
+texture_filter = 0
+texture = ExtResource("2")
+
+[node name="Box_10" type="Sprite3D" parent="."]
+visible = false
+layers = 16
+pixel_size = 0.004
+no_depth_test = true
+texture_filter = 0
+texture = ExtResource("2")
+
+[node name="Box_11" type="Sprite3D" parent="."]
+visible = false
+layers = 16
+pixel_size = 0.004
+no_depth_test = true
+texture_filter = 0
+texture = ExtResource("2")
+
+[node name="Box_12" type="Sprite3D" parent="."]
+visible = false
+layers = 16
+pixel_size = 0.004
+no_depth_test = true
+texture_filter = 0
+texture = ExtResource("2")
+
+[node name="Box_13" type="Sprite3D" parent="."]
+visible = false
+layers = 16
+pixel_size = 0.004
+no_depth_test = true
+texture_filter = 0
+texture = ExtResource("2")
+
+[node name="Box_14" type="Sprite3D" parent="."]
+visible = false
+layers = 16
+pixel_size = 0.004
+no_depth_test = true
+texture_filter = 0
+texture = ExtResource("2")
+
+[node name="Box_15" type="Sprite3D" parent="."]
+visible = false
+layers = 16
+pixel_size = 0.004
+no_depth_test = true
+texture_filter = 0
+texture = ExtResource("2")
+
+[node name="Box_16" type="Sprite3D" parent="."]
+visible = false
+layers = 16
+pixel_size = 0.004
+no_depth_test = true
+texture_filter = 0
+texture = ExtResource("2")

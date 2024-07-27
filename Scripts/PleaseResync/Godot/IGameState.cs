@@ -4,11 +4,9 @@ namespace PleaseResync
     public interface IGameState
     {
         void Setup();
-        void GameLoop(PlayerInputs[] playerInput);
+        void GameLoop(byte[] playerInput);
         void Serialize(BinaryWriter bw);
         void Deserialize(BinaryReader br);
-        PlayerInputs GetLocalInput(int PlayerID);
-        int StateFrame();
-        //uint StateChecksum();
+        byte[] GetLocalInput(int PlayerID, int InputSize);
     }
 }

@@ -45,7 +45,7 @@ namespace SakugaEngine
 
             bw.Write(GameIsRunning);
 
-            bw.Write(VictoryCounter.Length);
+            //bw.Write(VictoryCounter.Length);
             for (int i = 0; i < VictoryCounter.Length; ++i)
             {
                 bw.Write(VictoryCounter[i]);
@@ -65,9 +65,9 @@ namespace SakugaEngine
 
             GameIsRunning = br.ReadBoolean();
 
-            var length = br.ReadInt32();
-            if (length != VictoryCounter.Length)
-                VictoryCounter = new int[length];
+            //var length = br.ReadInt32();
+            //if (length != VictoryCounter.Length)
+                //VictoryCounter = new int[length];
             
             for (int i = 0; i < VictoryCounter.Length; ++i)
             {
@@ -112,10 +112,10 @@ namespace SakugaEngine
 
             if (Winner < 0) 
             {
-                /*for (int i = 0; i < _fighters.Length; i++)
+                for (int i = 0; i < _fighters.Length; i++)
                 {
                     _fighters[i].Reset(i);
-                }*/
+                }
                 Reset();
             }
             else Godot.GD.Print($"Player {Winner + 1} win the game!");

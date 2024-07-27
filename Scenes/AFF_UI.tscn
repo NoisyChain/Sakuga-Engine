@@ -668,24 +668,13 @@ offset_right = 240.0
 offset_bottom = 310.0
 color = Color(0, 0, 0, 0.156863)
 
-[node name="ColorRect3" type="ColorRect" parent="Debug"]
+[node name="ColorRect2" type="ColorRect" parent="Debug"]
 layout_mode = 0
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -240.0
 offset_bottom = 310.0
 color = Color(0, 0, 0, 0.156863)
-
-[node name="ColorRect2" type="ColorRect" parent="Debug"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -32.0
-offset_right = 30.0
-offset_bottom = 24.0
-grow_horizontal = 2
-color = Color(0, 0, 0, 1)
 
 [node name="P1Debug" type="Label" parent="Debug"]
 layout_mode = 1
@@ -704,7 +693,26 @@ offset_bottom = 23.0
 grow_horizontal = 0
 text = "Lorem ipsun"
 
-[node name="FPS" type="Label" parent="Debug"]
+[node name="FPSDisplay" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="FPSDisplay"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -32.0
+offset_right = 30.0
+offset_bottom = 24.0
+grow_horizontal = 2
+color = Color(0, 0, 0, 1)
+
+[node name="FPS" type="Label" parent="FPSDisplay"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -803,7 +811,6 @@ offset_bottom = 226.0
 text = "Offline Game"
 
 [node name="Button_Replay" type="Button" parent="PleaseResync_UI/Connection_Panel"]
-visible = false
 layout_mode = 0
 offset_left = 22.0
 offset_top = 235.0
@@ -861,11 +868,15 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Button_Close" type="Button" parent="PleaseResync_UI/Connected_Panel"]
-layout_mode = 0
-offset_left = 22.0
-offset_top = 649.0
-offset_right = 121.0
-offset_bottom = 680.0
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 7.0
+offset_top = -68.0
+offset_right = 106.0
+offset_bottom = -37.0
+grow_vertical = 0
 text = "Close Game"
 
 [connection signal="pressed" from="PleaseResync_UI/Connection_Panel/Button_OnlinePlay" to="PleaseResync_UI" method="OnButton_OnlinePlayPressed"]

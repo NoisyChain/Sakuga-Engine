@@ -1,0 +1,54 @@
+[gd_resource type="Resource" script_class="FighterState" load_steps=8 format=3 uid="uid://cf4fnu1mjcrmg"]
+
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="1"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/StatePhysics.cs" id="3"]
+
+[sub_resource type="Resource" id="2"]
+script = ExtResource("2")
+animationStage = 0
+Frame = 0
+HitboxIndex = 5
+
+[sub_resource type="Resource" id="3"]
+script = ExtResource("2")
+animationStage = 1
+Frame = 3
+HitboxIndex = 6
+
+[sub_resource type="Resource" id="4"]
+script = ExtResource("2")
+animationStage = 2
+Frame = 7
+HitboxIndex = 0
+
+[sub_resource type="Resource" id="1"]
+script = ExtResource("3")
+frame = 0
+UseLateralSpeed = true
+LateralSpeed = 0
+UseVerticalSpeed = true
+VerticalSpeed = 0
+UseGravity = true
+Gravity = 0
+UseInertia = false
+UseHorizontalInput = false
+UseVerticalInput = false
+
+[resource]
+script = ExtResource("1")
+StateName = "2A"
+Type = 2
+OffTheGround = false
+Duration = 12
+Loop = false
+LoopFrames = Vector2i(0, 0)
+TurnState = 0
+RoundFinishDuration = 0
+HitStunFrameLimit = -1
+statePhysics = [SubResource("1")]
+hitboxStates = [SubResource("2"), SubResource("3"), SubResource("4")]
+animationEvents = null
+throwPivot = null
+soundEvents = null
+stateTransitions = null

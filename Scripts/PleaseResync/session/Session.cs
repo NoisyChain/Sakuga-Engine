@@ -22,8 +22,16 @@ namespace PleaseResync
     {
         public const uint LIMIT_INPUT_SIZE = 32;
         public const uint LIMIT_DEVICE_COUNT = 4;
-        public const uint LIMIT_TOTAL_PLAYER_COUNT = 16;
+        public const uint LIMIT_TOTAL_PLAYER_COUNT = 24;
 
+        /// <summary>
+        /// connectionState returns the connection between the devices.
+        /// </summary>
+        
+        /// <summary>
+        /// OfflinePlay defines if it's a netork game or not.
+        /// </summary>
+        protected bool OfflinePlay;
         /// <summary>
         /// InputSize is the size in bits of the input for one player.
         /// </summary>
@@ -49,15 +57,16 @@ namespace PleaseResync
         /// <param name="inputSize">The size in bits of the input for one player.</param>
         /// <param name="deviceCount">The number of devices taking part in this session.</param>
         /// <param name="totalPlayerCount">The total number of players accross all devices taking part in this session.</param>
-        public Session(uint inputSize, uint deviceCount, uint totalPlayerCount)
+        public Session(uint inputSize, uint deviceCount, uint totalPlayerCount, bool offline)
         {
             Debug.Assert(inputSize > 0);
             Debug.Assert(inputSize <= LIMIT_INPUT_SIZE);
-            Debug.Assert(deviceCount >= 2);
+            Debug.Assert(deviceCount >= 1);
             Debug.Assert(deviceCount <= LIMIT_DEVICE_COUNT);
             Debug.Assert(totalPlayerCount >= 2);
             Debug.Assert(totalPlayerCount <= LIMIT_TOTAL_PLAYER_COUNT);
 
+            OfflinePlay = offline;
             InputSize = inputSize;
             DeviceCount = deviceCount;
             TotalPlayerCount = totalPlayerCount;
@@ -79,6 +88,8 @@ namespace PleaseResync
         /// <param name="remoteConfiguration">As the given device is not local to the Session, we must provide a way to communicate with that given device, this configuration will be passed to the session adapter</param>
         public abstract void AddRemoteDevice(uint deviceId, uint playerCount, object remoteConfiguration);
 
+        public abstract void AddSpectatorDevice(uint deviceId, object remoteConfiguration);
+
         /// <summary>
         /// Poll must be called periodically to give the Session a chance to perform some work and synchronize devices.
         /// </summary>
@@ -92,12 +103,14 @@ namespace PleaseResync
         /// </summary>
         /// <param name="localInput">the local device input for the current frame</param>
         /// <returns>a list of actions to perform in order before calling AdvanceFrame again</returns>
-        public abstract List<SessionAction> AdvanceFrame(PlayerInputs[] localInput);
+        public abstract List<SessionAction> AdvanceFrame(byte[] localInput);
         internal protected abstract uint SendMessageTo(uint deviceId, DeviceMessage message);
         internal protected abstract void AddRemoteInput(uint deviceId, DeviceInputMessage message);
 
+        public bool IsOffline() => OfflinePlay;
         public abstract int Frame();
         public abstract int FrameAdvantage();
         public abstract uint RollbackFrames();
+        public abstract int State();
     }
 }

@@ -1,9 +1,70 @@
-[gd_resource type="Resource" script_class="HitboxSettings" load_steps=2 format=3 uid="uid://b5x4otrs0q04d"]
+[gd_resource type="Resource" script_class="HitboxSettings" load_steps=4 format=3 uid="uid://b5x4otrs0q04d"]
 
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxSettings.cs" id="1_7s4vp"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxElement.cs" id="1_a68yr"]
+
+[sub_resource type="Resource" id="Resource_tm223"]
+script = ExtResource("1_a68yr")
+Center = Vector2i(5000, 5000)
+Size = Vector2i(12000, 10000)
+HitboxType = 0
+HitType = 0
+BaseDamage = 150
+ChipDamage = 0
+ChipDeath = false
+KillingBlow = true
+GuardCrush = false
+SelfMeterGain = 25
+OpponentMeterGain = 10
+ArmorDamage = 1
+Priority = 0
+HitStopDuration = 12
+BlockStopDuration = 12
+CounterHitStopDuration = 20
+ClashHitStopDuration = 20
+DamageScalingSubtract = 15
+HitEffectIndex = 0
+BlockEffectIndex = 1
+ClashEffectIndex = 2
+ArmorHitEffectIndex = 3
+GroundHitstunType = 0
+GroundHitReaction = 0
+CrouchHitReaction = 0
+GroundDamageKnockback = Vector2i(0, 0)
+GroundBlockKnockback = Vector2i(0, 0)
+GroundDamageKnockbackGravity = 0
+GroundBlockKnockbackGravity = 0
+GroundHitKnockbackTime = 8
+GroundBlockKnockbackTime = 8
+GroundHitStun = 8
+GroundBlockStun = 8
+AirHitstunType = 0
+AirHitReaction = 0
+AirDamageKnockback = Vector2i(0, 0)
+AirBlockKnockback = Vector2i(0, 0)
+AirDamageKnockbackGravity = 300000
+AirBlockKnockbackGravity = 300000
+AirHitKnockbackTime = 8
+AirBlockKnockbackTime = 8
+AirHitStun = 8
+AirBlockStun = 8
+PostThrowKnockback = false
+GroundThrow = false
+AirThrow = false
+AllowSelfPushback = true
+SelfPushbackForce = 0
+SelfPushbackDuration = 0
+HitConfirmState = -1
+AllowInertia = true
+BounceXTime = 0
+BounceXIntensity = 0
+BounceXState = 0
+BounceYTime = 0
+BounceYIntensity = 0
+BounceYState = 0
 
 [resource]
 script = ExtResource("1_7s4vp")
 PushboxCenter = Vector2i(0, 6000)
 PushboxSize = Vector2i(6000, 12000)
-Hitboxes = []
+Hitboxes = [SubResource("Resource_tm223")]

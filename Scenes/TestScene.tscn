@@ -1,11 +1,12 @@
-[gd_scene load_steps=12 format=3 uid="uid://dr8cly8qy5pg2"]
+[gd_scene load_steps=13 format=3 uid="uid://dr8cly8qy5pg2"]
 
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Game/GameManager.cs" id="1_ocl0l"]
 [ext_resource type="PackedScene" uid="uid://blnwu2aaw8s60" path="res://Scenes/AFF_UI.tscn" id="1_wexcy"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/FighterCamera.cs" id="2_dh05b"]
-[ext_resource type="PackedScene" uid="uid://3reeyb4tcc1i" path="res://Fighters/Dummy/Instances/Dummy_Fighter.tscn" id="2_dt18i"]
 [ext_resource type="Texture2D" uid="uid://6ctweo6uvot8" path="res://icon.svg" id="3_x54tm"]
-[ext_resource type="Script" path="res://Scripts/PleaseResync/Godot/PleaseResyncManager.cs" id="4_e5pwr"]
+[ext_resource type="PackedScene" uid="uid://b1ggpw8ltpaid" path="res://Fighters/Kaede/Instances/Fighter_Kaede.tscn" id="5_oxe85"]
+[ext_resource type="PackedScene" uid="uid://3reeyb4tcc1i" path="res://Fighters/Dummy/Instances/Dummy_Fighter.tscn" id="6_61j5v"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Game/SakugaRollbackManager.cs" id="6_jke5l"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_6ubbf"]
 
@@ -32,7 +33,7 @@ size = Vector3(20, 0.2, 2)
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2034, 4.65161)
-cull_mask = 1048557
+cull_mask = 1048573
 fov = 45.0
 script = ExtResource("2_dh05b")
 minBounds = Vector2(-7, 1.25)
@@ -52,10 +53,11 @@ mesh = SubResource("BoxMesh_ql5gv")
 
 [node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("FighterUI", "Camera")]
 script = ExtResource("1_ocl0l")
-Spawns = Array[PackedScene]([ExtResource("2_dt18i"), ExtResource("2_dt18i")])
+Spawns = Array[PackedScene]([ExtResource("5_oxe85"), ExtResource("6_61j5v")])
 FighterUI = NodePath("../CanvasLayer")
 Camera = NodePath("../Camera3D")
 
 [node name="RollbackManager" type="Node" parent="." node_paths=PackedStringArray("GameManager")]
-script = ExtResource("4_e5pwr")
+script = ExtResource("6_jke5l")
 GameManager = NodePath("../GameManager")
+InputSize = 2

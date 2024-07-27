@@ -5,7 +5,7 @@ namespace SakugaEngine.Resources
     [GlobalClass]
     public partial class MotionInputs : Resource
     {
-        [Export] public InputSequence[] Inputs;
+        [Export] public InputOption[] ValidInputs;
         [Export] public bool AbsoluteDirection;
         [Export] public int InputBuffer = 8;
         [Export] public int DirectionalChargeLimit = 30;

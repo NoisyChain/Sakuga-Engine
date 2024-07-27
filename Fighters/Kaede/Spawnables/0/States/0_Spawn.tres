@@ -1,0 +1,38 @@
+[gd_resource type="Resource" load_steps=6 format=2]
+
+[ext_resource path="res://Scripts/AFF/Resources/SpawnableState.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/AFF/Resources/HitboxState.cs" type="Script" id=2]
+[ext_resource path="res://Scripts/AFF/Resources/StatePhysics.cs" type="Script" id=3]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 2 )
+animationStage = 0
+Frame = 0
+HitboxIndex = 0
+
+[sub_resource type="Resource" id=2]
+script = ExtResource( 3 )
+frame = 0
+UseLateralSpeed = true
+LateralSpeed = 6.0
+UseVerticalSpeed = true
+VerticalSpeed = 0.0
+UseGravity = false
+Gravity = 0.0
+
+[resource]
+script = ExtResource( 1 )
+StateName = "Spawn"
+Duration = 12
+StartCountdown = false
+Loop = false
+LoopStartFrame = 0
+LoopEndFrame = 0
+statePhysics = [ SubResource( 2 ) ]
+hitboxStates = [ SubResource( 1 ) ]
+soundEvents = null
+AutoTransitionTo = 1
+AutoTransitionOnGround = -1
+AutoTransitionOnWalls = -1
+AutoTransitionFalling = -1
+AutoTransitionDeath = 2

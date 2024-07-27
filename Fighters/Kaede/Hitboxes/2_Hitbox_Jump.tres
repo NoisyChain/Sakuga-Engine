@@ -1,0 +1,70 @@
+[gd_resource type="Resource" script_class="HitboxSettings" load_steps=4 format=3 uid="uid://do4rbierxdm3u"]
+
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxSettings.cs" id="1"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxElement.cs" id="2"]
+
+[sub_resource type="Resource" id="1"]
+script = ExtResource("2")
+Center = Vector2i(0, 1)
+Size = Vector2i(0, 0)
+HitboxType = 0
+HitType = 0
+BaseDamage = 150
+ChipDamage = 0
+ChipDeath = false
+KillingBlow = true
+GuardCrush = false
+SelfMeterGain = 25
+OpponentMeterGain = 10
+ArmorDamage = 1
+Priority = 0
+HitStopDuration = 12
+BlockStopDuration = 12
+CounterHitStopDuration = 20
+ClashHitStopDuration = 20
+DamageScalingSubtract = 15
+HitEffectIndex = 1
+BlockEffectIndex = 2
+ClashEffectIndex = 3
+ArmorHitEffectIndex = 4
+GroundHitstunType = 0
+GroundHitReaction = 0
+CrouchHitReaction = 0
+GroundDamageKnockback = Vector2i(0, 0)
+GroundBlockKnockback = Vector2i(0, 0)
+GroundDamageKnockbackGravity = 0
+GroundBlockKnockbackGravity = 0
+GroundHitKnockbackTime = 8
+GroundBlockKnockbackTime = 8
+GroundHitStun = 8
+GroundBlockStun = 8
+AirHitstunType = 0
+AirHitReaction = 0
+AirDamageKnockback = Vector2i(0, 0)
+AirBlockKnockback = Vector2i(0, 0)
+AirDamageKnockbackGravity = 30
+AirBlockKnockbackGravity = 30
+AirHitKnockbackTime = 8
+AirBlockKnockbackTime = 8
+AirHitStun = 8
+AirBlockStun = 8
+PostThrowKnockback = false
+GroundThrow = false
+AirThrow = false
+AllowSelfPushback = true
+SelfPushbackForce = 0
+SelfPushbackDuration = 0
+HitConfirmState = -1
+AllowInertia = true
+BounceXTime = 0
+BounceXIntensity = 0
+BounceXState = 0
+BounceYTime = 0
+BounceYIntensity = 0
+BounceYState = 0
+
+[resource]
+script = ExtResource("1")
+PushboxCenter = Vector2i(0, 0)
+PushboxSize = Vector2i(0, 1)
+Hitboxes = [SubResource("1")]
