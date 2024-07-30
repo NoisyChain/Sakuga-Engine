@@ -1,28 +1,28 @@
-[gd_resource type="Resource" load_steps=3 format=3]
+[gd_resource type="Resource" script_class="MoveSettings" load_steps=3 format=3 uid="uid://c4rrn130o8wh7"]
 
-[ext_resource type="Resource" path="res://Fighters/Shared/Inputs/Input_2A.tres" id="1"]
+[ext_resource type="Resource" uid="uid://b7xl8m7kdvbg7" path="res://Fighters/Shared/Inputs/15_Input_2A.tres" id="1_8uxlp"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2"]
 
 [resource]
-script = ExtResource( 2 )
+script = ExtResource("2")
 MoveName = "2A"
 MoveState = 47
-MoveType = 1
-MeterRequired = 0
-MinimumHealth = 0
-MaximumHealth = 99999
+Inputs = ExtResource("1_8uxlp")
+SideChange = 0
+MoveEnd = 2
+MoveEndState = -1
+SuperGaugeRequired = 0
+HealthThreshold = Vector2i(0, 99999)
 SpendHealth = 0
 ChangeStance = -1
-IsSequenceFromStates = null
-CheckOpponentStates = null
-CancelsTo = null
-KaraCancelsTo = null
-MoveEndCondition = 0
-MoveEndState = -1
-Command = ExtResource( 1 )
+IsSequenceFromStates = PackedInt32Array()
+CancelsTo = PackedInt32Array()
+KaraCancelsTo = PackedInt32Array()
 buttonChargeSequence = null
-TimeFreeze = 0
+SuperFlash = 0
+CanBeOverrided = false
+CanOverrideToSelf = false
+IgnoreSamePriority = true
+Priority = 5
 UseOnGround = true
 UseOnAir = false
-AllowJumpCancel = false
-AllowDashCancel = false

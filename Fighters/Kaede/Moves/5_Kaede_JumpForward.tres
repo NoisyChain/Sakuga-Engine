@@ -1,7 +1,18 @@
-[gd_resource type="Resource" script_class="MoveSettings" load_steps=3 format=3 uid="uid://2aifytfjpp26"]
+[gd_resource type="Resource" script_class="MoveSettings" load_steps=6 format=3 uid="uid://2aifytfjpp26"]
 
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/ExtraVariableChange.cs" id="1_0ksmv"]
 [ext_resource type="Resource" uid="uid://diuo4je084p3s" path="res://Fighters/Shared/Inputs/4_Input_9.tres" id="1_vj153"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_xouv3"]
+
+[sub_resource type="Resource" id="Resource_7a8kx"]
+script = ExtResource("1_0ksmv")
+ChangeMode = 0
+ChangeValue = 0
+
+[sub_resource type="Resource" id="Resource_h8656"]
+script = ExtResource("1_0ksmv")
+ChangeMode = 0
+ChangeValue = 0
 
 [resource]
 script = ExtResource("2_xouv3")
@@ -14,6 +25,8 @@ MoveEndState = -1
 SuperGaugeRequired = 0
 HealthThreshold = Vector2i(0, 99999)
 SpendHealth = 0
+ExtraVariablesRequirement = null
+ExtraVariablesChange = Array[Object]([SubResource("Resource_7a8kx"), SubResource("Resource_h8656")])
 ChangeStance = -1
 IsSequenceFromStates = PackedInt32Array()
 CancelsTo = PackedInt32Array()
@@ -22,6 +35,7 @@ buttonChargeSequence = null
 SuperFlash = 0
 CanBeOverrided = true
 CanOverrideToSelf = false
+IgnoreSamePriority = true
 Priority = 1
 UseOnGround = true
 UseOnAir = false

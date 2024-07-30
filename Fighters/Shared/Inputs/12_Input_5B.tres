@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="MotionInputs" load_steps=6 format=3 uid="uid://bdy2tcfv6ov1v"]
+
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/InputSequence.cs" id="1_7ir5u"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/InputOption.cs" id="2_t2l4a"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/MotionInputs.cs" id="3_f1p0n"]
+
+[sub_resource type="Resource" id="Resource_6t0yt"]
+script = ExtResource("1_7ir5u")
+Directional = 5
+Buttons = 2
+DirectionalMode = 0
+ButtonMode = 0
+
+[sub_resource type="Resource" id="Resource_4uo5i"]
+script = ExtResource("2_t2l4a")
+Inputs = Array[Object]([SubResource("Resource_6t0yt")])
+
+[resource]
+script = ExtResource("3_f1p0n")
+ValidInputs = Array[Object]([SubResource("Resource_4uo5i")])
+AbsoluteDirection = true
+InputBuffer = 8
+DirectionalChargeLimit = 30
+ButtonChargeLimit = 30

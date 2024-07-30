@@ -46,6 +46,8 @@ namespace SakugaEngine.Resources
             if (!isDesiredHealth) return false;
             
             if (owner.Variables.CurrentSuperGauge < GetMove(index).SuperGaugeRequired) return false;
+
+            if (!owner.Variables.CompareExtraVariables(GetMove(index).ExtraVariablesRequirement)) return false;
             
             return true;
         }
@@ -68,21 +70,21 @@ namespace SakugaEngine.Resources
             AttackBufferStorage();
         }
 
-        public void ExecuteMove(int moveIndex)
+        public void ExecuteMove()
         {
-            owner.Variables.CurrentSuperGauge -= (uint)GetMove(moveIndex).SuperGaugeRequired;
+            owner.Variables.CurrentSuperGauge -= (uint)GetMove(bufferedMove).SuperGaugeRequired;
 
-            if (owner.Variables.CurrentHealth > 10 && GetMove(moveIndex).SpendHealth > 0)
-                owner.Variables.CurrentHealth -= (uint)GetMove(moveIndex).SpendHealth;
+            if (owner.Variables.CurrentHealth > 10 && GetMove(bufferedMove).SpendHealth > 0)
+                owner.Variables.CurrentHealth -= (uint)GetMove(bufferedMove).SpendHealth;
 
-            if (GetMove(moveIndex).SuperFlash > 0 && !owner.SuperStop)
+            if (GetMove(bufferedMove).SuperFlash > 0 && !owner.SuperStop)
             {
                 owner.GetOpponent().SuperStop = true;
-                owner.GetOpponent().HitStop.Start((uint)GetMove(moveIndex).SuperFlash);
+                owner.GetOpponent().HitStop.Start((uint)GetMove(bufferedMove).SuperFlash);
             }
 
-            owner.CallState(GetMove(moveIndex).MoveState, true);
-            //owner.ForceMovementMode();
+            owner.CallState(GetMove(bufferedMove).MoveState, true);
+            owner.Variables.SetExtraVariables(GetMove(bufferedMove).ExtraVariablesChange);
 
             currentMove = bufferedMove;
             bufferedMove = -1;
@@ -111,7 +113,7 @@ namespace SakugaEngine.Resources
                     
                     if (CanOverride || canCancelThis)
                     {
-                        ExecuteMove(bufferedMove);
+                        ExecuteMove();
                         GD.Print("You executed " + GetCurrentMove().MoveName + "!");
                     }
                     else GD.Print("Move " + GetMove(bufferedMove).MoveName + " Buffered!");

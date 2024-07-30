@@ -35,8 +35,11 @@ public static class Global
     public enum HitboxType{ HURTBOX, HITBOX, PROXIMITY_BLOCK, PROJECTILE, THROW, COUNTER, DEFLECT, PARRY }
     public enum HitType{ HIGH, MEDIUM, LOW, UNBLOCKABLE }
     public enum HitstunType { DEFAULT, KNOCKDOWN, HARD_KNOCKDOWN, STAGGER }
+    public enum ExtraVariableMode { IDLE, INCREASE, DECREASE }
+    public enum ExtraVariableChange { SET, ADD, SUBTRACT }
+    public enum ExtraVariableCompareMode { EQUAL, GREATER, GREATER_EQUAL, LESS, LESS_EQUAL }
     public enum SoundType{ SFX, VOICE }
-    public enum FadeScreenMode {NONE, FADE_IN, FADE_OUT}
+    public enum FadeScreenMode { NONE, FADE_IN, FADE_OUT }
     public enum TransitionCondition 
     {
         STATE_END = 0,

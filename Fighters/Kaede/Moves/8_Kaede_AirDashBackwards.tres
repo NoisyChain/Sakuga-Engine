@@ -1,19 +1,50 @@
-[gd_resource type="Resource" script_class="MoveSettings" load_steps=3 format=3 uid="uid://v1wx455mfvn2"]
+[gd_resource type="Resource" script_class="MoveSettings" load_steps=10 format=3 uid="uid://v1wx455mfvn2"]
 
-[ext_resource type="Resource" uid="uid://bcyy6q5j33eyu" path="res://Fighters/Shared/Inputs/11_Input_44.tres" id="1_qwfj7"]
+[ext_resource type="Resource" uid="uid://bcyy6q5j33eyu" path="res://Fighters/Shared/Inputs/10_Input_44.tres" id="1_ey81c"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/ExtraVariableChange.cs" id="1_gaawt"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/ExtraVariableCondition.cs" id="2_5nlih"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_45xj8"]
+
+[sub_resource type="Resource" id="Resource_y8ecd"]
+script = ExtResource("1_gaawt")
+ChangeMode = 1
+ChangeValue = 1
+
+[sub_resource type="Resource" id="Resource_kkj64"]
+script = ExtResource("1_gaawt")
+ChangeMode = 1
+ChangeValue = 1
+
+[sub_resource type="Resource" id="Resource_uvtq5"]
+script = ExtResource("1_gaawt")
+ChangeMode = 0
+ChangeValue = 0
+
+[sub_resource type="Resource" id="Resource_jdrmi"]
+script = ExtResource("2_5nlih")
+Value = 1
+Mode = 0
+CompareMode = 3
+
+[sub_resource type="Resource" id="Resource_nknrw"]
+script = ExtResource("2_5nlih")
+Value = 1
+Mode = 0
+CompareMode = 3
 
 [resource]
 script = ExtResource("2_45xj8")
 MoveName = "Backwards Air Dash"
 MoveState = 15
-Inputs = ExtResource("1_qwfj7")
+Inputs = ExtResource("1_ey81c")
 SideChange = 0
 MoveEnd = 0
 MoveEndState = -1
 SuperGaugeRequired = 0
 HealthThreshold = Vector2i(0, 99999)
 SpendHealth = 0
+ExtraVariablesRequirement = Array[Object]([SubResource("Resource_jdrmi"), SubResource("Resource_nknrw")])
+ExtraVariablesChange = Array[Object]([SubResource("Resource_y8ecd"), SubResource("Resource_kkj64"), SubResource("Resource_uvtq5")])
 ChangeStance = -1
 IsSequenceFromStates = PackedInt32Array()
 CancelsTo = PackedInt32Array()
@@ -22,6 +53,7 @@ buttonChargeSequence = null
 SuperFlash = 0
 CanBeOverrided = false
 CanOverrideToSelf = false
+IgnoreSamePriority = true
 Priority = 4
 UseOnGround = false
 UseOnAir = true

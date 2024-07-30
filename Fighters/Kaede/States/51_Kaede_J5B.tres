@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="FighterState" load_steps=8 format=3 uid="uid://d4jk0seunpt40"]
+[gd_resource type="Resource" script_class="FighterState" load_steps=11 format=3 uid="uid://d4jk0seunpt40"]
 
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="1"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/StatePhysics.cs" id="3"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/StateTransitionSettings.cs" id="4_kgnt8"]
 
 [sub_resource type="Resource" id="2"]
 script = ExtResource("2")
@@ -30,10 +31,22 @@ LateralSpeed = 0
 UseVerticalSpeed = false
 VerticalSpeed = 0
 UseGravity = true
-Gravity = 0
+Gravity = 650000
 UseInertia = false
 UseHorizontalInput = false
 UseVerticalInput = false
+
+[sub_resource type="Resource" id="Resource_xlsm1"]
+script = ExtResource("4_kgnt8")
+StateIndex = 6
+Condition = 0
+AtFrame = -1
+
+[sub_resource type="Resource" id="Resource_2bji3"]
+script = ExtResource("4_kgnt8")
+StateIndex = 7
+Condition = 2
+AtFrame = -1
 
 [resource]
 script = ExtResource("1")
@@ -51,4 +64,4 @@ hitboxStates = [SubResource("2"), SubResource("3"), SubResource("4")]
 animationEvents = null
 throwPivot = null
 soundEvents = null
-stateTransitions = null
+stateTransitions = Array[Object]([SubResource("Resource_xlsm1"), SubResource("Resource_2bji3")])

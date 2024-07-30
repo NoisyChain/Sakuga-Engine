@@ -1,36 +1,36 @@
 [gd_resource type="Resource" script_class="MotionInputs" load_steps=8 format=3 uid="uid://bcyy6q5j33eyu"]
 
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/InputSequence.cs" id="1_e3e4p"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/MotionInputs.cs" id="2_igwly"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/InputOption.cs" id="2_yqvon"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/InputSequence.cs" id="1_3skax"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/InputOption.cs" id="2_5q2fi"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/MotionInputs.cs" id="3_c7rr3"]
 
 [sub_resource type="Resource" id="Resource_6t0yt"]
-script = ExtResource("1_e3e4p")
+script = ExtResource("1_3skax")
 Directional = 4
 Buttons = 0
 DirectionalMode = 1
 ButtonMode = 0
 
 [sub_resource type="Resource" id="Resource_s2due"]
-script = ExtResource("1_e3e4p")
+script = ExtResource("1_3skax")
 Directional = 4
 Buttons = 0
 DirectionalMode = 3
 ButtonMode = 0
 
 [sub_resource type="Resource" id="Resource_jx6ng"]
-script = ExtResource("1_e3e4p")
+script = ExtResource("1_3skax")
 Directional = 4
 Buttons = 0
 DirectionalMode = 0
 ButtonMode = 0
 
 [sub_resource type="Resource" id="Resource_4uo5i"]
-script = ExtResource("2_yqvon")
+script = ExtResource("2_5q2fi")
 Inputs = Array[Object]([SubResource("Resource_6t0yt"), SubResource("Resource_s2due"), SubResource("Resource_jx6ng")])
 
 [resource]
-script = ExtResource("2_igwly")
+script = ExtResource("3_c7rr3")
 ValidInputs = Array[Object]([SubResource("Resource_4uo5i")])
 AbsoluteDirection = true
 InputBuffer = 8

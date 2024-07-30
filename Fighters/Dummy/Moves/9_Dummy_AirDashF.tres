@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="MoveSettings" load_steps=3 format=3 uid="uid://d20pqmn3u1he4"]
 
-[ext_resource type="Resource" uid="uid://cgu3jrjka1a8d" path="res://Fighters/Shared/Inputs/10_Input_66.tres" id="1_pgth6"]
+[ext_resource type="Resource" uid="uid://cgu3jrjka1a8d" path="res://Fighters/Shared/Inputs/9_Input_66.tres" id="1_pgth6"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_x0bfe"]
 
 [resource]

@@ -13,9 +13,9 @@ namespace SakugaEngine.Resources
         [Export] public int MoveEndState = -1;
         [Export] public int SuperGaugeRequired = 0;
         [Export] public Vector2I HealthThreshold = new Vector2I(0, 99999);
-        //[Export] public int MinimumHealth = 0;
-        //[Export] public int MaximumHealth = 99999;
         [Export] public int SpendHealth = 0;
+        [Export] public ExtraVariableCondition[] ExtraVariablesRequirement;
+        [Export] public ExtraVariableChange[] ExtraVariablesChange;
         [Export] public int ChangeStance = -1;
         [Export] public int[] IsSequenceFromStates;
         //[Export] public int[] CheckOpponentStates;

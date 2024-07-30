@@ -1,4 +1,4 @@
-[gd_scene load_steps=347 format=3 uid="uid://b1ggpw8ltpaid"]
+[gd_scene load_steps=351 format=3 uid="uid://b1ggpw8ltpaid"]
 
 [ext_resource type="Texture2D" uid="uid://bx0l7712opy5a" path="res://Fighters/Kaede/Sprites/0-12.png" id="1"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Utils/FOV_Correction.cs" id="2"]
@@ -297,6 +297,7 @@
 [ext_resource type="Resource" uid="uid://ccal4fra1gc3t" path="res://Fighters/Kaede/Hitboxes/6_Hitbox_5A_Active.tres" id="288_w537s"]
 [ext_resource type="Resource" uid="uid://cwbj5esglv2om" path="res://Fighters/Kaede/Hitboxes/7_Hitbox_5B_Active.tres" id="289_mhmx1"]
 [ext_resource type="Resource" uid="uid://chqrw2rci8qq3" path="res://Fighters/Kaede/Hitboxes/8_Hitbox_5C_Active.tres" id="290_81yq4"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/ExtraVariable.cs" id="294_608rl"]
 
 [sub_resource type="Animation" id="42"]
 resource_name = "2A"
@@ -1532,7 +1533,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [ExtResource("5")]
 }
 tracks/1/type = "value"
@@ -1544,7 +1545,7 @@ tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [Vector2(0, 0)]
 }
 
@@ -1747,6 +1748,24 @@ _data = {
 "j_5C": SubResource("47")
 }
 
+[sub_resource type="Resource" id="Resource_iawsj"]
+script = ExtResource("294_608rl")
+Name = "Air Jump Limit"
+MaxValue = 1
+StartingValue = 0
+
+[sub_resource type="Resource" id="Resource_c3vhj"]
+script = ExtResource("294_608rl")
+Name = "Air Dash Limit"
+MaxValue = 1
+StartingValue = 0
+
+[sub_resource type="Resource" id="Resource_3vvfr"]
+script = ExtResource("294_608rl")
+Name = "Dash Jumping"
+MaxValue = 1
+StartingValue = 0
+
 [node name="Kaede_Viewer" type="Node3D" node_paths=PackedStringArray("Body", "Inputs", "Variables", "Animator", "Stance", "Tracker", "HitStun", "HitStop", "MoveBuffer", "PushForce", "HorizontalBounce", "VerticalBounce", "Graphics")]
 script = ExtResource("3")
 Body = NodePath("PhysicsBody")
@@ -1813,6 +1832,7 @@ script = ExtResource("227_ppa6i")
 
 [node name="Variables" type="Node" parent="."]
 script = ExtResource("228_8hrt3")
+ExtraVariables = Array[Object]([SubResource("Resource_iawsj"), SubResource("Resource_c3vhj"), SubResource("Resource_3vvfr")])
 
 [node name="Stances" type="Node" parent="."]
 script = ExtResource("229_0b4ui")

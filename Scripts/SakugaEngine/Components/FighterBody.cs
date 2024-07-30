@@ -115,6 +115,7 @@ namespace SakugaEngine
                 StateTransitions();
                 Animator.LoopState();
             }
+            Variables.UpdateExtraVariables();
             MoveBuffer.Run();
             Stance.CheckMoves();
             UpdateHitboxes();
@@ -122,6 +123,7 @@ namespace SakugaEngine
                 CharacterPushing();
             else
                 UpdateFighterPhysics();
+            Variables.CalculateDamageScaling(Body.IsOnWall);
         }
 
         private void UpdateFighterPhysics()
