@@ -5,8 +5,8 @@
 
 [sub_resource type="Resource" id="1"]
 script = ExtResource("2")
-Center = Vector2i(0, 1)
-Size = Vector2i(0, 0)
+Center = Vector2i(0, 11000)
+Size = Vector2i(6000, 6000)
 HitboxType = 0
 HitType = 0
 BaseDamage = 150
@@ -65,6 +65,6 @@ BounceYState = 0
 
 [resource]
 script = ExtResource("1")
-PushboxCenter = Vector2i(0, 0)
-PushboxSize = Vector2i(0, 1)
+PushboxCenter = Vector2i(0, 6000)
+PushboxSize = Vector2i(4000, 12000)
 Hitboxes = [SubResource("1")]

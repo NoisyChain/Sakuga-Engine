@@ -1,4 +1,6 @@
+using System;
 using Godot;
+using LiteNetLib;
 
 public static class Global
 {
@@ -7,7 +9,7 @@ public static class Global
     public const int SubSteps = 4;
     public const int Delta = TicksPerSecond * SubSteps;
     public const int SimulationScale = 10000;
-    public const int WallLimit = 70000;
+    public const int WallLimit = 75000;
     public const int CeilingLimit = 120000;
     public const int StartingPosition = 15000;
     public const int MaxPlayersDistance = 70000;
@@ -15,6 +17,7 @@ public static class Global
     public const int KaraCancelWindow = 3;
     public const int RoundsToWin = 2;
     public const int GameTimer = 99;
+    public const int MinHitstun = 8;
 
     //Global inputs
     public const int INPUT_UP = 1 << 0;
@@ -40,16 +43,27 @@ public static class Global
     public enum ExtraVariableCompareMode { EQUAL, GREATER, GREATER_EQUAL, LESS, LESS_EQUAL }
     public enum SoundType{ SFX, VOICE }
     public enum FadeScreenMode { NONE, FADE_IN, FADE_OUT }
-    public enum TransitionCondition 
+    public enum EventType{ SPAWN_OBJECT, TELEPORT, ANIMATION_DAMAGE, DETTACH_THROW, FORCE_SIDE_CHANGE, SET_SUPER_ARMOR }
+    public enum RelativeTo{ WORLD, SELF, FIGHTER, SPAWNABLE }
+    public enum ObjectType{ SPAWNABLE, VXF }
+    public enum SpawnableHitCheck{ OPPONENT, OWNER, BOTH }
+    [Flags] public enum FrameProperties : byte
     {
-        STATE_END = 0,
-        AT_FRAME = 1,
-        ON_GROUND = 2,
-        ON_WALLS = 3,
-        ON_FALL = 4,
-        ON_KO = 5,
-        ON_LIFETIME_END = 6,
-        ON_INPUT_COMMAND = 7,
+        GROUND_THROW_IMUNITY = 1 << 0,
+        AIR_THROW_IMUNITY = 1 << 1,
+        PROJECTILE_IMUNITY = 1 << 2,
+        FORCE_MOVE_CANCEL = 1 << 3
+    }
+    [Flags] public enum TransitionCondition : byte
+    {
+        STATE_END = 1 << 0,
+        AT_FRAME = 1 << 1,
+        ON_GROUND = 1 << 2,
+        ON_WALLS = 1 << 3,
+        ON_FALL = 1 << 4,
+        ON_LIFE_END = 1 << 5,
+        ON_INPUT_COMMAND = 1 << 6,
+        ON_DISTANCE = 1 << 7,
     }
 
     public enum DirectionalInputs
@@ -115,5 +129,19 @@ public static class Global
     public static float ToScaledFloat(int value)
     {
         return value / (float)SimulationScale;
+    }
+
+    public static int IntLerp(int from, int to, int numberOfSteps, int currentStep)
+    {
+        return ((to - from) * currentStep) / numberOfSteps;
+    }
+
+    public static int HorizontalDistance(Vector2I a, Vector2I b)
+    {
+        int ax = a.X - b.X;
+        int dx = ax / ax;
+        //int dy = a.Y - b.Y;
+        int dy = 0;
+        return dx * dx + dy * dy;
     }
 }

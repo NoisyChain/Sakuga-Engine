@@ -1,0 +1,637 @@
+using Godot;
+using System.IO;
+using SakugaEngine.Resources;
+using SakugaEngine.Collision;
+
+namespace SakugaEngine
+{
+    [GlobalClass]
+    [Icon("res://Sprites/Icons/Icon_Fighter.png")]
+    public partial class SakugaFighter : SakugaActor, IDamage
+    {
+        [ExportCategory("Timers")]
+        [Export] public FrameTimer HitStun;
+        [Export] public FrameTimer HitStop;
+        [Export] public FrameTimer  MoveBuffer;
+        [Export] public FrameTimer  PushForce;
+        [Export] public FrameTimer  HorizontalBounce;
+        [Export] public FrameTimer  VerticalBounce;
+
+        [ExportCategory("Lists")]
+        [Export] public SpawnsList SpawnablesList;
+        [Export] public SpawnsList VFXList;
+        [Export] public SoundsList SFXList;
+        [Export] public SoundsList VoicesList;
+
+        [ExportCategory("Extras")]
+        [Export] public FighterProfile Profile;
+
+        public bool SuperStop;
+        public int LayerSorting = -1;
+
+        private bool PushAllowInertia;
+        private bool IsBeingPushed = false;
+        private int PushGravity;
+        private int HBounceIntensity;
+        private int VBounceIntensity;
+        private int HitstunType = -1;
+        private SakugaSpawnable[][] Spawnables;
+        private SakugaVFX[][] VFX;
+        
+        private SakugaFighter _opponent;
+
+        public SakugaFighter GetOpponent() => _opponent;
+        public void SetOpponent(SakugaFighter opponent) { _opponent = opponent; }
+        public FighterVariables FighterVars => Variables as FighterVariables;
+
+        public override void _Process(double delta)
+        {
+            base._Process(delta);
+        }
+
+        public void ParseInputs(ushort rawInputs)
+        {
+            Inputs.InsertToHistory(rawInputs);
+        }
+
+        public void SpawnablesSetup(Node Parent, PhysicsWorld world)
+        {
+            Spawnables = new SakugaSpawnable[SpawnablesList.SpawnObjects.Length][];
+            for (int i = 0; i < Spawnables.Length; ++i)
+            {
+                Spawnables[i] = new SakugaSpawnable[SpawnablesList.SpawnObjects[i].Ammount];
+                for (int j = 0; j < Spawnables[i].Length; ++j)
+                {
+                    Node temp = SpawnablesList.SpawnObjects[i].SpawnScene.Instantiate();
+                    Parent.AddChild(temp);
+                    Spawnables[i][j] = temp as SakugaSpawnable;
+                    world.AddBody(Spawnables[i][j].Body);
+                    Spawnables[i][j].Initialize(this);
+                }
+            }
+        }
+
+        public void VFXSetup(Node Parent)
+        {
+            VFX = new SakugaVFX[VFXList.SpawnObjects.Length][];
+            for (int i = 0; i < VFX.Length; ++i)
+            {
+                VFX[i] = new SakugaVFX[VFXList.SpawnObjects[i].Ammount];
+                for (int j = 0; j < VFX[i].Length; ++j)
+                {
+                    Node temp = VFXList.SpawnObjects[i].SpawnScene.Instantiate();
+                    Parent.AddChild(temp);
+                    VFX[i][j] = temp as SakugaVFX;
+                    VFX[i][j].Initialize();
+                }
+            }
+        }
+
+        public void Initialize(int index)
+        {
+            Body.Initialize(this);
+            Stance.Initialize(this);
+            Variables.Initialize();
+            Body.FixedPosition.X = Global.StartingPosition * (-1 + (index * 2));
+            Animator.PlayState(Stance.GetCurrentStance().NeutralState);
+            Animator.Frame = -1;
+        }
+
+        public void Reset(int index)
+        {
+            Body.FixedVelocity = Vector2I.Zero;
+            Body.FixedPosition.X = Global.StartingPosition * (-1 + (index * 2));
+            Body.FixedPosition.Y = 0;
+            if (!Stance.GetCurrentStance().IsRoundPersistent)
+                Stance.CurrentStance = 0;
+            Animator.PlayState(Stance.GetCurrentStance().NeutralState);
+            Variables.Initialize();
+            Animator.Frame = -1;
+            HitStun.Stop();
+            HitStop.Stop();
+            MoveBuffer.Stop();
+            PushForce.Stop();
+            HorizontalBounce.Stop();
+            VerticalBounce.Stop();
+        }
+
+        public void UpdateSide(bool leftSide)
+        {
+            if (Body.IsLeftSide == leftSide) return;
+
+            Body.IsLeftSide = leftSide;
+        }
+
+        public void ChangePlayerSide()
+        {
+            if (Body.IsLeftSide && Body.PlayerSide > 0) return;
+            if (!Body.IsLeftSide && Body.PlayerSide < 0) return;
+            
+            if (!Body.IsOnGround) return;
+            if (!Stance.CanAutoTurn()) return;
+
+            Body.PlayerSide = Body.IsLeftSide ? 1 : -1;
+
+            if (Animator.GetCurrentState().TurnState >= 0)
+                Animator.PlayState(Animator.GetCurrentState().TurnState);
+
+            if (Stance.currentMove >= 0 &&(int)Stance.GetCurrentMove().SideChange == 2)
+                Stance.ResetStance();
+        }
+
+        public void ForcePlayerSide()
+        {
+            Body.PlayerSide = Body.IsLeftSide ? 1 : -1;
+        }
+
+        public override void Tick()
+        {
+            ChangePlayerSide();
+            HitStop.Run();
+
+            Inputs.InputSide = Body.PlayerSide;
+            Body.IsMovable = !HitStop.IsRunning();
+            
+            if (!HitStop.IsRunning())
+            {
+                HitStun.Run();
+                PushForce.Run();
+                HorizontalBounce.Run();
+                VerticalBounce.Run();
+                if (!IsStunLocked()) Animator.RunState();
+                UpdateFrameProperties();
+                AnimationEvents();
+                StateTransitions();
+                Animator.LoopState();
+            }
+            Variables.UpdateExtraVariables();
+            MoveBuffer.Run();
+            Stance.CheckMoves();
+
+            UpdateHitboxes(!HitStop.IsRunning());
+
+            if (IsBeingPushed)
+                CharacterPushing();
+            else
+                UpdateFighterPhysics();
+            
+            FighterVars.CalculateDamageScaling(Body.IsOnWall);
+            if (!HitStun.IsRunning())
+            {
+                FighterVars.ResetDamageStatus();
+                Tracker.Reset();
+            }
+
+            for (int i = 0; i < Spawnables.Length; ++i)
+                for (int j = 0; j < Spawnables[i].Length; ++j)
+                    Spawnables[i][j].Tick();
+            
+            for (int i = 0; i < VFX.Length; ++i)
+                for (int j = 0; j < VFX[i].Length; ++j)
+                    VFX[i][j].Tick();
+                
+
+            Tracker.UpdateFrameData(this);
+        }
+
+#region Push Force
+        public void PushCharacter(int pushDuration, int VelocityX, int VelocityY, int gravity, bool xInertia)
+        {
+            Body.FixedVelocity.X = VelocityX;
+            Body.FixedVelocity.Y = VelocityY;
+            PushGravity = gravity;
+            PushAllowInertia = xInertia;
+            PushForce.Start((uint)pushDuration);
+            IsBeingPushed = true;
+        }
+
+        public void HitPushback(int duration, int velX)
+        {
+            int pushbackSide = Body.FixedPosition.X > 0 ? 1 : -1;
+            if (Body.IsOnGround)
+                if (GetOpponent().Body.IsOnWall)
+                    PushCharacter(duration, velX * pushbackSide, 0, 0, false);
+        }
+
+        public void CharacterPushing()
+        {
+            if (PushGravity != 0 && !Body.IsOnGround)
+            {
+                Body.AddGravity(PushGravity);
+            }
+
+            if (!PushForce.IsRunning())
+            {
+                if(PushGravity != 0) PushGravity = 0;
+                Body.FixedVelocity.X = 0;
+                IsBeingPushed = false;
+            }
+        }
+
+        public void BounceLogic()
+        {
+            if (Body.IsOnWall && HorizontalBounce.IsRunning())
+            {
+                Body.FixedVelocity.X *= HBounceIntensity * -1;
+                Body.FixedVelocity.X /= 100;
+                HorizontalBounce.Stop();
+                //Debug.LogWarning("Bounced on wall!");
+
+            }
+            if (Body.IsOnGround && Body.IsFalling && VerticalBounce.IsRunning())
+            {
+                Body.FixedVelocity.Y *= VBounceIntensity * -1;
+                Body.FixedVelocity.Y /= 100;
+                VerticalBounce.Stop();
+                //Debug.LogWarning("Bounced on ground!");
+            }
+        }
+
+        public void ThrowPivoting()
+        {
+            if (Animator.GetCurrentState().statePhysics.Length == 0) return;
+            for(int i = 0; i < GetOpponent().Animator.GetCurrentState().throwPivot.Length; i++)
+            {
+                int nextFrame = i + 1 < Animator.GetCurrentState().throwPivot.Length ?
+                                    Animator.GetCurrentState().throwPivot[i + 1].Frame :
+                                    Animator.GetCurrentState().Duration;
+                if (Animator.Frame >= Animator.GetCurrentState().throwPivot[i].Frame && Animator.Frame < nextFrame)
+                {
+                    int side = GetOpponent().Body.IsLeftSide ? 1 : -1;
+                    Body.FixedPosition.X = GetOpponent().Body.FixedPosition.X + GetOpponent().Animator.GetCurrentState().throwPivot[i].PivotPosition.X * side;
+                    Body.FixedPosition.Y = GetOpponent().Body.FixedPosition.Y + GetOpponent().Animator.GetCurrentState().throwPivot[i].PivotPosition.Y;
+                }
+            }
+
+            //Push opponent away from the wall if both characters are too near from each other
+            int pushbackSide = Body.FixedPosition.X > 0 ? 1 : -1;
+            if (Mathf.Abs(Body.FixedPosition.X - GetOpponent().Body.FixedPosition.X) <= 5)
+                GetOpponent().Body.FixedPosition.X -= 5 * pushbackSide;
+        }
+#endregion
+        /// <summary>
+        /// Calls block states
+        /// The block type moves the state index to the designed block type
+        /// 0 = Enter blocking state
+        /// 1 = Blocking state
+        /// 2 = Exiting block state
+        /// 3 = Guard Break
+        /// </summary>
+        public void CallBlockState(int blockType)
+        {
+            if (Body.IsOnGround)
+            {
+                if (IsCrouching())
+                {
+                    if (Stance.GetCurrentStance().CrouchBlockInitialState >= 0)
+                        Animator.PlayState(Stance.GetCurrentStance().CrouchBlockInitialState + blockType, true);
+                }
+                else
+                {
+                    if (Stance.GetCurrentStance().GroundBlockInitialState >= 0)
+                        Animator.PlayState(Stance.GetCurrentStance().GroundBlockInitialState + blockType, true);
+                }
+            }
+            else
+            {
+                if (Stance.GetCurrentStance().AirBlockInitialState >= 0)
+                    Animator.PlayState(Stance.GetCurrentStance().AirBlockInitialState + blockType, true);
+            }
+        }
+
+        public void SpawnSpawnable(int index, Vector2I pos)
+        {
+            if (Spawnables[index].Length == 1)
+                Spawnables[index][0].Spawn(pos);
+            else
+            {
+                for (int i = 0; i < Spawnables[index].Length; ++i)
+                {
+                    if (Spawnables[index][i].IsActive)
+                    {
+                        if (i == Spawnables[index].Length - 1)
+                        {
+                            Spawnables[index][0].Spawn(pos);
+                            break;
+                        }
+                        else continue;
+                    }
+                    else
+                    {
+                        Spawnables[index][i].Spawn(pos);
+                        break;
+                    }
+                }
+            }
+        }
+
+        public SakugaSpawnable GetActiveSpawnable(int index)
+        {
+            if (Spawnables[index].Length == 1)
+                if (Spawnables[index][0].IsActive)
+                    return Spawnables[index][0];
+            else
+            {
+                for (int i = 0; i < Spawnables[index].Length; ++i)
+                {
+                    if (Spawnables[index][i].IsActive)
+                    {
+                        return Spawnables[index][i];
+                    }
+                    else continue;
+                }
+            }
+
+            return null;
+        }
+
+        public void SpawnVFX(int index, Vector2I pos)
+        {
+            if (VFX[index].Length == 1)
+                VFX[index][0].Spawn(pos, Body.PlayerSide);
+            else
+            {
+                for (int i = 0; i < VFX[index].Length; ++i)
+                {
+                    if (VFX[index][i].IsActive)
+                    {
+                        if (i == VFX[index].Length - 1)
+                        {
+                            VFX[index][0].Spawn(pos, Body.PlayerSide);
+                            break;
+                        }
+                        else continue;
+                    }
+                    else
+                    {
+                        VFX[index][i].Spawn(pos, Body.PlayerSide);
+                        break;
+                    }
+                }
+            }
+        }
+
+        public string DebugInfo()
+        {
+            return "Position: "+Body.FixedPosition+
+                    "\nVelocity: "+Body.FixedVelocity+
+                    "\nStance: "+Stance.CurrentStance+
+                    "\nState: "+Animator.CurrentState+
+                    "\nAnimation: "+Animator.GetCurrentState().StateName+
+                    "\nCurrent Move: "+Stance.currentMove+
+                    "\nBuffered Move: "+Stance.bufferedMove+
+                    "\nFrame: "+Animator.Frame+
+                    "\nHitbox: "+Body.CurrentHitbox+
+                    "\nBlocking: "+IsBlocking();
+        }
+
+#region Damage functions
+        public void HitDamage(HitboxElement box)
+        {
+            LayerSorting = -1;
+            var finalHitstun = Body.IsOnGround ? box.GroundHitStun : box.AirHitStun;
+            var finalKnockbackTime = Body.IsOnGround ? box.GroundHitKnockbackTime : box.AirHitKnockbackTime;
+            var finalDamageKnockback = Body.IsOnGround ? box.GroundDamageKnockback : box.AirDamageKnockback;
+            var finalKnockbackGravity = Body.IsOnGround ? box.GroundDamageKnockbackGravity : box.AirDamageKnockbackGravity;
+            var finalHitReaction = Body.IsOnGround ? (IsCrouching() ? box.CrouchHitReaction : box.GroundHitReaction)  : box.AirHitReaction;
+            var finalDamage = box.BaseDamage * FighterVars.CurrentDamageScaling / 100;
+            bool CanTech = Animator.StateType() == 4 && !HitStun.IsRunning();
+            Body.IsLeftSide = !GetOpponent().Body.IsLeftSide;
+            Body.IsMovable = false;
+            HitstunType = Body.IsOnGround ? (int)box.GroundHitstunType : (int)box.AirHitstunType;
+            HitStop.Start((uint)box.HitStopDuration);
+            HitStun.Start((uint)Mathf.Max(finalHitstun, Global.MinHitstun));
+            HorizontalBounce.Start((uint)box.BounceXTime);
+            VerticalBounce.Start((uint)box.BounceYTime);
+            HBounceIntensity = box.BounceXIntensity;
+            VBounceIntensity = box.BounceYIntensity;
+            Stance.Clear();
+            if (Stance.GetCurrentStance().HitReactions != null && Stance.GetCurrentStance().HitReactions.Length >= 0)
+            {
+                Animator.PlayState(Stance.GetCurrentStance().HitReactions[finalHitReaction], true);
+                Variables.ExtraVariablesOnDamage();
+            }
+            PushCharacter(
+                finalKnockbackTime, 
+                finalDamageKnockback.X * (GetOpponent().Body.IsLeftSide ? -1 : 1),
+                finalDamageKnockback.Y, 
+                finalKnockbackGravity, box.AllowInertia);
+            Variables.TakeDamage(
+                finalDamage,
+                box.OpponentMeterGain,
+                box.KillingBlow);
+            if (finalDamage > 0)
+            {
+                FighterVars.RemoveDamageScaling((ushort)box.DamageScalingSubtract);
+            }
+            Tracker.UpdateTrackers((uint)finalDamage, GetOpponent().Animator.Frame, (int)box.HitType, CanTech);
+        }
+
+        public void BlockHit(HitboxElement box) 
+        {
+            LayerSorting = -1;
+            var finalHitstun = Body.IsOnGround ? box.GroundBlockStun : box.AirBlockStun;
+            var finalKnockbackTime = Body.IsOnGround ? box.GroundBlockKnockbackTime : box.AirBlockKnockbackTime;
+            var finalDamageKnockback = Body.IsOnGround ? box.GroundBlockKnockback : box.AirBlockKnockback;
+            var finalKnockbackGravity = Body.IsOnGround ? box.GroundBlockKnockbackGravity : box.AirBlockKnockbackGravity;
+            //var finalHitReaction = Body.IsOnGround ? (IsCrouching() ? box.CrouchHitReaction : box.GroundHitReaction)  : box.AirHitReaction;
+            //bool CanTech = StateType() == 3 && meters.StunLevel <= 0;
+            Body.IsLeftSide = !GetOpponent().Body.IsLeftSide;
+            Body.IsMovable = false;
+            Stance.Clear();
+            CallBlockState(1);
+            HitStun.Start((uint)finalHitstun);
+            HitStop.Start((uint)box.HitStopDuration);
+            PushCharacter(
+                finalKnockbackTime,
+                finalDamageKnockback.X * (GetOpponent().Body.IsLeftSide ? -1 : 1),
+                finalDamageKnockback.X,
+                finalKnockbackGravity, box.AllowInertia);
+            Variables.TakeDamage(
+                box.ChipDamage,
+                box.OpponentMeterGain,
+                box.ChipDeath);
+        }
+        public void ArmorHit(HitboxElement box)
+        {
+            //Armor hit
+            HitConfirm(box.OpponentMeterGain, (uint)box.ClashHitStopDuration, -1, -1, Vector2I.Zero);
+            LayerSorting = -1;
+            Variables.ArmorDamage((sbyte)box.ArmorDamage, box.BaseDamage / 2);
+        }
+        public void ThrowHit(HitboxElement box) {}
+        public void DettachThrow(){}
+        public void ThrowEscape(){}
+
+        public void HitConfirm(int superGaugeGain, uint hitStopDuration, int hitConfirmAnimation, int hitEffect, Vector2I VFXSpawn)
+        {
+            LayerSorting = 1;
+            Body.HitConfirmed = true;
+            Body.IsMovable = false;
+            Stance.canMoveCancel = true;
+            Variables.AddSuperGauge(superGaugeGain);
+            HitStop.Start(hitStopDuration);
+            if (hitEffect >= 0)
+            {
+                SpawnVFX(hitEffect, VFXSpawn);
+                //sounds.QueueSound(sounds.Last, hitEffect);
+            }
+
+            if (hitConfirmAnimation >= 0)
+                Animator.PlayState(hitConfirmAnimation, false);
+            
+            Variables.ExtraVariablesOnHit();
+        }
+#endregion
+
+#region Return functions
+        public bool IsBlockableState() => Animator.StateType() != 2 && Animator.StateType() != 4;
+        public bool IsCrouching() => Body.IsOnGround && Inputs.IsBeingPressed(Inputs.CurrentHistory, Global.INPUT_DOWN);
+        public bool IsBlocking() => IsBlockableState() && Inputs.IsBeingPressed(Inputs.CurrentHistory, Body.IsLeftSide ? Global.INPUT_LEFT : Global.INPUT_RIGHT);
+        public bool IsKO() => Variables.CurrentHealth <= 0;
+         public bool IsGroundHit() => Body.IsOnGround && !Animator.GetCurrentState().OffTheGround;
+        public bool IsStunLocked() => IsGroundHit() && HitStun.TimeLeft >= Animator.GetCurrentState().Duration - Animator.GetCurrentState().HitStunFrameLimit + 1 && Animator.Frame >= Animator.GetCurrentState().HitStunFrameLimit;
+        protected override bool LifeEnded() { return Variables.CurrentHealth <= 0; }
+        protected override SakugaFighter FighterReference() { return this; }
+#endregion
+
+#region Interface functions
+        public void BaseDamage(HitboxElement box, Vector2I contact)
+        {
+            bool HitPosition = box.HitType == Global.HitType.UNBLOCKABLE || 
+                                box.HitType == Global.HitType.HIGH && IsCrouching() || 
+                                box.HitType == Global.HitType.LOW && !IsCrouching();
+            if (Variables.SuperArmor > 0)
+            {
+                ArmorHit(box);
+                GD.Print("Fighter: Armor Hit");
+            }
+            else
+            {
+                if (IsBlocking() && !HitPosition)
+                {
+                    BlockHit(box);
+                    GD.Print("Fighter: Blocked!");
+                }
+                else
+                {
+                    HitDamage(box);
+                    GD.Print("Fighter: Hit!");
+                }
+            }
+        }
+        public void HitConfirmReaction(HitboxElement box, Vector2I contact)
+        {
+            if (GetOpponent().Variables.SuperArmor > 0)
+            {
+                HitConfirm(box.SelfMeterGain, (uint)box.ClashHitStopDuration, -1, box.ArmorHitEffectIndex, contact);
+            }
+            else
+            {
+                HitConfirm(box.SelfMeterGain, (uint)box.HitStopDuration, box.HitConfirmState, box.HitEffectIndex, contact);
+                if (box.AllowSelfPushback)
+                    HitPushback(box.SelfPushbackDuration, box.SelfPushbackForce);
+            }
+        }
+        public void ThrowDamage(HitboxElement box, Vector2I contact){}
+        public void ProjectileDamage(HitboxElement box, Vector2I contact, int priority){}
+        public void HitboxClash(HitboxElement box, Vector2I contact)
+        {
+            HitConfirm(0, (uint)box.ClashHitStopDuration, -1, box.HitEffectIndex, contact);
+        }
+        public void ProjectileClash(HitboxElement box, Vector2I contact){}
+        public void ProjectileDeflect(HitboxElement box, Vector2I contact){}
+        public void CounterHit(HitboxElement box, Vector2I contact){}
+        public void ProximityBlock()
+        {
+            if (IsBlocking() && Animator.GetCurrentState().Type != Global.StateType.BLOCKING)
+            {
+                CallBlockState(0);
+                Stance.currentMove = -1;
+            }
+        }
+        public void OnHitboxExit()
+        {
+            if (Animator.GetCurrentState().Type == Global.StateType.BLOCKING && !HitStun.IsRunning())
+            {
+                CallBlockState(2);
+                Body.ProximityBlocked = false;
+            }
+        }
+#endregion
+
+#region Game State
+        public override void Serialize(BinaryWriter bw)
+        {
+            //Components
+            Body.Serialize(bw);
+            Inputs.Serialize(bw);
+            Variables.Serialize(bw);
+            Animator.Serialize(bw);
+            Stance.Serialize(bw);
+            Tracker.Serialize(bw);
+            //Timers
+            HitStun.Serialize(bw);
+            HitStop.Serialize(bw);
+            MoveBuffer.Serialize(bw);
+            PushForce.Serialize(bw);
+            HorizontalBounce.Serialize(bw);
+            VerticalBounce.Serialize(bw);
+            //Variables
+            bw.Write(SuperStop);
+            bw.Write(IsBeingPushed);
+            bw.Write(PushAllowInertia);
+
+            bw.Write(PushGravity);
+            bw.Write(HBounceIntensity);
+            bw.Write(VBounceIntensity);
+            bw.Write(HitstunType);
+
+            for (int i = 0; i < Spawnables.Length; ++i)
+                for (int j = 0; j < Spawnables[i].Length; ++j)
+                    Spawnables[i][j].Serialize(bw);
+            
+            for (int i = 0; i < VFX.Length; ++i)
+                for (int j = 0; j < VFX[i].Length; ++j)
+                    VFX[i][j].Serialize(bw);
+        }
+
+        public override void Deserialize(BinaryReader br)
+        {
+            //Components
+            Body.Deserialize(br);
+            Inputs.Deserialize(br);
+            Variables.Deserialize(br);
+            Animator.Deserialize(br);
+            Stance.Deserialize(br);
+            Tracker.Deserialize(br);
+            //Timers
+            HitStun.Deserialize(br);
+            HitStop.Deserialize(br);
+            MoveBuffer.Deserialize(br);
+            PushForce.Deserialize(br);
+            HorizontalBounce.Deserialize(br);
+            VerticalBounce.Deserialize(br);
+            //Variables
+            SuperStop = br.ReadBoolean();
+            IsBeingPushed = br.ReadBoolean();
+            PushAllowInertia = br.ReadBoolean();
+
+            PushGravity = br.ReadInt32();
+            HBounceIntensity = br.ReadInt32();
+            VBounceIntensity = br.ReadInt32();
+            HitstunType = br.ReadInt32();
+
+            Body.UpdateColliders();
+
+            for (int i = 0; i < Spawnables.Length; ++i)
+                for (int j = 0; j < Spawnables[i].Length; ++j)
+                    Spawnables[i][j].Deserialize(br);
+            
+            for (int i = 0; i < VFX.Length; ++i)
+                for (int j = 0; j < VFX[i].Length; ++j)
+                    VFX[i][j].Deserialize(br);
+        }
+#endregion
+    }
+}

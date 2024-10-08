@@ -1,0 +1,64 @@
+[gd_resource type="Resource" script_class="MoveSettings" load_steps=10 format=3 uid="uid://b8rm50wunba6n"]
+
+[ext_resource type="Resource" uid="uid://b27cxpfq2cn4o" path="res://Fighters/Shared/Inputs/7_Input_tap9.tres" id="1_alim2"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/ExtraVariableChange.cs" id="1_cpv61"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_4p11v"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/ExtraVariableCondition.cs" id="2_etow4"]
+
+[sub_resource type="Resource" id="Resource_m2dhn"]
+script = ExtResource("1_cpv61")
+ChangeMode = 1
+ChangeValue = 1
+
+[sub_resource type="Resource" id="Resource_gmgb4"]
+script = ExtResource("1_cpv61")
+ChangeMode = 1
+ChangeValue = 1
+
+[sub_resource type="Resource" id="Resource_2r0h2"]
+script = ExtResource("1_cpv61")
+ChangeMode = 0
+ChangeValue = 0
+
+[sub_resource type="Resource" id="Resource_jjs70"]
+script = ExtResource("2_etow4")
+Value = 1
+Mode = 0
+CompareMode = 3
+
+[sub_resource type="Resource" id="Resource_5lyqc"]
+script = ExtResource("2_etow4")
+Value = 1
+Mode = 0
+CompareMode = 3
+
+[resource]
+script = ExtResource("2_4p11v")
+MoveName = "Forward Air Jump"
+MoveState = 4
+Inputs = ExtResource("1_alim2")
+SideChange = 0
+MoveEnd = 0
+MoveEndState = -1
+SuperGaugeRequired = 0
+HealthThreshold = Vector2i(0, 99999)
+SpendHealth = 0
+DistanceArea = Vector2i(0, 99999)
+FrameLimit = -1
+ExtraVariablesRequirement = Array[Object]([SubResource("Resource_jjs70"), SubResource("Resource_5lyqc")])
+ExtraVariablesChange = Array[Object]([SubResource("Resource_m2dhn"), SubResource("Resource_gmgb4"), SubResource("Resource_2r0h2")])
+ChangeStance = -1
+IsSequenceFromStates = PackedInt32Array()
+CancelsTo = PackedInt32Array()
+KaraCancelsTo = PackedInt32Array()
+buttonChargeSequence = null
+SuperFlash = 0
+CanBeOverrided = true
+CanOverrideToSelf = true
+IgnoreSamePriority = false
+PriorityBuffer = false
+Priority = 4
+AutoPlayNextMove = -1
+WaitForNullStates = true
+UseOnGround = false
+UseOnAir = true

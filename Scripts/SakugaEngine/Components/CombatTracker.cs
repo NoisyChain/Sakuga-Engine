@@ -44,11 +44,10 @@ namespace SakugaEngine
             LastHitType = hitType;
         }
 
-        public void UpdateFrameData(FighterBody owner)
+        public void UpdateFrameData(SakugaFighter owner)
         {
-            FrameData = owner.Animator.StateType() == 1 ? 0 : owner.Animator.GetCurrentState().Duration - owner.Animator.Frame;
-            FrameAdvantage = (owner.Animator.StateType() == 3 || owner.GetOpponent().Animator.StateType() == 3) ? 
-                        HitFrame - owner.GetOpponent().Tracker.HitFrame : 0;
+            FrameData = owner.Animator.StateType() <= 1 ? 0 : owner.Animator.GetCurrentState().Duration - owner.Animator.Frame;
+            FrameAdvantage = owner.Tracker.HitFrame - (int)owner.GetOpponent().HitStun.WaitTime;
 
             FrameData = Mathf.Clamp(FrameData, 0, owner.Animator.GetCurrentState().Duration);
         }
@@ -56,7 +55,7 @@ namespace SakugaEngine
         public void Reset()
         {
             HitCombo = 0;
-            LastDamage = 0;
+            //LastDamage = 0;
             CurrentCombo = 0;
             invalidHit = false;
         }

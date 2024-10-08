@@ -75,15 +75,15 @@ namespace SakugaEngine
             }
         }
 
-        public void CheckVictoryConditions(FighterBody[] _fighters)
+        public void CheckVictoryConditions(SakugaFighter[] _fighters)
         {
             int biggerHealth = 0;
 
             //Do not compare the current healths directly to not mess up with characters
             //with different base health values.
-            //Convert them into percentages instead... but a big bigger for extra precision
-            uint p1HealthPercentage = _fighters[biggerHealth].Variables.CurrentHealth * 1000 / _fighters[biggerHealth].Variables.MaxHealth;
-            uint p2HealthPercentage = _fighters[1].Variables.CurrentHealth * 1000 / _fighters[1].Variables.MaxHealth;
+            //Convert them into percentages instead... but a bit bigger for extra precision
+            int p1HealthPercentage = _fighters[biggerHealth].Variables.CurrentHealth * 1000 / _fighters[biggerHealth].Variables.MaxHealth;
+            int p2HealthPercentage = _fighters[1].Variables.CurrentHealth * 1000 / _fighters[1].Variables.MaxHealth;
             
             if (_fighters[1].IsKO() && _fighters[biggerHealth].IsKO())
                 biggerHealth = -1; //Double K.O.
@@ -121,7 +121,7 @@ namespace SakugaEngine
             else Godot.GD.Print($"Player {Winner + 1} win the game!");
         }
 
-        public void Tick(FighterBody[] _fighters)
+        public void Tick(SakugaFighter[] _fighters)
         {
             if (!GameIsRunning) return;
 
@@ -183,12 +183,7 @@ namespace SakugaEngine
                     FadeProgress++;
                     break;
             }
-            if (FadeTime > 0) FadeScreenIntensity = IntLerp(0, 100, FadeTime, FadeProgress);
-        }
-
-        public static int IntLerp(int from, int to, int numberOfSteps, int currentStep)
-        {
-            return ((to - from) * currentStep) / numberOfSteps;
+            if (FadeTime > 0) FadeScreenIntensity = Global.IntLerp(0, 100, FadeTime, FadeProgress);
         }
     }
 }

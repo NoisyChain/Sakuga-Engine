@@ -6,12 +6,14 @@ namespace SakugaEngine.Resources
     public partial class HitboxElement : Resource
     {
         // Hitbox settings
+        [ExportGroup("Box Settings")]
         [Export] public Vector2I Center = Vector2I.Zero;
         [Export] public Vector2I Size = Vector2I.Zero;
         [Export] public Global.HitboxType HitboxType;
         [Export] public Global.HitType HitType;
 
         // Damage settings
+        [ExportGroup("Damage Settings")]
         [Export] public int BaseDamage = 150;
         [Export] public int ChipDamage;
         [Export] public bool ChipDeath;
@@ -28,12 +30,14 @@ namespace SakugaEngine.Resources
         [Export] public int DamageScalingSubtract = 15;
         
         //VFX settings
+        [ExportGroup("VFX Settings")]
         [Export] public int HitEffectIndex = 0;
         [Export] public int BlockEffectIndex = 1;
         [Export] public int ClashEffectIndex = 2;
         [Export] public int ArmorHitEffectIndex = 3;
 
         //Ground Hitstun settings
+        [ExportGroup("Ground Hit Settings")]
         [Export] public Global.HitstunType GroundHitstunType;
         [Export] public int GroundHitReaction;
         [Export] public int CrouchHitReaction;
@@ -47,6 +51,7 @@ namespace SakugaEngine.Resources
         [Export] public int GroundBlockStun = 8;
 
         //Air Hitstun settings
+        [ExportGroup("Air Hit Settings")]
         [Export] public Global.HitstunType AirHitstunType;
         [Export] public int AirHitReaction;
         [Export] public Vector2I AirDamageKnockback;
@@ -59,15 +64,18 @@ namespace SakugaEngine.Resources
         [Export] public int AirBlockStun = 8;
 
         //Throw settings
+        [ExportGroup("Throw Hit Settings")]
         [Export] public bool PostThrowKnockback;
         [Export] public bool GroundThrow, AirThrow;
 
         //Pushback settings
+        [ExportGroup("Pushback Settings")]
         [Export] public bool AllowSelfPushback = true;
         [Export] public int SelfPushbackForce;
         [Export] public int SelfPushbackDuration;
 
         //Extra settings
+        [ExportGroup("Extra Settings")]
         [Export] public int HitConfirmState = -1;
         [Export] public bool AllowInertia = true;
         [Export] public int BounceXTime = 0;

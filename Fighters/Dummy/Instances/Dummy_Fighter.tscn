@@ -1,7 +1,7 @@
 [gd_scene load_steps=24 format=3 uid="uid://3reeyb4tcc1i"]
 
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/FrameTimer.cs" id="1_5hpi4"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/FighterBody.cs" id="1_dqfls"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/SakugaFighter.cs" id="1_pv6li"]
 [ext_resource type="Resource" uid="uid://dmfn50x0ch85i" path="res://Fighters/Dummy/States/0_Dummy_Neutral.tres" id="2_758vt"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/InputManager.cs" id="2_ujbvg"]
 [ext_resource type="Resource" uid="uid://dfma5gqaldi8g" path="res://Fighters/Dummy/Dummy_Profile.tres" id="2_vgqb8"]
@@ -34,14 +34,8 @@ height = 0.5
 radial_segments = 12
 rings = 8
 
-[node name="Dummy_Fighter" type="Node3D" node_paths=PackedStringArray("Body", "Inputs", "Variables", "Animator", "Stance", "Tracker", "HitStun", "HitStop", "MoveBuffer", "PushForce", "HorizontalBounce", "VerticalBounce", "Graphics")]
-script = ExtResource("1_dqfls")
-Body = NodePath("PhysicsBody")
-Inputs = NodePath("InputManager")
-Variables = NodePath("Variables")
-Animator = NodePath("Graphics/Mesh")
-Stance = NodePath("Stances")
-Tracker = NodePath("CombatTracker")
+[node name="Dummy_Fighter" type="Node3D" node_paths=PackedStringArray("HitStun", "HitStop", "MoveBuffer", "PushForce", "HorizontalBounce", "VerticalBounce", "Body", "Inputs", "Variables", "Animator", "Stance", "Tracker", "Graphics")]
+script = ExtResource("1_pv6li")
 HitStun = NodePath("Timers/HitStun")
 HitStop = NodePath("Timers/HitStop")
 MoveBuffer = NodePath("Timers/MoveBuffer")
@@ -49,6 +43,12 @@ PushForce = NodePath("Timers/Pushback")
 HorizontalBounce = NodePath("Timers/HBounce")
 VerticalBounce = NodePath("Timers/VBounce")
 Profile = ExtResource("2_vgqb8")
+Body = NodePath("PhysicsBody")
+Inputs = NodePath("InputManager")
+Variables = NodePath("Variables")
+Animator = NodePath("Graphics/Mesh")
+Stance = NodePath("Stances")
+Tracker = NodePath("CombatTracker")
 Graphics = [NodePath("Graphics/Mesh/Pivot")]
 
 [node name="Graphics" type="Node3D" parent="."]

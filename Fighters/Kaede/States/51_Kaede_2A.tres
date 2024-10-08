@@ -1,0 +1,64 @@
+[gd_resource type="Resource" script_class="FighterState" load_steps=10 format=3 uid="uid://blkopjy72slty"]
+
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="1"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/StatePhysics.cs" id="3"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/StateTransitionSettings.cs" id="4_isfww"]
+
+[sub_resource type="Resource" id="2"]
+script = ExtResource("2")
+animationStage = 0
+Frame = 0
+HitboxIndex = 9
+
+[sub_resource type="Resource" id="3"]
+script = ExtResource("2")
+animationStage = 1
+Frame = 3
+HitboxIndex = 10
+
+[sub_resource type="Resource" id="4"]
+script = ExtResource("2")
+animationStage = 2
+Frame = 7
+HitboxIndex = 1
+
+[sub_resource type="Resource" id="1"]
+script = ExtResource("3")
+Frame = 0
+UseLateralSpeed = true
+LateralSpeed = 0
+UseVerticalSpeed = true
+VerticalSpeed = 0
+UseGravity = true
+Gravity = 0
+UseLateralInertia = false
+UseVerticalInertia = false
+UseHorizontalInput = false
+UseVerticalInput = false
+
+[sub_resource type="Resource" id="Resource_wo6ud"]
+script = ExtResource("4_isfww")
+StateIndex = 12
+Condition = 1
+AtFrame = -1
+DistanceArea = Vector2i(0, 99999)
+
+[resource]
+script = ExtResource("1")
+StateName = "2A"
+Type = 2
+OffTheGround = false
+Duration = 12
+Loop = false
+LoopFrames = Vector2i(0, 0)
+TurnState = -1
+RoundFinishDuration = 0
+HitStunFrameLimit = -1
+stateProperties = null
+statePhysics = [SubResource("1")]
+hitboxStates = [SubResource("2"), SubResource("3"), SubResource("4")]
+animationEvents = null
+throwPivot = null
+soundEvents = Array[Object]([])
+stateTransitions = Array[Object]([SubResource("Resource_wo6ud")])

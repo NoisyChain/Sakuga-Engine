@@ -17,7 +17,7 @@
 
 [node name="CanvasLayer" type="CanvasLayer"]
 
-[node name="GameHUD_Background" type="Control" parent="." node_paths=PackedStringArray("P1Portrait", "P1Health", "P1Rounds", "P1Combo", "P1Name", "P2Portrait", "P2Health", "P2Rounds", "P2Combo", "P2Name", "Timer")]
+[node name="GameHUD_Background" type="Control" parent="." node_paths=PackedStringArray("P1Portrait", "P1Health", "P1Rounds", "P1Combo", "P1Name", "P2Portrait", "P2Health", "P2Rounds", "P2Combo", "P2Name", "Timer", "P1Debug", "P2Debug")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -36,6 +36,8 @@ P2Rounds = NodePath("HealthBars/P2Rounds")
 P2Combo = NodePath("ComboCounters/P2ComboCounter")
 P2Name = NodePath("HealthBars/P2Name")
 Timer = NodePath("HealthBars/Timer")
+P1Debug = NodePath("../Debug/P1Debug")
+P2Debug = NodePath("../Debug/P2Debug")
 
 [node name="HealthBars" type="Control" parent="GameHUD_Background"]
 anchors_preset = 0
@@ -311,7 +313,6 @@ scale = Vector2(1.5, 1.5)
 text = "Hit Combo"
 
 [node name="ViewportContainer" type="SubViewportContainer" parent="."]
-visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -321,7 +322,7 @@ stretch = true
 transparent_bg = true
 handle_input_locally = false
 size = Vector2i(1280, 720)
-render_target_update_mode = 0
+render_target_update_mode = 4
 
 [node name="CharacterCamera" type="Camera3D" parent="ViewportContainer/Viewport_Foreground"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 9)
@@ -394,7 +395,6 @@ tint_under = Color(0.509804, 0.509804, 0.509804, 1)
 tint_progress = Color(0.301961, 0.745098, 0.243137, 1)
 
 [node name="TrainingInfo" type="Control" parent="GameHUD_Foreground"]
-visible = false
 anchors_preset = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -444,7 +444,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 141.0
 offset_top = 4.0
-offset_right = 182.0
+offset_right = 205.0
 offset_bottom = 131.0
 grow_horizontal = 0
 grow_vertical = 2
@@ -499,7 +499,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 141.0
 offset_top = 4.0
-offset_right = 182.0
+offset_right = 205.0
 offset_bottom = 131.0
 grow_horizontal = 0
 grow_vertical = 2
@@ -654,7 +654,6 @@ color = Color(0, 0, 0, 0)
 script = ExtResource("12_uu21w")
 
 [node name="Debug" type="Control" parent="."]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -687,11 +686,12 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -240.0
-offset_right = -143.0
+offset_left = -103.0
+offset_right = -6.0
 offset_bottom = 23.0
 grow_horizontal = 0
 text = "Lorem ipsun"
+horizontal_alignment = 2
 
 [node name="FPSDisplay" type="Control" parent="."]
 layout_mode = 3

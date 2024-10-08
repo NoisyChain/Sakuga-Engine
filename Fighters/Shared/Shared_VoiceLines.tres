@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="SoundsList" load_steps=2 format=3 uid="uid://c8h8jltu6u5pb"]
+
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/SoundsList.cs" id="1_anggk"]
+
+[resource]
+script = ExtResource("1_anggk")
+Sounds = null

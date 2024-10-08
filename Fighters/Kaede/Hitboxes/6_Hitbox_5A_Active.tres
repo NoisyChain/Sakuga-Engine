@@ -3,10 +3,10 @@
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxSettings.cs" id="1"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxElement.cs" id="2"]
 
-[sub_resource type="Resource" id="6"]
+[sub_resource type="Resource" id="Resource_nuvrf"]
 script = ExtResource("2")
-Center = Vector2i(0, 1)
-Size = Vector2i(0, 0)
+Center = Vector2i(0, 8400)
+Size = Vector2i(5000, 8000)
 HitboxType = 0
 HitType = 0
 BaseDamage = 150
@@ -63,10 +63,10 @@ BounceYTime = 0
 BounceYIntensity = 0
 BounceYState = 0
 
-[sub_resource type="Resource" id="5"]
+[sub_resource type="Resource" id="Resource_g8xyv"]
 script = ExtResource("2")
-Center = Vector2i(0, 0)
-Size = Vector2i(0, 0)
+Center = Vector2i(0, 2200)
+Size = Vector2i(5000, 4400)
 HitboxType = 0
 HitType = 0
 BaseDamage = 150
@@ -123,10 +123,10 @@ BounceYTime = 0
 BounceYIntensity = 0
 BounceYState = 0
 
-[sub_resource type="Resource" id="3"]
+[sub_resource type="Resource" id="Resource_blamb"]
 script = ExtResource("2")
-Center = Vector2i(0, 1)
-Size = Vector2i(0, 0)
+Center = Vector2i(650, 14000)
+Size = Vector2i(3000, 3000)
 HitboxType = 0
 HitType = 0
 BaseDamage = 150
@@ -185,8 +185,8 @@ BounceYState = 0
 
 [sub_resource type="Resource" id="9"]
 script = ExtResource("2")
-Center = Vector2i(0, 1)
-Size = Vector2i(0, 0)
+Center = Vector2i(4400, 12000)
+Size = Vector2i(4000, 1400)
 HitboxType = 0
 HitType = 0
 BaseDamage = 150
@@ -245,10 +245,10 @@ BounceYState = 0
 
 [sub_resource type="Resource" id="7"]
 script = ExtResource("2")
-Center = Vector2i(0, 1)
-Size = Vector2i(1, 0)
-HitboxType = 0
-HitType = 0
+Center = Vector2i(5770, 12500)
+Size = Vector2i(4200, 2000)
+HitboxType = 1
+HitType = 1
 BaseDamage = 150
 ChipDamage = 0
 ChipDeath = false
@@ -263,37 +263,37 @@ BlockStopDuration = 12
 CounterHitStopDuration = 20
 ClashHitStopDuration = 20
 DamageScalingSubtract = 15
-HitEffectIndex = 1
-BlockEffectIndex = 2
-ClashEffectIndex = 3
-ArmorHitEffectIndex = 4
+HitEffectIndex = 0
+BlockEffectIndex = 1
+ClashEffectIndex = 2
+ArmorHitEffectIndex = 3
 GroundHitstunType = 0
 GroundHitReaction = 0
 CrouchHitReaction = 0
-GroundDamageKnockback = Vector2i(0, 0)
-GroundBlockKnockback = Vector2i(0, 0)
+GroundDamageKnockback = Vector2i(-25000, 0)
+GroundBlockKnockback = Vector2i(-25000, 0)
 GroundDamageKnockbackGravity = 0
 GroundBlockKnockbackGravity = 0
 GroundHitKnockbackTime = 8
 GroundBlockKnockbackTime = 8
-GroundHitStun = 8
-GroundBlockStun = 8
+GroundHitStun = 12
+GroundBlockStun = 12
 AirHitstunType = 0
 AirHitReaction = 0
-AirDamageKnockback = Vector2i(0, 0)
+AirDamageKnockback = Vector2i(-15000, 50000)
 AirBlockKnockback = Vector2i(0, 0)
 AirDamageKnockbackGravity = 30
 AirBlockKnockbackGravity = 30
 AirHitKnockbackTime = 8
 AirBlockKnockbackTime = 8
-AirHitStun = 8
-AirBlockStun = 8
+AirHitStun = 12
+AirBlockStun = 12
 PostThrowKnockback = false
 GroundThrow = false
 AirThrow = false
 AllowSelfPushback = true
-SelfPushbackForce = 0
-SelfPushbackDuration = 0
+SelfPushbackForce = -30000
+SelfPushbackDuration = 8
 HitConfirmState = -1
 AllowInertia = true
 BounceXTime = 0
@@ -303,11 +303,11 @@ BounceYTime = 0
 BounceYIntensity = 0
 BounceYState = 0
 
-[sub_resource type="Resource" id="8"]
+[sub_resource type="Resource" id="Resource_sx17e"]
 script = ExtResource("2")
-Center = Vector2i(0, 1)
-Size = Vector2i(0, 0)
-HitboxType = 0
+Center = Vector2i(10000, 10605)
+Size = Vector2i(15000, 2000)
+HitboxType = 2
 HitType = 0
 BaseDamage = 150
 ChipDamage = 0
@@ -365,6 +365,6 @@ BounceYState = 0
 
 [resource]
 script = ExtResource("1")
-PushboxCenter = Vector2i(0, 0)
-PushboxSize = Vector2i(0, 1)
-Hitboxes = [SubResource("6"), SubResource("5"), SubResource("3"), SubResource("9"), SubResource("7"), SubResource("8")]
+PushboxCenter = Vector2i(0, 6000)
+PushboxSize = Vector2i(4000, 12000)
+Hitboxes = [SubResource("Resource_nuvrf"), SubResource("Resource_g8xyv"), SubResource("Resource_blamb"), SubResource("9"), SubResource("7"), SubResource("Resource_sx17e")]

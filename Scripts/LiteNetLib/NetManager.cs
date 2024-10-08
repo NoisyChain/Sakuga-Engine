@@ -308,7 +308,7 @@ namespace LiteNetLib
         public bool UseNativeSockets = false;
 
         /// <summary>
-        /// Disconnect peers if HostUnreachable or NetworkUnreachable spawned (old behaviour 0.9.x was true)
+        /// Disconnect peers if HostUnreachable or NetworkUnreachable spawned (old Behavior 0.9.x was true)
         /// </summary>
         public bool DisconnectOnUnreachable = false;
 

@@ -1,0 +1,221 @@
+[gd_scene load_steps=34 format=3 uid="uid://domhsm5n4i2q1"]
+
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/SakugaSpawnable.cs" id="1_dhydb"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Utils/FOV_Correction.cs" id="3_vniop"]
+[ext_resource type="Resource" uid="uid://cwuwbygqhrjcb" path="res://Fighters/Kaede/Spawnables/0/States/0_Spawn.tres" id="4_a4ayh"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/FrameAnimator.cs" id="4_ao37v"]
+[ext_resource type="Resource" uid="uid://iwa20g1seshl" path="res://Fighters/Kaede/Spawnables/0/States/1_Travel.tres" id="5_xqrih"]
+[ext_resource type="Resource" uid="uid://bgjd35gpl3n3l" path="res://Fighters/Kaede/Spawnables/0/States/2_Death.tres" id="6_1hw44"]
+[ext_resource type="Texture2D" uid="uid://dho2rxfy6hkug" path="res://Fighters/Kaede/Spawnables/0/Sprites/1210-5.png" id="7_1jm7p"]
+[ext_resource type="Texture2D" uid="uid://buaxs0u1qu3bu" path="res://Fighters/Kaede/Spawnables/0/Sprites/1210-0.png" id="8_20w5q"]
+[ext_resource type="Texture2D" uid="uid://ceu1vxkao34tk" path="res://Fighters/Kaede/Spawnables/0/Sprites/1210-1.png" id="9_qyvgt"]
+[ext_resource type="Texture2D" uid="uid://l066noakrrx6" path="res://Fighters/Kaede/Spawnables/0/Sprites/1210-2.png" id="10_0ddx1"]
+[ext_resource type="Texture2D" uid="uid://dnny4brtl1rih" path="res://Fighters/Kaede/Spawnables/0/Sprites/1210-3.png" id="11_2077t"]
+[ext_resource type="Texture2D" uid="uid://b7dd2fm5jb8eo" path="res://Fighters/Kaede/Spawnables/0/Sprites/1210-4.png" id="12_k37rr"]
+[ext_resource type="Texture2D" uid="uid://bwybhwxqi1lea" path="res://Fighters/Kaede/Spawnables/0/Sprites/1210-6.png" id="13_wcm7f"]
+[ext_resource type="Texture2D" uid="uid://bqn808dr1xgt5" path="res://Fighters/Kaede/Spawnables/0/Sprites/1210-7.png" id="14_c0qtb"]
+[ext_resource type="Texture2D" uid="uid://dlsfasp5w35ob" path="res://Fighters/Kaede/Spawnables/0/Sprites/1210-8.png" id="15_exb3l"]
+[ext_resource type="Texture2D" uid="uid://33q2at6e5oq7" path="res://Fighters/Kaede/Spawnables/0/Sprites/1211-0.png" id="16_g0add"]
+[ext_resource type="Resource" uid="uid://dyam6gxn4slhs" path="res://Fighters/Kaede/Spawnables/0/Hitboxes/0_Hitbox_Spawnable_Basic.tres" id="230_by1ut"]
+[ext_resource type="PackedScene" uid="uid://dduf0jsq56ggk" path="res://Scenes/HitboxViewer.tscn" id="281_wh8kr"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Collision/PhysicsBody.cs" id="282_or0ge"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/InputManager.cs" id="296_873i7"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/FighterVariables.cs" id="297_3o8vi"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/ExtraVariable.cs" id="298_egolq"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/StanceManager.cs" id="299_yy046"]
+[ext_resource type="Resource" uid="uid://bpi3dgk313noc" path="res://Fighters/Kaede/Stances/Kaede_Stance_Main.tres" id="300_c46cp"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/CombatTracker.cs" id="301_a6k57"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/FrameTimer.cs" id="302_0eu8l"]
+
+[sub_resource type="Animation" id="Animation_b1ng2"]
+resource_name = "Death"
+length = 0.200002
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite3D:texture")
+tracks/0/interp = 0
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("13_wcm7f"), ExtResource("14_c0qtb"), ExtResource("15_exb3l"), ExtResource("16_g0add"), null]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite3D:offset")
+tracks/1/interp = 0
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(-250, -120)]
+}
+
+[sub_resource type="Animation" id="Animation_7romc"]
+resource_name = "Spawn"
+length = 0.100002
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite3D:texture")
+tracks/0/interp = 0
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("8_20w5q"), ExtResource("9_qyvgt"), ExtResource("10_0ddx1")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite3D:offset")
+tracks/1/interp = 0
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Vector2(-120, -60), Vector2(-185, -90), Vector2(-250, -120)]
+}
+
+[sub_resource type="Animation" id="Animation_4g5j5"]
+resource_name = "Travel"
+length = 0.200002
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite3D:texture")
+tracks/0/interp = 0
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("10_0ddx1"), ExtResource("11_2077t"), ExtResource("12_k37rr"), ExtResource("7_1jm7p")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite3D:offset")
+tracks/1/interp = 0
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(-250, -120)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_efsgm"]
+_data = {
+"Death": SubResource("Animation_b1ng2"),
+"Spawn": SubResource("Animation_7romc"),
+"Travel": SubResource("Animation_4g5j5")
+}
+
+[sub_resource type="Resource" id="Resource_iawsj"]
+script = ExtResource("298_egolq")
+Name = "Air Jump Limit"
+MaxValue = 1
+StartingValue = 0
+
+[sub_resource type="Resource" id="Resource_c3vhj"]
+script = ExtResource("298_egolq")
+Name = "Air Dash Limit"
+MaxValue = 1
+StartingValue = 0
+
+[sub_resource type="Resource" id="Resource_3vvfr"]
+script = ExtResource("298_egolq")
+Name = "Dash Jumping"
+MaxValue = 1
+StartingValue = 0
+
+[node name="Kaede_Spawnable" type="Node3D" node_paths=PackedStringArray("LifeTime", "Body", "Animator", "Graphics")]
+script = ExtResource("1_dhydb")
+LifeTime = NodePath("Timers/LifeTime")
+DeathState = 2
+DieOnGround = true
+DieOnWalls = true
+DieOnHit = true
+Deflectable = true
+Body = NodePath("PhysicsBody")
+Animator = NodePath("Graphics/Mesh")
+Graphics = [NodePath("Graphics/Mesh/ProjectileGraphics")]
+
+[node name="Graphics" type="Node3D" parent="."]
+script = ExtResource("3_vniop")
+
+[node name="Mesh" type="Node3D" parent="Graphics" node_paths=PackedStringArray("players")]
+script = ExtResource("4_ao37v")
+players = [NodePath("ProjectileGraphics/AnimationPlayer")]
+prefix = PackedStringArray("")
+States = Array[Object]([ExtResource("4_a4ayh"), ExtResource("5_xqrih"), ExtResource("6_1hw44")])
+
+[node name="ProjectileGraphics" type="Node3D" parent="Graphics/Mesh"]
+
+[node name="Sprite3D" type="Sprite3D" parent="Graphics/Mesh/ProjectileGraphics"]
+layers = 2
+centered = false
+offset = Vector2(-250, -120)
+pixel_size = 0.003
+texture_filter = 0
+texture = ExtResource("10_0ddx1")
+region_rect = Rect2(711.25, 46.25, 2, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Graphics/Mesh/ProjectileGraphics"]
+libraries = {
+"": SubResource("AnimationLibrary_efsgm")
+}
+
+[node name="HitboxViewer" parent="." node_paths=PackedStringArray("body") instance=ExtResource("281_wh8kr")]
+body = NodePath("../PhysicsBody")
+
+[node name="Sounds" type="Node3D" parent="."]
+
+[node name="SFX_0" type="AudioStreamPlayer3D" parent="Sounds"]
+
+[node name="SFX_1" type="AudioStreamPlayer3D" parent="Sounds"]
+
+[node name="SFX_2" type="AudioStreamPlayer3D" parent="Sounds"]
+
+[node name="SFX_3" type="AudioStreamPlayer3D" parent="Sounds"]
+
+[node name="SFX_4" type="AudioStreamPlayer3D" parent="Sounds"]
+
+[node name="PhysicsBody" type="Node" parent="."]
+script = ExtResource("282_or0ge")
+StayOnBounds = true
+FixedAcceleration = 35000
+FixedDeceleration = 40000
+FixedFriction = 75000
+HitboxesLimit = 3
+HitboxPresets = Array[Object]([ExtResource("230_by1ut")])
+
+[node name="InputManager" type="Node" parent="."]
+script = ExtResource("296_873i7")
+
+[node name="Variables" type="Node" parent="."]
+script = ExtResource("297_3o8vi")
+ExtraVariables = Array[Object]([SubResource("Resource_iawsj"), SubResource("Resource_c3vhj"), SubResource("Resource_3vvfr")])
+
+[node name="Stances" type="Node" parent="."]
+script = ExtResource("299_yy046")
+Stances = Array[Object]([ExtResource("300_c46cp")])
+
+[node name="CombatTracker" type="Node" parent="."]
+script = ExtResource("301_a6k57")
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="LifeTime" type="Node" parent="Timers"]
+script = ExtResource("302_0eu8l")
+WaitTime = 40

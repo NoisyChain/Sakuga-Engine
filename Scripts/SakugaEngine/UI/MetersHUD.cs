@@ -11,6 +11,8 @@ namespace SakugaEngine.UI
         [Export] private InputHistory P1InputHistory;
         [Export] private InputHistory P2InputHistory;
 
+        private int CurrentFrameAdvantage;
+
         /*public override void _Ready()
         {
             P1Meter = GetNode<TextureProgressBar>("Meters/P1Meter");
@@ -19,50 +21,70 @@ namespace SakugaEngine.UI
             P2TrainingInfo = GetNode<Label>("TrainingInfo/P2Info/Information");
         }*/
 
-        public void Setup(FighterBody[] fighters)
+        public void Setup(SakugaFighter[] fighters)
         {
             P1Meter.MaxValue = fighters[0].Variables.MaxSuperGauge;
             P2Meter.MaxValue = fighters[1].Variables.MaxSuperGauge;
         }
 
-        public void UpdateMeters(FighterBody[] fighters)
+        public void UpdateMeters(SakugaFighter[] fighters)
         {
             P1Meter.Value = fighters[0].Variables.CurrentSuperGauge;
             P2Meter.Value = fighters[1].Variables.CurrentSuperGauge;
 
-            P1TrainingInfo.Text = TrainingInfoText(fighters[1]);
-            P2TrainingInfo.Text = TrainingInfoText(fighters[0]);
+            GetFrameAdvantage(fighters);
 
             P1InputHistory.SetHistoryList(fighters[0].Inputs);
             P2InputHistory.SetHistoryList(fighters[1].Inputs);
+
+            P1TrainingInfo.Text = TrainingInfoText(fighters[0], fighters[1]);
+            P2TrainingInfo.Text = TrainingInfoText(fighters[1], fighters[0]);
         }
 
-        private string TrainingInfoText(FighterBody reference)
+        void GetFrameAdvantage(SakugaFighter[] fighters)
         {
-            /*string hitTypeText = "";
+            for (int i = 0; i < fighters.Length; i++)
+            {
+                if (fighters[i].Tracker.FrameAdvantage != 0)
+                    CurrentFrameAdvantage = fighters[i].Tracker.FrameAdvantage;
+            }
+        }
 
-            switch (reference.tracker.LastHitType)
+        private string TrainingInfoText(SakugaFighter owner, SakugaFighter reference)
+        {
+            string hitTypeText = "";
+
+            switch (reference.Tracker.LastHitType)
             {
                 case 0:
-                    hitTypeText = "LOW";
+                    hitTypeText = "HIGH";
                     break;
                 case 1:
                     hitTypeText = "MID";
                     break;
                 case 2:
-                    hitTypeText = "HIGH";
+                    hitTypeText = "LOW";
+                    break;
+                case 3:
+                    hitTypeText = "UNBLOCKABLE";
                     break;
             }
 
-            string frameAdvantageInfo = reference.tracker.FrameAdvantage >= 0 ? 
-            "+" + reference.tracker.FrameAdvantage : reference.tracker.FrameAdvantage.ToString();
+            int refFrameAdv = CurrentFrameAdvantage;
+            int ownFrameAdv = -CurrentFrameAdvantage;
 
-            return reference.tracker.LastDamage + "\n" +
-                    reference.tracker.CurrentCombo + "\n" +
-                    reference.tracker.HighestCombo + "\n" +
+            int finalFrameAdv = (int)owner.Tracker.FrameAdvantage != 0 ? ownFrameAdv : refFrameAdv;
+
+            string frameAdvantageInfo = finalFrameAdv >= 0 ? 
+                    ("+" + finalFrameAdv) : "" + finalFrameAdv;
+            
+            string frameAdvText = "("+frameAdvantageInfo+")";
+
+            return reference.Tracker.LastDamage + "\n" +
+                    reference.Tracker.CurrentCombo + "\n" +
+                    reference.Tracker.HighestCombo + "\n" +
                     hitTypeText + "\n" +
-                    reference.tracker.FrameData + "("+ frameAdvantageInfo + ")";*/
-            return "";
+                    owner.Tracker.FrameData + frameAdvText;
         }
     }
 }

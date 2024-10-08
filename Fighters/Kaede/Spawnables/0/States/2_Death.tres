@@ -1,38 +1,44 @@
-[gd_resource type="Resource" load_steps=6 format=2]
+[gd_resource type="Resource" script_class="FighterState" load_steps=6 format=3 uid="uid://bgjd35gpl3n3l"]
 
-[ext_resource path="res://Scripts/AFF/Resources/SpawnableState.cs" type="Script" id=1]
-[ext_resource path="res://Scripts/AFF/Resources/HitboxState.cs" type="Script" id=2]
-[ext_resource path="res://Scripts/AFF/Resources/StatePhysics.cs" type="Script" id=3]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="1"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/StatePhysics.cs" id="3"]
 
-[sub_resource type="Resource" id=1]
-script = ExtResource( 2 )
+[sub_resource type="Resource" id="1"]
+script = ExtResource("2")
 animationStage = 0
 Frame = 0
 HitboxIndex = -1
 
-[sub_resource type="Resource" id=2]
-script = ExtResource( 3 )
-frame = 0
+[sub_resource type="Resource" id="2"]
+script = ExtResource("3")
+Frame = 0
 UseLateralSpeed = true
-LateralSpeed = 0.0
+LateralSpeed = 0
 UseVerticalSpeed = true
-VerticalSpeed = 0.0
+VerticalSpeed = 0
 UseGravity = false
-Gravity = 0.0
+Gravity = 0
+UseLateralInertia = false
+UseVerticalInertia = false
+UseHorizontalInput = false
+UseVerticalInput = false
 
 [resource]
-script = ExtResource( 1 )
+script = ExtResource("1")
 StateName = "Death"
+Type = 0
+OffTheGround = false
 Duration = 12
-StartCountdown = false
 Loop = false
-LoopStartFrame = 0
-LoopEndFrame = 0
-statePhysics = [ SubResource( 2 ) ]
-hitboxStates = [ SubResource( 1 ) ]
-soundEvents = [  ]
-AutoTransitionTo = -1
-AutoTransitionOnGround = -1
-AutoTransitionOnWalls = -1
-AutoTransitionFalling = -1
-AutoTransitionDeath = -1
+LoopFrames = Vector2i(0, 0)
+TurnState = -1
+RoundFinishDuration = 0
+HitStunFrameLimit = -1
+stateProperties = null
+statePhysics = [SubResource("2")]
+hitboxStates = [SubResource("1")]
+animationEvents = null
+throwPivot = null
+soundEvents = null
+stateTransitions = null

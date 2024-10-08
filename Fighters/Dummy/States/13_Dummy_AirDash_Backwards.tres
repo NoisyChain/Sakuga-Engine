@@ -60,6 +60,7 @@ LoopFrames = Vector2i(0, 0)
 TurnState = 0
 RoundFinishDuration = 0
 HitStunFrameLimit = -1
+stateProperties = null
 statePhysics = Array[Object]([SubResource("Resource_aim2h"), SubResource("Resource_mlmck"), SubResource("Resource_e8kqm")])
 hitboxStates = null
 animationEvents = null

@@ -5,8 +5,8 @@
 
 [sub_resource type="Resource" id="6"]
 script = ExtResource("2")
-Center = Vector2i(0, 1)
-Size = Vector2i(0, 0)
+Center = Vector2i(0, 8400)
+Size = Vector2i(5000, 8000)
 HitboxType = 0
 HitType = 0
 BaseDamage = 150
@@ -65,8 +65,8 @@ BounceYState = 0
 
 [sub_resource type="Resource" id="5"]
 script = ExtResource("2")
-Center = Vector2i(0, 0)
-Size = Vector2i(0, 0)
+Center = Vector2i(0, 2200)
+Size = Vector2i(5000, 4400)
 HitboxType = 0
 HitType = 0
 BaseDamage = 150
@@ -125,8 +125,8 @@ BounceYState = 0
 
 [sub_resource type="Resource" id="3"]
 script = ExtResource("2")
-Center = Vector2i(0, 1)
-Size = Vector2i(0, 0)
+Center = Vector2i(650, 14000)
+Size = Vector2i(3000, 3000)
 HitboxType = 0
 HitType = 0
 BaseDamage = 150

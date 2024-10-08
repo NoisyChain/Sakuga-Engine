@@ -6,48 +6,52 @@
 
 [sub_resource type="Resource" id="1"]
 script = ExtResource("2")
-frame = 0
+Frame = 0
 UseLateralSpeed = true
 LateralSpeed = 0
 UseVerticalSpeed = true
 VerticalSpeed = 0
 UseGravity = true
 Gravity = 0
-UseInertia = false
+UseLateralInertia = false
+UseVerticalInertia = false
 UseHorizontalInput = false
 UseVerticalInput = false
 
 [sub_resource type="Resource" id="4"]
 script = ExtResource("2")
-frame = 4
+Frame = 4
 UseLateralSpeed = true
 LateralSpeed = 0
 UseVerticalSpeed = true
-VerticalSpeed = 70000
+VerticalSpeed = 80000
 UseGravity = false
 Gravity = 0
-UseInertia = false
+UseLateralInertia = false
+UseVerticalInertia = false
 UseHorizontalInput = false
 UseVerticalInput = false
 
 [sub_resource type="Resource" id="3"]
 script = ExtResource("2")
-frame = 5
+Frame = 5
 UseLateralSpeed = false
 LateralSpeed = 0
 UseVerticalSpeed = false
 VerticalSpeed = 0
 UseGravity = true
-Gravity = 650000
-UseInertia = false
+Gravity = 200000
+UseLateralInertia = false
+UseVerticalInertia = false
 UseHorizontalInput = false
 UseVerticalInput = false
 
 [sub_resource type="Resource" id="Resource_c502o"]
 script = ExtResource("3_rnvg4")
-StateIndex = 6
-Condition = 0
+StateIndex = 7
+Condition = 1
 AtFrame = -1
+DistanceArea = Vector2i(0, 99999)
 
 [resource]
 script = ExtResource("1")
@@ -60,6 +64,7 @@ LoopFrames = Vector2i(0, 0)
 TurnState = -1
 RoundFinishDuration = 0
 HitStunFrameLimit = -1
+stateProperties = null
 statePhysics = [SubResource("1"), SubResource("4"), SubResource("3")]
 hitboxStates = null
 animationEvents = null

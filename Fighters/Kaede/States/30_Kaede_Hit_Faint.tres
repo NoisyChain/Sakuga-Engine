@@ -1,0 +1,52 @@
+[gd_resource type="Resource" script_class="FighterState" load_steps=8 format=3 uid="uid://b4giu8m6s2ibs"]
+
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="1"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/StatePhysics.cs" id="3"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/StateTransitionSettings.cs" id="4_t47jw"]
+
+[sub_resource type="Resource" id="2"]
+script = ExtResource("2")
+animationStage = 0
+Frame = 0
+HitboxIndex = 0
+
+[sub_resource type="Resource" id="3"]
+script = ExtResource("3")
+Frame = 0
+UseLateralSpeed = false
+LateralSpeed = 0
+UseVerticalSpeed = false
+VerticalSpeed = 0
+UseGravity = true
+Gravity = 0
+UseLateralInertia = false
+UseVerticalInertia = false
+UseHorizontalInput = false
+UseVerticalInput = false
+
+[sub_resource type="Resource" id="Resource_76172"]
+script = ExtResource("4_t47jw")
+StateIndex = 26
+Condition = 1
+AtFrame = -1
+DistanceArea = Vector2i(0, 999999)
+
+[resource]
+script = ExtResource("1")
+StateName = "Hit_Faint"
+Type = 4
+OffTheGround = false
+Duration = 30
+Loop = false
+LoopFrames = Vector2i(0, 0)
+TurnState = -1
+RoundFinishDuration = 0
+HitStunFrameLimit = -1
+stateProperties = null
+statePhysics = [SubResource("3")]
+hitboxStates = [SubResource("2")]
+animationEvents = null
+throwPivot = null
+soundEvents = null
+stateTransitions = Array[Object]([SubResource("Resource_76172")])

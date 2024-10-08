@@ -14,6 +14,7 @@ namespace SakugaEngine.Resources
         [Export] public int TurnState = -1;
         [Export] public int RoundFinishDuration;
         [Export] public int HitStunFrameLimit = -1;
+        [Export] public FrameProperties[] stateProperties;
         [Export] public StatePhysics[] statePhysics;
         [Export] public HitboxState[] hitboxStates;
         [Export] public AnimationEvents[] animationEvents;

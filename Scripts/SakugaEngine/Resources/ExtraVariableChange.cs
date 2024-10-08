@@ -6,6 +6,6 @@ namespace SakugaEngine.Resources
     public partial class ExtraVariableChange : Resource
     {
         [Export] public Global.ExtraVariableChange ChangeMode;
-        [Export] public uint ChangeValue;
+        [Export] public int ChangeValue;
     }
 }

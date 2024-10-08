@@ -13,7 +13,7 @@ namespace SakugaEngine.Game
         [Export] private FighterCamera Camera;
         public uint InputSize;
 
-        private FighterBody[] Fighters;
+        private SakugaFighter[] Fighters;
         private PhysicsWorld World;
         private GameMonitor Monitor;
         private HealthHUD healthHUD;
@@ -35,6 +35,7 @@ namespace SakugaEngine.Game
 
             healthHUD.UpdateHealthBars(Fighters, Monitor.VictoryCounter);
             healthHUD.UpdateTimer(Monitor.Clock / Global.TicksPerSecond);
+            healthHUD.UpdateDebug(Fighters);
             metersHUD.UpdateMeters(Fighters);
             Camera.UpdateCamera(Fighters[0], Fighters[1]);
         }
@@ -54,14 +55,16 @@ namespace SakugaEngine.Game
             Monitor = new GameMonitor(Global.GameTimer, 2);
             World = new PhysicsWorld();
 
-            Fighters = new FighterBody[2];
+            Fighters = new SakugaFighter[2];
             for (int i = 0; i < Spawns.Length; i++)
             {
                 Node temp = Spawns[i].Instantiate();
                 AddChild(temp);
-                Fighters[i] = temp as FighterBody;
+                Fighters[i] = temp as SakugaFighter;
                 World.AddBody(Fighters[i].Body);
                 Fighters[i].Initialize(i);
+                Fighters[i].SpawnablesSetup(this, World);
+                Fighters[i].VFXSetup(this);
             }
 
             Fighters[0].SetOpponent(Fighters[1]);
@@ -78,9 +81,9 @@ namespace SakugaEngine.Game
             int center = (Fighters[0].Body.FixedPosition.X + Fighters[1].Body.FixedPosition.X) / 2;
 
             if (Fighters[0].Body.FixedPosition.X < Fighters[1].Body.FixedPosition.X)
-            { Fighters[0].ChangeSide(true); Fighters[1].ChangeSide(false); }
+            { Fighters[0].UpdateSide(true); Fighters[1].UpdateSide(false); }
             else if (Fighters[0].Body.FixedPosition.X > Fighters[1].Body.FixedPosition.X)
-            { Fighters[0].ChangeSide(false); Fighters[1].ChangeSide(true); }
+            { Fighters[0].UpdateSide(false); Fighters[1].UpdateSide(true); }
 
             for (int i = 0; i < Fighters.Length; i++)
             {
@@ -104,7 +107,10 @@ namespace SakugaEngine.Game
                 );
             }
 
-            Monitor.Tick(Fighters);
+            for (int i = 0; i < Fighters.Length; i++)
+                Fighters[i].LateTick();
+
+            Monitor.Tick(Fighters); 
         }
 
         // Generate inputs for your game

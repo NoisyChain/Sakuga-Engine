@@ -3,10 +3,10 @@
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxElement.cs" id="1"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxSettings.cs" id="2"]
 
-[sub_resource type="Resource" id="1"]
+[sub_resource type="Resource" id="Resource_iklrc"]
 script = ExtResource("1")
-Center = Vector2i(0, 0)
-Size = Vector2i(0, 0)
+Center = Vector2i(0, 3000)
+Size = Vector2i(6000, 6000)
 HitboxType = 0
 HitType = 0
 BaseDamage = 150
@@ -63,10 +63,10 @@ BounceYTime = 0
 BounceYIntensity = 0
 BounceYState = 0
 
-[sub_resource type="Resource" id="2"]
+[sub_resource type="Resource" id="Resource_2q6fv"]
 script = ExtResource("1")
-Center = Vector2i(0, 0)
-Size = Vector2i(0, 0)
+Center = Vector2i(800, 7100)
+Size = Vector2i(3000, 3000)
 HitboxType = 0
 HitType = 0
 BaseDamage = 150
@@ -125,6 +125,6 @@ BounceYState = 0
 
 [resource]
 script = ExtResource("2")
-PushboxCenter = Vector2i(0, 0)
-PushboxSize = Vector2i(0, 0)
-Hitboxes = [SubResource("1"), SubResource("2")]
+PushboxCenter = Vector2i(0, 3000)
+PushboxSize = Vector2i(4000, 6000)
+Hitboxes = [SubResource("Resource_iklrc"), SubResource("Resource_2q6fv")]

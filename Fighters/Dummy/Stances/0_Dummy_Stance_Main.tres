@@ -11,6 +11,7 @@
 
 [resource]
 script = ExtResource("1_55coc")
+IsPersistent = false
 NeutralState = 0
 Moves = Array[Object]([ExtResource("1_c1uqo"), ExtResource("2_3l7yh"), ExtResource("3_ph8w4"), ExtResource("4_12jwt"), ExtResource("5_pdmj4"), ExtResource("6_x058f"), ExtResource("7_ahvae")])
 HitReactions = PackedInt32Array()

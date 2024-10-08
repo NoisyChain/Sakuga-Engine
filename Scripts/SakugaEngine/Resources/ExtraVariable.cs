@@ -1,5 +1,5 @@
 using Godot;
-using System;
+using System.IO;
 
 namespace SakugaEngine.Resources
 {
@@ -7,15 +7,15 @@ namespace SakugaEngine.Resources
     public partial class ExtraVariable : Resource
     {
         [Export] public string Name;
-        [Export] public uint MaxValue;
-        [Export] public uint StartingValue;
+        [Export] public int MaxValue;
+        [Export] public int StartingValue;
 
         //Not working yet (gonna change some stuff)
-        [Export] public ExtraVariableBehaviour BehaviourOnStart;
-        [Export] public ExtraVariableBehaviour BehaviourOnHit;
-        [Export] public ExtraVariableBehaviour BehaviourOnDamage;
-        [Export] public ExtraVariableBehaviour BehaviourOnChange;
-        [Export] public ExtraVariableBehaviour BehaviourOnFull;
-        [Export] public ExtraVariableBehaviour BehaviourOnEmpty;
+        [Export] public ExtraVariableBehavior BehaviorOnStart;
+        [Export] public ExtraVariableBehavior BehaviorOnHit;
+        [Export] public ExtraVariableBehavior BehaviorOnDamage;
+        [Export] public ExtraVariableBehavior BehaviorOnMoveChange;
+        [Export] public ExtraVariableBehavior BehaviorOnFull;
+        [Export] public ExtraVariableBehavior BehaviorOnEmpty;
     }
 }

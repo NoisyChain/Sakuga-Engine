@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="MoveSettings" load_steps=3 format=3 uid="uid://c4rrn130o8wh7"]
+
+[ext_resource type="Resource" uid="uid://b7xl8m7kdvbg7" path="res://Fighters/Shared/Inputs/15_Input_2A.tres" id="1_udhq3"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_8k45x"]
+
+[resource]
+script = ExtResource("2_8k45x")
+MoveName = "2A"
+MoveState = 51
+Inputs = ExtResource("1_udhq3")
+SideChange = 0
+MoveEnd = 2
+MoveEndState = -1
+SuperGaugeRequired = 0
+HealthThreshold = Vector2i(0, 99999)
+SpendHealth = 0
+DistanceArea = Vector2i(0, 999999)
+FrameLimit = -1
+ExtraVariablesRequirement = null
+ExtraVariablesChange = null
+ChangeStance = -1
+IsSequenceFromStates = PackedInt32Array()
+CancelsTo = PackedInt32Array(22)
+KaraCancelsTo = PackedInt32Array()
+buttonChargeSequence = null
+SuperFlash = 0
+CanBeOverrided = false
+CanOverrideToSelf = false
+IgnoreSamePriority = false
+PriorityBuffer = false
+Priority = 5
+AutoPlayNextMove = 10
+WaitForNullStates = false
+UseOnGround = true
+UseOnAir = false

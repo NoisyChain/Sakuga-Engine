@@ -25,7 +25,7 @@ namespace SakugaEngine
             }
         }
 
-        public void PlayState(int state, bool reset)
+        public void PlayState(int state, bool reset = false)
         {
             if (CurrentState != state)
             {

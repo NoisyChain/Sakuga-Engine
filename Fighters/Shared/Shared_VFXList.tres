@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SpawnsList" load_steps=5 format=3 uid="uid://b6a4cqdykhhg"]
+
+[ext_resource type="PackedScene" uid="uid://bu1whcrm5k7wv" path="res://Fighters/Shared/VFX/VFX_00.tscn" id="1_2q3kk"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/SpawnsList.cs" id="1_r1fnx"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/SpawnObject.cs" id="2_0kwyy"]
+
+[sub_resource type="Resource" id="Resource_2floy"]
+script = ExtResource("2_0kwyy")
+SpawnScene = ExtResource("1_2q3kk")
+Ammount = 1
+
+[resource]
+script = ExtResource("1_r1fnx")
+SpawnObjects = Array[Object]([SubResource("Resource_2floy")])

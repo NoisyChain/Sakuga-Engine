@@ -21,7 +21,8 @@ namespace SakugaEngine
         public void Resume() { Paused = false; }
         public void Stop() { TimeLeft =  0; Paused = false; }
 
-        public bool IsRunning() => TimeLeft > 0 && !Paused;
+        public bool IsRunning() => TimeLeft > 0;
+        public bool IsCounting() => TimeLeft > 0 && !Paused;
         public bool IsPaused() => Paused;
 
         public void Serialize(BinaryWriter bw)

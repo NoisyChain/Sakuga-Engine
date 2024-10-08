@@ -5,14 +5,15 @@
 
 [sub_resource type="Resource" id="1"]
 script = ExtResource("2")
-frame = 0
+Frame = 0
 UseLateralSpeed = true
 LateralSpeed = 20000
 UseVerticalSpeed = true
 VerticalSpeed = 0
 UseGravity = false
 Gravity = 0
-UseInertia = false
+UseLateralInertia = false
+UseVerticalInertia = false
 UseHorizontalInput = false
 UseVerticalInput = false
 
@@ -27,6 +28,7 @@ LoopFrames = Vector2i(0, 29)
 TurnState = -1
 RoundFinishDuration = 0
 HitStunFrameLimit = -1
+stateProperties = null
 statePhysics = [SubResource("1")]
 hitboxStates = null
 animationEvents = null

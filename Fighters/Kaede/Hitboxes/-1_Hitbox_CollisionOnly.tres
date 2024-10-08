@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource("1")
-PushboxCenter = Vector2i(0, 0)
-PushboxSize = Vector2i(0, 0)
+PushboxCenter = Vector2i(0, 6000)
+PushboxSize = Vector2i(4000, 12000)
 Hitboxes = []

@@ -20,8 +20,10 @@ namespace SakugaEngine.UI
 
         [ExportCategory("Extra")]
         [Export] private Label Timer;
+        [Export] private Label P1Debug;
+        [Export] private Label P2Debug;
 
-        public void Setup(FighterBody[] fighters)
+        public void Setup(SakugaFighter[] fighters)
         {
             P1Health.MaxValue = fighters[0].Variables.MaxHealth;
             P2Health.MaxValue = fighters[1].Variables.MaxHealth;
@@ -39,7 +41,7 @@ namespace SakugaEngine.UI
             }
         }
 
-        public void UpdateHealthBars(FighterBody[] fighters, int[] rounds)
+        public void UpdateHealthBars(SakugaFighter[] fighters, int[] rounds)
         {
             P1Health.Value = fighters[0].Variables.CurrentHealth;
             P2Health.Value = fighters[1].Variables.CurrentHealth;
@@ -54,6 +56,13 @@ namespace SakugaEngine.UI
             P1Combo.UpdateCounter((int)fighters[1].HitStun.TimeLeft, fighters[1].Tracker);
             P2Combo.UpdateCounter((int)fighters[0].HitStun.TimeLeft, fighters[0].Tracker);
         }
+
+        public void UpdateDebug(SakugaFighter[] fighters)
+        {
+            P1Debug.Text = fighters[0].DebugInfo();
+            P2Debug.Text = fighters[1].DebugInfo();
+        }
+
         public void UpdateTimer(int timerValue)
         {
             Timer.Text = timerValue.ToString();

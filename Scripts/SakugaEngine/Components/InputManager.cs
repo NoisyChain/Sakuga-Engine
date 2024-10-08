@@ -66,12 +66,12 @@ namespace SakugaEngine
             bool validInput;
 
             if (directionNumber != 5 && buttonNumber == 0)
-                validInput = CheckDirectionalInputs(CurrentHistory, directionNumber, 3, motion.AbsoluteDirection);
+                validInput = !CheckDirectionalInputs(CurrentHistory, directionNumber, 1, motion.AbsoluteDirection);
             else if (directionNumber == 5 && buttonNumber > 0)
-                validInput = CheckButtonInputs(CurrentHistory, buttonNumber, 3);
+                validInput = !CheckButtonInputs(CurrentHistory, buttonNumber, 1);
             else
-                validInput = CheckDirectionalInputs(CurrentHistory, directionNumber, 3, motion.AbsoluteDirection) &&
-                CheckButtonInputs(CurrentHistory, buttonNumber, 3);
+                validInput = !CheckDirectionalInputs(CurrentHistory, directionNumber, 1, motion.AbsoluteDirection) &&
+                !CheckButtonInputs(CurrentHistory, buttonNumber, 1);
 
             if (!validInput)
                 return false;
@@ -217,8 +217,6 @@ namespace SakugaEngine
             }
 
             InputHistory[CurrentHistory].duration++;
-            
-            //GD.Print(CurrentHistory + "::" + InputHistory[CurrentHistory].ToString());
         }
         
         public bool IsBeingPressed(int index, int input)
@@ -285,6 +283,9 @@ public struct InputRegistry
 {
     public ushort rawInput;
     public ushort duration;
+    public short hCharge;
+    public short vCharge;
+    public short bCharge;
 
     public bool IsNull => rawInput == 0;
 
@@ -292,12 +293,18 @@ public struct InputRegistry
     {
         bw.Write(rawInput);
         bw.Write(duration);
+        bw.Write(hCharge);
+        bw.Write(vCharge);
+        bw.Write(bCharge);
     }
 
     public void Deserialize(BinaryReader br)
     {
         rawInput = br.ReadUInt16();
         duration = br.ReadUInt16();
+        hCharge = br.ReadInt16();
+        vCharge = br.ReadInt16();
+        bCharge = br.ReadInt16();
     }
     
     public override string ToString()

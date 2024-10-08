@@ -1,12 +1,13 @@
 using Godot;
+using SakugaEngine.Resources;
 using System.IO;
 
-namespace SakugaEngine.Resources
+namespace SakugaEngine
 {
     [GlobalClass]
     public partial class StanceManager : Node
     {
-        private FighterBody owner;
+        private SakugaFighter owner;
         [Export] public int DefaultStance = 0;
         [Export] public FighterStance[] Stances;
 
@@ -15,7 +16,7 @@ namespace SakugaEngine.Resources
         public int currentMove = -1;
         public bool canMoveCancel;
 
-        public void Initialize(FighterBody owner)
+        public void Initialize(SakugaFighter owner)
         {
             this.owner = owner;
             CurrentStance = DefaultStance;
@@ -23,12 +24,21 @@ namespace SakugaEngine.Resources
 
         public bool CheckMoveConditions(int index)
         {
-            if (currentMove >= 0 && currentMove == index)
+            if (currentMove >= 0)
             {
-                bool canOverride = GetCurrentMove().CanBeOverrided && GetCurrentMove().CanOverrideToSelf;
+                if (currentMove == index)
+                {
+                    bool canOverride = !GetCurrentMove().CanBeOverrided || (GetCurrentMove().CanBeOverrided && GetCurrentMove().CanOverrideToSelf);
 
-                if (!canOverride) return false;
+                    if (!canOverride) return false;
+                }
+
+                if (GetMove(index).PriorityBuffer && GetMove(index).Priority < GetCurrentMove().Priority) return false;
             }
+
+            int distance = Global.HorizontalDistance(owner.GetOpponent().Body.FixedPosition, owner.Body.FixedPosition);
+            bool isValidDistance = distance >= GetMove(index).DistanceArea.X && distance <= GetMove(index).DistanceArea.Y;
+            if (!isValidDistance) return false;
 
             bool isCorrectSurface = (GetMove(index).UseOnGround && owner.Body.IsOnGround) ||
                 (GetMove(index).UseOnAir && !owner.Body.IsOnGround) ||
@@ -48,6 +58,9 @@ namespace SakugaEngine.Resources
             if (owner.Variables.CurrentSuperGauge < GetMove(index).SuperGaugeRequired) return false;
 
             if (!owner.Variables.CompareExtraVariables(GetMove(index).ExtraVariablesRequirement)) return false;
+            
+            bool AllowedFrameWindow = owner.Animator.GetCurrentState().Loop || !owner.Animator.GetCurrentState().Loop && owner.Animator.Frame < GetMove(index).FrameLimit;
+            if (GetMove(index).FrameLimit > 0 && !AllowedFrameWindow) return false;
             
             return true;
         }
@@ -72,10 +85,10 @@ namespace SakugaEngine.Resources
 
         public void ExecuteMove()
         {
-            owner.Variables.CurrentSuperGauge -= (uint)GetMove(bufferedMove).SuperGaugeRequired;
+            owner.Variables.CurrentSuperGauge -= GetMove(bufferedMove).SuperGaugeRequired;
 
             if (owner.Variables.CurrentHealth > 10 && GetMove(bufferedMove).SpendHealth > 0)
-                owner.Variables.CurrentHealth -= (uint)GetMove(bufferedMove).SpendHealth;
+                owner.Variables.CurrentHealth -= GetMove(bufferedMove).SpendHealth;
 
             if (GetMove(bufferedMove).SuperFlash > 0 && !owner.SuperStop)
             {
@@ -83,7 +96,12 @@ namespace SakugaEngine.Resources
                 owner.GetOpponent().HitStop.Start((uint)GetMove(bufferedMove).SuperFlash);
             }
 
-            owner.CallState(GetMove(bufferedMove).MoveState, true);
+            
+            if (GetMove(bufferedMove).MoveState >= 0) 
+                owner.Animator.PlayState(GetMove(bufferedMove).MoveState, true);
+            
+            owner.Variables.ExtraVariablesOnMoveChange();
+            
             owner.Variables.SetExtraVariables(GetMove(bufferedMove).ExtraVariablesChange);
 
             currentMove = bufferedMove;
@@ -108,10 +126,17 @@ namespace SakugaEngine.Resources
                                         GetMove(bufferedMove).Priority > GetCurrentMove().Priority : 
                                         GetMove(bufferedMove).Priority >= GetCurrentMove().Priority));
                     
-                    bool canCancelThis = (canMoveCancel && CanCancel()) || 
-                                (owner.Animator.Frame < Global.KaraCancelWindow && CanKaraCancel());
+                    bool allowMoveCancel = canMoveCancel || owner.Body.ContainsFrameProperty((byte)Global.FrameProperties.FORCE_MOVE_CANCEL);
                     
-                    if (CanOverride || canCancelThis)
+                    bool canCancelThis = (allowMoveCancel && CanCancel()) || 
+                                (owner.Animator.Frame < Global.KaraCancelWindow && CanKaraCancel());
+                                        
+                    bool isValidStateType = GetMove(bufferedMove).WaitForNullStates ? 
+                                            (owner.Animator.GetCurrentState().Type > Global.StateType.NULL &&
+                                            owner.Animator.GetCurrentState().Type <= Global.StateType.COMBAT) :
+                                            owner.Animator.GetCurrentState().Type <= Global.StateType.COMBAT;
+                    
+                    if (isValidStateType && (CanOverride || canCancelThis))
                     {
                         ExecuteMove();
                         GD.Print("You executed " + GetCurrentMove().MoveName + "!");
@@ -136,7 +161,7 @@ namespace SakugaEngine.Resources
         public void ResetStance()
         {
             if (GetCurrentMove().MoveEndState >= 0)
-                owner.CallState(GetCurrentMove().MoveEndState, false);
+                owner.Animator.PlayState(GetCurrentMove().MoveEndState, false);
             
             if (canMoveCancel) canMoveCancel = false;
             
@@ -145,7 +170,22 @@ namespace SakugaEngine.Resources
                 CurrentStance = GetCurrentMove().ChangeStance;
                 bufferedMove = -1;
             }
+            int nextMove = GetCurrentMove().AutoPlayNextMove;
             currentMove = -1;
+            
+            if (nextMove >= 0 && bufferedMove < 0) 
+            {
+                bufferedMove = nextMove;
+                ExecuteMove();
+            }
+            
+        }
+
+        public void Clear()
+        {
+            currentMove = -1;
+            canMoveCancel = false;
+            if (!GetCurrentStance().IsDamagePersistent) CurrentStance = 0;
         }
 
         public bool CheckOwnerState(int index) 

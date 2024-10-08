@@ -3,6 +3,7 @@ using Godot;
 namespace SakugaEngine.Resources
 {
     [GlobalClass]
+    [Icon("res://Sprites/Icons/Icon_Motion.png")]
     public partial class MoveSettings : Resource
     {
         [Export] public string MoveName;
@@ -14,6 +15,8 @@ namespace SakugaEngine.Resources
         [Export] public int SuperGaugeRequired = 0;
         [Export] public Vector2I HealthThreshold = new Vector2I(0, 99999);
         [Export] public int SpendHealth = 0;
+        [Export] public Vector2I DistanceArea = new Vector2I(0, 999999);
+        [Export] public int FrameLimit = -1;
         [Export] public ExtraVariableCondition[] ExtraVariablesRequirement;
         [Export] public ExtraVariableChange[] ExtraVariablesChange;
         [Export] public int ChangeStance = -1;
@@ -26,7 +29,10 @@ namespace SakugaEngine.Resources
         [Export] public bool CanBeOverrided;
         [Export] public bool CanOverrideToSelf;
         [Export] public bool IgnoreSamePriority = true;
+        [Export] public bool PriorityBuffer;
         [Export] public int Priority = 0;
+        [Export] public int AutoPlayNextMove = -1;
+        [Export] public bool WaitForNullStates = true;
         [Export] public bool UseOnGround, UseOnAir;
         //[Export] public bool AllowJumpCancel, AllowDashCancel;
     }
