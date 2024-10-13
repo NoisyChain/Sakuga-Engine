@@ -1,12 +1,14 @@
-[gd_scene load_steps=11 format=3 uid="uid://bu1whcrm5k7wv"]
+[gd_scene load_steps=13 format=3 uid="uid://b6q10l0c6oxdp"]
 
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/SakugaVFX.cs" id="1_71f8f"]
-[ext_resource type="Texture2D" uid="uid://dy8t34bg73laq" path="res://Sprites/VFX/6005-0.png" id="2_e2cx1"]
-[ext_resource type="Texture2D" uid="uid://cjq3772ci4p40" path="res://Sprites/VFX/6005-1.png" id="3_fmefi"]
-[ext_resource type="Texture2D" uid="uid://dsdscwi0l5pj6" path="res://Sprites/VFX/6005-2.png" id="4_fpc4k"]
-[ext_resource type="Texture2D" uid="uid://bhnmdeyaebhy7" path="res://Sprites/VFX/6005-3.png" id="5_62cfg"]
-[ext_resource type="AudioStream" uid="uid://dh8gd7nsvr4dy" path="res://Fighters/Shared/Sounds/SFX/SFX_Hit.wav" id="6_duoua"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/SoundQueue.cs" id="6_lw88n"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/SakugaVFX.cs" id="1_swfpx"]
+[ext_resource type="Texture2D" uid="uid://dy8t34bg73laq" path="res://Sprites/VFX/6005-0.png" id="2_5ae4s"]
+[ext_resource type="Texture2D" uid="uid://cn6sdysvilie7" path="res://Sprites/VFX/6000-0.png" id="2_qi5d4"]
+[ext_resource type="Texture2D" uid="uid://u3wi0xk58ijv" path="res://Sprites/VFX/6000-1.png" id="3_ftbg7"]
+[ext_resource type="Texture2D" uid="uid://cpri747mmmnfp" path="res://Sprites/VFX/6000-2.png" id="4_oyxh8"]
+[ext_resource type="Texture2D" uid="uid://bfnd6dyiurbmn" path="res://Sprites/VFX/6000-3.png" id="5_6rcgy"]
+[ext_resource type="Texture2D" uid="uid://bfna8b1aaf18f" path="res://Sprites/VFX/6000-5.png" id="6_aq670"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/SoundQueue.cs" id="7_deevn"]
+[ext_resource type="AudioStream" uid="uid://0fv0qogxarkr" path="res://Fighters/Shared/Sounds/SFX/SFX_Block.wav" id="8_j2l3e"]
 
 [sub_resource type="Animation" id="Animation_b6bqa"]
 resource_name = "GFX"
@@ -22,7 +24,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.2, 0.266667),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
-"values": [ExtResource("2_e2cx1"), ExtResource("3_fmefi"), ExtResource("4_fpc4k"), ExtResource("5_62cfg"), null]
+"values": [ExtResource("2_qi5d4"), ExtResource("3_ftbg7"), ExtResource("4_oyxh8"), ExtResource("5_6rcgy"), ExtResource("6_aq670")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -31,10 +33,10 @@ tracks/1/path = NodePath("Graphics/Visuals/Sprite3D:offset")
 tracks/1/interp = 0
 tracks/1/loop_wrap = false
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.2),
+"times": PackedFloat32Array(0, 0.0666667, 0.2, 0.266667),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(-250, -200), Vector2(-210, -200), Vector2(-180, -150), Vector2(-120, -120)]
+"values": [Vector2(-6, -12), Vector2(-18, -32), Vector2(-18, -32), Vector2(-24, -48)]
 }
 
 [sub_resource type="Animation" id="Animation_nv8md"]
@@ -49,7 +51,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("2_e2cx1")]
+"values": [ExtResource("2_5ae4s")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -71,7 +73,7 @@ _data = {
 }
 
 [node name="VFX" type="Node3D" node_paths=PackedStringArray("Player", "Graphics", "Sound")]
-script = ExtResource("1_71f8f")
+script = ExtResource("1_swfpx")
 Duration = 16
 Player = NodePath("Graphics/Visuals/AnimationPlayer")
 Graphics = NodePath("Graphics")
@@ -93,9 +95,8 @@ layers = 2
 sorting_offset = 10.0
 centered = false
 offset = Vector2(-250, -200)
-pixel_size = 0.0015
-texture = ExtResource("2_e2cx1")
+texture = ExtResource("2_5ae4s")
 
 [node name="HitSound" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource("6_duoua")
-script = ExtResource("6_lw88n")
+stream = ExtResource("8_j2l3e")
+script = ExtResource("7_deevn")

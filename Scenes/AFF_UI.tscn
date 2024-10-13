@@ -664,7 +664,7 @@ grow_vertical = 2
 [node name="ColorRect1" type="ColorRect" parent="Debug"]
 layout_mode = 0
 offset_right = 240.0
-offset_bottom = 310.0
+offset_bottom = 364.0
 color = Color(0, 0, 0, 0.156863)
 
 [node name="ColorRect2" type="ColorRect" parent="Debug"]
@@ -672,7 +672,7 @@ layout_mode = 0
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -240.0
-offset_bottom = 310.0
+offset_bottom = 364.0
 color = Color(0, 0, 0, 0.156863)
 
 [node name="P1Debug" type="Label" parent="Debug"]

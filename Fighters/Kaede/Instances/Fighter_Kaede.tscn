@@ -1,4 +1,4 @@
-[gd_scene load_steps=361 format=3 uid="uid://b1ggpw8ltpaid"]
+[gd_scene load_steps=362 format=3 uid="uid://b1ggpw8ltpaid"]
 
 [ext_resource type="Texture2D" uid="uid://bx0l7712opy5a" path="res://Fighters/Kaede/Sprites/0-12.png" id="1"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/SakugaFighter.cs" id="1_7dx2y"]
@@ -293,6 +293,7 @@
 [ext_resource type="Resource" uid="uid://t64afo7e4u1o" path="res://Fighters/Kaede/Hitboxes/0_Hitbox_Basic.tres" id="282_e3wna"]
 [ext_resource type="Resource" uid="uid://b6kiyox8tjef2" path="res://Fighters/Kaede/Hitboxes/1_Hitbox_Crouch.tres" id="283_0cwlf"]
 [ext_resource type="Resource" uid="uid://do4rbierxdm3u" path="res://Fighters/Kaede/Hitboxes/2_Hitbox_Jump.tres" id="284_xhaa5"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/SoundQueue.cs" id="285_ltkr8"]
 [ext_resource type="Resource" uid="uid://wsc17lx57phl" path="res://Fighters/Kaede/Hitboxes/3_Hitbox_FDash.tres" id="285_tgbyt"]
 [ext_resource type="Resource" uid="uid://bpi3dgk313noc" path="res://Fighters/Kaede/Stances/Kaede_Stance_Main.tres" id="285_xbwpm"]
 [ext_resource type="Resource" uid="uid://d1h77q6l816dg" path="res://Fighters/Kaede/Hitboxes/4_Hitbox_BDash.tres" id="286_itrj8"]
@@ -1855,7 +1856,7 @@ Name = "Dash Jumping"
 MaxValue = 1
 StartingValue = 0
 
-[node name="Kaede_Viewer" type="Node3D" node_paths=PackedStringArray("HitStun", "HitStop", "MoveBuffer", "PushForce", "HorizontalBounce", "VerticalBounce", "Body", "Inputs", "Variables", "Animator", "Stance", "Tracker", "Graphics")]
+[node name="Kaede_Viewer" type="Node3D" node_paths=PackedStringArray("HitStun", "HitStop", "MoveBuffer", "PushForce", "HorizontalBounce", "VerticalBounce", "Body", "Inputs", "Variables", "Animator", "Stance", "Tracker", "Sounds", "Graphics")]
 script = ExtResource("1_7dx2y")
 HitStun = NodePath("Timers/HitStun")
 HitStop = NodePath("Timers/HitStop")
@@ -1864,9 +1865,6 @@ PushForce = NodePath("Timers/Pushback")
 HorizontalBounce = NodePath("Timers/HBounce")
 VerticalBounce = NodePath("Timers/VBounce")
 SpawnablesList = ExtResource("2_rb7dq")
-VFXList = ExtResource("3_xocgb")
-SFXList = ExtResource("4_sr35b")
-VoicesList = ExtResource("5_skjfo")
 Profile = ExtResource("2_tnpyq")
 Body = NodePath("PhysicsBody")
 Inputs = NodePath("InputManager")
@@ -1874,7 +1872,11 @@ Variables = NodePath("Variables")
 Animator = NodePath("Graphics/Mesh")
 Stance = NodePath("Stances")
 Tracker = NodePath("CombatTracker")
+Sounds = [NodePath("Sounds/SFX_0"), NodePath("Sounds/SFX_1"), NodePath("Sounds/SFX_2"), NodePath("Sounds/SFX_3"), NodePath("Sounds/SFX_4")]
 Graphics = [NodePath("Graphics/Mesh/KaedeGraphics")]
+VFXList = ExtResource("3_xocgb")
+SFXList = ExtResource("4_sr35b")
+VoicesList = ExtResource("5_skjfo")
 
 [node name="Graphics" type="Node3D" parent="."]
 script = ExtResource("2")
@@ -1906,14 +1908,19 @@ body = NodePath("../PhysicsBody")
 [node name="Sounds" type="Node3D" parent="."]
 
 [node name="SFX_0" type="AudioStreamPlayer3D" parent="Sounds"]
+script = ExtResource("285_ltkr8")
 
 [node name="SFX_1" type="AudioStreamPlayer3D" parent="Sounds"]
+script = ExtResource("285_ltkr8")
 
 [node name="SFX_2" type="AudioStreamPlayer3D" parent="Sounds"]
+script = ExtResource("285_ltkr8")
 
 [node name="SFX_3" type="AudioStreamPlayer3D" parent="Sounds"]
+script = ExtResource("285_ltkr8")
 
 [node name="SFX_4" type="AudioStreamPlayer3D" parent="Sounds"]
+script = ExtResource("285_ltkr8")
 
 [node name="PhysicsBody" type="Node" parent="."]
 script = ExtResource("225_oxjr4")

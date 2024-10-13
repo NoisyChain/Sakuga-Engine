@@ -1,14 +1,32 @@
-[gd_resource type="Resource" script_class="SpawnsList" load_steps=5 format=3 uid="uid://b6a4cqdykhhg"]
+[gd_resource type="Resource" script_class="SpawnsList" load_steps=11 format=3 uid="uid://b6a4cqdykhhg"]
 
 [ext_resource type="PackedScene" uid="uid://bu1whcrm5k7wv" path="res://Fighters/Shared/VFX/VFX_00.tscn" id="1_2q3kk"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/SpawnsList.cs" id="1_r1fnx"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/SpawnObject.cs" id="2_0kwyy"]
+[ext_resource type="PackedScene" uid="uid://b6q10l0c6oxdp" path="res://Fighters/Shared/VFX/VFX_01.tscn" id="3_6o1bp"]
+[ext_resource type="PackedScene" uid="uid://ci8tj0xdjw1dl" path="res://Fighters/Shared/VFX/VFX_02.tscn" id="4_lhgkm"]
+[ext_resource type="PackedScene" uid="uid://bkam4nekv1yw2" path="res://Fighters/Shared/VFX/VFX_03.tscn" id="5_axc1q"]
 
 [sub_resource type="Resource" id="Resource_2floy"]
 script = ExtResource("2_0kwyy")
 SpawnScene = ExtResource("1_2q3kk")
 Ammount = 1
 
+[sub_resource type="Resource" id="Resource_6t0f1"]
+script = ExtResource("2_0kwyy")
+SpawnScene = ExtResource("3_6o1bp")
+Ammount = 1
+
+[sub_resource type="Resource" id="Resource_widxw"]
+script = ExtResource("2_0kwyy")
+SpawnScene = ExtResource("4_lhgkm")
+Ammount = 1
+
+[sub_resource type="Resource" id="Resource_55vjd"]
+script = ExtResource("2_0kwyy")
+SpawnScene = ExtResource("5_axc1q")
+Ammount = 1
+
 [resource]
 script = ExtResource("1_r1fnx")
-SpawnObjects = Array[Object]([SubResource("Resource_2floy")])
+SpawnObjects = Array[Object]([SubResource("Resource_2floy"), SubResource("Resource_6t0f1"), SubResource("Resource_widxw"), SubResource("Resource_55vjd")])

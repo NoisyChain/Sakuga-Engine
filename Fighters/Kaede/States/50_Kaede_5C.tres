@@ -1,9 +1,35 @@
-[gd_resource type="Resource" script_class="FighterState" load_steps=11 format=3 uid="uid://c4h470mmhnes4"]
+[gd_resource type="Resource" script_class="FighterState" load_steps=16 format=3 uid="uid://c4h470mmhnes4"]
 
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="1"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/AnimationEvents.cs" id="1_3hfyi"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/StatePhysics.cs" id="3"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/StateTransitionSettings.cs" id="4_w2dw3"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/SoundEvents.cs" id="4_wp3yt"]
+
+[sub_resource type="Resource" id="Resource_mqgxp"]
+script = ExtResource("1_3hfyi")
+Frame = 0
+Type = 5
+Object = 0
+xRelativeTo = 0
+yRelativeTo = 0
+Index = 0
+Value = 3
+SetActive = false
+TargetPosition = Vector2i(0, 0)
+
+[sub_resource type="Resource" id="Resource_i0kgn"]
+script = ExtResource("1_3hfyi")
+Frame = 18
+Type = 5
+Object = 0
+xRelativeTo = 0
+yRelativeTo = 0
+Index = 0
+Value = 0
+SetActive = false
+TargetPosition = Vector2i(0, 0)
 
 [sub_resource type="Resource" id="2"]
 script = ExtResource("2")
@@ -22,6 +48,15 @@ script = ExtResource("2")
 animationStage = 2
 Frame = 22
 HitboxIndex = 0
+
+[sub_resource type="Resource" id="Resource_yi6f6"]
+script = ExtResource("4_wp3yt")
+Frame = 0
+SoundType = 0
+Source = 0
+Index = 0
+IsRandom = false
+Range = 0
 
 [sub_resource type="Resource" id="5"]
 script = ExtResource("3")
@@ -72,7 +107,7 @@ HitStunFrameLimit = -1
 stateProperties = null
 statePhysics = [SubResource("5"), SubResource("6")]
 hitboxStates = [SubResource("2"), SubResource("3"), SubResource("4")]
-animationEvents = null
+animationEvents = Array[Object]([SubResource("Resource_mqgxp"), SubResource("Resource_i0kgn")])
 throwPivot = null
-soundEvents = null
+soundEvents = Array[Object]([SubResource("Resource_yi6f6")])
 stateTransitions = Array[Object]([SubResource("Resource_6gdsy")])

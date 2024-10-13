@@ -1,6 +1,6 @@
 using System;
 using Godot;
-using LiteNetLib;
+using SakugaEngine.PRNG;
 
 public static class Global
 {
@@ -98,6 +98,8 @@ public static class Global
         FACE_ANY = 10,
         TAUNT = 11
     }
+
+    public static int RandomNumber;
 
     //global functions
     public static Vector2 ToScaledVector2(Vector2I vector)

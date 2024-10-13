@@ -5,11 +5,11 @@ namespace SakugaEngine.Resources
     [GlobalClass]
     public partial class SoundEvents : Resource
     {
-        public int Frame;
-        public Global.SoundType SoundType;
-        public int Source;
-        public int Index;
-        public bool IsRandom;
-        public int Range;
+        [Export] public int Frame;
+        [Export] public Global.SoundType SoundType;
+        [Export] public int Source;
+        [Export] public int Index;
+        [Export] public bool IsRandom;
+        [Export] public int Range;
     }
 }

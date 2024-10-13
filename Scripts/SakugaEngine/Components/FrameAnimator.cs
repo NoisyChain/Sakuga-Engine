@@ -40,6 +40,7 @@ namespace SakugaEngine
         public void RunState()
         {
             Frame++;
+            LoopState();
         }
 
         public void LoopState()

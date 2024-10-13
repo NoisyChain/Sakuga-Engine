@@ -15,9 +15,16 @@ namespace SakugaEngine
 		[Export] public FrameAnimator Animator;
 		[Export] public StanceManager Stance;
 		[Export] public CombatTracker Tracker;
+        [Export] public SoundQueue[] Sounds;
 
 		[ExportCategory("Visuals")]
         [Export] protected Node3D[] Graphics;
+
+        [ExportCategory("Lists")]
+        //[Export] public SpawnsList SpawnablesList;
+        [Export] public SpawnsList VFXList;
+        [Export] public SoundsList SFXList;
+        [Export] public SoundsList VoicesList;
 		
 		public virtual void Tick(){}
 		public virtual void LateTick(){}
@@ -118,7 +125,7 @@ namespace SakugaEngine
                 //Condition 1: State End
                 bool c1 = (conditions & (byte)Global.TransitionCondition.STATE_END) == 0 ||
                         ((conditions & (byte)Global.TransitionCondition.STATE_END) != 0 && 
-                        Animator.Frame >= Animator.GetCurrentState().Duration);
+                        Animator.Frame >= Animator.GetCurrentState().Duration - 1);
                 //Condition 2: At Frame
                 bool c2 = (conditions & (byte)Global.TransitionCondition.AT_FRAME) == 0 ||
                     ((conditions & (byte)Global.TransitionCondition.AT_FRAME) != 0 && 
@@ -157,23 +164,26 @@ namespace SakugaEngine
 
             for (int i = 0; i < Animator.GetCurrentState().animationEvents.Length; i++)
             {
-                if (Animator.Frame != Animator.GetCurrentState().animationEvents[i].Frame) return;
-
                 Vector2I dst = Teleport(Animator.GetCurrentState().animationEvents[i].TargetPosition,
                                         Animator.GetCurrentState().animationEvents[i].Index,
                                         (int)Animator.GetCurrentState().animationEvents[i].xRelativeTo,
                                         (int)Animator.GetCurrentState().animationEvents[i].yRelativeTo);
+                                                        
+                if (Animator.Frame != Animator.GetCurrentState().animationEvents[i].Frame) continue;
 
                 switch ((int)Animator.GetCurrentState().animationEvents[i].Type)
                 {
                     case 0: //Spawn Object (Spawnable, VFX)
+                        int ind = Animator.GetCurrentState().animationEvents[i].IsRandom ? 
+                            (Global.RandomNumber + Animator.GetCurrentState().animationEvents[i].Index) % Animator.GetCurrentState().animationEvents[i].Range : 
+                            Animator.GetCurrentState().animationEvents[i].Index;
                         switch((int)Animator.GetCurrentState().animationEvents[i].Object)
                         {
                             case 0: //Spawnable
-                                FighterReference().SpawnSpawnable(Animator.GetCurrentState().animationEvents[i].Index, dst);
+                                FighterReference().SpawnSpawnable(ind, dst);
                                 break;
                             case 1: //VFX
-                                FighterReference().SpawnVFX(Animator.GetCurrentState().animationEvents[i].Index, dst);
+                                FighterReference().SpawnVFX(ind, dst);
                                 break;
                         }
                         break;
@@ -210,8 +220,35 @@ namespace SakugaEngine
                         break;
                     case 5: //Set super armor
                         Variables.SuperArmor = (sbyte)Animator.GetCurrentState().animationEvents[i].Value;
+                        GD.Print("Super Armor: " + Animator.GetCurrentState().animationEvents[i].Value);
                         break;
                 }
+            }
+        }
+
+        public void SoundEvents(SoundsList SFX, SoundsList VoiceLines)
+        {
+            if (Animator.GetCurrentState().soundEvents.Length <= 0) return;
+            if (SFX == null) return;
+            if (VoiceLines == null) return;
+
+            for (int i = 0; i < Animator.GetCurrentState().soundEvents.Length; i++)
+            {
+                if (Animator.Frame != Animator.GetCurrentState().soundEvents[i].Frame) continue;
+                int ind = Animator.GetCurrentState().soundEvents[i].IsRandom ? 
+                    (Global.RandomNumber + Animator.GetCurrentState().soundEvents[i].Index) % Animator.GetCurrentState().soundEvents[i].Range : 
+                    Animator.GetCurrentState().soundEvents[i].Index;
+                AudioStream selectedSound = null;
+                switch ((int)Animator.GetCurrentState().soundEvents[i].SoundType)
+                {
+                    case 0:
+                        selectedSound = SFX.Sounds[ind];
+                        break;
+                    case 1:
+                        selectedSound = VoiceLines.Sounds[ind];
+                        break;
+                }
+                Sounds[Animator.GetCurrentState().soundEvents[i].Source].QueueSound(selectedSound);
             }
         }
 

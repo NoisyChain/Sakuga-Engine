@@ -1,9 +1,12 @@
-[gd_scene load_steps=34 format=3 uid="uid://domhsm5n4i2q1"]
+[gd_scene load_steps=38 format=3 uid="uid://domhsm5n4i2q1"]
 
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/SakugaSpawnable.cs" id="1_dhydb"]
+[ext_resource type="Resource" uid="uid://b6a4cqdykhhg" path="res://Fighters/Shared/Shared_VFXList.tres" id="2_mmp44"]
+[ext_resource type="Resource" uid="uid://k31pv0ejfv2s" path="res://Fighters/Shared/Shared_SFXList.tres" id="3_mac18"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Utils/FOV_Correction.cs" id="3_vniop"]
 [ext_resource type="Resource" uid="uid://cwuwbygqhrjcb" path="res://Fighters/Kaede/Spawnables/0/States/0_Spawn.tres" id="4_a4ayh"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/FrameAnimator.cs" id="4_ao37v"]
+[ext_resource type="Resource" uid="uid://c8h8jltu6u5pb" path="res://Fighters/Shared/Shared_VoiceLines.tres" id="4_vrrx0"]
 [ext_resource type="Resource" uid="uid://iwa20g1seshl" path="res://Fighters/Kaede/Spawnables/0/States/1_Travel.tres" id="5_xqrih"]
 [ext_resource type="Resource" uid="uid://bgjd35gpl3n3l" path="res://Fighters/Kaede/Spawnables/0/States/2_Death.tres" id="6_1hw44"]
 [ext_resource type="Texture2D" uid="uid://dho2rxfy6hkug" path="res://Fighters/Kaede/Spawnables/0/Sprites/1210-5.png" id="7_1jm7p"]
@@ -16,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://bqn808dr1xgt5" path="res://Fighters/Kaede/Spawnables/0/Sprites/1210-7.png" id="14_c0qtb"]
 [ext_resource type="Texture2D" uid="uid://dlsfasp5w35ob" path="res://Fighters/Kaede/Spawnables/0/Sprites/1210-8.png" id="15_exb3l"]
 [ext_resource type="Texture2D" uid="uid://33q2at6e5oq7" path="res://Fighters/Kaede/Spawnables/0/Sprites/1211-0.png" id="16_g0add"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/SoundQueue.cs" id="18_d0kas"]
 [ext_resource type="Resource" uid="uid://dyam6gxn4slhs" path="res://Fighters/Kaede/Spawnables/0/Hitboxes/0_Hitbox_Spawnable_Basic.tres" id="230_by1ut"]
 [ext_resource type="PackedScene" uid="uid://dduf0jsq56ggk" path="res://Scenes/HitboxViewer.tscn" id="281_wh8kr"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Collision/PhysicsBody.cs" id="282_or0ge"]
@@ -139,7 +143,7 @@ Name = "Dash Jumping"
 MaxValue = 1
 StartingValue = 0
 
-[node name="Kaede_Spawnable" type="Node3D" node_paths=PackedStringArray("LifeTime", "Body", "Animator", "Graphics")]
+[node name="Kaede_Spawnable" type="Node3D" node_paths=PackedStringArray("LifeTime", "Body", "Animator", "Sounds", "Graphics")]
 script = ExtResource("1_dhydb")
 LifeTime = NodePath("Timers/LifeTime")
 DeathState = 2
@@ -149,7 +153,11 @@ DieOnHit = true
 Deflectable = true
 Body = NodePath("PhysicsBody")
 Animator = NodePath("Graphics/Mesh")
+Sounds = [NodePath("Sounds/SFX_0")]
 Graphics = [NodePath("Graphics/Mesh/ProjectileGraphics")]
+VFXList = ExtResource("2_mmp44")
+SFXList = ExtResource("3_mac18")
+VoicesList = ExtResource("4_vrrx0")
 
 [node name="Graphics" type="Node3D" parent="."]
 script = ExtResource("3_vniop")
@@ -168,7 +176,7 @@ centered = false
 offset = Vector2(-250, -120)
 pixel_size = 0.003
 texture_filter = 0
-texture = ExtResource("10_0ddx1")
+texture = ExtResource("13_wcm7f")
 region_rect = Rect2(711.25, 46.25, 2, 0)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Graphics/Mesh/ProjectileGraphics"]
@@ -182,14 +190,7 @@ body = NodePath("../PhysicsBody")
 [node name="Sounds" type="Node3D" parent="."]
 
 [node name="SFX_0" type="AudioStreamPlayer3D" parent="Sounds"]
-
-[node name="SFX_1" type="AudioStreamPlayer3D" parent="Sounds"]
-
-[node name="SFX_2" type="AudioStreamPlayer3D" parent="Sounds"]
-
-[node name="SFX_3" type="AudioStreamPlayer3D" parent="Sounds"]
-
-[node name="SFX_4" type="AudioStreamPlayer3D" parent="Sounds"]
+script = ExtResource("18_d0kas")
 
 [node name="PhysicsBody" type="Node" parent="."]
 script = ExtResource("282_or0ge")

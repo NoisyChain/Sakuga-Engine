@@ -2,6 +2,7 @@ using Godot;
 using System.IO;
 using SakugaEngine.Resources;
 using SakugaEngine.Collision;
+using System.Threading.Tasks;
 
 namespace SakugaEngine
 {
@@ -19,9 +20,6 @@ namespace SakugaEngine
 
         [ExportCategory("Lists")]
         [Export] public SpawnsList SpawnablesList;
-        [Export] public SpawnsList VFXList;
-        [Export] public SoundsList SFXList;
-        [Export] public SoundsList VoicesList;
 
         [ExportCategory("Extras")]
         [Export] public FighterProfile Profile;
@@ -158,22 +156,29 @@ namespace SakugaEngine
                 PushForce.Run();
                 HorizontalBounce.Run();
                 VerticalBounce.Run();
-                if (!IsStunLocked()) Animator.RunState();
-                UpdateFrameProperties();
-                AnimationEvents();
-                StateTransitions();
-                Animator.LoopState();
+                if (!IsStunLocked())
+                    Animator.RunState();
             }
             Variables.UpdateExtraVariables();
             MoveBuffer.Run();
             Stance.CheckMoves();
 
+            if (!HitStop.IsRunning())
+            {
+                UpdateFrameProperties();
+                StateTransitions();
+                AnimationEvents();
+                SoundEvents(SFXList, VoicesList);
+            }
             UpdateHitboxes(!HitStop.IsRunning());
+           
 
             if (IsBeingPushed)
                 CharacterPushing();
             else
                 UpdateFighterPhysics();
+            
+            BounceLogic();
             
             FighterVars.CalculateDamageScaling(Body.IsOnWall);
             if (!HitStun.IsRunning())
@@ -382,6 +387,9 @@ namespace SakugaEngine
                     "\nBuffered Move: "+Stance.bufferedMove+
                     "\nFrame: "+Animator.Frame+
                     "\nHitbox: "+Body.CurrentHitbox+
+                    "\nHealth: "+Variables.CurrentHealth+"/"+Variables.MaxHealth+
+                    "\nSuper Gauge: "+Variables.CurrentSuperGauge+"/"+Variables.MaxSuperGauge+
+                    "\nSuper Armor: "+Variables.SuperArmor+
                     "\nBlocking: "+IsBlocking();
         }
 
@@ -528,7 +536,8 @@ namespace SakugaEngine
             }
             else
             {
-                HitConfirm(box.SelfMeterGain, (uint)box.HitStopDuration, box.HitConfirmState, box.HitEffectIndex, contact);
+                int hitFX = GetOpponent().IsBlocking() ? box.BlockEffectIndex : box.HitEffectIndex;
+                HitConfirm(box.SelfMeterGain, (uint)box.HitStopDuration, box.HitConfirmState, hitFX, contact);
                 if (box.AllowSelfPushback)
                     HitPushback(box.SelfPushbackDuration, box.SelfPushbackForce);
             }
@@ -537,7 +546,7 @@ namespace SakugaEngine
         public void ProjectileDamage(HitboxElement box, Vector2I contact, int priority){}
         public void HitboxClash(HitboxElement box, Vector2I contact)
         {
-            HitConfirm(0, (uint)box.ClashHitStopDuration, -1, box.HitEffectIndex, contact);
+            HitConfirm(0, (uint)box.ClashHitStopDuration, -1, box.ClashEffectIndex, contact);
         }
         public void ProjectileClash(HitboxElement box, Vector2I contact){}
         public void ProjectileDeflect(HitboxElement box, Vector2I contact){}

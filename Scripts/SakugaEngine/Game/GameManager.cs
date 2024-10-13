@@ -3,6 +3,8 @@ using System.IO;
 using PleaseResync;
 using SakugaEngine.Collision;
 using SakugaEngine.UI;
+using SakugaEngine.PRNG;
+using System.Text;
 
 namespace SakugaEngine.Game
 {
@@ -20,6 +22,8 @@ namespace SakugaEngine.Game
         private MetersHUD metersHUD;
 
         private int Frame = 0;
+        private PRandom RNG;
+        private string seed = "Sakuga Engine";
         //private uint Checksum;
 
         public override void _Ready()
@@ -40,6 +44,13 @@ namespace SakugaEngine.Game
             Camera.UpdateCamera(Fighters[0], Fighters[1]);
         }
 
+        private void GenerateSeed()
+        {
+            byte[] seedArray = Encoding.ASCII.GetBytes(seed);
+            RNG = new PRandom((int)Platform.FletcherChecksumAlt(seedArray, 32), 256);
+            GD.Print((int)Platform.FletcherChecksumAlt(seedArray, 32));
+        }
+
         public void Setup()
         {
             if (GetChildren().Count > 0)
@@ -54,6 +65,7 @@ namespace SakugaEngine.Game
 
             Monitor = new GameMonitor(Global.GameTimer, 2);
             World = new PhysicsWorld();
+            GenerateSeed();
 
             Fighters = new SakugaFighter[2];
             for (int i = 0; i < Spawns.Length; i++)
@@ -77,6 +89,7 @@ namespace SakugaEngine.Game
         public void GameLoop(byte[] playerInput)
         {
             Frame++;
+            Global.RandomNumber = RNG.Next();
 
             int center = (Fighters[0].Body.FixedPosition.X + Fighters[1].Body.FixedPosition.X) / 2;
 
@@ -177,6 +190,7 @@ namespace SakugaEngine.Game
         {
             bw.Write(Frame);
             Monitor.Serialize(bw);
+            RNG.Serialize(bw);
             for (int i = 0; i < Fighters.Length; i++)
                 Fighters[i].Serialize(bw);
         }
@@ -185,6 +199,7 @@ namespace SakugaEngine.Game
         {
             Frame = br.ReadInt32();
             Monitor.Deserialize(br);
+            RNG.Deserialize(br);
             for (int i = 0; i < Fighters.Length; i++)
                 Fighters[i].Deserialize(br);
         }

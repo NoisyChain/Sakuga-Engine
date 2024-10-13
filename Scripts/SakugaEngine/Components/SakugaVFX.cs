@@ -1,4 +1,5 @@
 using Godot;
+using SakugaEngine;
 using System.IO;
 
 public partial class SakugaVFX : Node3D
@@ -8,6 +9,7 @@ public partial class SakugaVFX : Node3D
     [Export] private AnimationPlayer Player;
     [Export] private Node3D Graphics;
     [Export] private string AnimationName;
+    [Export] private SoundQueue Sound;
     public bool IsActive;
     public Vector2I FixedPosition;
     public int Frame;
@@ -34,6 +36,8 @@ public partial class SakugaVFX : Node3D
         FixedPosition = origin;
         Side = side;
         Frame = -1;
+        Sound.Stop();
+        Sound.SimpleQueueSound();
         IsActive = true;
     }
     public void Tick()

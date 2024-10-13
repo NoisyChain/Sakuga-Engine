@@ -95,13 +95,8 @@ namespace SakugaEngine
             
             if (!GetFighterOwner().HitStop.IsRunning())
             {
-                if (!Body.IsMovable) 
                 LifeTime.Run();
                 Animator.RunState();
-                UpdateFrameProperties();
-                AnimationEvents();
-                StateTransitions();
-                Animator.LoopState();
             }
 
             if (Variables != null) Variables.UpdateExtraVariables();
@@ -111,11 +106,18 @@ namespace SakugaEngine
             {
                 IsActive = false;
                 Animator.Frame = -1;
-                //Body.CurrentHitbox = -1;
                 Body.SetHitbox(-1);
             }
 
+            if (!GetFighterOwner().HitStop.IsRunning())
+            {
+                UpdateFrameProperties();
+                StateTransitions();
+                AnimationEvents();
+                SoundEvents(SFXList, VoicesList);
+            }
             UpdateHitboxes(!GetFighterOwner().HitStop.IsRunning());
+
             UpdateFighterPhysics();
         }
 
