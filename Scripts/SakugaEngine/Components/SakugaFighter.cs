@@ -23,6 +23,7 @@ namespace SakugaEngine
 
         [ExportCategory("Extras")]
         [Export] public FighterProfile Profile;
+        [Export] public int CharacterSeed;
 
         public bool SuperStop;
         public int LayerSorting = -1;

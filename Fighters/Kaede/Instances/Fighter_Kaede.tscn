@@ -1866,6 +1866,7 @@ HorizontalBounce = NodePath("Timers/HBounce")
 VerticalBounce = NodePath("Timers/VBounce")
 SpawnablesList = ExtResource("2_rb7dq")
 Profile = ExtResource("2_tnpyq")
+CharacterSeed = 339654605
 Body = NodePath("PhysicsBody")
 Inputs = NodePath("InputManager")
 Variables = NodePath("Variables")

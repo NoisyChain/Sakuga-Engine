@@ -3,7 +3,6 @@ using System.IO;
 using PleaseResync;
 using SakugaEngine.Collision;
 using SakugaEngine.UI;
-using SakugaEngine.PRNG;
 using System.Text;
 
 namespace SakugaEngine.Game
@@ -13,6 +12,7 @@ namespace SakugaEngine.Game
         [Export] public PackedScene[] Spawns;
         [Export] private CanvasLayer FighterUI;
         [Export] private FighterCamera Camera;
+        [Export] Label SeedViewer;
         public uint InputSize;
 
         private SakugaFighter[] Fighters;
@@ -22,9 +22,10 @@ namespace SakugaEngine.Game
         private MetersHUD metersHUD;
 
         private int Frame = 0;
-        private PRandom RNG;
-        private string seed = "Sakuga Engine";
+        private int generatedSeed = 0;
         //private uint Checksum;
+
+        Vector3I randomTest = new Vector3I();
 
         public override void _Ready()
         {
@@ -42,13 +43,22 @@ namespace SakugaEngine.Game
             healthHUD.UpdateDebug(Fighters);
             metersHUD.UpdateMeters(Fighters);
             Camera.UpdateCamera(Fighters[0], Fighters[1]);
+            SeedViewer.Text = CalculateSeed().ToString();
         }
 
-        private void GenerateSeed()
+        private void GenerateBaseSeed()
         {
-            byte[] seedArray = Encoding.ASCII.GetBytes(seed);
-            RNG = new PRandom((int)Platform.FletcherChecksumAlt(seedArray, 32), 256);
-            GD.Print((int)Platform.FletcherChecksumAlt(seedArray, 32));
+            byte[] seedArray = Encoding.ASCII.GetBytes(Global.baseSeed);
+            generatedSeed = (int)Platform.GetChecksum(seedArray);
+        }
+
+        private int CalculateSeed()
+        {
+            int posX = Fighters[0].Body.FixedPosition.X + Fighters[1].Body.FixedPosition.X;
+            int posY = Fighters[0].Body.FixedPosition.Y + Fighters[1].Body.FixedPosition.Y;
+            int stateFrame = Fighters[0].Animator.Frame + Fighters[0].Animator.CurrentState + Fighters[1].Animator.Frame + Fighters[1].Animator.CurrentState;
+            int charSeeds = Fighters[0].CharacterSeed + Fighters[1].CharacterSeed;
+            return generatedSeed + posX + posY + stateFrame + charSeeds + (Frame * Global.SimulationScale) + Monitor.Clock;
         }
 
         public void Setup()
@@ -65,7 +75,7 @@ namespace SakugaEngine.Game
 
             Monitor = new GameMonitor(Global.GameTimer, 2);
             World = new PhysicsWorld();
-            GenerateSeed();
+            GenerateBaseSeed();
 
             Fighters = new SakugaFighter[2];
             for (int i = 0; i < Spawns.Length; i++)
@@ -89,7 +99,13 @@ namespace SakugaEngine.Game
         public void GameLoop(byte[] playerInput)
         {
             Frame++;
-            Global.RandomNumber = RNG.Next();
+            Global.UpdateRNG(CalculateSeed());
+
+            randomTest = new Vector3I(
+                Global.RNG.Next(),
+                Global.RNG.Next(),
+                Global.RNG.Next()
+            );
 
             int center = (Fighters[0].Body.FixedPosition.X + Fighters[1].Body.FixedPosition.X) / 2;
 
@@ -190,18 +206,24 @@ namespace SakugaEngine.Game
         {
             bw.Write(Frame);
             Monitor.Serialize(bw);
-            RNG.Serialize(bw);
             for (int i = 0; i < Fighters.Length; i++)
                 Fighters[i].Serialize(bw);
+            
+            bw.Write(randomTest.X);
+            bw.Write(randomTest.Y);
+            bw.Write(randomTest.Z);
         }
 
         public void Deserialize(BinaryReader br)
         {
             Frame = br.ReadInt32();
             Monitor.Deserialize(br);
-            RNG.Deserialize(br);
             for (int i = 0; i < Fighters.Length; i++)
                 Fighters[i].Deserialize(br);
+            
+            randomTest.X = br.ReadInt32();
+            randomTest.Y = br.ReadInt32();
+            randomTest.Z = br.ReadInt32();
         }
 
         public byte[] GetLocalInput(int PlayerID, int InputSize)

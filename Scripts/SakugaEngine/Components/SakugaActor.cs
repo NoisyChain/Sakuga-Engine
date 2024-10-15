@@ -24,7 +24,7 @@ namespace SakugaEngine
         //[Export] public SpawnsList SpawnablesList;
         [Export] public SpawnsList VFXList;
         [Export] public SoundsList SFXList;
-        [Export] public SoundsList VoicesList;
+        [Export] public SoundsList VoicesList;        
 		
 		public virtual void Tick(){}
 		public virtual void LateTick(){}
@@ -175,7 +175,7 @@ namespace SakugaEngine
                 {
                     case 0: //Spawn Object (Spawnable, VFX)
                         int ind = Animator.GetCurrentState().animationEvents[i].IsRandom ? 
-                            (Global.RandomNumber + Animator.GetCurrentState().animationEvents[i].Index) % Animator.GetCurrentState().animationEvents[i].Range : 
+                            Global.RNGRange(Animator.GetCurrentState().animationEvents[i].Index, Animator.GetCurrentState().animationEvents[i].Range) : 
                             Animator.GetCurrentState().animationEvents[i].Index;
                         switch((int)Animator.GetCurrentState().animationEvents[i].Object)
                         {
@@ -236,7 +236,7 @@ namespace SakugaEngine
             {
                 if (Animator.Frame != Animator.GetCurrentState().soundEvents[i].Frame) continue;
                 int ind = Animator.GetCurrentState().soundEvents[i].IsRandom ? 
-                    (Global.RandomNumber + Animator.GetCurrentState().soundEvents[i].Index) % Animator.GetCurrentState().soundEvents[i].Range : 
+                    Global.RNGRange(Animator.GetCurrentState().soundEvents[i].Index, Animator.GetCurrentState().soundEvents[i].Range) : 
                     Animator.GetCurrentState().soundEvents[i].Index;
                 AudioStream selectedSound = null;
                 switch ((int)Animator.GetCurrentState().soundEvents[i].SoundType)

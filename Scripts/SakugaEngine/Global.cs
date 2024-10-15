@@ -99,7 +99,17 @@ public static class Global
         TAUNT = 11
     }
 
-    public static int RandomNumber;
+    public static Random RNG;
+    public static string baseSeed = "Sakuga Engine";
+    public static void UpdateRNG(int seed)
+    {
+        RNG = new Random(seed);
+    }
+
+    public static int RNGRange(int a, int b)
+    {
+        return (RNG.Next() + a) % b;
+    }
 
     //global functions
     public static Vector2 ToScaledVector2(Vector2I vector)

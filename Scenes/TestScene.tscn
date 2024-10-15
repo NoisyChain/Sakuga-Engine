@@ -30,6 +30,33 @@ size = Vector3(20, 0.2, 2)
 
 [node name="CanvasLayer" parent="." instance=ExtResource("1_wexcy")]
 
+[node name="SeedViewer" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Seed" type="Label" parent="SeedViewer"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -34.0
+offset_top = -37.0
+offset_right = 33.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 8
+text = "Seed"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2034, 4.65161)
 cull_mask = 1048557
@@ -50,11 +77,12 @@ environment = SubResource("Environment_iltph")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
 mesh = SubResource("BoxMesh_ql5gv")
 
-[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("FighterUI", "Camera")]
+[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("FighterUI", "Camera", "SeedViewer")]
 script = ExtResource("1_ocl0l")
 Spawns = Array[PackedScene]([ExtResource("5_oxe85"), ExtResource("5_oxe85")])
 FighterUI = NodePath("../CanvasLayer")
 Camera = NodePath("../Camera3D")
+SeedViewer = NodePath("../SeedViewer/Seed")
 
 [node name="RollbackManager" type="Node" parent="." node_paths=PackedStringArray("GameManager")]
 script = ExtResource("6_jke5l")
