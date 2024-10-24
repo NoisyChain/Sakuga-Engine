@@ -134,7 +134,7 @@ namespace SakugaEngine
             if (Animator.GetCurrentState().TurnState >= 0)
                 Animator.PlayState(Animator.GetCurrentState().TurnState);
 
-            if (Stance.currentMove >= 0 &&(int)Stance.GetCurrentMove().SideChange == 2)
+            if (Stance.CurrentMove >= 0 &&(int)Stance.GetCurrentMove().SideChange == 2)
                 Stance.ResetStance();
         }
 
@@ -384,13 +384,14 @@ namespace SakugaEngine
                     "\nStance: "+Stance.CurrentStance+
                     "\nState: "+Animator.CurrentState+
                     "\nAnimation: "+Animator.GetCurrentState().StateName+
-                    "\nCurrent Move: "+Stance.currentMove+
-                    "\nBuffered Move: "+Stance.bufferedMove+
+                    "\nCurrent Move: "+Stance.CurrentMove+
+                    "\nBuffered Move: "+Stance.BufferedMove+
                     "\nFrame: "+Animator.Frame+
                     "\nHitbox: "+Body.CurrentHitbox+
                     "\nHealth: "+Variables.CurrentHealth+"/"+Variables.MaxHealth+
                     "\nSuper Gauge: "+Variables.CurrentSuperGauge+"/"+Variables.MaxSuperGauge+
                     "\nSuper Armor: "+Variables.SuperArmor+
+                    "\nCharge Buffers: "+Inputs.CurrentInput().hCharge+" | "+Inputs.CurrentInput().vCharge+" | "+Inputs.CurrentInput().bCharge+
                     "\nBlocking: "+IsBlocking();
         }
 
@@ -477,7 +478,7 @@ namespace SakugaEngine
             LayerSorting = 1;
             Body.HitConfirmed = true;
             Body.IsMovable = false;
-            Stance.canMoveCancel = true;
+            Stance.CanMoveCancel = true;
             Variables.AddSuperGauge(superGaugeGain);
             HitStop.Start(hitStopDuration);
             if (hitEffect >= 0)
@@ -557,7 +558,7 @@ namespace SakugaEngine
             if (IsBlocking() && Animator.GetCurrentState().Type != Global.StateType.BLOCKING)
             {
                 CallBlockState(0);
-                Stance.currentMove = -1;
+                Stance.CurrentMove = -1;
             }
         }
         public void OnHitboxExit()

@@ -18,7 +18,6 @@ namespace PleaseResync
 
         private const int HealthCheckFramesBehind = 10;
         private const byte HealthCheckTime = 30;
-        private byte HealthCheckBus;
         private bool _offlinePlay;
 
         private SyncState _syncState;
@@ -181,8 +180,7 @@ namespace PleaseResync
 
             if (_lastSentChecksum == checksum) return;
 
-            HealthCheckBus++;
-            if (HealthCheckBus == HealthCheckTime)
+            if (_timeSync.LocalFrame > 0 && (_timeSync.LocalFrame % HealthCheckTime) == 0)
             {
                 foreach (var device in _devices)
                 {
@@ -197,7 +195,6 @@ namespace PleaseResync
                     }
                 }
                 _lastSentChecksum = checksum;
-                HealthCheckBus = 0;
             }
         }
 

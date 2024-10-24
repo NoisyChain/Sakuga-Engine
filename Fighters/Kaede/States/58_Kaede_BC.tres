@@ -1,0 +1,44 @@
+[gd_resource type="Resource" script_class="FighterState" load_steps=6 format=3 uid="uid://d1pionrhmvjjl"]
+
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="1_0v5me"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="1_236vv"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/StatePhysics.cs" id="3_qb2lk"]
+
+[sub_resource type="Resource" id="Resource_5e2ap"]
+script = ExtResource("1_236vv")
+animationStage = 0
+Frame = 0
+HitboxIndex = 0
+
+[sub_resource type="Resource" id="Resource_mpd63"]
+script = ExtResource("3_qb2lk")
+Frame = 0
+UseLateralSpeed = true
+LateralSpeed = 0
+UseVerticalSpeed = true
+VerticalSpeed = 0
+UseGravity = false
+Gravity = 0
+UseLateralInertia = false
+UseVerticalInertia = false
+UseHorizontalInput = false
+UseVerticalInput = false
+
+[resource]
+script = ExtResource("1_0v5me")
+StateName = "Taunt"
+Type = 2
+OffTheGround = false
+Duration = 92
+Loop = false
+LoopFrames = Vector2i(0, 0)
+TurnState = -1
+RoundFinishDuration = 0
+HitStunFrameLimit = -1
+stateProperties = null
+statePhysics = Array[Object]([SubResource("Resource_mpd63")])
+hitboxStates = Array[Object]([SubResource("Resource_5e2ap")])
+animationEvents = null
+throwPivot = null
+soundEvents = null
+stateTransitions = null

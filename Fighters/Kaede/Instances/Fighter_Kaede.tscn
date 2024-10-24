@@ -1,4 +1,4 @@
-[gd_scene load_steps=362 format=3 uid="uid://b1ggpw8ltpaid"]
+[gd_scene load_steps=370 format=3 uid="uid://b1ggpw8ltpaid"]
 
 [ext_resource type="Texture2D" uid="uid://bx0l7712opy5a" path="res://Fighters/Kaede/Sprites/0-12.png" id="1"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/SakugaFighter.cs" id="1_7dx2y"]
@@ -131,6 +131,7 @@
 [ext_resource type="Texture2D" uid="uid://yah4rrwl8sm2" path="res://Fighters/Kaede/Sprites/105-6.png" id="66"]
 [ext_resource type="Resource" uid="uid://iu2gxdyj1xs0" path="res://Fighters/Kaede/States/57_Kaede_66B.tres" id="66_hf6f1"]
 [ext_resource type="Texture2D" uid="uid://bpjf15u1b0fap" path="res://Fighters/Kaede/Sprites/105-8.png" id="67"]
+[ext_resource type="Resource" uid="uid://d1pionrhmvjjl" path="res://Fighters/Kaede/States/58_Kaede_BC.tres" id="67_jb784"]
 [ext_resource type="Texture2D" uid="uid://d4eo78pa6fb5v" path="res://Fighters/Kaede/Sprites/105-7.png" id="68"]
 [ext_resource type="Texture2D" uid="uid://b102jnskqlqg7" path="res://Fighters/Kaede/Sprites/105-4.png" id="69"]
 [ext_resource type="Texture2D" uid="uid://p8lb6dfy61aw" path="res://Fighters/Kaede/Sprites/105-5.png" id="70"]
@@ -292,14 +293,20 @@
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/FrameTimer.cs" id="232_811te"]
 [ext_resource type="Resource" uid="uid://t64afo7e4u1o" path="res://Fighters/Kaede/Hitboxes/0_Hitbox_Basic.tres" id="282_e3wna"]
 [ext_resource type="Resource" uid="uid://b6kiyox8tjef2" path="res://Fighters/Kaede/Hitboxes/1_Hitbox_Crouch.tres" id="283_0cwlf"]
+[ext_resource type="Texture2D" uid="uid://rw4q7nvg0f1u" path="res://Fighters/Kaede/Sprites/180-0.png" id="284_7p1pn"]
 [ext_resource type="Resource" uid="uid://do4rbierxdm3u" path="res://Fighters/Kaede/Hitboxes/2_Hitbox_Jump.tres" id="284_xhaa5"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/SoundQueue.cs" id="285_ltkr8"]
+[ext_resource type="Texture2D" uid="uid://c7uk676kowt2" path="res://Fighters/Kaede/Sprites/180-1.png" id="285_p81x1"]
 [ext_resource type="Resource" uid="uid://wsc17lx57phl" path="res://Fighters/Kaede/Hitboxes/3_Hitbox_FDash.tres" id="285_tgbyt"]
 [ext_resource type="Resource" uid="uid://bpi3dgk313noc" path="res://Fighters/Kaede/Stances/Kaede_Stance_Main.tres" id="285_xbwpm"]
 [ext_resource type="Resource" uid="uid://d1h77q6l816dg" path="res://Fighters/Kaede/Hitboxes/4_Hitbox_BDash.tres" id="286_itrj8"]
+[ext_resource type="Texture2D" uid="uid://c4x2rsvnkh6hy" path="res://Fighters/Kaede/Sprites/180-2.png" id="286_n0lul"]
 [ext_resource type="Resource" uid="uid://dy23ho6aepysm" path="res://Fighters/Kaede/Hitboxes/5_Hitbox_5A_StUp.tres" id="287_5sf82"]
+[ext_resource type="Texture2D" uid="uid://bjiua12g0ct75" path="res://Fighters/Kaede/Sprites/180-3.png" id="287_gxj1q"]
+[ext_resource type="Texture2D" uid="uid://dpkvsunk3qmml" path="res://Fighters/Kaede/Sprites/180-4.png" id="288_iua8e"]
 [ext_resource type="Resource" uid="uid://ccal4fra1gc3t" path="res://Fighters/Kaede/Hitboxes/6_Hitbox_5A_Active.tres" id="288_w537s"]
 [ext_resource type="Resource" uid="uid://cwbj5esglv2om" path="res://Fighters/Kaede/Hitboxes/7_Hitbox_5B_Active.tres" id="289_mhmx1"]
+[ext_resource type="Texture2D" uid="uid://el0tv4va1k8y" path="res://Fighters/Kaede/Sprites/180-5.png" id="289_vwwoq"]
 [ext_resource type="Resource" uid="uid://chqrw2rci8qq3" path="res://Fighters/Kaede/Hitboxes/8_Hitbox_5C_Active.tres" id="290_81yq4"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/ExtraVariable.cs" id="294_608rl"]
 [ext_resource type="Resource" uid="uid://cb88clwitcqb5" path="res://Fighters/Kaede/Hitboxes/11_Hitbox_2B_Active.tres" id="294_c38k2"]
@@ -1783,6 +1790,35 @@ tracks/1/keys = {
 "values": [Vector2(-123, 19), Vector2(-133, 19), Vector2(-133, 26), Vector2(-128, 103), Vector2(-133, 70), Vector2(-140, 68), Vector2(-111, 31), Vector2(-79, -9)]
 }
 
+[sub_resource type="Animation" id="Animation_iwlrq"]
+resource_name = "Taunt"
+length = 1.53334
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite3D:texture")
+tracks/0/interp = 0
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.2, 0.266667, 0.333333, 0.4, 0.466667, 0.533333, 0.6, 0.666667, 0.733333, 0.8, 0.866667, 0.933333, 1, 1.06667, 1.13333, 1.2, 1.26667, 1.33333, 1.4, 1.46667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("284_7p1pn"), ExtResource("285_p81x1"), ExtResource("286_n0lul"), ExtResource("287_gxj1q"), ExtResource("288_iua8e"), ExtResource("289_vwwoq"), ExtResource("287_gxj1q"), ExtResource("288_iua8e"), ExtResource("289_vwwoq"), ExtResource("287_gxj1q"), ExtResource("288_iua8e"), ExtResource("289_vwwoq"), ExtResource("287_gxj1q"), ExtResource("288_iua8e"), ExtResource("289_vwwoq"), ExtResource("287_gxj1q"), ExtResource("288_iua8e"), ExtResource("289_vwwoq"), ExtResource("287_gxj1q"), ExtResource("288_iua8e"), ExtResource("289_vwwoq"), ExtResource("285_p81x1"), ExtResource("284_7p1pn")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite3D:offset")
+tracks/1/interp = 0
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.2, 0.266667, 0.333333, 0.4, 0.466667, 0.533333, 0.6, 0.666667, 0.733333, 0.8, 0.866667, 0.933333, 1, 1.06667, 1.13333, 1.2, 1.26667, 1.33333, 1.4, 1.46667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(-58, -11), Vector2(-59, -11), Vector2(-62, -8), Vector2(-63, -8), Vector2(-61, -8), Vector2(-60, -8), Vector2(-63, -8), Vector2(-61, -8), Vector2(-60, -8), Vector2(-63, -8), Vector2(-61, -8), Vector2(-60, -8), Vector2(-63, -8), Vector2(-61, -8), Vector2(-60, -8), Vector2(-63, -8), Vector2(-61, -8), Vector2(-60, -8), Vector2(-63, -8), Vector2(-61, -8), Vector2(-60, -8), Vector2(-59, -11), Vector2(-58, -11)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_n2gjo"]
 _data = {
 "2A": SubResource("42"),
@@ -1831,6 +1867,7 @@ _data = {
 "Jump_Neutral": SubResource("11"),
 "Landing": SubResource("14"),
 "RESET": SubResource("2"),
+"Taunt": SubResource("Animation_iwlrq"),
 "Walk_Backwards": SubResource("4"),
 "Walk_Forward": SubResource("3"),
 "j_5A": SubResource("45"),
@@ -1886,7 +1923,7 @@ script = ExtResource("2")
 script = ExtResource("3_nysqa")
 players = [NodePath("KaedeGraphics/AnimationPlayer")]
 prefix = PackedStringArray("")
-States = Array[Object]([ExtResource("4_xlofv"), ExtResource("5_2sxfy"), ExtResource("6_u2dqg"), ExtResource("7_xwol1"), ExtResource("8_hxuoj"), ExtResource("9_ckwfv"), ExtResource("59_mlhuf"), ExtResource("10_u7cet"), ExtResource("11_ckfgn"), ExtResource("18_ij8bc"), ExtResource("19_hh7rs"), ExtResource("20_ah7dl"), ExtResource("21_rfcxw"), ExtResource("22_3sr7t"), ExtResource("23_pok6s"), ExtResource("24_phwyd"), ExtResource("25_8twg1"), ExtResource("29_jvf1v"), ExtResource("21_j7mmt"), ExtResource("22_pqew6"), ExtResource("23_86unt"), ExtResource("30_6dd7a"), ExtResource("31_mdeoi"), ExtResource("32_nbfue"), ExtResource("33_2qxv0"), ExtResource("34_en7an"), ExtResource("35_36eqi"), ExtResource("36_853s0"), ExtResource("37_oi05v"), ExtResource("38_3q1jw"), ExtResource("39_er80j"), ExtResource("40_722ln"), ExtResource("41_x767v"), ExtResource("42_77g4i"), ExtResource("43_ahavt"), ExtResource("44_bkmsp"), ExtResource("45_2fh7g"), ExtResource("46_486ig"), ExtResource("47_3y26o"), ExtResource("48_r6j10"), ExtResource("49_3iql2"), ExtResource("50_vg5so"), ExtResource("51_kgv4h"), ExtResource("52_1hj62"), ExtResource("53_le6pq"), ExtResource("54_11ub6"), ExtResource("55_lxr2w"), ExtResource("56_4fvg5"), ExtResource("57_ndasp"), ExtResource("58_elb54"), ExtResource("59_dyf2g"), ExtResource("60_a7vav"), ExtResource("61_31p7a"), ExtResource("62_ntykl"), ExtResource("63_78uap"), ExtResource("64_5gdyr"), ExtResource("65_eykor"), ExtResource("66_hf6f1")])
+States = Array[Object]([ExtResource("4_xlofv"), ExtResource("5_2sxfy"), ExtResource("6_u2dqg"), ExtResource("7_xwol1"), ExtResource("8_hxuoj"), ExtResource("9_ckwfv"), ExtResource("59_mlhuf"), ExtResource("10_u7cet"), ExtResource("11_ckfgn"), ExtResource("18_ij8bc"), ExtResource("19_hh7rs"), ExtResource("20_ah7dl"), ExtResource("21_rfcxw"), ExtResource("22_3sr7t"), ExtResource("23_pok6s"), ExtResource("24_phwyd"), ExtResource("25_8twg1"), ExtResource("29_jvf1v"), ExtResource("21_j7mmt"), ExtResource("22_pqew6"), ExtResource("23_86unt"), ExtResource("30_6dd7a"), ExtResource("31_mdeoi"), ExtResource("32_nbfue"), ExtResource("33_2qxv0"), ExtResource("34_en7an"), ExtResource("35_36eqi"), ExtResource("36_853s0"), ExtResource("37_oi05v"), ExtResource("38_3q1jw"), ExtResource("39_er80j"), ExtResource("40_722ln"), ExtResource("41_x767v"), ExtResource("42_77g4i"), ExtResource("43_ahavt"), ExtResource("44_bkmsp"), ExtResource("45_2fh7g"), ExtResource("46_486ig"), ExtResource("47_3y26o"), ExtResource("48_r6j10"), ExtResource("49_3iql2"), ExtResource("50_vg5so"), ExtResource("51_kgv4h"), ExtResource("52_1hj62"), ExtResource("53_le6pq"), ExtResource("54_11ub6"), ExtResource("55_lxr2w"), ExtResource("56_4fvg5"), ExtResource("57_ndasp"), ExtResource("58_elb54"), ExtResource("59_dyf2g"), ExtResource("60_a7vav"), ExtResource("61_31p7a"), ExtResource("62_ntykl"), ExtResource("63_78uap"), ExtResource("64_5gdyr"), ExtResource("65_eykor"), ExtResource("66_hf6f1"), ExtResource("67_jb784")])
 
 [node name="KaedeGraphics" type="Node3D" parent="Graphics/Mesh"]
 

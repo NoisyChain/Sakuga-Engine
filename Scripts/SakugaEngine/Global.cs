@@ -28,6 +28,13 @@ public static class Global
     public const int INPUT_FACE_B = 1 << 5;
     public const int INPUT_FACE_C = 1 << 6;
     public const int INPUT_FACE_D = 1 << 7;
+    //Free space
+    public const int INPUT_MACRO_DASH = 1 << 12;
+    public const int INPUT_TAUNT = 1 << 13;
+    public const int INPUT_MENU = 1 << 14;
+    public const int INPUT_BACK = 1 << 15;
+    public const int INPUT_ANY_DIRECTION = INPUT_UP | INPUT_DOWN | INPUT_LEFT | INPUT_RIGHT;
+    public const int INPUT_ANY_BUTTON = INPUT_FACE_A | INPUT_FACE_B | INPUT_FACE_C | INPUT_FACE_D;
 
     //Global enumerators
     public enum AnimationStage { STARTUP, ACTIVE, RECOVERY }
@@ -146,6 +153,11 @@ public static class Global
     public static int IntLerp(int from, int to, int numberOfSteps, int currentStep)
     {
         return ((to - from) * currentStep) / numberOfSteps;
+    }
+
+    public static bool IsOnRange(int value, int min, int max)
+    {
+        return value >= min && value <= max;
     }
 
     public static int HorizontalDistance(Vector2I a, Vector2I b)

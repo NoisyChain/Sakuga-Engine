@@ -1,33 +1,88 @@
-[gd_resource type="Resource" script_class="MotionInputs" load_steps=6 format=3 uid="uid://blmhxklxcq4l6"]
+[gd_resource type="Resource" script_class="MotionInputs" load_steps=16 format=3 uid="uid://blmhxklxcq4l6"]
 
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/InputSequence.cs" id="1_gwj4k"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/MotionInputs.cs" id="2_kn6u7"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/InputOption.cs" id="2_lqqgy"]
 
-[sub_resource type="Resource" id="Resource_mn5rr"]
+[sub_resource type="Resource" id="Resource_afufi"]
 script = ExtResource("1_gwj4k")
 Directional = 10
 Buttons = 0
 DirectionalMode = 0
 ButtonMode = 0
 
-[sub_resource type="Resource" id="Resource_2l8m5"]
-script = ExtResource("1_gwj4k")
-Directional = 4
-Buttons = 0
-DirectionalMode = 3
-ButtonMode = 0
-
-[sub_resource type="Resource" id="Resource_qh82a"]
+[sub_resource type="Resource" id="Resource_05di8"]
 script = ExtResource("1_gwj4k")
 Directional = 6
 Buttons = 1
 DirectionalMode = 0
 ButtonMode = 0
 
+[sub_resource type="Resource" id="Resource_oia6a"]
+script = ExtResource("2_lqqgy")
+Inputs = Array[Object]([SubResource("Resource_afufi"), SubResource("Resource_05di8")])
+
+[sub_resource type="Resource" id="Resource_kex3u"]
+script = ExtResource("1_gwj4k")
+Directional = 10
+Buttons = 0
+DirectionalMode = 0
+ButtonMode = 0
+
+[sub_resource type="Resource" id="Resource_ushxj"]
+script = ExtResource("1_gwj4k")
+Directional = 4
+Buttons = 0
+DirectionalMode = 3
+ButtonMode = 0
+
+[sub_resource type="Resource" id="Resource_khkds"]
+script = ExtResource("1_gwj4k")
+Directional = 6
+Buttons = 1
+DirectionalMode = 0
+ButtonMode = 0
+
+[sub_resource type="Resource" id="Resource_3vdkq"]
+script = ExtResource("2_lqqgy")
+Inputs = Array[Object]([SubResource("Resource_kex3u"), SubResource("Resource_ushxj"), SubResource("Resource_khkds")])
+
+[sub_resource type="Resource" id="Resource_v0w5w"]
+script = ExtResource("1_gwj4k")
+Directional = 10
+Buttons = 0
+DirectionalMode = 0
+ButtonMode = 0
+
+[sub_resource type="Resource" id="Resource_excxp"]
+script = ExtResource("1_gwj4k")
+Directional = 4
+Buttons = 0
+DirectionalMode = 3
+ButtonMode = 0
+
+[sub_resource type="Resource" id="Resource_pfeql"]
+script = ExtResource("1_gwj4k")
+Directional = 6
+Buttons = 0
+DirectionalMode = 1
+ButtonMode = 0
+
+[sub_resource type="Resource" id="Resource_6v6fc"]
+script = ExtResource("1_gwj4k")
+Directional = 6
+Buttons = 1
+DirectionalMode = 1
+ButtonMode = 0
+
+[sub_resource type="Resource" id="Resource_awmub"]
+script = ExtResource("2_lqqgy")
+Inputs = Array[Object]([SubResource("Resource_v0w5w"), SubResource("Resource_excxp"), SubResource("Resource_pfeql"), SubResource("Resource_6v6fc")])
+
 [resource]
 script = ExtResource("2_kn6u7")
-Inputs = Array[Object]([SubResource("Resource_mn5rr"), SubResource("Resource_2l8m5"), SubResource("Resource_qh82a")])
+ValidInputs = Array[Object]([SubResource("Resource_oia6a"), SubResource("Resource_3vdkq"), SubResource("Resource_awmub")])
 AbsoluteDirection = true
 InputBuffer = 8
-DirectionalChargeLimit = 30
-ButtonChargeLimit = 30
+DirectionalChargeLimit = 40
+ButtonChargeLimit = 40

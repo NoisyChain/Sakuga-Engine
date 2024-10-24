@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="FighterStance" load_steps=30 format=3 uid="uid://bpi3dgk313noc"]
+[gd_resource type="Resource" script_class="FighterStance" load_steps=34 format=3 uid="uid://bpi3dgk313noc"]
 
 [ext_resource type="Resource" uid="uid://b1uqbm5bepxhv" path="res://Fighters/Kaede/Moves/0_Kaede_MoveForward.tres" id="1_8fbso"]
 [ext_resource type="Resource" uid="uid://dhmyuy5f4qm0x" path="res://Fighters/Kaede/Moves/1_Kaede_MoveBackwards.tres" id="2_2lsvi"]
@@ -29,13 +29,17 @@
 [ext_resource type="Resource" uid="uid://dft62lsfytswm" path="res://Fighters/Kaede/Moves/25_Kaede_j_5B.tres" id="25_wm31i"]
 [ext_resource type="Resource" uid="uid://bpa40mmb2hyor" path="res://Fighters/Kaede/Moves/26_Kaede_j_5C.tres" id="26_whrma"]
 [ext_resource type="Resource" uid="uid://b5v3c4kx5b1nc" path="res://Fighters/Kaede/Moves/27_Kaede_66B.tres" id="27_u6dhq"]
+[ext_resource type="Resource" uid="uid://dvtpcx44dk545" path="res://Fighters/Kaede/Moves/28_Kaede_BC.tres" id="29_s04dg"]
+[ext_resource type="Resource" uid="uid://bja7x262w5nw7" path="res://Fighters/Kaede/Moves/29_Kaede_BC_seq1.tres" id="30_qxr8y"]
+[ext_resource type="Resource" uid="uid://6f6j1xt7lxvl" path="res://Fighters/Kaede/Moves/30_Kaede_BC_seq2.tres" id="31_cxwv4"]
+[ext_resource type="Resource" uid="uid://bhj8sjd3ddmqc" path="res://Fighters/Kaede/Moves/31_Kaede_BC_seq3.tres" id="32_32yfm"]
 
 [resource]
 script = ExtResource("9")
 IsDamagePersistent = true
 IsRoundPersistent = true
 NeutralState = 0
-Moves = Array[Object]([ExtResource("1_8fbso"), ExtResource("2_2lsvi"), ExtResource("3_6kbo2"), ExtResource("4_tbqt5"), ExtResource("5_73twn"), ExtResource("6_6ue60"), ExtResource("7_6m2w4"), ExtResource("8_yqhy4"), ExtResource("9_euwau"), ExtResource("10_wd1qc"), ExtResource("11_5elae"), ExtResource("11_67cbe"), ExtResource("12_7ub3m"), ExtResource("13_my6eh"), ExtResource("14_1y84m"), ExtResource("15_d1exm"), ExtResource("17_ac1gc"), ExtResource("18_ms8a6"), ExtResource("18_l7ox0"), ExtResource("19_do64y"), ExtResource("20_2lesk"), ExtResource("21_kox32"), ExtResource("22_j4ow5"), ExtResource("23_w3q8g"), ExtResource("24_r1o0n"), ExtResource("25_wm31i"), ExtResource("26_whrma"), ExtResource("27_u6dhq")])
+Moves = Array[Object]([ExtResource("1_8fbso"), ExtResource("2_2lsvi"), ExtResource("3_6kbo2"), ExtResource("4_tbqt5"), ExtResource("5_73twn"), ExtResource("6_6ue60"), ExtResource("7_6m2w4"), ExtResource("8_yqhy4"), ExtResource("9_euwau"), ExtResource("10_wd1qc"), ExtResource("11_5elae"), ExtResource("11_67cbe"), ExtResource("12_7ub3m"), ExtResource("13_my6eh"), ExtResource("14_1y84m"), ExtResource("15_d1exm"), ExtResource("17_ac1gc"), ExtResource("18_ms8a6"), ExtResource("18_l7ox0"), ExtResource("19_do64y"), ExtResource("20_2lesk"), ExtResource("21_kox32"), ExtResource("22_j4ow5"), ExtResource("23_w3q8g"), ExtResource("24_r1o0n"), ExtResource("25_wm31i"), ExtResource("26_whrma"), ExtResource("27_u6dhq"), ExtResource("29_s04dg"), ExtResource("30_qxr8y"), ExtResource("31_cxwv4"), ExtResource("32_32yfm")])
 HitReactions = PackedInt32Array(17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30)
 GroundBlockInitialState = 33
 CrouchBlockInitialState = 38

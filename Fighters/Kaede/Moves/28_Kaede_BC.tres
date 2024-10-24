@@ -1,0 +1,51 @@
+[gd_resource type="Resource" script_class="MoveSettings" load_steps=7 format=3 uid="uid://dvtpcx44dk545"]
+
+[ext_resource type="Resource" uid="uid://dovk6n76rc55h" path="res://Fighters/Shared/Inputs/22_Input_BC.tres" id="1_up8bs"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/ButtonChargeSequence.cs" id="2_ffvot"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_k2d6q"]
+
+[sub_resource type="Resource" id="Resource_5ubco"]
+script = ExtResource("2_ffvot")
+Threshold = Vector2i(1, 30)
+SequenceMove = 29
+
+[sub_resource type="Resource" id="Resource_51pp6"]
+script = ExtResource("2_ffvot")
+Threshold = Vector2i(31, 60)
+SequenceMove = 30
+
+[sub_resource type="Resource" id="Resource_rwkj0"]
+script = ExtResource("2_ffvot")
+Threshold = Vector2i(61, 90)
+SequenceMove = 31
+
+[resource]
+script = ExtResource("2_k2d6q")
+MoveName = "BC_Charge"
+MoveState = 58
+Inputs = ExtResource("1_up8bs")
+SideChange = 0
+MoveEnd = 2
+MoveEndState = -1
+SuperGaugeRequired = 0
+HealthThreshold = Vector2i(0, 99999)
+SpendHealth = 0
+DistanceArea = Vector2i(0, 999999)
+FrameLimit = -1
+ExtraVariablesRequirement = null
+ExtraVariablesChange = null
+ChangeStance = -1
+IsSequenceFromStates = PackedInt32Array()
+CancelsTo = PackedInt32Array()
+KaraCancelsTo = PackedInt32Array()
+buttonChargeSequence = Array[Object]([SubResource("Resource_5ubco"), SubResource("Resource_51pp6"), SubResource("Resource_rwkj0")])
+SuperFlash = 0
+CanBeOverrided = true
+CanOverrideToSelf = false
+IgnoreSamePriority = false
+PriorityBuffer = false
+Priority = 6
+AutoPlayNextMove = -1
+WaitForNullStates = false
+UseOnGround = true
+UseOnAir = false
