@@ -14,7 +14,8 @@ namespace SakugaEngine.Resources
         [Export] public ExtraVariableBehavior BehaviorOnStart;
         [Export] public ExtraVariableBehavior BehaviorOnHit;
         [Export] public ExtraVariableBehavior BehaviorOnDamage;
-        [Export] public ExtraVariableBehavior BehaviorOnMoveChange;
+        [Export] public ExtraVariableBehavior BehaviorOnMoveEnter;
+        [Export] public ExtraVariableBehavior BehaviorOnMoveExit;
         [Export] public ExtraVariableBehavior BehaviorOnFull;
         [Export] public ExtraVariableBehavior BehaviorOnEmpty;
     }

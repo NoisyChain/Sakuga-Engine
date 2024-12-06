@@ -83,6 +83,7 @@ namespace PleaseResync
     {
         public uint StartFrame;
         public uint EndFrame;
+        public int Advantage;
         public byte[] Input;
 
         public DeviceInputMessage(){ID = 3;}
@@ -98,6 +99,7 @@ namespace PleaseResync
             bw.Write(SequenceNumber);
             bw.Write(StartFrame);
             bw.Write(EndFrame);
+            bw.Write(Advantage);
             bw.Write(Input.Length);
             for (int i = 0; i < Input.Length; i++)
                 bw.Write(Input[i]);
@@ -109,6 +111,7 @@ namespace PleaseResync
             SequenceNumber = br.ReadUInt32();
             StartFrame = br.ReadUInt32();
             EndFrame = br.ReadUInt32();
+            Advantage = br.ReadInt32();
             Input = new byte[br.ReadInt32()];
             for (int i = 0; i < Input.Length; i++)
                 Input[i] = br.ReadByte();
@@ -170,5 +173,37 @@ namespace PleaseResync
         }
 
         public override string ToString() { return $"{typeof(HealthCheckMessage)}: {new { Frame, Checksum }}"; }
+    }
+
+    public class PingMessage : DeviceMessage
+    {
+        //public int Frame;
+        public uint PingTime;
+        public bool Returning;
+
+        public PingMessage(){ID = 6;}
+
+        public PingMessage(BinaryReader br)
+        {
+            Deserialize(br);
+        }
+
+        public override void Serialize(BinaryWriter bw)
+        {
+            bw.Write(ID);
+            bw.Write(SequenceNumber);
+            //bw.Write(Frame);
+            bw.Write(PingTime);
+            bw.Write(Returning);
+        }
+        public override void Deserialize(BinaryReader br)
+        {
+            SequenceNumber = br.ReadUInt32();
+            //Frame = br.ReadInt32();
+            PingTime = br.ReadUInt32();
+            Returning = br.ReadBoolean();
+        }
+
+        public override string ToString() { return $"{typeof(PingMessage)}: {new { PingTime, Returning }}"; }
     }
 }

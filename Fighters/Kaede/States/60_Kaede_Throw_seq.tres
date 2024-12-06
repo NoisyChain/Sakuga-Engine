@@ -1,0 +1,138 @@
+[gd_resource type="Resource" script_class="FighterState" load_steps=16 format=3 uid="uid://cywyov8k7d28t"]
+
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/AnimationEvents.cs" id="1_he3k0"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="1_qo4pe"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="2_264bk"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/StatePhysics.cs" id="3_iy0dy"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/StateTransitionSettings.cs" id="4_xs5ao"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/ThrowPivot.cs" id="5_mmk8x"]
+
+[sub_resource type="Resource" id="Resource_0lewt"]
+script = ExtResource("1_he3k0")
+Frame = 25
+Type = 2
+Object = 0
+xRelativeTo = 0
+yRelativeTo = 0
+Index = 1
+IsRandom = false
+Range = 0
+Value = -550
+SetActive = false
+TargetPosition = Vector2i(0, 0)
+
+[sub_resource type="Resource" id="Resource_5e2ap"]
+script = ExtResource("1_qo4pe")
+animationStage = 0
+Frame = 0
+HitboxIndex = -1
+
+[sub_resource type="Resource" id="Resource_mpd63"]
+script = ExtResource("3_iy0dy")
+Frame = 0
+UseLateralSpeed = true
+LateralSpeed = 0
+UseVerticalSpeed = true
+VerticalSpeed = 0
+UseGravity = false
+Gravity = 0
+UseLateralInertia = false
+UseVerticalInertia = false
+UseHorizontalInput = false
+UseVerticalInput = false
+
+[sub_resource type="Resource" id="Resource_ejds0"]
+script = ExtResource("4_xs5ao")
+StateIndex = 8
+Condition = 1
+AtFrame = -1
+DistanceArea = Vector2i(0, 999999)
+
+[sub_resource type="Resource" id="Resource_ksa0j"]
+script = ExtResource("5_mmk8x")
+Frame = 1
+PivotPosition = Vector2i(3000, 0)
+ThrowState = -1
+Dettach = false
+DettachInvertSide = false
+DettachHitstunType = 0
+DettachHitKnockback = Vector2i(0, 0)
+DettachHitKnockbackGravity = 0
+DettachHitKnockbackTime = 8
+DettachHitKnockbackInertia = false
+DettachHitstun = 8
+
+[sub_resource type="Resource" id="Resource_cwgmc"]
+script = ExtResource("5_mmk8x")
+Frame = 17
+PivotPosition = Vector2i(5000, 8000)
+ThrowState = -1
+Dettach = false
+DettachInvertSide = false
+DettachHitstunType = 0
+DettachHitKnockback = Vector2i(0, 0)
+DettachHitKnockbackGravity = 0
+DettachHitKnockbackTime = 8
+DettachHitKnockbackInertia = false
+DettachHitstun = 8
+
+[sub_resource type="Resource" id="Resource_id3s2"]
+script = ExtResource("5_mmk8x")
+Frame = 21
+PivotPosition = Vector2i(0, 10000)
+ThrowState = -1
+Dettach = false
+DettachInvertSide = false
+DettachHitstunType = 0
+DettachHitKnockback = Vector2i(0, 0)
+DettachHitKnockbackGravity = 0
+DettachHitKnockbackTime = 8
+DettachHitKnockbackInertia = false
+DettachHitstun = 8
+
+[sub_resource type="Resource" id="Resource_anryf"]
+script = ExtResource("5_mmk8x")
+Frame = 25
+PivotPosition = Vector2i(-8000, 0)
+ThrowState = -1
+Dettach = false
+DettachInvertSide = false
+DettachHitstunType = 0
+DettachHitKnockback = Vector2i(0, 0)
+DettachHitKnockbackGravity = 0
+DettachHitKnockbackTime = 8
+DettachHitKnockbackInertia = false
+DettachHitstun = 8
+
+[sub_resource type="Resource" id="Resource_yley4"]
+script = ExtResource("5_mmk8x")
+Frame = 29
+PivotPosition = Vector2i(-8000, 0)
+ThrowState = 4
+Dettach = true
+DettachInvertSide = false
+DettachHitstunType = 2
+DettachHitKnockback = Vector2i(-20000, 60000)
+DettachHitKnockbackGravity = 300000
+DettachHitKnockbackTime = 8
+DettachHitKnockbackInertia = true
+DettachHitstun = 0
+
+[resource]
+script = ExtResource("2_264bk")
+StateName = "Throw_Sequence"
+Type = 2
+OffTheGround = false
+Duration = 42
+Loop = false
+LoopFrames = Vector2i(0, 0)
+TurnState = -1
+RoundFinishDuration = 0
+HitStunFrameLimit = -1
+stateProperties = Array[Object]([])
+statePhysics = Array[Object]([SubResource("Resource_mpd63")])
+hitboxStates = Array[Object]([SubResource("Resource_5e2ap")])
+animationEvents = Array[Object]([SubResource("Resource_0lewt")])
+throwPivot = Array[Object]([SubResource("Resource_ksa0j"), SubResource("Resource_cwgmc"), SubResource("Resource_id3s2"), SubResource("Resource_anryf"), SubResource("Resource_yley4")])
+soundEvents = null
+stateTransitions = Array[Object]([SubResource("Resource_ejds0")])

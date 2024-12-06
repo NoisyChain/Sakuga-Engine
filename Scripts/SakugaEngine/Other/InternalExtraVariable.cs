@@ -97,12 +97,20 @@ namespace SakugaEngine
             CurrentMode = (byte)Reference.BehaviorOnDamage.Mode;
         }
 
-        public void ChangeOnMove()
+        public void ChangeOnMoveEnter()
         {
-            if (Reference.BehaviorOnMoveChange == null) return;
+            if (Reference.BehaviorOnMoveEnter == null) return;
             
-            CurrentFactor = Reference.BehaviorOnMoveChange.Factor;
-            CurrentMode = (byte)Reference.BehaviorOnMoveChange.Mode;
+            CurrentFactor = Reference.BehaviorOnMoveEnter.Factor;
+            CurrentMode = (byte)Reference.BehaviorOnMoveEnter.Mode;
+        }
+
+        public void ChangeOnMoveExit()
+        {
+            if (Reference.BehaviorOnMoveExit == null) return;
+            
+            CurrentFactor = Reference.BehaviorOnMoveExit.Factor;
+            CurrentMode = (byte)Reference.BehaviorOnMoveExit.Mode;
         }
 
         public void ChangeOnFull()

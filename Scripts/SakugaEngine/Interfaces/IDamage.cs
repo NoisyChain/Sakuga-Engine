@@ -5,14 +5,13 @@ namespace SakugaEngine
 {
     public partial interface IDamage
     {
-        void BaseDamage(HitboxElement box, Vector2I contact);
-        void HitConfirmReaction(HitboxElement box, Vector2I contact);
-        void ThrowDamage(HitboxElement box, Vector2I contact);
-        void ProjectileDamage(HitboxElement box, Vector2I contact, int priority);
+        void BaseDamage(SakugaActor target, HitboxElement box, Vector2I contact);
+        void ThrowDamage(SakugaActor target, HitboxElement box, Vector2I contact);
         void HitboxClash(HitboxElement box, Vector2I contact);
         void ProjectileClash(HitboxElement box, Vector2I contact);
-        void ProjectileDeflect(HitboxElement box, Vector2I contact);
-        void CounterHit(HitboxElement box, Vector2I contact);
+        void ProjectileDeflect(SakugaActor target, HitboxElement box, Vector2I contact);
+        void CounterHit(SakugaActor target, HitboxElement box, Vector2I contact);
+        void ParryHit(SakugaActor target, HitboxElement box, Vector2I contact);
         void ProximityBlock();
         void OnHitboxExit();
     }

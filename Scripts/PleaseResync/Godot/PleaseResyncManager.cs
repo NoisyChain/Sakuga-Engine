@@ -2,7 +2,6 @@ using Godot;
 using System;
 using System.IO;
 using System.Collections.Generic;
-using System.Net.NetworkInformation;
 using System.Threading;
 
 namespace PleaseResync
@@ -19,10 +18,13 @@ namespace PleaseResync
         
         [Export] protected ushort FrameDelay = 2;
         [Export] protected ushort SimulatedFrameDelay = 0;
+        [Export] protected ushort SpectatorDelay = 30;
         [Export] protected uint MaxPlayers = 2;
+        [Export] protected uint MaxSpectators = 8;
         [Export] protected uint DeviceCount = 2;
         [Export] protected uint InputSize = 1;
         private uint DEVICE_ID;
+        private uint PingId;
 
         private string[] Adresses = {"127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1"};
         private ushort[] Ports = {7001, 7002, 7003, 7004};
@@ -35,31 +37,15 @@ namespace PleaseResync
         List<SessionAction> sessionActions;
         string InputDebug;
         string SimulationText;
+        string PingText;
+        string RollbackText;
         List<ReplayInputs> RecordedInputs = new List<ReplayInputs>();
 
-        Thread PingThread;
+        private Thread GameThread;
 
-        Ping p = new Ping();
-        PingReply r;
-
-        private void StartPinging(string pingIP)
+        private string ShowPingInfo(uint id)
         {
-            PingThread = new Thread(() => Ping(pingIP));
-            PingThread.IsBackground = true;
-            PingThread.Start();
-        }
-
-        private void Ping(string PingIP)
-        {
-            while(Started)
-                r = p.Send(PingIP);
-        }
-
-        private string ShowPingInfo()
-        {
-            if (r == null) return "";
-            if (r.Status != IPStatus.Success) return "";
-            return $"Ping: {r.RoundtripTime} ms";
+            return session.AllDevices[id].GetRTT().ToString();
         }
 
         public override void _Ready()
@@ -73,34 +59,28 @@ namespace PleaseResync
             if (RollbackInfo != null) RollbackInfo.Text = "";
             if (PingInfo != null) PingInfo.Text = "";
         }
-        /*public override void _Process(double delta)
-        {
-            if (!Started) return;
-            if (!OfflineMode)
-            {
-                if (RollbackInfo != null) RollbackInfo.Text = "RBF: " + session.RollbackFrames();
-                if (PingInfo != null) PingInfo.Text = ShowPingInfo();
-            }
-            if (SimulationInfo != null) SimulationInfo.Text = SimulationText;
-        }*/
 
         public override void _PhysicsProcess(double delta)
         {
             if (!Started) return;
 
-            if (SimulationInfo != null) SimulationInfo.Text = NotificationText();
-
             if (!session.IsOffline())
             {
                 session.Poll();
-
                 if (!session.IsRunning()) return;
-                
-                if (RollbackInfo != null) RollbackInfo.Text = "RBF: " + session.RollbackFrames();
-                if (PingInfo != null) PingInfo.Text = ShowPingInfo();
             }
 
             GameLoop();
+
+            if (!session.IsOffline())
+            {
+                RollbackText = "RBF: " + session.RollbackFrames();
+                PingText = "Ping: " + ShowPingInfo(PingId) + " ms";
+            }
+
+            if (SimulationInfo != null) SimulationInfo.Text = NotificationText();
+            if (RollbackInfo != null) RollbackInfo.Text = RollbackText;
+            if (PingInfo != null) PingInfo.Text = PingText;
         }
 
         void OnDestroy()
@@ -119,11 +99,7 @@ namespace PleaseResync
 
         protected void StartOnlineGame(IGameState state, uint playerCount, uint ID)
         {
-            string tempIP = "";
-
             DEVICE_ID = ID;
-            //MAX_PLAYERS = playerCount;
-            //DEVICE_COUNT = playerCount;
 
             sessionState = state;
 
@@ -142,7 +118,7 @@ namespace PleaseResync
                 if (i != DEVICE_ID)
                 {
                     session.AddRemoteDevice(i, 1, LiteNetLibSessionAdapter.CreateRemoteConfig(Adresses[i], Ports[i]));
-                    tempIP = Adresses[i];
+                    PingId = i;
                     
                     GD.Print($"Device {i} created");
                 }
@@ -150,7 +126,37 @@ namespace PleaseResync
             
             Replay = false;
             Started = true;
-            StartPinging(tempIP);
+        }
+
+        protected void StartSpectatorMode(IGameState state, uint playerCount, uint ID)
+        {
+            DEVICE_ID = ID;
+
+            sessionState = state;
+
+            sessionState.Setup();
+            
+            adapter = new LiteNetLibSessionAdapter(Adresses[DEVICE_ID], Ports[DEVICE_ID]);
+
+            session = new Peer2PeerSession(InputSize, DeviceCount, MaxPlayers, false, adapter);
+
+            LastInput = new byte[InputSize];
+
+            session.AddSpectatorDevice(DEVICE_ID, SpectatorDelay);
+            
+            for (uint i = 0; i < DeviceCount; i++)
+            {
+                if (i != DEVICE_ID)
+                {
+                    session.AddRemoteDevice(i, 1, LiteNetLibSessionAdapter.CreateRemoteConfig(Adresses[i], Ports[i]));
+                    PingId = i;
+                    
+                    GD.Print($"Device {i} created");
+                }
+            }
+            
+            Replay = false;
+            Started = true;
         }
 
         protected void StartOfflineGame(IGameState state, uint playerCount)
@@ -217,18 +223,24 @@ namespace PleaseResync
                         BinaryWriter writer = new BinaryWriter(writerStream);
                         sessionState.Serialize(writer);
                         byte[] state = writerStream.ToArray();
-                        
                         SGAction.Save(state, Platform.GetChecksum(state));
                         break;
                 }
             }
 
-            string FrameCounter = session.IsOffline() ? $"{session.Frame()}" : $"{session.Frame()} ({session.FrameAdvantage()})";
+            string FrameCounter = session.IsOffline() ? $"{session.Frame()}" : $"{session.Frame()} ({session.RemoteFrame()} | {session.FrameAdvantage()} | {session.RemoteFrameAdvantage()})";
 
             SimulationText = FrameCounter + $" || ( {InputDebug} )";
 
             if (Replay && session.Frame() >= RecordedInputs.Count)
                 CloseGame();
+        }
+
+        private void StartGameThread()
+        {
+            GameThread = new Thread(GameLoop);
+            GameThread.IsBackground = true;
+            GameThread.Start();
         }
 
         private string NotificationText()
@@ -295,6 +307,7 @@ namespace PleaseResync
         }
 
         public virtual void OnlineGame(uint maxPlayers, uint ID){}
+        public virtual void Spectate(uint maxPlayers, uint ID){}
         public virtual void LocalGame(uint maxPlayers){}
         public virtual void ReplayMode(uint maxPlayers) {}
     }

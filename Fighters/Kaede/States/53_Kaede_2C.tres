@@ -25,9 +25,9 @@ HitboxIndex = 1
 
 [sub_resource type="Resource" id="5"]
 script = ExtResource("3")
-Frame = 0
+Frame = 6
 UseLateralSpeed = true
-LateralSpeed = 0
+LateralSpeed = 40000
 UseVerticalSpeed = true
 VerticalSpeed = 0
 UseGravity = true
@@ -39,7 +39,7 @@ UseVerticalInput = false
 
 [sub_resource type="Resource" id="6"]
 script = ExtResource("3")
-Frame = 0
+Frame = 16
 UseLateralSpeed = true
 LateralSpeed = 0
 UseVerticalSpeed = true

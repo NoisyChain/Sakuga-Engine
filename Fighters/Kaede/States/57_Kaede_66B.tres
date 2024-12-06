@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="FighterState" load_steps=8 format=3 uid="uid://iu2gxdyj1xs0"]
+[gd_resource type="Resource" script_class="FighterState" load_steps=10 format=3 uid="uid://iu2gxdyj1xs0"]
 
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="1"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2"]
@@ -11,7 +11,7 @@ animationStage = 0
 Frame = 0
 HitboxIndex = 2
 
-[sub_resource type="Resource" id="1"]
+[sub_resource type="Resource" id="Resource_04frn"]
 script = ExtResource("3")
 Frame = 0
 UseLateralSpeed = true
@@ -20,6 +20,34 @@ UseVerticalSpeed = true
 VerticalSpeed = 0
 UseGravity = true
 Gravity = 0
+UseLateralInertia = false
+UseVerticalInertia = false
+UseHorizontalInput = false
+UseVerticalInput = false
+
+[sub_resource type="Resource" id="Resource_ujkja"]
+script = ExtResource("3")
+Frame = 4
+UseLateralSpeed = true
+LateralSpeed = 60000
+UseVerticalSpeed = true
+VerticalSpeed = 30000
+UseGravity = false
+Gravity = 0
+UseLateralInertia = false
+UseVerticalInertia = false
+UseHorizontalInput = false
+UseVerticalInput = false
+
+[sub_resource type="Resource" id="Resource_r4h2m"]
+script = ExtResource("3")
+Frame = 5
+UseLateralSpeed = false
+LateralSpeed = 0
+UseVerticalSpeed = false
+VerticalSpeed = 0
+UseGravity = true
+Gravity = 300000
 UseLateralInertia = false
 UseVerticalInertia = false
 UseHorizontalInput = false
@@ -44,7 +72,7 @@ TurnState = -1
 RoundFinishDuration = 0
 HitStunFrameLimit = -1
 stateProperties = null
-statePhysics = [SubResource("1")]
+statePhysics = [SubResource("Resource_04frn"), SubResource("Resource_ujkja"), SubResource("Resource_r4h2m")]
 hitboxStates = [SubResource("2")]
 animationEvents = null
 throwPivot = null

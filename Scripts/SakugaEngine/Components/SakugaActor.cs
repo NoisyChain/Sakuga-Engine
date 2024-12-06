@@ -32,8 +32,9 @@ namespace SakugaEngine
 		public virtual void Serialize(BinaryWriter bw){}
 		public virtual void Deserialize(BinaryReader br){}
 
+        public virtual SakugaFighter FighterReference() { return null; }
+
         protected virtual bool LifeEnded() { return false; }
-        protected virtual SakugaFighter FighterReference() { return null; }
         public virtual bool AllowHitCheck(SakugaActor other) { return true; }
 
         public override void _Process(double delta)
@@ -102,6 +103,9 @@ namespace SakugaEngine
 
         public void UpdateFrameProperties()
         {
+            if (Animator.GetCurrentState().stateProperties.Length <= 0)
+                Body.FrameProperties = 0;
+            
             for (int i = 0; i < Animator.GetCurrentState().stateProperties.Length; ++i)
             {
                 if (Animator.Frame == Animator.GetCurrentState().stateProperties[i].Frame)
@@ -175,7 +179,7 @@ namespace SakugaEngine
                 {
                     case 0: //Spawn Object (Spawnable, VFX)
                         int ind = Animator.GetCurrentState().animationEvents[i].IsRandom ? 
-                            Global.RNGRange(Animator.GetCurrentState().animationEvents[i].Index, Animator.GetCurrentState().animationEvents[i].Range) : 
+                            Global.RNG.Next(Animator.GetCurrentState().animationEvents[i].Index, Animator.GetCurrentState().animationEvents[i].Range) : 
                             Animator.GetCurrentState().animationEvents[i].Index;
                         switch((int)Animator.GetCurrentState().animationEvents[i].Object)
                         {
@@ -196,16 +200,25 @@ namespace SakugaEngine
                         {
                             case 0:
                                 if (damage > 0) FighterReference().Variables.AddHealth(Mathf.Abs(damage));
-                                else if (damage < 0) FighterReference().Variables.RemoveHealth(Mathf.Abs(damage));
+                                else if (damage < 0) 
+                                {
+                                    FighterReference().Variables.RemoveHealth(Mathf.Abs(damage));
+                                    FighterReference().Tracker.HitCombo++;
+                                    FighterReference().HitStun.Start(1);
+                                }
                                 break;
                             case 1:
                                 if (damage > 0) FighterReference().GetOpponent().Variables.AddHealth(Mathf.Abs(damage));
-                                else if (damage < 0) FighterReference().GetOpponent().Variables.RemoveHealth(Mathf.Abs(damage));
+                                else if (damage < 0) 
+                                {
+                                    FighterReference().GetOpponent().Variables.RemoveHealth(Mathf.Abs(damage));
+                                    FighterReference().GetOpponent().Tracker.HitCombo++;
+                                    FighterReference().GetOpponent().HitStun.Start(1);
+                                }
                                 break;
                         }
                         break;
-                    case 3: //Dettach Throw
-                        FighterReference().DettachThrow();
+                    case 3: //Dettach Throw (remove this)
                         break;
                     case 4: //Force Side Change
                         switch (Animator.GetCurrentState().animationEvents[i].Index)
@@ -236,7 +249,7 @@ namespace SakugaEngine
             {
                 if (Animator.Frame != Animator.GetCurrentState().soundEvents[i].Frame) continue;
                 int ind = Animator.GetCurrentState().soundEvents[i].IsRandom ? 
-                    Global.RNGRange(Animator.GetCurrentState().soundEvents[i].Index, Animator.GetCurrentState().soundEvents[i].Range) : 
+                    Global.RNG.Next(Animator.GetCurrentState().soundEvents[i].Index, Animator.GetCurrentState().soundEvents[i].Range) : 
                     Animator.GetCurrentState().soundEvents[i].Index;
                 AudioStream selectedSound = null;
                 switch ((int)Animator.GetCurrentState().soundEvents[i].SoundType)

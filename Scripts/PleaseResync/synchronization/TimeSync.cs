@@ -11,8 +11,9 @@ namespace PleaseResync
         public int SyncFrame;
         public int LocalFrame;
         public int RemoteFrame;
-        public int RemoteFrameAdvantage;
         public int LocalFrameAdvantage;
+        public int RemoteFrameAdvantage;
+        public int FrameAdvantageDifference;
 
         public TimeSync()
         {
@@ -49,9 +50,9 @@ namespace PleaseResync
             RemoteFrameAdvantage = maxRemoteFrameAdvantage;
             // How far the client is ahead of the last reported frame by the remote clients
             LocalFrameAdvantage = LocalFrame - RemoteFrame;
-            int frameAdvDiff = Mathf.Max(0, LocalFrameAdvantage) - Mathf.Max(0, RemoteFrameAdvantage);
+            FrameAdvantageDifference = LocalFrameAdvantage - RemoteFrameAdvantage;
             // Only allow the local client to get so far ahead of remote.
-            return LocalFrameAdvantage < MaxRollbackFrames && Mathf.Max(0, frameAdvDiff) <= FrameAdvantageLimit;
+            return LocalFrameAdvantage < MaxRollbackFrames && FrameAdvantageDifference <= FrameAdvantageLimit;
         }
 
         public bool ShouldRollback()

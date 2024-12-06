@@ -11,7 +11,7 @@ animationStage = 0
 Frame = 0
 HitboxIndex = 0
 
-[sub_resource type="Resource" id="3"]
+[sub_resource type="Resource" id="Resource_b6fs7"]
 script = ExtResource("3")
 Frame = 0
 UseLateralSpeed = false
@@ -19,7 +19,7 @@ LateralSpeed = 0
 UseVerticalSpeed = false
 VerticalSpeed = 0
 UseGravity = true
-Gravity = 0
+Gravity = 200000
 UseLateralInertia = false
 UseVerticalInertia = false
 UseHorizontalInput = false
@@ -51,7 +51,7 @@ TurnState = -1
 RoundFinishDuration = 0
 HitStunFrameLimit = -1
 stateProperties = null
-statePhysics = [SubResource("3")]
+statePhysics = [SubResource("Resource_b6fs7")]
 hitboxStates = [SubResource("2")]
 animationEvents = null
 throwPivot = null

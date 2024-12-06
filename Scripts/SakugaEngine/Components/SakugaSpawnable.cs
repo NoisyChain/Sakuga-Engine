@@ -29,7 +29,7 @@ namespace SakugaEngine
 
         public SakugaFighter GetFighterOwner() => _owner;
         public void SetFighterOwner(SakugaFighter owner) { _owner = owner; }
-        protected override SakugaFighter FighterReference() { return GetFighterOwner(); }
+        public override SakugaFighter FighterReference() { return GetFighterOwner(); }
 
         public override bool AllowHitCheck(SakugaActor other)
         {
@@ -151,20 +151,51 @@ namespace SakugaEngine
             if (Variables != null) Variables.ExtraVariablesOnHit();
         }
 
-        public void BaseDamage(HitboxElement box, Vector2I contact){/*Variables.ExtraVariablesOnDamage();*/}
-        public void HitConfirmReaction(HitboxElement box, Vector2I contact)
+        public void BaseDamage(SakugaActor target, HitboxElement box, Vector2I contact)
         {
-            HitConfirm(box.SelfMeterGain, (uint)box.HitStopDuration, box.HitConfirmState, box.HitEffectIndex, contact);
+            GetFighterOwner().SetOpponent(target.FighterReference());
+            SakugaFighter Opp = GetFighterOwner().GetOpponent();
+
+            bool isHitAllowed = !Opp.Body.ContainsFrameProperty((byte)Global.FrameProperties.PROJECTILE_IMUNITY);
+            if (!isHitAllowed) return;
+
+            bool HitPosition = box.HitType == Global.HitType.UNBLOCKABLE || 
+                                box.HitType == Global.HitType.HIGH && Opp.IsCrouching() || 
+                                box.HitType == Global.HitType.LOW && !Opp.IsCrouching();
+            if (Opp.Variables.SuperArmor > 0)
+            {
+                Opp.ArmorHit(box);
+                HitConfirm(box.SelfMeterGain, (uint)box.ClashHitStopDuration, -1, box.ArmorHitEffectIndex, contact);
+                GD.Print("Spawnable: Armor Hit");
+            }
+            else
+            {
+                int hitFX;
+                if (Opp.IsBlocking() && !HitPosition)
+                {
+                    hitFX = box.BlockEffectIndex;
+                    Opp.BlockHit(box);
+                    GD.Print("Spawnable: Blocked!");
+                }
+                else
+                {
+                    hitFX = box.HitEffectIndex;
+                    Opp.HitDamage(box);
+                    GD.Print("Spawnable: Hit!");
+                }
+                HitConfirm(box.SelfMeterGain, (uint)box.HitStopDuration, box.HitConfirmState, hitFX, contact);
+                //if (box.AllowSelfPushback)
+                    //HitPushback(box.SelfPushbackDuration, box.SelfPushbackForce);
+            }
         }
-        public void ThrowDamage(HitboxElement box, Vector2I contact){}
-        public void ProjectileDamage(HitboxElement box, Vector2I contact, int priority){}
+        public void ThrowDamage(SakugaActor target, HitboxElement box, Vector2I contact){}
         public void HitboxClash(HitboxElement box, Vector2I contact){}
         public void ProjectileClash(HitboxElement box, Vector2I contact)
         {
             if (DieOnHit)
             { LifeTime.Stop(); Animator.PlayState(DeathState); }
         }
-        public void ProjectileDeflect(HitboxElement box, Vector2I contact)
+        public void ProjectileDeflect(SakugaActor target, HitboxElement box, Vector2I contact)
         {
             if (!Deflectable) return;
 
@@ -183,7 +214,8 @@ namespace SakugaEngine
             Body.IsLeftSide = !Body.IsLeftSide;
             //Body.PlayerSide = Body.IsLeftSide ? 1 : -1;
         }
-        public void CounterHit(HitboxElement box, Vector2I contact){}
+        public void CounterHit(SakugaActor target, HitboxElement box, Vector2I contact){}
+        public void ParryHit(SakugaActor target, HitboxElement box, Vector2I contact){}
         public void ProximityBlock(){}
         public void OnHitboxExit(){}
 

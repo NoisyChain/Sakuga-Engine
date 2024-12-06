@@ -51,15 +51,14 @@ namespace PleaseResync
             _sync.AddRemoteDevice(deviceId, playerCount);
         }
 
-        public override void AddSpectatorDevice(uint deviceId, object remoteConfiguration)
+        public override void AddSpectatorDevice(uint deviceId, uint spectatorDelay)
         {
             Debug.Assert(deviceId >= 0 && deviceId < DeviceCount, $"DeviceId {deviceId} should be between [0,  {DeviceCount}[");
-            Debug.Assert(LocalDevice != null, "SetLocalDevice must be called before any call to AddSpectatorDevice.");
-            Debug.Assert(_allDevices[deviceId] == null, $"Spectator device {deviceId} was already set.");
+            Debug.Assert(LocalDevice == null, $"Local device {deviceId} was already set.");
+            Debug.Assert(_allDevices[deviceId] == null, $"Local device {deviceId} was already set.");
 
-            _sessionAdapter.AddRemote(deviceId, remoteConfiguration);
-            _allDevices[deviceId] = new Device(this, deviceId, 1, Device.DeviceType.Spectator);
-            _allDevices[deviceId].StartSyncing();
+            _localDevice = new Device(this, deviceId, 1, Device.DeviceType.Spectator);
+            _allDevices[deviceId] = LocalDevice;
             _sync.AddSpectatorDevice(deviceId);
         }
 
@@ -136,14 +135,17 @@ namespace PleaseResync
                 byte[] inputsForFrame = new byte[message.Input.Length / inputCount];
 
                 System.Array.Copy(message.Input, inputIndex * inputSize, inputsForFrame, 0, inputSize);
-                _sync.AddRemoteInput(deviceId, (int)i, inputsForFrame);
+                _sync.AddRemoteInput(deviceId, (int)i, message.Advantage, inputsForFrame);
 
                 inputIndex++;
             }
         }
 
         public override int Frame() => _sync.Frame();
+        public override int RemoteFrame() => _sync.RemoteFrame();
         public override int FrameAdvantage() => _sync.FramesAhead();
+        public override int RemoteFrameAdvantage() => _sync.FramesAhead();
+        public override int FrameAdvantageDifference() => _sync.FrameDifference();
         public override uint RollbackFrames() => _sync.RollbackFrames();
         public override int State() => (int)_sync.State();
     }

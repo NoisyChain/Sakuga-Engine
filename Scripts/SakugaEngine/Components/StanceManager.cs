@@ -104,7 +104,7 @@ namespace SakugaEngine
             if (GetMove(BufferedMove).MoveState >= 0) 
                 owner.Animator.PlayState(GetMove(BufferedMove).MoveState, true);
             
-            owner.Variables.ExtraVariablesOnMoveChange();
+            owner.Variables.ExtraVariablesOnMoveEnter();
             
             owner.Variables.SetExtraVariables(GetMove(BufferedMove).ExtraVariablesChange);
 
@@ -224,6 +224,7 @@ namespace SakugaEngine
                 BufferedMove = nextMove;
                 ExecuteMove();
             }
+            owner.Variables.ExtraVariablesOnMoveExit();
         }
 
         public void Clear()

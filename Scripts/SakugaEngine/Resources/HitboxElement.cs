@@ -41,32 +41,34 @@ namespace SakugaEngine.Resources
         [Export] public Global.HitstunType GroundHitstunType;
         [Export] public int GroundHitReaction;
         [Export] public int CrouchHitReaction;
-        [Export] public Vector2I GroundDamageKnockback;
-        [Export] public Vector2I GroundBlockKnockback;
-        [Export] public int GroundDamageKnockbackGravity = 0;
-        [Export] public int GroundBlockKnockbackGravity = 0;
+        [Export] public Vector2I GroundHitKnockback;
+         [Export] public int GroundHitKnockbackGravity = 0;
         [Export] public int GroundHitKnockbackTime = 8;
+        [Export] public int GroundHitstun = 8;
+        [Export] public Vector2I GroundBlockKnockback;
+        [Export] public int GroundBlockKnockbackGravity = 0;
         [Export] public int GroundBlockKnockbackTime = 8;
-        [Export] public int GroundHitStun = 8;
-        [Export] public int GroundBlockStun = 8;
+        [Export] public int GroundBlockstun = 8;
 
         //Air Hitstun settings
         [ExportGroup("Air Hit Settings")]
         [Export] public Global.HitstunType AirHitstunType;
         [Export] public int AirHitReaction;
-        [Export] public Vector2I AirDamageKnockback;
-        [Export] public Vector2I AirBlockKnockback;
-        [Export] public int AirDamageKnockbackGravity = 300000;
-        [Export] public int AirBlockKnockbackGravity = 300000;
+        [Export] public Vector2I AirHitKnockback;
+        [Export] public int AirHitKnockbackGravity = 300000;
         [Export] public int AirHitKnockbackTime = 8;
+        [Export] public int AirHitstun = 8;
+        [Export] public Vector2I AirBlockKnockback;
+        [Export] public int AirBlockKnockbackGravity = 300000;
         [Export] public int AirBlockKnockbackTime = 8;
-        [Export] public int AirHitStun = 8;
-        [Export] public int AirBlockStun = 8;
+        [Export] public int AirBlockstun = 8;
+        
 
         //Throw settings
         [ExportGroup("Throw Hit Settings")]
-        [Export] public bool PostThrowKnockback;
-        [Export] public bool GroundThrow, AirThrow;
+        [Export] public bool GroundThrow;
+        [Export] public bool AirThrow;
+        [Export] public int ThrowHitReaction = -1;
 
         //Pushback settings
         [ExportGroup("Pushback Settings")]

@@ -27,7 +27,7 @@ HitboxIndex = 0
 script = ExtResource("3")
 Frame = 0
 UseLateralSpeed = true
-LateralSpeed = 0
+LateralSpeed = 18000
 UseVerticalSpeed = true
 VerticalSpeed = 0
 UseGravity = true
@@ -39,7 +39,7 @@ UseVerticalInput = false
 
 [sub_resource type="Resource" id="6"]
 script = ExtResource("3")
-Frame = 0
+Frame = 9
 UseLateralSpeed = true
 LateralSpeed = 0
 UseVerticalSpeed = true
@@ -53,9 +53,9 @@ UseVerticalInput = false
 
 [sub_resource type="Resource" id="7"]
 script = ExtResource("3")
-Frame = 0
+Frame = 15
 UseLateralSpeed = true
-LateralSpeed = 0
+LateralSpeed = -12000
 UseVerticalSpeed = true
 VerticalSpeed = 0
 UseGravity = true
@@ -67,7 +67,7 @@ UseVerticalInput = false
 
 [sub_resource type="Resource" id="8"]
 script = ExtResource("3")
-Frame = 0
+Frame = 23
 UseLateralSpeed = true
 LateralSpeed = 0
 UseVerticalSpeed = true

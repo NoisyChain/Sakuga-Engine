@@ -23,6 +23,7 @@ namespace SakugaEngine.Game
 
         private int Frame = 0;
         private int generatedSeed = 0;
+        private int finalSeed = 0;
         //private uint Checksum;
 
         Vector3I randomTest = new Vector3I();
@@ -43,13 +44,14 @@ namespace SakugaEngine.Game
             healthHUD.UpdateDebug(Fighters);
             metersHUD.UpdateMeters(Fighters);
             Camera.UpdateCamera(Fighters[0], Fighters[1]);
-            SeedViewer.Text = CalculateSeed().ToString();
+            SeedViewer.Text = finalSeed.ToString();
         }
 
         private void GenerateBaseSeed()
         {
             byte[] seedArray = Encoding.ASCII.GetBytes(Global.baseSeed);
-            generatedSeed = (int)Platform.GetChecksum(seedArray);
+            int charSeeds = Fighters[0].CharacterSeed + Fighters[1].CharacterSeed;
+            generatedSeed = (int)Platform.GetChecksum(seedArray) + charSeeds;
         }
 
         private int CalculateSeed()
@@ -57,8 +59,7 @@ namespace SakugaEngine.Game
             int posX = Fighters[0].Body.FixedPosition.X + Fighters[1].Body.FixedPosition.X;
             int posY = Fighters[0].Body.FixedPosition.Y + Fighters[1].Body.FixedPosition.Y;
             int stateFrame = Fighters[0].Animator.Frame + Fighters[0].Animator.CurrentState + Fighters[1].Animator.Frame + Fighters[1].Animator.CurrentState;
-            int charSeeds = Fighters[0].CharacterSeed + Fighters[1].CharacterSeed;
-            return generatedSeed + posX + posY + stateFrame + charSeeds + (Frame * Global.SimulationScale) + Monitor.Clock;
+            return generatedSeed + posX + posY + stateFrame + (Frame * Global.SimulationScale) + Monitor.Clock;
         }
 
         public void Setup()
@@ -75,7 +76,6 @@ namespace SakugaEngine.Game
 
             Monitor = new GameMonitor(Global.GameTimer, 2);
             World = new PhysicsWorld();
-            GenerateBaseSeed();
 
             Fighters = new SakugaFighter[2];
             for (int i = 0; i < Spawns.Length; i++)
@@ -92,14 +92,17 @@ namespace SakugaEngine.Game
             Fighters[0].SetOpponent(Fighters[1]);
             Fighters[1].SetOpponent(Fighters[0]);
 
+            GenerateBaseSeed();
+
             healthHUD.Setup(Fighters);
             metersHUD.Setup(Fighters);
         }
 
         public void GameLoop(byte[] playerInput)
         {
+            finalSeed = CalculateSeed();
+            Global.UpdateRNG(finalSeed);
             Frame++;
-            Global.UpdateRNG(CalculateSeed());
 
             randomTest = new Vector3I(
                 Global.RNG.Next(),

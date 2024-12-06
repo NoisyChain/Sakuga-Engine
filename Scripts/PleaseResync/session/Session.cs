@@ -88,7 +88,7 @@ namespace PleaseResync
         /// <param name="remoteConfiguration">As the given device is not local to the Session, we must provide a way to communicate with that given device, this configuration will be passed to the session adapter</param>
         public abstract void AddRemoteDevice(uint deviceId, uint playerCount, object remoteConfiguration);
 
-        public abstract void AddSpectatorDevice(uint deviceId, object remoteConfiguration);
+        public abstract void AddSpectatorDevice(uint deviceId, uint spectatorDelay);
 
         /// <summary>
         /// Poll must be called periodically to give the Session a chance to perform some work and synchronize devices.
@@ -109,7 +109,10 @@ namespace PleaseResync
 
         public bool IsOffline() => OfflinePlay;
         public abstract int Frame();
+        public abstract int RemoteFrame();
         public abstract int FrameAdvantage();
+        public abstract int RemoteFrameAdvantage();
+        public abstract int FrameAdvantageDifference();
         public abstract uint RollbackFrames();
         public abstract int State();
     }

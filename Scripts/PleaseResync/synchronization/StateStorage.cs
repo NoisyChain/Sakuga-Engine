@@ -39,7 +39,7 @@ namespace PleaseResync
 
         public bool CompareChecksums(int frame, uint checksum)
         {
-            Godot.GD.Print($"Checksum comparison: Frame:({frame} :: {_states[frame % _size].Checksum}), {checksum}");
+            //Godot.GD.Print($"Checksum comparison: Frame:({frame} :: {_states[frame % _size].Checksum}), {checksum}");
             if (_states[frame % _size].Checksum == 0 || checksum == 0) return true;
             
             return _states[frame % _size].Checksum == checksum;

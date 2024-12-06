@@ -152,12 +152,20 @@ namespace SakugaEngine
                 internalExtraVariables[v].ChangeOnDamage();
         }
 
-        public void ExtraVariablesOnMoveChange()
+        public void ExtraVariablesOnMoveEnter()
         {
             if (!HasExtraVariables()) return;
 
             for (int v = 0; v < internalExtraVariables.Length; v++)
-                internalExtraVariables[v].ChangeOnMove();
+                internalExtraVariables[v].ChangeOnMoveEnter();
+        }
+
+        public void ExtraVariablesOnMoveExit()
+        {
+            if (!HasExtraVariables()) return;
+
+            for (int v = 0; v < internalExtraVariables.Length; v++)
+                internalExtraVariables[v].ChangeOnMoveExit();
         }
 
         public void ExtraVariablesOnFull()
