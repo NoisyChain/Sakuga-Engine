@@ -80,10 +80,13 @@ namespace SakugaEngine.UI
             
             string frameAdvText = "("+frameAdvantageInfo+")";
 
+            FighterVariables vars = reference.Variables as FighterVariables;
+
             return reference.Tracker.LastDamage + "\n" +
                     reference.Tracker.CurrentCombo + "\n" +
                     reference.Tracker.HighestCombo + "\n" +
                     hitTypeText + "\n" +
+                    vars.CurrentDamageScaling + "\n" +
                     owner.Tracker.FrameData + frameAdvText;
         }
     }

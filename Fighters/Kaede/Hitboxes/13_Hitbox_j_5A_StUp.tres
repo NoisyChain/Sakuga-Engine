@@ -3,10 +3,10 @@
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxElement.cs" id="1_co4u3"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxSettings.cs" id="2_a8akl"]
 
-[sub_resource type="Resource" id="Resource_018kf"]
+[sub_resource type="Resource" id="Resource_vupp6"]
 script = ExtResource("1_co4u3")
-Center = Vector2i(0, 3000)
-Size = Vector2i(6000, 6000)
+Center = Vector2i(0, 6250)
+Size = Vector2i(5000, 12500)
 HitboxType = 0
 HitType = 0
 BaseDamage = 150
@@ -18,7 +18,8 @@ SelfMeterGain = 25
 OpponentMeterGain = 10
 ArmorDamage = 1
 Priority = 0
-HitStopDuration = 12
+SelfHitStopDuration = 12
+OpponentHitStopDuration = 12
 BlockStopDuration = 12
 CounterHitStopDuration = 20
 ClashHitStopDuration = 20
@@ -48,8 +49,10 @@ AirBlockKnockback = Vector2i(0, 0)
 AirBlockKnockbackGravity = 30
 AirBlockKnockbackTime = 8
 AirBlockstun = 8
+CanEscape = true
 GroundThrow = false
 AirThrow = false
+ThrowHitStopDuration = 8
 ThrowHitReaction = -1
 AllowSelfPushback = true
 SelfPushbackForce = 0
@@ -65,7 +68,7 @@ BounceYState = 0
 
 [sub_resource type="Resource" id="Resource_ql6fn"]
 script = ExtResource("1_co4u3")
-Center = Vector2i(800, 7100)
+Center = Vector2i(800, 13200)
 Size = Vector2i(3000, 3000)
 HitboxType = 0
 HitType = 0
@@ -78,7 +81,8 @@ SelfMeterGain = 25
 OpponentMeterGain = 10
 ArmorDamage = 1
 Priority = 0
-HitStopDuration = 12
+SelfHitStopDuration = 12
+OpponentHitStopDuration = 12
 BlockStopDuration = 12
 CounterHitStopDuration = 20
 ClashHitStopDuration = 20
@@ -108,8 +112,10 @@ AirBlockKnockback = Vector2i(0, 0)
 AirBlockKnockbackGravity = 30
 AirBlockKnockbackTime = 8
 AirBlockstun = 8
+CanEscape = true
 GroundThrow = false
 AirThrow = false
+ThrowHitStopDuration = 8
 ThrowHitReaction = -1
 AllowSelfPushback = true
 SelfPushbackForce = 0
@@ -125,8 +131,8 @@ BounceYState = 0
 
 [sub_resource type="Resource" id="Resource_igg1m"]
 script = ExtResource("1_co4u3")
-Center = Vector2i(10000, 2700)
-Size = Vector2i(15000, 2000)
+Center = Vector2i(10000, 5000)
+Size = Vector2i(15000, 8000)
 HitboxType = 2
 HitType = 0
 BaseDamage = 150
@@ -138,7 +144,8 @@ SelfMeterGain = 25
 OpponentMeterGain = 10
 ArmorDamage = 1
 Priority = 0
-HitStopDuration = 12
+SelfHitStopDuration = 12
+OpponentHitStopDuration = 12
 BlockStopDuration = 12
 CounterHitStopDuration = 20
 ClashHitStopDuration = 20
@@ -168,8 +175,10 @@ AirBlockKnockback = Vector2i(0, 0)
 AirBlockKnockbackGravity = 30
 AirBlockKnockbackTime = 8
 AirBlockstun = 8
+CanEscape = true
 GroundThrow = false
 AirThrow = false
+ThrowHitStopDuration = 8
 ThrowHitReaction = -1
 AllowSelfPushback = true
 SelfPushbackForce = 0
@@ -187,4 +196,4 @@ BounceYState = 0
 script = ExtResource("2_a8akl")
 PushboxCenter = Vector2i(0, 3000)
 PushboxSize = Vector2i(4000, 6000)
-Hitboxes = [SubResource("Resource_018kf"), SubResource("Resource_ql6fn"), SubResource("Resource_igg1m")]
+Hitboxes = [SubResource("Resource_vupp6"), SubResource("Resource_ql6fn"), SubResource("Resource_igg1m")]

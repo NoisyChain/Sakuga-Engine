@@ -140,8 +140,8 @@ namespace SakugaEngine.Collision
 
                         if (myType == 0 && otType == 0) continue;
 
-                        var body1 = bodyA.Parent as SakugaActor;
-                        var body2 = bodyB.Parent as SakugaActor;
+                        SakugaActor body1 = bodyA.Parent as SakugaActor;
+                        SakugaActor body2 = bodyB.Parent as SakugaActor;
 
                         Vector2I ContactPoint = GetContactPoint(hitboxA, hitboxB);
 

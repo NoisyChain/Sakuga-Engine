@@ -14,7 +14,7 @@ HitboxIndex = 0
 [sub_resource type="Resource" id="Resource_xu0b3"]
 script = ExtResource("3")
 Frame = 0
-UseLateralSpeed = true
+UseLateralSpeed = false
 LateralSpeed = 0
 UseVerticalSpeed = true
 VerticalSpeed = 0

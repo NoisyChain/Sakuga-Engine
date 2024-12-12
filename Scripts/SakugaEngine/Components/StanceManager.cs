@@ -89,6 +89,7 @@ namespace SakugaEngine
 
         public void ExecuteMove()
         {
+            if (GetMove(BufferedMove).InterruptCornerPushback) owner.StopPushing();
             owner.Variables.CurrentSuperGauge -= GetMove(BufferedMove).SuperGaugeRequired;
 
             if (owner.Variables.CurrentHealth > 10 && GetMove(BufferedMove).SpendHealth > 0)
@@ -100,7 +101,6 @@ namespace SakugaEngine
                 owner.GetOpponent().HitStop.Start((uint)GetMove(BufferedMove).SuperFlash);
             }
 
-            
             if (GetMove(BufferedMove).MoveState >= 0) 
                 owner.Animator.PlayState(GetMove(BufferedMove).MoveState, true);
             

@@ -166,7 +166,7 @@ namespace PleaseResync
 
             session = new Peer2PeerSession(InputSize, 1, MaxPlayers, true, null);
             LastInput = new byte[(int)(MaxPlayers * InputSize)];
-            session.SetLocalDevice(DEVICE_ID, MaxPlayers, SimulatedFrameDelay);
+            session.SetLocalDevice(0, MaxPlayers, SimulatedFrameDelay);
 
             if (RollbackInfo != null) RollbackInfo.Text = "";
             if (PingInfo != null) PingInfo.Text = "";
@@ -182,7 +182,7 @@ namespace PleaseResync
 
             session = new Peer2PeerSession(InputSize, 1, MaxPlayers, true, null);
             LastInput = new byte[(int)(MaxPlayers * InputSize)];
-            session.SetLocalDevice(DEVICE_ID, MaxPlayers, SimulatedFrameDelay);
+            session.SetLocalDevice(0, MaxPlayers, SimulatedFrameDelay);
 
             if (RollbackInfo != null) RollbackInfo.Text = "";
             if (PingInfo != null) PingInfo.Text = "";

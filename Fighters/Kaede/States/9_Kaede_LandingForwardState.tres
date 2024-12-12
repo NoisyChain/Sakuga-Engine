@@ -5,11 +5,11 @@
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="3"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/StateTransitionSettings.cs" id="4_ttlwh"]
 
-[sub_resource type="Resource" id="2"]
+[sub_resource type="Resource" id="Resource_ii472"]
 script = ExtResource("3")
 animationStage = 0
 Frame = 0
-HitboxIndex = 0
+HitboxIndex = 1
 
 [sub_resource type="Resource" id="1"]
 script = ExtResource("2")
@@ -45,7 +45,7 @@ RoundFinishDuration = 0
 HitStunFrameLimit = -1
 stateProperties = null
 statePhysics = [SubResource("1")]
-hitboxStates = [SubResource("2")]
+hitboxStates = [SubResource("Resource_ii472")]
 animationEvents = null
 throwPivot = null
 soundEvents = null

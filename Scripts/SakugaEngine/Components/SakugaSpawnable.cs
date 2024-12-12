@@ -183,7 +183,7 @@ namespace SakugaEngine
                     Opp.HitDamage(box);
                     GD.Print("Spawnable: Hit!");
                 }
-                HitConfirm(box.SelfMeterGain, (uint)box.HitStopDuration, box.HitConfirmState, hitFX, contact);
+                HitConfirm(box.SelfMeterGain, (uint)box.SelfHitStopDuration, box.HitConfirmState, hitFX, contact);
                 //if (box.AllowSelfPushback)
                     //HitPushback(box.SelfPushbackDuration, box.SelfPushbackForce);
             }

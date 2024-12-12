@@ -136,7 +136,7 @@ namespace SakugaEngine
                     Animator.Frame == Animator.GetCurrentState().stateTransitions[i].AtFrame);
                 //Condition 3: On Ground
                 bool c3 = (conditions & (byte)Global.TransitionCondition.ON_GROUND) == 0 ||
-                    ((conditions & (byte)Global.TransitionCondition.ON_GROUND) != 0 && Body.IsOnGround);
+                    ((conditions & (byte)Global.TransitionCondition.ON_GROUND) != 0 && Body.IsOnGround && Body.FixedVelocity.Y <= 0);
                 //Condition 4: On Walls
                 bool c4 = (conditions & (byte)Global.TransitionCondition.ON_WALLS) == 0 ||
                     ((conditions & (byte)Global.TransitionCondition.ON_WALLS) != 0 && Body.IsOnWall);

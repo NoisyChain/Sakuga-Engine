@@ -1,0 +1,67 @@
+[gd_resource type="Resource" script_class="FighterState" load_steps=10 format=3 uid="uid://bl70vrda303oh"]
+
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/AnimationEvents.cs" id="1_cgxsq"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="1_e311h"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="2_h2j8i"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/StatePhysics.cs" id="3_gm7sg"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/StateTransitionSettings.cs" id="4_6dqov"]
+
+[sub_resource type="Resource" id="Resource_phb7r"]
+script = ExtResource("1_cgxsq")
+Frame = 10
+Type = 0
+Object = 0
+xRelativeTo = 1
+yRelativeTo = 1
+Index = 0
+IsRandom = false
+Range = 0
+Value = 0
+SetActive = false
+TargetPosition = Vector2i(5000, 10000)
+
+[sub_resource type="Resource" id="Resource_5e2ap"]
+script = ExtResource("1_e311h")
+animationStage = 0
+Frame = 0
+HitboxIndex = 0
+
+[sub_resource type="Resource" id="Resource_mpd63"]
+script = ExtResource("3_gm7sg")
+Frame = 0
+UseLateralSpeed = true
+LateralSpeed = 0
+UseVerticalSpeed = true
+VerticalSpeed = 0
+UseGravity = false
+Gravity = 0
+UseLateralInertia = false
+UseVerticalInertia = false
+UseHorizontalInput = false
+UseVerticalInput = false
+
+[sub_resource type="Resource" id="Resource_8ewsb"]
+script = ExtResource("4_6dqov")
+StateIndex = 0
+Condition = 1
+AtFrame = -1
+DistanceArea = Vector2i(0, 999999)
+
+[resource]
+script = ExtResource("2_h2j8i")
+StateName = "236C_3"
+Type = 2
+OffTheGround = false
+Duration = 29
+Loop = false
+LoopFrames = Vector2i(0, 0)
+TurnState = -1
+RoundFinishDuration = 0
+HitStunFrameLimit = -1
+stateProperties = null
+statePhysics = Array[Object]([SubResource("Resource_mpd63")])
+hitboxStates = Array[Object]([SubResource("Resource_5e2ap")])
+animationEvents = Array[Object]([SubResource("Resource_phb7r")])
+throwPivot = null
+soundEvents = null
+stateTransitions = Array[Object]([SubResource("Resource_8ewsb")])

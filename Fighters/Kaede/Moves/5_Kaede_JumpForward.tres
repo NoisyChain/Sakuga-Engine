@@ -43,6 +43,7 @@ SuperFlash = 0
 CanBeOverrided = true
 CanOverrideToSelf = false
 IgnoreSamePriority = true
+InterruptCornerPushback = true
 PriorityBuffer = false
 Priority = 1
 AutoPlayNextMove = -1

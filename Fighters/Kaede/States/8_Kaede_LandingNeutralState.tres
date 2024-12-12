@@ -5,11 +5,11 @@
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/StatePhysics.cs" id="3_vyxen"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/StateTransitionSettings.cs" id="4_hc3et"]
 
-[sub_resource type="Resource" id="2"]
+[sub_resource type="Resource" id="Resource_7l8ub"]
 script = ExtResource("3")
 animationStage = 0
 Frame = 0
-HitboxIndex = 0
+HitboxIndex = 1
 
 [sub_resource type="Resource" id="Resource_rrchg"]
 script = ExtResource("3_vyxen")
@@ -45,7 +45,7 @@ RoundFinishDuration = 0
 HitStunFrameLimit = -1
 stateProperties = null
 statePhysics = [SubResource("Resource_rrchg")]
-hitboxStates = [SubResource("2")]
+hitboxStates = [SubResource("Resource_7l8ub")]
 animationEvents = Array[Object]([])
 throwPivot = null
 soundEvents = null

@@ -19,7 +19,7 @@ namespace SakugaEngine
         public const int RoundsToWin = 2; //<= Move this to the GameMonitor
         public const int GameTimer = 99;  //<= Move this to the GameMonitor
         public const int MinHitstun = 8;
-        public const int HitGrabStunAdditional = 8;
+        public const int ThrowHitStunAdditional = 8;
 
         //Global inputs
         public const int INPUT_UP = 1 << 0;

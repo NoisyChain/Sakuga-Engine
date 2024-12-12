@@ -29,6 +29,7 @@ namespace SakugaEngine.Resources
         [Export] public bool CanBeOverrided;
         [Export] public bool CanOverrideToSelf;
         [Export] public bool IgnoreSamePriority = true;
+        [Export] public bool InterruptCornerPushback = false;
         [Export] public bool PriorityBuffer;
         [Export] public int Priority = 0;
         [Export] public int AutoPlayNextMove = -1;

@@ -9,19 +9,19 @@
 script = ExtResource("1_6duet")
 animationStage = 0
 Frame = 0
-HitboxIndex = 0
+HitboxIndex = 18
 
 [sub_resource type="Resource" id="Resource_oxicv"]
 script = ExtResource("1_6duet")
 animationStage = 1
 Frame = 3
-HitboxIndex = 18
+HitboxIndex = 19
 
 [sub_resource type="Resource" id="Resource_nl4j0"]
 script = ExtResource("1_6duet")
 animationStage = 2
 Frame = 7
-HitboxIndex = 0
+HitboxIndex = 18
 
 [sub_resource type="Resource" id="Resource_mpd63"]
 script = ExtResource("3_2g7k5")

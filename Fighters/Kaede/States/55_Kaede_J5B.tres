@@ -5,22 +5,22 @@
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/StatePhysics.cs" id="3"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/StateTransitionSettings.cs" id="4_kgnt8"]
 
-[sub_resource type="Resource" id="2"]
+[sub_resource type="Resource" id="Resource_a640j"]
 script = ExtResource("2")
 animationStage = 0
 Frame = 0
-HitboxIndex = 5
+HitboxIndex = 13
 
-[sub_resource type="Resource" id="3"]
+[sub_resource type="Resource" id="Resource_qa1gi"]
 script = ExtResource("2")
 animationStage = 1
-Frame = 9
-HitboxIndex = 7
+Frame = 4
+HitboxIndex = 15
 
 [sub_resource type="Resource" id="4"]
 script = ExtResource("2")
 animationStage = 2
-Frame = 13
+Frame = 7
 HitboxIndex = 0
 
 [sub_resource type="Resource" id="5"]
@@ -64,7 +64,7 @@ RoundFinishDuration = 0
 HitStunFrameLimit = -1
 stateProperties = null
 statePhysics = [SubResource("5")]
-hitboxStates = [SubResource("2"), SubResource("3"), SubResource("4")]
+hitboxStates = [SubResource("Resource_a640j"), SubResource("Resource_qa1gi"), SubResource("4")]
 animationEvents = null
 throwPivot = null
 soundEvents = null

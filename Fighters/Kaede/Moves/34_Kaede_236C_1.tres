@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="MoveSettings" load_steps=3 format=3 uid="uid://cqd6owm5o4yay"]
+
+[ext_resource type="Resource" uid="uid://dnsaxvbcfkp5k" path="res://Fighters/Shared/Inputs/19_Input_236C.tres" id="1_tdxix"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_cafx2"]
+
+[resource]
+script = ExtResource("2_cafx2")
+MoveName = "236C_1"
+MoveState = 63
+Inputs = ExtResource("1_tdxix")
+SideChange = 0
+MoveEnd = 2
+MoveEndState = -1
+SuperGaugeRequired = 0
+HealthThreshold = Vector2i(0, 99999)
+SpendHealth = 0
+DistanceArea = Vector2i(0, 999999)
+FrameLimit = -1
+ExtraVariablesRequirement = null
+ExtraVariablesChange = null
+ChangeStance = -1
+IsSequenceFromStates = PackedInt32Array()
+CancelsTo = PackedInt32Array(35)
+KaraCancelsTo = PackedInt32Array()
+buttonChargeSequence = null
+SuperFlash = 0
+CanBeOverrided = true
+CanOverrideToSelf = false
+IgnoreSamePriority = false
+PriorityBuffer = false
+Priority = 6
+AutoPlayNextMove = -1
+WaitForNullStates = false
+UseOnGround = true
+UseOnAir = false

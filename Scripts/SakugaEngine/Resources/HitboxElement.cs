@@ -23,7 +23,8 @@ namespace SakugaEngine.Resources
         [Export] public int OpponentMeterGain = 10;
         [Export] public int ArmorDamage = 1;
         [Export] public int Priority = 0;
-        [Export] public int HitStopDuration = 12;
+        [Export] public int SelfHitStopDuration = 12;
+        [Export] public int OpponentHitStopDuration = 12;
         [Export] public int BlockStopDuration = 12;
         [Export] public int CounterHitStopDuration = 20;
         [Export] public int ClashHitStopDuration = 20;
@@ -55,26 +56,28 @@ namespace SakugaEngine.Resources
         [Export] public Global.HitstunType AirHitstunType;
         [Export] public int AirHitReaction;
         [Export] public Vector2I AirHitKnockback;
-        [Export] public int AirHitKnockbackGravity = 300000;
+        [Export] public int AirHitKnockbackGravity = 200000;
         [Export] public int AirHitKnockbackTime = 8;
         [Export] public int AirHitstun = 8;
         [Export] public Vector2I AirBlockKnockback;
-        [Export] public int AirBlockKnockbackGravity = 300000;
+        [Export] public int AirBlockKnockbackGravity = 200000;
         [Export] public int AirBlockKnockbackTime = 8;
         [Export] public int AirBlockstun = 8;
         
 
         //Throw settings
         [ExportGroup("Throw Hit Settings")]
+        [Export] public bool CanEscape = true;
         [Export] public bool GroundThrow;
         [Export] public bool AirThrow;
+        [Export] public int ThrowHitStopDuration = 8;
         [Export] public int ThrowHitReaction = -1;
 
         //Pushback settings
-        [ExportGroup("Pushback Settings")]
+        [ExportGroup("Corner Pushback Settings")]
         [Export] public bool AllowSelfPushback = true;
-        [Export] public int SelfPushbackForce;
-        [Export] public int SelfPushbackDuration;
+        [Export] public int SelfPushbackForce = -30000;
+        [Export] public int SelfPushbackDuration = 8;
 
         //Extra settings
         [ExportGroup("Extra Settings")]

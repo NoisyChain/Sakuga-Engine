@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="FighterState" load_steps=6 format=3 uid="uid://dq54rj2dcsvyr"]
+[gd_resource type="Resource" script_class="FighterState" load_steps=7 format=3 uid="uid://dq54rj2dcsvyr"]
 
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="1_sskrb"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="2_uirvq"]
@@ -17,6 +17,13 @@ Condition = 1
 AtFrame = -1
 DistanceArea = Vector2i(0, 99999)
 
+[sub_resource type="Resource" id="Resource_haxmt"]
+script = ExtResource("3_k3tca")
+StateIndex = 30
+Condition = 32
+AtFrame = -1
+DistanceArea = Vector2i(0, 999999)
+
 [resource]
 script = ExtResource("2_uirvq")
 StateName = "Hit_Weak"
@@ -34,4 +41,4 @@ hitboxStates = [SubResource("2")]
 animationEvents = null
 throwPivot = null
 soundEvents = null
-stateTransitions = Array[Object]([SubResource("Resource_mywsi")])
+stateTransitions = Array[Object]([SubResource("Resource_mywsi"), SubResource("Resource_haxmt")])
