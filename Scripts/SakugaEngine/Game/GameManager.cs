@@ -9,6 +9,7 @@ namespace SakugaEngine.Game
 {
     public partial class GameManager : Node, IGameState
     {
+        [Export] private GameMonitor Monitor;
         [Export] public PackedScene[] Spawns;
         [Export] private CanvasLayer FighterUI;
         [Export] private FighterCamera Camera;
@@ -17,7 +18,7 @@ namespace SakugaEngine.Game
 
         private SakugaFighter[] Fighters;
         private PhysicsWorld World;
-        private GameMonitor Monitor;
+        
         private HealthHUD healthHUD;
         private MetersHUD metersHUD;
 
@@ -39,9 +40,7 @@ namespace SakugaEngine.Game
             if (Fighters == null) return;
             if (Monitor == null) return;
 
-            healthHUD.UpdateHealthBars(Fighters, Monitor.VictoryCounter);
-            healthHUD.UpdateTimer(Monitor.Clock / Global.TicksPerSecond);
-            healthHUD.UpdateDebug(Fighters);
+            healthHUD.UpdateHealthBars(Fighters, Monitor);
             metersHUD.UpdateMeters(Fighters);
             Camera.UpdateCamera(Fighters[0], Fighters[1]);
             SeedViewer.Text = finalSeed.ToString();
@@ -49,9 +48,9 @@ namespace SakugaEngine.Game
 
         private void GenerateBaseSeed()
         {
-            byte[] seedArray = Encoding.ASCII.GetBytes(Global.baseSeed);
-            int charSeeds = Fighters[0].CharacterSeed + Fighters[1].CharacterSeed;
-            generatedSeed = (int)Platform.GetChecksum(seedArray) + charSeeds;
+            string seedText = Global.baseSeed + Fighters[0].Profile.FighterName + Fighters[1].Profile.FighterName;
+            byte[] seedArray = Encoding.ASCII.GetBytes(seedText);
+            generatedSeed = (int)Platform.GetChecksum(seedArray);
         }
 
         private int CalculateSeed()
@@ -74,7 +73,6 @@ namespace SakugaEngine.Game
 
             Frame = 0;
 
-            Monitor = new GameMonitor(Global.GameTimer, 2);
             World = new PhysicsWorld();
 
             Fighters = new SakugaFighter[2];
@@ -93,6 +91,7 @@ namespace SakugaEngine.Game
             Fighters[1].SetOpponent(Fighters[0]);
 
             GenerateBaseSeed();
+            Monitor.Initialize(Fighters.Length);
 
             healthHUD.Setup(Fighters);
             metersHUD.Setup(Fighters);
@@ -103,6 +102,7 @@ namespace SakugaEngine.Game
             finalSeed = CalculateSeed();
             Global.UpdateRNG(finalSeed);
             Frame++;
+            Monitor.Tick(Fighters);
 
             randomTest = new Vector3I(
                 Global.RNG.Next(),
@@ -112,11 +112,6 @@ namespace SakugaEngine.Game
 
             int center = (Fighters[0].Body.FixedPosition.X + Fighters[1].Body.FixedPosition.X) / 2;
 
-            if (Fighters[0].Body.FixedPosition.X < Fighters[1].Body.FixedPosition.X)
-            { Fighters[0].UpdateSide(true); Fighters[1].UpdateSide(false); }
-            else if (Fighters[0].Body.FixedPosition.X > Fighters[1].Body.FixedPosition.X)
-            { Fighters[0].UpdateSide(false); Fighters[1].UpdateSide(true); }
-
             for (int i = 0; i < Fighters.Length; i++)
             {
                 ushort combinedInput = 0;
@@ -124,11 +119,22 @@ namespace SakugaEngine.Game
                 combinedInput |= (ushort)(playerInput[(i * InputSize) + 1] << 8);
                 Fighters[i].ParseInputs(combinedInput);
             }
+
+            for (int i = 0; i < Fighters.Length; i++)
+                Fighters[i].PreTick();
             
             for (int i = 0; i < Fighters.Length; i++)
                 Fighters[i].Tick();
             
             World.Simulate();
+
+            if (Fighters[0].Body.FixedPosition.X < Fighters[1].Body.FixedPosition.X)
+            { Fighters[0].UpdateSide(true); Fighters[1].UpdateSide(false); }
+            else if (Fighters[0].Body.FixedPosition.X > Fighters[1].Body.FixedPosition.X)
+            { Fighters[0].UpdateSide(false); Fighters[1].UpdateSide(true); }
+
+            for (int i = 0; i < Fighters.Length; i++)
+                Fighters[i].LateTick();
 
             for (int i = 0; i < Fighters.Length; i++)
             {
@@ -137,12 +143,8 @@ namespace SakugaEngine.Game
                     center - Global.MaxPlayersDistance / 2,
                     center + Global.MaxPlayersDistance / 2
                 );
+                Fighters[i].Body.UpdateColliders();
             }
-
-            for (int i = 0; i < Fighters.Length; i++)
-                Fighters[i].LateTick();
-
-            Monitor.Tick(Fighters); 
         }
 
         // Generate inputs for your game

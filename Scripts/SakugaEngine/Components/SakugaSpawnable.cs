@@ -31,7 +31,7 @@ namespace SakugaEngine
         public void SetFighterOwner(SakugaFighter owner) { _owner = owner; }
         public override SakugaFighter FighterReference() { return GetFighterOwner(); }
 
-        public override bool AllowHitCheck(SakugaActor other)
+        private bool AllowHitCheck(SakugaActor other)
         {
             if (CurrentHitCheck == 1 && other != _owner) return false;
             if (CurrentHitCheck == 0 && other != _owner.GetOpponent()) return false;
@@ -86,11 +86,10 @@ namespace SakugaEngine
             Body.SetHitbox(-1);
         }
 
-        public override void Tick()
+        public override void PreTick()
         {
             if (!IsActive) return;
 
-            Body.PlayerSide = Body.IsLeftSide ? 1 : -1;
             Body.IsMovable = !GetFighterOwner().HitStop.IsRunning();
             
             if (!GetFighterOwner().HitStop.IsRunning())
@@ -98,6 +97,11 @@ namespace SakugaEngine
                 LifeTime.Run();
                 Animator.RunState();
             }
+        }
+
+        public override void Tick()
+        {
+            if (!IsActive) return;
 
             if (Variables != null) Variables.UpdateExtraVariables();
             CheckDeathConditions();
@@ -109,16 +113,22 @@ namespace SakugaEngine
                 Body.SetHitbox(-1);
             }
 
+            UpdateFighterPhysics();
+        }
+
+        public override void LateTick()
+        {
+            if (!IsActive) return;
+
+            Body.PlayerSide = Body.IsLeftSide ? 1 : -1;
+
             if (!GetFighterOwner().HitStop.IsRunning())
             {
                 UpdateFrameProperties();
                 StateTransitions();
                 AnimationEvents();
-                SoundEvents(SFXList, VoicesList);
             }
-            UpdateHitboxes(!GetFighterOwner().HitStop.IsRunning());
-
-            UpdateFighterPhysics();
+            UpdateHitboxes();
         }
 
         private void CheckDeathConditions()
@@ -131,7 +141,6 @@ namespace SakugaEngine
         {
             GD.Print(hitEffect);
             GetFighterOwner().LayerSorting = 1;
-            GetFighterOwner().Body.HitConfirmed = true;
             GetFighterOwner().Body.IsMovable = false;
             Body.HitConfirmed = true;
             Body.IsMovable = false;
@@ -140,7 +149,6 @@ namespace SakugaEngine
             if (hitEffect >= 0)
             {
                 GetFighterOwner().SpawnVFX(hitEffect, VFXSpawn);
-                //sounds.QueueSound(sounds.Last, hitEffect);
             }
 
             if (DieOnHit)
@@ -153,7 +161,11 @@ namespace SakugaEngine
 
         public void BaseDamage(SakugaActor target, HitboxElement box, Vector2I contact)
         {
-            GetFighterOwner().SetOpponent(target.FighterReference());
+            if (!AllowHitCheck(target)) return;
+
+            if (target != GetFighterOwner()) 
+                GetFighterOwner().SetOpponent(target.FighterReference());
+
             SakugaFighter Opp = GetFighterOwner().GetOpponent();
 
             bool isHitAllowed = !Opp.Body.ContainsFrameProperty((byte)Global.FrameProperties.PROJECTILE_IMUNITY);
@@ -165,7 +177,7 @@ namespace SakugaEngine
             if (Opp.Variables.SuperArmor > 0)
             {
                 Opp.ArmorHit(box);
-                HitConfirm(box.SelfMeterGain, (uint)box.ClashHitStopDuration, -1, box.ArmorHitEffectIndex, contact);
+                HitConfirm(box.SelfSuperGaugeGain, (uint)box.ClashHitStopDuration, -1, box.ArmorHitEffectIndex, contact);
                 GD.Print("Spawnable: Armor Hit");
             }
             else
@@ -180,15 +192,15 @@ namespace SakugaEngine
                 else
                 {
                     hitFX = box.HitEffectIndex;
-                    Opp.HitDamage(box);
+                    Opp.HitDamage(box, false);
                     GD.Print("Spawnable: Hit!");
                 }
-                HitConfirm(box.SelfMeterGain, (uint)box.SelfHitStopDuration, box.HitConfirmState, hitFX, contact);
-                //if (box.AllowSelfPushback)
-                    //HitPushback(box.SelfPushbackDuration, box.SelfPushbackForce);
+                HitConfirm(box.SelfSuperGaugeGain, (uint)box.SelfHitStopDuration, box.HitConfirmState, hitFX, contact);
             }
         }
+        public void HitTrade(HitboxElement box, Vector2I contact){}
         public void ThrowDamage(SakugaActor target, HitboxElement box, Vector2I contact){}
+        public void ThrowTrade(){}
         public void HitboxClash(HitboxElement box, Vector2I contact){}
         public void ProjectileClash(HitboxElement box, Vector2I contact)
         {
@@ -212,10 +224,9 @@ namespace SakugaEngine
             else Animator.PlayState(DeflectState, true);
         
             Body.IsLeftSide = !Body.IsLeftSide;
-            //Body.PlayerSide = Body.IsLeftSide ? 1 : -1;
+            Body.PlayerSide = Body.IsLeftSide ? 1 : -1;
         }
         public void CounterHit(SakugaActor target, HitboxElement box, Vector2I contact){}
-        public void ParryHit(SakugaActor target, HitboxElement box, Vector2I contact){}
         public void ProximityBlock(){}
         public void OnHitboxExit(){}
 

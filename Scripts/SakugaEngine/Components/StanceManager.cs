@@ -47,11 +47,11 @@ namespace SakugaEngine
                 (GetMove(index).UseOnGround && GetMove(index).UseOnAir);
             if (!isCorrectSurface) return false;
 
-            bool isCorrectState = GetMove(index).IsSequenceFromStates.Length <= 0 || CheckOwnerState(index);
-            if (!isCorrectState) return false;
+            bool isValidState = CheckStatesToIgnore(index);
+            if (!isValidState) return false;
 
-            //bool isOpponentCorrectState = GetMove(index).CheckOpponentStates.Length <= 0 || CheckOpponentState(index);
-            //if (!isOpponentCorrectState) return false;
+            bool isCorrectState = CheckOwnerState(index);
+            if (!isCorrectState) return false;
 
             bool isDesiredHealth = owner.Variables.CurrentHealth >= GetMove(index).HealthThreshold.X &&
                 owner.Variables.CurrentHealth <= GetMove(index).HealthThreshold.Y;
@@ -81,10 +81,10 @@ namespace SakugaEngine
                     break;
                 }
             }
-
-            CheckMoveEndCondition();
-            ChargeButtonSequence();
+            
             AttackBufferStorage();
+            ChargeButtonSequence();
+            CheckMoveEndCondition();
         }
 
         public void ExecuteMove()
@@ -126,8 +126,8 @@ namespace SakugaEngine
                     GD.Print("Buffer Cleaned!");
                 }
                 else if (!owner.HitStop.IsRunning())
-                {                    
-                    bool CanOverride = CurrentMove == -1 || (GetCurrentMove().CanBeOverrided && 
+                {
+                    bool CanOverride = CurrentMove < 0 || (GetCurrentMove().CanBeOverrided && 
                                         (GetCurrentMove().IgnoreSamePriority ? 
                                         GetMove(BufferedMove).Priority > GetCurrentMove().Priority : 
                                         GetMove(BufferedMove).Priority >= GetCurrentMove().Priority));
@@ -216,14 +216,7 @@ namespace SakugaEngine
                 CurrentStance = GetCurrentMove().ChangeStance;
                 BufferedMove = -1;
             }
-            int nextMove = GetCurrentMove().AutoPlayNextMove;
             CurrentMove = -1;
-            
-            if (nextMove >= 0 && BufferedMove < 0) 
-            {
-                BufferedMove = nextMove;
-                ExecuteMove();
-            }
             owner.Variables.ExtraVariablesOnMoveExit();
         }
 
@@ -236,6 +229,9 @@ namespace SakugaEngine
 
         public bool CheckOwnerState(int index)
         {
+            if (GetMove(index).IsSequenceFromStates == null) return true;
+            if (GetMove(index).IsSequenceFromStates.Length <= 0) return true;
+            
             foreach (int possibleStates in GetMove(index).IsSequenceFromStates)
             {
                 if (owner.Animator.CurrentState == possibleStates)
@@ -244,23 +240,42 @@ namespace SakugaEngine
             return false;
         }
 
+        public bool CheckStatesToIgnore(int index)
+        {
+            if (GetMove(index).IgnoreStates == null) return true;
+            if (GetMove(index).IgnoreStates.Length <= 0) return true;
+            
+            foreach (int possibleStates in GetMove(index).IgnoreStates)
+            {
+                if (owner.Animator.CurrentState == possibleStates)
+                    return false;
+            }
+            return true;
+        }
+
         public bool CanCancel()
         {
-            if (CurrentMove >= 0)
-                foreach (int possibleCancel in GetCurrentMove().CancelsTo)
-                {
-                    if (GetCurrentMove().CancelsTo.Length > 0 && BufferedMove == possibleCancel)
-                        return true;
-                }
+            if (CurrentMove < 0) return false;
+            if (GetCurrentMove().CancelsTo == null) return false;
+            if (GetCurrentMove().CancelsTo.Length <= 0) return false;
+
+            foreach (int possibleCancel in GetCurrentMove().CancelsTo)
+            {
+                if (BufferedMove == possibleCancel)
+                    return true;
+            }
             return false;
         }
 
         public bool CanKaraCancel()
         {
-            if (CurrentMove >= 0)
+            if (CurrentMove < 0) return false;
+            if (GetCurrentMove().KaraCancelsTo == null) return false;
+            if (GetCurrentMove().KaraCancelsTo.Length <= 0) return false;
+
                 foreach (int possibleKaraCancel in GetCurrentMove().KaraCancelsTo)
                 {
-                    if (GetCurrentMove().KaraCancelsTo.Length > 0 && BufferedMove == possibleKaraCancel)
+                    if (BufferedMove == possibleKaraCancel)
                         return true;
                 }
             return false;

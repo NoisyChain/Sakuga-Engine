@@ -57,16 +57,16 @@ namespace SakugaEngine.Utils
                             break;
                         case Global.HitboxType.COUNTER:
                             hitboxGraphics[j].SortingOffset = 2;
-                            hitboxGraphics[j].Modulate = new Color(0.5f, 0.0f, 1.0f);
+                            hitboxGraphics[j].Modulate = new Color(0.5f, 0.5f, 0.5f);
                             break;
                         case Global.HitboxType.DEFLECT:
                             hitboxGraphics[j].SortingOffset = 2;
                             hitboxGraphics[j].Modulate = new Color(1.0f, 0.0f, 0.5f);
                             break;
-                        case Global.HitboxType.PARRY:
+                        /*case Global.HitboxType.PARRY:
                             hitboxGraphics[j].SortingOffset = 2;
                             hitboxGraphics[j].Modulate = new Color(0.5f, 0.5f, 0.5f);
-                            break;
+                            break;*/
                     }
                     hitboxGraphics[j].GlobalPosition = Global.ToScaledVector3(previewSettings.Hitboxes[j].Center);
                     hitboxGraphics[j].Scale = Global.ToScaledVector3(previewSettings.Hitboxes[j].Size, 1f);

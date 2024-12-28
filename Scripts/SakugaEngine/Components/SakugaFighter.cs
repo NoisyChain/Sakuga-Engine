@@ -2,7 +2,6 @@ using Godot;
 using System.IO;
 using SakugaEngine.Resources;
 using SakugaEngine.Collision;
-using System.Threading.Tasks;
 
 namespace SakugaEngine
 {
@@ -23,19 +22,21 @@ namespace SakugaEngine
 
         [ExportCategory("Extras")]
         [Export] public FighterProfile Profile;
-        [Export] public int CharacterSeed;
 
         public bool SuperStop;
         public int LayerSorting = -1;
 
         private bool PushAllowInertia;
         private bool IsBeingPushed = false;
+        private bool BlockStun;
         private int PushGravity;
         private int HBounceIntensity;
         private int HBounceState;
         private int VBounceIntensity;
         private int VBounceState;
         private byte HitstunType = 0;
+        private byte GravityDecayFactor = 0;
+        private byte HitstunDecayFactor = 0;
         private SakugaSpawnable[][] Spawnables;
         private SakugaVFX[][] VFX;
         
@@ -92,7 +93,9 @@ namespace SakugaEngine
         {
             Body.Initialize(this);
             Stance.Initialize(this);
+            Tracker.Initialize(this);
             Variables.Initialize();
+            
             Body.FixedPosition.X = Global.StartingPosition * (-1 + (index * 2));
             Animator.PlayState(Stance.GetCurrentStance().NeutralState);
             Animator.Frame = -1;
@@ -129,8 +132,8 @@ namespace SakugaEngine
             if (!Body.IsLeftSide && Body.PlayerSide < 0) return;
             
             if (!Body.IsOnGround) return; //Never auto turn on air
+            if (Animator.StateType() != 1) return; // Also only auto turn in movement states
             if (!Stance.CanAutoTurn()) return; //If a move is being executed, leave the decision to it
-            if (Animator.StateType() == 4) return; // Also never auto turn during a hit reaction
 
             Body.PlayerSide = Body.IsLeftSide ? 1 : -1;
 
@@ -146,39 +149,36 @@ namespace SakugaEngine
             Body.PlayerSide = Body.IsLeftSide ? 1 : -1;
         }
 
-        public override void Tick()
+        public override void PreTick()
         {
-            ChangePlayerSide();
             HitStop.Run();
-
-            Inputs.InputSide = Body.PlayerSide;
             Body.IsMovable = !HitStop.IsRunning();
-            
+
             if (!HitStop.IsRunning())
             {
-                if (HitstunType != 2)
+                if (SuperStop) SuperStop = false;
+                if (HitstunType != (int)Global.HitstunType.HARD_KNOCKDOWN)
                     HitStun.Run();
                 PushForce.Run();
                 HorizontalBounce.Run();
                 VerticalBounce.Run();
+                MoveBuffer.Run();
                 if (Animator.GetCurrentState().HitStunFrameLimit < 0 || !IsStunLocked())
                     Animator.RunState();
             }
-            Variables.UpdateExtraVariables();
-            MoveBuffer.Run();
-            Stance.CheckMoves();
 
-            if (!HitStop.IsRunning())
-            {
-                UpdateFrameProperties();
-                StateTransitions();
-                AnimationEvents();
-                SoundEvents(SFXList, VoicesList);
-            }
-            UpdateHitboxes(!HitStop.IsRunning());
-           
+            for (int i = 0; i < Spawnables.Length; ++i)
+                for (int j = 0; j < Spawnables[i].Length; ++j)
+                    Spawnables[i][j].PreTick();
+        }
 
-            if (HitstunType == 4)
+        public override void Tick()
+        {
+            ThrowEscape();
+            HitstunRecover();
+            BounceLogic();
+
+            if (HitstunType > (int)Global.HitstunType.STAGGER)
                 ThrowPivoting();
             else
                 if (IsBeingPushed)
@@ -186,28 +186,48 @@ namespace SakugaEngine
                 else
                     UpdateFighterPhysics();
             
-            BounceLogic();
-            
-            FighterVars.CalculateDamageScaling(Body.IsOnWall);
-
-            if (Animator.StateType() != 4)
-            {
-                if (HitStun.IsRunning()) HitStun.Stop();
-                HitstunType = 0;
-                FighterVars.ResetDamageStatus();
-                Tracker.Reset();
-            }
+            Stance.CheckMoves();
 
             for (int i = 0; i < Spawnables.Length; ++i)
                 for (int j = 0; j < Spawnables[i].Length; ++j)
                     Spawnables[i][j].Tick();
-            
+        }
+
+        public override void LateTick()
+        {
+            ChangePlayerSide();
+            Inputs.InputSide = Body.PlayerSide;
+            Variables.UpdateExtraVariables();
+            FighterVars.CalculateDamageScaling(Body.IsOnWall);
+            Tracker.UpdateFrameData();
+
+            if (!HitStop.IsRunning())
+            {
+                UpdateFrameProperties();
+                StateTransitions();
+                AnimationEvents();
+            }
+            UpdateHitboxes();
+
+            if (!HitStun.IsRunning() && HitstunType < (int)Global.HitstunType.STAGGER)
+            {
+                FighterVars.ResetDamageStatus();
+                Tracker.Reset();
+                HitstunDecayFactor = 0;
+                GravityDecayFactor = 0;
+                HitstunType = 0;
+                BlockStun = false;
+            }
+
+            for (int i = 0; i < Spawnables.Length; ++i)
+                for (int j = 0; j < Spawnables[i].Length; ++j)
+                    Spawnables[i][j].LateTick();
+
             for (int i = 0; i < VFX.Length; ++i)
                 for (int j = 0; j < VFX[i].Length; ++j)
                     VFX[i][j].Tick();
-                
 
-            Tracker.UpdateFrameData(this);
+            GD.Print(IsStunLocked());
         }
 
 #region Push Force
@@ -294,7 +314,6 @@ namespace SakugaEngine
 
         public void ThrowPivoting()
         {
-            //No velocity for throws
             FighterState currState = GetOpponent().Animator.GetCurrentState();
             if (currState.throwPivot.Length == 0) return;
             for(int i = 0; i < currState.throwPivot.Length; i++)
@@ -337,14 +356,65 @@ namespace SakugaEngine
             if (Mathf.Abs(Body.FixedPosition.X - GetOpponent().Body.FixedPosition.X) <= 5)
                 GetOpponent().Body.FixedPosition.X -= 5 * pushbackSide;
         }
+
+        public void HitstunRecover()
+        {
+            if (HitStun.IsRunning()) return;
+            if (Animator.StateType() != (int)Global.StateType.HIT_REACTION) return;
+            if (HitstunType >= (int)Global.HitstunType.HARD_KNOCKDOWN) return;
+
+            int selectedRecovery = -1;
+            int recoveryDirection;
+            if (Inputs.WasPressed(Inputs.CurrentHistory, Global.INPUT_ANY_BUTTON))
+            {
+                if (Inputs.IsBeingPressed(Inputs.CurrentHistory, Global.INPUT_LEFT))
+                    recoveryDirection = -1;
+                else if (Inputs.IsBeingPressed(Inputs.CurrentHistory, Global.INPUT_RIGHT))
+                    recoveryDirection = 1;
+                else 
+                    recoveryDirection = Mathf.Sign(Body.FixedVelocity.X);
+                
+                if (Body.IsOnGround)
+                {
+                    if (!Animator.GetCurrentState().OffTheGround)
+                    {
+                        if (recoveryDirection == 0) recoveryDirection = Body.PlayerSide; 
+                        selectedRecovery = recoveryDirection * Body.PlayerSide >= 0 ? 
+                                    Stance.GetCurrentStance().GroundForwardRecoveryState :
+                                    Stance.GetCurrentStance().GroundBackwardsRecoveryState;
+                        PushCharacter(20, Global.RecoveryHorizontalSpeed * recoveryDirection, 0, 0, false);
+                    }
+                    else if (Animator.GetCurrentState().OffTheGround && HitstunType < (int)Global.HitstunType.KNOCKDOWN)
+                    {
+                        selectedRecovery = Stance.GetCurrentStance().OffTheGroundRecoveryState;
+                        PushCharacter(20, 0, Global.RecoveryJumpVelocity, Global.RecoveryGravity, true);
+                    }
+                    
+                }
+                else if (HitstunType < (int)Global.HitstunType.KNOCKDOWN)
+                {
+                    selectedRecovery = recoveryDirection * Body.PlayerSide >= 0 ? 
+                                    Stance.GetCurrentStance().AirForwardRecoveryState :
+                                    Stance.GetCurrentStance().AirBackwardsRecoveryState;
+                    PushCharacter(20, Mathf.Abs(Body.FixedVelocity.X) * recoveryDirection, Global.RecoveryJumpVelocity, Global.RecoveryGravity, true);
+                }
+                
+                if (selectedRecovery >= 0) 
+                {
+                    HitstunType = 0;
+                    Animator.PlayState(selectedRecovery, true); 
+                }
+                GD.Print("Recovered!");
+            }
+        }
 #endregion
         /// <summary>
-        /// Calls block states
-        /// The block type moves the state index to the designed block type
-        /// 0 = Enter blocking state
-        /// 1 = Blocking state
-        /// 2 = Exiting block state
-        /// 3 = Guard Break
+        /// Calls block states. 
+        /// The block type moves the state index to the designed block type: 
+        /// 0 = Enter blocking state;
+        /// 1 = Blocking state;
+        /// 2 = Exiting block state;
+        /// 3 = Guard Break.
         /// </summary>
         public void CallBlockState(int blockType)
         {
@@ -354,17 +424,23 @@ namespace SakugaEngine
                 {
                     if (Stance.GetCurrentStance().CrouchBlockInitialState >= 0)
                         Animator.PlayState(Stance.GetCurrentStance().CrouchBlockInitialState + blockType, true);
+                    
+                    GD.Print(Animator.States[Stance.GetCurrentStance().CrouchBlockInitialState + blockType].StateName);
                 }
                 else
                 {
                     if (Stance.GetCurrentStance().GroundBlockInitialState >= 0)
                         Animator.PlayState(Stance.GetCurrentStance().GroundBlockInitialState + blockType, true);
+                    
+                    GD.Print(Animator.States[Stance.GetCurrentStance().GroundBlockInitialState + blockType].StateName);
                 }
             }
             else
             {
                 if (Stance.GetCurrentStance().AirBlockInitialState >= 0)
                     Animator.PlayState(Stance.GetCurrentStance().AirBlockInitialState + blockType, true);
+                
+                GD.Print(Animator.States[Stance.GetCurrentStance().AirBlockInitialState + blockType].StateName);
             }
         }
 
@@ -455,12 +531,13 @@ namespace SakugaEngine
                     "\nHealth: "+Variables.CurrentHealth+"/"+Variables.MaxHealth+
                     "\nSuper Gauge: "+Variables.CurrentSuperGauge+"/"+Variables.MaxSuperGauge+
                     "\nSuper Armor: "+Variables.SuperArmor+
+                    "\nHit Stun: "+HitStun.TimeLeft+
                     "\nCharge Buffers: "+Inputs.CurrentInput().hCharge+" | "+Inputs.CurrentInput().vCharge+" | "+Inputs.CurrentInput().bCharge+
                     "\nBlocking: "+IsBlocking();
         }
 
 #region Damage functions
-        public void HitDamage(HitboxElement box)
+        public void HitDamage(HitboxElement box, bool isTrade)
         {
             LayerSorting = -1;
             bool isGroundHit = !LifeEnded() && Body.IsOnGround && !Animator.GetCurrentState().OffTheGround;
@@ -469,13 +546,18 @@ namespace SakugaEngine
             var finalDamageKnockback = isGroundHit ? box.GroundHitKnockback : box.AirHitKnockback;
             var finalKnockbackGravity = isGroundHit ? box.GroundHitKnockbackGravity : box.AirHitKnockbackGravity;
             var finalHitReaction = isGroundHit ? (IsCrouching() ? box.CrouchHitReaction : box.GroundHitReaction)  : box.AirHitReaction;
-            var finalDamage = box.BaseDamage * FighterVars.CurrentDamageScaling / 100;
+            //var damageFactor = GetOpponent().FighterVars.CurrentAttack - (FighterVars.CurrentDefense - 100);
+            //var scaledDamage = box.BaseDamage * FighterVars.CurrentDamageScaling / 100;
+            var finalDamage = FighterVars.CalculateCompleteDamage(box.BaseDamage, GetOpponent().FighterVars.CurrentAttack);
             bool CanTech = Animator.StateType() == 4 && !HitStun.IsRunning();
             Body.IsLeftSide = !GetOpponent().Body.IsLeftSide;
             Body.IsMovable = false;
             HitstunType = isGroundHit ? (byte)box.GroundHitstunType : (byte)box.AirHitstunType;
-            HitStop.Start((uint)box.OpponentHitStopDuration);
-            HitStun.Start((uint)Mathf.Max(finalHitstun, Global.MinHitstun));
+            if (!isTrade)
+                HitStop.Start((uint)box.OpponentHitStopDuration);
+            else HitStop.Stop();
+            uint finalHitstunForReal = (uint)Mathf.Max(finalHitstun - HitstunDecayFactor, Global.MinHitstun);
+            HitStun.Start(finalHitstunForReal);
             if (box.BounceXTime > 0)
             {
                 HBounceState = Stance.GetCurrentStance().HitReactions[box.BounceXState];
@@ -508,20 +590,27 @@ namespace SakugaEngine
                 Animator.PlayState(Stance.GetCurrentStance().HitReactions[finalHitReaction], true);
                 Variables.ExtraVariablesOnDamage();
             }
+            int decayingKnockback = Global.GravityDecay * GravityDecayFactor;
             PushCharacter(
                 finalKnockbackTime, 
                 finalDamageKnockback.X * (GetOpponent().Body.IsLeftSide ? -1 : 1),
-                finalDamageKnockback.Y, 
+                finalDamageKnockback.Y - decayingKnockback, 
                 finalKnockbackGravity, box.AllowInertia);
             Variables.TakeDamage(
                 finalDamage,
-                box.OpponentMeterGain,
+                box.OpponentSuperGaugeGain,
                 box.KillingBlow);
             if (finalDamage > 0)
             {
                 FighterVars.RemoveDamageScaling((ushort)box.DamageScalingSubtract);
             }
-            Tracker.UpdateTrackers((uint)finalDamage, GetOpponent().Animator.Frame, (int)box.HitType, CanTech);
+            Tracker.UpdateTrackers(
+                (uint)finalDamage, GetOpponent().Animator.GetCurrentState().Duration - GetOpponent().Animator.Frame, 
+                finalHitstunForReal, (int)box.HitType, CanTech);
+            if (Tracker.HitCombo >= Global.HitstunDecayMinCombo)
+                HitstunDecayFactor++;
+            if (!Body.IsOnGround)
+                GravityDecayFactor++;
         }
 
         public void BlockHit(HitboxElement box) 
@@ -531,37 +620,57 @@ namespace SakugaEngine
             var finalKnockbackTime = Body.IsOnGround ? box.GroundBlockKnockbackTime : box.AirBlockKnockbackTime;
             var finalDamageKnockback = Body.IsOnGround ? box.GroundBlockKnockback : box.AirBlockKnockback;
             var finalKnockbackGravity = Body.IsOnGround ? box.GroundBlockKnockbackGravity : box.AirBlockKnockbackGravity;
+            //var damageFactor = GetOpponent().FighterVars.CurrentAttack - (FighterVars.CurrentDefense - 100);
+            //var scaledDamage = box.ChipDamage * FighterVars.CurrentDamageScaling / 100;
+            var finalDamage = FighterVars.CalculateCompleteDamage(box.ChipDamage, GetOpponent().FighterVars.CurrentAttack);
             //var finalHitReaction = Body.IsOnGround ? (IsCrouching() ? box.CrouchHitReaction : box.GroundHitReaction)  : box.AirHitReaction;
             //bool CanTech = Animator.StateType() == 4 && !HitStun.IsRunning();
+            BlockStun = true;
             Body.IsLeftSide = !GetOpponent().Body.IsLeftSide;
             Body.IsMovable = false;
             Stance.Clear();
-            CallBlockState(1);
             HitStun.Start((uint)finalHitstun);
             HitStop.Start((uint)box.BlockStopDuration);
+            CallBlockState(1);
             PushCharacter(
                 finalKnockbackTime,
                 finalDamageKnockback.X * (GetOpponent().Body.IsLeftSide ? -1 : 1),
                 finalDamageKnockback.X,
                 finalKnockbackGravity, box.AllowInertia);
             Variables.TakeDamage(
-                box.ChipDamage,
-                box.OpponentMeterGain,
+                finalDamage,
+                box.OpponentSuperGaugeGain,
                 box.ChipDeath);
+        }
+        public void GuardCrush(HitboxElement box)
+        {
+            //var damageFactor = GetOpponent().FighterVars.CurrentAttack - (FighterVars.CurrentDefense - 100);
+            //var scaledDamage = box.GuardCrushDamage * FighterVars.CurrentDamageScaling / 100;
+            var finalDamage = FighterVars.CalculateCompleteDamage(box.GuardCrushDamage, GetOpponent().FighterVars.CurrentAttack);
+            Body.IsLeftSide = !GetOpponent().Body.IsLeftSide;
+            Stance.Clear();
+            HitStun.Start(Global.GuardCrushHitstun);
+            HitStop.Start((uint)box.BlockStopDuration);
+            CallBlockState(3);
+            Variables.TakeDamage(
+                finalDamage,
+                box.OpponentSuperGaugeGain,
+                box.KillingBlow);
         }
         public void ArmorHit(HitboxElement box)
         {
             //Armor hit
-            HitConfirm(box.OpponentMeterGain, (uint)box.ClashHitStopDuration, -1, -1, Vector2I.Zero);
+            var finalDamage = FighterVars.CalculateCompleteDamage(box.BaseDamage, GetOpponent().FighterVars.CurrentAttack);
+            HitConfirm(box.OpponentSuperGaugeGain, (uint)box.ClashHitStopDuration, -1, -1, Vector2I.Zero);
             LayerSorting = -1;
-            Variables.ArmorDamage((sbyte)box.ArmorDamage, box.BaseDamage / 2);
+            Variables.ArmorDamage((sbyte)box.ArmorDamage, finalDamage / 2);
         }
         public void ThrowHit(HitboxElement box, uint finalHitStop)
         {
             LayerSorting = -1;
             Body.IsLeftSide = !GetOpponent().Body.IsLeftSide;
             Body.IsMovable = false;
-            HitstunType = 4;
+            HitstunType = (int)Global.HitstunType.STAGGER + 1; //Always make sure the value is out of the enumerator
             HitStop.Start(finalHitStop);
             Stance.Clear();
             if (Stance.GetCurrentStance().HitReactions != null && Stance.GetCurrentStance().HitReactions.Length >= 0)
@@ -570,7 +679,26 @@ namespace SakugaEngine
                 Variables.ExtraVariablesOnDamage();
             }
         }
-        public void ThrowEscape(){}
+        public void ThrowEscape()
+        {
+            if (!HitStop.IsRunning()) return;
+            if (HitstunType <= (int)Global.HitstunType.STAGGER) return;
+            if (Inputs.IsBeingPressed(Inputs.CurrentHistory, Global.INPUT_ANY_BUTTON))
+            {
+                HitstunType = 0;
+                ThrowEscapeAction();
+                GetOpponent().ThrowEscapeAction();
+            }
+        }
+        public void ThrowEscapeAction()
+        {
+            int selfSelectThrowEscape = Body.IsOnGround ? 
+                                        Stance.GetCurrentStance().GroundThrowEscapeState : 
+                                        Stance.GetCurrentStance().AirThrowEscapeState;
+            HitStop.Stop();
+            Animator.PlayState(selfSelectThrowEscape);
+            PushCharacter(10, -40000 * Body.PlayerSide, 0, 0, true);
+        }
         public void HitConfirm(int superGaugeGain, uint hitStopDuration, int hitConfirmAnimation, int hitEffect, Vector2I VFXSpawn)
         {
             LayerSorting = 1;
@@ -582,7 +710,6 @@ namespace SakugaEngine
             if (hitEffect >= 0 && VFXSpawn != Vector2I.Zero)
             {
                 SpawnVFX(hitEffect, VFXSpawn);
-                //sounds.QueueSound(sounds.Last, hitEffect);
             }
 
             if (hitConfirmAnimation >= 0)
@@ -597,8 +724,8 @@ namespace SakugaEngine
         public bool IsCrouching() => Body.IsOnGround && Inputs.IsBeingPressed(Inputs.CurrentHistory, Global.INPUT_DOWN);
         public bool IsBlocking() => IsBlockableState() && Inputs.IsBeingPressed(Inputs.CurrentHistory, Body.IsLeftSide ? Global.INPUT_LEFT : Global.INPUT_RIGHT);
         public bool IsKO() => Variables.CurrentHealth <= 0;
-         public bool IsGroundHit() => Body.IsOnGround && !Animator.GetCurrentState().OffTheGround;
-        public bool IsStunLocked() => IsGroundHit() && HitStun.TimeLeft >= Animator.GetCurrentState().Duration - Animator.GetCurrentState().HitStunFrameLimit + 1 && Animator.Frame >= Animator.GetCurrentState().HitStunFrameLimit;
+        public bool IsGroundHit() => Body.IsOnGround && !Animator.GetCurrentState().OffTheGround;
+        public bool IsStunLocked() => HitStun.TimeLeft >= Animator.GetCurrentState().Duration - Animator.GetCurrentState().HitStunFrameLimit + 1 && Animator.Frame >= Animator.GetCurrentState().HitStunFrameLimit;
         protected override bool LifeEnded() { return Variables.CurrentHealth <= 0; }
         public override SakugaFighter FighterReference() { return this; }
 #endregion
@@ -617,7 +744,7 @@ namespace SakugaEngine
             if (GetOpponent().Variables.SuperArmor > 0)
             {
                 GetOpponent().ArmorHit(box);
-                HitConfirm(box.SelfMeterGain, (uint)box.ClashHitStopDuration, -1, box.ArmorHitEffectIndex, contact);
+                HitConfirm(box.SelfSuperGaugeGain, (uint)box.ClashHitStopDuration, -1, box.ArmorHitEffectIndex, contact);
                 GD.Print("Fighter: Armor Hit");
             }
             else
@@ -625,20 +752,40 @@ namespace SakugaEngine
                 int hitFX;
                 if (GetOpponent().IsBlocking() && !HitPosition)
                 {
-                    hitFX = box.BlockEffectIndex;
-                    GetOpponent().BlockHit(box);
-                    GD.Print("Fighter: Blocked!");
+                    if (box.GuardCrush)
+                    {
+                        hitFX = box.GuardCrushEffectIndex;
+                        GetOpponent().GuardCrush(box);
+                        GD.Print("Fighter: Guard Crushed!");
+                    }
+                    else
+                    {
+                        hitFX = box.BlockEffectIndex;
+                        GetOpponent().BlockHit(box);
+                        if (box.AllowSelfPushback)
+                            HitPushback(box.SelfPushbackDuration, box.SelfPushbackForce);
+                        GD.Print("Fighter: Blocked!");
+                    }
                 }
                 else
                 {
                     hitFX = box.HitEffectIndex;
-                    GetOpponent().HitDamage(box);
+                    GetOpponent().HitDamage(box, false);
+                    if (box.AllowSelfPushback)
+                        HitPushback(box.SelfPushbackDuration, box.SelfPushbackForce);
                     GD.Print("Fighter: Hit!");
                 }
-                HitConfirm(box.SelfMeterGain, (uint)box.SelfHitStopDuration, box.HitConfirmState, hitFX, contact);
-                if (box.AllowSelfPushback)
-                    HitPushback(box.SelfPushbackDuration, box.SelfPushbackForce);
+                HitConfirm(box.SelfSuperGaugeGain, (uint)box.SelfHitStopDuration, box.HitConfirmState, hitFX, contact);
             }
+        }
+        public void HitTrade(HitboxElement box, Vector2I contact)
+        {
+            HitDamage(box, true);
+            if (box.HitEffectIndex >= 0 && contact != Vector2I.Zero)
+            {
+                SpawnVFX(box.HitEffectIndex, contact);
+            }
+            GD.Print("Fighter: Traded!");
         }
         public void ThrowDamage(SakugaActor target, HitboxElement box, Vector2I contact)
         {
@@ -658,28 +805,36 @@ namespace SakugaEngine
             HitConfirm(0, finalHitstop, box.HitConfirmState, -1, Vector2I.Zero);
             GD.Print("Fighter: Throw!");
         }
+        public void ThrowTrade()
+        {
+            ThrowEscapeAction();
+        }
         public void HitboxClash(HitboxElement box, Vector2I contact)
         {
             HitConfirm(0, (uint)box.ClashHitStopDuration, -1, box.ClashEffectIndex, contact);
         }
         public void ProjectileClash(HitboxElement box, Vector2I contact){}
         public void ProjectileDeflect(SakugaActor target, HitboxElement box, Vector2I contact){}
-        public void CounterHit(SakugaActor target, HitboxElement box, Vector2I contact){}
-        public void ParryHit(SakugaActor target, HitboxElement box, Vector2I contact){}
+        public void CounterHit(SakugaActor target, HitboxElement box, Vector2I contact)
+        {
+            SetOpponent(target.FighterReference());
+            HitConfirm(box.SelfSuperGaugeGain, (uint)box.SelfHitStopDuration, box.HitConfirmState, box.HitEffectIndex, contact);
+            GetOpponent().HitConfirm(box.OpponentSuperGaugeGain, (uint)box.OpponentHitStopDuration, -1, -1, Vector2I.Zero);
+        }
         public void ProximityBlock()
         {
-            if (IsBlocking() && Animator.GetCurrentState().Type != Global.StateType.BLOCKING)
+            Body.ProximityBlocked = true;
+            if (IsBlocking() && Animator.StateType() != 3)
             {
                 CallBlockState(0);
-                Stance.CurrentMove = -1;
+                Stance.Clear();
             }
         }
         public void OnHitboxExit()
         {
-            if (Animator.GetCurrentState().Type == Global.StateType.BLOCKING && !HitStun.IsRunning())
+            if (!BlockStun && Animator.StateType() == 3)
             {
                 CallBlockState(2);
-                Body.ProximityBlocked = false;
             }
         }
 #endregion
@@ -705,13 +860,15 @@ namespace SakugaEngine
             bw.Write(SuperStop);
             bw.Write(IsBeingPushed);
             bw.Write(PushAllowInertia);
-
+            bw.Write(BlockStun);
             bw.Write(PushGravity);
             bw.Write(HBounceIntensity);
             bw.Write(HBounceState);
             bw.Write(VBounceIntensity);
             bw.Write(VBounceState);
             bw.Write(HitstunType);
+            bw.Write(GravityDecayFactor);
+            bw.Write(HitstunDecayFactor);
 
             for (int i = 0; i < Spawnables.Length; ++i)
                 for (int j = 0; j < Spawnables[i].Length; ++j)
@@ -742,13 +899,15 @@ namespace SakugaEngine
             SuperStop = br.ReadBoolean();
             IsBeingPushed = br.ReadBoolean();
             PushAllowInertia = br.ReadBoolean();
-
+            BlockStun = br.ReadBoolean();
             PushGravity = br.ReadInt32();
             HBounceIntensity = br.ReadInt32();
             HBounceState = br.ReadInt32();
             VBounceIntensity = br.ReadInt32();
             VBounceState = br.ReadInt32();
             HitstunType = br.ReadByte();
+            GravityDecayFactor = br.ReadByte();
+            HitstunDecayFactor = br.ReadByte();
 
             Body.UpdateColliders();
 

@@ -9,7 +9,7 @@ namespace SakugaEngine.UI
         public TextureRect[] RoundViews;
 
         // Called when the node enters the scene tree for the first time.
-        public override void _Ready()
+        public void Setup()
         {
             RoundViews = new TextureRect[RoundsLimit];
             for (int i = 0; i < RoundsLimit; i++)

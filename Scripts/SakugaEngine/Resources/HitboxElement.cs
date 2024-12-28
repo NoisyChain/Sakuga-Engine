@@ -19,8 +19,10 @@ namespace SakugaEngine.Resources
         [Export] public bool ChipDeath;
         [Export] public bool KillingBlow = true;
         [Export] public bool GuardCrush;
-        [Export] public int SelfMeterGain = 25;
-        [Export] public int OpponentMeterGain = 10;
+        [Export] public bool Uncrouch;
+        [Export] public int GuardCrushDamage = 100;
+        [Export] public int SelfSuperGaugeGain = 250;
+        [Export] public int OpponentSuperGaugeGain = 100;
         [Export] public int ArmorDamage = 1;
         [Export] public int Priority = 0;
         [Export] public int SelfHitStopDuration = 12;
@@ -36,6 +38,7 @@ namespace SakugaEngine.Resources
         [Export] public int BlockEffectIndex = 1;
         [Export] public int ClashEffectIndex = 2;
         [Export] public int ArmorHitEffectIndex = 3;
+        [Export] public int GuardCrushEffectIndex = 0;
 
         //Ground Hitstun settings
         [ExportGroup("Ground Hit Settings")]

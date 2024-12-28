@@ -16,10 +16,17 @@ namespace SakugaEngine
         public const int MaxPlayersDistance = 70000;
         public const int InputHistorySize = 16;
         public const int KaraCancelWindow = 3;
-        public const int RoundsToWin = 2; //<= Move this to the GameMonitor
-        public const int GameTimer = 99;  //<= Move this to the GameMonitor
-        public const int MinHitstun = 8;
+        //public const int RoundsToWin = 2; //<= Move this to the GameMonitor
+        //public const int GameTimer = 99;  //<= Move this to the GameMonitor
         public const int ThrowHitStunAdditional = 8;
+        public const int GravityDecay = 2500;
+        public const int HitstunDecayMinCombo = 5;
+        public const int MinHitstun = 8;
+        public const int RecoveryJumpVelocity = 60000;
+        public const int RecoveryGravity = 200000;
+        public const int RecoveryHorizontalSpeed = 45000;
+        public const int ThrowEscapePushForce = 45000;
+        public const int GuardCrushHitstun = 40;
 
         //Global inputs
         public const int INPUT_UP = 1 << 0;
@@ -43,18 +50,17 @@ namespace SakugaEngine
         public enum ButtonMode { PRESS, HOLD, RELEASE, UNPRESSED }
         public enum MoveEndCondition { STATE_END, RELEASE_BUTTON, STATE_TYPE_CHANGE }
         public enum SideChangeMode { NONE, CHANGE_SIDE, INTERRUPT }
-        public enum StateType { NULL, MOVEMENT, COMBAT, BLOCKING, HIT_REACTION }
-        public enum HitboxType{ HURTBOX, HITBOX, PROXIMITY_BLOCK, PROJECTILE, THROW, COUNTER, DEFLECT, PARRY }
+        public enum StateType { NULL, MOVEMENT, COMBAT, BLOCKING, HIT_REACTION, LOCKED }
+        public enum HitboxType{ HURTBOX, HITBOX, PROXIMITY_BLOCK, PROJECTILE, THROW, COUNTER, DEFLECT }
         public enum HitType{ HIGH, MEDIUM, LOW, UNBLOCKABLE }
-        public enum HitstunType { BASIC = 1, KNOCKDOWN = 2, STAGGER = 3 }
+        public enum HitstunType { BASIC = 1, KNOCKDOWN = 2, HARD_KNOCKDOWN = 3, DIZZINESS = 4, STAGGER = 5 }
         public enum ExtraVariableMode { IDLE, INCREASE, DECREASE }
         public enum ExtraVariableChange { SET, ADD, SUBTRACT }
         public enum ExtraVariableCompareMode { EQUAL, GREATER, GREATER_EQUAL, LESS, LESS_EQUAL }
-        public enum SoundType{ SFX, VOICE }
         public enum FadeScreenMode { NONE, FADE_IN, FADE_OUT }
-        public enum EventType{ SPAWN_OBJECT, TELEPORT, ANIMATION_DAMAGE, DETTACH_THROW, FORCE_SIDE_CHANGE, SET_SUPER_ARMOR }
         public enum RelativeTo{ WORLD, SELF, FIGHTER, SPAWNABLE }
-        public enum ObjectType{ SPAWNABLE, VXF }
+        public enum SoundType{ SFX, VOICE }
+        public enum ObjectType{ SPAWNABLE, VFX }
         public enum SpawnableHitCheck{ OPPONENT, OWNER, BOTH }
         public enum PauseMode { PRESS, HOLD, LOCK }
         //...

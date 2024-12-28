@@ -6,6 +6,7 @@ namespace SakugaEngine
     [GlobalClass]
     public partial class CombatTracker : Node
     {
+        private SakugaFighter TrackerOwner;
         public int HitCombo;
         public uint LastDamage;
         public uint CurrentCombo;
@@ -14,11 +15,13 @@ namespace SakugaEngine
         public int FrameData;
         public int FrameAdvantage;
         public int HitFrame;
+        public uint StunAtHit;
         public int LastHitType;
         public bool invalidHit;
 
-        public void Initialize() 
+        public void Initialize(SakugaFighter onwer)
         {
+            TrackerOwner = onwer;
             HitCombo = 0;
             LastDamage = 0;
             CurrentCombo = 0;
@@ -27,10 +30,11 @@ namespace SakugaEngine
             FrameData = 0;
             FrameAdvantage = 0;
             HitFrame = 0;
+            StunAtHit = 0;
             LastHitType = 0;
             invalidHit = false;
         }
-        public void UpdateTrackers(uint damage, int hitFrame, int hitType, bool isInvalid)
+        public void UpdateTrackers(uint damage, int hitFrame, uint hitStun, int hitType, bool isInvalid)
         {
             if (isInvalid)
                 invalidHit = true;
@@ -41,15 +45,20 @@ namespace SakugaEngine
             if (CurrentCombo > HighestCombo)
                 HighestCombo = CurrentCombo;
             HitFrame = hitFrame;
+            StunAtHit = hitStun;
             LastHitType = hitType;
         }
 
-        public void UpdateFrameData(SakugaFighter owner)
+        public void UpdateFrameData()
         {
-            FrameData = owner.Animator.StateType() <= 1 ? 0 : owner.Animator.GetCurrentState().Duration - owner.Animator.Frame;
-            FrameAdvantage = owner.Tracker.HitFrame - (int)owner.GetOpponent().HitStun.WaitTime;
+            int selectFrameOrigin = TrackerOwner.Animator.StateType() == 4 ? 
+                                        (int)TrackerOwner.HitStun.TimeLeft : 
+                                        (TrackerOwner.Animator.GetCurrentState().Duration - TrackerOwner.Animator.Frame);
+            
+            FrameData = TrackerOwner.Animator.StateType() <= 1 ? 0 : selectFrameOrigin;
+            FrameAdvantage = TrackerOwner.Tracker.HitFrame - (int)StunAtHit;
 
-            FrameData = Mathf.Clamp(FrameData, 0, owner.Animator.GetCurrentState().Duration);
+            //FrameData = Mathf.Clamp(FrameData, 0, owner.Animator.GetCurrentState().Duration);
         }
 
         public void Reset()
@@ -70,6 +79,7 @@ namespace SakugaEngine
             bw.Write(FrameData);
             bw.Write(FrameAdvantage);
 			bw.Write(HitFrame);
+            bw.Write(StunAtHit);
 			bw.Write(LastHitType);
 
 			bw.Write(invalidHit);
@@ -85,6 +95,7 @@ namespace SakugaEngine
 			FrameData = br.ReadInt32();
             FrameAdvantage = br.ReadInt32();
             HitFrame = br.ReadInt32();
+            StunAtHit = br.ReadUInt32();
             LastHitType = br.ReadInt32();
 
 			invalidHit = br.ReadBoolean();

@@ -55,5 +55,4 @@ statePhysics = Array[Object]([SubResource("Resource_gn5fu")])
 hitboxStates = Array[Object]([SubResource("Resource_f34wn")])
 animationEvents = null
 throwPivot = null
-soundEvents = null
 stateTransitions = Array[Object]([SubResource("Resource_rgluj"), SubResource("Resource_sr4mv")])

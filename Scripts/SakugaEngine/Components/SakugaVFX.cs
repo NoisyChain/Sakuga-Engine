@@ -36,7 +36,7 @@ public partial class SakugaVFX : Node3D
         FixedPosition = origin;
         Side = side;
         Frame = -1;
-        Sound.Stop();
+        //Sound.Stop();
         Sound.SimpleQueueSound();
         IsActive = true;
     }

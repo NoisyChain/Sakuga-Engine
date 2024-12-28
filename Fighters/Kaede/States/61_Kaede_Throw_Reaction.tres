@@ -25,5 +25,4 @@ statePhysics = null
 hitboxStates = Array[Object]([SubResource("Resource_y6dfi")])
 animationEvents = null
 throwPivot = null
-soundEvents = null
 stateTransitions = null

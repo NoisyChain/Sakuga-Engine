@@ -11,8 +11,8 @@
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/FighterStance.cs" id="9"]
 [ext_resource type="Resource" uid="uid://v1wx455mfvn2" path="res://Fighters/Kaede/Moves/8_Kaede_AirDashBackwards.tres" id="9_euwau"]
 [ext_resource type="Resource" uid="uid://brha3nw12aj44" path="res://Fighters/Kaede/Moves/9_Kaede_Crouch.tres" id="10_wd1qc"]
-[ext_resource type="Resource" uid="uid://b676yw3nusi5x" path="res://Fighters/Kaede/Moves/10_Kaede_Crouch_Sequence.tres" id="11_5elae"]
 [ext_resource type="Resource" uid="uid://8cv3fxgdm0td" path="res://Fighters/Kaede/Moves/11_Kaede_AirJumpNeutral.tres" id="11_67cbe"]
+[ext_resource type="Resource" uid="uid://b676yw3nusi5x" path="res://Fighters/Kaede/Moves/10_Kaede_Uncrouch.tres" id="11_ukwti"]
 [ext_resource type="Resource" uid="uid://b8rm50wunba6n" path="res://Fighters/Kaede/Moves/12_Kaede_AirJumpForward.tres" id="12_7ub3m"]
 [ext_resource type="Resource" uid="uid://bsh6kfdelh82f" path="res://Fighters/Kaede/Moves/13_Kaede_AirJumpBackwards.tres" id="13_my6eh"]
 [ext_resource type="Resource" uid="uid://1ji2x5eipcmv" path="res://Fighters/Kaede/Moves/14_Kaede_DashJump.tres" id="14_1y84m"]
@@ -44,8 +44,17 @@ script = ExtResource("9")
 IsDamagePersistent = true
 IsRoundPersistent = true
 NeutralState = 0
-Moves = Array[Object]([ExtResource("1_8fbso"), ExtResource("2_2lsvi"), ExtResource("3_6kbo2"), ExtResource("4_tbqt5"), ExtResource("5_73twn"), ExtResource("6_6ue60"), ExtResource("7_6m2w4"), ExtResource("8_yqhy4"), ExtResource("9_euwau"), ExtResource("10_wd1qc"), ExtResource("11_5elae"), ExtResource("11_67cbe"), ExtResource("12_7ub3m"), ExtResource("13_my6eh"), ExtResource("14_1y84m"), ExtResource("15_d1exm"), ExtResource("17_ac1gc"), ExtResource("18_ms8a6"), ExtResource("18_l7ox0"), ExtResource("19_do64y"), ExtResource("20_2lesk"), ExtResource("21_kox32"), ExtResource("22_j4ow5"), ExtResource("23_w3q8g"), ExtResource("24_r1o0n"), ExtResource("25_wm31i"), ExtResource("26_whrma"), ExtResource("27_u6dhq"), ExtResource("29_s04dg"), ExtResource("30_qxr8y"), ExtResource("31_cxwv4"), ExtResource("32_32yfm"), ExtResource("33_wutca"), ExtResource("34_ilijk"), ExtResource("35_n43h3"), ExtResource("36_dqjdo"), ExtResource("37_ttvs0")])
+CrouchEnterState = 11
+CrouchExitState = 8
+Moves = Array[Object]([ExtResource("1_8fbso"), ExtResource("2_2lsvi"), ExtResource("3_6kbo2"), ExtResource("4_tbqt5"), ExtResource("5_73twn"), ExtResource("6_6ue60"), ExtResource("7_6m2w4"), ExtResource("8_yqhy4"), ExtResource("9_euwau"), ExtResource("10_wd1qc"), ExtResource("11_ukwti"), ExtResource("11_67cbe"), ExtResource("12_7ub3m"), ExtResource("13_my6eh"), ExtResource("14_1y84m"), ExtResource("15_d1exm"), ExtResource("17_ac1gc"), ExtResource("18_ms8a6"), ExtResource("18_l7ox0"), ExtResource("19_do64y"), ExtResource("20_2lesk"), ExtResource("21_kox32"), ExtResource("22_j4ow5"), ExtResource("23_w3q8g"), ExtResource("24_r1o0n"), ExtResource("25_wm31i"), ExtResource("26_whrma"), ExtResource("27_u6dhq"), ExtResource("29_s04dg"), ExtResource("30_qxr8y"), ExtResource("31_cxwv4"), ExtResource("32_32yfm"), ExtResource("33_wutca"), ExtResource("34_ilijk"), ExtResource("35_n43h3"), ExtResource("36_dqjdo"), ExtResource("37_ttvs0")])
 HitReactions = PackedInt32Array(17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 61)
 GroundBlockInitialState = 33
 CrouchBlockInitialState = 38
 AirBlockInitialState = 43
+GroundForwardRecoveryState = 71
+GroundBackwardsRecoveryState = 71
+AirForwardRecoveryState = 72
+AirBackwardsRecoveryState = 72
+OffTheGroundRecoveryState = 72
+GroundThrowEscapeState = 69
+AirThrowEscapeState = 70

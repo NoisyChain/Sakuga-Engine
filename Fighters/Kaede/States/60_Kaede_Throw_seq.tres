@@ -1,25 +1,26 @@
-[gd_resource type="Resource" script_class="FighterState" load_steps=16 format=3 uid="uid://cywyov8k7d28t"]
+[gd_resource type="Resource" script_class="FighterState" load_steps=18 format=3 uid="uid://cywyov8k7d28t"]
 
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/AnimationEvents.cs" id="1_he3k0"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/Animation Events/ApplyDamageAnimationEvent.cs" id="1_1inkj"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="1_qo4pe"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="2_264bk"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/AnimationEventsList.cs" id="2_x2ffj"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/StatePhysics.cs" id="3_iy0dy"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/StateTransitionSettings.cs" id="4_xs5ao"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/ThrowPivot.cs" id="5_mmk8x"]
 
-[sub_resource type="Resource" id="Resource_0lewt"]
-script = ExtResource("1_he3k0")
-Frame = 25
-Type = 2
-Object = 0
-xRelativeTo = 0
-yRelativeTo = 0
+[sub_resource type="Resource" id="Resource_ld3k7"]
+script = ExtResource("1_1inkj")
 Index = 1
-IsRandom = false
-Range = 0
-Value = -550
-SetActive = false
-TargetPosition = Vector2i(0, 0)
+HealthChange = 2
+Value = 350
+AffectedByModifiers = true
+AffectDamageTracker = true
+KillingBlow = true
+
+[sub_resource type="Resource" id="Resource_npwel"]
+script = ExtResource("2_x2ffj")
+Frame = 26
+Events = Array[Object]([SubResource("Resource_ld3k7")])
 
 [sub_resource type="Resource" id="Resource_5e2ap"]
 script = ExtResource("1_qo4pe")
@@ -113,10 +114,10 @@ Dettach = true
 DettachInvertSide = false
 DettachHitstunType = 2
 DettachHitKnockback = Vector2i(-20000, 60000)
-DettachHitKnockbackGravity = 300000
+DettachHitKnockbackGravity = 200000
 DettachHitKnockbackTime = 8
 DettachHitKnockbackInertia = true
-DettachHitstun = 0
+DettachHitstun = 50
 
 [resource]
 script = ExtResource("2_264bk")
@@ -132,7 +133,6 @@ HitStunFrameLimit = -1
 stateProperties = Array[Object]([])
 statePhysics = Array[Object]([SubResource("Resource_mpd63")])
 hitboxStates = Array[Object]([SubResource("Resource_5e2ap")])
-animationEvents = Array[Object]([SubResource("Resource_0lewt")])
+animationEvents = Array[Object]([SubResource("Resource_npwel")])
 throwPivot = Array[Object]([SubResource("Resource_ksa0j"), SubResource("Resource_cwgmc"), SubResource("Resource_id3s2"), SubResource("Resource_anryf"), SubResource("Resource_yley4")])
-soundEvents = null
 stateTransitions = Array[Object]([SubResource("Resource_ejds0")])

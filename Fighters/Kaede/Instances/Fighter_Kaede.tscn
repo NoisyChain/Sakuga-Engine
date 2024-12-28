@@ -1,4 +1,4 @@
-[gd_scene load_steps=451 format=3 uid="uid://b1ggpw8ltpaid"]
+[gd_scene load_steps=458 format=3 uid="uid://b1ggpw8ltpaid"]
 
 [ext_resource type="Texture2D" uid="uid://bx0l7712opy5a" path="res://Fighters/Kaede/Sprites/0-12.png" id="1"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/SakugaFighter.cs" id="1_7dx2y"]
@@ -152,12 +152,19 @@
 [ext_resource type="Texture2D" uid="uid://svrvdu1wm2ln" path="res://Fighters/Kaede/Sprites/41-0.png" id="74"]
 [ext_resource type="Resource" uid="uid://bblf2h48e6ya6" path="res://Fighters/Kaede/States/65_Kaede_236C_3.tres" id="74_624dn"]
 [ext_resource type="Texture2D" uid="uid://b3wp2c1b0tfdy" path="res://Fighters/Kaede/Sprites/41-5.png" id="75"]
+[ext_resource type="Resource" uid="uid://u2pq0kt0v4pr" path="res://Fighters/Kaede/States/66_Kaede_623C.tres" id="75_xkmyy"]
 [ext_resource type="Texture2D" uid="uid://bwnh4skjhbmtm" path="res://Fighters/Kaede/Sprites/41-2.png" id="76"]
+[ext_resource type="Resource" uid="uid://cc4h1kdvigwri" path="res://Fighters/Kaede/States/67_Kaede_623C_seq.tres" id="76_ppglk"]
 [ext_resource type="Texture2D" uid="uid://bhrswarwdsl76" path="res://Fighters/Kaede/Sprites/41-4.png" id="77"]
+[ext_resource type="Resource" uid="uid://dt7x7nl36ot5l" path="res://Fighters/Kaede/States/68_Kaede_236BC_seq.tres" id="77_fxu7p"]
 [ext_resource type="Texture2D" uid="uid://cfnysnspna5gq" path="res://Fighters/Kaede/Sprites/41-6.png" id="78"]
+[ext_resource type="Resource" uid="uid://c8rkaxvtbgaxl" path="res://Fighters/Kaede/States/69_Kaede_GroundThrowEscape.tres" id="78_5xa71"]
 [ext_resource type="Texture2D" uid="uid://cw0nd14unnomo" path="res://Fighters/Kaede/Sprites/41-3.png" id="79"]
+[ext_resource type="Resource" uid="uid://bgqcyt7ecr63o" path="res://Fighters/Kaede/States/70_Kaede_AirThrowEscape.tres" id="79_gf7kd"]
 [ext_resource type="Texture2D" uid="uid://baijhthkut183" path="res://Fighters/Kaede/Sprites/41-1.png" id="80"]
+[ext_resource type="Resource" uid="uid://dukqdmlhoxwna" path="res://Fighters/Kaede/States/71_Kaede_GroundRecoveryForward.tres" id="80_3aiip"]
 [ext_resource type="Texture2D" uid="uid://c40a00uojv0gk" path="res://Fighters/Kaede/Sprites/42-0.png" id="81"]
+[ext_resource type="Resource" uid="uid://bk6kr345ggqfg" path="res://Fighters/Kaede/States/72_Kaede_AirRecoveryForward.tres" id="81_1tw52"]
 [ext_resource type="Texture2D" uid="uid://cf7hfrc32cits" path="res://Fighters/Kaede/Sprites/42-3.png" id="82"]
 [ext_resource type="Texture2D" uid="uid://cqvjudjiiskph" path="res://Fighters/Kaede/Sprites/42-4.png" id="83"]
 [ext_resource type="Texture2D" uid="uid://bopqoovmr0hsq" path="res://Fighters/Kaede/Sprites/42-1.png" id="84"]
@@ -2245,7 +2252,6 @@ HorizontalBounce = NodePath("Timers/HBounce")
 VerticalBounce = NodePath("Timers/VBounce")
 SpawnablesList = ExtResource("2_rb7dq")
 Profile = ExtResource("2_tnpyq")
-CharacterSeed = 339654605
 Body = NodePath("PhysicsBody")
 Inputs = NodePath("InputManager")
 Variables = NodePath("Variables")
@@ -2265,7 +2271,7 @@ script = ExtResource("2")
 script = ExtResource("3_nysqa")
 players = [NodePath("KaedeGraphics/AnimationPlayer")]
 prefix = PackedStringArray("")
-States = Array[Object]([ExtResource("4_xlofv"), ExtResource("5_2sxfy"), ExtResource("6_u2dqg"), ExtResource("7_xwol1"), ExtResource("8_hxuoj"), ExtResource("9_ckwfv"), ExtResource("59_mlhuf"), ExtResource("10_u7cet"), ExtResource("11_ckfgn"), ExtResource("18_ij8bc"), ExtResource("19_hh7rs"), ExtResource("20_ah7dl"), ExtResource("21_rfcxw"), ExtResource("22_3sr7t"), ExtResource("23_pok6s"), ExtResource("24_phwyd"), ExtResource("25_8twg1"), ExtResource("29_jvf1v"), ExtResource("21_j7mmt"), ExtResource("22_pqew6"), ExtResource("23_86unt"), ExtResource("30_6dd7a"), ExtResource("31_mdeoi"), ExtResource("32_nbfue"), ExtResource("33_2qxv0"), ExtResource("34_en7an"), ExtResource("35_36eqi"), ExtResource("36_853s0"), ExtResource("37_oi05v"), ExtResource("38_3q1jw"), ExtResource("39_er80j"), ExtResource("40_722ln"), ExtResource("41_x767v"), ExtResource("42_77g4i"), ExtResource("43_ahavt"), ExtResource("44_bkmsp"), ExtResource("45_2fh7g"), ExtResource("46_486ig"), ExtResource("47_3y26o"), ExtResource("48_r6j10"), ExtResource("49_3iql2"), ExtResource("50_vg5so"), ExtResource("51_kgv4h"), ExtResource("52_1hj62"), ExtResource("53_le6pq"), ExtResource("54_11ub6"), ExtResource("55_lxr2w"), ExtResource("56_4fvg5"), ExtResource("57_ndasp"), ExtResource("58_elb54"), ExtResource("59_dyf2g"), ExtResource("60_a7vav"), ExtResource("61_31p7a"), ExtResource("62_ntykl"), ExtResource("63_78uap"), ExtResource("64_5gdyr"), ExtResource("65_eykor"), ExtResource("66_hf6f1"), ExtResource("67_jb784"), ExtResource("68_cy2tw"), ExtResource("69_fs10i"), ExtResource("70_rc8wv"), ExtResource("71_0kukc"), ExtResource("72_u2u65"), ExtResource("73_tg4wo"), ExtResource("74_624dn")])
+States = Array[Object]([ExtResource("4_xlofv"), ExtResource("5_2sxfy"), ExtResource("6_u2dqg"), ExtResource("7_xwol1"), ExtResource("8_hxuoj"), ExtResource("9_ckwfv"), ExtResource("59_mlhuf"), ExtResource("10_u7cet"), ExtResource("11_ckfgn"), ExtResource("18_ij8bc"), ExtResource("19_hh7rs"), ExtResource("20_ah7dl"), ExtResource("21_rfcxw"), ExtResource("22_3sr7t"), ExtResource("23_pok6s"), ExtResource("24_phwyd"), ExtResource("25_8twg1"), ExtResource("29_jvf1v"), ExtResource("21_j7mmt"), ExtResource("22_pqew6"), ExtResource("23_86unt"), ExtResource("30_6dd7a"), ExtResource("31_mdeoi"), ExtResource("32_nbfue"), ExtResource("33_2qxv0"), ExtResource("34_en7an"), ExtResource("35_36eqi"), ExtResource("36_853s0"), ExtResource("37_oi05v"), ExtResource("38_3q1jw"), ExtResource("39_er80j"), ExtResource("40_722ln"), ExtResource("41_x767v"), ExtResource("42_77g4i"), ExtResource("43_ahavt"), ExtResource("44_bkmsp"), ExtResource("45_2fh7g"), ExtResource("46_486ig"), ExtResource("47_3y26o"), ExtResource("48_r6j10"), ExtResource("49_3iql2"), ExtResource("50_vg5so"), ExtResource("51_kgv4h"), ExtResource("52_1hj62"), ExtResource("53_le6pq"), ExtResource("54_11ub6"), ExtResource("55_lxr2w"), ExtResource("56_4fvg5"), ExtResource("57_ndasp"), ExtResource("58_elb54"), ExtResource("59_dyf2g"), ExtResource("60_a7vav"), ExtResource("61_31p7a"), ExtResource("62_ntykl"), ExtResource("63_78uap"), ExtResource("64_5gdyr"), ExtResource("65_eykor"), ExtResource("66_hf6f1"), ExtResource("67_jb784"), ExtResource("68_cy2tw"), ExtResource("69_fs10i"), ExtResource("70_rc8wv"), ExtResource("71_0kukc"), ExtResource("72_u2u65"), ExtResource("73_tg4wo"), ExtResource("74_624dn"), ExtResource("75_xkmyy"), ExtResource("76_ppglk"), ExtResource("77_fxu7p"), ExtResource("78_5xa71"), ExtResource("79_gf7kd"), ExtResource("80_3aiip"), ExtResource("81_1tw52")])
 
 [node name="KaedeGraphics" type="Node3D" parent="Graphics/Mesh"]
 

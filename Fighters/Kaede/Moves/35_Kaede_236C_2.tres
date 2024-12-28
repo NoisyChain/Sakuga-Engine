@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource("2_v2ygm")
-MoveName = "236C_1"
+MoveName = "236C_2"
 MoveState = 64
 Inputs = ExtResource("1_4uyw2")
 SideChange = 0
@@ -20,6 +20,7 @@ ExtraVariablesRequirement = null
 ExtraVariablesChange = null
 ChangeStance = -1
 IsSequenceFromStates = PackedInt32Array(63)
+IgnoreStates = PackedInt32Array()
 CancelsTo = PackedInt32Array(36)
 KaraCancelsTo = PackedInt32Array()
 buttonChargeSequence = null
@@ -27,9 +28,9 @@ SuperFlash = 0
 CanBeOverrided = true
 CanOverrideToSelf = false
 IgnoreSamePriority = false
+InterruptCornerPushback = false
 PriorityBuffer = false
 Priority = 6
-AutoPlayNextMove = -1
 WaitForNullStates = false
 UseOnGround = true
 UseOnAir = false

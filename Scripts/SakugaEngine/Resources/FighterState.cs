@@ -17,9 +17,8 @@ namespace SakugaEngine.Resources
         [Export] public FrameProperties[] stateProperties;
         [Export] public StatePhysics[] statePhysics;
         [Export] public HitboxState[] hitboxStates;
-        [Export] public AnimationEvents[] animationEvents;
+        [Export] public AnimationEventsList[] animationEvents;
         [Export] public ThrowPivot[] throwPivot;
-        [Export] public SoundEvents[] soundEvents;
         [Export] public StateTransitionSettings[] stateTransitions;
     }
 }

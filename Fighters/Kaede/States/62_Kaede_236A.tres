@@ -1,24 +1,27 @@
-[gd_resource type="Resource" script_class="FighterState" load_steps=10 format=3 uid="uid://bl70vrda303oh"]
+[gd_resource type="Resource" script_class="FighterState" load_steps=12 format=3 uid="uid://bl70vrda303oh"]
 
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/AnimationEvents.cs" id="1_cgxsq"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="1_e311h"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/Animation Events/SpawnObjectAnimationEvent.cs" id="1_p455q"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="2_h2j8i"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/AnimationEventsList.cs" id="2_rdu17"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/StatePhysics.cs" id="3_gm7sg"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/StateTransitionSettings.cs" id="4_6dqov"]
 
-[sub_resource type="Resource" id="Resource_phb7r"]
-script = ExtResource("1_cgxsq")
-Frame = 10
-Type = 0
+[sub_resource type="Resource" id="Resource_cnjr5"]
+script = ExtResource("1_p455q")
 Object = 0
+TargetPosition = Vector2i(5000, 10000)
 xRelativeTo = 1
 yRelativeTo = 1
 Index = 0
 IsRandom = false
 Range = 0
-Value = 0
-SetActive = false
-TargetPosition = Vector2i(5000, 10000)
+FromExtraVariable = 0
+
+[sub_resource type="Resource" id="Resource_oa7dv"]
+script = ExtResource("2_rdu17")
+Frame = 10
+Events = Array[Object]([SubResource("Resource_cnjr5")])
 
 [sub_resource type="Resource" id="Resource_5e2ap"]
 script = ExtResource("1_e311h")
@@ -61,7 +64,6 @@ HitStunFrameLimit = -1
 stateProperties = null
 statePhysics = Array[Object]([SubResource("Resource_mpd63")])
 hitboxStates = Array[Object]([SubResource("Resource_5e2ap")])
-animationEvents = Array[Object]([SubResource("Resource_phb7r")])
+animationEvents = Array[Object]([SubResource("Resource_oa7dv")])
 throwPivot = null
-soundEvents = null
 stateTransitions = Array[Object]([SubResource("Resource_8ewsb")])

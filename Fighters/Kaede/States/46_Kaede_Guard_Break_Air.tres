@@ -41,10 +41,10 @@ DistanceArea = Vector2i(0, 999999)
 
 [resource]
 script = ExtResource("1")
-StateName = "Block_Neutral_Exit"
+StateName = "Falling"
 Type = 4
 OffTheGround = false
-Duration = 6
+Duration = 30
 Loop = false
 LoopFrames = Vector2i(0, 0)
 TurnState = -1
@@ -55,5 +55,4 @@ statePhysics = [SubResource("5")]
 hitboxStates = [SubResource("1")]
 animationEvents = null
 throwPivot = null
-soundEvents = null
 stateTransitions = Array[Object]([SubResource("Resource_liuql"), SubResource("Resource_e7igb")])

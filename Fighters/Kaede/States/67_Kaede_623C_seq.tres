@@ -1,0 +1,77 @@
+[gd_resource type="Resource" script_class="FighterState" load_steps=11 format=3 uid="uid://cc4h1kdvigwri"]
+
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="1_7i2qg"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="2_8w8vb"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/StatePhysics.cs" id="3_c2hbl"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/StateTransitionSettings.cs" id="4_lxuxy"]
+
+[sub_resource type="Resource" id="Resource_qlmxr"]
+script = ExtResource("1_7i2qg")
+animationStage = 0
+Frame = 0
+HitboxIndex = 5
+
+[sub_resource type="Resource" id="Resource_p8vrw"]
+script = ExtResource("1_7i2qg")
+animationStage = 0
+Frame = 10
+HitboxIndex = 23
+
+[sub_resource type="Resource" id="Resource_c3nis"]
+script = ExtResource("1_7i2qg")
+animationStage = 0
+Frame = 15
+HitboxIndex = 0
+
+[sub_resource type="Resource" id="Resource_mpd63"]
+script = ExtResource("3_c2hbl")
+Frame = 0
+UseLateralSpeed = true
+LateralSpeed = 50000
+UseVerticalSpeed = true
+VerticalSpeed = 0
+UseGravity = false
+Gravity = 0
+UseLateralInertia = false
+UseVerticalInertia = false
+UseHorizontalInput = false
+UseVerticalInput = false
+
+[sub_resource type="Resource" id="Resource_ijji8"]
+script = ExtResource("3_c2hbl")
+Frame = 12
+UseLateralSpeed = true
+LateralSpeed = 0
+UseVerticalSpeed = true
+VerticalSpeed = 0
+UseGravity = false
+Gravity = 0
+UseLateralInertia = false
+UseVerticalInertia = false
+UseHorizontalInput = false
+UseVerticalInput = false
+
+[sub_resource type="Resource" id="Resource_1k4x6"]
+script = ExtResource("4_lxuxy")
+StateIndex = 0
+Condition = 1
+AtFrame = -1
+DistanceArea = Vector2i(0, 999999)
+
+[resource]
+script = ExtResource("2_8w8vb")
+StateName = "236C_3"
+Type = 2
+OffTheGround = false
+Duration = 29
+Loop = false
+LoopFrames = Vector2i(0, 0)
+TurnState = -1
+RoundFinishDuration = 0
+HitStunFrameLimit = -1
+stateProperties = null
+statePhysics = Array[Object]([SubResource("Resource_mpd63"), SubResource("Resource_ijji8")])
+hitboxStates = Array[Object]([SubResource("Resource_qlmxr"), SubResource("Resource_p8vrw"), SubResource("Resource_c3nis")])
+animationEvents = null
+throwPivot = null
+stateTransitions = Array[Object]([SubResource("Resource_1k4x6")])

@@ -76,6 +76,13 @@ namespace SakugaEngine
                 CurrentDamageScaling = CurrentBaseDamageScaling;
         }
 
+        public int CalculateCompleteDamage(int damage, int attackValue)
+        {
+            var damageFactor = attackValue - (CurrentDefense - 100);
+            var scaledDamage = damage * CurrentDamageScaling / 100;
+            return scaledDamage * damageFactor / 100;
+        }
+
         public override void Serialize(BinaryWriter bw)
         {
             base.Serialize(bw);

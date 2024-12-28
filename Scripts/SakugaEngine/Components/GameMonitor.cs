@@ -1,10 +1,12 @@
 using System.IO;
+using Godot;
 
 namespace SakugaEngine
 {
-    public class GameMonitor
+    public partial class GameMonitor : Node
     {
-        public int clockLimit;
+        [Export] public int ClockLimit = 99;
+        [Export] public int RoundsToWin = 2;
         public int Clock;
         public int CurrentRound;
         public int Winner;
@@ -17,12 +19,11 @@ namespace SakugaEngine
         public int FadeTime;
         public int FadeProgress;
 
-        public GameMonitor(int clockTime, int playerCount)
+        public void Initialize(int playerCount)
         {
-            clockLimit = clockTime;
             Winner = -1;
             CurrentRound = 0;
-            Clock = clockTime * Global.TicksPerSecond;
+            Clock = ClockLimit * Global.TicksPerSecond;
             GameIsRunning = true;
             VictoryCounter = new int[playerCount];
             for (int i = 0; i < VictoryCounter.Length; ++i)
@@ -104,7 +105,7 @@ namespace SakugaEngine
             {
                 VictoryCounter[biggerHealth]++;
                 Godot.GD.Print($"Player {biggerHealth + 1} win the round {CurrentRound + 1}!");
-                if (VictoryCounter[biggerHealth] == Global.RoundsToWin)
+                if (VictoryCounter[biggerHealth] == RoundsToWin)
                     Winner = biggerHealth;
             }
 
@@ -127,7 +128,7 @@ namespace SakugaEngine
 
             FadeController();
 
-            if (Clock > 0)
+            if (Clock >= 0)
             {
                 Clock--;
 
@@ -148,7 +149,7 @@ namespace SakugaEngine
         public void Reset()
         {
             CurrentRound++;
-            Clock = clockLimit * Global.TicksPerSecond;
+            Clock = ClockLimit * Global.TicksPerSecond;
             GameIsRunning = true;
         }
 

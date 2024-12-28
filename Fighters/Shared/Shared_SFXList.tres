@@ -4,4 +4,4 @@
 
 [resource]
 script = ExtResource("1_yu0fx")
-Sounds = Array[AudioStream]([null, null, null, null])
+Sounds = Array[AudioStream]([])

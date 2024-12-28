@@ -10,6 +10,8 @@ namespace SakugaEngine.Resources
         [Export] public bool IsDamagePersistent;
         [Export] public bool IsRoundPersistent;
         [Export] public int NeutralState = 0;
+        [Export] public int CrouchEnterState = 0;
+        [Export] public int CrouchExitState = 0;
         [Export] public MoveSettings[] Moves;
         [Export] public int[] HitReactions;
 
@@ -18,6 +20,15 @@ namespace SakugaEngine.Resources
         [Export] public int CrouchBlockInitialState = -1;
         [Export] public int AirBlockInitialState = -1;
 
-        //[ExportCategory("Recovery")]
+        [ExportCategory("Recovery")]
+        [Export] public int GroundForwardRecoveryState = -1;
+        [Export] public int GroundBackwardsRecoveryState = -1;
+        [Export] public int AirForwardRecoveryState = -1;
+        [Export] public int AirBackwardsRecoveryState = -1;
+        [Export] public int OffTheGroundRecoveryState = -1;
+
+        [ExportCategory("Throw Escape")]
+        [Export] public int GroundThrowEscapeState = -1;
+        [Export] public int AirThrowEscapeState = -1;
     }
 }

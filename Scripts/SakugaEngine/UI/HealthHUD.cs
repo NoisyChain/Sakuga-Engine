@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 namespace SakugaEngine.UI
@@ -39,22 +40,27 @@ namespace SakugaEngine.UI
                 P2Portrait.Texture = fighters[1].Profile.Portrait;
                 P2Name.Text = fighters[1].Profile.ShortName;
             }
+
+            P1Rounds.Setup();
+            P2Rounds.Setup();
         }
 
-        public void UpdateHealthBars(SakugaFighter[] fighters, int[] rounds)
+        public void UpdateHealthBars(SakugaFighter[] fighters, GameMonitor monitor)
         {
             P1Health.Value = fighters[0].Variables.CurrentHealth;
             P2Health.Value = fighters[1].Variables.CurrentHealth;
-            
 
-            P1Rounds.ShowRounds(rounds[0]);
-            P2Rounds.ShowRounds(rounds[1]);
+            UpdateTimer(monitor);
+
+            P1Rounds.ShowRounds(monitor.VictoryCounter[0]);
+            P2Rounds.ShowRounds(monitor.VictoryCounter[1]);
 
             P1Combo.Visible = fighters[1].Tracker.HitCombo > 0;
             P2Combo.Visible = fighters[0].Tracker.HitCombo > 0;
 
             P1Combo.UpdateCounter((int)fighters[1].HitStun.TimeLeft, fighters[1].Tracker);
             P2Combo.UpdateCounter((int)fighters[0].HitStun.TimeLeft, fighters[0].Tracker);
+            UpdateDebug(fighters);
         }
 
         public void UpdateDebug(SakugaFighter[] fighters)
@@ -63,9 +69,11 @@ namespace SakugaEngine.UI
             P2Debug.Text = fighters[1].DebugInfo();
         }
 
-        public void UpdateTimer(int timerValue)
+        public void UpdateTimer(GameMonitor monitor)
         {
-            Timer.Text = timerValue.ToString();
+            int time = (monitor.Clock / Global.TicksPerSecond) + 1;
+            time = Mathf.Clamp(time, 0, monitor.ClockLimit);
+            Timer.Text = time.ToString();
         }
     }
 }

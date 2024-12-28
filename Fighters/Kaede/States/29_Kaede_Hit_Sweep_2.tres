@@ -25,5 +25,4 @@ statePhysics = null
 hitboxStates = [SubResource("2")]
 animationEvents = null
 throwPivot = null
-soundEvents = null
 stateTransitions = null

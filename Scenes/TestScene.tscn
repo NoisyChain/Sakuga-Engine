@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://dr8cly8qy5pg2"]
+[gd_scene load_steps=13 format=3 uid="uid://dr8cly8qy5pg2"]
 
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Game/GameManager.cs" id="1_ocl0l"]
 [ext_resource type="PackedScene" uid="uid://blnwu2aaw8s60" path="res://Scenes/AFF_UI.tscn" id="1_wexcy"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/FighterCamera.cs" id="2_dh05b"]
 [ext_resource type="Texture2D" uid="uid://6ctweo6uvot8" path="res://icon.svg" id="3_x54tm"]
 [ext_resource type="PackedScene" uid="uid://b1ggpw8ltpaid" path="res://Fighters/Kaede/Instances/Fighter_Kaede.tscn" id="5_oxe85"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/GameMonitor.cs" id="6_d185x"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Game/SakugaRollbackManager.cs" id="6_jke5l"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_cc1ax"]
@@ -77,12 +78,16 @@ environment = SubResource("Environment_iltph")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
 mesh = SubResource("BoxMesh_ql5gv")
 
-[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("FighterUI", "Camera", "SeedViewer")]
+[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("Monitor", "FighterUI", "Camera", "SeedViewer")]
 script = ExtResource("1_ocl0l")
+Monitor = NodePath("../GameMonitor")
 Spawns = Array[PackedScene]([ExtResource("5_oxe85"), ExtResource("5_oxe85")])
 FighterUI = NodePath("../CanvasLayer")
 Camera = NodePath("../Camera3D")
 SeedViewer = NodePath("../SeedViewer/Seed")
+
+[node name="GameMonitor" type="Node" parent="."]
+script = ExtResource("6_d185x")
 
 [node name="RollbackManager" type="Node" parent="." node_paths=PackedStringArray("GameManager")]
 script = ExtResource("6_jke5l")

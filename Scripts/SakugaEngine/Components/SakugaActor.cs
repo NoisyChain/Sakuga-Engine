@@ -3,6 +3,7 @@ using System.IO;
 using SakugaEngine.Collision;
 using System;
 using SakugaEngine.Resources;
+using System.Diagnostics;
 
 namespace SakugaEngine
 {
@@ -24,8 +25,9 @@ namespace SakugaEngine
         //[Export] public SpawnsList SpawnablesList;
         [Export] public SpawnsList VFXList;
         [Export] public SoundsList SFXList;
-        [Export] public SoundsList VoicesList;        
+        [Export] public SoundsList VoicesList;
 		
+        public virtual void PreTick(){}
 		public virtual void Tick(){}
 		public virtual void LateTick(){}
 		
@@ -35,8 +37,6 @@ namespace SakugaEngine
         public virtual SakugaFighter FighterReference() { return null; }
 
         protected virtual bool LifeEnded() { return false; }
-        public virtual bool AllowHitCheck(SakugaActor other) { return true; }
-
         public override void _Process(double delta)
         {
             Position = Global.ToScaledVector3(Body.FixedPosition);
@@ -89,14 +89,15 @@ namespace SakugaEngine
             }
         }
 
-		public void UpdateHitboxes(bool canHitAgain)
+		public void UpdateHitboxes()
         {
             for (int i = 0; i < Animator.GetCurrentState().hitboxStates.Length; ++i)
             {
-                if (Animator.Frame == Animator.GetCurrentState().hitboxStates[i].Frame)
+                if (Animator.Frame == Animator.GetCurrentState().hitboxStates[i].Frame &&
+                    Body.CurrentHitbox != Animator.GetCurrentState().hitboxStates[i].HitboxIndex)
                 {
                     Body.SetHitbox(Animator.GetCurrentState().hitboxStates[i].HitboxIndex);
-                    if (canHitAgain) Body.HitConfirmed = false;
+                    Body.HitConfirmed = false;
                 }
             }
         }
@@ -168,101 +169,112 @@ namespace SakugaEngine
 
             for (int i = 0; i < Animator.GetCurrentState().animationEvents.Length; i++)
             {
-                Vector2I dst = Teleport(Animator.GetCurrentState().animationEvents[i].TargetPosition,
-                                        Animator.GetCurrentState().animationEvents[i].Index,
-                                        (int)Animator.GetCurrentState().animationEvents[i].xRelativeTo,
-                                        (int)Animator.GetCurrentState().animationEvents[i].yRelativeTo);
-                                                        
                 if (Animator.Frame != Animator.GetCurrentState().animationEvents[i].Frame) continue;
-
-                switch ((int)Animator.GetCurrentState().animationEvents[i].Type)
+                for (int j = 0; j < Animator.GetCurrentState().animationEvents[i].Events.Length; j++)
                 {
-                    case 0: //Spawn Object (Spawnable, VFX)
-                        int ind = Animator.GetCurrentState().animationEvents[i].IsRandom ? 
-                            Global.RNG.Next(Animator.GetCurrentState().animationEvents[i].Index, Animator.GetCurrentState().animationEvents[i].Range) : 
-                            Animator.GetCurrentState().animationEvents[i].Index;
-                        switch((int)Animator.GetCurrentState().animationEvents[i].Object)
-                        {
-                            case 0: //Spawnable
-                                FighterReference().SpawnSpawnable(ind, dst);
-                                break;
-                            case 1: //VFX
-                                FighterReference().SpawnVFX(ind, dst);
-                                break;
-                        }
-                        break;
-                    case 1: //Teleport
-                        Body.MoveTo(dst);
-                        break;
-                    case 2: //Animation Damage
-                        int damage = Animator.GetCurrentState().animationEvents[i].Value;
-                        switch (Animator.GetCurrentState().animationEvents[i].Index)
-                        {
-                            case 0:
-                                if (damage > 0) FighterReference().Variables.AddHealth(Mathf.Abs(damage));
-                                else if (damage < 0) 
-                                {
-                                    FighterReference().Variables.RemoveHealth(Mathf.Abs(damage));
-                                    FighterReference().Tracker.HitCombo++;
-                                    FighterReference().HitStun.Start(1);
-                                }
-                                break;
-                            case 1:
-                                if (damage > 0) FighterReference().GetOpponent().Variables.AddHealth(Mathf.Abs(damage));
-                                else if (damage < 0) 
-                                {
-                                    FighterReference().GetOpponent().Variables.RemoveHealth(Mathf.Abs(damage));
-                                    FighterReference().GetOpponent().Tracker.HitCombo++;
-                                    FighterReference().GetOpponent().HitStun.Start(1);
-                                }
-                                break;
-                        }
-                        break;
-                    case 3: //Dettach Throw (remove this)
-                        break;
-                    case 4: //Force Side Change
-                        switch (Animator.GetCurrentState().animationEvents[i].Index)
-                        {
-                            case 0:
-                                FighterReference().ForcePlayerSide();
-                                break;
-                            case 1:
-                                FighterReference().GetOpponent().ForcePlayerSide();
-                                break;
-                        }
-                        break;
-                    case 5: //Set super armor
-                        Variables.SuperArmor = (sbyte)Animator.GetCurrentState().animationEvents[i].Value;
-                        GD.Print("Super Armor: " + Animator.GetCurrentState().animationEvents[i].Value);
-                        break;
+                    switch (Animator.GetCurrentState().animationEvents[i].Events[j])
+                    {
+                        case SpawnObjectAnimationEvent spawnEvent: //Spawn Object (Spawnable, VFX)
+                            Vector2I dst = Teleport(spawnEvent.TargetPosition, spawnEvent.Index,
+                                            (int)spawnEvent.xRelativeTo, (int)spawnEvent.yRelativeTo);
+                            
+                            int ind = spawnEvent.IsRandom ? 
+                                Global.RNG.Next(spawnEvent.Index, spawnEvent.Range) : 
+                                spawnEvent.Index;
+                            switch(spawnEvent.Object)
+                            {
+                                case Global.ObjectType.SPAWNABLE:
+                                    FighterReference().SpawnSpawnable(ind, dst);
+                                    break;
+                                case Global.ObjectType.VFX:
+                                    FighterReference().SpawnVFX(ind, dst);
+                                    break;
+                            }
+                            break;
+                        case TeleportAnimationEvent teleportEvent: //Teleport
+                            dst = Teleport(teleportEvent.TargetPosition, teleportEvent.Index,
+                                            (int)teleportEvent.xRelativeTo, (int)teleportEvent.yRelativeTo);
+                            
+                            Body.MoveTo(dst);
+                            break;
+                        case ApplyDamageAnimationEvent damageEvent: //Animation Damage
+                            AnimationDamage(damageEvent);
+                            break;
+                        case ChangeSideAnimationEvent changeSideEvent: //Force Side Change
+                            switch (changeSideEvent.Index)
+                            {
+                                case 0:
+                                    FighterReference().ForcePlayerSide();
+                                    break;
+                                case 1:
+                                    FighterReference().GetOpponent().ForcePlayerSide();
+                                    break;
+                            }
+                            break;
+                        case SuperArmorAnimationEvent armorEvent: //Set super armor
+                            Variables.SuperArmor = (sbyte)armorEvent.ArmorValue;
+                            break;
+                        case PlaySoundAnimationEvent soundEvent: //Set super armor
+                            SoundEvents(soundEvent);
+                            break;
+                    }
                 }
             }
         }
 
-        public void SoundEvents(SoundsList SFX, SoundsList VoiceLines)
+        public void AnimationDamage(ApplyDamageAnimationEvent damageEvent)
         {
-            if (Animator.GetCurrentState().soundEvents.Length <= 0) return;
-            if (SFX == null) return;
-            if (VoiceLines == null) return;
-
-            for (int i = 0; i < Animator.GetCurrentState().soundEvents.Length; i++)
+            SakugaFighter reference = null;
+            
+            switch (damageEvent.Index)
             {
-                if (Animator.Frame != Animator.GetCurrentState().soundEvents[i].Frame) continue;
-                int ind = Animator.GetCurrentState().soundEvents[i].IsRandom ? 
-                    Global.RNG.Next(Animator.GetCurrentState().soundEvents[i].Index, Animator.GetCurrentState().soundEvents[i].Range) : 
-                    Animator.GetCurrentState().soundEvents[i].Index;
-                AudioStream selectedSound = null;
-                switch ((int)Animator.GetCurrentState().soundEvents[i].SoundType)
-                {
-                    case 0:
-                        selectedSound = SFX.Sounds[ind];
-                        break;
-                    case 1:
-                        selectedSound = VoiceLines.Sounds[ind];
-                        break;
-                }
-                Sounds[Animator.GetCurrentState().soundEvents[i].Source].QueueSound(selectedSound);
+                case 0:
+                    reference = FighterReference();
+                    break;
+                case 1:
+                    reference = FighterReference().GetOpponent();
+                    break;
             }
+            reference.HitStun.Start(Global.MinHitstun);
+
+            int finalDamage = damageEvent.Value;
+            if (damageEvent.AffectedByModifiers)
+                finalDamage = reference.FighterVars.CalculateCompleteDamage(damageEvent.Value, reference.GetOpponent().FighterVars.CurrentAttack);
+
+            switch (damageEvent.HealthChange)
+            {
+                case Global.ExtraVariableChange.SET:
+                    reference.Variables.CurrentHealth = finalDamage;
+                    break;
+                case  Global.ExtraVariableChange.ADD:
+                    reference.Variables.AddHealth(finalDamage);
+                    break;
+                case  Global.ExtraVariableChange.SUBTRACT:
+                    reference.Variables.TakeDamage(finalDamage, 0, damageEvent.KillingBlow);
+                    break;
+            }
+            if (damageEvent.AffectDamageTracker)
+                reference.Tracker.UpdateTrackers((uint)finalDamage, 0, Global.MinHitstun, 0, false);
+        }
+
+        public void SoundEvents(PlaySoundAnimationEvent soundEvent)
+        {
+            if (SFXList == null) return;
+            if (VoicesList == null) return;
+            
+            int ind = soundEvent.IsRandom ? Global.RNG.Next(soundEvent.Index, soundEvent.Range) : soundEvent.Index;
+            AudioStream selectedSound = null;
+            switch ((int)soundEvent.SoundType)
+            {
+                case 0:
+                    selectedSound = SFXList.Sounds[ind];
+                    break;
+                case 1:
+                    selectedSound = VoicesList.Sounds[ind];
+                    break;
+            }
+            Sounds[soundEvent.Source].QueueSound(selectedSound);
+            GD.Print("Sound queued");
         }
 
         public Vector2I Teleport(Vector2I Target, int index, int xRelative, int yRelative)
