@@ -12,7 +12,6 @@ namespace SakugaEngine.Resources
         [Export] public bool Loop;
         [Export] public Vector2I LoopFrames;
         [Export] public int TurnState = -1;
-        [Export] public int RoundFinishDuration;
         [Export] public int HitStunFrameLimit = -1;
         [Export] public FrameProperties[] stateProperties;
         [Export] public StatePhysics[] statePhysics;

@@ -58,7 +58,7 @@ namespace SakugaEngine
         public enum ExtraVariableChange { SET, ADD, SUBTRACT }
         public enum ExtraVariableCompareMode { EQUAL, GREATER, GREATER_EQUAL, LESS, LESS_EQUAL }
         public enum FadeScreenMode { NONE, FADE_IN, FADE_OUT }
-        public enum RelativeTo{ WORLD, SELF, FIGHTER, SPAWNABLE }
+        public enum RelativeTo{ WORLD, SELF, OPPONENT, FIGHTER, SPAWNABLE }
         public enum SoundType{ SFX, VOICE }
         public enum ObjectType{ SPAWNABLE, VFX }
         public enum SpawnableHitCheck{ OPPONENT, OWNER, BOTH }

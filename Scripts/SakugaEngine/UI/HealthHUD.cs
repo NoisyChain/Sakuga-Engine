@@ -8,6 +8,7 @@ namespace SakugaEngine.UI
         [ExportCategory("Player 1")]
         [Export] private TextureRect P1Portrait;
         [Export] private TextureProgressBar P1Health;
+        [Export] private TextureProgressBar P1LostHealth;
         [Export] private RoundsCounter P1Rounds;
         [Export] private ComboCounter P1Combo;
         [Export] private Label P1Name;
@@ -15,6 +16,7 @@ namespace SakugaEngine.UI
         [ExportCategory("Player 2")]
         [Export] private TextureRect P2Portrait;
         [Export] private TextureProgressBar P2Health;
+        [Export] private TextureProgressBar P2LostHealth;
         [Export] private RoundsCounter P2Rounds;
         [Export] private ComboCounter P2Combo;
         [Export] private Label P2Name;
@@ -49,6 +51,8 @@ namespace SakugaEngine.UI
         {
             P1Health.Value = fighters[0].Variables.CurrentHealth;
             P2Health.Value = fighters[1].Variables.CurrentHealth;
+            P1LostHealth.Value = fighters[0].FighterVars.LostHealth;
+            P2LostHealth.Value = fighters[1].FighterVars.LostHealth;
 
             UpdateTimer(monitor);
 

@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=3 uid="uid://dr8cly8qy5pg2"]
 
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Game/GameManager.cs" id="1_ocl0l"]
-[ext_resource type="PackedScene" uid="uid://blnwu2aaw8s60" path="res://Scenes/AFF_UI.tscn" id="1_wexcy"]
+[ext_resource type="PackedScene" uid="uid://blnwu2aaw8s60" path="res://Scenes/Sakuga_UI.tscn" id="1_wexcy"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/FighterCamera.cs" id="2_dh05b"]
 [ext_resource type="Texture2D" uid="uid://6ctweo6uvot8" path="res://icon.svg" id="3_x54tm"]
 [ext_resource type="PackedScene" uid="uid://b1ggpw8ltpaid" path="res://Fighters/Kaede/Instances/Fighter_Kaede.tscn" id="5_oxe85"]

@@ -22,10 +22,11 @@ namespace SakugaEngine
         [Export] protected Node3D[] Graphics;
 
         [ExportCategory("Lists")]
-        //[Export] public SpawnsList SpawnablesList;
         [Export] public SpawnsList VFXList;
         [Export] public SoundsList SFXList;
         [Export] public SoundsList VoicesList;
+
+        protected bool EventExecuted;
 		
         public virtual void PreTick(){}
 		public virtual void Tick(){}
@@ -166,6 +167,7 @@ namespace SakugaEngine
         public void AnimationEvents()
         {
             if (Animator.GetCurrentState().animationEvents.Length <= 0) return;
+            if (EventExecuted) return;
 
             for (int i = 0; i < Animator.GetCurrentState().animationEvents.Length; i++)
             {
@@ -176,7 +178,7 @@ namespace SakugaEngine
                     {
                         case SpawnObjectAnimationEvent spawnEvent: //Spawn Object (Spawnable, VFX)
                             Vector2I dst = Teleport(spawnEvent.TargetPosition, spawnEvent.Index,
-                                            (int)spawnEvent.xRelativeTo, (int)spawnEvent.yRelativeTo);
+                                    (int)spawnEvent.xRelativeTo, (int)spawnEvent.yRelativeTo);
                             
                             int ind = spawnEvent.IsRandom ? 
                                 Global.RNG.Next(spawnEvent.Index, spawnEvent.Range) : 
@@ -193,7 +195,7 @@ namespace SakugaEngine
                             break;
                         case TeleportAnimationEvent teleportEvent: //Teleport
                             dst = Teleport(teleportEvent.TargetPosition, teleportEvent.Index,
-                                            (int)teleportEvent.xRelativeTo, (int)teleportEvent.yRelativeTo);
+                                    (int)teleportEvent.xRelativeTo, (int)teleportEvent.yRelativeTo);
                             
                             Body.MoveTo(dst);
                             break;
@@ -220,6 +222,8 @@ namespace SakugaEngine
                     }
                 }
             }
+
+            EventExecuted = true;
         }
 
         public void AnimationDamage(ApplyDamageAnimationEvent damageEvent)
@@ -289,7 +293,11 @@ namespace SakugaEngine
                     relativePosX = Body.FixedPosition.X;
                     Target.X *= Body.PlayerSide;
                     break;
-                case 2: //Fighter
+                case 2: //Opponent
+                    relativePosX = FighterReference().GetOpponent().Body.FixedPosition.X;
+                    Target.X *= FighterReference().GetOpponent().Body.PlayerSide;
+                    break;
+                case 3: //Fighter (by index)
                     switch (index)
                     {
                         case 0:
@@ -302,7 +310,7 @@ namespace SakugaEngine
                             break;
                     }
                     break;
-                case 3: //Spawnable
+                case 4: //Spawnable (by index)
                     relativePosX = FighterReference().GetActiveSpawnable(index).Body.FixedPosition.X;
                     Target.X *= FighterReference().GetActiveSpawnable(index).Body.PlayerSide;
                     break;
@@ -310,12 +318,15 @@ namespace SakugaEngine
 
             switch (yRelative)
             {
-                case 0:
+                case 0: //World
                     break;
-                case 1:
+                case 1: //Self
                     relativePosY = Body.FixedPosition.Y;
                     break;
-                case 2:
+                case 2: //Opponent
+                    relativePosY = FighterReference().GetOpponent().Body.FixedPosition.Y;
+                    break;
+                case 3: //Fighter (by index)
                     switch (index)
                     {
                         case 0:
@@ -326,7 +337,7 @@ namespace SakugaEngine
                             break;
                     }
                     break;
-                case 3:
+                case 4: //Spawnable (by index)
                     relativePosY = FighterReference().GetActiveSpawnable(index).Body.FixedPosition.Y;
                     break;
             }

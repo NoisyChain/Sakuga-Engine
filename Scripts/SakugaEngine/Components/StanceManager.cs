@@ -71,6 +71,9 @@ namespace SakugaEngine
         {
             if (owner.Animator.StateType() > 3) return;
 
+            if (CurrentMove >= 0)
+                owner.Variables.AddSuperGauge(GetCurrentMove().BuildSuperGauge);
+
             for (int i = GetMoveListLength() - 1; i >= 0; i--)
             {
                 if (!CheckMoveConditions(i)) continue;

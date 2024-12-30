@@ -89,6 +89,7 @@ namespace SakugaEngine
         public override void PreTick()
         {
             if (!IsActive) return;
+            EventExecuted = false;
 
             Body.IsMovable = !GetFighterOwner().HitStop.IsRunning();
             
@@ -122,12 +123,9 @@ namespace SakugaEngine
 
             Body.PlayerSide = Body.IsLeftSide ? 1 : -1;
 
-            if (!GetFighterOwner().HitStop.IsRunning())
-            {
-                UpdateFrameProperties();
-                StateTransitions();
-                AnimationEvents();
-            }
+            UpdateFrameProperties();
+            StateTransitions();
+            AnimationEvents();
             UpdateHitboxes();
         }
 
@@ -238,6 +236,8 @@ namespace SakugaEngine
             if (Variables != null) Variables.Serialize(bw);
             Animator.Serialize(bw);
             LifeTime.Serialize(bw);
+
+            bw.Write(EventExecuted);
         }
 		public override void Deserialize(BinaryReader br)
         {
@@ -247,6 +247,8 @@ namespace SakugaEngine
             if (Variables != null) Variables.Deserialize(br);
             Animator.Deserialize(br);
             LifeTime.Deserialize(br);
+
+            EventExecuted = br.ReadBoolean();
 
             Body.UpdateColliders();
         }

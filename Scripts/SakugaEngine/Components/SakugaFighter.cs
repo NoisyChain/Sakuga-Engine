@@ -29,6 +29,7 @@ namespace SakugaEngine
         private bool PushAllowInertia;
         private bool IsBeingPushed = false;
         private bool BlockStun;
+        private bool Uncrouched;
         private int PushGravity;
         private int HBounceIntensity;
         private int HBounceState;
@@ -95,6 +96,9 @@ namespace SakugaEngine
             Stance.Initialize(this);
             Tracker.Initialize(this);
             Variables.Initialize();
+
+            BlockStun = false;
+            Uncrouched = false;
             
             Body.FixedPosition.X = Global.StartingPosition * (-1 + (index * 2));
             Animator.PlayState(Stance.GetCurrentStance().NeutralState);
@@ -117,6 +121,9 @@ namespace SakugaEngine
             PushForce.Stop();
             HorizontalBounce.Stop();
             VerticalBounce.Stop();
+
+            BlockStun = false;
+            Uncrouched = false;
         }
 
         public void UpdateSide(bool leftSide)
@@ -152,6 +159,7 @@ namespace SakugaEngine
         public override void PreTick()
         {
             HitStop.Run();
+            EventExecuted = false;
             Body.IsMovable = !HitStop.IsRunning();
 
             if (!HitStop.IsRunning())
@@ -201,23 +209,11 @@ namespace SakugaEngine
             FighterVars.CalculateDamageScaling(Body.IsOnWall);
             Tracker.UpdateFrameData();
 
-            if (!HitStop.IsRunning())
-            {
-                UpdateFrameProperties();
-                StateTransitions();
-                AnimationEvents();
-            }
+            UpdateFrameProperties();
+            StateTransitions();
+            AnimationEvents();
             UpdateHitboxes();
-
-            if (!HitStun.IsRunning() && HitstunType < (int)Global.HitstunType.STAGGER)
-            {
-                FighterVars.ResetDamageStatus();
-                Tracker.Reset();
-                HitstunDecayFactor = 0;
-                GravityDecayFactor = 0;
-                HitstunType = 0;
-                BlockStun = false;
-            }
+            ResetDamageStatus();
 
             for (int i = 0; i < Spawnables.Length; ++i)
                 for (int j = 0; j < Spawnables[i].Length; ++j)
@@ -226,10 +222,23 @@ namespace SakugaEngine
             for (int i = 0; i < VFX.Length; ++i)
                 for (int j = 0; j < VFX[i].Length; ++j)
                     VFX[i][j].Tick();
-
-            GD.Print(IsStunLocked());
         }
 
+        private void ResetDamageStatus()
+        {
+            if (HitstunType < (int)Global.HitstunType.STAGGER && 
+                Animator.StateType() != (int)Global.StateType.HIT_REACTION)
+            {
+                HitStun.Stop(); 
+                FighterVars.ResetDamageStatus();
+                Tracker.Reset();
+                HitstunDecayFactor = 0;
+                GravityDecayFactor = 0;
+                HitstunType = 0;
+                BlockStun = false;
+                Uncrouched = false;
+            }
+        }
 #region Push Force
         public void PushCharacter(int pushDuration, int VelocityX, int VelocityY, int gravity, bool xInertia)
         {
@@ -540,6 +549,7 @@ namespace SakugaEngine
         public void HitDamage(HitboxElement box, bool isTrade)
         {
             LayerSorting = -1;
+            if (box.Uncrouch) Uncrouched = true;
             bool isGroundHit = !LifeEnded() && Body.IsOnGround && !Animator.GetCurrentState().OffTheGround;
             var finalHitstun = isGroundHit ? box.GroundHitstun : box.AirHitstun;
             var finalKnockbackTime = isGroundHit ? box.GroundHitKnockbackTime : box.AirHitKnockbackTime;
@@ -721,7 +731,7 @@ namespace SakugaEngine
 
 #region Return functions
         public bool IsBlockableState() => Animator.StateType() != 2 && Animator.StateType() != 4;
-        public bool IsCrouching() => Body.IsOnGround && Inputs.IsBeingPressed(Inputs.CurrentHistory, Global.INPUT_DOWN);
+        public bool IsCrouching() => Body.IsOnGround && !Uncrouched && Inputs.IsBeingPressed(Inputs.CurrentHistory, Global.INPUT_DOWN);
         public bool IsBlocking() => IsBlockableState() && Inputs.IsBeingPressed(Inputs.CurrentHistory, Body.IsLeftSide ? Global.INPUT_LEFT : Global.INPUT_RIGHT);
         public bool IsKO() => Variables.CurrentHealth <= 0;
         public bool IsGroundHit() => Body.IsOnGround && !Animator.GetCurrentState().OffTheGround;
@@ -857,10 +867,12 @@ namespace SakugaEngine
             HorizontalBounce.Serialize(bw);
             VerticalBounce.Serialize(bw);
             //Variables
+            bw.Write(EventExecuted);
             bw.Write(SuperStop);
             bw.Write(IsBeingPushed);
             bw.Write(PushAllowInertia);
             bw.Write(BlockStun);
+            bw.Write(Uncrouched);
             bw.Write(PushGravity);
             bw.Write(HBounceIntensity);
             bw.Write(HBounceState);
@@ -896,10 +908,12 @@ namespace SakugaEngine
             HorizontalBounce.Deserialize(br);
             VerticalBounce.Deserialize(br);
             //Variables
+            EventExecuted = br.ReadBoolean();
             SuperStop = br.ReadBoolean();
             IsBeingPushed = br.ReadBoolean();
             PushAllowInertia = br.ReadBoolean();
             BlockStun = br.ReadBoolean();
+            Uncrouched = br.ReadBoolean();
             PushGravity = br.ReadInt32();
             HBounceIntensity = br.ReadInt32();
             HBounceState = br.ReadInt32();

@@ -81,7 +81,6 @@ Duration = 24
 Loop = false
 LoopFrames = Vector2i(0, 0)
 TurnState = -1
-RoundFinishDuration = 0
 HitStunFrameLimit = -1
 stateProperties = null
 statePhysics = [SubResource("Resource_04frn"), SubResource("Resource_ujkja"), SubResource("Resource_r4h2m")]

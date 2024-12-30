@@ -11,6 +11,7 @@ namespace SakugaEngine.Resources
         [Export] public MotionInputs Inputs;
         [Export] public Global.SideChangeMode SideChange;
         [Export] public int SuperGaugeRequired = 0;
+        [Export] public int BuildSuperGauge = 0;
         [Export] public Vector2I HealthThreshold = new Vector2I(0, 99999);
         [Export] public int SpendHealth = 0;
         [Export] public Vector2I DistanceArea = new Vector2I(0, 999999);

@@ -1,9 +1,10 @@
-[gd_resource type="Resource" script_class="FighterState" load_steps=11 format=3 uid="uid://u2bqvxcp02oh"]
+[gd_resource type="Resource" script_class="FighterState" load_steps=14 format=3 uid="uid://u2bqvxcp02oh"]
 
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/StatePhysics.cs" id="1"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="2"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="3"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/StateTransitionSettings.cs" id="4_7j3ie"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/FrameProperties.cs" id="4_t4271"]
 
 [sub_resource type="Resource" id="5"]
 script = ExtResource("3")
@@ -59,6 +60,16 @@ UseVerticalInertia = false
 UseHorizontalInput = false
 UseVerticalInput = false
 
+[sub_resource type="Resource" id="Resource_anmr3"]
+script = ExtResource("4_t4271")
+Frame = 0
+Properties = 3
+
+[sub_resource type="Resource" id="Resource_dmry4"]
+script = ExtResource("4_t4271")
+Frame = 4
+Properties = 0
+
 [sub_resource type="Resource" id="Resource_liohb"]
 script = ExtResource("4_7j3ie")
 StateIndex = 0
@@ -77,7 +88,7 @@ LoopFrames = Vector2i(0, 0)
 TurnState = -1
 RoundFinishDuration = 0
 HitStunFrameLimit = -1
-stateProperties = null
+stateProperties = Array[Object]([SubResource("Resource_anmr3"), SubResource("Resource_dmry4")])
 statePhysics = [SubResource("3"), SubResource("2"), SubResource("4")]
 hitboxStates = [SubResource("5"), SubResource("6")]
 animationEvents = null

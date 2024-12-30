@@ -62,13 +62,13 @@ namespace SakugaEngine
             SuperArmor -= value;
         }
 
-        public void TakeDamage(int damage, int meterGain, bool isKilingBlow)
+        public virtual void TakeDamage(int damage, int meterGain, bool isKilingBlow)
         {
-            AddSuperGauge(meterGain);
             if (!isKilingBlow && CurrentHealth - damage <= 1)
                 CurrentHealth = 1;
             else
                 RemoveHealth(damage);
+            AddSuperGauge(meterGain);
         }
 
         public void ArmorDamage(sbyte damage, int healthDamage)

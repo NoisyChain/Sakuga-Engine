@@ -17,7 +17,7 @@
 
 [node name="CanvasLayer" type="CanvasLayer"]
 
-[node name="GameHUD_Background" type="Control" parent="." node_paths=PackedStringArray("P1Portrait", "P1Health", "P1Rounds", "P1Combo", "P1Name", "P2Portrait", "P2Health", "P2Rounds", "P2Combo", "P2Name", "Timer", "P1Debug", "P2Debug")]
+[node name="GameHUD_Background" type="Control" parent="." node_paths=PackedStringArray("P1Portrait", "P1Health", "P1LostHealth", "P1Rounds", "P1Combo", "P1Name", "P2Portrait", "P2Health", "P2LostHealth", "P2Rounds", "P2Combo", "P2Name", "Timer", "P1Debug", "P2Debug")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -27,11 +27,13 @@ grow_vertical = 2
 script = ExtResource("1_ulr1j")
 P1Portrait = NodePath("HealthBars/P1Portrait")
 P1Health = NodePath("HealthBars/P1Health")
+P1LostHealth = NodePath("HealthBars/P1LostHealth")
 P1Rounds = NodePath("HealthBars/P1Rounds")
 P1Combo = NodePath("ComboCounters/P1ComboCounter")
 P1Name = NodePath("HealthBars/P1Name")
 P2Portrait = NodePath("HealthBars/P2Portrait")
 P2Health = NodePath("HealthBars/P2Health")
+P2LostHealth = NodePath("HealthBars/P2LostHealth")
 P2Rounds = NodePath("HealthBars/P2Rounds")
 P2Combo = NodePath("ComboCounters/P2ComboCounter")
 P2Name = NodePath("HealthBars/P2Name")
@@ -65,6 +67,26 @@ texture = ExtResource("2_h5vba")
 expand_mode = 1
 stretch_mode = 1
 
+[node name="P1LostHealth" type="TextureProgressBar" parent="GameHUD_Background/HealthBars"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -590.0
+offset_top = 90.0
+offset_right = 1410.0
+offset_bottom = 225.0
+grow_horizontal = 2
+scale = Vector2(0.27, 0.27)
+max_value = 10000.0
+step = 0.0
+value = 7000.0
+fill_mode = 1
+texture_under = ExtResource("3_quu14")
+texture_progress = ExtResource("3_quu14")
+tint_under = Color(0.509804, 0.509804, 0.509804, 1)
+tint_progress = Color(0.72882, 0, 0.08201, 1)
+
 [node name="P1Health" type="TextureProgressBar" parent="GameHUD_Background/HealthBars"]
 layout_mode = 1
 anchors_preset = 5
@@ -85,7 +107,7 @@ texture_progress = ExtResource("3_quu14")
 tint_under = Color(0.509804, 0.509804, 0.509804, 1)
 tint_progress = Color(0.909804, 0.843137, 0.396078, 1)
 
-[node name="P2Health" type="TextureProgressBar" parent="GameHUD_Background/HealthBars"]
+[node name="P2LostHealth" type="TextureProgressBar" parent="GameHUD_Background/HealthBars"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -100,6 +122,24 @@ max_value = 10000.0
 step = 0.0
 value = 7000.0
 texture_under = ExtResource("3_quu14")
+texture_progress = ExtResource("3_quu14")
+tint_under = Color(0.509804, 0.509804, 0.509804, 1)
+tint_progress = Color(0.72882, 0, 0.08201, 1)
+
+[node name="P2Health" type="TextureProgressBar" parent="GameHUD_Background/HealthBars"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 60.0
+offset_top = 90.0
+offset_right = 2060.0
+offset_bottom = 225.0
+grow_horizontal = 2
+scale = Vector2(0.27, 0.27)
+max_value = 10000.0
+step = 0.0
+value = 7000.0
 texture_progress = ExtResource("3_quu14")
 tint_under = Color(0.509804, 0.509804, 0.509804, 1)
 tint_progress = Color(0.909804, 0.843137, 0.396078, 1)
@@ -170,24 +210,31 @@ layout_mode = 2
 texture = ExtResource("2_h5vba")
 
 [node name="P1Name" type="Label" parent="GameHUD_Background/HealthBars"]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -520.0
+offset_left = -512.0
 offset_top = 40.0
-offset_right = -452.0
+offset_right = -285.0
 offset_bottom = 63.0
+grow_horizontal = 2
 scale = Vector2(2, 2)
 text = "Fighter 1"
 
 [node name="P2Name" type="Label" parent="GameHUD_Background/HealthBars"]
-layout_mode = 0
-offset_left = 1020.0
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 70.0
 offset_top = 40.0
-offset_right = 1088.0
+offset_right = 291.0
 offset_bottom = 63.0
+grow_horizontal = 2
 scale = Vector2(2, 2)
 text = "Fighter 2"
+horizontal_alignment = 2
 
 [node name="Timer" type="Label" parent="GameHUD_Background/HealthBars"]
 layout_mode = 1
@@ -664,7 +711,7 @@ grow_vertical = 2
 [node name="ColorRect1" type="ColorRect" parent="Debug"]
 layout_mode = 0
 offset_right = 240.0
-offset_bottom = 364.0
+offset_bottom = 426.0
 color = Color(0, 0, 0, 0.156863)
 
 [node name="ColorRect2" type="ColorRect" parent="Debug"]
@@ -672,7 +719,7 @@ layout_mode = 0
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -240.0
-offset_bottom = 364.0
+offset_bottom = 426.0
 color = Color(0, 0, 0, 0.156863)
 
 [node name="P1Debug" type="Label" parent="Debug"]

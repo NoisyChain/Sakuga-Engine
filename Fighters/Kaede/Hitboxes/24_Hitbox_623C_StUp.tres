@@ -1,12 +1,12 @@
-[gd_resource type="Resource" script_class="HitboxSettings" load_steps=5 format=3 uid="uid://bjm6llkfwtv0w"]
+[gd_resource type="Resource" script_class="HitboxSettings" load_steps=5 format=3 uid="uid://ckbm8vkl7h4bk"]
 
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxElement.cs" id="1_us4uj"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxSettings.cs" id="2_7xlts"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxElement.cs" id="1_kjeb5"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxSettings.cs" id="2_ksbx1"]
 
-[sub_resource type="Resource" id="Resource_asc0c"]
-script = ExtResource("1_us4uj")
-Center = Vector2i(1840, 6000)
-Size = Vector2i(5000, 12000)
+[sub_resource type="Resource" id="Resource_0ymrl"]
+script = ExtResource("1_kjeb5")
+Center = Vector2i(1200, 11500)
+Size = Vector2i(7000, 7000)
 HitboxType = 0
 HitType = 0
 BaseDamage = 150
@@ -69,11 +69,11 @@ BounceYTime = 0
 BounceYIntensity = 0
 BounceYState = 0
 
-[sub_resource type="Resource" id="Resource_oilei"]
-script = ExtResource("1_us4uj")
-Center = Vector2i(3400, 12600)
-Size = Vector2i(3000, 3000)
-HitboxType = 0
+[sub_resource type="Resource" id="Resource_ohqyl"]
+script = ExtResource("1_kjeb5")
+Center = Vector2i(10000, 5000)
+Size = Vector2i(15000, 8000)
+HitboxType = 2
 HitType = 0
 BaseDamage = 150
 ChipDamage = 0
@@ -136,7 +136,7 @@ BounceYIntensity = 0
 BounceYState = 0
 
 [resource]
-script = ExtResource("2_7xlts")
-PushboxCenter = Vector2i(0, 6000)
-PushboxSize = Vector2i(4000, 12000)
-Hitboxes = [SubResource("Resource_asc0c"), SubResource("Resource_oilei")]
+script = ExtResource("2_ksbx1")
+PushboxCenter = Vector2i(0, 3000)
+PushboxSize = Vector2i(4000, 6000)
+Hitboxes = [SubResource("Resource_0ymrl"), SubResource("Resource_ohqyl")]

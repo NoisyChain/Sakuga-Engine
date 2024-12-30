@@ -10,6 +10,7 @@ MoveState = 9
 Inputs = ExtResource("1_cuxtk")
 SideChange = 2
 SuperGaugeRequired = 0
+BuildSuperGauge = 2
 HealthThreshold = Vector2i(0, 99999)
 SpendHealth = 0
 DistanceArea = Vector2i(0, 999999)

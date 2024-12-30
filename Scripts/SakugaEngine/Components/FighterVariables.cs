@@ -22,7 +22,6 @@ namespace SakugaEngine
         public ushort CurrentDamageProration;
         public ushort CurrentGravityProration;
         
-
         public int LostHealth;
 
         public override void Initialize()
@@ -39,6 +38,13 @@ namespace SakugaEngine
 
             CurrentDamageProration = 100;
             CurrentGravityProration = 100;
+        }
+
+        public override void TakeDamage(int damage, int meterGain, bool isKilingBlow)
+        {
+            base.TakeDamage(damage, meterGain, isKilingBlow);
+            if (CurrentHealth == 0)
+                LostHealth = 0;
         }
 
         public void RemoveDamageScaling(ushort value)
@@ -58,6 +64,7 @@ namespace SakugaEngine
             CurrentCornerDamageScaling = CornerMaxDamageScaling;
             CurrentDamageProration = 100;
             CurrentGravityProration = 100;
+            UpdateLostHealth();
         }
 
         public void UpdateLostHealth()

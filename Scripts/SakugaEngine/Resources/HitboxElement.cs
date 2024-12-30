@@ -70,7 +70,6 @@ namespace SakugaEngine.Resources
 
         //Throw settings
         [ExportGroup("Throw Hit Settings")]
-        [Export] public bool CanEscape = true;
         [Export] public bool GroundThrow;
         [Export] public bool AirThrow;
         [Export] public int ThrowHitStopDuration = 8;

@@ -39,11 +39,13 @@ namespace SakugaEngine
             if (isInvalid)
                 invalidHit = true;
 
+            if (HitCombo == 0) CurrentCombo = 0;
             HitCombo++;
             LastDamage = damage;
             CurrentCombo += damage;
             if (CurrentCombo > HighestCombo)
                 HighestCombo = CurrentCombo;
+            
             HitFrame = hitFrame;
             StunAtHit = hitStun;
             LastHitType = hitType;
@@ -65,7 +67,7 @@ namespace SakugaEngine
         {
             HitCombo = 0;
             //LastDamage = 0;
-            CurrentCombo = 0;
+            //CurrentCombo = 0;
             invalidHit = false;
         }
 

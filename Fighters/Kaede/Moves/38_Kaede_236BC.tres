@@ -1,15 +1,15 @@
-[gd_resource type="Resource" script_class="MoveSettings" load_steps=3 format=3 uid="uid://dnlvmw48b16sg"]
+[gd_resource type="Resource" script_class="MoveSettings" load_steps=3 format=3 uid="uid://cp44wcvfgrkue"]
 
-[ext_resource type="Resource" uid="uid://cxbefdoq5df5p" path="res://Fighters/Shared/Inputs/19_Input_236A.tres" id="1_g7fx1"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_ru1rl"]
+[ext_resource type="Resource" uid="uid://gqj3r3ub5wjc" path="res://Fighters/Shared/Inputs/25_Input_236BC.tres" id="1_tyncq"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_ksgc6"]
 
 [resource]
-script = ExtResource("2_ru1rl")
-MoveName = "236A"
-MoveState = 62
-Inputs = ExtResource("1_g7fx1")
+script = ExtResource("2_ksgc6")
+MoveName = "236BC"
+MoveState = 68
+Inputs = ExtResource("1_tyncq")
 SideChange = 0
-SuperGaugeRequired = 0
+SuperGaugeRequired = 5000
 BuildSuperGauge = 0
 HealthThreshold = Vector2i(0, 99999)
 SpendHealth = 0
@@ -25,11 +25,11 @@ MoveEnd = 2
 MoveEndState = -1
 ChangeStance = -1
 FrameLimit = -1
-SuperFlash = 0
-Priority = 6
-CanBeOverrided = true
+SuperFlash = 26
+Priority = 7
+CanBeOverrided = false
 CanOverrideToSelf = false
-IgnoreSamePriority = false
+IgnoreSamePriority = true
 InterruptCornerPushback = false
 PriorityBuffer = false
 WaitForNullStates = false

@@ -1,12 +1,12 @@
-[gd_resource type="Resource" script_class="HitboxSettings" load_steps=5 format=3 uid="uid://bjm6llkfwtv0w"]
+[gd_resource type="Resource" script_class="HitboxSettings" load_steps=5 format=3 uid="uid://dwnyu400p8vdj"]
 
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxElement.cs" id="1_us4uj"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxSettings.cs" id="2_7xlts"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxElement.cs" id="1_hrecp"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxSettings.cs" id="2_nex5t"]
 
-[sub_resource type="Resource" id="Resource_asc0c"]
-script = ExtResource("1_us4uj")
-Center = Vector2i(1840, 6000)
-Size = Vector2i(5000, 12000)
+[sub_resource type="Resource" id="Resource_whmeu"]
+script = ExtResource("1_hrecp")
+Center = Vector2i(0, 2500)
+Size = Vector2i(7000, 5000)
 HitboxType = 0
 HitType = 0
 BaseDamage = 150
@@ -52,7 +52,6 @@ AirBlockKnockback = Vector2i(0, 0)
 AirBlockKnockbackGravity = 30
 AirBlockKnockbackTime = 8
 AirBlockstun = 8
-CanEscape = true
 GroundThrow = false
 AirThrow = false
 ThrowHitStopDuration = 8
@@ -69,21 +68,21 @@ BounceYTime = 0
 BounceYIntensity = 0
 BounceYState = 0
 
-[sub_resource type="Resource" id="Resource_oilei"]
-script = ExtResource("1_us4uj")
-Center = Vector2i(3400, 12600)
-Size = Vector2i(3000, 3000)
-HitboxType = 0
-HitType = 0
-BaseDamage = 150
-ChipDamage = 0
+[sub_resource type="Resource" id="Resource_aqr4w"]
+script = ExtResource("1_hrecp")
+Center = Vector2i(6200, 7000)
+Size = Vector2i(12000, 15000)
+HitboxType = 1
+HitType = 1
+BaseDamage = 1000
+ChipDamage = 80
 ChipDeath = false
 KillingBlow = true
-GuardCrush = false
+GuardCrush = true
 Uncrouch = false
-GuardCrushDamage = 100
-SelfSuperGaugeGain = 25
-OpponentSuperGaugeGain = 10
+GuardCrushDamage = 750
+SelfSuperGaugeGain = 0
+OpponentSuperGaugeGain = 100
 ArmorDamage = 1
 Priority = 0
 SelfHitStopDuration = 12
@@ -92,51 +91,50 @@ BlockStopDuration = 12
 CounterHitStopDuration = 20
 ClashHitStopDuration = 20
 DamageScalingSubtract = 15
-HitEffectIndex = 1
-BlockEffectIndex = 2
-ClashEffectIndex = 3
-ArmorHitEffectIndex = 4
+HitEffectIndex = 0
+BlockEffectIndex = 1
+ClashEffectIndex = 2
+ArmorHitEffectIndex = 3
 GuardCrushEffectIndex = 0
-GroundHitstunType = 0
-GroundHitReaction = 0
-CrouchHitReaction = 0
-GroundHitKnockback = Vector2i(0, 0)
-GroundHitKnockbackGravity = 0
+GroundHitstunType = 3
+GroundHitReaction = 4
+CrouchHitReaction = 4
+GroundHitKnockback = Vector2i(-10000, 80000)
+GroundHitKnockbackGravity = 200000
 GroundHitKnockbackTime = 8
-GroundHitstun = 8
-GroundBlockKnockback = Vector2i(0, 0)
+GroundHitstun = 120
+GroundBlockKnockback = Vector2i(-30000, 0)
 GroundBlockKnockbackGravity = 0
 GroundBlockKnockbackTime = 8
-GroundBlockstun = 8
-AirHitstunType = 0
-AirHitReaction = 0
-AirHitKnockback = Vector2i(0, 0)
-AirHitKnockbackGravity = 300000
+GroundBlockstun = 14
+AirHitstunType = 3
+AirHitReaction = 4
+AirHitKnockback = Vector2i(-10000, 80000)
+AirHitKnockbackGravity = 200000
 AirHitKnockbackTime = 8
-AirHitstun = 8
-AirBlockKnockback = Vector2i(0, 0)
-AirBlockKnockbackGravity = 30
+AirHitstun = 120
+AirBlockKnockback = Vector2i(-30000, 60000)
+AirBlockKnockbackGravity = 200000
 AirBlockKnockbackTime = 8
-AirBlockstun = 8
-CanEscape = true
+AirBlockstun = 14
 GroundThrow = false
 AirThrow = false
 ThrowHitStopDuration = 8
 ThrowHitReaction = -1
-AllowSelfPushback = true
-SelfPushbackForce = 0
-SelfPushbackDuration = 0
+AllowSelfPushback = false
+SelfPushbackForce = -30000
+SelfPushbackDuration = 8
 HitConfirmState = -1
 AllowInertia = true
 BounceXTime = 0
-BounceXIntensity = 0
-BounceXState = 0
+BounceXIntensity = 100
+BounceXState = -1
 BounceYTime = 0
-BounceYIntensity = 0
-BounceYState = 0
+BounceYIntensity = 100
+BounceYState = -1
 
 [resource]
-script = ExtResource("2_7xlts")
-PushboxCenter = Vector2i(0, 6000)
-PushboxSize = Vector2i(4000, 12000)
-Hitboxes = [SubResource("Resource_asc0c"), SubResource("Resource_oilei")]
+script = ExtResource("2_nex5t")
+PushboxCenter = Vector2i(0, 3000)
+PushboxSize = Vector2i(4000, 6000)
+Hitboxes = [SubResource("Resource_whmeu"), SubResource("Resource_aqr4w")]

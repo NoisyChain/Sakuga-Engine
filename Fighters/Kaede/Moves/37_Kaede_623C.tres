@@ -1,13 +1,13 @@
-[gd_resource type="Resource" script_class="MoveSettings" load_steps=3 format=3 uid="uid://dnlvmw48b16sg"]
+[gd_resource type="Resource" script_class="MoveSettings" load_steps=3 format=3 uid="uid://d05yefknp8o8a"]
 
-[ext_resource type="Resource" uid="uid://cxbefdoq5df5p" path="res://Fighters/Shared/Inputs/19_Input_236A.tres" id="1_g7fx1"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_ru1rl"]
+[ext_resource type="Resource" uid="uid://ceak3kopd0qqb" path="res://Fighters/Shared/Inputs/24_Input_623C.tres" id="1_34peo"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_j4eds"]
 
 [resource]
-script = ExtResource("2_ru1rl")
-MoveName = "236A"
-MoveState = 62
-Inputs = ExtResource("1_g7fx1")
+script = ExtResource("2_j4eds")
+MoveName = "623C"
+MoveState = 66
+Inputs = ExtResource("1_34peo")
 SideChange = 0
 SuperGaugeRequired = 0
 BuildSuperGauge = 0
@@ -33,5 +33,5 @@ IgnoreSamePriority = false
 InterruptCornerPushback = false
 PriorityBuffer = false
 WaitForNullStates = false
-UseOnGround = true
-UseOnAir = false
+UseOnGround = false
+UseOnAir = true

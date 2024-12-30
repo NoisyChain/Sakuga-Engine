@@ -110,7 +110,7 @@ namespace SakugaEngine.Collision
         public void MoveTo(Vector2I destination)
         {
             if (IsStatic) return;
-            if (!IsMovable) return;
+            //if (!IsMovable) return;
             
             FixedPosition = destination;
             UpdateColliders();

@@ -14,13 +14,13 @@ HitboxIndex = 5
 
 [sub_resource type="Resource" id="Resource_t4vo6"]
 script = ExtResource("1_8n1oa")
-animationStage = 0
+animationStage = 1
 Frame = 10
 HitboxIndex = 22
 
 [sub_resource type="Resource" id="Resource_4f70k"]
 script = ExtResource("1_8n1oa")
-animationStage = 0
+animationStage = 2
 Frame = 15
 HitboxIndex = 0
 
@@ -78,7 +78,6 @@ Duration = 29
 Loop = false
 LoopFrames = Vector2i(0, 0)
 TurnState = -1
-RoundFinishDuration = 0
 HitStunFrameLimit = -1
 stateProperties = Array[Object]([SubResource("Resource_6skxt"), SubResource("Resource_6vuad")])
 statePhysics = Array[Object]([SubResource("Resource_mpd63"), SubResource("Resource_ijji8")])

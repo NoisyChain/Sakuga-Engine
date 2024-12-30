@@ -8,7 +8,7 @@
 script = ExtResource("1_vlvpd")
 animationStage = 0
 Frame = 0
-HitboxIndex = 25
+HitboxIndex = 29
 
 [sub_resource type="Resource" id="Resource_puvqo"]
 script = ExtResource("2_jfctq")
@@ -33,7 +33,6 @@ Duration = 60
 Loop = false
 LoopFrames = Vector2i(0, 0)
 TurnState = -1
-RoundFinishDuration = 0
 HitStunFrameLimit = -1
 stateProperties = null
 statePhysics = Array[Object]([SubResource("Resource_puvqo")])
