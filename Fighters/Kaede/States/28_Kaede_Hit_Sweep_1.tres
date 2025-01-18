@@ -18,7 +18,6 @@ Duration = 16
 Loop = false
 LoopFrames = Vector2i(0, 0)
 TurnState = -1
-RoundFinishDuration = 0
 HitStunFrameLimit = -1
 stateProperties = null
 statePhysics = null

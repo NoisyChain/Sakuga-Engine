@@ -25,7 +25,6 @@ namespace SakugaEngine.Game
         private int Frame = 0;
         private int generatedSeed = 0;
         private int finalSeed = 0;
-        //private uint Checksum;
 
         Vector3I randomTest = new Vector3I();
 
@@ -46,6 +45,10 @@ namespace SakugaEngine.Game
             SeedViewer.Text = finalSeed.ToString();
         }
 
+        /// <summary>
+        /// Generates the base seed to be used for generating the PRNG. The base seed is a non-random 
+        /// number generated with a default string and both characters' names.
+        /// </summary>
         private void GenerateBaseSeed()
         {
             string seedText = Global.baseSeed + Fighters[0].Profile.FighterName + Fighters[1].Profile.FighterName;
@@ -53,6 +56,11 @@ namespace SakugaEngine.Game
             generatedSeed = (int)Platform.GetChecksum(seedArray);
         }
 
+        /// <summary>
+        /// Generate the PRNG seed with a bunch of everchanging values. 
+        /// If the values used are deterministic, the generated seed will be deterministic.
+        /// </summary>
+        /// <returns>a 32-bit seed number</returns>
         private int CalculateSeed()
         {
             int posX = Fighters[0].Body.FixedPosition.X + Fighters[1].Body.FixedPosition.X;
@@ -91,7 +99,7 @@ namespace SakugaEngine.Game
             Fighters[1].SetOpponent(Fighters[0]);
 
             GenerateBaseSeed();
-            Monitor.Initialize(Fighters.Length);
+            Monitor.Initialize(Fighters);
 
             healthHUD.Setup(Fighters);
             metersHUD.Setup(Fighters);
@@ -102,7 +110,7 @@ namespace SakugaEngine.Game
             finalSeed = CalculateSeed();
             Global.UpdateRNG(finalSeed);
             Frame++;
-            Monitor.Tick(Fighters);
+            Monitor.Tick();
 
             randomTest = new Vector3I(
                 Global.RNG.Next(),

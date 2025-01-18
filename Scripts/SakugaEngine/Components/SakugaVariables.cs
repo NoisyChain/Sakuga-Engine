@@ -13,7 +13,6 @@ namespace SakugaEngine
 
         [ExportCategory("Extra Variables")]
         [Export] public ExtraVariable[] ExtraVariables;
-        private InternalExtraVariable[] internalExtraVariables;
 
         public int CurrentHealth;
         public int CurrentSuperGauge;
@@ -25,11 +24,10 @@ namespace SakugaEngine
             CurrentSuperGauge = 0;
             SuperArmor = 0;
 
-            if (ExtraVariables != null && ExtraVariables.Length > 0)
+            if (HasExtraVariables())
             {
-                internalExtraVariables = new InternalExtraVariable[ExtraVariables.Length];
-                for (int v = 0; v < internalExtraVariables.Length; v++)
-                    internalExtraVariables[v].Initialize(ExtraVariables[v]);
+                for (int v = 0; v < ExtraVariables.Length; v++)
+                    ExtraVariables[v].Initialize();
             }
         }
 
@@ -81,17 +79,17 @@ namespace SakugaEngine
         {
             if (!HasExtraVariables()) return;
 
-            for (int v = 0; v < internalExtraVariables.Length; v++)
+            for (int v = 0; v < ExtraVariables.Length; v++)
             {
-                switch (internalExtraVariables[v].CurrentMode)
+                switch (ExtraVariables[v].CurrentMode)
                 {
                     case 0:
                         break;
                     case 1:
-                        internalExtraVariables[v].Add(internalExtraVariables[v].CurrentFactor);
+                        ExtraVariables[v].Add(ExtraVariables[v].CurrentFactor);
                         break;
                     case 2:
-                        internalExtraVariables[v].Subtract(internalExtraVariables[v].CurrentFactor);
+                        ExtraVariables[v].Subtract(ExtraVariables[v].CurrentFactor);
                         break;
                 }
             }
@@ -105,9 +103,9 @@ namespace SakugaEngine
             {
                 if (CompareTo[i].Value < 0) continue;
 
-                if (internalExtraVariables[i].CurrentMode != (byte)CompareTo[i].Mode) return false;
+                if (ExtraVariables[i].CurrentMode != (byte)CompareTo[i].Mode) return false;
 
-                if (!internalExtraVariables[i].CompareValue(CompareTo[i].Value, (byte)CompareTo[i].CompareMode))
+                if (!ExtraVariables[i].CompareValue(CompareTo[i].Value, (byte)CompareTo[i].CompareMode))
                     return false;
             }
             return true;
@@ -124,13 +122,13 @@ namespace SakugaEngine
                 switch ((byte)ToChange[i].ChangeMode)
                 {
                     case 0:
-                        internalExtraVariables[i].Set(ToChange[i].ChangeValue);
+                        ExtraVariables[i].Set(ToChange[i].ChangeValue);
                         break;
                     case 1:
-                        internalExtraVariables[i].Add(ToChange[i].ChangeValue);
+                        ExtraVariables[i].Add(ToChange[i].ChangeValue);
                         break;
                     case 2:
-                        internalExtraVariables[i].Subtract(ToChange[i].ChangeValue);
+                        ExtraVariables[i].Subtract(ToChange[i].ChangeValue);
                         break;
                 }
             }
@@ -140,57 +138,57 @@ namespace SakugaEngine
         {
             if (!HasExtraVariables()) return;
 
-            for (int v = 0; v < internalExtraVariables.Length; v++)
-                internalExtraVariables[v].ChangeOnHit();
+            for (int v = 0; v < ExtraVariables.Length; v++)
+                ExtraVariables[v].ChangeOnHit();
         }
 
         public void ExtraVariablesOnDamage()
         {
             if (!HasExtraVariables()) return;
 
-            for (int v = 0; v < internalExtraVariables.Length; v++)
-                internalExtraVariables[v].ChangeOnDamage();
+            for (int v = 0; v < ExtraVariables.Length; v++)
+                ExtraVariables[v].ChangeOnDamage();
         }
 
         public void ExtraVariablesOnMoveEnter()
         {
             if (!HasExtraVariables()) return;
 
-            for (int v = 0; v < internalExtraVariables.Length; v++)
-                internalExtraVariables[v].ChangeOnMoveEnter();
+            for (int v = 0; v < ExtraVariables.Length; v++)
+                ExtraVariables[v].ChangeOnMoveEnter();
         }
 
         public void ExtraVariablesOnMoveExit()
         {
             if (!HasExtraVariables()) return;
 
-            for (int v = 0; v < internalExtraVariables.Length; v++)
-                internalExtraVariables[v].ChangeOnMoveExit();
+            for (int v = 0; v < ExtraVariables.Length; v++)
+                ExtraVariables[v].ChangeOnMoveExit();
         }
 
         public void ExtraVariablesOnFull()
         {
             if (!HasExtraVariables()) return;
 
-            for (int v = 0; v < internalExtraVariables.Length; v++)
-                internalExtraVariables[v].ChangeOnFull();
+            for (int v = 0; v < ExtraVariables.Length; v++)
+                ExtraVariables[v].ChangeOnFull();
         }
 
         public void ExtraVariablesOnEmpty()
         {
             if (!HasExtraVariables()) return;
 
-            for (int v = 0; v < internalExtraVariables.Length; v++)
-                internalExtraVariables[v].ChangeOnEmpty();
+            for (int v = 0; v < ExtraVariables.Length; v++)
+                ExtraVariables[v].ChangeOnEmpty();
         }
 
-        public bool HasExtraVariables() => internalExtraVariables != null && internalExtraVariables.Length > 0;
+        public bool HasExtraVariables() => ExtraVariables != null && ExtraVariables.Length > 0;
 
         public virtual void Serialize(BinaryWriter bw)
         {
             if (HasExtraVariables())
-                for (int i = 0; i < internalExtraVariables.Length; i ++)
-                    internalExtraVariables[i].Serialize(bw);
+                for (int i = 0; i < ExtraVariables.Length; i ++)
+                    ExtraVariables[i].Serialize(bw);
             
             bw.Write(CurrentHealth);
             bw.Write(CurrentSuperGauge);
@@ -200,8 +198,8 @@ namespace SakugaEngine
         public virtual void Deserialize(BinaryReader br)
         {
             if (HasExtraVariables())
-                for (int i = 0; i < internalExtraVariables.Length; i ++)
-                    internalExtraVariables[i].Deserialize(br);
+                for (int i = 0; i < ExtraVariables.Length; i ++)
+                    ExtraVariables[i].Deserialize(br);
             
             CurrentHealth = br.ReadInt32();
             CurrentSuperGauge = br.ReadInt32();

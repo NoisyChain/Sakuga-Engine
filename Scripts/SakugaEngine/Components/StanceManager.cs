@@ -98,9 +98,9 @@ namespace SakugaEngine
             if (owner.Variables.CurrentHealth > 10 && GetMove(BufferedMove).SpendHealth > 0)
                 owner.Variables.CurrentHealth -= GetMove(BufferedMove).SpendHealth;
 
-            if (GetMove(BufferedMove).SuperFlash > 0 && !owner.SuperStop)
+            if (GetMove(BufferedMove).SuperFlash > 0 && !owner.SuperFlash)
             {
-                owner.GetOpponent().SuperStop = true;
+                owner.GetOpponent().SuperFlash = true;
                 owner.GetOpponent().HitStop.Start((uint)GetMove(BufferedMove).SuperFlash);
             }
 
@@ -123,7 +123,7 @@ namespace SakugaEngine
         {
             if (BufferedMove >= 0)
             {
-                if (!owner.MoveBuffer.IsRunning() && !owner.SuperStop)
+                if (!owner.MoveBuffer.IsRunning() && !owner.SuperFlash)
                 {
                     BufferedMove = -1;
                     GD.Print("Buffer Cleaned!");

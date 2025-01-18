@@ -7,7 +7,7 @@ namespace SakugaEngine.UI
     {
         [Export] private InputHistoryElement[] elements;
 
-        private int ElementsAmmount => elements.Length;
+        private int ElementsAmount => elements.Length;
 
         public void SetHistoryList(InputManager manager)
         {
@@ -15,7 +15,7 @@ namespace SakugaEngine.UI
 
             int el = 0;
 
-            for (int e = ElementsAmmount - 1; e >= 1; e--)
+            for (int e = ElementsAmount - 1; e >= 1; e--)
             {
                 el++;
                 int element = el + manager.CurrentHistory;
@@ -27,7 +27,7 @@ namespace SakugaEngine.UI
 
         public void Clear()
         {
-            for (int i = 0; i < ElementsAmmount; i++)
+            for (int i = 0; i < ElementsAmount; i++)
             {
                 elements[i].Visible = false;
             }

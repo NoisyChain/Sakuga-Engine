@@ -34,7 +34,7 @@ height = 0.5
 radial_segments = 12
 rings = 8
 
-[node name="Dummy_Fighter" type="Node3D" node_paths=PackedStringArray("HitStun", "HitStop", "MoveBuffer", "PushForce", "HorizontalBounce", "VerticalBounce", "Body", "Inputs", "Variables", "Animator", "Stance", "Tracker", "Graphics")]
+[node name="Dummy_Fighter" type="Node3D" node_paths=PackedStringArray("HitStun", "HitStop", "MoveBuffer", "PushForce", "HorizontalBounce", "VerticalBounce", "Body", "Inputs", "Variables", "Animator", "Stance", "Tracker", "Sounds", "Graphics")]
 script = ExtResource("1_pv6li")
 HitStun = NodePath("Timers/HitStun")
 HitStop = NodePath("Timers/HitStop")
@@ -49,6 +49,7 @@ Variables = NodePath("Variables")
 Animator = NodePath("Graphics/Mesh")
 Stance = NodePath("Stances")
 Tracker = NodePath("CombatTracker")
+Sounds = []
 Graphics = [NodePath("Graphics/Mesh/Pivot")]
 
 [node name="Graphics" type="Node3D" parent="."]
@@ -85,8 +86,9 @@ HitboxPresets = Array[Object]([ExtResource("13_41tll")])
 [node name="InputManager" type="Node" parent="."]
 script = ExtResource("2_ujbvg")
 
-[node name="Variables" type="Node" parent="."]
+[node name="Variables" type="Node" parent="." node_paths=PackedStringArray("ExtraVariables")]
 script = ExtResource("7_08r4i")
+ExtraVariables = []
 
 [node name="Stances" type="Node" parent="."]
 script = ExtResource("15_h2acr")

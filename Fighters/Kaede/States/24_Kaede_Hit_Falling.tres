@@ -41,7 +41,6 @@ Duration = 21
 Loop = true
 LoopFrames = Vector2i(15, 20)
 TurnState = -1
-RoundFinishDuration = 0
 HitStunFrameLimit = -1
 stateProperties = null
 statePhysics = Array[Object]([SubResource("Resource_o5aap")])

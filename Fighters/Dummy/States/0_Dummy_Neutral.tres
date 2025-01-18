@@ -12,14 +12,15 @@ HitboxIndex = 0
 
 [sub_resource type="Resource" id="Resource_aim2h"]
 script = ExtResource("2_f8y4x")
-frame = 0
+Frame = 0
 UseLateralSpeed = true
 LateralSpeed = 0
 UseVerticalSpeed = true
 VerticalSpeed = 0
 UseGravity = false
 Gravity = 0
-UseInertia = false
+UseLateralInertia = false
+UseVerticalInertia = false
 UseHorizontalInput = false
 UseVerticalInput = false
 
@@ -32,12 +33,10 @@ Duration = 60
 Loop = true
 LoopFrames = Vector2i(0, 0)
 TurnState = 0
-RoundFinishDuration = 0
 HitStunFrameLimit = -1
 stateProperties = null
 statePhysics = Array[Object]([SubResource("Resource_aim2h")])
 hitboxStates = Array[Object]([SubResource("Resource_rpu4i")])
 animationEvents = null
 throwPivot = null
-soundEvents = null
 stateTransitions = null

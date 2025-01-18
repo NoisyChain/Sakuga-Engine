@@ -78,7 +78,6 @@ Duration = 22
 Loop = false
 LoopFrames = Vector2i(0, 0)
 TurnState = -1
-RoundFinishDuration = 0
 HitStunFrameLimit = -1
 stateProperties = Array[Object]([SubResource("Resource_lil5x"), SubResource("Resource_bg7sg")])
 statePhysics = [SubResource("1"), SubResource("7")]

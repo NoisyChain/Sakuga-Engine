@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://domhsm5n4i2q1"]
+[gd_scene load_steps=29 format=3 uid="uid://domhsm5n4i2q1"]
 
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/SakugaSpawnable.cs" id="1_dhydb"]
 [ext_resource type="Resource" uid="uid://b6a4cqdykhhg" path="res://Fighters/Shared/Shared_VFXList.tres" id="2_mmp44"]
@@ -23,12 +23,6 @@
 [ext_resource type="Resource" uid="uid://dyam6gxn4slhs" path="res://Fighters/Kaede/Spawnables/0/Hitboxes/0_Hitbox_Spawnable_Basic.tres" id="230_by1ut"]
 [ext_resource type="PackedScene" uid="uid://dduf0jsq56ggk" path="res://Scenes/HitboxViewer.tscn" id="281_wh8kr"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Collision/PhysicsBody.cs" id="282_or0ge"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/InputManager.cs" id="296_873i7"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/FighterVariables.cs" id="297_3o8vi"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/ExtraVariable.cs" id="298_egolq"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/StanceManager.cs" id="299_yy046"]
-[ext_resource type="Resource" uid="uid://bpi3dgk313noc" path="res://Fighters/Kaede/Stances/Kaede_Stance_Main.tres" id="300_c46cp"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/CombatTracker.cs" id="301_a6k57"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/FrameTimer.cs" id="302_0eu8l"]
 
 [sub_resource type="Animation" id="Animation_b1ng2"]
@@ -125,24 +119,6 @@ _data = {
 "Travel": SubResource("Animation_4g5j5")
 }
 
-[sub_resource type="Resource" id="Resource_iawsj"]
-script = ExtResource("298_egolq")
-Name = "Air Jump Limit"
-MaxValue = 1
-StartingValue = 0
-
-[sub_resource type="Resource" id="Resource_c3vhj"]
-script = ExtResource("298_egolq")
-Name = "Air Dash Limit"
-MaxValue = 1
-StartingValue = 0
-
-[sub_resource type="Resource" id="Resource_3vvfr"]
-script = ExtResource("298_egolq")
-Name = "Dash Jumping"
-MaxValue = 1
-StartingValue = 0
-
 [node name="Kaede_Spawnable" type="Node3D" node_paths=PackedStringArray("LifeTime", "Body", "Animator", "Sounds", "Graphics")]
 script = ExtResource("1_dhydb")
 LifeTime = NodePath("Timers/LifeTime")
@@ -200,20 +176,6 @@ FixedDeceleration = 40000
 FixedFriction = 75000
 HitboxesLimit = 3
 HitboxPresets = Array[Object]([ExtResource("230_by1ut")])
-
-[node name="InputManager" type="Node" parent="."]
-script = ExtResource("296_873i7")
-
-[node name="Variables" type="Node" parent="."]
-script = ExtResource("297_3o8vi")
-ExtraVariables = Array[Object]([SubResource("Resource_iawsj"), SubResource("Resource_c3vhj"), SubResource("Resource_3vvfr")])
-
-[node name="Stances" type="Node" parent="."]
-script = ExtResource("299_yy046")
-Stances = Array[Object]([ExtResource("300_c46cp")])
-
-[node name="CombatTracker" type="Node" parent="."]
-script = ExtResource("301_a6k57")
 
 [node name="Timers" type="Node" parent="."]
 

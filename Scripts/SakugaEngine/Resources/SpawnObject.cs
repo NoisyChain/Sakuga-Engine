@@ -6,6 +6,6 @@ namespace SakugaEngine.Resources
     public partial class SpawnObject : Resource
     {
         [Export] public PackedScene SpawnScene;
-        [Export] public int Ammount;
+        [Export] public int Amount;
     }
 }

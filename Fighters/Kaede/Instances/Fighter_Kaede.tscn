@@ -1,4 +1,4 @@
-[gd_scene load_steps=462 format=3 uid="uid://b1ggpw8ltpaid"]
+[gd_scene load_steps=459 format=3 uid="uid://b1ggpw8ltpaid"]
 
 [ext_resource type="Texture2D" uid="uid://bx0l7712opy5a" path="res://Fighters/Kaede/Sprites/0-12.png" id="1"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/SakugaFighter.cs" id="1_7dx2y"]
@@ -332,7 +332,7 @@
 [ext_resource type="Texture2D" uid="uid://bywklmgtyvltl" path="res://Fighters/Kaede/Sprites/800-0.png" id="291_fjuot"]
 [ext_resource type="Texture2D" uid="uid://bg2hmae3fi18u" path="res://Fighters/Kaede/Sprites/800-1.png" id="292_7j8nm"]
 [ext_resource type="Texture2D" uid="uid://clj3rlkwps41r" path="res://Fighters/Kaede/Sprites/800-2.png" id="293_ftt01"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/ExtraVariable.cs" id="294_608rl"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/ExtraVariable.cs" id="294_608rl"]
 [ext_resource type="Resource" uid="uid://cb88clwitcqb5" path="res://Fighters/Kaede/Hitboxes/11_Hitbox_2B_Active.tres" id="294_c38k2"]
 [ext_resource type="Texture2D" uid="uid://0mjwsxjoim0t" path="res://Fighters/Kaede/Sprites/800-3.png" id="294_nq2ts"]
 [ext_resource type="Texture2D" uid="uid://ch8hfeum2iy5b" path="res://Fighters/Kaede/Sprites/800-4.png" id="295_0uqno"]
@@ -2228,24 +2228,6 @@ _data = {
 "j_5C": SubResource("47")
 }
 
-[sub_resource type="Resource" id="Resource_iawsj"]
-script = ExtResource("294_608rl")
-Name = "Air Jump Limit"
-MaxValue = 1
-StartingValue = 0
-
-[sub_resource type="Resource" id="Resource_c3vhj"]
-script = ExtResource("294_608rl")
-Name = "Air Dash Limit"
-MaxValue = 1
-StartingValue = 0
-
-[sub_resource type="Resource" id="Resource_3vvfr"]
-script = ExtResource("294_608rl")
-Name = "Dash Jumping"
-MaxValue = 1
-StartingValue = 0
-
 [node name="Kaede_Viewer" type="Node3D" node_paths=PackedStringArray("HitStun", "HitStop", "MoveBuffer", "PushForce", "HorizontalBounce", "VerticalBounce", "Body", "Inputs", "Variables", "Animator", "Stance", "Tracker", "Sounds", "Graphics")]
 script = ExtResource("1_7dx2y")
 HitStun = NodePath("Timers/HitStun")
@@ -2323,16 +2305,28 @@ HitboxPresets = Array[Object]([ExtResource("282_e3wna"), ExtResource("283_0cwlf"
 [node name="InputManager" type="Node" parent="."]
 script = ExtResource("227_ppa6i")
 
-[node name="Variables" type="Node" parent="."]
-script = ExtResource("228_8hrt3")
-ExtraVariables = Array[Object]([SubResource("Resource_iawsj"), SubResource("Resource_c3vhj"), SubResource("Resource_3vvfr")])
-
 [node name="Stances" type="Node" parent="."]
 script = ExtResource("229_0b4ui")
 Stances = Array[Object]([ExtResource("285_xbwpm")])
 
 [node name="CombatTracker" type="Node" parent="."]
 script = ExtResource("231_bxldr")
+
+[node name="Variables" type="Node" parent="." node_paths=PackedStringArray("ExtraVariables")]
+script = ExtResource("228_8hrt3")
+ExtraVariables = [NodePath("AirJumpLimit"), NodePath("AirDashLimit"), NodePath("IsDashJump")]
+
+[node name="AirJumpLimit" type="Node" parent="Variables"]
+script = ExtResource("294_608rl")
+MaxValue = 1
+
+[node name="AirDashLimit" type="Node" parent="Variables"]
+script = ExtResource("294_608rl")
+MaxValue = 1
+
+[node name="IsDashJump" type="Node" parent="Variables"]
+script = ExtResource("294_608rl")
+MaxValue = 1
 
 [node name="Timers" type="Node" parent="."]
 

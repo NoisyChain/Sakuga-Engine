@@ -1,6 +1,6 @@
 ﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sakuga Engine", "Sakuga Engine.csproj", "{28D9980D-3B6A-4968-847C-FED214020F95}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sakuga Engine", "Sakuga Engine.csproj", "{33934061-02BB-4FBE-A62B-37E37F57A2D0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,11 +9,11 @@ Global
 	ExportRelease|Any CPU = ExportRelease|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{28D9980D-3B6A-4968-847C-FED214020F95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{28D9980D-3B6A-4968-847C-FED214020F95}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{28D9980D-3B6A-4968-847C-FED214020F95}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
-		{28D9980D-3B6A-4968-847C-FED214020F95}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
-		{28D9980D-3B6A-4968-847C-FED214020F95}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
-		{28D9980D-3B6A-4968-847C-FED214020F95}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+		{33934061-02BB-4FBE-A62B-37E37F57A2D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33934061-02BB-4FBE-A62B-37E37F57A2D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33934061-02BB-4FBE-A62B-37E37F57A2D0}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
+		{33934061-02BB-4FBE-A62B-37E37F57A2D0}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
+		{33934061-02BB-4FBE-A62B-37E37F57A2D0}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
+		{33934061-02BB-4FBE-A62B-37E37F57A2D0}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
 	EndGlobalSection
 EndGlobal

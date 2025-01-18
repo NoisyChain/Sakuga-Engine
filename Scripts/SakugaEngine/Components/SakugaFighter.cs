@@ -23,9 +23,10 @@ namespace SakugaEngine
         [ExportCategory("Extras")]
         [Export] public FighterProfile Profile;
 
-        public bool SuperStop;
         public int LayerSorting = -1;
 
+        public bool SuperFlash;
+        public bool CinematicState;
         private bool PushAllowInertia;
         private bool IsBeingPushed = false;
         private bool BlockStun;
@@ -62,7 +63,7 @@ namespace SakugaEngine
             Spawnables = new SakugaSpawnable[SpawnablesList.SpawnObjects.Length][];
             for (int i = 0; i < Spawnables.Length; ++i)
             {
-                Spawnables[i] = new SakugaSpawnable[SpawnablesList.SpawnObjects[i].Ammount];
+                Spawnables[i] = new SakugaSpawnable[SpawnablesList.SpawnObjects[i].Amount];
                 for (int j = 0; j < Spawnables[i].Length; ++j)
                 {
                     Node temp = SpawnablesList.SpawnObjects[i].SpawnScene.Instantiate();
@@ -79,7 +80,7 @@ namespace SakugaEngine
             VFX = new SakugaVFX[VFXList.SpawnObjects.Length][];
             for (int i = 0; i < VFX.Length; ++i)
             {
-                VFX[i] = new SakugaVFX[VFXList.SpawnObjects[i].Ammount];
+                VFX[i] = new SakugaVFX[VFXList.SpawnObjects[i].Amount];
                 for (int j = 0; j < VFX[i].Length; ++j)
                 {
                     Node temp = VFXList.SpawnObjects[i].SpawnScene.Instantiate();
@@ -164,7 +165,7 @@ namespace SakugaEngine
 
             if (!HitStop.IsRunning())
             {
-                if (SuperStop) SuperStop = false;
+                if (SuperFlash) SuperFlash = false;
                 if (HitstunType != (int)Global.HitstunType.HARD_KNOCKDOWN)
                     HitStun.Run();
                 PushForce.Run();
@@ -868,7 +869,8 @@ namespace SakugaEngine
             VerticalBounce.Serialize(bw);
             //Variables
             bw.Write(EventExecuted);
-            bw.Write(SuperStop);
+            bw.Write(SuperFlash);
+            bw.Write(CinematicState);
             bw.Write(IsBeingPushed);
             bw.Write(PushAllowInertia);
             bw.Write(BlockStun);
@@ -909,7 +911,8 @@ namespace SakugaEngine
             VerticalBounce.Deserialize(br);
             //Variables
             EventExecuted = br.ReadBoolean();
-            SuperStop = br.ReadBoolean();
+            SuperFlash = br.ReadBoolean();
+            CinematicState = br.ReadBoolean();
             IsBeingPushed = br.ReadBoolean();
             PushAllowInertia = br.ReadBoolean();
             BlockStun = br.ReadBoolean();

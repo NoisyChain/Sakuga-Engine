@@ -33,7 +33,6 @@ Duration = 32
 Loop = true
 LoopFrames = Vector2i(0, 31)
 TurnState = -1
-RoundFinishDuration = 0
 HitStunFrameLimit = -1
 stateProperties = null
 statePhysics = [SubResource("1")]

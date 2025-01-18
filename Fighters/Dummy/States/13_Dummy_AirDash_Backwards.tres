@@ -6,40 +6,43 @@
 
 [sub_resource type="Resource" id="Resource_aim2h"]
 script = ExtResource("2_rjcdr")
-frame = 0
+Frame = 0
 UseLateralSpeed = true
 LateralSpeed = 0
 UseVerticalSpeed = true
 VerticalSpeed = 0
 UseGravity = true
 Gravity = 0
-UseInertia = false
+UseLateralInertia = false
+UseVerticalInertia = false
 UseHorizontalInput = false
 UseVerticalInput = false
 
 [sub_resource type="Resource" id="Resource_mlmck"]
 script = ExtResource("2_rjcdr")
-frame = 5
+Frame = 0
 UseLateralSpeed = true
 LateralSpeed = -40000
 UseVerticalSpeed = true
 VerticalSpeed = 0
 UseGravity = true
 Gravity = 0
-UseInertia = false
+UseLateralInertia = false
+UseVerticalInertia = false
 UseHorizontalInput = false
 UseVerticalInput = false
 
 [sub_resource type="Resource" id="Resource_e8kqm"]
 script = ExtResource("2_rjcdr")
-frame = 17
+Frame = 0
 UseLateralSpeed = true
 LateralSpeed = 0
 UseVerticalSpeed = true
 VerticalSpeed = 0
 UseGravity = false
 Gravity = 0
-UseInertia = false
+UseLateralInertia = false
+UseVerticalInertia = false
 UseHorizontalInput = false
 UseVerticalInput = false
 
@@ -48,6 +51,7 @@ script = ExtResource("3_jjnih")
 StateIndex = 6
 Condition = 0
 AtFrame = -1
+DistanceArea = Vector2i(0, 999999)
 
 [resource]
 script = ExtResource("1_7cbcb")
@@ -58,12 +62,10 @@ Duration = 18
 Loop = false
 LoopFrames = Vector2i(0, 0)
 TurnState = 0
-RoundFinishDuration = 0
 HitStunFrameLimit = -1
 stateProperties = null
 statePhysics = Array[Object]([SubResource("Resource_aim2h"), SubResource("Resource_mlmck"), SubResource("Resource_e8kqm")])
 hitboxStates = null
 animationEvents = null
 throwPivot = null
-soundEvents = null
 stateTransitions = Array[Object]([SubResource("Resource_gult3")])

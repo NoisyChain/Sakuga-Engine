@@ -10,22 +10,22 @@
 [sub_resource type="Resource" id="Resource_2floy"]
 script = ExtResource("2_0kwyy")
 SpawnScene = ExtResource("1_2q3kk")
-Ammount = 1
+Amount = 1
 
 [sub_resource type="Resource" id="Resource_6t0f1"]
 script = ExtResource("2_0kwyy")
 SpawnScene = ExtResource("3_6o1bp")
-Ammount = 1
+Amount = 1
 
 [sub_resource type="Resource" id="Resource_widxw"]
 script = ExtResource("2_0kwyy")
 SpawnScene = ExtResource("4_lhgkm")
-Ammount = 1
+Amount = 1
 
 [sub_resource type="Resource" id="Resource_55vjd"]
 script = ExtResource("2_0kwyy")
 SpawnScene = ExtResource("5_axc1q")
-Ammount = 1
+Amount = 1
 
 [resource]
 script = ExtResource("1_r1fnx")

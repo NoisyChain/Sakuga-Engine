@@ -26,7 +26,6 @@ Duration = 12
 Loop = true
 LoopFrames = Vector2i(0, 11)
 TurnState = -1
-RoundFinishDuration = 0
 HitStunFrameLimit = -1
 stateProperties = null
 statePhysics = Array[Object]([SubResource("Resource_goxqg")])

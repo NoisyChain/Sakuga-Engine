@@ -6,14 +6,15 @@
 
 [sub_resource type="Resource" id="Resource_o3lnn"]
 script = ExtResource("2_is36p")
-frame = 0
+Frame = 0
 UseLateralSpeed = false
 LateralSpeed = 0
 UseVerticalSpeed = false
 VerticalSpeed = 0
 UseGravity = true
 Gravity = 400000
-UseInertia = false
+UseLateralInertia = false
+UseVerticalInertia = false
 UseHorizontalInput = false
 UseVerticalInput = false
 
@@ -22,6 +23,7 @@ script = ExtResource("3_pcgjr")
 StateIndex = 0
 Condition = 2
 AtFrame = -1
+DistanceArea = Vector2i(0, 999999)
 
 [resource]
 script = ExtResource("1_gw68j")
@@ -32,12 +34,10 @@ Duration = 20
 Loop = false
 LoopFrames = Vector2i(0, 0)
 TurnState = 0
-RoundFinishDuration = 0
 HitStunFrameLimit = -1
 stateProperties = null
 statePhysics = Array[Object]([SubResource("Resource_o3lnn")])
 hitboxStates = null
 animationEvents = null
 throwPivot = null
-soundEvents = null
 stateTransitions = Array[Object]([SubResource("Resource_jnbfh")])

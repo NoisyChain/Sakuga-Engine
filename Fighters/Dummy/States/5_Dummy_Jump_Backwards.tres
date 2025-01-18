@@ -6,40 +6,43 @@
 
 [sub_resource type="Resource" id="Resource_aim2h"]
 script = ExtResource("2_46pii")
-frame = 0
+Frame = 0
 UseLateralSpeed = true
 LateralSpeed = 0
 UseVerticalSpeed = true
 VerticalSpeed = 0
 UseGravity = true
 Gravity = 0
-UseInertia = false
+UseLateralInertia = false
+UseVerticalInertia = false
 UseHorizontalInput = false
 UseVerticalInput = false
 
 [sub_resource type="Resource" id="Resource_nbfu2"]
 script = ExtResource("2_46pii")
-frame = 5
+Frame = 0
 UseLateralSpeed = true
 LateralSpeed = -17000
 UseVerticalSpeed = true
 VerticalSpeed = 65000
 UseGravity = true
 Gravity = 0
-UseInertia = false
+UseLateralInertia = false
+UseVerticalInertia = false
 UseHorizontalInput = false
 UseVerticalInput = false
 
 [sub_resource type="Resource" id="Resource_8eh53"]
 script = ExtResource("2_46pii")
-frame = 6
+Frame = 0
 UseLateralSpeed = false
 LateralSpeed = 0
 UseVerticalSpeed = false
 VerticalSpeed = 0
 UseGravity = true
 Gravity = 400000
-UseInertia = false
+UseLateralInertia = false
+UseVerticalInertia = false
 UseHorizontalInput = false
 UseVerticalInput = false
 
@@ -48,6 +51,7 @@ script = ExtResource("3_5oqrn")
 StateIndex = 6
 Condition = 0
 AtFrame = -1
+DistanceArea = Vector2i(0, 999999)
 
 [resource]
 script = ExtResource("1_a7nuk")
@@ -58,12 +62,10 @@ Duration = 20
 Loop = false
 LoopFrames = Vector2i(0, 0)
 TurnState = 0
-RoundFinishDuration = 0
 HitStunFrameLimit = -1
 stateProperties = null
 statePhysics = Array[Object]([SubResource("Resource_aim2h"), SubResource("Resource_nbfu2"), SubResource("Resource_8eh53")])
 hitboxStates = null
 animationEvents = null
 throwPivot = null
-soundEvents = null
 stateTransitions = Array[Object]([SubResource("Resource_gult3")])
