@@ -5,5 +5,20 @@ My previous attempt (AFF) was functional, but I made a lot of dumb decisions whi
 ### And port it to Godot 4!
 Godot 3 lacks a lot of features and has a lot of problems that Godot 4 solves, with some quality of life improvements that I really miss in the older version.
 I was planning to migrate since a while, so let's see how it goes.
-## Features?
-When I got something to show I'm gonna update this
+## Features
+### Included
+- 2D 1v1 anime-style fighting game
+- Rollback netcode out of the box
+- Supports 3D sprites and 3D models
+- Robust state system
+- Stances
+- Projectiles
+- Pseudorandom number generator
+- An example character
+### For the future
+- Game modes
+- AI
+- Puppets
+- Cinematics
+- Default Steamworks support
+- An original character
