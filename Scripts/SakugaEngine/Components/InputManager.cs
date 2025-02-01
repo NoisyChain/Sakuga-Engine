@@ -116,12 +116,28 @@ namespace SakugaEngine
                     up = WasBeingPressed(index, Global.INPUT_UP);
                     down = WasBeingPressed(index, Global.INPUT_DOWN);
                     break;
+                case 4:
+                    left = !IsBeingPressed(index, _left);
+                    right = !IsBeingPressed(index, _right);
+                    up = !IsBeingPressed(index, Global.INPUT_UP);
+                    down = !IsBeingPressed(index, Global.INPUT_DOWN);
+                    break;
             }
             
             bool absV = absDirection ? !up && !down : true;
             bool absH = absDirection ? !left && !right : true;
 
-            return (buttonNumber == 2 && down && !up && absH) ||
+            if (buttonMode == 4) return (buttonNumber == 2 && down) ||
+                (buttonNumber == 4 && left) ||
+                (buttonNumber == 6 && right) ||
+                (buttonNumber == 8 && up) ||
+                (buttonNumber == 1 && down && left) ||
+                (buttonNumber == 3 && down && right) ||
+                (buttonNumber == 7 && up && left) ||
+                (buttonNumber == 9 && up && right) ||
+                (buttonNumber == 5 && down && up && left && right);
+
+            else return (buttonNumber == 2 && down && !up && absH) ||
                 (buttonNumber == 4 && absV && left && !right) ||
                 (buttonNumber == 6 && absV && !left && right) ||
                 (buttonNumber == 8 && !down && up && absH) ||
@@ -165,8 +181,15 @@ namespace SakugaEngine
                     action_b3 = WasBeingPressed(index, Global.INPUT_FACE_C);
                     action_b4 = WasBeingPressed(index, Global.INPUT_FACE_D);
                     break;
+                case 4:
+                    action_b1 = !IsBeingPressed(index, Global.INPUT_FACE_A);
+                    action_b2 = !IsBeingPressed(index, Global.INPUT_FACE_B);
+                    action_b3 = !IsBeingPressed(index, Global.INPUT_FACE_C);
+                    action_b4 = !IsBeingPressed(index, Global.INPUT_FACE_D);
+                    break;
             }
 
+            
             return (buttonNumber == 0 && !action_b1 && !action_b2 && !action_b3 && !action_b4) ||
                 (buttonNumber == 1 && action_b1) ||
                 (buttonNumber == 2 && action_b2) ||
@@ -256,15 +279,7 @@ namespace SakugaEngine
                 (InputHistory[previousInput % Global.InputHistorySize].rawInput & input) != 0 &&
                 InputHistory[index].duration == 1;
         }
-        public bool AnyButtonIsBeingPressed(int index)
-        {
-            bool A = IsBeingPressed(index, Global.INPUT_FACE_A);
-            bool B = IsBeingPressed(index, Global.INPUT_FACE_B);
-            bool C = IsBeingPressed(index, Global.INPUT_FACE_C);
-            bool D = IsBeingPressed(index, Global.INPUT_FACE_D);
 
-            return A || B || C || D;
-        }
         public bool IsDifferentInputs(int index)
         {
             int previousInput = index - 1;
@@ -336,7 +351,7 @@ namespace SakugaEngine
                 if (InputHistory[CurrentHistory].vCharge != 0) InputHistory[CurrentHistory].vCharge = 0;
             }
 
-            if (AnyButtonIsBeingPressed(CurrentHistory))
+            if (IsBeingPressed(CurrentHistory, Global.INPUT_ANY_BUTTON))
             {
                 if (InputHistory[CurrentHistory].bCharge > 0 && FaceButtonsChanged(CurrentHistory))
                     InputHistory[CurrentHistory].bCharge = 0;

@@ -86,7 +86,7 @@ namespace SakugaEngine.UI
                     reference.Tracker.CurrentCombo + "\n" +
                     reference.Tracker.HighestCombo + "\n" +
                     hitTypeText + "\n" +
-                    vars.CurrentDamageScaling + "\n" +
+                    vars.CurrentDamageScaling + "%\n" +
                     owner.Tracker.FrameData + frameAdvText;
         }
     }

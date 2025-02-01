@@ -47,7 +47,7 @@ namespace SakugaEngine
 
         //Global enumerators
         public enum AnimationStage { STARTUP, ACTIVE, RECOVERY }
-        public enum ButtonMode { PRESS, HOLD, RELEASE, UNPRESSED }
+        public enum ButtonMode { PRESS, HOLD, RELEASE, WAS_PRESSED, NOT_PRESSED }
         public enum MoveEndCondition { STATE_END, RELEASE_BUTTON, STATE_TYPE_CHANGE }
         public enum SideChangeMode { NONE, CHANGE_SIDE, INTERRUPT }
         public enum StateType { NULL, MOVEMENT, COMBAT, BLOCKING, HIT_REACTION, LOCKED }
