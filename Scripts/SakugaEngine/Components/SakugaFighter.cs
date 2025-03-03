@@ -60,6 +60,8 @@ namespace SakugaEngine
 
         public void SpawnablesSetup(Node Parent, PhysicsWorld world)
         {
+            if (SpawnablesList == null) { Spawnables = new SakugaSpawnable[0][]; return; }
+
             Spawnables = new SakugaSpawnable[SpawnablesList.SpawnObjects.Length][];
             for (int i = 0; i < Spawnables.Length; ++i)
             {
@@ -77,6 +79,8 @@ namespace SakugaEngine
 
         public void VFXSetup(Node Parent)
         {
+            if (VFXList == null)  { VFX = new SakugaVFX[0][]; return; }
+
             VFX = new SakugaVFX[VFXList.SpawnObjects.Length][];
             for (int i = 0; i < VFX.Length; ++i)
             {
@@ -176,9 +180,16 @@ namespace SakugaEngine
                     Animator.RunState();
             }
 
+            SpawnablesPreTick();
+        }
+
+        private void SpawnablesPreTick()
+        {
+            if (Spawnables.Length == 0 || Spawnables == null) return;
+
             for (int i = 0; i < Spawnables.Length; ++i)
                 for (int j = 0; j < Spawnables[i].Length; ++j)
-                    Spawnables[i][j].PreTick();
+                    if (Spawnables[i][j] != null) Spawnables[i][j].PreTick();
         }
 
         public override void Tick()
@@ -197,9 +208,16 @@ namespace SakugaEngine
             
             Stance.CheckMoves();
 
+            SpawnablesTick();
+        }
+
+        private void SpawnablesTick()
+        {
+            if (Spawnables.Length == 0 || Spawnables == null) return;
+
             for (int i = 0; i < Spawnables.Length; ++i)
                 for (int j = 0; j < Spawnables[i].Length; ++j)
-                    Spawnables[i][j].Tick();
+                    if (Spawnables[i][j] != null) Spawnables[i][j].Tick();
         }
 
         public override void LateTick()
@@ -216,13 +234,26 @@ namespace SakugaEngine
             UpdateHitboxes();
             ResetDamageStatus();
 
+            SpawnablesLateTick();
+            VFXTick();
+        }
+
+        private void SpawnablesLateTick()
+        {
+            if (Spawnables.Length == 0 || Spawnables == null) return;
+
             for (int i = 0; i < Spawnables.Length; ++i)
                 for (int j = 0; j < Spawnables[i].Length; ++j)
-                    Spawnables[i][j].LateTick();
+                    if (Spawnables[i][j] != null) Spawnables[i][j].LateTick();
+        }
+
+        private void VFXTick()
+        {
+            if (VFX.Length == 0 || VFX == null) return;
 
             for (int i = 0; i < VFX.Length; ++i)
                 for (int j = 0; j < VFX[i].Length; ++j)
-                    VFX[i][j].Tick();
+                    if (VFX[i][j] != null) VFX[i][j].Tick();
         }
 
         private void ResetDamageStatus()
