@@ -5,8 +5,9 @@ namespace PleaseResync
     {
         void Setup();
         void GameLoop(byte[] playerInput);
-        void Serialize(BinaryWriter bw);
-        void Deserialize(BinaryReader br);
+        void SaveState(BinaryWriter bw);
+        void LoadState(BinaryReader br);
+        void Render();
         byte[] GetLocalInput(int PlayerID, int InputSize);
     }
 }

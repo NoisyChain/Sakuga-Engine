@@ -54,7 +54,7 @@ offset_right = -512.0
 offset_bottom = 128.0
 texture = ExtResource("2_h5vba")
 expand_mode = 1
-stretch_mode = 1
+stretch_mode = 4
 
 [node name="P2Portrait" type="TextureRect" parent="GameHUD_Background/HealthBars"]
 layout_mode = 0
@@ -64,8 +64,7 @@ offset_left = 512.0
 offset_right = 640.0
 offset_bottom = 128.0
 texture = ExtResource("2_h5vba")
-expand_mode = 1
-stretch_mode = 1
+stretch_mode = 4
 
 [node name="P1LostHealth" type="TextureProgressBar" parent="GameHUD_Background/HealthBars"]
 layout_mode = 1

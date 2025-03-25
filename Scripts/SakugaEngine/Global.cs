@@ -117,6 +117,8 @@ namespace SakugaEngine
             ON_DISTANCE = 1 << 7,
         }
 
+        public static bool ShowHitboxes;
+
         //Random Number Generator
         public static Random RNG;
         public static string baseSeed = "Sakuga Engine"; //You can change this if you want

@@ -323,6 +323,7 @@ namespace PleaseResync
         public int FramesAhead() => _timeSync.LocalFrameAdvantage;
         public int RemoteFramesAhead() => _timeSync.RemoteFrameAdvantage;
         public int FrameDifference() => _timeSync.FrameAdvantageDifference;
+        public float AverageFrameAdvantage() => _offlinePlay ? (1 / 60f) : _timeSync.GetAverageFrameAdvantage();
         public uint RollbackFrames() => (uint) Mathf.Max(0, _timeSync.LocalFrame - (_timeSync.SyncFrame + 1));
         public SyncState State() => _syncState;
     }

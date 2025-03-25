@@ -43,6 +43,9 @@ namespace PleaseResync
 
         private Thread GameThread;
 
+        private bool canRender;
+        private System.Threading.Mutex mutex = new System.Threading.Mutex();
+
         private string ShowPingInfo(uint id)
         {
             return session.AllDevices[id].GetRTT().ToString();
@@ -64,19 +67,10 @@ namespace PleaseResync
         {
             if (!Started) return;
 
-            if (!session.IsOffline())
-            {
-                session.Poll();
-                if (!session.IsRunning()) return;
-            }
-
-            GameLoop();
-
-            if (!session.IsOffline())
-            {
-                RollbackText = "RBF: " + session.RollbackFrames();
-                PingText = "Ping: " + ShowPingInfo(PingId) + " ms";
-            }
+            //if (canRender) sessionState.Render();
+            mutex.WaitOne();
+            sessionState.Render();
+            mutex.ReleaseMutex();
 
             if (SimulationInfo != null) SimulationInfo.Text = NotificationText();
             if (RollbackInfo != null) RollbackInfo.Text = RollbackText;
@@ -126,6 +120,8 @@ namespace PleaseResync
             
             Replay = false;
             Started = true;
+
+            StartGameThread();
         }
 
         protected void StartSpectatorMode(IGameState state, uint playerCount, uint ID)
@@ -157,6 +153,8 @@ namespace PleaseResync
             
             Replay = false;
             Started = true;
+
+            StartGameThread();
         }
 
         protected void StartOfflineGame(IGameState state, uint playerCount)
@@ -173,6 +171,8 @@ namespace PleaseResync
 
             Replay = false;
             Started = true;
+
+            StartGameThread();
         }
 
         protected void StartReplay(IGameState state, uint playerCount)
@@ -189,57 +189,77 @@ namespace PleaseResync
 
             Replay = true;
             Started = true;
+
+            StartGameThread();
         }
 
         private void GameLoop()
         {
-            if (Replay)
-                LastInput = ReadInputs(session.Frame());
-            else
-                for (int i = 0; i < LastInput.Length / InputSize; i++)
-                {
-                    byte[] inputs = SyncTest ? GetRandomInput() : sessionState.GetLocalInput(i, (int)InputSize);
-                    Array.Copy(inputs, 0, LastInput, i * InputSize, inputs.Length);
-                }
-
-            sessionActions = session.AdvanceFrame(LastInput);
-            
-            foreach (var action in sessionActions)
+            while (true)
             {
-                switch (action)
+                mutex.WaitOne();
+                //canRender = false;
+                if (!session.IsOffline()) session.Poll();
+
+                if (session.IsRunning())
                 {
-                    case SessionAdvanceFrameAction AFAction:
-                        InputDebug = InputConstructor(AFAction.Inputs);
-                        sessionState.GameLoop(AFAction.Inputs);
-                        if (!Replay) RecordInput(AFAction.Frame, AFAction.Inputs);
-                        break;
-                    case SessionLoadGameAction LGAction:
-                        MemoryStream readerStream = new MemoryStream(LGAction.Load());
-                        BinaryReader reader = new BinaryReader(readerStream);
-                        sessionState.Deserialize(reader);
-                        break;
-                    case SessionSaveGameAction SGAction:
-                        MemoryStream writerStream = new MemoryStream();
-                        BinaryWriter writer = new BinaryWriter(writerStream);
-                        sessionState.Serialize(writer);
-                        byte[] state = writerStream.ToArray();
-                        SGAction.Save(state, Platform.GetChecksum(state));
-                        break;
+                    if (Replay)
+                        LastInput = ReadInputs(session.Frame());
+                    else
+                        for (int i = 0; i < LastInput.Length / InputSize; i++)
+                        {
+                            byte[] inputs = SyncTest ? GetRandomInput() : sessionState.GetLocalInput(i, (int)InputSize);
+                            Array.Copy(inputs, 0, LastInput, i * InputSize, inputs.Length);
+                        }
+
+                    sessionActions = session.AdvanceFrame(LastInput);
+                    
+                    foreach (var action in sessionActions)
+                    {
+                        switch (action)
+                        {
+                            case SessionAdvanceFrameAction AFAction:
+                                InputDebug = InputConstructor(AFAction.Inputs);
+                                sessionState.GameLoop(AFAction.Inputs);
+                                if (!Replay) RecordInput(AFAction.Frame, AFAction.Inputs);
+                                break;
+                            case SessionLoadGameAction LGAction:
+                                MemoryStream readerStream = new MemoryStream(LGAction.Load());
+                                BinaryReader reader = new BinaryReader(readerStream);
+                                sessionState.LoadState(reader);
+                                break;
+                            case SessionSaveGameAction SGAction:
+                                MemoryStream writerStream = new MemoryStream();
+                                BinaryWriter writer = new BinaryWriter(writerStream);
+                                sessionState.SaveState(writer);
+                                byte[] state = writerStream.ToArray();
+                                SGAction.Save(state, Platform.GetChecksum(state));
+                                break;
+                        }
+                    }
+
+                    string FrameCounter = session.IsOffline() ? $"{session.Frame()}" : $"{session.Frame()} ({session.RemoteFrame()} | {session.FrameAdvantage()} | {session.RemoteFrameAdvantage()})";
+
+                    SimulationText = FrameCounter + $" || ( {InputDebug} )";
+                    if (!session.IsOffline())
+                    {
+                        RollbackText = "RBF: " + session.RollbackFrames();
+                        PingText = "Ping: " + ShowPingInfo(PingId) + " ms";
+                    }
+
+                    if (Replay && session.Frame() >= RecordedInputs.Count)
+                        CloseGame();
                 }
+                //canRender = true;
+                mutex.ReleaseMutex();
+                Thread.Sleep((int)((1 / 60f) * 1000));
             }
-
-            string FrameCounter = session.IsOffline() ? $"{session.Frame()}" : $"{session.Frame()} ({session.RemoteFrame()} | {session.FrameAdvantage()} | {session.RemoteFrameAdvantage()})";
-
-            SimulationText = FrameCounter + $" || ( {InputDebug} )";
-
-            if (Replay && session.Frame() >= RecordedInputs.Count)
-                CloseGame();
         }
 
         private void StartGameThread()
         {
-            GameThread = new Thread(GameLoop);
-            GameThread.IsBackground = true;
+            GameThread = new Thread(() => GameLoop());
+            //GameThread.IsBackground = true;
             GameThread.Start();
         }
 

@@ -146,6 +146,7 @@ namespace PleaseResync
         public override int FrameAdvantage() => _sync.FramesAhead();
         public override int RemoteFrameAdvantage() => _sync.FramesAhead();
         public override int FrameAdvantageDifference() => _sync.FrameDifference();
+        public override float AverageFrameAdvantage() =>  _sync.AverageFrameAdvantage();
         public override uint RollbackFrames() => _sync.RollbackFrames();
         public override int State() => (int)_sync.State();
     }

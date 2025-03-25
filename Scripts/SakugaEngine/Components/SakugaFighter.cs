@@ -1,7 +1,7 @@
 using Godot;
 using System.IO;
 using SakugaEngine.Resources;
-using SakugaEngine.Collision;
+using SakugaEngine.Game;
 
 namespace SakugaEngine
 {
@@ -48,17 +48,12 @@ namespace SakugaEngine
         public void SetOpponent(SakugaFighter opponent) { if (opponent != _opponent) _opponent = opponent; }
         public FighterVariables FighterVars => Variables as FighterVariables;
 
-        public override void _Process(double delta)
-        {
-            base._Process(delta);
-        }
-
         public void ParseInputs(ushort rawInputs)
         {
             Inputs.InsertToHistory(rawInputs);
         }
 
-        public void SpawnablesSetup(Node Parent, PhysicsWorld world)
+        public void SpawnablesSetup(GameManager game)
         {
             if (SpawnablesList == null) { Spawnables = new SakugaSpawnable[0][]; return; }
 
@@ -69,15 +64,14 @@ namespace SakugaEngine
                 for (int j = 0; j < Spawnables[i].Length; ++j)
                 {
                     Node temp = SpawnablesList.SpawnObjects[i].SpawnScene.Instantiate();
-                    Parent.AddChild(temp);
                     Spawnables[i][j] = temp as SakugaSpawnable;
-                    world.AddBody(Spawnables[i][j].Body);
+                    game.AddActor(Spawnables[i][j]);
                     Spawnables[i][j].Initialize(this);
                 }
             }
         }
 
-        public void VFXSetup(Node Parent)
+        public void VFXSetup(GameManager game)
         {
             if (VFXList == null)  { VFX = new SakugaVFX[0][]; return; }
 
@@ -88,8 +82,8 @@ namespace SakugaEngine
                 for (int j = 0; j < VFX[i].Length; ++j)
                 {
                     Node temp = VFXList.SpawnObjects[i].SpawnScene.Instantiate();
-                    Parent.AddChild(temp);
                     VFX[i][j] = temp as SakugaVFX;
+                    game.AddActor(VFX[i][j], false);
                     VFX[i][j].Initialize();
                 }
             }
@@ -180,17 +174,17 @@ namespace SakugaEngine
                     Animator.RunState();
             }
 
-            SpawnablesPreTick();
+            //SpawnablesPreTick();
         }
 
-        private void SpawnablesPreTick()
+        /*private void SpawnablesPreTick()
         {
             if (Spawnables.Length == 0 || Spawnables == null) return;
 
             for (int i = 0; i < Spawnables.Length; ++i)
                 for (int j = 0; j < Spawnables[i].Length; ++j)
                     if (Spawnables[i][j] != null) Spawnables[i][j].PreTick();
-        }
+        }*/
 
         public override void Tick()
         {
@@ -208,17 +202,17 @@ namespace SakugaEngine
             
             Stance.CheckMoves();
 
-            SpawnablesTick();
+            //SpawnablesTick();
         }
 
-        private void SpawnablesTick()
+        /*private void SpawnablesTick()
         {
             if (Spawnables.Length == 0 || Spawnables == null) return;
 
             for (int i = 0; i < Spawnables.Length; ++i)
                 for (int j = 0; j < Spawnables[i].Length; ++j)
                     if (Spawnables[i][j] != null) Spawnables[i][j].Tick();
-        }
+        }*/
 
         public override void LateTick()
         {
@@ -234,11 +228,11 @@ namespace SakugaEngine
             UpdateHitboxes();
             ResetDamageStatus();
 
-            SpawnablesLateTick();
-            VFXTick();
+            //SpawnablesLateTick();
+            //VFXTick();
         }
 
-        private void SpawnablesLateTick()
+        /*private void SpawnablesLateTick()
         {
             if (Spawnables.Length == 0 || Spawnables == null) return;
 
@@ -254,7 +248,7 @@ namespace SakugaEngine
             for (int i = 0; i < VFX.Length; ++i)
                 for (int j = 0; j < VFX[i].Length; ++j)
                     if (VFX[i][j] != null) VFX[i][j].Tick();
-        }
+        }*/
 
         private void ResetDamageStatus()
         {
@@ -562,8 +556,9 @@ namespace SakugaEngine
             return "Position: "+Body.FixedPosition+
                     "\nVelocity: "+Body.FixedVelocity+
                     "\nStance: "+Stance.CurrentStance+
-                    "\nState: "+Animator.CurrentState+
-                    "\nAnimation: "+Animator.GetCurrentState().StateName+
+                    "\nState Index: "+Animator.CurrentState+
+                    "\nState Name: "+Animator.GetCurrentState().ResourcePath+
+                    "\nAnimation Name: "+Animator.GetCurrentState().StateName+
                     "\nCurrent Move: "+Stance.CurrentMove+
                     "\nBuffered Move: "+Stance.BufferedMove+
                     "\nFrame: "+Animator.Frame+

@@ -14,13 +14,13 @@ namespace SakugaEngine
         public int CurrentState;
         public int Frame;
 
-        public override void _Process(double delta)
+        public void ViewAnimations()
         {
+            if (GetCurrentState().StateName == "") return;
+
             for (int a = 0; a < players.Length; a++)
             {
-                if (GetCurrentState().StateName != "")
-                    players[a].Play(prefix[a] + GetCurrentState().StateName);
-                
+                players[a].Play(prefix[a] + GetCurrentState().StateName);
                 players[a].Seek(Frame / (float)Global.TicksPerSecond, true);
             }
         }

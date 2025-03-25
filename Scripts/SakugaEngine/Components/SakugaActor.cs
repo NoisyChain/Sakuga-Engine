@@ -1,13 +1,10 @@
 using Godot;
-using System.IO;
 using SakugaEngine.Collision;
-using System;
 using SakugaEngine.Resources;
-using System.Diagnostics;
 
 namespace SakugaEngine
 {
-	public partial class SakugaActor : Node3D
+	public partial class SakugaActor : SakugaNode
 	{
 		[ExportCategory("Components")]
 		[Export] public PhysicsBody Body;
@@ -27,22 +24,17 @@ namespace SakugaEngine
         [Export] public SoundsList VoicesList;
 
         protected bool EventExecuted;
-		
-        public virtual void PreTick(){}
-		public virtual void Tick(){}
-		public virtual void LateTick(){}
-		
-		public virtual void Serialize(BinaryWriter bw){}
-		public virtual void Deserialize(BinaryReader br){}
 
         public virtual SakugaFighter FighterReference() { return null; }
 
         protected virtual bool LifeEnded() { return false; }
-        public override void _Process(double delta)
+        
+        public override void Render()
         {
-            Position = Global.ToScaledVector3(Body.FixedPosition);
+            GlobalPosition = Global.ToScaledVector3(Body.FixedPosition);
             foreach (Node3D g in Graphics)
                 g.Scale = new Vector3(Body.PlayerSide, 1, 1);
+            Animator.ViewAnimations();
         }
 
 		public void UpdateFighterPhysics()

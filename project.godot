@@ -14,12 +14,14 @@ config/name="Sakuga Engine"
 config/tags=PackedStringArray("game", "high_priority", "library")
 run/main_scene="res://Scenes/TestScene.tscn"
 config/features=PackedStringArray("4.3", "C#", "GL Compatibility")
+run/max_fps=60
 config/icon="res://Sprites/Icons/Icon_Fighter.png"
 
 [display]
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
+window/vsync/vsync_mode=0
 
 [dotnet]
 
@@ -105,6 +107,11 @@ k2_face_c={
 k2_face_d={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194439,"key_label":0,"unicode":49,"location":0,"echo":false,"script":null)
+]
+}
+toggle_hitboxes={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194332,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
 ]
 }
 

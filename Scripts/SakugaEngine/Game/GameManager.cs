@@ -1,21 +1,26 @@
 using Godot;
 using System.IO;
 using PleaseResync;
+using SakugaEngine.Resources;
 using SakugaEngine.Collision;
 using SakugaEngine.UI;
 using System.Text;
+using System.Collections.Generic;
 
 namespace SakugaEngine.Game
 {
     public partial class GameManager : Node, IGameState
     {
         [Export] private GameMonitor Monitor;
-        [Export] public PackedScene[] Spawns;
+        [Export] public FighterList fightersList;
+        [Export] public int player1Character;
+        [Export] public int player2Character;
         [Export] private CanvasLayer FighterUI;
         [Export] private FighterCamera Camera;
         [Export] Label SeedViewer;
         public uint InputSize;
 
+        private List<SakugaNode> Nodes;
         private SakugaFighter[] Fighters;
         private PhysicsWorld World;
         
@@ -28,21 +33,39 @@ namespace SakugaEngine.Game
 
         Vector3I randomTest = new Vector3I();
 
+        private bool canRender;
+
         public override void _Ready()
         {
             healthHUD = (HealthHUD)FighterUI.GetNode("GameHUD_Background");
             metersHUD = (MetersHUD)FighterUI.GetNode("GameHUD_Foreground");
+            Nodes = new List<SakugaNode>();
         }
 
         public override void _Process(double delta)
         {
+            base._Process(delta);
             if (Fighters == null) return;
             if (Monitor == null) return;
 
+            if (Input.IsActionJustPressed("toggle_hitboxes"))
+                Global.ShowHitboxes = !Global.ShowHitboxes;
+        }
+
+        public void Render()
+        {
+            RenderNodes();
+            Camera.UpdateCamera(Fighters[0], Fighters[1]);
             healthHUD.UpdateHealthBars(Fighters, Monitor);
             metersHUD.UpdateMeters(Fighters);
-            Camera.UpdateCamera(Fighters[0], Fighters[1]);
-            SeedViewer.Text = finalSeed.ToString();
+        }
+
+        void RenderNodes()
+        {
+            foreach (SakugaNode node in Nodes)
+            {
+                node.Render();
+            }
         }
 
         /// <summary>
@@ -84,16 +107,9 @@ namespace SakugaEngine.Game
             World = new PhysicsWorld();
 
             Fighters = new SakugaFighter[2];
-            for (int i = 0; i < Spawns.Length; i++)
-            {
-                Node temp = Spawns[i].Instantiate();
-                AddChild(temp);
-                Fighters[i] = temp as SakugaFighter;
-                World.AddBody(Fighters[i].Body);
-                Fighters[i].Initialize(i);
-                Fighters[i].SpawnablesSetup(this, World);
-                Fighters[i].VFXSetup(this);
-            }
+
+            CreateFighter(player1Character, 0);
+            CreateFighter(player2Character, 1);
 
             Fighters[0].SetOpponent(Fighters[1]);
             Fighters[1].SetOpponent(Fighters[0]);
@@ -105,8 +121,26 @@ namespace SakugaEngine.Game
             metersHUD.Setup(Fighters);
         }
 
+        public void CreateFighter(int characterIndex, int playerIndex)
+        {
+            Node temp = fightersList.fighters[characterIndex].Instantiate(); 
+            Fighters[playerIndex] = temp as SakugaFighter;
+            AddActor(Fighters[playerIndex]);
+            Fighters[playerIndex].Initialize(playerIndex);
+            Fighters[playerIndex].SpawnablesSetup(this);
+            Fighters[playerIndex].VFXSetup(this);
+        }
+
+        public void AddActor(SakugaNode newNode, bool isPhysicsBody = true)
+        {
+            AddChild(newNode);
+            Nodes.Add(newNode);
+            if (isPhysicsBody) World.AddBody((newNode as SakugaActor).Body);
+        }
+
         public void GameLoop(byte[] playerInput)
         {
+            canRender = false;
             finalSeed = CalculateSeed();
             Global.UpdateRNG(finalSeed);
             Frame++;
@@ -128,11 +162,11 @@ namespace SakugaEngine.Game
                 Fighters[i].ParseInputs(combinedInput);
             }
 
-            for (int i = 0; i < Fighters.Length; i++)
-                Fighters[i].PreTick();
+            for (int i = 0; i < Nodes.Count; i++)
+                Nodes[i].PreTick();
             
-            for (int i = 0; i < Fighters.Length; i++)
-                Fighters[i].Tick();
+            for (int i = 0; i < Nodes.Count; i++)
+                Nodes[i].Tick();
             
             World.Simulate();
 
@@ -141,8 +175,8 @@ namespace SakugaEngine.Game
             else if (Fighters[0].Body.FixedPosition.X > Fighters[1].Body.FixedPosition.X)
             { Fighters[0].UpdateSide(false); Fighters[1].UpdateSide(true); }
 
-            for (int i = 0; i < Fighters.Length; i++)
-                Fighters[i].LateTick();
+            for (int i = 0; i < Nodes.Count; i++)
+                Nodes[i].LateTick();
 
             for (int i = 0; i < Fighters.Length; i++)
             {
@@ -153,6 +187,8 @@ namespace SakugaEngine.Game
                 );
                 Fighters[i].Body.UpdateColliders();
             }
+
+            canRender = true;
         }
 
         // Generate inputs for your game
@@ -215,7 +251,7 @@ namespace SakugaEngine.Game
             return input;
         }
 
-        public void Serialize(BinaryWriter bw)
+        public void SaveState(BinaryWriter bw)
         {
             bw.Write(Frame);
             Monitor.Serialize(bw);
@@ -227,7 +263,7 @@ namespace SakugaEngine.Game
             bw.Write(randomTest.Z);
         }
 
-        public void Deserialize(BinaryReader br)
+        public void LoadState(BinaryReader br)
         {
             Frame = br.ReadInt32();
             Monitor.Deserialize(br);

@@ -2,7 +2,7 @@ using Godot;
 using SakugaEngine;
 using System.IO;
 
-public partial class SakugaVFX : Node3D
+public partial class SakugaVFX : SakugaNode
 {
     [ExportCategory("Settings")]
     [Export] private int Duration;
@@ -15,9 +15,9 @@ public partial class SakugaVFX : Node3D
     public int Frame;
     public int Side;
 
-    public override void _Process(double delta)
+    public override void Render()
     {
-        Position = Global.ToScaledVector3(FixedPosition);
+        GlobalPosition = Global.ToScaledVector3(FixedPosition);
         Graphics.Scale = new Vector3(Side, 1, 1);
         Graphics.Visible = IsActive;
         Player.Play(AnimationName);
@@ -40,7 +40,7 @@ public partial class SakugaVFX : Node3D
         Sound.SimpleQueueSound();
         IsActive = true;
     }
-    public void Tick()
+    public override void LateTick()
     {
         if (!IsActive) return;
 
@@ -48,7 +48,7 @@ public partial class SakugaVFX : Node3D
         if (Frame >= Duration - 1) IsActive = false;
     }
 
-    public void Serialize(BinaryWriter bw)
+    public override void Serialize(BinaryWriter bw)
         {
             bw.Write(FixedPosition.X);
             bw.Write(FixedPosition.Y);
@@ -57,7 +57,7 @@ public partial class SakugaVFX : Node3D
             bw.Write(Side);
         }
 
-        public void Deserialize(BinaryReader br)
+        public override void Deserialize(BinaryReader br)
         {
             FixedPosition.X = br.ReadInt32();
             FixedPosition.Y = br.ReadInt32();

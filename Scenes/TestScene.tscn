@@ -1,11 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://dr8cly8qy5pg2"]
+[gd_scene load_steps=13 format=3 uid="uid://dr8cly8qy5pg2"]
 
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Game/GameManager.cs" id="1_ocl0l"]
 [ext_resource type="PackedScene" uid="uid://blnwu2aaw8s60" path="res://Scenes/Sakuga_UI.tscn" id="1_wexcy"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/FighterCamera.cs" id="2_dh05b"]
 [ext_resource type="Texture2D" uid="uid://6ctweo6uvot8" path="res://icon.svg" id="3_x54tm"]
-[ext_resource type="PackedScene" uid="uid://b1ggpw8ltpaid" path="res://Fighters/Kaede/Instances/Fighter_Kaede.tscn" id="5_oxe85"]
-[ext_resource type="PackedScene" uid="uid://3reeyb4tcc1i" path="res://Fighters/Dummy/Instances/Dummy_Fighter.tscn" id="6_7m0id"]
+[ext_resource type="Resource" uid="uid://c8s3ip7gkhwq6" path="res://Roster.tres" id="5_pp7s2"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/GameMonitor.cs" id="6_d185x"]
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Game/SakugaRollbackManager.cs" id="6_jke5l"]
 
@@ -60,12 +59,17 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2034, 4.65161)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, -7)
 cull_mask = 1048557
-fov = 45.0
+fov = 27.0
 script = ExtResource("2_dh05b")
 minBounds = Vector2(-7, 1.25)
 maxBounds = Vector2(7, 10)
+minOffset = Vector2(-6.5, 1.2)
+maxOffset = Vector2(-15.5, 3.2)
+maxDistance = 14.5
+boundsAdditionalNear = 1.9
+boundsAdditionalFar = 1.95
 
 [node name="Stage" type="Node3D" parent="."]
 
@@ -79,18 +83,20 @@ environment = SubResource("Environment_iltph")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
 mesh = SubResource("BoxMesh_ql5gv")
 
-[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("Monitor", "FighterUI", "Camera", "SeedViewer")]
-script = ExtResource("1_ocl0l")
-Monitor = NodePath("../GameMonitor")
-Spawns = Array[PackedScene]([ExtResource("5_oxe85"), ExtResource("6_7m0id")])
-FighterUI = NodePath("../CanvasLayer")
-Camera = NodePath("../Camera3D")
-SeedViewer = NodePath("../SeedViewer/Seed")
-
-[node name="GameMonitor" type="Node" parent="."]
-script = ExtResource("6_d185x")
-
 [node name="RollbackManager" type="Node" parent="." node_paths=PackedStringArray("GameManager")]
 script = ExtResource("6_jke5l")
 GameManager = NodePath("../GameManager")
 InputSize = 2
+
+[node name="GameMonitor" type="Node" parent="."]
+script = ExtResource("6_d185x")
+
+[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("Monitor", "FighterUI", "Camera", "SeedViewer")]
+process_priority = 1
+script = ExtResource("1_ocl0l")
+Monitor = NodePath("../GameMonitor")
+fightersList = ExtResource("5_pp7s2")
+player1Character = 2
+FighterUI = NodePath("../CanvasLayer")
+Camera = NodePath("../Camera3D")
+SeedViewer = NodePath("../SeedViewer/Seed")

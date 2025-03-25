@@ -17,7 +17,7 @@ namespace SakugaEngine
 
         private Camera3D charCam;
 
-        const float DELTA = 1f / Global.TicksPerSecond;
+        const float DELTA = 10f / Global.TicksPerSecond;
 
         public override void _Ready()
         {
@@ -25,12 +25,12 @@ namespace SakugaEngine
             //audioListener = GetNode<Listener>("Listener");
         }
 
-        public void UpdateCamera(Node3D player1, Node3D player2)
+        public void UpdateCamera(SakugaFighter player1, SakugaFighter player2)
         {
             if (player1 == null || player2 == null) return;
 
-            Vector3 _p1Position = player1.GlobalPosition;
-            Vector3 _p2Position = player2.GlobalPosition;
+            Vector3 _p1Position = Global.ToScaledVector3(player1.Body.FixedPosition);
+            Vector3 _p2Position = Global.ToScaledVector3(player2.Body.FixedPosition);
 
             bool canSmooth = Mathf.Abs(_p2Position.X - _p1Position.X) > minSmoothDistance;
 
@@ -50,12 +50,12 @@ namespace SakugaEngine
 
             float BoundsAdd = Mathf.Lerp(boundsAdditionalNear, boundsAdditionalFar, pl);
             Position = new Vector3(
-                Mathf.Lerp(Position.X, newCamPosition.X, 10f * DELTA),
-                Mathf.Lerp(Position.Y, newCamPosition.Y, 10f * DELTA),
+                Mathf.Lerp(Position.X, newCamPosition.X, DELTA),
+                Mathf.Lerp(Position.Y, newCamPosition.Y, DELTA),
                 0);
             Position = new Vector3(
                 Mathf.Clamp(Position.X, minBounds.X + BoundsAdd, maxBounds.X - BoundsAdd),
-                Mathf.Clamp(Position.Y, minBounds.Y, maxBounds.Y), 
+                Mathf.Clamp(Position.Y, minBounds.Y, maxBounds.Y),
                 -FinalZOffset);
             
             charCam.GlobalTransform = GlobalTransform;

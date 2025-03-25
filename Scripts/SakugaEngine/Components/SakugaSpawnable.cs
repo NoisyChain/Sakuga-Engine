@@ -39,11 +39,12 @@ namespace SakugaEngine
             return true;
         }
 
-        public override void _Process(double delta)
+        public override void Render()
         {
-            base._Process(delta);
-            for (int i = 0; i < Graphics.Length; ++i)
-                Graphics[i].Visible = IsActive;
+            foreach (Node3D g in Graphics)
+                g.Visible = IsActive;
+            
+            base.Render();
         }
 
         protected override bool LifeEnded() { return !LifeTime.IsRunning(); }

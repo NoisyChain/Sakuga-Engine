@@ -12,6 +12,8 @@ namespace SakugaEngine.Utils
         {
             if (body == null) return;
 
+            Visible = Global.ShowHitboxes;
+
             UpdateHitboxes();
             UpdatePushbox();
         }

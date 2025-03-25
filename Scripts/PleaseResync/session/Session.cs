@@ -113,6 +113,7 @@ namespace PleaseResync
         public abstract int FrameAdvantage();
         public abstract int RemoteFrameAdvantage();
         public abstract int FrameAdvantageDifference();
+        public abstract float AverageFrameAdvantage();
         public abstract uint RollbackFrames();
         public abstract int State();
     }
