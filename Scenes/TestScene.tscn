@@ -58,19 +58,6 @@ text = "Seed"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, -7)
-cull_mask = 1048557
-fov = 27.0
-script = ExtResource("2_dh05b")
-minBounds = Vector2(-7, 1.25)
-maxBounds = Vector2(7, 10)
-minOffset = Vector2(-6.5, 1.2)
-maxOffset = Vector2(-15.5, 3.2)
-maxDistance = 14.5
-boundsAdditionalNear = 1.9
-boundsAdditionalFar = 1.95
-
 [node name="Stage" type="Node3D" parent="."]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Stage"]
@@ -96,7 +83,20 @@ process_priority = 1
 script = ExtResource("1_ocl0l")
 Monitor = NodePath("../GameMonitor")
 fightersList = ExtResource("5_pp7s2")
-player1Character = 2
+player1Character = 1
 FighterUI = NodePath("../CanvasLayer")
 Camera = NodePath("../Camera3D")
 SeedViewer = NodePath("../SeedViewer/Seed")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, -7)
+cull_mask = 1048557
+fov = 27.0
+script = ExtResource("2_dh05b")
+minBounds = Vector2(-7, 1.25)
+maxBounds = Vector2(7, 10)
+minOffset = Vector2(-6.5, 1.2)
+maxOffset = Vector2(-15.5, 3.2)
+maxDistance = 14.5
+boundsAdditionalNear = 1.9
+boundsAdditionalFar = 1.95

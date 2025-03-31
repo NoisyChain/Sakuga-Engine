@@ -1,10 +1,9 @@
-[gd_resource type="Resource" script_class="FighterList" load_steps=5 format=3 uid="uid://c8s3ip7gkhwq6"]
+[gd_resource type="Resource" script_class="FighterList" load_steps=4 format=3 uid="uid://c8s3ip7gkhwq6"]
 
 [ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/FighterList.cs" id="1_x0sfh"]
 [ext_resource type="PackedScene" uid="uid://3reeyb4tcc1i" path="res://Fighters/Dummy/Instances/Dummy_Fighter.tscn" id="2_xqai4"]
 [ext_resource type="PackedScene" uid="uid://b1ggpw8ltpaid" path="res://Fighters/Kaede/Instances/Fighter_Kaede.tscn" id="3_okppc"]
-[ext_resource type="PackedScene" uid="uid://c2c7rbmh4e4sd" path="res://Fighters/Anippe/Instances/Anippe_Fighter.tscn" id="3_yk877"]
 
 [resource]
 script = ExtResource("1_x0sfh")
-fighters = Array[PackedScene]([ExtResource("3_okppc"), ExtResource("2_xqai4"), ExtResource("3_yk877")])
+fighters = Array[PackedScene]([ExtResource("3_okppc"), ExtResource("2_xqai4")])
