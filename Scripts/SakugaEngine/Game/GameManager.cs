@@ -32,9 +32,7 @@ namespace SakugaEngine.Game
         private int finalSeed = 0;
 
         Vector3I randomTest = new Vector3I();
-
-        private bool canRender;
-
+        
         public override void _Ready()
         {
             healthHUD = (HealthHUD)FighterUI.GetNode("GameHUD_Background");
@@ -105,7 +103,7 @@ namespace SakugaEngine.Game
             Frame = 0;
 
             World = new PhysicsWorld();
-
+            Nodes.Clear();
             Fighters = new SakugaFighter[2];
 
             CreateFighter(player1Character, 0);
@@ -140,7 +138,6 @@ namespace SakugaEngine.Game
 
         public void GameLoop(byte[] playerInput)
         {
-            canRender = false;
             finalSeed = CalculateSeed();
             Global.UpdateRNG(finalSeed);
             Frame++;
@@ -187,8 +184,6 @@ namespace SakugaEngine.Game
                 );
                 Fighters[i].Body.UpdateColliders();
             }
-
-            canRender = true;
         }
 
         // Generate inputs for your game
@@ -255,8 +250,8 @@ namespace SakugaEngine.Game
         {
             bw.Write(Frame);
             Monitor.Serialize(bw);
-            for (int i = 0; i < Fighters.Length; i++)
-                Fighters[i].Serialize(bw);
+            for (int i = 0; i < Nodes.Count; i++)
+                Nodes[i].Serialize(bw);
             
             bw.Write(randomTest.X);
             bw.Write(randomTest.Y);
@@ -267,8 +262,8 @@ namespace SakugaEngine.Game
         {
             Frame = br.ReadInt32();
             Monitor.Deserialize(br);
-            for (int i = 0; i < Fighters.Length; i++)
-                Fighters[i].Deserialize(br);
+            for (int i = 0; i < Nodes.Count; i++)
+                Nodes[i].Deserialize(br);
             
             randomTest.X = br.ReadInt32();
             randomTest.Y = br.ReadInt32();

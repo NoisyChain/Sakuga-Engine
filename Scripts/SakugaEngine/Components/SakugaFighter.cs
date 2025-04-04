@@ -909,14 +909,6 @@ namespace SakugaEngine
             bw.Write(HitstunType);
             bw.Write(GravityDecayFactor);
             bw.Write(HitstunDecayFactor);
-
-            for (int i = 0; i < Spawnables.Length; ++i)
-                for (int j = 0; j < Spawnables[i].Length; ++j)
-                    Spawnables[i][j].Serialize(bw);
-            
-            for (int i = 0; i < VFX.Length; ++i)
-                for (int j = 0; j < VFX[i].Length; ++j)
-                    VFX[i][j].Serialize(bw);
         }
 
         public override void Deserialize(BinaryReader br)
@@ -953,14 +945,6 @@ namespace SakugaEngine
             HitstunDecayFactor = br.ReadByte();
 
             Body.UpdateColliders();
-
-            for (int i = 0; i < Spawnables.Length; ++i)
-                for (int j = 0; j < Spawnables[i].Length; ++j)
-                    Spawnables[i][j].Deserialize(br);
-            
-            for (int i = 0; i < VFX.Length; ++i)
-                for (int j = 0; j < VFX[i].Length; ++j)
-                    VFX[i][j].Deserialize(br);
         }
 #endregion
     }
