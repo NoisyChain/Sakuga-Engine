@@ -22,3 +22,6 @@ I was planning to migrate since a while, so let's see how it goes.
 - Cinematics
 - Default Steamworks support
 - An original character
+### Notes
+- Made completely in C#
+- Currently using Godot 4.3 .NET
