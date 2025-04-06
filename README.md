@@ -24,5 +24,5 @@ I was planning to migrate since a while, so let's see how it goes.
 - An original character
 ### Notes
 - Made completely in C#
-- Currently using Godot 4.3 .NET
+- Currently using Godot 4.4.1 .NET
 - It's strongly advised to know the basics of Godot to use it properly
