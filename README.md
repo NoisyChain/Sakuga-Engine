@@ -25,3 +25,4 @@ I was planning to migrate since a while, so let's see how it goes.
 ### Notes
 - Made completely in C#
 - Currently using Godot 4.3 .NET
+- It's strongly advised to know the basics of Godot to use it properly
