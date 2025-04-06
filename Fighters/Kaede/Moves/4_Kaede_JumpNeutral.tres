@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="MoveSettings" load_steps=7 format=3 uid="uid://befx6w2m2o2um"]
 
 [ext_resource type="Resource" uid="uid://p776iw0sg1gy" path="res://Fighters/Shared/Inputs/2_Input_8.tres" id="1_qe0ft"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/ExtraVariableChange.cs" id="1_tgybi"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_p16oi"]
+[ext_resource type="Script" uid="uid://dh03r2nvy3pmu" path="res://Scripts/SakugaEngine/Resources/ExtraVariableChange.cs" id="1_tgybi"]
+[ext_resource type="Script" uid="uid://gk1rkw667o4n" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_p16oi"]
 
 [sub_resource type="Resource" id="Resource_pgsid"]
 script = ExtResource("1_tgybi")

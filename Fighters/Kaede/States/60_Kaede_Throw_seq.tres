@@ -1,12 +1,12 @@
 [gd_resource type="Resource" script_class="FighterState" load_steps=18 format=3 uid="uid://cywyov8k7d28t"]
 
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/Animation Events/ApplyDamageAnimationEvent.cs" id="1_1inkj"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="1_qo4pe"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="2_264bk"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/AnimationEventsList.cs" id="2_x2ffj"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/StatePhysics.cs" id="3_iy0dy"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/StateTransitionSettings.cs" id="4_xs5ao"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/ThrowPivot.cs" id="5_mmk8x"]
+[ext_resource type="Script" uid="uid://by2qprudfmxwx" path="res://Scripts/SakugaEngine/Resources/Animation Events/ApplyDamageAnimationEvent.cs" id="1_1inkj"]
+[ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="1_qo4pe"]
+[ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="2_264bk"]
+[ext_resource type="Script" uid="uid://bwm15ys7iwmfc" path="res://Scripts/SakugaEngine/Resources/AnimationEventsList.cs" id="2_x2ffj"]
+[ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Resources/StatePhysics.cs" id="3_iy0dy"]
+[ext_resource type="Script" uid="uid://bia88bspuvxd" path="res://Scripts/SakugaEngine/Resources/StateTransitionSettings.cs" id="4_xs5ao"]
+[ext_resource type="Script" uid="uid://cjn4b20f8smxi" path="res://Scripts/SakugaEngine/Resources/ThrowPivot.cs" id="5_mmk8x"]
 
 [sub_resource type="Resource" id="Resource_ld3k7"]
 script = ExtResource("1_1inkj")

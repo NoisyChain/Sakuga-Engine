@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="FighterState" load_steps=4 format=3 uid="uid://bwoarywlnubtd"]
 
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="1"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2"]
+[ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="1"]
+[ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2"]
 
 [sub_resource type="Resource" id="2"]
 script = ExtResource("2")

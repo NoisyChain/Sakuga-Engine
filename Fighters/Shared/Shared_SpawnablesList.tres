@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="SpawnsList" load_steps=5 format=3 uid="uid://5w0ffcesv6ec"]
 
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/SpawnsList.cs" id="1_6x7q1"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/SpawnObject.cs" id="1_r4gar"]
+[ext_resource type="Script" uid="uid://k0lh4a8ntjdo" path="res://Scripts/SakugaEngine/Resources/SpawnsList.cs" id="1_6x7q1"]
+[ext_resource type="Script" uid="uid://fshoagbsdqd4" path="res://Scripts/SakugaEngine/Resources/SpawnObject.cs" id="1_r4gar"]
 [ext_resource type="PackedScene" uid="uid://domhsm5n4i2q1" path="res://Fighters/Kaede/Spawnables/0/Instances/Kaede_Spawnable_0.tscn" id="1_t5ho5"]
 
 [sub_resource type="Resource" id="Resource_42ym4"]

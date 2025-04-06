@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="MoveSettings" load_steps=3 format=3 uid="uid://b676yw3nusi5x"]
 
 [ext_resource type="Resource" uid="uid://cjtxv3hfn8vc4" path="res://Fighters/Shared/Inputs/8_Input_]2[.tres" id="1_81gut"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_ylf0d"]
+[ext_resource type="Script" uid="uid://gk1rkw667o4n" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_ylf0d"]
 
 [resource]
 script = ExtResource("2_ylf0d")

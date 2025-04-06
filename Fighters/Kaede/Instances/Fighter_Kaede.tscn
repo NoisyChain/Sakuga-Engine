@@ -1,11 +1,11 @@
 [gd_scene load_steps=459 format=3 uid="uid://b1ggpw8ltpaid"]
 
 [ext_resource type="Texture2D" uid="uid://bx0l7712opy5a" path="res://Fighters/Kaede/Sprites/0-12.png" id="1"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/SakugaFighter.cs" id="1_7dx2y"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Utils/FOV_Correction.cs" id="2"]
+[ext_resource type="Script" uid="uid://bkhlpeqky2g1r" path="res://Scripts/SakugaEngine/Components/SakugaFighter.cs" id="1_7dx2y"]
+[ext_resource type="Script" uid="uid://cqd8ai3a40alf" path="res://Scripts/SakugaEngine/Utils/FOV_Correction.cs" id="2"]
 [ext_resource type="Resource" uid="uid://5w0ffcesv6ec" path="res://Fighters/Shared/Shared_SpawnablesList.tres" id="2_rb7dq"]
-[ext_resource type="Resource" path="res://Fighters/Kaede/Kaede_Profile.tres" id="2_tnpyq"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/FrameAnimator.cs" id="3_nysqa"]
+[ext_resource type="Resource" uid="uid://dti25wauqaxwy" path="res://Fighters/Kaede/Kaede_Profile.tres" id="2_tnpyq"]
+[ext_resource type="Script" uid="uid://bx452hpssiy38" path="res://Scripts/SakugaEngine/Components/FrameAnimator.cs" id="3_nysqa"]
 [ext_resource type="Resource" uid="uid://b6a4cqdykhhg" path="res://Fighters/Shared/Shared_VFXList.tres" id="3_xocgb"]
 [ext_resource type="PackedScene" uid="uid://dduf0jsq56ggk" path="res://Scenes/HitboxViewer.tscn" id="4"]
 [ext_resource type="Resource" uid="uid://k31pv0ejfv2s" path="res://Fighters/Shared/Shared_SFXList.tres" id="4_sr35b"]
@@ -306,17 +306,17 @@
 [ext_resource type="Texture2D" uid="uid://c7o651o26ebe8" path="res://Fighters/Kaede/Sprites/300-7.png" id="222"]
 [ext_resource type="Texture2D" uid="uid://ccwb1inl6trgg" path="res://Fighters/Kaede/Sprites/300-4.png" id="223"]
 [ext_resource type="Texture2D" uid="uid://cm5pk5bmny4w7" path="res://Fighters/Kaede/Sprites/300-5.png" id="224"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Collision/PhysicsBody.cs" id="225_oxjr4"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/InputManager.cs" id="227_ppa6i"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/FighterVariables.cs" id="228_8hrt3"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/StanceManager.cs" id="229_0b4ui"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/CombatTracker.cs" id="231_bxldr"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/FrameTimer.cs" id="232_811te"]
+[ext_resource type="Script" uid="uid://hg0vcp1gy2ny" path="res://Scripts/SakugaEngine/Collision/PhysicsBody.cs" id="225_oxjr4"]
+[ext_resource type="Script" uid="uid://dshbmw3q5jor2" path="res://Scripts/SakugaEngine/Components/InputManager.cs" id="227_ppa6i"]
+[ext_resource type="Script" uid="uid://v7id8u3160fg" path="res://Scripts/SakugaEngine/Components/FighterVariables.cs" id="228_8hrt3"]
+[ext_resource type="Script" uid="uid://c3t6wbsc2kmvs" path="res://Scripts/SakugaEngine/Components/StanceManager.cs" id="229_0b4ui"]
+[ext_resource type="Script" uid="uid://jxgdxccucllx" path="res://Scripts/SakugaEngine/Components/CombatTracker.cs" id="231_bxldr"]
+[ext_resource type="Script" uid="uid://cmq3cp1n0copp" path="res://Scripts/SakugaEngine/Components/FrameTimer.cs" id="232_811te"]
 [ext_resource type="Resource" uid="uid://t64afo7e4u1o" path="res://Fighters/Kaede/Hitboxes/0_Hitbox_Basic.tres" id="282_e3wna"]
 [ext_resource type="Resource" uid="uid://b6kiyox8tjef2" path="res://Fighters/Kaede/Hitboxes/1_Hitbox_Crouch.tres" id="283_0cwlf"]
 [ext_resource type="Texture2D" uid="uid://rw4q7nvg0f1u" path="res://Fighters/Kaede/Sprites/180-0.png" id="284_7p1pn"]
 [ext_resource type="Resource" uid="uid://do4rbierxdm3u" path="res://Fighters/Kaede/Hitboxes/2_Hitbox_Jump.tres" id="284_xhaa5"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/SoundQueue.cs" id="285_ltkr8"]
+[ext_resource type="Script" uid="uid://3uu6r0mhj3p3" path="res://Scripts/SakugaEngine/Components/SoundQueue.cs" id="285_ltkr8"]
 [ext_resource type="Texture2D" uid="uid://c7uk676kowt2" path="res://Fighters/Kaede/Sprites/180-1.png" id="285_p81x1"]
 [ext_resource type="Resource" uid="uid://wsc17lx57phl" path="res://Fighters/Kaede/Hitboxes/3_Hitbox_FDash.tres" id="285_tgbyt"]
 [ext_resource type="Resource" uid="uid://bpi3dgk313noc" path="res://Fighters/Kaede/Stances/Kaede_Stance_Main.tres" id="285_xbwpm"]
@@ -332,7 +332,7 @@
 [ext_resource type="Texture2D" uid="uid://bywklmgtyvltl" path="res://Fighters/Kaede/Sprites/800-0.png" id="291_fjuot"]
 [ext_resource type="Texture2D" uid="uid://bg2hmae3fi18u" path="res://Fighters/Kaede/Sprites/800-1.png" id="292_7j8nm"]
 [ext_resource type="Texture2D" uid="uid://clj3rlkwps41r" path="res://Fighters/Kaede/Sprites/800-2.png" id="293_ftt01"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/ExtraVariable.cs" id="294_608rl"]
+[ext_resource type="Script" uid="uid://be15qkgbfwwhd" path="res://Scripts/SakugaEngine/Components/ExtraVariable.cs" id="294_608rl"]
 [ext_resource type="Resource" uid="uid://cb88clwitcqb5" path="res://Fighters/Kaede/Hitboxes/11_Hitbox_2B_Active.tres" id="294_c38k2"]
 [ext_resource type="Texture2D" uid="uid://0mjwsxjoim0t" path="res://Fighters/Kaede/Sprites/800-3.png" id="294_nq2ts"]
 [ext_resource type="Texture2D" uid="uid://ch8hfeum2iy5b" path="res://Fighters/Kaede/Sprites/800-4.png" id="295_0uqno"]
@@ -2165,67 +2165,67 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_n2gjo"]
 _data = {
-"236236A": SubResource("Animation_l2unq"),
-"236C_1": SubResource("Animation_50qne"),
-"236C_2": SubResource("Animation_xud8q"),
-"236C_3": SubResource("Animation_ksv6f"),
-"2A": SubResource("42"),
-"2B": SubResource("43"),
-"2C": SubResource("44"),
-"5A": SubResource("15"),
-"5B": SubResource("16"),
-"5C": SubResource("17"),
-"623B": SubResource("Animation_hptys"),
-"623B_2": SubResource("Animation_trg78"),
-"66B": SubResource("48"),
-"Block_Air_Enter": SubResource("40"),
-"Block_Air_Exit": SubResource("41"),
-"Block_Crouch_Enter": SubResource("36"),
-"Block_Crouch_Exit": SubResource("37"),
-"Block_Neutral_Enter": SubResource("33"),
-"Block_Neutral_Exit": SubResource("34"),
-"Blocking_Air": SubResource("Animation_6phi8"),
-"Blocking_Crouch": SubResource("Animation_xt3e1"),
-"Blocking_Neutral": SubResource("Animation_rdv84"),
-"Blockstun_Air": SubResource("39"),
-"Blockstun_Crouch": SubResource("38"),
-"Blockstun_Neutral": SubResource("35"),
-"Crouch_Enter": SubResource("5"),
-"Crouch_Exit": SubResource("7"),
-"Crouching": SubResource("6"),
-"Dash_Backwards": SubResource("8"),
-"Dash_Forward": SubResource("9"),
-"Falling": SubResource("10"),
-"Hit_Air_Strong": SubResource("20"),
-"Hit_Air_Weak": SubResource("22"),
-"Hit_Crouch_Weak": SubResource("21"),
-"Hit_Dizzy": SubResource("32"),
-"Hit_Down": SubResource("25"),
-"Hit_Faint": SubResource("31"),
-"Hit_Falling": SubResource("23"),
-"Hit_GetUp": SubResource("26"),
-"Hit_OnTheGround_1": SubResource("24"),
-"Hit_Spin_1": SubResource("28"),
-"Hit_Spin_2": SubResource("29"),
-"Hit_Strong": SubResource("19"),
-"Hit_Sweep_1": SubResource("30"),
-"Hit_Sweep_2": SubResource("27"),
-"Hit_Weak": SubResource("18"),
-"Idle": SubResource("1"),
-"Jump_Backwards": SubResource("13"),
-"Jump_Forward": SubResource("12"),
-"Jump_Neutral": SubResource("11"),
-"Landing": SubResource("14"),
-"RESET": SubResource("2"),
-"Taunt": SubResource("Animation_iwlrq"),
-"Throw_Enter": SubResource("Animation_vawbm"),
-"Throw_Reaction": SubResource("Animation_d1oj1"),
-"Throw_Sequence": SubResource("Animation_3ljre"),
-"Walk_Backwards": SubResource("4"),
-"Walk_Forward": SubResource("3"),
-"j_5A": SubResource("45"),
-"j_5B": SubResource("46"),
-"j_5C": SubResource("47")
+&"236236A": SubResource("Animation_l2unq"),
+&"236C_1": SubResource("Animation_50qne"),
+&"236C_2": SubResource("Animation_xud8q"),
+&"236C_3": SubResource("Animation_ksv6f"),
+&"2A": SubResource("42"),
+&"2B": SubResource("43"),
+&"2C": SubResource("44"),
+&"5A": SubResource("15"),
+&"5B": SubResource("16"),
+&"5C": SubResource("17"),
+&"623B": SubResource("Animation_hptys"),
+&"623B_2": SubResource("Animation_trg78"),
+&"66B": SubResource("48"),
+&"Block_Air_Enter": SubResource("40"),
+&"Block_Air_Exit": SubResource("41"),
+&"Block_Crouch_Enter": SubResource("36"),
+&"Block_Crouch_Exit": SubResource("37"),
+&"Block_Neutral_Enter": SubResource("33"),
+&"Block_Neutral_Exit": SubResource("34"),
+&"Blocking_Air": SubResource("Animation_6phi8"),
+&"Blocking_Crouch": SubResource("Animation_xt3e1"),
+&"Blocking_Neutral": SubResource("Animation_rdv84"),
+&"Blockstun_Air": SubResource("39"),
+&"Blockstun_Crouch": SubResource("38"),
+&"Blockstun_Neutral": SubResource("35"),
+&"Crouch_Enter": SubResource("5"),
+&"Crouch_Exit": SubResource("7"),
+&"Crouching": SubResource("6"),
+&"Dash_Backwards": SubResource("8"),
+&"Dash_Forward": SubResource("9"),
+&"Falling": SubResource("10"),
+&"Hit_Air_Strong": SubResource("20"),
+&"Hit_Air_Weak": SubResource("22"),
+&"Hit_Crouch_Weak": SubResource("21"),
+&"Hit_Dizzy": SubResource("32"),
+&"Hit_Down": SubResource("25"),
+&"Hit_Faint": SubResource("31"),
+&"Hit_Falling": SubResource("23"),
+&"Hit_GetUp": SubResource("26"),
+&"Hit_OnTheGround_1": SubResource("24"),
+&"Hit_Spin_1": SubResource("28"),
+&"Hit_Spin_2": SubResource("29"),
+&"Hit_Strong": SubResource("19"),
+&"Hit_Sweep_1": SubResource("30"),
+&"Hit_Sweep_2": SubResource("27"),
+&"Hit_Weak": SubResource("18"),
+&"Idle": SubResource("1"),
+&"Jump_Backwards": SubResource("13"),
+&"Jump_Forward": SubResource("12"),
+&"Jump_Neutral": SubResource("11"),
+&"Landing": SubResource("14"),
+&"RESET": SubResource("2"),
+&"Taunt": SubResource("Animation_iwlrq"),
+&"Throw_Enter": SubResource("Animation_vawbm"),
+&"Throw_Reaction": SubResource("Animation_d1oj1"),
+&"Throw_Sequence": SubResource("Animation_3ljre"),
+&"Walk_Backwards": SubResource("4"),
+&"Walk_Forward": SubResource("3"),
+&"j_5A": SubResource("45"),
+&"j_5B": SubResource("46"),
+&"j_5C": SubResource("47")
 }
 
 [node name="Kaede_Viewer" type="Node3D" node_paths=PackedStringArray("HitStun", "HitStop", "MoveBuffer", "PushForce", "HorizontalBounce", "VerticalBounce", "Body", "Inputs", "Variables", "Animator", "Stance", "Tracker", "Sounds", "Graphics")]
@@ -2271,7 +2271,7 @@ region_rect = Rect2(711.25, 46.25, 2, 0)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Graphics/Mesh/KaedeGraphics"]
 libraries = {
-"": SubResource("AnimationLibrary_n2gjo")
+&"": SubResource("AnimationLibrary_n2gjo")
 }
 
 [node name="HitboxViewer" parent="." node_paths=PackedStringArray("body") instance=ExtResource("4")]

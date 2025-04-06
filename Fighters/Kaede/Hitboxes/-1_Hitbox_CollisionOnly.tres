@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="HitboxSettings" load_steps=2 format=3 uid="uid://du8n0gtee4iwi"]
 
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxSettings.cs" id="1"]
+[ext_resource type="Script" uid="uid://dxuwyhds75mce" path="res://Scripts/SakugaEngine/Resources/HitboxSettings.cs" id="1"]
 
 [resource]
 script = ExtResource("1")

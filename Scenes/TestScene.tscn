@@ -1,12 +1,12 @@
 [gd_scene load_steps=13 format=3 uid="uid://dr8cly8qy5pg2"]
 
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Game/GameManager.cs" id="1_ocl0l"]
+[ext_resource type="Script" uid="uid://xmbdtaq2pt7v" path="res://Scripts/SakugaEngine/Game/GameManager.cs" id="1_ocl0l"]
 [ext_resource type="PackedScene" uid="uid://blnwu2aaw8s60" path="res://Scenes/Sakuga_UI.tscn" id="1_wexcy"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/FighterCamera.cs" id="2_dh05b"]
+[ext_resource type="Script" uid="uid://vkei5fxedpo3" path="res://Scripts/SakugaEngine/Components/FighterCamera.cs" id="2_dh05b"]
 [ext_resource type="Texture2D" uid="uid://6ctweo6uvot8" path="res://icon.svg" id="3_x54tm"]
 [ext_resource type="Resource" uid="uid://c8s3ip7gkhwq6" path="res://Roster.tres" id="5_pp7s2"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/GameMonitor.cs" id="6_d185x"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Game/SakugaRollbackManager.cs" id="6_jke5l"]
+[ext_resource type="Script" uid="uid://8r60yfod0dqc" path="res://Scripts/SakugaEngine/Components/GameMonitor.cs" id="6_d185x"]
+[ext_resource type="Script" uid="uid://j5t0o28p2u6u" path="res://Scripts/SakugaEngine/Game/SakugaRollbackManager.cs" id="6_jke5l"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_cc1ax"]
 

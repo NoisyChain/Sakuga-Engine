@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dduf0jsq56ggk"]
 
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Utils/HitboxViewer.cs" id="1"]
+[ext_resource type="Script" uid="uid://cv30pdvv2k8fy" path="res://Scripts/SakugaEngine/Utils/HitboxViewer.cs" id="1"]
 [ext_resource type="Texture2D" uid="uid://cq4kjdi28thw7" path="res://Sprites/SPR_Hitbox.png" id="2"]
 [ext_resource type="Texture2D" uid="uid://b6o81hgy21rv1" path="res://Sprites/Pivot.png" id="2_dg03u"]
 

@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://csdgicelabg4n"]
 
 [ext_resource type="Texture2D" uid="uid://cq4kjdi28thw7" path="res://Sprites/SPR_Hitbox.png" id="1"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Utils/HitboxPreviewer.cs" id="2"]
+[ext_resource type="Script" uid="uid://kpk4r6112ckj" path="res://Scripts/SakugaEngine/Utils/HitboxPreviewer.cs" id="2"]
 [ext_resource type="Texture2D" uid="uid://b6o81hgy21rv1" path="res://Sprites/Pivot.png" id="2_xui34"]
 
 [node name="HitboxPreviewer" type="Node3D" node_paths=PackedStringArray("hitboxGraphics")]

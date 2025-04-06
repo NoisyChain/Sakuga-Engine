@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="FighterStance" load_steps=9 format=3 uid="uid://cjsr2weyqwopy"]
 
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/FighterStance.cs" id="1_55coc"]
+[ext_resource type="Script" uid="uid://00dse0vp38l7" path="res://Scripts/SakugaEngine/Resources/FighterStance.cs" id="1_55coc"]
 [ext_resource type="Resource" uid="uid://bq6rlhndqo3wp" path="res://Fighters/Dummy/Moves/0_Dummy_MoveF.tres" id="1_c1uqo"]
 [ext_resource type="Resource" uid="uid://blm0xqfd2tk0v" path="res://Fighters/Dummy/Moves/1_Dummy_MoveB.tres" id="2_3l7yh"]
 [ext_resource type="Resource" uid="uid://dnygtxtib12ur" path="res://Fighters/Dummy/Moves/2_Dummy_JumpN.tres" id="3_ph8w4"]

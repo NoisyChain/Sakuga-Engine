@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="MoveSettings" load_steps=3 format=3 uid="uid://dnygtxtib12ur"]
 
 [ext_resource type="Resource" uid="uid://brssiq77ils1q" path="res://Fighters/Shared/Inputs/5_Input_tap8.tres" id="1_fihvm"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_d8bj7"]
+[ext_resource type="Script" uid="uid://gk1rkw667o4n" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_d8bj7"]
 
 [resource]
 script = ExtResource("2_d8bj7")
@@ -9,19 +9,29 @@ MoveName = "Neutral Jump"
 MoveState = 3
 Inputs = ExtResource("1_fihvm")
 SideChange = 0
-MoveEnd = 0
-MoveEndState = -1
 SuperGaugeRequired = 0
+BuildSuperGauge = 0
 HealthThreshold = Vector2i(0, 99999)
 SpendHealth = 0
-ChangeStance = -1
+DistanceArea = Vector2i(0, 999999)
 IsSequenceFromStates = PackedInt32Array()
+IgnoreStates = PackedInt32Array()
 CancelsTo = PackedInt32Array()
 KaraCancelsTo = PackedInt32Array()
 buttonChargeSequence = null
+ExtraVariablesRequirement = null
+ExtraVariablesChange = null
+MoveEnd = 0
+MoveEndState = -1
+ChangeStance = -1
+FrameLimit = -1
 SuperFlash = 0
+Priority = 1
 CanBeOverrided = true
 CanOverrideToSelf = false
-Priority = 1
+IgnoreSamePriority = true
+InterruptCornerPushback = false
+PriorityBuffer = false
+WaitForNullStates = true
 UseOnGround = true
 UseOnAir = false

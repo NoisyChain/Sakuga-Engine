@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="MoveSettings" load_steps=3 format=3 uid="uid://dhmyuy5f4qm0x"]
 
 [ext_resource type="Resource" uid="uid://biqgn48x4ggwh" path="res://Fighters/Shared/Inputs/1_Input_4.tres" id="1_bbljn"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_6f5y3"]
+[ext_resource type="Script" uid="uid://gk1rkw667o4n" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_6f5y3"]
 
 [resource]
 script = ExtResource("2_6f5y3")
@@ -9,19 +9,29 @@ MoveName = "Move Backwards"
 MoveState = 2
 Inputs = ExtResource("1_bbljn")
 SideChange = 2
-MoveEnd = 1
-MoveEndState = 0
 SuperGaugeRequired = 0
+BuildSuperGauge = 0
 HealthThreshold = Vector2i(0, 99999)
 SpendHealth = 0
-ChangeStance = -1
+DistanceArea = Vector2i(0, 999999)
 IsSequenceFromStates = PackedInt32Array()
+IgnoreStates = PackedInt32Array()
 CancelsTo = PackedInt32Array()
 KaraCancelsTo = PackedInt32Array()
 buttonChargeSequence = null
+ExtraVariablesRequirement = null
+ExtraVariablesChange = null
+MoveEnd = 1
+MoveEndState = 0
+ChangeStance = -1
+FrameLimit = -1
 SuperFlash = 0
+Priority = 0
 CanBeOverrided = true
 CanOverrideToSelf = false
-Priority = 0
+IgnoreSamePriority = true
+InterruptCornerPushback = false
+PriorityBuffer = false
+WaitForNullStates = true
 UseOnGround = true
 UseOnAir = false

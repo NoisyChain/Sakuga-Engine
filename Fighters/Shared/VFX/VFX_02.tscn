@@ -1,10 +1,10 @@
 [gd_scene load_steps=9 format=3 uid="uid://ci8tj0xdjw1dl"]
 
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/SakugaVFX.cs" id="1_kqvvl"]
+[ext_resource type="Script" uid="uid://d4e1sv1gy8i8a" path="res://Scripts/SakugaEngine/Components/SakugaVFX.cs" id="1_kqvvl"]
 [ext_resource type="Texture2D" uid="uid://b0s24dtiuorpx" path="res://Sprites/VFX/6075-0.png" id="2_7sun0"]
 [ext_resource type="AudioStream" uid="uid://cjeyumaq2g8wb" path="res://Fighters/Shared/Sounds/SFX/SFX_Clash.wav" id="4_44j2o"]
 [ext_resource type="Texture2D" uid="uid://dy8t34bg73laq" path="res://Sprites/VFX/6005-0.png" id="7_exqes"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/SoundQueue.cs" id="9_ukbny"]
+[ext_resource type="Script" uid="uid://3uu6r0mhj3p3" path="res://Scripts/SakugaEngine/Components/SoundQueue.cs" id="9_ukbny"]
 
 [sub_resource type="Animation" id="Animation_b6bqa"]
 resource_name = "GFX"
@@ -88,8 +88,8 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_bmuae"]
 _data = {
-"GFX": SubResource("Animation_b6bqa"),
-"RESET": SubResource("Animation_nv8md")
+&"GFX": SubResource("Animation_b6bqa"),
+&"RESET": SubResource("Animation_nv8md")
 }
 
 [node name="VFX" type="Node3D" node_paths=PackedStringArray("Player", "Graphics", "Sound")]

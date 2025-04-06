@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="FighterState" load_steps=10 format=3 uid="uid://bk10df3h23sqs"]
 
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="1_6duet"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="2_s0rim"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/StatePhysics.cs" id="3_2g7k5"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/StateTransitionSettings.cs" id="4_13o3u"]
+[ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="1_6duet"]
+[ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="2_s0rim"]
+[ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Resources/StatePhysics.cs" id="3_2g7k5"]
+[ext_resource type="Script" uid="uid://bia88bspuvxd" path="res://Scripts/SakugaEngine/Resources/StateTransitionSettings.cs" id="4_13o3u"]
 
 [sub_resource type="Resource" id="Resource_5e2ap"]
 script = ExtResource("1_6duet")

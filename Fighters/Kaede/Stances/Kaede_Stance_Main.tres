@@ -8,7 +8,7 @@
 [ext_resource type="Resource" uid="uid://2aifytfjpp26" path="res://Fighters/Kaede/Moves/5_Kaede_JumpForward.tres" id="6_6ue60"]
 [ext_resource type="Resource" uid="uid://c7bfv24bbrpki" path="res://Fighters/Kaede/Moves/6_Kaede_JumpBackwards.tres" id="7_6m2w4"]
 [ext_resource type="Resource" uid="uid://bjy4bx4dv4qd6" path="res://Fighters/Kaede/Moves/7_Kaede_AirDashForward.tres" id="8_yqhy4"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/FighterStance.cs" id="9"]
+[ext_resource type="Script" uid="uid://00dse0vp38l7" path="res://Scripts/SakugaEngine/Resources/FighterStance.cs" id="9"]
 [ext_resource type="Resource" uid="uid://v1wx455mfvn2" path="res://Fighters/Kaede/Moves/8_Kaede_AirDashBackwards.tres" id="9_euwau"]
 [ext_resource type="Resource" uid="uid://brha3nw12aj44" path="res://Fighters/Kaede/Moves/9_Kaede_Crouch.tres" id="10_wd1qc"]
 [ext_resource type="Resource" uid="uid://8cv3fxgdm0td" path="res://Fighters/Kaede/Moves/11_Kaede_AirJumpNeutral.tres" id="11_67cbe"]

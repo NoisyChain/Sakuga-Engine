@@ -1,11 +1,11 @@
 [gd_scene load_steps=29 format=3 uid="uid://domhsm5n4i2q1"]
 
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/SakugaSpawnable.cs" id="1_dhydb"]
+[ext_resource type="Script" uid="uid://ocvrnnvvf610" path="res://Scripts/SakugaEngine/Components/SakugaSpawnable.cs" id="1_dhydb"]
 [ext_resource type="Resource" uid="uid://b6a4cqdykhhg" path="res://Fighters/Shared/Shared_VFXList.tres" id="2_mmp44"]
 [ext_resource type="Resource" uid="uid://k31pv0ejfv2s" path="res://Fighters/Shared/Shared_SFXList.tres" id="3_mac18"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Utils/FOV_Correction.cs" id="3_vniop"]
+[ext_resource type="Script" uid="uid://cqd8ai3a40alf" path="res://Scripts/SakugaEngine/Utils/FOV_Correction.cs" id="3_vniop"]
 [ext_resource type="Resource" uid="uid://cwuwbygqhrjcb" path="res://Fighters/Kaede/Spawnables/0/States/0_Spawn.tres" id="4_a4ayh"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/FrameAnimator.cs" id="4_ao37v"]
+[ext_resource type="Script" uid="uid://bx452hpssiy38" path="res://Scripts/SakugaEngine/Components/FrameAnimator.cs" id="4_ao37v"]
 [ext_resource type="Resource" uid="uid://c8h8jltu6u5pb" path="res://Fighters/Shared/Shared_VoiceLines.tres" id="4_vrrx0"]
 [ext_resource type="Resource" uid="uid://iwa20g1seshl" path="res://Fighters/Kaede/Spawnables/0/States/1_Travel.tres" id="5_xqrih"]
 [ext_resource type="Resource" uid="uid://bgjd35gpl3n3l" path="res://Fighters/Kaede/Spawnables/0/States/2_Death.tres" id="6_1hw44"]
@@ -19,11 +19,11 @@
 [ext_resource type="Texture2D" uid="uid://bqn808dr1xgt5" path="res://Fighters/Kaede/Spawnables/0/Sprites/1210-7.png" id="14_c0qtb"]
 [ext_resource type="Texture2D" uid="uid://dlsfasp5w35ob" path="res://Fighters/Kaede/Spawnables/0/Sprites/1210-8.png" id="15_exb3l"]
 [ext_resource type="Texture2D" uid="uid://33q2at6e5oq7" path="res://Fighters/Kaede/Spawnables/0/Sprites/1211-0.png" id="16_g0add"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/SoundQueue.cs" id="18_d0kas"]
+[ext_resource type="Script" uid="uid://3uu6r0mhj3p3" path="res://Scripts/SakugaEngine/Components/SoundQueue.cs" id="18_d0kas"]
 [ext_resource type="Resource" uid="uid://dyam6gxn4slhs" path="res://Fighters/Kaede/Spawnables/0/Hitboxes/0_Hitbox_Spawnable_Basic.tres" id="230_by1ut"]
 [ext_resource type="PackedScene" uid="uid://dduf0jsq56ggk" path="res://Scenes/HitboxViewer.tscn" id="281_wh8kr"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Collision/PhysicsBody.cs" id="282_or0ge"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Components/FrameTimer.cs" id="302_0eu8l"]
+[ext_resource type="Script" uid="uid://hg0vcp1gy2ny" path="res://Scripts/SakugaEngine/Collision/PhysicsBody.cs" id="282_or0ge"]
+[ext_resource type="Script" uid="uid://cmq3cp1n0copp" path="res://Scripts/SakugaEngine/Components/FrameTimer.cs" id="302_0eu8l"]
 
 [sub_resource type="Animation" id="Animation_b1ng2"]
 resource_name = "Death"
@@ -114,9 +114,9 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_efsgm"]
 _data = {
-"Death": SubResource("Animation_b1ng2"),
-"Spawn": SubResource("Animation_7romc"),
-"Travel": SubResource("Animation_4g5j5")
+&"Death": SubResource("Animation_b1ng2"),
+&"Spawn": SubResource("Animation_7romc"),
+&"Travel": SubResource("Animation_4g5j5")
 }
 
 [node name="Kaede_Spawnable" type="Node3D" node_paths=PackedStringArray("LifeTime", "Body", "Animator", "Sounds", "Graphics")]

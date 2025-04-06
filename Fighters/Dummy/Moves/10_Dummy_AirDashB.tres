@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="MoveSettings" load_steps=3 format=3 uid="uid://cd4pnu30tsldm"]
 
 [ext_resource type="Resource" uid="uid://bcyy6q5j33eyu" path="res://Fighters/Shared/Inputs/10_Input_44.tres" id="1_s3xvh"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_sgxra"]
+[ext_resource type="Script" uid="uid://gk1rkw667o4n" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_sgxra"]
 
 [resource]
 script = ExtResource("2_sgxra")
@@ -9,19 +9,29 @@ MoveName = "Backwards Air Dash"
 MoveState = 8
 Inputs = ExtResource("1_s3xvh")
 SideChange = 0
-MoveEnd = 0
-MoveEndState = -1
 SuperGaugeRequired = 0
+BuildSuperGauge = 0
 HealthThreshold = Vector2i(0, 99999)
 SpendHealth = 0
-ChangeStance = -1
+DistanceArea = Vector2i(0, 999999)
 IsSequenceFromStates = PackedInt32Array()
+IgnoreStates = PackedInt32Array()
 CancelsTo = PackedInt32Array()
 KaraCancelsTo = PackedInt32Array()
 buttonChargeSequence = null
+ExtraVariablesRequirement = null
+ExtraVariablesChange = null
+MoveEnd = 0
+MoveEndState = -1
+ChangeStance = -1
+FrameLimit = -1
 SuperFlash = 0
+Priority = 2
 CanBeOverrided = false
 CanOverrideToSelf = false
-Priority = 2
+IgnoreSamePriority = true
+InterruptCornerPushback = false
+PriorityBuffer = false
+WaitForNullStates = true
 UseOnGround = false
 UseOnAir = true

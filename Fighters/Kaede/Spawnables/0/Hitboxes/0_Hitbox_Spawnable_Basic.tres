@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="HitboxSettings" load_steps=5 format=3 uid="uid://dyam6gxn4slhs"]
 
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxSettings.cs" id="1"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/HitboxElement.cs" id="2"]
+[ext_resource type="Script" uid="uid://dxuwyhds75mce" path="res://Scripts/SakugaEngine/Resources/HitboxSettings.cs" id="1"]
+[ext_resource type="Script" uid="uid://c0y740kryylcs" path="res://Scripts/SakugaEngine/Resources/HitboxElement.cs" id="2"]
 
 [sub_resource type="Resource" id="Resource_8567p"]
 script = ExtResource("2")

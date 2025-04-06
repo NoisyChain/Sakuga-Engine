@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bjld3ylk4qo41"]
 
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Utils/ChecksumCalculator.cs" id="1_v0lo7"]
+[ext_resource type="Script" uid="uid://ch04jo1cqtxeo" path="res://Scripts/SakugaEngine/Utils/ChecksumCalculator.cs" id="1_v0lo7"]
 
 [node name="Control" type="Control" node_paths=PackedStringArray("TextToConvert", "ChecksumField")]
 layout_mode = 3

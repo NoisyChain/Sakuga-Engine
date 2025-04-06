@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="MoveSettings" load_steps=10 format=3 uid="uid://b8rm50wunba6n"]
 
 [ext_resource type="Resource" uid="uid://b27cxpfq2cn4o" path="res://Fighters/Shared/Inputs/7_Input_tap9.tres" id="1_alim2"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/ExtraVariableChange.cs" id="1_cpv61"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_4p11v"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/ExtraVariableCondition.cs" id="2_etow4"]
+[ext_resource type="Script" uid="uid://dh03r2nvy3pmu" path="res://Scripts/SakugaEngine/Resources/ExtraVariableChange.cs" id="1_cpv61"]
+[ext_resource type="Script" uid="uid://gk1rkw667o4n" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_4p11v"]
+[ext_resource type="Script" uid="uid://cuch5yr7c7dag" path="res://Scripts/SakugaEngine/Resources/ExtraVariableCondition.cs" id="2_etow4"]
 
 [sub_resource type="Resource" id="Resource_m2dhn"]
 script = ExtResource("1_cpv61")

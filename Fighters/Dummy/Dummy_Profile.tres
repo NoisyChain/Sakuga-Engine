@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="FighterProfile" load_steps=3 format=3 uid="uid://dfma5gqaldi8g"]
 
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/FighterProfile.cs" id="1_hse2h"]
+[ext_resource type="Script" uid="uid://c5w04j5my3h8p" path="res://Scripts/SakugaEngine/Resources/FighterProfile.cs" id="1_hse2h"]
 [ext_resource type="Texture2D" uid="uid://6ctweo6uvot8" path="res://icon.svg" id="1_o44jh"]
 
 [resource]

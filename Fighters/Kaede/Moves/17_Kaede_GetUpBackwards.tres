@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="MoveSettings" load_steps=3 format=3 uid="uid://bxq1eqaqdsm3s"]
 
 [ext_resource type="Resource" uid="uid://biqgn48x4ggwh" path="res://Fighters/Shared/Inputs/1_Input_4.tres" id="1_5puws"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_wchk2"]
+[ext_resource type="Script" uid="uid://gk1rkw667o4n" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_wchk2"]
 
 [resource]
 script = ExtResource("2_wchk2")
@@ -10,6 +10,7 @@ MoveState = 10
 Inputs = ExtResource("1_5puws")
 SideChange = 2
 SuperGaugeRequired = 0
+BuildSuperGauge = 0
 HealthThreshold = Vector2i(0, 99999)
 SpendHealth = 0
 DistanceArea = Vector2i(0, 999999)

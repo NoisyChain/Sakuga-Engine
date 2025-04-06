@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="MotionInputs" load_steps=6 format=3 uid="uid://diuo4je084p3s"]
 
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/InputSequence.cs" id="1_adp2n"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/MotionInputs.cs" id="2_unfii"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/InputOption.cs" id="2_vwunu"]
+[ext_resource type="Script" uid="uid://87xpa7lbksa8" path="res://Scripts/SakugaEngine/Resources/InputSequence.cs" id="1_adp2n"]
+[ext_resource type="Script" uid="uid://di4jwsd3y2x8w" path="res://Scripts/SakugaEngine/Resources/MotionInputs.cs" id="2_unfii"]
+[ext_resource type="Script" uid="uid://ce6shsv0dij5v" path="res://Scripts/SakugaEngine/Resources/InputOption.cs" id="2_vwunu"]
 
 [sub_resource type="Resource" id="Resource_ehqku"]
 script = ExtResource("1_adp2n")

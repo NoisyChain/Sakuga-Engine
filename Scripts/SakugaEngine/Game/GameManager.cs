@@ -46,6 +46,8 @@ namespace SakugaEngine.Game
             if (Fighters == null) return;
             if (Monitor == null) return;
 
+            SeedViewer.Text = finalSeed.ToString();
+
             if (Input.IsActionJustPressed("toggle_hitboxes"))
                 Global.ShowHitboxes = !Global.ShowHitboxes;
         }
