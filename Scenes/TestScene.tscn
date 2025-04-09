@@ -1,7 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://dr8cly8qy5pg2"]
+[gd_scene load_steps=14 format=3 uid="uid://dr8cly8qy5pg2"]
 
 [ext_resource type="Script" uid="uid://xmbdtaq2pt7v" path="res://Scripts/SakugaEngine/Game/GameManager.cs" id="1_ocl0l"]
 [ext_resource type="PackedScene" uid="uid://blnwu2aaw8s60" path="res://Scenes/Sakuga_UI.tscn" id="1_wexcy"]
+[ext_resource type="PackedScene" uid="uid://ctu20phobjd06" path="res://Stages/AFF_Legacy/Meshes/aff_stage_legacy.tscn" id="2_6xh1p"]
 [ext_resource type="Script" uid="uid://vkei5fxedpo3" path="res://Scripts/SakugaEngine/Components/FighterCamera.cs" id="2_dh05b"]
 [ext_resource type="Texture2D" uid="uid://6ctweo6uvot8" path="res://icon.svg" id="3_x54tm"]
 [ext_resource type="Resource" uid="uid://c8s3ip7gkhwq6" path="res://Roster.tres" id="5_pp7s2"]
@@ -10,12 +11,12 @@
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_cc1ax"]
 
-[sub_resource type="Sky" id="Sky_sxoig"]
+[sub_resource type="Sky" id="Sky_6xh1p"]
 sky_material = SubResource("ProceduralSkyMaterial_cc1ax")
 
 [sub_resource type="Environment" id="Environment_iltph"]
 background_mode = 2
-sky = SubResource("Sky_sxoig")
+sky = SubResource("Sky_6xh1p")
 ambient_light_source = 3
 reflected_light_source = 2
 
@@ -58,15 +59,19 @@ text = "Seed"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Stage" type="Node3D" parent="."]
+[node name="AFF_Stage_Legacy" parent="." instance=ExtResource("2_6xh1p")]
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Stage"]
+[node name="Sakuga_Stage_Basic" type="Node3D" parent="."]
+visible = false
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Sakuga_Stage_Basic"]
 transform = Transform3D(0.722436, 0.540801, -0.430836, 0, 0.623102, 0.782141, 0.691437, -0.565047, 0.450152, 0, 2.2674, 0)
+shadow_enabled = true
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="Stage"]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Sakuga_Stage_Basic"]
 environment = SubResource("Environment_iltph")
 
-[node name="Floor" type="MeshInstance3D" parent="Stage"]
+[node name="Floor" type="MeshInstance3D" parent="Sakuga_Stage_Basic"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
 mesh = SubResource("BoxMesh_ql5gv")
 
@@ -83,7 +88,7 @@ process_priority = 1
 script = ExtResource("1_ocl0l")
 Monitor = NodePath("../GameMonitor")
 fightersList = ExtResource("5_pp7s2")
-player1Character = 1
+player1Character = 2
 FighterUI = NodePath("../CanvasLayer")
 Camera = NodePath("../Camera3D")
 SeedViewer = NodePath("../SeedViewer/Seed")

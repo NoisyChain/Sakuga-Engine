@@ -172,11 +172,13 @@ namespace PleaseResync
                     //TODO: replace it for something more optimized
                     uint limitFrames = TimeSync.MaxRollbackFrames - 1;
                     uint startingFrame = _timeSync.LocalFrame <= limitFrames ? 0 : (uint)_timeSync.LocalFrame - limitFrames;
+                    
                     uint finalFrame = (uint)(_timeSync.LocalFrame + _deviceInputs[localDeviceId].GetFrameDelay());
 
                     var combinedInput = new List<byte>();
 
                     for (uint i = startingFrame; i <= finalFrame; i++)
+                    //for (uint i = device.LastAckedInputFrame; i <= finalFrame; i++)
                     {
                         combinedInput.AddRange(GetDeviceInput((int)i, localDeviceId).Inputs);
                     }
@@ -184,6 +186,7 @@ namespace PleaseResync
                     device.SendMessage(new DeviceInputMessage
                     {
                         StartFrame = startingFrame,
+                        //StartFrame = device.LastAckedInputFrame,
                         EndFrame = finalFrame,
                         Advantage = _timeSync.LocalFrameAdvantage,
                         Input = combinedInput.ToArray()

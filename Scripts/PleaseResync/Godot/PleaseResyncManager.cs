@@ -28,6 +28,7 @@ namespace PleaseResync
 
         private string[] Adresses = {"127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1"};
         private ushort[] Ports = {7001, 7002, 7003, 7004};
+        private uint[] rollbackFrames = new uint[16];
 
         public IGameState sessionState;
 
@@ -243,7 +244,8 @@ namespace PleaseResync
                     SimulationText = FrameCounter + $" || ( {InputDebug} )";
                     if (!session.IsOffline())
                     {
-                        RollbackText = "RBF: " + session.RollbackFrames();
+                        rollbackFrames[session.Frame() % rollbackFrames.Length] = session.RollbackFrames();
+                        RollbackText = "RBF: " + GetAverageRollbackFrames();
                         PingText = "Ping: " + ShowPingInfo(PingId) + " ms";
                     }
 
@@ -254,6 +256,20 @@ namespace PleaseResync
                 mutex.ReleaseMutex();
                 Thread.Sleep((int)((1 / 60f) * 1000));
             }
+        }
+
+        private uint GetAverageRollbackFrames()
+        {
+            float sumFrames = 0f;
+            
+            for(int i = 0; i < rollbackFrames.Length; i++)
+            {
+                sumFrames += rollbackFrames[i];
+            }
+
+            sumFrames /= rollbackFrames.Length;
+
+            return (uint)Mathf.RoundToInt(sumFrames);
         }
 
         private void StartGameThread()

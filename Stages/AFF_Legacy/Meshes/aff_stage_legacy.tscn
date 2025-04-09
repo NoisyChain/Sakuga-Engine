@@ -1,0 +1,72 @@
+[gd_scene load_steps=6 format=3 uid="uid://ctu20phobjd06"]
+
+[ext_resource type="PackedScene" uid="uid://dfj4ov83m8s44" path="res://Stages/AFF_Legacy/Meshes/AFF_Stage_Legacy.gltf" id="1_l0vme"]
+[ext_resource type="Material" uid="uid://8ki38j7140br" path="res://Stages/AFF_Legacy/Materials/AFF_Legacy_MAT.tres" id="2_w81la"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_l0vme"]
+
+[sub_resource type="Sky" id="Sky_sxoig"]
+sky_material = SubResource("ProceduralSkyMaterial_l0vme")
+
+[sub_resource type="Environment" id="Environment_w81la"]
+background_mode = 2
+sky = SubResource("Sky_sxoig")
+ambient_light_source = 3
+reflected_light_source = 2
+
+[node name="Stage" instance=ExtResource("1_l0vme")]
+
+[node name="Cube" parent="." index="0"]
+surface_material_override/0 = ExtResource("2_w81la")
+
+[node name="Cylinder_003" parent="." index="1"]
+surface_material_override/0 = ExtResource("2_w81la")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." index="2"]
+transform = Transform3D(0.523532, -0.423177, 0.739483, -0.176238, 0.795373, 0.579932, -0.833579, -0.433938, 0.341824, 4.2018, 7.31484, 5.47539)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." index="3"]
+environment = SubResource("Environment_w81la")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="." index="4"]
+transform = Transform3D(1, 0, 0, 0, -0.330234, 0.943899, 0, -0.943899, -0.330234, -1.95616, 4, -6.02466)
+light_energy = 4.2
+spot_range = 8.0
+spot_attenuation = 0.8
+spot_angle = 25.0
+
+[node name="SpotLight3D4" type="SpotLight3D" parent="." index="5"]
+transform = Transform3D(1, 0, 0, 0, -0.330234, 0.943899, 0, -0.943899, -0.330234, 1.956, 4, -6.02494)
+light_energy = 4.2
+spot_range = 8.0
+spot_attenuation = 0.8
+spot_angle = 25.0
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="." index="6"]
+transform = Transform3D(1, 0, 0, 0, -0.330234, 0.943899, 0, -0.943899, -0.330234, -6.01817, 4, -6.02466)
+light_energy = 4.2
+spot_range = 8.0
+spot_attenuation = 0.8
+spot_angle = 25.0
+
+[node name="SpotLight3D5" type="SpotLight3D" parent="." index="7"]
+transform = Transform3D(1, 0, 0, 0, -0.330234, 0.943899, 0, -0.943899, -0.330234, 6.018, 4, -6.02494)
+light_energy = 4.2
+spot_range = 8.0
+spot_attenuation = 0.8
+spot_angle = 25.0
+
+[node name="SpotLight3D3" type="SpotLight3D" parent="." index="8"]
+transform = Transform3D(0.876861, -0.453774, -0.158758, 0, -0.330234, 0.943899, -0.480744, -0.827668, -0.28957, -9.35935, 4, -6.02466)
+light_energy = 4.2
+spot_range = 8.0
+spot_attenuation = 0.8
+spot_angle = 25.0
+
+[node name="SpotLight3D6" type="SpotLight3D" parent="." index="9"]
+transform = Transform3D(0.877146, 0.453235, 0.158721, -2.88945e-08, -0.330514, 0.943801, 0.480223, -0.827851, -0.289909, 9.359, 4, -6.02494)
+light_energy = 4.2
+spot_range = 8.0
+spot_attenuation = 0.8
+spot_angle = 25.0
