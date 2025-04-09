@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="FighterList" load_steps=4 format=3 uid="uid://bl30fi0muatu1"]
+
+[ext_resource type="PackedScene" uid="uid://dk22qgaiwdb7k" path="res://Stages/Sakuga Default/sakuga_stage_basic.tscn" id="1_h8ykn"]
+[ext_resource type="PackedScene" uid="uid://ctu20phobjd06" path="res://Stages/AFF_Legacy/Meshes/aff_stage_legacy.tscn" id="2_h7n5v"]
+[ext_resource type="Script" uid="uid://c1vwroelg1kwb" path="res://Scripts/SakugaEngine/Resources/FighterList.cs" id="4_i140w"]
+
+[resource]
+script = ExtResource("4_i140w")
+elements = Array[PackedScene]([ExtResource("1_h8ykn"), ExtResource("2_h7n5v")])

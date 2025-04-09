@@ -13,8 +13,10 @@ namespace SakugaEngine.Game
     {
         [Export] private GameMonitor Monitor;
         [Export] public FighterList fightersList;
+        [Export] public FighterList stagesList;
         [Export] public int player1Character;
         [Export] public int player2Character;
+        [Export] public int selectedStage;
         [Export] private CanvasLayer FighterUI;
         [Export] private FighterCamera Camera;
         [Export] Label SeedViewer;
@@ -104,6 +106,8 @@ namespace SakugaEngine.Game
 
             Frame = 0;
 
+            CreateStage(selectedStage);
+
             World = new PhysicsWorld();
             Nodes.Clear();
             Fighters = new SakugaFighter[2];
@@ -123,12 +127,18 @@ namespace SakugaEngine.Game
 
         public void CreateFighter(int characterIndex, int playerIndex)
         {
-            Node temp = fightersList.fighters[characterIndex].Instantiate(); 
+            Node temp = fightersList.elements[characterIndex].Instantiate(); 
             Fighters[playerIndex] = temp as SakugaFighter;
             AddActor(Fighters[playerIndex]);
             Fighters[playerIndex].Initialize(playerIndex);
             Fighters[playerIndex].SpawnablesSetup(this);
             Fighters[playerIndex].VFXSetup(this);
+        }
+
+        public void CreateStage(int stageIndex)
+        {
+            Node temp = stagesList.elements[stageIndex].Instantiate();
+            AddChild(temp);
         }
 
         public void AddActor(SakugaNode newNode, bool isPhysicsBody = true)

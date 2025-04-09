@@ -196,7 +196,7 @@ namespace PleaseResync
 
         private void GameLoop()
         {
-            while (true)
+            while (Started)
             {
                 mutex.WaitOne();
                 //canRender = false;
@@ -298,10 +298,10 @@ namespace PleaseResync
 
         public void CloseGame()
         {
+            Started = false;
+            Replay = false;
             sessionState = null;
             if (adapter != null) adapter.Close();
-            Replay = false;
-            Started = false;
             SimulationInfo.Text = "Disconnected";
         }
 
