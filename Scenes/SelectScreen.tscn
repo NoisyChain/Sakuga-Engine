@@ -3,9 +3,9 @@
 [ext_resource type="Script" uid="uid://cei16d41occwt" path="res://Scripts/SakugaEngine/UI/SelectScreen.cs" id="1_c6n7t"]
 [ext_resource type="Resource" uid="uid://c8s3ip7gkhwq6" path="res://Roster.tres" id="2_d1pnq"]
 [ext_resource type="Resource" uid="uid://bl30fi0muatu1" path="res://StageSelect.tres" id="3_qnnlv"]
-[ext_resource type="Texture2D" uid="uid://cb5vid1u71dw4" path="res://Fighters/Anippe/Models/Anippe_Sel.png" id="4_fdpms"]
 [ext_resource type="Texture2D" uid="uid://ccj7yra2c1xbp" path="res://Fighters/Kaede/Sprites/Kaede_Render.png" id="5_v0euj"]
 [ext_resource type="PackedScene" uid="uid://dw8jr0o1wc7hl" path="res://Scenes/Instances/CharSelectPortrait.tscn" id="6_5y3p4"]
+[ext_resource type="Texture2D" uid="uid://cm6vulqowfuwj" path="res://Fighters/Dummy/capsule_render.jpeg" id="6_d1pnq"]
 [ext_resource type="Texture2D" uid="uid://bmwubw4i8or18" path="res://Sprites/P1_CSS.png" id="9_d1pnq"]
 [ext_resource type="PackedScene" uid="uid://x5jtlftljtjd" path="res://Scenes/Instances/StageSelectPortrait.tscn" id="9_vt3nd"]
 [ext_resource type="Texture2D" uid="uid://6ctweo6uvot8" path="res://icon.svg" id="10_d1pnq"]
@@ -57,7 +57,7 @@ grow_vertical = 2
 layout_mode = 0
 offset_right = 596.0
 offset_bottom = 980.0
-texture = ExtResource("4_fdpms")
+texture = ExtResource("6_d1pnq")
 expand_mode = 1
 stretch_mode = 5
 
