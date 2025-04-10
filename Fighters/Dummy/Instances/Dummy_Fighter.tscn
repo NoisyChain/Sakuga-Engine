@@ -17,7 +17,7 @@
 [ext_resource type="Resource" uid="uid://c2qjtpci8vusc" path="res://Fighters/Dummy/States/13_Dummy_AirDash_Backwards.tres" id="10_7fd13"]
 [ext_resource type="Script" uid="uid://hg0vcp1gy2ny" path="res://Scripts/SakugaEngine/Collision/PhysicsBody.cs" id="12_bham4"]
 [ext_resource type="Resource" uid="uid://b5x4otrs0q04d" path="res://Fighters/Dummy/Hitboxes/0_Hitbox_Basic.tres" id="13_41tll"]
-[ext_resource type="PackedScene" uid="uid://dduf0jsq56ggk" path="res://Scenes/HitboxViewer.tscn" id="14_1fhq1"]
+[ext_resource type="PackedScene" uid="uid://dduf0jsq56ggk" path="res://Scenes/Instances/HitboxViewer.tscn" id="14_1fhq1"]
 [ext_resource type="Script" uid="uid://c3t6wbsc2kmvs" path="res://Scripts/SakugaEngine/Components/StanceManager.cs" id="15_h2acr"]
 [ext_resource type="Resource" uid="uid://cjsr2weyqwopy" path="res://Fighters/Dummy/Stances/0_Dummy_Stance_Main.tres" id="16_pa8cl"]
 [ext_resource type="Script" uid="uid://jxgdxccucllx" path="res://Scripts/SakugaEngine/Components/CombatTracker.cs" id="18_2fc62"]

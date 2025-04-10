@@ -13,7 +13,7 @@ namespace SakugaEngine.Game
     {
         [Export] private GameMonitor Monitor;
         [Export] public FighterList fightersList;
-        [Export] public FighterList stagesList;
+        [Export] public StageList stagesList;
         [Export] public int player1Character;
         [Export] public int player2Character;
         [Export] public int selectedStage;
@@ -127,7 +127,7 @@ namespace SakugaEngine.Game
 
         public void CreateFighter(int characterIndex, int playerIndex)
         {
-            Node temp = fightersList.elements[characterIndex].Instantiate(); 
+            Node temp = fightersList.elements[characterIndex].Instance.Instantiate();
             Fighters[playerIndex] = temp as SakugaFighter;
             AddActor(Fighters[playerIndex]);
             Fighters[playerIndex].Initialize(playerIndex);
@@ -137,7 +137,7 @@ namespace SakugaEngine.Game
 
         public void CreateStage(int stageIndex)
         {
-            Node temp = stagesList.elements[stageIndex].Instantiate();
+            Node temp = stagesList.elements[stageIndex].Instance.Instantiate();
             AddChild(temp);
         }
 

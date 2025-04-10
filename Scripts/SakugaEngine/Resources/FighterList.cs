@@ -6,7 +6,7 @@ namespace SakugaEngine.Resources
     [GlobalClass]
     public partial class FighterList : Resource
     {
-        [Export] public PackedScene[] elements;
+        [Export] public FighterElement[] elements;
     }
 }
 

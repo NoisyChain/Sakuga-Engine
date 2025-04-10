@@ -1,0 +1,299 @@
+[gd_scene load_steps=11 format=3 uid="uid://du8qdk1pkkc5e"]
+
+[ext_resource type="Script" uid="uid://cei16d41occwt" path="res://Scripts/SakugaEngine/UI/SelectScreen.cs" id="1_c6n7t"]
+[ext_resource type="Resource" uid="uid://c8s3ip7gkhwq6" path="res://Roster.tres" id="2_d1pnq"]
+[ext_resource type="Resource" uid="uid://bl30fi0muatu1" path="res://StageSelect.tres" id="3_qnnlv"]
+[ext_resource type="Texture2D" uid="uid://cb5vid1u71dw4" path="res://Fighters/Anippe/Models/Anippe_Sel.png" id="4_fdpms"]
+[ext_resource type="Texture2D" uid="uid://ccj7yra2c1xbp" path="res://Fighters/Kaede/Sprites/Kaede_Render.png" id="5_v0euj"]
+[ext_resource type="PackedScene" uid="uid://dw8jr0o1wc7hl" path="res://Scenes/Instances/CharSelectPortrait.tscn" id="6_5y3p4"]
+[ext_resource type="Texture2D" uid="uid://bmwubw4i8or18" path="res://Sprites/P1_CSS.png" id="9_d1pnq"]
+[ext_resource type="PackedScene" uid="uid://x5jtlftljtjd" path="res://Scenes/Instances/StageSelectPortrait.tscn" id="9_vt3nd"]
+[ext_resource type="Texture2D" uid="uid://6ctweo6uvot8" path="res://icon.svg" id="10_d1pnq"]
+[ext_resource type="Texture2D" uid="uid://btffyblli32iy" path="res://Sprites/P2_CSS.png" id="10_vt3nd"]
+
+[node name="Control" type="Control" node_paths=PackedStringArray("P1SelectedRender", "P2SelectedRender", "P1SelectedName", "P2SelectedName", "StageSelectedRender", "StageSelectedName", "charactersContainer", "stagesContainer", "P1Cursor", "P2Cursor", "P1SelectingStage", "P2SelectingStage", "StageCursor", "CharacterSelectMode", "StageSelectMode")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_c6n7t")
+fightersList = ExtResource("2_d1pnq")
+stagesList = ExtResource("3_qnnlv")
+P1SelectedRender = NodePath("P1SelectedRender")
+P2SelectedRender = NodePath("P2SelectedRender")
+P1SelectedName = NodePath("CharacterSelect/P1SelectedName")
+P2SelectedName = NodePath("CharacterSelect/P2SelectedName")
+StageSelectedRender = NodePath("StagePortrait")
+StageSelectedName = NodePath("StageSelect/StageName")
+charactersButtonElement = ExtResource("6_5y3p4")
+charactersContainer = NodePath("CharacterSelect/GridContainer")
+stagesButtonElement = ExtResource("9_vt3nd")
+stagesContainer = NodePath("StageSelect/HBoxContainer")
+P1Cursor = NodePath("CharacterSelect/P1_Cursor")
+P2Cursor = NodePath("CharacterSelect/P2_Cursor")
+P1SelectingStage = NodePath("StageSelect/P1Selecting")
+P2SelectingStage = NodePath("StageSelect/P2Selecting")
+StageCursor = NodePath("StageSelect/StageSelectCursor")
+CharacterSelectMode = NodePath("CharacterSelect")
+StageSelectMode = NodePath("StageSelect")
+
+[node name="StagePortrait" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -319.0
+offset_top = -286.0
+offset_right = 320.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="P1SelectedRender" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 596.0
+offset_bottom = 980.0
+texture = ExtResource("4_fdpms")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="P2SelectedRender" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -596.0
+offset_bottom = 980.0
+grow_horizontal = 0
+texture = ExtResource("5_v0euj")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CharacterSelect" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer" type="GridContainer" parent="CharacterSelect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -132.0
+offset_top = -110.0
+offset_right = 128.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 2
+metadata/_edit_group_ = true
+
+[node name="P1_Cursor" parent="CharacterSelect" instance=ExtResource("6_5y3p4")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 128.0
+offset_bottom = 128.0
+grow_horizontal = 1
+grow_vertical = 1
+texture = ExtResource("9_d1pnq")
+
+[node name="P2_Cursor" parent="CharacterSelect" instance=ExtResource("6_5y3p4")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 128.0
+offset_bottom = 128.0
+grow_horizontal = 1
+grow_vertical = 1
+texture = ExtResource("10_vt3nd")
+
+[node name="Title" type="Label" parent="CharacterSelect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -197.0
+offset_right = 197.0
+offset_bottom = 69.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 50
+text = "Character Select"
+horizontal_alignment = 1
+
+[node name="P1SelectedName" type="Label" parent="CharacterSelect"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -100.0
+offset_right = 414.0
+offset_bottom = -31.0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 50
+text = "Character Select"
+
+[node name="P2SelectedName" type="Label" parent="CharacterSelect"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -414.0
+offset_top = -100.0
+offset_right = -20.0
+offset_bottom = -31.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 50
+text = "Character Select"
+horizontal_alignment = 2
+
+[node name="StageSelect" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="StageSelect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -197.0
+offset_right = 197.0
+offset_bottom = 69.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 50
+text = "Stage Select"
+horizontal_alignment = 1
+
+[node name="StageName" type="Label" parent="StageSelect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -197.0
+offset_top = 507.0
+offset_right = 197.0
+offset_bottom = 576.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 50
+text = "AFF Legacy Stage"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="StageSelect"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -352.0
+offset_top = -112.0
+offset_right = 352.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="StageSelectCursor" type="Control" parent="StageSelect"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="TextureRect" type="TextureRect" parent="StageSelect/StageSelectCursor"]
+layout_mode = 1
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 120.0
+offset_bottom = 120.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("10_d1pnq")
+
+[node name="P1Selecting" type="Control" parent="StageSelect"]
+layout_mode = 1
+anchors_preset = 0
+offset_right = 194.0
+offset_bottom = 75.0
+
+[node name="ColorRect" type="ColorRect" parent="StageSelect/P1Selecting"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.265614, 0.478296, 1, 1)
+
+[node name="Label" type="Label" parent="StageSelect/P1Selecting"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 12.0
+offset_right = 143.0
+offset_bottom = 61.0
+theme_override_font_sizes/font_size = 35
+text = "Player 1"
+
+[node name="P2Selecting" type="Control" parent="StageSelect"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -194.0
+offset_bottom = 75.0
+grow_horizontal = 0
+
+[node name="ColorRect" type="ColorRect" parent="StageSelect/P2Selecting"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.806418, 0.171456, 0.231435, 1)
+
+[node name="Label" type="Label" parent="StageSelect/P2Selecting"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -149.0
+offset_top = 12.0
+offset_right = -14.0
+offset_bottom = 62.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 35
+text = "Player 2"
+horizontal_alignment = 2

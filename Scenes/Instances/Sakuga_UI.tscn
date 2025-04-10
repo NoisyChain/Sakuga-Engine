@@ -9,9 +9,9 @@
 [ext_resource type="Texture2D" uid="uid://0vthev3fa841" path="res://Sprites/meter_sprite.png" id="7_6huh3"]
 [ext_resource type="Texture2D" uid="uid://cirlpf1j23vao" path="res://Sprites/meter_sprite_fill.png" id="8_vbhb2"]
 [ext_resource type="Script" uid="uid://bxh004jlgsbbb" path="res://Scripts/SakugaEngine/UI/InputHistory.cs" id="9_vdd12"]
-[ext_resource type="PackedScene" uid="uid://cjtsw7lf6uyuy" path="res://Scenes/InputHistory_Pref_P1.tscn" id="10_kbxok"]
+[ext_resource type="PackedScene" uid="uid://cjtsw7lf6uyuy" path="res://Scenes/Instances/InputHistory_Pref_P1.tscn" id="10_kbxok"]
 [ext_resource type="Script" uid="uid://b6yldfeec8kg2" path="res://Scripts/SakugaEngine/Utils/ShowFPS.cs" id="11_a8ejj"]
-[ext_resource type="PackedScene" uid="uid://cljylybqkoasi" path="res://Scenes/InputHistory_Pref_P2.tscn" id="11_k2bmj"]
+[ext_resource type="PackedScene" uid="uid://cljylybqkoasi" path="res://Scenes/Instances/InputHistory_Pref_P2.tscn" id="11_k2bmj"]
 [ext_resource type="Script" uid="uid://c1l1of15r75hp" path="res://Scripts/PleaseResync/Godot/ConnectionUI.cs" id="12_7tlou"]
 [ext_resource type="Script" uid="uid://hm7bsfnod2vb" path="res://Scripts/SakugaEngine/UI/FadeScreen.cs" id="12_uu21w"]
 
@@ -64,6 +64,7 @@ offset_left = 512.0
 offset_right = 640.0
 offset_bottom = 128.0
 texture = ExtResource("2_h5vba")
+expand_mode = 1
 stretch_mode = 4
 
 [node name="P1LostHealth" type="TextureProgressBar" parent="GameHUD_Background/HealthBars"]

@@ -1,9 +1,26 @@
-[gd_resource type="Resource" script_class="FighterList" load_steps=4 format=3 uid="uid://bl30fi0muatu1"]
+[gd_resource type="Resource" script_class="StageList" load_steps=9 format=3 uid="uid://bl30fi0muatu1"]
 
 [ext_resource type="PackedScene" uid="uid://dk22qgaiwdb7k" path="res://Stages/Sakuga Default/sakuga_stage_basic.tscn" id="1_h8ykn"]
 [ext_resource type="PackedScene" uid="uid://ctu20phobjd06" path="res://Stages/AFF_Legacy/Meshes/aff_stage_legacy.tscn" id="2_h7n5v"]
-[ext_resource type="Script" uid="uid://c1vwroelg1kwb" path="res://Scripts/SakugaEngine/Resources/FighterList.cs" id="4_i140w"]
+[ext_resource type="Script" uid="uid://dw7uv2j4bk58i" path="res://Scripts/SakugaEngine/Resources/StageElement.cs" id="2_o2vfw"]
+[ext_resource type="Texture2D" uid="uid://76j3dxo635sm" path="res://Stages/Sakuga Default/Sakuga_Default_Thumbnail.png" id="2_ufopn"]
+[ext_resource type="Script" uid="uid://c2hiysdgxfpw6" path="res://Scripts/SakugaEngine/Resources/StageList.cs" id="4_ufopn"]
+[ext_resource type="Texture2D" uid="uid://bvyhebpl464x2" path="res://Stages/AFF_Legacy/Textures/AFF_Legacy_Thumbnail.png" id="5_i140w"]
+
+[sub_resource type="Resource" id="Resource_i140w"]
+script = ExtResource("2_o2vfw")
+Instance = ExtResource("1_h8ykn")
+Name = "Sakuga Default Stage"
+Thumbnail = ExtResource("2_ufopn")
+metadata/_custom_type_script = "uid://dw7uv2j4bk58i"
+
+[sub_resource type="Resource" id="Resource_07y5t"]
+script = ExtResource("2_o2vfw")
+Instance = ExtResource("2_h7n5v")
+Name = "AFF Legacy Stage"
+Thumbnail = ExtResource("5_i140w")
+metadata/_custom_type_script = "uid://dw7uv2j4bk58i"
 
 [resource]
-script = ExtResource("4_i140w")
-elements = Array[PackedScene]([ExtResource("1_h8ykn"), ExtResource("2_h7n5v")])
+script = ExtResource("4_ufopn")
+elements = Array[Object]([SubResource("Resource_i140w"), SubResource("Resource_07y5t")])

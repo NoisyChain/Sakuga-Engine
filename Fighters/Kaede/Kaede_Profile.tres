@@ -1,10 +1,12 @@
-[gd_resource type="Resource" script_class="FighterProfile" load_steps=3 format=3 uid="uid://dti25wauqaxwy"]
+[gd_resource type="Resource" script_class="FighterProfile" load_steps=4 format=3 uid="uid://dti25wauqaxwy"]
 
 [ext_resource type="Script" uid="uid://c5w04j5my3h8p" path="res://Scripts/SakugaEngine/Resources/FighterProfile.cs" id="1"]
 [ext_resource type="Texture2D" uid="uid://blel7u7bgt683" path="res://Fighters/Kaede/Sprites/9000-1.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://ccj7yra2c1xbp" path="res://Fighters/Kaede/Sprites/Kaede_Render.png" id="2_5ro76"]
 
 [resource]
 script = ExtResource("1")
 FighterName = "Kaede Hioh"
 ShortName = "Kaede"
+Render = ExtResource("2_5ro76")
 Portrait = ExtResource("2")

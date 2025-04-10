@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://dr8cly8qy5pg2"]
 
 [ext_resource type="Script" uid="uid://xmbdtaq2pt7v" path="res://Scripts/SakugaEngine/Game/GameManager.cs" id="1_ocl0l"]
-[ext_resource type="PackedScene" uid="uid://blnwu2aaw8s60" path="res://Scenes/Sakuga_UI.tscn" id="1_wexcy"]
+[ext_resource type="PackedScene" uid="uid://blnwu2aaw8s60" path="res://Scenes/Instances/Sakuga_UI.tscn" id="1_wexcy"]
 [ext_resource type="Script" uid="uid://vkei5fxedpo3" path="res://Scripts/SakugaEngine/Components/FighterCamera.cs" id="2_dh05b"]
 [ext_resource type="Resource" uid="uid://c8s3ip7gkhwq6" path="res://Roster.tres" id="5_pp7s2"]
 [ext_resource type="Resource" uid="uid://bl30fi0muatu1" path="res://StageSelect.tres" id="6_c264a"]
@@ -41,6 +41,7 @@ vertical_alignment = 1
 
 [node name="RollbackManager" type="Node" parent="." node_paths=PackedStringArray("GameManager")]
 script = ExtResource("6_jke5l")
+AutoStart = true
 GameManager = NodePath("../GameManager")
 InputSize = 2
 
@@ -53,7 +54,8 @@ script = ExtResource("1_ocl0l")
 Monitor = NodePath("../GameMonitor")
 fightersList = ExtResource("5_pp7s2")
 stagesList = ExtResource("6_c264a")
-player1Character = 1
+player1Character = 2
+player2Character = 1
 FighterUI = NodePath("../CanvasLayer")
 Camera = NodePath("../Camera3D")
 SeedViewer = NodePath("../SeedViewer/Seed")

@@ -6,6 +6,8 @@ namespace SakugaEngine.Game
 {
     public partial class SakugaRollbackManager : PleaseResyncManager
     {
+        [Export] private bool AutoStart;
+
         private const uint MAX_PLAYERS = 2;
         private const uint MAX_SPECTETORS = 10;
 
@@ -15,6 +17,13 @@ namespace SakugaEngine.Game
         {
             base._Ready();
             GameManager.InputSize = InputSize;
+            
+            if (AutoStart)
+            {
+                GameManager.player1Character = Global.Match.Player1.selectedCharacter;
+                GameManager.player2Character = Global.Match.Player2.selectedCharacter;
+                GameManager.selectedStage = Global.Match.selectedStage;
+            }
         }
 
         public override void OnlineGame(uint maxPlayers, uint ID)

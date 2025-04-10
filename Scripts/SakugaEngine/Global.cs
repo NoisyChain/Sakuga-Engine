@@ -5,6 +5,7 @@ namespace SakugaEngine
 {
     public static class Global
     {
+        public static MatchSetings Match;
         //Global settings
         public const int TicksPerSecond = 60;
         public const int SubSteps = 4;
@@ -63,6 +64,7 @@ namespace SakugaEngine
         public enum ObjectType{ SPAWNABLE, VFX }
         public enum SpawnableHitCheck{ OPPONENT, OWNER, BOTH }
         public enum PauseMode { PRESS, HOLD, LOCK }
+        public enum SelectedMode { ARCADE, VERSUS, ONLINE, TRAINING}
         //...
         public enum DirectionalInputs
         {
@@ -178,5 +180,22 @@ namespace SakugaEngine
             int dy = 0;
             return dx * dx + dy * dy;
         }
+    }
+
+    public struct MatchSetings
+    {
+        public MatchPlayerSettings Player1;
+        public MatchPlayerSettings Player2;
+        public int selectedStage;
+        public int selectedBGM;
+        public int roundsToWin;
+        public int roundTime;
+        public Global.SelectedMode selectedMode;
+    }
+    public struct MatchPlayerSettings
+    {
+        public int selectedCharacter;
+        public int selectedColor;
+        public int selectedDevice;
     }
 }
