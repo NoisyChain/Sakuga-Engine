@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="BGMList" load_steps=9 format=3 uid="uid://fxj4uvd0y37r"]
+
+[ext_resource type="Script" uid="uid://bldnphonm50nq" path="res://Scripts/SakugaEngine/Resources/BGMElement.cs" id="1_bkc4d"]
+[ext_resource type="Script" uid="uid://nup8upyemx4m" path="res://Scripts/SakugaEngine/Resources/BGMList.cs" id="1_g040y"]
+[ext_resource type="AudioStream" uid="uid://c77vg0hf8uesn" path="res://Songs/Strive_Rock_Parade.mp3" id="1_qotvk"]
+[ext_resource type="AudioStream" uid="uid://bo6naqlsneles" path="res://Songs/Xrd_High_Voltage.mp3" id="3_mn7hy"]
+[ext_resource type="AudioStream" uid="uid://dhal6ohm6i4s2" path="res://Songs/BlazBlue_Alexandrite_II.mp3" id="4_28mao"]
+
+[sub_resource type="Resource" id="Resource_i6s0c"]
+script = ExtResource("1_bkc4d")
+SongName = "Kaede's Theme"
+clip = ExtResource("1_qotvk")
+metadata/_custom_type_script = "uid://bldnphonm50nq"
+
+[sub_resource type="Resource" id="Resource_oj6ts"]
+script = ExtResource("1_bkc4d")
+SongName = "Dummy's Theme"
+clip = ExtResource("3_mn7hy")
+metadata/_custom_type_script = "uid://bldnphonm50nq"
+
+[sub_resource type="Resource" id="Resource_qotvk"]
+script = ExtResource("1_bkc4d")
+SongName = "Anippe's Theme"
+clip = ExtResource("4_28mao")
+metadata/_custom_type_script = "uid://bldnphonm50nq"
+
+[resource]
+script = ExtResource("1_g040y")
+elements = Array[Object]([SubResource("Resource_i6s0c"), SubResource("Resource_oj6ts"), SubResource("Resource_qotvk")])
+metadata/_custom_type_script = "uid://nup8upyemx4m"

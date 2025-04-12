@@ -65,6 +65,7 @@ namespace SakugaEngine
         public enum SpawnableHitCheck{ OPPONENT, OWNER, BOTH }
         public enum PauseMode { PRESS, HOLD, LOCK }
         public enum SelectedMode { ARCADE, VERSUS, ONLINE, TRAINING}
+        public enum BotDifficulty { BEGINNER, EASY, MEDIUM, HARD, VERY_HARD, EXPERT }
         //...
         public enum DirectionalInputs
         {
@@ -190,6 +191,7 @@ namespace SakugaEngine
         public int selectedBGM;
         public int roundsToWin;
         public int roundTime;
+        public Global.BotDifficulty botDifficulty;
         public Global.SelectedMode selectedMode;
     }
     public struct MatchPlayerSettings

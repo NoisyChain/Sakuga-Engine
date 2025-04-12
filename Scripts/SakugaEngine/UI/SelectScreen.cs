@@ -5,38 +5,44 @@ using System;
 
 public partial class SelectScreen : Node
 {
+    [ExportCategory("Settings")]
     [Export] private FighterList fightersList;
     [Export] private StageList stagesList;
+    [Export] private BGMList songsList;
+    [Export(PropertyHint.Enum, "Character_Select,Stage_Select")] private byte selectionMode;
+    [Export] private Control CharacterSelectMode;
+    [Export] private Control StageSelectMode;
+    [Export] private int P1Selected = 0;
+    [Export] private int P2Selected = 1;
+    [Export] private int StageSelected = 0;
+    [Export] private int BGMSelected = 0;
+
+    [ExportCategory("Character Select")]
+    
     [Export] private TextureRect P1SelectedRender;
     [Export] private TextureRect P2SelectedRender;
     [Export] private Label P1SelectedName;
     [Export] private Label P2SelectedName;
-    [Export] private TextureRect StageSelectedRender;
-    [Export] private Label StageSelectedName;
-
+    [Export] private TextureRect P1Cursor;
+    [Export] private TextureRect P2Cursor;
     [Export] private PackedScene charactersButtonElement;
     [Export] private GridContainer charactersContainer;
+    
+    [ExportCategory("Stage Select")]
+    [Export] private TextureRect StageSelectedRender;
+    [Export] private Label StageSelectedName;
+    [Export] private Label SongSelectedName;
+    [Export] private Control P1SelectingStage;
+    [Export] private Control P2SelectingStage;
+    [Export] private Control StageCursor;
     [Export] private PackedScene stagesButtonElement;
     [Export] private HBoxContainer stagesContainer;
 
-    [Export] private int P1Selected = 0;
-    [Export] private int P2Selected = 1;
-    [Export] private int StageSelected = 0;
-
+    //Hidden variables
     private bool P1Finished;
     private bool P2Finished;
     private bool isPlayer1SelectingStage = true;
     private bool AllSet = false;
-
-    [Export] private TextureRect P1Cursor;
-    [Export] private TextureRect P2Cursor;
-    [Export] private Control P1SelectingStage;
-    [Export] private Control P2SelectingStage;
-    [Export] private Control StageCursor;
-    [Export(PropertyHint.Enum, "Character_Select,Stage_Select")] private byte selectionMode;
-    [Export] private Control CharacterSelectMode;
-    [Export] private Control StageSelectMode;
-
     private TextureRect[] characterButtons;
     private TextureRect[] stageButtons;
 
@@ -69,124 +75,177 @@ public partial class SelectScreen : Node
     {
         if (AllSet) return;
         base._PhysicsProcess(delta);
-        if (!P1Finished)
-        {
-            if (Input.IsActionJustPressed("k1_up"))
-            {
-                P1Selected -= charactersContainer.Columns;
-                if (P1Selected < 0) P1Selected = 0;
-            }
-            if (Input.IsActionJustPressed("k1_down"))
-            {
-                P1Selected += charactersContainer.Columns;
-                if (P1Selected >= fightersList.elements.Length) 
-                    P1Selected = fightersList.elements.Length - 1;
-            }
-            if (Input.IsActionJustPressed("k1_left"))
-            {
-                P1Selected--;
-                if (P1Selected < 0) P1Selected = 0;
-            }
-            if (Input.IsActionJustPressed("k1_right"))
-            {
-                P1Selected++;
-                if (P1Selected >= fightersList.elements.Length) 
-                    P1Selected = fightersList.elements.Length - 1;
-            }
-            if (Input.IsActionJustPressed("k1_face_a"))
-            {
-                if (!P2Finished) isPlayer1SelectingStage = true;
-                P1Finished = true;
-            }
-        }
-        else
-        {
-            if (isPlayer1SelectingStage)
-            {
-                if (Input.IsActionJustPressed("k1_left"))
-                {
-                    StageSelected--;
-                    if (StageSelected < 0) StageSelected = 0;
-                }
-                if (Input.IsActionJustPressed("k1_right"))
-                {
-                    StageSelected++;
-                    if (StageSelected >= stagesList.elements.Length) 
-                        StageSelected = stagesList.elements.Length - 1;
-                }
-                if (Input.IsActionJustPressed("k1_face_a"))
-                {
-                    AllSet = true;
-                    MatchSetup();
-                    GetTree().ChangeSceneToFile("res://Scenes/TestScene.tscn");
-                }
-                
-                if (Input.IsActionJustPressed("k1_face_b"))
-                {
-                    P1Finished = false;
-                    P2Finished = false;
-                }
-            }
-        }
+        //Player 1 inputs
+        bool P1Up = Input.IsActionJustPressed("k1_up");
+        bool P1Down = Input.IsActionJustPressed("k1_down");
+        bool P1Left = Input.IsActionJustPressed("k1_left");
+        bool P1Right = Input.IsActionJustPressed("k1_right");
+        bool P1Confirm = Input.IsActionJustPressed("k1_face_a");
+        bool P1Return = Input.IsActionJustPressed("k1_face_b");
+        //Player 2 inputs
+        bool P2Up = Input.IsActionJustPressed("k2_up");
+        bool P2Down = Input.IsActionJustPressed("k2_down");
+        bool P2Left = Input.IsActionJustPressed("k2_left");
+        bool P2Right = Input.IsActionJustPressed("k2_right");
+        bool P2Confirm = Input.IsActionJustPressed("k2_face_a");
+        bool P2Return = Input.IsActionJustPressed("k2_face_b");
 
-        if (!P2Finished)
+        switch (selectionMode)
         {
-            if (Input.IsActionJustPressed("k2_up"))
-            {
-                P2Selected -= charactersContainer.Columns;
-                if (P2Selected < 0) P2Selected = 0;
-            }
-            if (Input.IsActionJustPressed("k2_down"))
-            {
-                P2Selected += charactersContainer.Columns;
-                if (P2Selected >= fightersList.elements.Length) 
-                    P2Selected = fightersList.elements.Length - 1;
-            }
-            if (Input.IsActionJustPressed("k2_left"))
-            {
-                P2Selected--;
-                if (P2Selected < 0) P2Selected = 0;
-            }
-            if (Input.IsActionJustPressed("k2_right"))
-            {
-                P2Selected++;
-                if (P2Selected >= fightersList.elements.Length) 
-                    P2Selected = fightersList.elements.Length - 1;
-            }
-            if (Input.IsActionJustPressed("k2_face_a"))
-            {
-                if (!P1Finished) isPlayer1SelectingStage = false;
-                P2Finished = true;
-            }
-        }
-        else
-        {
-            if (!isPlayer1SelectingStage)
-            {
-                if (Input.IsActionJustPressed("k2_left"))
+            case 0:
+                //Player 1 character selection
+                if (!P1Finished)
                 {
-                    StageSelected--;
-                    if (StageSelected < 0) StageSelected = 0;
+                    if (P1Up)
+                    {
+                        P1Selected -= charactersContainer.Columns;
+                        if (P1Selected < 0) P1Selected = 0;
+                    }
+                    if (P1Down)
+                    {
+                        P1Selected += charactersContainer.Columns;
+                        if (P1Selected >= fightersList.elements.Length) 
+                            P1Selected = fightersList.elements.Length - 1;
+                    }
+                    if (P1Left)
+                    {
+                        P1Selected--;
+                        if (P1Selected < 0) P1Selected = 0;
+                    }
+                    if (P1Right)
+                    {
+                        P1Selected++;
+                        if (P1Selected >= fightersList.elements.Length) 
+                            P1Selected = fightersList.elements.Length - 1;
+                    }
+                    if (P1Confirm)
+                    {
+                        if (!P2Finished) isPlayer1SelectingStage = true;
+                        P1Finished = true;
+                    }
                 }
-                if (Input.IsActionJustPressed("k2_right"))
+                else
                 {
-                    StageSelected++;
-                    if (StageSelected >= stagesList.elements.Length) 
-                        StageSelected = stagesList.elements.Length - 1;
+                    if (P1Return)
+                    {
+                        P1Finished = false;
+                    }
                 }
-                if (Input.IsActionJustPressed("k2_face_a"))
+                //Player 2 character selection
+                if (!P2Finished)
                 {
-                    AllSet = true;
-                    MatchSetup();
-                    GetTree().ChangeSceneToFile("res://Scenes/TestScene.tscn");
+                    if (P2Up)
+                    {
+                        P2Selected -= charactersContainer.Columns;
+                        if (P2Selected < 0) P2Selected = 0;
+                    }
+                    if (P2Down)
+                    {
+                        P2Selected += charactersContainer.Columns;
+                        if (P2Selected >= fightersList.elements.Length) 
+                            P2Selected = fightersList.elements.Length - 1;
+                    }
+                    if (P2Left)
+                    {
+                        P2Selected--;
+                        if (P2Selected < 0) P2Selected = 0;
+                    }
+                    if (P2Right)
+                    {
+                        P2Selected++;
+                        if (P2Selected >= fightersList.elements.Length) 
+                            P2Selected = fightersList.elements.Length - 1;
+                    }
+                    if (P2Confirm)
+                    {
+                        if (!P1Finished) isPlayer1SelectingStage = false;
+                        P2Finished = true;
+                    }
                 }
-                
-                if (Input.IsActionJustPressed("k2_face_b"))
+                else
                 {
-                    P1Finished = false;
-                    P2Finished = false;
+                    if (P2Return)
+                    {
+                        P2Finished = false;
+                    }
                 }
-            }
+                break;
+            case 1:
+                if (isPlayer1SelectingStage)
+                {
+                    if (P1Left)
+                    {
+                        StageSelected--;
+                        if (StageSelected < 0) StageSelected = 0;
+                    }
+                    if (P1Right)
+                    {
+                        StageSelected++;
+                        if (StageSelected >= stagesList.elements.Length) 
+                            StageSelected = stagesList.elements.Length - 1;
+                    }
+                    if (P1Up)
+                    {
+                        BGMSelected--;
+                        if (BGMSelected < 0) BGMSelected = 0;
+                    }
+                    if (P1Down)
+                    {
+                        BGMSelected++;
+                        if (BGMSelected >= songsList.elements.Length) 
+                            BGMSelected = songsList.elements.Length - 1;
+                    }
+                    if (P1Confirm)
+                    {
+                        AllSet = true;
+                        MatchSetup();
+                        GetTree().ChangeSceneToFile("res://Scenes/TestScene.tscn");
+                    }
+                    
+                    if (P1Return)
+                    {
+                        P1Finished = false;
+                        P2Finished = false;
+                    }
+                }
+                else
+                {
+                    if (P2Left)
+                    {
+                        StageSelected--;
+                        if (StageSelected < 0) StageSelected = 0;
+                    }
+                    if (P2Right)
+                    {
+                        StageSelected++;
+                        if (StageSelected >= stagesList.elements.Length) 
+                            StageSelected = stagesList.elements.Length - 1;
+                    }
+                    if (P2Up)
+                    {
+                        BGMSelected--;
+                        if (BGMSelected < 0) BGMSelected = 0;
+                    }
+                    if (P2Down)
+                    {
+                        BGMSelected++;
+                        if (BGMSelected >= songsList.elements.Length) 
+                            BGMSelected = songsList.elements.Length - 1;
+                    }
+                    if (P2Confirm)
+                    {
+                        AllSet = true;
+                        MatchSetup();
+                        GetTree().ChangeSceneToFile("res://Scenes/TestScene.tscn");
+                    }
+                    
+                    if (P2Return)
+                    {
+                        P1Finished = false;
+                        P2Finished = false;
+                    }
+                }
+                break;
         }
 
         selectionMode = P1Finished && P2Finished ? (byte)1 : (byte)0;
@@ -208,6 +267,7 @@ public partial class SelectScreen : Node
 
         StageSelectedRender.Texture = selectionMode == 1 ? stagesList.elements[StageSelected].Thumbnail : null;
         StageSelectedName.Text = stagesList.elements[StageSelected].Name;
+        SongSelectedName.Text = songsList.elements[BGMSelected].SongName;
     }
 
     void MatchSetup()
@@ -227,9 +287,10 @@ public partial class SelectScreen : Node
         };
         
         Global.Match.selectedStage = StageSelected;
-        Global.Match.selectedBGM = 0;
+        Global.Match.selectedBGM = BGMSelected;
         Global.Match.roundsToWin = 2;
         Global.Match.roundTime = 99;
+        Global.Match.botDifficulty = Global.BotDifficulty.MEDIUM;
         Global.Match.selectedMode = Global.SelectedMode.VERSUS;
     }
 }

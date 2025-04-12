@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dr8cly8qy5pg2"]
+[gd_scene load_steps=9 format=3 uid="uid://dr8cly8qy5pg2"]
 
 [ext_resource type="Script" uid="uid://xmbdtaq2pt7v" path="res://Scripts/SakugaEngine/Game/GameManager.cs" id="1_ocl0l"]
 [ext_resource type="PackedScene" uid="uid://blnwu2aaw8s60" path="res://Scenes/Instances/Sakuga_UI.tscn" id="1_wexcy"]
@@ -7,6 +7,7 @@
 [ext_resource type="Resource" uid="uid://bl30fi0muatu1" path="res://StageSelect.tres" id="6_c264a"]
 [ext_resource type="Script" uid="uid://8r60yfod0dqc" path="res://Scripts/SakugaEngine/Components/GameMonitor.cs" id="6_d185x"]
 [ext_resource type="Script" uid="uid://j5t0o28p2u6u" path="res://Scripts/SakugaEngine/Game/SakugaRollbackManager.cs" id="6_jke5l"]
+[ext_resource type="Resource" uid="uid://fxj4uvd0y37r" path="res://Soundtrack.tres" id="7_6xh1p"]
 
 [node name="Root" type="Node3D"]
 
@@ -48,16 +49,18 @@ InputSize = 2
 [node name="GameMonitor" type="Node" parent="."]
 script = ExtResource("6_d185x")
 
-[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("Monitor", "FighterUI", "Camera", "SeedViewer")]
+[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("Monitor", "FighterUI", "Camera", "BGMSource", "SeedViewer")]
 process_priority = 1
 script = ExtResource("1_ocl0l")
 Monitor = NodePath("../GameMonitor")
 fightersList = ExtResource("5_pp7s2")
 stagesList = ExtResource("6_c264a")
+songsList = ExtResource("7_6xh1p")
 player1Character = 2
 player2Character = 1
 FighterUI = NodePath("../CanvasLayer")
 Camera = NodePath("../Camera3D")
+BGMSource = NodePath("../BGM")
 SeedViewer = NodePath("../SeedViewer/Seed")
 
 [node name="Camera3D" type="Camera3D" parent="."]
@@ -72,3 +75,6 @@ maxOffset = Vector2(-15.5, 3.2)
 maxDistance = 14.5
 boundsAdditionalNear = 1.9
 boundsAdditionalFar = 1.95
+
+[node name="BGM" type="AudioStreamPlayer" parent="."]
+volume_db = -7.5

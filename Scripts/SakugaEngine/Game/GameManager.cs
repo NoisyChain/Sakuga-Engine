@@ -14,11 +14,14 @@ namespace SakugaEngine.Game
         [Export] private GameMonitor Monitor;
         [Export] public FighterList fightersList;
         [Export] public StageList stagesList;
+        [Export] public BGMList songsList;
         [Export] public int player1Character;
         [Export] public int player2Character;
         [Export] public int selectedStage;
+        [Export] public int selectedBGM;
         [Export] private CanvasLayer FighterUI;
         [Export] private FighterCamera Camera;
+        [Export] private AudioStreamPlayer BGMSource;
         [Export] Label SeedViewer;
         public uint InputSize;
 
@@ -48,10 +51,17 @@ namespace SakugaEngine.Game
             if (Fighters == null) return;
             if (Monitor == null) return;
 
+            if (!BGMSource.Playing) BGMSource.Play();
             SeedViewer.Text = finalSeed.ToString();
 
             if (Input.IsActionJustPressed("toggle_hitboxes"))
                 Global.ShowHitboxes = !Global.ShowHitboxes;
+        }
+
+        public void SetBGM()
+        {
+            if (BGMSource != null && !BGMSource.Playing && songsList.elements[selectedBGM].clip != null)
+                BGMSource.Stream = songsList.elements[selectedBGM].clip;
         }
 
         public void Render()

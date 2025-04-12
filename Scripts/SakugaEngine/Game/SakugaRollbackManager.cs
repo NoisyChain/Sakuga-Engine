@@ -23,21 +23,25 @@ namespace SakugaEngine.Game
                 GameManager.player1Character = Global.Match.Player1.selectedCharacter;
                 GameManager.player2Character = Global.Match.Player2.selectedCharacter;
                 GameManager.selectedStage = Global.Match.selectedStage;
+                GameManager.selectedBGM = Global.Match.selectedBGM;
             }
         }
 
         public override void OnlineGame(uint maxPlayers, uint ID)
         {
+            GameManager.SetBGM();
             StartOnlineGame(GameManager, maxPlayers, ID);
         }
 
         public override void LocalGame(uint maxPlayers)
         {
+            GameManager.SetBGM();
             StartOfflineGame(GameManager, maxPlayers);
         }
 
         public override void ReplayMode(uint maxPlayers)
         {
+            GameManager.SetBGM();
             StartReplay(GameManager, maxPlayers);
         }
     }
