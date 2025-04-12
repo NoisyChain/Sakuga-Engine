@@ -8,19 +8,19 @@
 
 [sub_resource type="Resource" id="Resource_i6s0c"]
 script = ExtResource("1_bkc4d")
-SongName = "Kaede's Theme"
+SongName = "Rock Parade"
 clip = ExtResource("1_qotvk")
 metadata/_custom_type_script = "uid://bldnphonm50nq"
 
 [sub_resource type="Resource" id="Resource_oj6ts"]
 script = ExtResource("1_bkc4d")
-SongName = "Dummy's Theme"
+SongName = "High Voltage"
 clip = ExtResource("3_mn7hy")
 metadata/_custom_type_script = "uid://bldnphonm50nq"
 
 [sub_resource type="Resource" id="Resource_qotvk"]
 script = ExtResource("1_bkc4d")
-SongName = "Anippe's Theme"
+SongName = "Alexandrite II"
 clip = ExtResource("4_28mao")
 metadata/_custom_type_script = "uid://bldnphonm50nq"
 
