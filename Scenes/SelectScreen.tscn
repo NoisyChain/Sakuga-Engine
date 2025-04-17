@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://du8qdk1pkkc5e"]
+[gd_scene load_steps=19 format=3 uid="uid://du8qdk1pkkc5e"]
 
 [ext_resource type="Script" uid="uid://cei16d41occwt" path="res://Scripts/SakugaEngine/UI/SelectScreen.cs" id="1_c6n7t"]
 [ext_resource type="Resource" uid="uid://c8s3ip7gkhwq6" path="res://Roster.tres" id="2_d1pnq"]
@@ -6,13 +6,18 @@
 [ext_resource type="Resource" uid="uid://fxj4uvd0y37r" path="res://Soundtrack.tres" id="4_i5d7u"]
 [ext_resource type="Texture2D" uid="uid://ccj7yra2c1xbp" path="res://Fighters/Kaede/Sprites/Kaede_Render.png" id="5_v0euj"]
 [ext_resource type="PackedScene" uid="uid://dw8jr0o1wc7hl" path="res://Scenes/Instances/CharSelectPortrait.tscn" id="6_5y3p4"]
-[ext_resource type="Texture2D" uid="uid://cm6vulqowfuwj" path="res://Fighters/Dummy/capsule_render.jpeg" id="6_d1pnq"]
+[ext_resource type="Texture2D" uid="uid://dovvnevt722ck" path="res://Sprites/Char_Random.png" id="6_pej5c"]
 [ext_resource type="Texture2D" uid="uid://76j3dxo635sm" path="res://Stages/Sakuga Default/Sakuga_Default_Thumbnail.png" id="6_vt3nd"]
+[ext_resource type="Texture2D" uid="uid://biofasvot2c7h" path="res://Sprites/Random_Render.png" id="7_7p58r"]
 [ext_resource type="Texture2D" uid="uid://bmwubw4i8or18" path="res://Sprites/P1_CSS.png" id="9_d1pnq"]
+[ext_resource type="Texture2D" uid="uid://dl6nahb8mfdi3" path="res://Sprites/Stage_Random.png" id="9_ly1kb"]
 [ext_resource type="PackedScene" uid="uid://x5jtlftljtjd" path="res://Scenes/Instances/StageSelectPortrait.tscn" id="9_vt3nd"]
+[ext_resource type="Texture2D" uid="uid://bumah6b3778a1" path="res://Sprites/Stage_Auto.png" id="10_8r0cl"]
 [ext_resource type="Texture2D" uid="uid://6ctweo6uvot8" path="res://icon.svg" id="10_d1pnq"]
 [ext_resource type="Texture2D" uid="uid://btffyblli32iy" path="res://Sprites/P2_CSS.png" id="10_vt3nd"]
 [ext_resource type="Texture2D" uid="uid://crn7f11jusxo0" path="res://Sprites/Song_Icon.png" id="11_83tgi"]
+[ext_resource type="Texture2D" uid="uid://c3cyqacvyusmv" path="res://Fighters/Dummy/capsule_render.png" id="12_7p58r"]
+[ext_resource type="Texture2D" uid="uid://cw7llwhkqnheo" path="res://Sprites/Arrow.png" id="18_7p58r"]
 
 [node name="Control" type="Control" node_paths=PackedStringArray("CharacterSelectMode", "StageSelectMode", "P1SelectedRender", "P2SelectedRender", "P1SelectedName", "P2SelectedName", "P1Cursor", "P2Cursor", "charactersContainer", "StageSelectedRender", "StageSelectedName", "SongSelectedName", "P1SelectingStage", "P2SelectingStage", "StageCursor", "stagesContainer")]
 layout_mode = 3
@@ -35,6 +40,8 @@ P1Cursor = NodePath("CharacterSelect/P1_Cursor")
 P2Cursor = NodePath("CharacterSelect/P2_Cursor")
 charactersButtonElement = ExtResource("6_5y3p4")
 charactersContainer = NodePath("CharacterSelect/GridContainer")
+randomCharPortrait = ExtResource("6_pej5c")
+randomCharRender = ExtResource("7_7p58r")
 StageSelectedRender = NodePath("StagePortrait")
 StageSelectedName = NodePath("StageSelect/StageName")
 SongSelectedName = NodePath("StageSelect/SongName")
@@ -43,6 +50,8 @@ P2SelectingStage = NodePath("StageSelect/P2Selecting")
 StageCursor = NodePath("StageSelect/StageSelectCursor")
 stagesButtonElement = ExtResource("9_vt3nd")
 stagesContainer = NodePath("StageSelect/HBoxContainer")
+randomStageThumbnail = ExtResource("9_ly1kb")
+autoStageThumbnail = ExtResource("10_8r0cl")
 
 [node name="StagePortrait" type="TextureRect" parent="."]
 layout_mode = 1
@@ -63,7 +72,7 @@ texture = ExtResource("6_vt3nd")
 layout_mode = 0
 offset_right = 596.0
 offset_bottom = 980.0
-texture = ExtResource("6_d1pnq")
+texture = ExtResource("12_7p58r")
 expand_mode = 1
 stretch_mode = 5
 
@@ -342,3 +351,66 @@ grow_horizontal = 0
 theme_override_font_sizes/font_size = 35
 text = "Player 2"
 horizontal_alignment = 2
+
+[node name="Arrow_Up" type="TextureRect" parent="StageSelect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -369.0
+offset_top = 38.0
+offset_right = -305.0
+offset_bottom = 102.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("18_7p58r")
+expand_mode = 1
+
+[node name="Arrow_Down" type="TextureRect" parent="StageSelect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -305.0
+offset_top = 209.0
+offset_right = -241.0
+offset_bottom = 273.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 3.14159
+texture = ExtResource("18_7p58r")
+expand_mode = 1
+
+[node name="Arrow_Right" type="TextureRect" parent="StageSelect"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_top = -64.0
+offset_right = 62.0
+grow_horizontal = 0
+grow_vertical = 0
+rotation = 1.5708
+texture = ExtResource("18_7p58r")
+expand_mode = 1
+
+[node name="Arrow_Left" type="TextureRect" parent="StageSelect"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = -2.0
+offset_right = 66.0
+offset_bottom = 62.0
+grow_vertical = 0
+rotation = 4.71239
+texture = ExtResource("18_7p58r")
+expand_mode = 1

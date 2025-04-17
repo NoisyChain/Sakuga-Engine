@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cm6vulqowfuwj"
-path="res://.godot/imported/capsule_render.jpeg-87b52a66e2a7d44c64b7796938665ed0.ctex"
+uid="uid://dovvnevt722ck"
+path="res://.godot/imported/Char_Random.png-fcc0097f5d52f6269501cb97016219a5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Fighters/Dummy/capsule_render.jpeg"
-dest_files=["res://.godot/imported/capsule_render.jpeg-87b52a66e2a7d44c64b7796938665ed0.ctex"]
+source_file="res://Sprites/Char_Random.png"
+dest_files=["res://.godot/imported/Char_Random.png-fcc0097f5d52f6269501cb97016219a5.ctex"]
 
 [params]
 
