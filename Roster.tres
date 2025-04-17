@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="FighterList" load_steps=12 format=3 uid="uid://c8s3ip7gkhwq6"]
+[gd_resource type="Resource" script_class="FighterList" load_steps=9 format=3 uid="uid://c8s3ip7gkhwq6"]
 
 [ext_resource type="PackedScene" uid="uid://b1ggpw8ltpaid" path="res://Fighters/Kaede/Instances/Fighter_Kaede.tscn" id="1_r4w1x"]
 [ext_resource type="Script" uid="uid://c1vwroelg1kwb" path="res://Scripts/SakugaEngine/Resources/FighterList.cs" id="1_x0sfh"]
@@ -6,8 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://3reeyb4tcc1i" path="res://Fighters/Dummy/Instances/Dummy_Fighter.tscn" id="2_vid08"]
 [ext_resource type="Script" uid="uid://dclkxgxahdy5l" path="res://Scripts/SakugaEngine/Resources/FighterElement.cs" id="3_m8lbm"]
 [ext_resource type="Resource" uid="uid://dfma5gqaldi8g" path="res://Fighters/Dummy/Dummy_Profile.tres" id="5_mamio"]
-[ext_resource type="PackedScene" uid="uid://c2c7rbmh4e4sd" path="res://Fighters/Anippe/Instances/Anippe_Fighter.tscn" id="6_mo2nk"]
-[ext_resource type="Resource" uid="uid://b7jbbmy7cbdc" path="res://Fighters/Anippe/Anippe_Profile.tres" id="7_m8lbm"]
 
 [sub_resource type="Resource" id="Resource_hd0eg"]
 script = ExtResource("3_m8lbm")
@@ -21,12 +19,6 @@ Instance = ExtResource("2_vid08")
 Profile = ExtResource("5_mamio")
 metadata/_custom_type_script = "uid://dclkxgxahdy5l"
 
-[sub_resource type="Resource" id="Resource_mamio"]
-script = ExtResource("3_m8lbm")
-Instance = ExtResource("6_mo2nk")
-Profile = ExtResource("7_m8lbm")
-metadata/_custom_type_script = "uid://dclkxgxahdy5l"
-
 [resource]
 script = ExtResource("1_x0sfh")
-elements = Array[Resource]([SubResource("Resource_hd0eg"), SubResource("Resource_w00mg"), SubResource("Resource_mamio")])
+elements = Array[Resource]([SubResource("Resource_hd0eg"), SubResource("Resource_w00mg")])
