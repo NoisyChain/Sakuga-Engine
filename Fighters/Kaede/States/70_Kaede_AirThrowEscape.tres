@@ -48,3 +48,4 @@ hitboxStates = Array[Object]([SubResource("Resource_uhee2")])
 animationEvents = null
 throwPivot = null
 stateTransitions = Array[Object]([SubResource("Resource_fyawy")])
+AIFlags = 1

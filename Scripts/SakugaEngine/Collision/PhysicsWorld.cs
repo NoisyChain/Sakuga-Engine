@@ -252,10 +252,10 @@ namespace SakugaEngine.Collision
                         
                         //Proximity block
                         if (myType == 2 /*Proximity Block*/ && otType == 0 /*Hurtbox*/ ) {
-                            bodyB.Parent.ProximityBlock();
+                            bodyB.Parent.ProximityBlock(boxSettingsA);
                         }
                         else if (otType == 2 /*Proximity Block*/ && myType == 0 /*Hurtbox*/ ) {
-                            bodyA.Parent.ProximityBlock();
+                            bodyA.Parent.ProximityBlock(boxSettingsB);
                         }
 
 						//Throws

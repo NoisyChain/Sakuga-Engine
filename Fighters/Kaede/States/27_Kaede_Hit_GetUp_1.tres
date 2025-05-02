@@ -33,3 +33,4 @@ hitboxStates = [SubResource("2")]
 animationEvents = null
 throwPivot = null
 stateTransitions = Array[Object]([SubResource("Resource_pc7tl")])
+AIFlags = 1

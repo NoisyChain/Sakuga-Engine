@@ -40,3 +40,4 @@ hitboxStates = [SubResource("1")]
 animationEvents = null
 throwPivot = null
 stateTransitions = null
+AIFlags = 0

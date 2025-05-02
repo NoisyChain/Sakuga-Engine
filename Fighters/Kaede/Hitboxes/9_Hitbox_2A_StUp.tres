@@ -133,12 +133,12 @@ BounceYTime = 0
 BounceYIntensity = 0
 BounceYState = 0
 
-[sub_resource type="Resource" id="Resource_igg1m"]
+[sub_resource type="Resource" id="Resource_e5h7y"]
 script = ExtResource("1_f3dkr")
 Center = Vector2i(10000, 2700)
 Size = Vector2i(15000, 2000)
 HitboxType = 2
-HitType = 0
+HitType = 2
 BaseDamage = 150
 ChipDamage = 0
 ChipDeath = false
@@ -202,4 +202,4 @@ BounceYState = 0
 script = ExtResource("2_qqnsx")
 PushboxCenter = Vector2i(0, 3000)
 PushboxSize = Vector2i(4000, 6000)
-Hitboxes = [SubResource("Resource_018kf"), SubResource("Resource_ql6fn"), SubResource("Resource_igg1m")]
+Hitboxes = [SubResource("Resource_018kf"), SubResource("Resource_ql6fn"), SubResource("Resource_e5h7y")]

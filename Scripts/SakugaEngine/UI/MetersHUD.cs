@@ -70,15 +70,12 @@ namespace SakugaEngine.UI
                     break;
             }
 
-            int refFrameAdv = CurrentFrameAdvantage;
-            int ownFrameAdv = -CurrentFrameAdvantage;
+            int finalFrameAdv = owner.Tracker.FrameAdvantage;// != 0 ? CurrentFrameAdvantage : CurrentFrameAdvantage;
 
-            int finalFrameAdv = (int)owner.Tracker.FrameAdvantage != 0 ? ownFrameAdv : refFrameAdv;
-
-            string frameAdvantageInfo = finalFrameAdv >= 0 ? 
+            string frameAdvantageInfo = finalFrameAdv >= 0 ?
                     ("+" + finalFrameAdv) : "" + finalFrameAdv;
-            
-            string frameAdvText = "("+frameAdvantageInfo+")";
+
+            string frameAdvText = "(" + frameAdvantageInfo + ")";
 
             FighterVariables vars = reference.Variables as FighterVariables;
 

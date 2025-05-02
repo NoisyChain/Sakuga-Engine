@@ -26,6 +26,8 @@ namespace SakugaEngine
 
         public bool CheckMoveConditions(int index)
         {
+            if (owner.Body.ContainsFrameProperty((byte)Global.FrameProperties.LOCK_MOVE)) return false;
+
             if (CurrentMove >= 0)
             {
                 if (CurrentMove == index)
@@ -38,7 +40,7 @@ namespace SakugaEngine
                 if (GetMove(index).PriorityBuffer && GetMove(index).Priority < GetCurrentMove().Priority) return false;
             }
 
-            int distance = Global.HorizontalDistance(owner.GetOpponent().Body.FixedPosition, owner.Body.FixedPosition);
+            int distance = Global.Distance(owner.GetOpponent().Body.FixedPosition, owner.Body.FixedPosition).X;
             bool isValidDistance = distance >= GetMove(index).DistanceArea.X && distance <= GetMove(index).DistanceArea.Y;
             if (!isValidDistance) return false;
 

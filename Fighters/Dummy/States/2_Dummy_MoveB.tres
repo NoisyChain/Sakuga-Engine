@@ -33,3 +33,4 @@ hitboxStates = null
 animationEvents = null
 throwPivot = null
 stateTransitions = Array[Object]([])
+AIFlags = 0

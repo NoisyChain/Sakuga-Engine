@@ -1,0 +1,320 @@
+[gd_resource type="Resource" script_class="AIBehavior" load_steps=31 format=3 uid="uid://ctkuakk7dip6y"]
+
+[ext_resource type="Script" uid="uid://c6pe4r5xpq803" path="res://Scripts/SakugaEngine/Resources/AI/AIActionPack.cs" id="1_gk3oj"]
+[ext_resource type="Script" uid="uid://bogcblgipf4f7" path="res://Scripts/SakugaEngine/Resources/AI/AICondition.cs" id="4_03ch4"]
+[ext_resource type="Script" uid="uid://bdbcupbr6mour" path="res://Scripts/SakugaEngine/Resources/AI/AIBehavior.cs" id="5_isow5"]
+
+[sub_resource type="Resource" id="Resource_t1rw4"]
+script = ExtResource("4_03ch4")
+Distance = Vector2i(65000, 0)
+UseOnGround = true
+UseOnAir = false
+SuperGaugeRequired = 0
+Probability = 10
+ActionMode = -1
+ActionsList = PackedInt32Array(2)
+CounterFlags = 0
+metadata/_custom_type_script = "uid://bogcblgipf4f7"
+
+[sub_resource type="Resource" id="Resource_41abm"]
+script = ExtResource("4_03ch4")
+Distance = Vector2i(75000, 0)
+UseOnGround = true
+UseOnAir = false
+SuperGaugeRequired = 0
+Probability = 10
+ActionMode = -1
+ActionsList = PackedInt32Array(5)
+CounterFlags = 0
+metadata/_custom_type_script = "uid://bogcblgipf4f7"
+
+[sub_resource type="Resource" id="Resource_4mnbe"]
+script = ExtResource("4_03ch4")
+Distance = Vector2i(75000, 0)
+UseOnGround = true
+UseOnAir = false
+SuperGaugeRequired = 0
+Probability = 6
+ActionMode = 0
+ActionsList = PackedInt32Array(5, 2)
+CounterFlags = 0
+metadata/_custom_type_script = "uid://bogcblgipf4f7"
+
+[sub_resource type="Resource" id="Resource_6xj6i"]
+script = ExtResource("4_03ch4")
+Distance = Vector2i(75000, 0)
+UseOnGround = true
+UseOnAir = false
+SuperGaugeRequired = 0
+Probability = 5
+ActionMode = 1
+ActionsList = PackedInt32Array(0)
+CounterFlags = 0
+metadata/_custom_type_script = "uid://bogcblgipf4f7"
+
+[sub_resource type="Resource" id="Resource_f0wxx"]
+script = ExtResource("1_gk3oj")
+HorizontalDistance = 75000
+Conditions = Array[Object]([SubResource("Resource_t1rw4"), SubResource("Resource_41abm"), SubResource("Resource_4mnbe"), SubResource("Resource_6xj6i")])
+metadata/_custom_type_script = "uid://c6pe4r5xpq803"
+
+[sub_resource type="Resource" id="Resource_2c6wa"]
+script = ExtResource("4_03ch4")
+Distance = Vector2i(55000, 0)
+UseOnGround = true
+UseOnAir = false
+SuperGaugeRequired = 0
+Probability = 10
+ActionMode = -1
+ActionsList = PackedInt32Array(0)
+CounterFlags = 0
+metadata/_custom_type_script = "uid://bogcblgipf4f7"
+
+[sub_resource type="Resource" id="Resource_qyayx"]
+script = ExtResource("4_03ch4")
+Distance = Vector2i(55000, 0)
+UseOnGround = true
+UseOnAir = false
+SuperGaugeRequired = 0
+Probability = 6
+ActionMode = 0
+ActionsList = PackedInt32Array(16)
+CounterFlags = 0
+metadata/_custom_type_script = "uid://bogcblgipf4f7"
+
+[sub_resource type="Resource" id="Resource_1nm2w"]
+script = ExtResource("4_03ch4")
+Distance = Vector2i(60000, 0)
+UseOnGround = true
+UseOnAir = false
+SuperGaugeRequired = 0
+Probability = 10
+ActionMode = -1
+ActionsList = PackedInt32Array(2)
+CounterFlags = 0
+metadata/_custom_type_script = "uid://bogcblgipf4f7"
+
+[sub_resource type="Resource" id="Resource_26iwr"]
+script = ExtResource("1_gk3oj")
+HorizontalDistance = 60000
+Conditions = Array[Object]([SubResource("Resource_2c6wa"), SubResource("Resource_qyayx"), SubResource("Resource_1nm2w")])
+metadata/_custom_type_script = "uid://c6pe4r5xpq803"
+
+[sub_resource type="Resource" id="Resource_wcyki"]
+script = ExtResource("4_03ch4")
+Distance = Vector2i(32000, 0)
+UseOnGround = true
+UseOnAir = false
+SuperGaugeRequired = 0
+Probability = 10
+ActionMode = -1
+ActionsList = PackedInt32Array(0)
+CounterFlags = 0
+metadata/_custom_type_script = "uid://bogcblgipf4f7"
+
+[sub_resource type="Resource" id="Resource_7bmri"]
+script = ExtResource("4_03ch4")
+Distance = Vector2i(45000, 0)
+UseOnGround = true
+UseOnAir = false
+SuperGaugeRequired = 0
+Probability = 10
+ActionMode = -1
+ActionsList = PackedInt32Array(5)
+CounterFlags = 0
+metadata/_custom_type_script = "uid://bogcblgipf4f7"
+
+[sub_resource type="Resource" id="Resource_1gtum"]
+script = ExtResource("4_03ch4")
+Distance = Vector2i(45000, 0)
+UseOnGround = true
+UseOnAir = false
+SuperGaugeRequired = 0
+Probability = 4
+ActionMode = -1
+ActionsList = PackedInt32Array(16)
+CounterFlags = 0
+metadata/_custom_type_script = "uid://bogcblgipf4f7"
+
+[sub_resource type="Resource" id="Resource_cexdi"]
+script = ExtResource("4_03ch4")
+Distance = Vector2i(45000, 0)
+UseOnGround = true
+UseOnAir = false
+SuperGaugeRequired = 0
+Probability = 8
+ActionMode = 0
+ActionsList = PackedInt32Array(2)
+CounterFlags = 0
+metadata/_custom_type_script = "uid://bogcblgipf4f7"
+
+[sub_resource type="Resource" id="Resource_2yj2e"]
+script = ExtResource("4_03ch4")
+Distance = Vector2i(45000, 0)
+UseOnGround = true
+UseOnAir = false
+SuperGaugeRequired = 0
+Probability = 4
+ActionMode = 0
+ActionsList = PackedInt32Array(5, 2)
+CounterFlags = 0
+metadata/_custom_type_script = "uid://bogcblgipf4f7"
+
+[sub_resource type="Resource" id="Resource_qd3le"]
+script = ExtResource("1_gk3oj")
+HorizontalDistance = 45000
+Conditions = Array[Object]([SubResource("Resource_wcyki"), SubResource("Resource_7bmri"), SubResource("Resource_1gtum"), SubResource("Resource_cexdi"), SubResource("Resource_2yj2e")])
+metadata/_custom_type_script = "uid://c6pe4r5xpq803"
+
+[sub_resource type="Resource" id="Resource_ft1py"]
+script = ExtResource("4_03ch4")
+Distance = Vector2i(6000, 0)
+UseOnGround = true
+UseOnAir = false
+SuperGaugeRequired = 0
+Probability = 10
+ActionMode = -1
+ActionsList = PackedInt32Array(9, 10, 5, 9, 10, 5, 9, 10, 11)
+CounterFlags = 0
+metadata/_custom_type_script = "uid://bogcblgipf4f7"
+
+[sub_resource type="Resource" id="Resource_isow5"]
+script = ExtResource("4_03ch4")
+Distance = Vector2i(6000, 0)
+UseOnGround = true
+UseOnAir = false
+SuperGaugeRequired = 0
+Probability = 7
+ActionMode = 0
+ActionsList = PackedInt32Array(9, 10, 17, 17, 17)
+CounterFlags = 0
+metadata/_custom_type_script = "uid://bogcblgipf4f7"
+
+[sub_resource type="Resource" id="Resource_3tjkd"]
+script = ExtResource("4_03ch4")
+Distance = Vector2i(6000, 0)
+UseOnGround = true
+UseOnAir = false
+SuperGaugeRequired = 0
+Probability = 4
+ActionMode = 0
+ActionsList = PackedInt32Array(15)
+CounterFlags = 0
+metadata/_custom_type_script = "uid://bogcblgipf4f7"
+
+[sub_resource type="Resource" id="Resource_03ch4"]
+script = ExtResource("4_03ch4")
+Distance = Vector2i(8500, 0)
+UseOnGround = true
+UseOnAir = false
+SuperGaugeRequired = 0
+Probability = 10
+ActionMode = -1
+ActionsList = PackedInt32Array(9, 12, 13, 14)
+CounterFlags = 0
+metadata/_custom_type_script = "uid://bogcblgipf4f7"
+
+[sub_resource type="Resource" id="Resource_r8ub0"]
+script = ExtResource("4_03ch4")
+Distance = Vector2i(8500, 0)
+UseOnGround = true
+UseOnAir = false
+SuperGaugeRequired = 0
+Probability = 5
+ActionMode = 0
+ActionsList = PackedInt32Array(10, 17, 17, 17)
+CounterFlags = 0
+metadata/_custom_type_script = "uid://bogcblgipf4f7"
+
+[sub_resource type="Resource" id="Resource_x0i8h"]
+script = ExtResource("4_03ch4")
+Distance = Vector2i(8500, 0)
+UseOnGround = true
+UseOnAir = false
+SuperGaugeRequired = 0
+Probability = 6
+ActionMode = 1
+ActionsList = PackedInt32Array(6)
+CounterFlags = 0
+metadata/_custom_type_script = "uid://bogcblgipf4f7"
+
+[sub_resource type="Resource" id="Resource_x8uhh"]
+script = ExtResource("4_03ch4")
+Distance = Vector2i(15000, 0)
+UseOnGround = true
+UseOnAir = false
+SuperGaugeRequired = 0
+Probability = 10
+ActionMode = -1
+ActionsList = PackedInt32Array(0)
+CounterFlags = 0
+metadata/_custom_type_script = "uid://bogcblgipf4f7"
+
+[sub_resource type="Resource" id="Resource_jb20a"]
+script = ExtResource("4_03ch4")
+Distance = Vector2i(15000, 0)
+UseOnGround = true
+UseOnAir = false
+SuperGaugeRequired = 0
+Probability = 3
+ActionMode = 0
+ActionsList = PackedInt32Array(11)
+CounterFlags = 0
+metadata/_custom_type_script = "uid://bogcblgipf4f7"
+
+[sub_resource type="Resource" id="Resource_k7vgb"]
+script = ExtResource("4_03ch4")
+Distance = Vector2i(15000, 0)
+UseOnGround = true
+UseOnAir = false
+SuperGaugeRequired = 0
+Probability = 4
+ActionMode = 1
+ActionsList = PackedInt32Array(1)
+CounterFlags = 0
+metadata/_custom_type_script = "uid://bogcblgipf4f7"
+
+[sub_resource type="Resource" id="Resource_at24f"]
+script = ExtResource("4_03ch4")
+Distance = Vector2i(20000, 0)
+UseOnGround = true
+UseOnAir = false
+SuperGaugeRequired = 0
+Probability = 10
+ActionMode = -1
+ActionsList = PackedInt32Array(0)
+CounterFlags = 0
+metadata/_custom_type_script = "uid://bogcblgipf4f7"
+
+[sub_resource type="Resource" id="Resource_8nqj8"]
+script = ExtResource("4_03ch4")
+Distance = Vector2i(20000, 0)
+UseOnGround = true
+UseOnAir = false
+SuperGaugeRequired = 0
+Probability = 4
+ActionMode = 1
+ActionsList = PackedInt32Array(3)
+CounterFlags = 0
+metadata/_custom_type_script = "uid://bogcblgipf4f7"
+
+[sub_resource type="Resource" id="Resource_4w0ro"]
+script = ExtResource("1_gk3oj")
+HorizontalDistance = 20000
+Conditions = Array[Object]([SubResource("Resource_ft1py"), SubResource("Resource_isow5"), SubResource("Resource_3tjkd"), SubResource("Resource_03ch4"), SubResource("Resource_r8ub0"), SubResource("Resource_x0i8h"), SubResource("Resource_x8uhh"), SubResource("Resource_jb20a"), SubResource("Resource_k7vgb"), SubResource("Resource_at24f"), SubResource("Resource_8nqj8")])
+metadata/_custom_type_script = "uid://c6pe4r5xpq803"
+
+[resource]
+script = ExtResource("5_isow5")
+DecisionRateFree = Vector2i(25, 45)
+DecisionRateBusy = Vector2i(60, 80)
+InputRandomness = Vector2i(3, 6)
+BlockingRate = 5
+TechingRate = 5
+PredictionQuality = 5
+LowHealth = 4000
+NearActions = SubResource("Resource_4w0ro")
+MidActions = SubResource("Resource_qd3le")
+FarActions = SubResource("Resource_26iwr")
+DistantActions = SubResource("Resource_f0wxx")
+metadata/_custom_type_script = "uid://bdbcupbr6mour"

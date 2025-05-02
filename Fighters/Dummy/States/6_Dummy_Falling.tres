@@ -41,3 +41,4 @@ hitboxStates = null
 animationEvents = null
 throwPivot = null
 stateTransitions = Array[Object]([SubResource("Resource_jnbfh")])
+AIFlags = 0

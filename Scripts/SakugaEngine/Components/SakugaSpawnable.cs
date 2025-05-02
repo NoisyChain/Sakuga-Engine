@@ -47,7 +47,7 @@ namespace SakugaEngine
             base.Render();
         }
 
-        protected override bool LifeEnded() { return !LifeTime.IsRunning(); }
+        public override bool LifeEnded() { return !LifeTime.IsRunning(); }
 
         public void Initialize(SakugaFighter owner)
         {
@@ -226,7 +226,7 @@ namespace SakugaEngine
             Body.PlayerSide = Body.IsLeftSide ? 1 : -1;
         }
         public void CounterHit(SakugaActor target, HitboxElement box, Vector2I contact){}
-        public void ProximityBlock(){}
+        public void ProximityBlock(HitboxElement box){}
         public void OnHitboxExit(){}
 
         public override void Serialize(BinaryWriter bw)

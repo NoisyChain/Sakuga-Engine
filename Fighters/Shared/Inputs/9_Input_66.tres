@@ -51,6 +51,6 @@ Inputs = Array[Object]([SubResource("Resource_p5mm0"), SubResource("Resource_u6q
 script = ExtResource("3_4h65q")
 ValidInputs = Array[Object]([SubResource("Resource_fnkja"), SubResource("Resource_rq0y0")])
 AbsoluteDirection = true
-InputBuffer = 4
+InputBuffer = 6
 DirectionalChargeLimit = 30
 ButtonChargeLimit = 30

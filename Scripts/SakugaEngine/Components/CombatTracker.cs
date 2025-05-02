@@ -45,21 +45,20 @@ namespace SakugaEngine
             CurrentCombo += damage;
             if (CurrentCombo > HighestCombo)
                 HighestCombo = CurrentCombo;
-            
+
             HitFrame = hitFrame;
             StunAtHit = hitStun;
             LastHitType = hitType;
+            FrameAdvantage = HitFrame - (int)StunAtHit;
         }
 
         public void UpdateFrameData()
         {
-            int selectFrameOrigin = TrackerOwner.Animator.StateType() == 4 ? 
-                                        (int)TrackerOwner.HitStun.TimeLeft : 
+            int selectFrameOrigin = TrackerOwner.Animator.StateType() == 4 ?
+                                        (int)TrackerOwner.HitStun.TimeLeft :
                                         (TrackerOwner.Animator.GetCurrentState().Duration - TrackerOwner.Animator.Frame);
-            
-            FrameData = TrackerOwner.Animator.StateType() <= 1 ? 0 : selectFrameOrigin;
-            FrameAdvantage = TrackerOwner.Tracker.HitFrame - (int)StunAtHit;
 
+            FrameData = TrackerOwner.Animator.StateType() <= 1 ? 0 : selectFrameOrigin;
             //FrameData = Mathf.Clamp(FrameData, 0, owner.Animator.GetCurrentState().Duration);
         }
 

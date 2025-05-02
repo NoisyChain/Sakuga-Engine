@@ -52,20 +52,21 @@ namespace SakugaEngine
         public enum MoveEndCondition { STATE_END, RELEASE_BUTTON, STATE_TYPE_CHANGE }
         public enum SideChangeMode { NONE, CHANGE_SIDE, INTERRUPT }
         public enum StateType { NULL, MOVEMENT, COMBAT, BLOCKING, HIT_REACTION, LOCKED }
-        public enum HitboxType{ HURTBOX, HITBOX, PROXIMITY_BLOCK, PROJECTILE, THROW, COUNTER, DEFLECT }
-        public enum HitType{ HIGH, MEDIUM, LOW, UNBLOCKABLE }
+        public enum HitboxType { HURTBOX, HITBOX, PROXIMITY_BLOCK, PROJECTILE, THROW, COUNTER, DEFLECT }
+        public enum HitType { HIGH, MEDIUM, LOW, UNBLOCKABLE }
         public enum HitstunType { BASIC = 1, KNOCKDOWN = 2, HARD_KNOCKDOWN = 3, DIZZINESS = 4, STAGGER = 5 }
         public enum ExtraVariableMode { IDLE, INCREASE, DECREASE }
         public enum ExtraVariableChange { SET, ADD, SUBTRACT }
         public enum ExtraVariableCompareMode { EQUAL, GREATER, GREATER_EQUAL, LESS, LESS_EQUAL }
         public enum FadeScreenMode { NONE, FADE_IN, FADE_OUT }
-        public enum RelativeTo{ WORLD, SELF, OPPONENT, FIGHTER, SPAWNABLE }
-        public enum SoundType{ SFX, VOICE }
-        public enum ObjectType{ SPAWNABLE, VFX }
-        public enum SpawnableHitCheck{ OPPONENT, OWNER, BOTH }
+        public enum RelativeTo { WORLD, SELF, OPPONENT, FIGHTER, SPAWNABLE }
+        public enum SoundType { SFX, VOICE }
+        public enum ObjectType { SPAWNABLE, VFX }
+        public enum SpawnableHitCheck { OPPONENT, OWNER, BOTH }
         public enum PauseMode { PRESS, HOLD, LOCK }
-        public enum SelectedMode { ARCADE, VERSUS, ONLINE, TRAINING}
-        public enum BotDifficulty { BEGINNER, EASY, MEDIUM, HARD, VERY_HARD, EXPERT }
+        public enum SelectedMode { ARCADE, VERSUS, ONLINE, TRAINING }
+        public enum BotDifficulty { BEGINNER, EASY, MEDIUM, HARD, VERY_HARD, PRO }
+        public enum BotMode {ANY = -1, AGGRESSIVE, DEFENSIVE}
         //...
         public enum DirectionalInputs
         {
@@ -101,14 +102,17 @@ namespace SakugaEngine
         }
 
         //Global bit flags
-        [Flags] public enum FrameProperties : byte
+        [Flags]
+        public enum FrameProperties : byte
         {
             DAMAGE_IMUNITY = 1 << 0,
             THROW_IMUNITY = 1 << 1,
             PROJECTILE_IMUNITY = 1 << 2,
-            FORCE_MOVE_CANCEL = 1 << 3
+            FORCE_MOVE_CANCEL = 1 << 3,
+            LOCK_MOVE = 1 << 4
         }
-        [Flags] public enum TransitionCondition : byte
+        [Flags]
+        public enum TransitionCondition : byte
         {
             STATE_END = 1 << 0,
             AT_FRAME = 1 << 1,
@@ -118,6 +122,23 @@ namespace SakugaEngine
             ON_LIFE_END = 1 << 5,
             ON_INPUT_COMMAND = 1 << 6,
             ON_DISTANCE = 1 << 7,
+        }
+        [Flags]
+        public enum AIFlags : ushort
+        {
+            IDLE = 1 << 0,
+            GROUND_ACTION = 1 << 1,
+            AIR_ACTION = 1 << 2,
+            MOVEMENT_STATE = 1 << 3,
+            ATTACK_STATE = 1 << 4,
+            HITSTUN_STATE = 1 << 5,
+            BLOCKSTUN_STATE = 1 << 6,
+            KNOCKED_DOWN = 1 << 7,
+            HIGH_ACTION = 1 << 8,
+            LOW_ACTION = 1 << 9,
+            CLOSE_ACTION = 1 << 10,
+            FAR_ACTION = 1 << 11,
+            INVULNERABLE = 1 << 12,
         }
 
         public static bool ShowHitboxes;
@@ -171,14 +192,30 @@ namespace SakugaEngine
             return value >= min && value <= max;
         }
 
+        public static Vector2I Distance(Vector2I a, Vector2I b)
+        {
+            int dx = b.X - a.X;
+            int dy = b.Y - a.Y;
+            
+            if (b.X < a.X) dx = a.X - b.X;
+            if (b.Y < a.Y) dx = a.Y - b.Y;
+
+            return new Vector2I(dx, dy);
+        }
+
         public static int HorizontalDistance(Vector2I a, Vector2I b)
         {
-            int ax = a.X - b.X;
-            if (ax == 0) return 0;
-            
-            int dx = ax / ax;
-            //int dy = a.Y - b.Y;
+            int dx = a.X - b.X;
             int dy = 0;
+
+            return dx * dx + dy * dy;
+        }
+
+        public static int VerticalDistance(Vector2I a, Vector2I b)
+        {
+            int dx = 0;
+            int dy = a.Y - b.Y;
+
             return dx * dx + dy * dy;
         }
     }

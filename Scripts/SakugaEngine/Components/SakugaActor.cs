@@ -27,7 +27,7 @@ namespace SakugaEngine
 
         public virtual SakugaFighter FighterReference() { return null; }
 
-        protected virtual bool LifeEnded() { return false; }
+        public virtual bool LifeEnded() { return false; }
         
         public override void Render()
         {
@@ -145,7 +145,7 @@ namespace SakugaEngine
                     ((conditions & (byte)Global.TransitionCondition.ON_INPUT_COMMAND) != 0 && 
                     Inputs.CheckMotionInputs(Animator.GetCurrentState().stateTransitions[i].Inputs));
                 //Condition 8: On Distance
-                int distance = Global.HorizontalDistance(FighterReference().GetOpponent().Body.FixedPosition, Body.FixedPosition);
+                int distance = Global.Distance(FighterReference().GetOpponent().Body.FixedPosition, Body.FixedPosition).X;
                 bool c8 = (conditions & (byte)Global.TransitionCondition.ON_DISTANCE) == 0 ||
                     ((conditions & (byte)Global.TransitionCondition.ON_DISTANCE) != 0 && 
                     distance >= Animator.GetCurrentState().stateTransitions[i].DistanceArea.X &&
@@ -198,10 +198,10 @@ namespace SakugaEngine
                             switch (changeSideEvent.Index)
                             {
                                 case 0:
-                                    FighterReference().ForcePlayerSide();
+                                    FighterReference().ForcePlayerSide(!FighterReference().GetOpponent().Body.IsLeftSide);
                                     break;
                                 case 1:
-                                    FighterReference().GetOpponent().ForcePlayerSide();
+                                    FighterReference().GetOpponent().ForcePlayerSide(FighterReference().Body.IsLeftSide);
                                     break;
                             }
                             break;
@@ -250,7 +250,10 @@ namespace SakugaEngine
                     break;
             }
             if (damageEvent.AffectDamageTracker)
+            {
                 reference.Tracker.UpdateTrackers((uint)finalDamage, 0, Global.MinHitstun, 0, false);
+                reference.GetOpponent().Tracker.FrameAdvantage = -(0 - Global.MinHitstun);
+            }
         }
 
         public void SoundEvents(PlaySoundAnimationEvent soundEvent)

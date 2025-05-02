@@ -40,3 +40,4 @@ hitboxStates = [SubResource("2")]
 animationEvents = null
 throwPivot = null
 stateTransitions = Array[Object]([SubResource("Resource_mywsi"), SubResource("Resource_haxmt")])
+AIFlags = 34

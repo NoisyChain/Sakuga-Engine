@@ -19,5 +19,7 @@ namespace SakugaEngine.Resources
         [Export] public AnimationEventsList[] animationEvents;
         [Export] public ThrowPivot[] throwPivot;
         [Export] public StateTransitionSettings[] stateTransitions;
+        [ExportSubgroup("AI Flags")]
+        [Export] public Global.AIFlags AIFlags;
     }
 }

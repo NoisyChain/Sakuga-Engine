@@ -22,6 +22,8 @@ namespace SakugaEngine
 
         [ExportCategory("Extras")]
         [Export] public FighterProfile Profile;
+        [Export] public AIBrain Brain;
+        [Export] public bool UseAI;
 
         public int LayerSorting = -1;
 
@@ -95,6 +97,7 @@ namespace SakugaEngine
             Stance.Initialize(this);
             Tracker.Initialize(this);
             Variables.Initialize();
+            Brain.Initialize(this);
 
             BlockStun = false;
             Uncrouched = false;
@@ -150,8 +153,9 @@ namespace SakugaEngine
                 Stance.ResetStance();
         }
 
-        public void ForcePlayerSide()
+        public void ForcePlayerSide(bool side)
         {
+            Body.IsLeftSide = side;
             Body.PlayerSide = Body.IsLeftSide ? 1 : -1;
         }
 
@@ -253,6 +257,7 @@ namespace SakugaEngine
         private void ResetDamageStatus()
         {
             if (HitstunType < (int)Global.HitstunType.STAGGER && 
+                Animator.StateType() != (int)Global.StateType.BLOCKING &&
                 Animator.StateType() != (int)Global.StateType.HIT_REACTION)
             {
                 HitStun.Stop(); 
@@ -394,6 +399,7 @@ namespace SakugaEngine
 
         public void HitstunRecover()
         {
+            if (LifeEnded()) return;
             if (HitStun.IsRunning()) return;
             if (Animator.StateType() != (int)Global.StateType.HIT_REACTION) return;
             if (HitstunType >= (int)Global.HitstunType.HARD_KNOCKDOWN) return;
@@ -582,12 +588,12 @@ namespace SakugaEngine
             var finalKnockbackTime = isGroundHit ? box.GroundHitKnockbackTime : box.AirHitKnockbackTime;
             var finalDamageKnockback = isGroundHit ? box.GroundHitKnockback : box.AirHitKnockback;
             var finalKnockbackGravity = isGroundHit ? box.GroundHitKnockbackGravity : box.AirHitKnockbackGravity;
-            var finalHitReaction = isGroundHit ? (IsCrouching() ? box.CrouchHitReaction : box.GroundHitReaction)  : box.AirHitReaction;
+            var finalHitReaction = isGroundHit ? (IsCrouching() ? box.CrouchHitReaction : box.GroundHitReaction) : box.AirHitReaction;
             //var damageFactor = GetOpponent().FighterVars.CurrentAttack - (FighterVars.CurrentDefense - 100);
             //var scaledDamage = box.BaseDamage * FighterVars.CurrentDamageScaling / 100;
             var finalDamage = FighterVars.CalculateCompleteDamage(box.BaseDamage, GetOpponent().FighterVars.CurrentAttack);
             bool CanTech = Animator.StateType() == 4 && !HitStun.IsRunning();
-            Body.IsLeftSide = !GetOpponent().Body.IsLeftSide;
+            ForcePlayerSide(!GetOpponent().Body.IsLeftSide);
             Body.IsMovable = false;
             HitstunType = isGroundHit ? (byte)box.GroundHitstunType : (byte)box.AirHitstunType;
             if (!isTrade)
@@ -641,9 +647,12 @@ namespace SakugaEngine
             {
                 FighterVars.RemoveDamageScaling((ushort)box.DamageScalingSubtract);
             }
-            Tracker.UpdateTrackers(
-                (uint)finalDamage, GetOpponent().Animator.GetCurrentState().Duration - GetOpponent().Animator.Frame, 
-                finalHitstunForReal, (int)box.HitType, CanTech);
+            int stunFrame = GetOpponent().Animator.GetCurrentState().Duration - GetOpponent().Animator.Frame;
+            Tracker.UpdateTrackers((uint)finalDamage, stunFrame, finalHitstunForReal, (int)box.HitType, CanTech);
+            //GetOpponent().Tracker.HitFrame = stunFrame;
+            //GetOpponent().Tracker.StunAtHit = finalHitstunForReal;
+            GetOpponent().Tracker.FrameAdvantage = -(stunFrame - (int)finalHitstunForReal);
+
             if (Tracker.HitCombo >= Global.HitstunDecayMinCombo)
                 HitstunDecayFactor++;
             if (!Body.IsOnGround)
@@ -663,7 +672,7 @@ namespace SakugaEngine
             //var finalHitReaction = Body.IsOnGround ? (IsCrouching() ? box.CrouchHitReaction : box.GroundHitReaction)  : box.AirHitReaction;
             //bool CanTech = Animator.StateType() == 4 && !HitStun.IsRunning();
             BlockStun = true;
-            Body.IsLeftSide = !GetOpponent().Body.IsLeftSide;
+            ForcePlayerSide(!GetOpponent().Body.IsLeftSide);
             Body.IsMovable = false;
             Stance.Clear();
             HitStun.Start((uint)finalHitstun);
@@ -684,7 +693,7 @@ namespace SakugaEngine
             //var damageFactor = GetOpponent().FighterVars.CurrentAttack - (FighterVars.CurrentDefense - 100);
             //var scaledDamage = box.GuardCrushDamage * FighterVars.CurrentDamageScaling / 100;
             var finalDamage = FighterVars.CalculateCompleteDamage(box.GuardCrushDamage, GetOpponent().FighterVars.CurrentAttack);
-            Body.IsLeftSide = !GetOpponent().Body.IsLeftSide;
+            ForcePlayerSide(!GetOpponent().Body.IsLeftSide);
             Stance.Clear();
             HitStun.Start(Global.GuardCrushHitstun);
             HitStop.Start((uint)box.BlockStopDuration);
@@ -705,7 +714,8 @@ namespace SakugaEngine
         public void ThrowHit(HitboxElement box, uint finalHitStop)
         {
             LayerSorting = -1;
-            Body.IsLeftSide = !GetOpponent().Body.IsLeftSide;
+            Variables.SuperArmor = 0;
+            ForcePlayerSide(!GetOpponent().Body.IsLeftSide);
             Body.IsMovable = false;
             HitstunType = (int)Global.HitstunType.STAGGER + 1; //Always make sure the value is out of the enumerator
             HitStop.Start(finalHitStop);
@@ -751,19 +761,19 @@ namespace SakugaEngine
 
             if (hitConfirmAnimation >= 0)
                 Animator.PlayState(hitConfirmAnimation, false);
-            
+
             Variables.ExtraVariablesOnHit();
         }
 #endregion
 
 #region Return functions
-        public bool IsBlockableState() => Animator.StateType() != 2 && Animator.StateType() != 4;
+        public bool IsBlockableState() => Animator.StateType() != 2 && Animator.StateType() != 4 && Animator.StateType() != 5;
         public bool IsCrouching() => Body.IsOnGround && !Uncrouched && Inputs.IsBeingPressed(Inputs.CurrentHistory, Global.INPUT_DOWN);
         public bool IsBlocking() => IsBlockableState() && Inputs.IsBeingPressed(Inputs.CurrentHistory, Body.IsLeftSide ? Global.INPUT_LEFT : Global.INPUT_RIGHT);
         public bool IsKO() => Variables.CurrentHealth <= 0;
         public bool IsGroundHit() => Body.IsOnGround && !Animator.GetCurrentState().OffTheGround;
         public bool IsStunLocked() => HitStun.TimeLeft >= Animator.GetCurrentState().Duration - Animator.GetCurrentState().HitStunFrameLimit + 1 && Animator.Frame >= Animator.GetCurrentState().HitStunFrameLimit;
-        protected override bool LifeEnded() { return Variables.CurrentHealth <= 0; }
+        public override bool LifeEnded() { return Variables.CurrentHealth <= 0; }
         public override SakugaFighter FighterReference() { return this; }
 #endregion
 
@@ -812,6 +822,8 @@ namespace SakugaEngine
                         HitPushback(box.SelfPushbackDuration, box.SelfPushbackForce);
                     GD.Print("Fighter: Hit!");
                 }
+                Brain.canAdvance = true;
+                GetOpponent().Brain.Reset();
                 HitConfirm(box.SelfSuperGaugeGain, (uint)box.SelfHitStopDuration, box.HitConfirmState, hitFX, contact);
             }
         }
@@ -840,6 +852,7 @@ namespace SakugaEngine
             
             GetOpponent().ThrowHit(box, finalHitstop);
             HitConfirm(0, finalHitstop, box.HitConfirmState, -1, Vector2I.Zero);
+            Brain.canAdvance = true;
             GD.Print("Fighter: Throw!");
         }
         public void ThrowTrade()
@@ -849,6 +862,7 @@ namespace SakugaEngine
         public void HitboxClash(HitboxElement box, Vector2I contact)
         {
             HitConfirm(0, (uint)box.ClashHitStopDuration, -1, box.ClashEffectIndex, contact);
+            Brain.canAdvance = true;
         }
         public void ProjectileClash(HitboxElement box, Vector2I contact){}
         public void ProjectileDeflect(SakugaActor target, HitboxElement box, Vector2I contact){}
@@ -857,9 +871,11 @@ namespace SakugaEngine
             SetOpponent(target.FighterReference());
             HitConfirm(box.SelfSuperGaugeGain, (uint)box.SelfHitStopDuration, box.HitConfirmState, box.HitEffectIndex, contact);
             GetOpponent().HitConfirm(box.OpponentSuperGaugeGain, (uint)box.OpponentHitStopDuration, -1, -1, Vector2I.Zero);
+            Brain.canAdvance = true;
         }
-        public void ProximityBlock()
+        public void ProximityBlock(HitboxElement box)
         {
+            Brain.proximityHit = box.HitType;
             Body.ProximityBlocked = true;
             if (IsBlocking() && Animator.StateType() != 3)
             {

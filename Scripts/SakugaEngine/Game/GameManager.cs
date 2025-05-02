@@ -128,6 +128,10 @@ namespace SakugaEngine.Game
             Fighters[0].SetOpponent(Fighters[1]);
             Fighters[1].SetOpponent(Fighters[0]);
 
+            //AI test (select it in a better way later)
+            //Fighters[0].UseAI = Global.Match.Player1.selectedDevice == -1;
+            //Fighters[1].UseAI = Global.Match.Player2.selectedDevice == -1;
+
             GenerateBaseSeed();
             Monitor.Initialize(Fighters);
 
@@ -175,10 +179,18 @@ namespace SakugaEngine.Game
 
             for (int i = 0; i < Fighters.Length; i++)
             {
-                ushort combinedInput = 0;
-                combinedInput |= playerInput[i * InputSize];
-                combinedInput |= (ushort)(playerInput[(i * InputSize) + 1] << 8);
-                Fighters[i].ParseInputs(combinedInput);
+                if (Fighters[i].UseAI)
+                {
+                    Fighters[i].Brain.SelectCommand();
+                    Fighters[i].Brain.UpdateCommand();
+                }
+                else
+                {
+                    ushort combinedInput = 0;
+                    combinedInput |= playerInput[i * InputSize];
+                    combinedInput |= (ushort)(playerInput[(i * InputSize) + 1] << 8);
+                    Fighters[i].ParseInputs(combinedInput);
+                }
             }
 
             for (int i = 0; i < Nodes.Count; i++)
@@ -226,45 +238,44 @@ namespace SakugaEngine.Game
             }
 
             if (Input.IsActionPressed(prexif + "_up") && !Input.IsActionPressed(prexif + "_down"))
-                    input[0] |= Global.INPUT_UP;
+                input[0] |= Global.INPUT_UP;
 
-                if (!Input.IsActionPressed(prexif + "_up") && Input.IsActionPressed(prexif + "_down"))
-                    input[0] |= Global.INPUT_DOWN;
+            if (!Input.IsActionPressed(prexif + "_up") && Input.IsActionPressed(prexif + "_down"))
+                input[0] |= Global.INPUT_DOWN;
 
-                if (Input.IsActionPressed(prexif + "_left") && !Input.IsActionPressed(prexif + "_right"))
-                    input[0] |= Global.INPUT_LEFT;
+            if (Input.IsActionPressed(prexif + "_left") && !Input.IsActionPressed(prexif + "_right"))
+                input[0] |= Global.INPUT_LEFT;
 
-                if (!Input.IsActionPressed(prexif + "_left") && Input.IsActionPressed(prexif + "_right"))
-                    input[0] |= Global.INPUT_RIGHT;
+            if (!Input.IsActionPressed(prexif + "_left") && Input.IsActionPressed(prexif + "_right"))
+                input[0] |= Global.INPUT_RIGHT;
 
-                if (Input.IsActionPressed(prexif + "_face_a"))
-                    input[0] |= Global.INPUT_FACE_A;
+            if (Input.IsActionPressed(prexif + "_face_a"))
+                input[0] |= Global.INPUT_FACE_A;
 
-                if (Input.IsActionPressed(prexif + "_face_b"))
-                    input[0] |= Global.INPUT_FACE_B;
+            if (Input.IsActionPressed(prexif + "_face_b"))
+                input[0] |= Global.INPUT_FACE_B;
 
-                if (Input.IsActionPressed(prexif + "_face_c"))
-                    input[0] |= Global.INPUT_FACE_C;
+            if (Input.IsActionPressed(prexif + "_face_c"))
+                input[0] |= Global.INPUT_FACE_C;
 
-                if (Input.IsActionPressed(prexif + "_face_d"))
-                    input[0] |= Global.INPUT_FACE_D;
+            if (Input.IsActionPressed(prexif + "_face_d"))
+                input[0] |= Global.INPUT_FACE_D;
 
-                /*if (Input.IsActionPressed(prexif + "_macro_ab"))
-                    input |= Global.INPUT_FACE_A | Global.INPUT_FACE_B;
+            /*if (Input.IsActionPressed(prexif + "_macro_ab"))
+                input |= Global.INPUT_FACE_A | Global.INPUT_FACE_B;
 
-                if (Input.IsActionPressed(prexif + "_macro_ac"))
-                    input |= Global.INPUT_FACE_A | Global.INPUT_FACE_C;
-                
-                if (Input.IsActionPressed(prexif + "_macro_bc"))
-                    input |= Global.INPUT_FACE_B | Global.INPUT_FACE_C;
-
-                if (Input.IsActionPressed(prexif + "_macro_abc"))
-                    input |= Global.INPUT_FACE_A | Global.INPUT_FACE_B | Global.INPUT_FACE_C;
-
-                if (Input.IsActionPressed(prexif + "_macro_abcd"))
-                    input |= Global.INPUT_FACE_A | Global.INPUT_FACE_B | Global.INPUT_FACE_C | Global.INPUT_FACE_D;*/
+            if (Input.IsActionPressed(prexif + "_macro_ac"))
+                input |= Global.INPUT_FACE_A | Global.INPUT_FACE_C;
             
-            
+            if (Input.IsActionPressed(prexif + "_macro_bc"))
+                input |= Global.INPUT_FACE_B | Global.INPUT_FACE_C;
+
+            if (Input.IsActionPressed(prexif + "_macro_abc"))
+                input |= Global.INPUT_FACE_A | Global.INPUT_FACE_B | Global.INPUT_FACE_C;
+
+            if (Input.IsActionPressed(prexif + "_macro_abcd"))
+                input |= Global.INPUT_FACE_A | Global.INPUT_FACE_B | Global.INPUT_FACE_C | Global.INPUT_FACE_D;*/
+        
             return input;
         }
 
