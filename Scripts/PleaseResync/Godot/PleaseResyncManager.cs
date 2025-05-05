@@ -13,21 +13,24 @@ namespace PleaseResync
         private Label RollbackInfo;
         private Label PingInfo;
 
+        private bool Spectating;
         private bool Started;
         private bool Replay;
         
         [Export] protected ushort FrameDelay = 2;
         [Export] protected ushort SimulatedFrameDelay = 0;
         [Export] protected ushort SpectatorDelay = 30;
-        [Export] protected uint MaxPlayers = 2;
-        [Export] protected uint MaxSpectators = 8;
-        [Export] protected uint DeviceCount = 2;
+        [Export] public uint MaxPlayers = 2;
+        [Export] public uint MaxSpectators = 8;
+        //[Export] protected uint DeviceCount = 2;
         [Export] protected uint InputSize = 1;
         private uint DEVICE_ID;
         private uint PingId;
 
-        private string[] Adresses = {"127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1"};
-        private ushort[] Ports = {7001, 7002, 7003, 7004};
+        [Export] string[] PlayerAddresses = { "127.0.0.1", "127.0.0.1" };
+        [Export] string[] SpectatorAddresses = { "127.0.0.1", "127.0.0.1" };
+        [Export] int[] PlayerPorts = { 7001, 7002 };
+        [Export] int[] SpectatorPorts = { 8001, 8002 };
         private uint[] rollbackFrames = new uint[16];
 
         public IGameState sessionState;
@@ -83,75 +86,69 @@ namespace PleaseResync
             CloseGame();
         }
 
-        public void CreateConnections(string[] IPAdresses, ushort[] ports)
+        public void CreatePlayerConnections(string[] IPAdresses, ushort[] ports)
         {
             for (uint i = 0; i < IPAdresses.Length; i++)
             {
-                if (IPAdresses[i] != "") Adresses[i] = IPAdresses[i];
-                if (ports[i] > 0) Ports[i] = ports[i];
+                if (IPAdresses[i] != "") PlayerAddresses[i] = IPAdresses[i];
+                if (ports[i] > 0) PlayerPorts[i] = ports[i];
+            }
+        }
+        
+        public void CreateSpectatorConnections(string[] IPAdresses, ushort[] ports)
+        {
+            for (uint i = 0; i < IPAdresses.Length; i++)
+            {
+                if (IPAdresses[i] != "") SpectatorAddresses[i] = IPAdresses[i];
+                if (ports[i] > 0) SpectatorPorts[i] = ports[i];
             }
         }
 
-        protected void StartOnlineGame(IGameState state, uint playerCount, uint ID)
+        protected void StartOnlineGame(IGameState state, bool spectate, uint playerCount, uint spectatorCount, uint ID)
         {
             DEVICE_ID = ID;
-
             sessionState = state;
-
             sessionState.Setup();
-            
-            adapter = new LiteNetLibSessionAdapter(Adresses[DEVICE_ID], Ports[DEVICE_ID]);
-
-            session = new Peer2PeerSession(InputSize, DeviceCount, MaxPlayers, false, adapter);
-
             LastInput = new byte[InputSize];
 
-            session.SetLocalDevice(DEVICE_ID, 1, FrameDelay);
-            
-            for (uint i = 0; i < DeviceCount; i++)
+            if (!spectate)
             {
-                if (i != DEVICE_ID)
+                adapter = new LiteNetLibSessionAdapter(PlayerAddresses[DEVICE_ID], (ushort)PlayerPorts[DEVICE_ID]);
+                session = new Peer2PeerSession(InputSize, playerCount, MaxPlayers, false, adapter);
+                session.SetLocalDevice(DEVICE_ID, 1, FrameDelay);
+
+                for (uint i = 0; i < playerCount; i++)
                 {
-                    session.AddRemoteDevice(i, 1, LiteNetLibSessionAdapter.CreateRemoteConfig(Adresses[i], Ports[i]));
-                    PingId = i;
-                    
-                    GD.Print($"Device {i} created");
+                    if (i != DEVICE_ID)
+                    {
+                        session.AddRemoteDevice(i, 1, LiteNetLibSessionAdapter.CreateRemoteConfig(PlayerAddresses[i], (ushort)PlayerPorts[i]));
+                        PingId = i;
+
+                        GD.Print($"Device {i} created");
+                    }
+                }
+                // Add spectators
+                if (DEVICE_ID == 0)
+                {
+                    for (uint i = 0; i < spectatorCount; i++)
+                    {
+                        session.AddSpectatorDevice(0, LiteNetLibSessionAdapter.CreateRemoteConfig(SpectatorAddresses[i], (ushort)SpectatorPorts[i]));
+                        GD.Print($"Device {i} created");
+                    }
                 }
             }
-            
-            Replay = false;
-            Started = true;
-
-            StartGameThread();
-        }
-
-        protected void StartSpectatorMode(IGameState state, uint playerCount, uint ID)
-        {
-            DEVICE_ID = ID;
-
-            sessionState = state;
-
-            sessionState.Setup();
-            
-            adapter = new LiteNetLibSessionAdapter(Adresses[DEVICE_ID], Ports[DEVICE_ID]);
-
-            session = new Peer2PeerSession(InputSize, DeviceCount, MaxPlayers, false, adapter);
-
-            LastInput = new byte[InputSize];
-
-            session.AddSpectatorDevice(DEVICE_ID, SpectatorDelay);
-            
-            for (uint i = 0; i < DeviceCount; i++)
+            else
             {
-                if (i != DEVICE_ID)
-                {
-                    session.AddRemoteDevice(i, 1, LiteNetLibSessionAdapter.CreateRemoteConfig(Adresses[i], Ports[i]));
-                    PingId = i;
-                    
-                    GD.Print($"Device {i} created");
-                }
+                // Let's spectate!
+                adapter = new LiteNetLibSessionAdapter(SpectatorAddresses[DEVICE_ID], (ushort)SpectatorPorts[DEVICE_ID]);
+                session = new SpectatorSession(InputSize, playerCount, adapter, SpectatorDelay);
+                // Let1s just make the first active player the broadcaster for now.
+                // be sure to pass ALL the players as in player count
+                uint targetDevice = DEVICE_ID % playerCount;
+                session.AddRemoteDevice(targetDevice, playerCount, LiteNetLibSessionAdapter.CreateRemoteConfig(PlayerAddresses[targetDevice], (ushort)PlayerPorts[targetDevice]));
             }
-            
+
+            Spectating = spectate;
             Replay = false;
             Started = true;
 
@@ -162,14 +159,14 @@ namespace PleaseResync
         {
             sessionState = state;
             sessionState.Setup();
-
-            session = new Peer2PeerSession(InputSize, 1, MaxPlayers, true, null);
-            LastInput = new byte[(int)(MaxPlayers * InputSize)];
-            session.SetLocalDevice(0, MaxPlayers, SimulatedFrameDelay);
+            session = new Peer2PeerSession(InputSize, 1, playerCount, true, null);
+            LastInput = new byte[(int)(playerCount * InputSize)];
+            session.SetLocalDevice(0, playerCount, SimulatedFrameDelay);
 
             if (RollbackInfo != null) RollbackInfo.Text = "";
             if (PingInfo != null) PingInfo.Text = "";
 
+            Spectating = false;
             Replay = false;
             Started = true;
 
@@ -180,14 +177,14 @@ namespace PleaseResync
         {
             sessionState = state;
             sessionState.Setup();
-
-            session = new Peer2PeerSession(InputSize, 1, MaxPlayers, true, null);
-            LastInput = new byte[(int)(MaxPlayers * InputSize)];
-            session.SetLocalDevice(0, MaxPlayers, SimulatedFrameDelay);
+            session = new Peer2PeerSession(InputSize, 1, playerCount, true, null);
+            LastInput = new byte[(int)(playerCount * InputSize)];
+            session.SetLocalDevice(0, playerCount, SimulatedFrameDelay);
 
             if (RollbackInfo != null) RollbackInfo.Text = "";
             if (PingInfo != null) PingInfo.Text = "";
 
+            Spectating = false;
             Replay = true;
             Started = true;
 
@@ -239,18 +236,27 @@ namespace PleaseResync
                         }
                     }
 
-                    string FrameCounter = session.IsOffline() ? $"{session.Frame()}" : $"{session.Frame()} ({session.RemoteFrame()} | {session.FrameAdvantage()} | {session.RemoteFrameAdvantage()})";
-
-                    SimulationText = FrameCounter + $" || ( {InputDebug} )";
-                    if (!session.IsOffline())
+                    if (Spectating)
                     {
-                        rollbackFrames[session.Frame() % rollbackFrames.Length] = session.RollbackFrames();
-                        RollbackText = "RBF: " + GetAverageRollbackFrames();
-                        PingText = "Ping: " + ShowPingInfo(PingId) + " ms";
+                        SimulationText = "Spectating...";
+                        RollbackText = "";
+                        PingText = "";
+                    }
+                    else
+                    {
+                        string FrameCounter = session.IsOffline() ? $"{session.Frame()}" : $"{session.Frame()} ({session.RemoteFrame()} | {session.FrameAdvantage()} | {session.RemoteFrameAdvantage()})";
+
+                        SimulationText = FrameCounter + $" || ( {InputDebug} )";
+                        if (!session.IsOffline())
+                        {
+                            rollbackFrames[session.Frame() % rollbackFrames.Length] = session.RollbackFrames();
+                            RollbackText = "RBF: " + GetAverageRollbackFrames();
+                            PingText = "Ping: " + ShowPingInfo(PingId) + " ms";
+                        }
                     }
 
                     if (Replay && session.Frame() >= RecordedInputs.Count)
-                        CloseGame();
+                            CloseGame();
                 }
                 //canRender = true;
                 mutex.ReleaseMutex();
@@ -275,12 +281,14 @@ namespace PleaseResync
         private void StartGameThread()
         {
             GameThread = new Thread(() => GameLoop());
-            //GameThread.IsBackground = true;
+            GameThread.IsBackground = true;
             GameThread.Start();
         }
 
         private string NotificationText()
         {
+            if (Spectating) return SimulationText;
+
             switch (session.State())
             {
                 default:
@@ -342,10 +350,9 @@ namespace PleaseResync
             return cnv;
         }
 
-        public virtual void OnlineGame(uint maxPlayers, uint ID){}
-        public virtual void Spectate(uint maxPlayers, uint ID){}
-        public virtual void LocalGame(uint maxPlayers){}
-        public virtual void ReplayMode(uint maxPlayers) {}
+        public virtual void OnlineGame(bool spectate, uint players, uint spectators, uint ID) {}
+        public virtual void LocalGame(uint players) {}
+        public virtual void ReplayMode(uint players) {}
     }
 
     public struct ReplayInputs

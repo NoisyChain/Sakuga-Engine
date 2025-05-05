@@ -44,6 +44,7 @@ vertical_alignment = 1
 script = ExtResource("6_jke5l")
 AutoStart = true
 GameManager = NodePath("../GameManager")
+SpectatorDelay = 20
 InputSize = 2
 
 [node name="GameMonitor" type="Node" parent="."]

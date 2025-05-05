@@ -907,8 +907,15 @@ offset_right = 138.0
 offset_bottom = 130.0
 placeholder_text = "Player Index"
 
+[node name="Spectator_Count" type="LineEdit" parent="PleaseResync_UI/Connection_Panel"]
+layout_mode = 0
+offset_left = 156.0
+offset_top = 99.0
+offset_right = 272.0
+offset_bottom = 130.0
+placeholder_text = "Spec. Count"
+
 [node name="Spectator_Settings" type="Control" parent="PleaseResync_UI/Connection_Panel"]
-visible = false
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
@@ -929,148 +936,132 @@ offset_top = 280.0
 offset_right = 194.0
 offset_bottom = 304.0
 
-[node name="Spectator_Count" type="LineEdit" parent="PleaseResync_UI/Connection_Panel/Spectator_Settings"]
+[node name="S1_IP" type="LineEdit" parent="PleaseResync_UI/Connection_Panel/Spectator_Settings"]
 layout_mode = 0
 offset_left = 22.0
-offset_top = 313.0
-offset_right = 138.0
-offset_bottom = 344.0
-placeholder_text = "Spec. Count"
-
-[node name="Spectator_Index" type="LineEdit" parent="PleaseResync_UI/Connection_Panel/Spectator_Settings"]
-layout_mode = 0
-offset_left = 156.0
-offset_top = 313.0
-offset_right = 272.0
-offset_bottom = 344.0
-placeholder_text = "Spec. Index"
-
-[node name="P3_IP" type="LineEdit" parent="PleaseResync_UI/Connection_Panel/Spectator_Settings"]
-layout_mode = 0
-offset_left = 22.0
-offset_top = 366.0
+offset_top = 315.0
 offset_right = 192.0
-offset_bottom = 397.0
+offset_bottom = 346.0
 placeholder_text = "S1 IP address"
 
-[node name="P3_Port" type="LineEdit" parent="PleaseResync_UI/Connection_Panel/Spectator_Settings"]
+[node name="S1_Port" type="LineEdit" parent="PleaseResync_UI/Connection_Panel/Spectator_Settings"]
 layout_mode = 0
 offset_left = 209.0
-offset_top = 366.0
+offset_top = 315.0
 offset_right = 277.563
-offset_bottom = 397.0
+offset_bottom = 346.0
 placeholder_text = "S1 Port"
 
-[node name="P4_IP" type="LineEdit" parent="PleaseResync_UI/Connection_Panel/Spectator_Settings"]
+[node name="S2_IP" type="LineEdit" parent="PleaseResync_UI/Connection_Panel/Spectator_Settings"]
 layout_mode = 0
 offset_left = 22.0
-offset_top = 401.0
+offset_top = 350.0
 offset_right = 192.0
-offset_bottom = 432.0
+offset_bottom = 381.0
 placeholder_text = "S2 IP address"
 
-[node name="P4_Port" type="LineEdit" parent="PleaseResync_UI/Connection_Panel/Spectator_Settings"]
+[node name="S2_Port" type="LineEdit" parent="PleaseResync_UI/Connection_Panel/Spectator_Settings"]
 layout_mode = 0
 offset_left = 209.0
-offset_top = 401.0
+offset_top = 350.0
 offset_right = 277.563
-offset_bottom = 432.0
+offset_bottom = 381.0
 placeholder_text = "S2 Port"
 
-[node name="P5_IP" type="LineEdit" parent="PleaseResync_UI/Connection_Panel/Spectator_Settings"]
+[node name="S3_IP" type="LineEdit" parent="PleaseResync_UI/Connection_Panel/Spectator_Settings"]
 layout_mode = 0
 offset_left = 22.0
-offset_top = 436.0
+offset_top = 385.0
 offset_right = 192.0
-offset_bottom = 467.0
+offset_bottom = 416.0
 placeholder_text = "S3 IP address"
 
-[node name="P5_Port" type="LineEdit" parent="PleaseResync_UI/Connection_Panel/Spectator_Settings"]
+[node name="S3_Port" type="LineEdit" parent="PleaseResync_UI/Connection_Panel/Spectator_Settings"]
 layout_mode = 0
 offset_left = 209.0
-offset_top = 436.0
+offset_top = 385.0
 offset_right = 277.563
-offset_bottom = 467.0
+offset_bottom = 416.0
 placeholder_text = "S3 Port"
 
-[node name="P6_IP" type="LineEdit" parent="PleaseResync_UI/Connection_Panel/Spectator_Settings"]
+[node name="S4_IP" type="LineEdit" parent="PleaseResync_UI/Connection_Panel/Spectator_Settings"]
 layout_mode = 0
 offset_left = 22.0
-offset_top = 471.0
+offset_top = 420.0
 offset_right = 192.0
-offset_bottom = 502.0
+offset_bottom = 451.0
 placeholder_text = "S4 IP address"
 
-[node name="P6_Port" type="LineEdit" parent="PleaseResync_UI/Connection_Panel/Spectator_Settings"]
+[node name="S4_Port" type="LineEdit" parent="PleaseResync_UI/Connection_Panel/Spectator_Settings"]
 layout_mode = 0
 offset_left = 209.0
-offset_top = 471.0
+offset_top = 420.0
 offset_right = 277.563
-offset_bottom = 502.0
+offset_bottom = 451.0
 placeholder_text = "S4 Port"
 
-[node name="P7_IP" type="LineEdit" parent="PleaseResync_UI/Connection_Panel/Spectator_Settings"]
+[node name="S5_IP" type="LineEdit" parent="PleaseResync_UI/Connection_Panel/Spectator_Settings"]
 layout_mode = 0
 offset_left = 22.0
-offset_top = 506.0
+offset_top = 455.0
 offset_right = 192.0
-offset_bottom = 537.0
+offset_bottom = 486.0
 placeholder_text = "S5 IP address"
 
-[node name="P7_Port" type="LineEdit" parent="PleaseResync_UI/Connection_Panel/Spectator_Settings"]
+[node name="S5_Port" type="LineEdit" parent="PleaseResync_UI/Connection_Panel/Spectator_Settings"]
 layout_mode = 0
 offset_left = 209.0
-offset_top = 506.0
+offset_top = 455.0
 offset_right = 277.563
-offset_bottom = 537.0
+offset_bottom = 486.0
 placeholder_text = "S5 Port"
 
-[node name="P8_IP" type="LineEdit" parent="PleaseResync_UI/Connection_Panel/Spectator_Settings"]
+[node name="S6_IP" type="LineEdit" parent="PleaseResync_UI/Connection_Panel/Spectator_Settings"]
 layout_mode = 0
 offset_left = 22.0
-offset_top = 541.0
+offset_top = 490.0
 offset_right = 192.0
-offset_bottom = 572.0
+offset_bottom = 521.0
 placeholder_text = "S6 IP address"
 
-[node name="P8_Port" type="LineEdit" parent="PleaseResync_UI/Connection_Panel/Spectator_Settings"]
+[node name="S6_Port" type="LineEdit" parent="PleaseResync_UI/Connection_Panel/Spectator_Settings"]
 layout_mode = 0
 offset_left = 209.0
-offset_top = 541.0
+offset_top = 490.0
 offset_right = 277.563
-offset_bottom = 572.0
+offset_bottom = 521.0
 placeholder_text = "S6 Port"
 
-[node name="P9_IP" type="LineEdit" parent="PleaseResync_UI/Connection_Panel/Spectator_Settings"]
+[node name="S7_IP" type="LineEdit" parent="PleaseResync_UI/Connection_Panel/Spectator_Settings"]
 layout_mode = 0
 offset_left = 22.0
-offset_top = 576.0
+offset_top = 525.0
 offset_right = 192.0
-offset_bottom = 607.0
+offset_bottom = 556.0
 placeholder_text = "S7 IP address"
 
-[node name="P9_Port" type="LineEdit" parent="PleaseResync_UI/Connection_Panel/Spectator_Settings"]
+[node name="S7_Port" type="LineEdit" parent="PleaseResync_UI/Connection_Panel/Spectator_Settings"]
 layout_mode = 0
 offset_left = 209.0
-offset_top = 576.0
+offset_top = 525.0
 offset_right = 277.563
-offset_bottom = 607.0
+offset_bottom = 556.0
 placeholder_text = "S7 Port"
 
-[node name="P10_IP" type="LineEdit" parent="PleaseResync_UI/Connection_Panel/Spectator_Settings"]
+[node name="S8_IP" type="LineEdit" parent="PleaseResync_UI/Connection_Panel/Spectator_Settings"]
 layout_mode = 0
 offset_left = 22.0
-offset_top = 611.0
+offset_top = 560.0
 offset_right = 192.0
-offset_bottom = 642.0
+offset_bottom = 591.0
 placeholder_text = "S8 IP address"
 
-[node name="P10_Port" type="LineEdit" parent="PleaseResync_UI/Connection_Panel/Spectator_Settings"]
+[node name="S8_Port" type="LineEdit" parent="PleaseResync_UI/Connection_Panel/Spectator_Settings"]
 layout_mode = 0
 offset_left = 209.0
-offset_top = 611.0
+offset_top = 560.0
 offset_right = 277.563
-offset_bottom = 642.0
+offset_bottom = 591.0
 placeholder_text = "S8 Port"
 
 [node name="Connected_Panel" type="Control" parent="PleaseResync_UI"]

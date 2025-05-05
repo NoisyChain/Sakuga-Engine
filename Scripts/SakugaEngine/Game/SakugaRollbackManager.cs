@@ -27,22 +27,22 @@ namespace SakugaEngine.Game
             }
         }
 
-        public override void OnlineGame(uint maxPlayers, uint ID)
+        public override void OnlineGame(bool spectate, uint players, uint spectators, uint ID)
         {
             GameManager.SetBGM();
-            StartOnlineGame(GameManager, maxPlayers, ID);
+            StartOnlineGame(GameManager, spectate, players, spectators, ID);
         }
 
-        public override void LocalGame(uint maxPlayers)
+        public override void LocalGame(uint players)
         {
             GameManager.SetBGM();
-            StartOfflineGame(GameManager, maxPlayers);
+            StartOfflineGame(GameManager, players);
         }
 
-        public override void ReplayMode(uint maxPlayers)
+        public override void ReplayMode(uint players)
         {
             GameManager.SetBGM();
-            StartReplay(GameManager, maxPlayers);
+            StartReplay(GameManager, players);
         }
     }
 }
