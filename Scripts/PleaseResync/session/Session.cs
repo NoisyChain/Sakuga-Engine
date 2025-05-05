@@ -1,5 +1,7 @@
 using System.Diagnostics;
 using System.Collections.Generic;
+using System.Net;
+using System;
 
 namespace PleaseResync
 {
@@ -29,7 +31,7 @@ namespace PleaseResync
         /// </summary>
         
         /// <summary>
-        /// OfflinePlay defines if it's a netork game or not.
+        /// OfflinePlay defines if it's a network game or not.
         /// </summary>
         protected bool OfflinePlay;
         /// <summary>
@@ -88,7 +90,7 @@ namespace PleaseResync
         /// <param name="remoteConfiguration">As the given device is not local to the Session, we must provide a way to communicate with that given device, this configuration will be passed to the session adapter</param>
         public abstract void AddRemoteDevice(uint deviceId, uint playerCount, object remoteConfiguration);
 
-        public abstract void AddSpectatorDevice(uint deviceId, uint spectatorDelay);
+        public abstract void AddSpectatorDevice(uint spectatorDelay, object remoteConfiguration);
 
         /// <summary>
         /// Poll must be called periodically to give the Session a chance to perform some work and synchronize devices.
