@@ -97,7 +97,7 @@ namespace SakugaEngine
             Stance.Initialize(this);
             Tracker.Initialize(this);
             Variables.Initialize();
-            Brain.Initialize(this);
+            if (Brain != null) Brain.Initialize(this);
 
             BlockStun = false;
             Uncrouched = false;

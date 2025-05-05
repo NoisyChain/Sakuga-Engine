@@ -4,15 +4,19 @@ namespace PleaseResync
 {
     public partial class ConnectionUI : Control
     {
-        private const uint MAX_CONNECTIONS = 2;
+        private const uint MAX_PLAYERS = 2;
+        private const uint MAX_SPECTATORS = 2;
         public PleaseResyncManager manager;
         public ConnectionAddress[] connectionAdresses;
         public LineEdit PlayerID;
+        public LineEdit SpectatorCount;
+        public LineEdit SpectatorID;
         //[Export] public Button ConnectGameButton;
         //[Export] public Button LocalGameButton;
         //[Export] public Button CloseGameButton;
         public Control ConnectionMenuObject;
         public Control ConnectedMenuObject;
+        public CheckButton IsSpectatorMode;
 
         public override void _Ready()
         {
@@ -20,16 +24,20 @@ namespace PleaseResync
             ConnectionMenuObject = GetNode<Control>("Connection_Panel");
             ConnectedMenuObject = GetNode<Control>("Connected_Panel");
             PlayerID = ConnectionMenuObject.GetNode<LineEdit>("Player_Index");
+            IsSpectatorMode = ConnectionMenuObject.GetNode<CheckButton>("Spectator_Settings/Spectator_Toggle");
+            SpectatorCount = ConnectionMenuObject.GetNode<LineEdit>("Spectator_Settings/Spectator_Count");
+            SpectatorID = ConnectionMenuObject.GetNode<LineEdit>("Spectator_Settings/Spectator_Index");
 
-            connectionAdresses = new ConnectionAddress[MAX_CONNECTIONS];
-            connectionAdresses[0] = new ConnectionAddress(
-                ConnectionMenuObject.GetNode<LineEdit>("P1_IP"),
-                ConnectionMenuObject.GetNode<LineEdit>("P1_Port")
-            );
-            connectionAdresses[1] = new ConnectionAddress(
-                ConnectionMenuObject.GetNode<LineEdit>("P2_IP"),
-                ConnectionMenuObject.GetNode<LineEdit>("P2_Port")
-            );
+            connectionAdresses = new ConnectionAddress[MAX_PLAYERS/* + MAX_SPECTATORS*/];
+            for (int i = 0; i < connectionAdresses.Length; i++)
+            {
+                string identity = "P" + (i + 1) + "_";
+
+                connectionAdresses[i] = new ConnectionAddress(
+                    ConnectionMenuObject.GetNode<LineEdit>(identity + "IP"),
+                    ConnectionMenuObject.GetNode<LineEdit>(identity + "Port")
+                );
+            }
         }
         
         private void OnButton_OnlinePlayPressed()
@@ -54,9 +62,15 @@ namespace PleaseResync
 
         private void StartOnlineGame()
         {
+            uint finalSpectatorCount = SpectatorCount.Text.Trim().Length > 0 ? uint.Parse(SpectatorCount.Text) : 0;
+            uint totalPlayers = MAX_PLAYERS + (uint)Mathf.Min(MAX_SPECTATORS, finalSpectatorCount);
             uint finalPlayerID = PlayerID.Text.Trim().Length > 0 ? uint.Parse(PlayerID.Text) : 0;
-            manager.CreateConnections(CreateAddressesList(), CreatePortsList());
-            manager.OnlineGame(MAX_CONNECTIONS, finalPlayerID);
+            uint finalSpectatorID = SpectatorID.Text.Trim().Length > 0 ? uint.Parse(SpectatorID.Text) : 0;
+            manager.CreateConnections(CreateAddressesList(totalPlayers), CreatePortsList(totalPlayers));
+            if (IsSpectatorMode.ButtonPressed)
+                manager.Spectate(MAX_PLAYERS, finalSpectatorCount, MAX_PLAYERS + finalSpectatorID);
+            else
+                manager.OnlineGame(MAX_PLAYERS, finalSpectatorCount, finalPlayerID);
             ConnectionMenuObject.Visible = false;
             ConnectedMenuObject.Visible = true;
             GD.Print("Online game started.");
@@ -64,7 +78,7 @@ namespace PleaseResync
 
         private void StartLocalGame()
         {
-            manager.LocalGame(MAX_CONNECTIONS);
+            manager.LocalGame(MAX_PLAYERS);
             ConnectionMenuObject.Visible = false;
             ConnectedMenuObject.Visible = true;
             GD.Print("Local game started.");
@@ -72,7 +86,7 @@ namespace PleaseResync
 
         private void StartReplay()
         {
-            manager.ReplayMode(MAX_CONNECTIONS);
+            manager.ReplayMode(MAX_PLAYERS);
             ConnectionMenuObject.Visible = false;
             ConnectedMenuObject.Visible = true;
             GD.Print("Executing replay...");
@@ -86,9 +100,9 @@ namespace PleaseResync
             GD.Print("Game aborted.");
         }
 
-        private string[] CreateAddressesList()
+        private string[] CreateAddressesList(uint length)
         {
-            string[] temp = new string[MAX_CONNECTIONS];
+            string[] temp = new string[length];
             for (int i = 0; i < temp.Length; ++i)
             {
                 string address = connectionAdresses[i].IPField.Text.Trim();
@@ -98,9 +112,9 @@ namespace PleaseResync
             return temp;
         }
 
-        private ushort[] CreatePortsList()
+        private ushort[] CreatePortsList(uint length)
         {
-            ushort[] temp = new ushort[MAX_CONNECTIONS];
+            ushort[] temp = new ushort[length];
             for (int i = 0; i < temp.Length; ++i)
             {
                 string port = connectionAdresses[0].PortField.Text.Trim();
