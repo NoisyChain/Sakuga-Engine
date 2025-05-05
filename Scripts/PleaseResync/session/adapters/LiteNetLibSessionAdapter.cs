@@ -4,12 +4,13 @@ using System.IO;
 using LiteNetLib;
 using System.Net.Sockets;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PleaseResync
 {
     public class LiteNetLibSessionAdapter : SessionAdapter, INetEventListener
     {
-        private readonly IPEndPoint[] _remoteEndpoints;
+        private readonly Dictionary<uint, IPEndPoint> _remoteEndpoints = [];
 
         private NetManager _netManager;
         private List<(uint size, uint deviceId, DeviceMessage message)> _messages;
@@ -20,7 +21,7 @@ namespace PleaseResync
             _netManager = new NetManager(this);
             _netManager.Start(endpoint.Port);
             _netManager.ReuseAddress = true;
-            _remoteEndpoints = new IPEndPoint[Session.LIMIT_DEVICE_COUNT];
+            _remoteEndpoints = new();
         }
 
         public LiteNetLibSessionAdapter(ushort localPort) : this(new IPEndPoint(IPAddress.Any, localPort))
@@ -72,14 +73,7 @@ namespace PleaseResync
 
         private uint FindDeviceIdFromEndpoint(IPEndPoint endpoint)
         {
-            for (uint deviceId = 0; deviceId < _remoteEndpoints.Length; deviceId++)
-            {
-                if (endpoint.Equals(_remoteEndpoints[deviceId]))
-                {
-                    return deviceId;
-                }
-            }
-            throw new Exception($"Device ID not found for endpoint {endpoint}");
+            return _remoteEndpoints.First(x => x.Value.Equals(endpoint)).Key;
         }
 
         public void Close()
