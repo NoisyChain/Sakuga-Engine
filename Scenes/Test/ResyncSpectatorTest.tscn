@@ -1,0 +1,59 @@
+[gd_scene load_steps=4 format=3 uid="uid://bypg5kupo074u"]
+
+[ext_resource type="Script" uid="uid://cdjnocb4a4ur4" path="res://Scenes/Test/TestGameMgr.cs" id="1_6r7lp"]
+[ext_resource type="Texture2D" uid="uid://6ctweo6uvot8" path="res://icon.svg" id="1_40s7f"]
+
+[sub_resource type="Theme" id="Theme_bxwbv"]
+
+[node name="ResyncSpectatorTest" type="Node2D"]
+
+[node name="BG" type="ColorRect" parent="."]
+offset_right = 1278.0
+offset_bottom = 722.0
+color = Color(0, 0, 0, 1)
+
+[node name="TestGameMgr" type="Node" parent="." node_paths=PackedStringArray("Players")]
+script = ExtResource("1_6r7lp")
+Players = [NodePath("../P1"), NodePath("../P2")]
+Spectating = true
+
+[node name="P1" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="P1"]
+self_modulate = Color(0, 0, 100, 1)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_40s7f")
+metadata/_edit_lock_ = true
+
+[node name="P2" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="P2"]
+self_modulate = Color(100, 0, 0, 1)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_40s7f")
+metadata/_edit_lock_ = true
+
+[node name="UI" type="Panel" parent="."]
+offset_right = 123.0
+offset_bottom = 108.0
+
+[node name="Container" type="VBoxContainer" parent="UI"]
+layout_mode = 0
+offset_right = 119.0
+offset_bottom = 96.0
+
+[node name="Spectating" type="CheckBox" parent="UI/Container"]
+layout_mode = 2
+theme = SubResource("Theme_bxwbv")
+text = "Spectate"
+
+[node name="LocalId" type="SpinBox" parent="UI/Container"]
+layout_mode = 2
+max_value = 1.0
+prefix = "Id:"
+
+[node name="BtnSession" type="Button" parent="UI/Container"]
+layout_mode = 2
+text = "Start Session"
+
+[connection signal="pressed" from="UI/Container/BtnSession" to="TestGameMgr" method="_on_btn_session_pressed"]
