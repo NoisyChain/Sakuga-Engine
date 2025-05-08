@@ -189,7 +189,7 @@ namespace PleaseResync
             return _sessionAdapter.SendTo(deviceId, message);
         }
 
-        public override void AddSpectatorDevice(uint spectatorDelay, object remoteConfiguration)
+        public override void AddSpectatorDevice(object remoteConfiguration)
         {
             throw new NotImplementedException();
         }

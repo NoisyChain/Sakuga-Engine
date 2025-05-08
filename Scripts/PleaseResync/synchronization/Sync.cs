@@ -160,7 +160,7 @@ namespace PleaseResync
                 sendInput.AddRange(GetFrameInput(i).Inputs);
             }
 
-            GD.Print($"maxFrame: {maxFrame}, minFrame: {minFrame}, ackframe: {minAck}, inplength: {sendInput.Count}");
+            //GD.Print($"maxFrame: {maxFrame}, minFrame: {minFrame}, ackframe: {minAck}, inplength: {sendInput.Count}");
 
             foreach (var spectator in _spectators)
             {

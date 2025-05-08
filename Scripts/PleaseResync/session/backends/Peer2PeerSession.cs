@@ -54,7 +54,7 @@ namespace PleaseResync
             _sync.AddRemoteDevice(deviceId, playerCount);
         }
 
-        public override void AddSpectatorDevice(uint spectatorDelay, object remoteConfiguration)
+        public override void AddSpectatorDevice(object remoteConfiguration)
         { 
             uint spectatorId = uint.MaxValue - _numSpectators;
             _sessionAdapter.AddRemote(spectatorId, remoteConfiguration);

@@ -16,7 +16,8 @@ namespace PleaseResync
         private bool Spectating;
         private bool Started;
         private bool Replay;
-        
+
+        [Export] protected bool UseSeparateThread = false;
         [Export] protected ushort FrameDelay = 2;
         [Export] protected ushort SimulatedFrameDelay = 0;
         [Export] protected ushort SpectatorDelay = 30;
@@ -27,10 +28,10 @@ namespace PleaseResync
         private uint DEVICE_ID;
         private uint PingId;
 
-        [Export] string[] PlayerAddresses = { "127.0.0.1", "127.0.0.1" };
-        [Export] string[] SpectatorAddresses = { "127.0.0.1", "127.0.0.1" };
-        [Export] int[] PlayerPorts = { 7001, 7002 };
-        [Export] int[] SpectatorPorts = { 8001, 8002 };
+        string[] PlayerAddresses = { "127.0.0.1", "127.0.0.1" };
+        string[] SpectatorAddresses = { "127.0.0.1", "127.0.0.1" };
+        int[] PlayerPorts = { 7001, 7002 };
+        int[] SpectatorPorts = { 8001, 8002 };
         private uint[] rollbackFrames = new uint[16];
 
         public IGameState sessionState;
@@ -72,6 +73,7 @@ namespace PleaseResync
             if (!Started) return;
 
             //if (canRender) sessionState.Render();
+            if (!UseSeparateThread) GameLoop();
             mutex.WaitOne();
             sessionState.Render();
             mutex.ReleaseMutex();
@@ -128,12 +130,12 @@ namespace PleaseResync
                     }
                 }
                 // Add spectators
-                if (DEVICE_ID == 0)
+                if (DEVICE_ID < playerCount)
                 {
                     for (uint i = 0; i < spectatorCount; i++)
                     {
-                        session.AddSpectatorDevice(0, LiteNetLibSessionAdapter.CreateRemoteConfig(SpectatorAddresses[i], (ushort)SpectatorPorts[i]));
-                        GD.Print($"Device {i} created");
+                        if (i % playerCount != DEVICE_ID) continue;
+                        session.AddSpectatorDevice(LiteNetLibSessionAdapter.CreateRemoteConfig(SpectatorAddresses[i], (ushort)SpectatorPorts[i]));
                     }
                 }
             }
@@ -142,10 +144,11 @@ namespace PleaseResync
                 // Let's spectate!
                 adapter = new LiteNetLibSessionAdapter(SpectatorAddresses[DEVICE_ID], (ushort)SpectatorPorts[DEVICE_ID]);
                 session = new SpectatorSession(InputSize, playerCount, adapter, SpectatorDelay);
-                // Let1s just make the first active player the broadcaster for now.
+                // Let's just make the first active player the broadcaster for now.
                 // be sure to pass ALL the players as in player count
                 uint targetDevice = DEVICE_ID % playerCount;
                 session.AddRemoteDevice(targetDevice, playerCount, LiteNetLibSessionAdapter.CreateRemoteConfig(PlayerAddresses[targetDevice], (ushort)PlayerPorts[targetDevice]));
+                GD.Print($"Spectator device id {DEVICE_ID} connected to player ID {targetDevice}");
             }
 
             Spectating = spectate;
@@ -191,77 +194,82 @@ namespace PleaseResync
             StartGameThread();
         }
 
-        private void GameLoop()
+        private void GameThreadLoop()
         {
             while (Started)
             {
                 mutex.WaitOne();
-                //canRender = false;
-                if (!session.IsOffline()) session.Poll();
-
-                if (session.IsRunning())
-                {
-                    if (Replay)
-                        LastInput = ReadInputs(session.Frame());
-                    else
-                        for (int i = 0; i < LastInput.Length / InputSize; i++)
-                        {
-                            byte[] inputs = SyncTest ? GetRandomInput() : sessionState.GetLocalInput(i, (int)InputSize);
-                            Array.Copy(inputs, 0, LastInput, i * InputSize, inputs.Length);
-                        }
-
-                    sessionActions = session.AdvanceFrame(LastInput);
-                    
-                    foreach (var action in sessionActions)
-                    {
-                        switch (action)
-                        {
-                            case SessionAdvanceFrameAction AFAction:
-                                InputDebug = InputConstructor(AFAction.Inputs);
-                                sessionState.GameLoop(AFAction.Inputs);
-                                if (!Replay) RecordInput(AFAction.Frame, AFAction.Inputs);
-                                break;
-                            case SessionLoadGameAction LGAction:
-                                MemoryStream readerStream = new MemoryStream(LGAction.Load());
-                                BinaryReader reader = new BinaryReader(readerStream);
-                                sessionState.LoadState(reader);
-                                break;
-                            case SessionSaveGameAction SGAction:
-                                MemoryStream writerStream = new MemoryStream();
-                                BinaryWriter writer = new BinaryWriter(writerStream);
-                                sessionState.SaveState(writer);
-                                byte[] state = writerStream.ToArray();
-                                SGAction.Save(state, Platform.GetChecksum(state));
-                                break;
-                        }
-                    }
-
-                    if (Spectating)
-                    {
-                        SimulationText = "Spectating...";
-                        RollbackText = "";
-                        PingText = "";
-                    }
-                    else
-                    {
-                        string FrameCounter = session.IsOffline() ? $"{session.Frame()}" : $"{session.Frame()} ({session.RemoteFrame()} | {session.FrameAdvantage()} | {session.RemoteFrameAdvantage()})";
-
-                        SimulationText = FrameCounter + $" || ( {InputDebug} )";
-                        if (!session.IsOffline())
-                        {
-                            rollbackFrames[session.Frame() % rollbackFrames.Length] = session.RollbackFrames();
-                            RollbackText = "RBF: " + GetAverageRollbackFrames();
-                            PingText = "Ping: " + ShowPingInfo(PingId) + " ms";
-                        }
-                    }
-
-                    if (Replay && session.Frame() >= RecordedInputs.Count)
-                            CloseGame();
-                }
-                //canRender = true;
+                GameLoop();  
                 mutex.ReleaseMutex();
                 Thread.Sleep((int)((1 / 60f) * 1000));
             }
+        }
+
+        private void GameLoop()
+        {
+            //canRender = false;
+            if (!session.IsOffline()) session.Poll();
+
+            if (session.IsRunning())
+            {
+                if (Replay)
+                    LastInput = ReadInputs(session.Frame());
+                else
+                    for (int i = 0; i < LastInput.Length / InputSize; i++)
+                    {
+                        byte[] inputs = SyncTest ? GetRandomInput() : sessionState.GetLocalInput(i, (int)InputSize);
+                        Array.Copy(inputs, 0, LastInput, i * InputSize, inputs.Length);
+                    }
+
+                sessionActions = session.AdvanceFrame(LastInput);
+
+                foreach (var action in sessionActions)
+                {
+                    switch (action)
+                    {
+                        case SessionAdvanceFrameAction AFAction:
+                            InputDebug = InputConstructor(AFAction.Inputs);
+                            sessionState.GameLoop(AFAction.Inputs);
+                            if (!Replay) RecordInput(AFAction.Frame, AFAction.Inputs);
+                            break;
+                        case SessionLoadGameAction LGAction:
+                            MemoryStream readerStream = new MemoryStream(LGAction.Load());
+                            BinaryReader reader = new BinaryReader(readerStream);
+                            sessionState.LoadState(reader);
+                            break;
+                        case SessionSaveGameAction SGAction:
+                            MemoryStream writerStream = new MemoryStream();
+                            BinaryWriter writer = new BinaryWriter(writerStream);
+                            sessionState.SaveState(writer);
+                            byte[] state = writerStream.ToArray();
+                            SGAction.Save(state, Platform.GetChecksum(state));
+                            break;
+                    }
+                }
+
+                if (Spectating)
+                {
+                    SimulationText = $"Spectating...";
+                    RollbackText = "";
+                    PingText = "";
+                }
+                else
+                {
+                    string FrameCounter = session.IsOffline() ? $"{session.Frame()}" : $"{session.Frame()} ({session.RemoteFrame()} | {session.FrameAdvantage()} | {session.RemoteFrameAdvantage()})";
+
+                    SimulationText = FrameCounter + $" || ( {InputDebug} )";
+                    if (!session.IsOffline())
+                    {
+                        rollbackFrames[session.Frame() % rollbackFrames.Length] = session.RollbackFrames();
+                        RollbackText = "RBF: " + GetAverageRollbackFrames();
+                        PingText = "Ping: " + ShowPingInfo(PingId) + " ms";
+                    }
+                }
+
+                if (Replay && session.Frame() >= RecordedInputs.Count)
+                    CloseGame();
+            }
+            //canRender = true;
         }
 
         private uint GetAverageRollbackFrames()
@@ -280,7 +288,9 @@ namespace PleaseResync
 
         private void StartGameThread()
         {
-            GameThread = new Thread(() => GameLoop());
+            if (!UseSeparateThread) return;
+
+            GameThread = new Thread(() => GameThreadLoop());
             GameThread.IsBackground = true;
             GameThread.Start();
         }
@@ -306,6 +316,7 @@ namespace PleaseResync
 
         public void CloseGame()
         {
+            Spectating = false;
             Started = false;
             Replay = false;
             sessionState = null;
@@ -361,7 +372,7 @@ namespace PleaseResync
 
         public ReplayInputs()
         {
-            inputs = new byte[0];
+            inputs = Array.Empty<byte>();
         }
 
         public ReplayInputs(byte[] i)
