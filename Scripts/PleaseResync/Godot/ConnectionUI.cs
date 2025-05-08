@@ -132,9 +132,9 @@ namespace PleaseResync
             {
                 string port = "";
                 if (isSpectator)
-                    spectatorConnections[0].PortField.Text.Trim();
+                    spectatorConnections[i].PortField.Text.Trim();
                 else
-                    playerConnections[0].PortField.Text.Trim();
+                    playerConnections[i].PortField.Text.Trim();
                 temp[i] = port.Length > 0 ? ushort.Parse(port) : (ushort)0;
             }
 

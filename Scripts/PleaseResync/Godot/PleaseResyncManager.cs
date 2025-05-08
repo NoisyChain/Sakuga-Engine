@@ -23,7 +23,6 @@ namespace PleaseResync
         [Export] protected ushort SpectatorDelay = 30;
         [Export] public uint MaxPlayers = 2;
         [Export] public uint MaxSpectators = 8;
-        //[Export] protected uint DeviceCount = 2;
         [Export] protected uint InputSize = 1;
         private uint DEVICE_ID;
         private uint PingId;
@@ -32,7 +31,6 @@ namespace PleaseResync
         string[] SpectatorAddresses = { "127.0.0.1", "127.0.0.1" };
         int[] PlayerPorts = { 7001, 7002 };
         int[] SpectatorPorts = { 8001, 8002 };
-        //private uint[] rollbackFrames = new uint[16];
 
         public IGameState sessionState;
 
@@ -47,8 +45,6 @@ namespace PleaseResync
         List<ReplayInputs> RecordedInputs = new List<ReplayInputs>();
 
         private Thread GameThread;
-
-        private bool canRender;
         private System.Threading.Mutex mutex = new System.Threading.Mutex();
 
         private string ShowPingInfo(uint id)
@@ -207,7 +203,6 @@ namespace PleaseResync
 
         private void GameLoop()
         {
-            //canRender = false;
             if (!session.IsOffline()) session.Poll();
 
             if (session.IsRunning())
@@ -268,7 +263,6 @@ namespace PleaseResync
                 if (Replay && session.Frame() >= RecordedInputs.Count)
                     CloseGame();
             }
-            //canRender = true;
         }
 
         private void StartGameThread()

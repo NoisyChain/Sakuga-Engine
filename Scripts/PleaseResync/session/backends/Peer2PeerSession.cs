@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Diagnostics;
 using System.Collections.Generic;
-using Godot;
+//using Godot;
 
 namespace PleaseResync
 {
@@ -59,7 +59,7 @@ namespace PleaseResync
             uint spectatorId = uint.MaxValue - _numSpectators;
             _sessionAdapter.AddRemote(spectatorId, remoteConfiguration);
             _spectators.Add(new Device(this, spectatorId, 0, Device.DeviceType.Spectator));
-            GD.Print($"New spectator created with Id: {spectatorId}");
+            Platform.Log($"New spectator created with Id: {spectatorId}");
             _spectators.Last().StartSyncing();
             _numSpectators++;
         }

@@ -1,7 +1,6 @@
 using System.Diagnostics;
 using System.Collections.Generic;
 using System;
-using Godot;
 
 namespace PleaseResync
 {
@@ -101,7 +100,7 @@ namespace PleaseResync
                         actions.Add(new SessionSaveGameAction(i, _stateStorage));
                     }
 
-                    GD.Print($"Rollback detected from frame {_timeSync.SyncFrame + 1} to frame {_timeSync.LocalFrame} ({RollbackFrames() + 1} frames)");
+                    Platform.Log($"Rollback detected from frame {_timeSync.SyncFrame + 1} to frame {_timeSync.LocalFrame} ({RollbackFrames() + 1} frames)");
                 }
 
                 PingDevices();
@@ -189,7 +188,7 @@ namespace PleaseResync
 
             sumFrames /= rollbackFrames.Length;
 
-            return (uint)Mathf.RoundToInt(sumFrames);
+            return (uint)Math.Round(sumFrames);
         }
 
         private void HealthCheck()
@@ -300,7 +299,7 @@ namespace PleaseResync
                         {
                             device.State = Device.DeviceState.Disconnected;
                             _syncState = SyncState.DESYNCED;
-                            GD.PrintErr($"State mismatch found.({health.Item2} : {_stateStorage.GetChecksum(health.Item1)})");
+                            Platform.Log($"State mismatch found.({health.Item2} : {_stateStorage.GetChecksum(health.Item1)})", Platform.DebugType.Error);
                             break;
                         }
                     }
@@ -392,7 +391,7 @@ namespace PleaseResync
         public int FramesAhead() => _timeSync.LocalFrameAdvantage;
         public int RemoteFramesAhead() => _timeSync.RemoteFrameAdvantage;
         public int FrameDifference() => _timeSync.FrameAdvantageDifference;
-        public uint RollbackFrames() => (uint)Mathf.Max(0, _timeSync.LocalFrame - (_timeSync.SyncFrame + 1));
+        public uint RollbackFrames() => (uint)Math.Max(0, _timeSync.LocalFrame - (_timeSync.SyncFrame + 1));
         public uint AverageRollbackFrames() => GetAverageRollbackFrames();
         public SyncState State() => _syncState;
     }

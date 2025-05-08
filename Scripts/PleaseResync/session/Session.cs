@@ -1,7 +1,5 @@
 using System.Diagnostics;
 using System.Collections.Generic;
-using System.Net;
-using System;
 
 namespace PleaseResync
 {

@@ -11,7 +11,7 @@ namespace PleaseResync
     internal static class Platform
     {
         private readonly static Random RandomNumberGenerator = new Random();
-        public enum DebugType{ Log, Warning, Error};
+        public enum DebugType{ Log, Warning, Error };
 
         public static uint GetCurrentTimeMS()
         {
@@ -63,7 +63,7 @@ namespace PleaseResync
             return sum2 << 16 | sum1;
         }
 
-        public static void GodotLog(string message = "", DebugType type = DebugType.Log)
+        public static void Log(string message = "", DebugType type = DebugType.Log)
         {
             switch (type)
             {
@@ -71,7 +71,7 @@ namespace PleaseResync
                     GD.Print(message);
                     break;
                 case DebugType.Warning:
-                    GD.Print(message);
+                    GD.PrintRich($"[color=YELLOW]{message}");
                     break;
                 case DebugType.Error:
                     GD.PrintErr(message);

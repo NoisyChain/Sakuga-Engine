@@ -1,7 +1,6 @@
 using System.Diagnostics;
 using System.Collections.Generic;
 using System;
-using Godot;
 
 namespace PleaseResync
 {
@@ -118,7 +117,7 @@ namespace PleaseResync
 
         public void EndConnection()
         {
-            GD.Print($"Connection lost with Device {Id}: T({Type})");
+            Platform.Log($"Connection lost with Device {Id}: T({Type})");
             State = DeviceState.Disconnected;
         }
         #endregion
@@ -204,7 +203,7 @@ namespace PleaseResync
             }
         }
 
-        public int GetRTT() => Mathf.Max(0, (int)RTT - PING_ERRROR_MARGIN);
+        public int GetRTT() => Math.Max(0, (int)RTT - PING_ERRROR_MARGIN);
         #endregion
     }
 
