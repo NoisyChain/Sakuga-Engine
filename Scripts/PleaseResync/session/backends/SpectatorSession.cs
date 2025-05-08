@@ -98,7 +98,7 @@ namespace PleaseResync
             return actions;
         }
 
-        public override float AverageFrameAdvantage()
+        public override uint AverageRollbackFrames()
         {
             throw new System.NotImplementedException();
         }

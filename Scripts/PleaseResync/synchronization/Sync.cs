@@ -25,6 +25,7 @@ namespace PleaseResync
         private SyncState _syncState;
 
         private uint _lastSentChecksum;
+        private uint[] rollbackFrames;
 
         public Sync(Device[] devices, uint inputSize, bool offline, List<Device> spectators = null)
         {
@@ -36,6 +37,7 @@ namespace PleaseResync
             _deviceInputs = new InputQueue[_devices.Length];
             _syncState = SyncState.SYNCING;
             _spectators = spectators ?? [];
+            rollbackFrames = new uint[16];
         }
 
         public void AddRemoteInput(uint deviceId, int frame, int advantage, byte[] deviceInput)
@@ -127,6 +129,8 @@ namespace PleaseResync
 
                 actions.Add(new SessionAdvanceFrameAction(_timeSync.LocalFrame, GetFrameInput(_timeSync.LocalFrame).Inputs));
             }
+            rollbackFrames[_timeSync.LocalFrame % rollbackFrames.Length] = RollbackFrames();
+
             return actions;
         }
 
@@ -174,6 +178,19 @@ namespace PleaseResync
             }
         }
 
+        private uint GetAverageRollbackFrames()
+        {
+            float sumFrames = 0f;
+            
+            for(int i = 0; i < rollbackFrames.Length; i++)
+            {
+                sumFrames += rollbackFrames[i];
+            }
+
+            sumFrames /= rollbackFrames.Length;
+
+            return (uint)Mathf.RoundToInt(sumFrames);
+        }
 
         private void HealthCheck()
         {
@@ -375,8 +392,8 @@ namespace PleaseResync
         public int FramesAhead() => _timeSync.LocalFrameAdvantage;
         public int RemoteFramesAhead() => _timeSync.RemoteFrameAdvantage;
         public int FrameDifference() => _timeSync.FrameAdvantageDifference;
-        public float AverageFrameAdvantage() => _offlinePlay ? (1 / 60f) : _timeSync.GetAverageFrameAdvantage();
         public uint RollbackFrames() => (uint)Mathf.Max(0, _timeSync.LocalFrame - (_timeSync.SyncFrame + 1));
+        public uint AverageRollbackFrames() => GetAverageRollbackFrames();
         public SyncState State() => _syncState;
     }
 }

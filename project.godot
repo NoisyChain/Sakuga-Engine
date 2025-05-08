@@ -21,6 +21,8 @@ config/icon="res://Sprites/Icons/Icon_Fighter.png"
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
 window/vsync/vsync_mode=0
 
 [dotnet]

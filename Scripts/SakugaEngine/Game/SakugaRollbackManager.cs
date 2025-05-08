@@ -8,9 +8,6 @@ namespace SakugaEngine.Game
     {
         [Export] private bool AutoStart;
 
-        private const uint MAX_PLAYERS = 2;
-        private const uint MAX_SPECTETORS = 10;
-
         [Export] private GameManager GameManager;
 
         public override void _Ready()
