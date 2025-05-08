@@ -15,3 +15,7 @@ data_*/
 mono_crash.*.json
 
 Fighters/Anippe
+Scenes/Test
+Scenes/ChecksumCalculator.tscn
+interpolation_editor.gd
+interpolation_editor.gd.uid
