@@ -1,4 +1,4 @@
-[gd_scene load_steps=542 format=3 uid="uid://b1ggpw8ltpaid"]
+[gd_scene load_steps=543 format=3 uid="uid://b1ggpw8ltpaid"]
 
 [ext_resource type="Texture2D" uid="uid://bx0l7712opy5a" path="res://Fighters/Kaede/Sprites/0-12.png" id="1"]
 [ext_resource type="Script" uid="uid://bkhlpeqky2g1r" path="res://Scripts/SakugaEngine/Components/SakugaFighter.cs" id="1_7dx2y"]
@@ -168,6 +168,7 @@
 [ext_resource type="Texture2D" uid="uid://c40a00uojv0gk" path="res://Fighters/Kaede/Sprites/42-0.png" id="81"]
 [ext_resource type="Resource" uid="uid://bk6kr345ggqfg" path="res://Fighters/Kaede/States/72_Kaede_AirRecoveryForward.tres" id="81_m554x"]
 [ext_resource type="Texture2D" uid="uid://cf7hfrc32cits" path="res://Fighters/Kaede/Sprites/42-3.png" id="82"]
+[ext_resource type="Material" uid="uid://bq6qbm2ymofxw" path="res://pallete_test.tres" id="82_axt2r"]
 [ext_resource type="Texture2D" uid="uid://cqvjudjiiskph" path="res://Fighters/Kaede/Sprites/42-4.png" id="83"]
 [ext_resource type="Texture2D" uid="uid://bopqoovmr0hsq" path="res://Fighters/Kaede/Sprites/42-1.png" id="84"]
 [ext_resource type="Texture2D" uid="uid://bailyyjgqaekl" path="res://Fighters/Kaede/Sprites/42-2.png" id="85"]
@@ -429,6 +430,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(-106, -21), Vector2(-106, -9), Vector2(-97, 0), Vector2(-100, 15), Vector2(-105, 16), Vector2(-98, -8), Vector2(-76, -8), Vector2(-76, -8), Vector2(-76, -8), Vector2(-90, -8), Vector2(-106, -20), Vector2(-103, -11), Vector2(-91, -11), Vector2(-76, -11), Vector2(-76, -11)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0833333, 0.166667, 0.25, 0.333333, 0.416667, 0.5, 0.566667, 0.633333, 0.7, 0.883333, 0.966667, 1.01667, 1.06667, 1.13334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("329_0msbe"), ExtResource("330_f7d15"), ExtResource("331_fofsb"), ExtResource("332_j53hj"), ExtResource("333_6r1kw"), ExtResource("334_2b4fq"), ExtResource("335_8vwab"), ExtResource("336_gvxir"), ExtResource("337_gow78"), ExtResource("338_23igm"), ExtResource("40"), ExtResource("37"), ExtResource("38"), ExtResource("39"), ExtResource("39")]
+}
 
 [sub_resource type="Animation" id="Animation_50qne"]
 resource_name = "236C_1"
@@ -457,6 +470,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(-116, -7), Vector2(-116, -7), Vector2(-123, -3), Vector2(-136, -2), Vector2(-136, -2), Vector2(-136, -2), Vector2(-136, -2), Vector2(-94, -12), Vector2(-78, -9), Vector2(-78, -9)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.116667, 0.166667, 0.216667, 0.266667, 0.316667, 0.366667, 0.416667, 0.483333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("307_gfwjh"), ExtResource("308_kipgx"), ExtResource("309_kayp1"), ExtResource("310_rs4ur"), ExtResource("311_4epjn"), ExtResource("310_rs4ur"), ExtResource("311_4epjn"), ExtResource("312_rmrjg"), ExtResource("313_8klr8"), ExtResource("313_8klr8")]
 }
 
 [sub_resource type="Animation" id="Animation_xud8q"]
@@ -487,6 +512,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(-145, -6), Vector2(-83, -4), Vector2(-81, -4), Vector2(-83, -4), Vector2(-85, -4), Vector2(-85, -4), Vector2(-84, -4), Vector2(-56, -11), Vector2(-56, -11)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.183333, 0.233334, 0.283334, 0.35, 0.416667, 0.483333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("314_j0pq8"), ExtResource("315_4nn3v"), ExtResource("316_uwyne"), ExtResource("317_bbyth"), ExtResource("318_86ik4"), ExtResource("319_u82f0"), ExtResource("320_cvhyg"), ExtResource("321_7v65y"), ExtResource("321_7v65y")]
+}
 
 [sub_resource type="Animation" id="Animation_ksv6f"]
 resource_name = "236C_3"
@@ -515,6 +552,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(-100, -4), Vector2(-114, -4), Vector2(-76, -11), Vector2(-127, -10), Vector2(-109, -10), Vector2(-102, -10), Vector2(-89, -12), Vector2(-89, -12)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.166667, 0.25, 0.333333, 0.533333, 0.666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("322_48pkx"), ExtResource("323_bn5ny"), ExtResource("324_8ykjx"), ExtResource("325_7d2xi"), ExtResource("326_scrd0"), ExtResource("327_v4qvf"), ExtResource("328_egd1q"), ExtResource("328_egd1q")]
 }
 
 [sub_resource type="Animation" id="42"]
@@ -545,6 +594,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(-84, -15), Vector2(-97, -16), Vector2(-96, -16), Vector2(-97, -16), Vector2(-77, -20)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1, 0.15, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("175"), ExtResource("176"), ExtResource("177"), ExtResource("174"), ExtResource("176"), ExtResource("41")]
+}
 
 [sub_resource type="Animation" id="43"]
 resource_name = "2B"
@@ -573,6 +634,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(-134, -47), Vector2(-127, -42), Vector2(-177, -10), Vector2(-176, -42), Vector2(-182, -42), Vector2(-180, -42), Vector2(-174, -42), Vector2(-139, -42), Vector2(-116, -25), Vector2(-104, -42), Vector2(-77, -20)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1, 0.133333, 0.166667, 0.2, 0.25, 0.3, 0.35, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("183"), ExtResource("180"), ExtResource("184"), ExtResource("181"), ExtResource("185"), ExtResource("186"), ExtResource("182"), ExtResource("187"), ExtResource("178"), ExtResource("179"), ExtResource("41")]
 }
 
 [sub_resource type="Animation" id="44"]
@@ -603,6 +676,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(-127, -42), Vector2(-147, -14), Vector2(-178, -17), Vector2(-182, -12), Vector2(-186, -12), Vector2(-116, -7), Vector2(-116, -7), Vector2(-116, -34), Vector2(-84, -18), Vector2(-84, -10), Vector2(-77, -20)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1, 0.133333, 0.166667, 0.216667, 0.266667, 0.316667, 0.366667, 0.416667, 0.466667, 0.516667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("195"), ExtResource("190"), ExtResource("188"), ExtResource("193"), ExtResource("192"), ExtResource("198"), ExtResource("189"), ExtResource("197"), ExtResource("194"), ExtResource("199"), ExtResource("196"), ExtResource("191"), ExtResource("41")]
+}
 
 [sub_resource type="Animation" id="15"]
 resource_name = "5A"
@@ -631,6 +716,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(-70, -12), Vector2(-50, -11), Vector2(-45, -11), Vector2(-45, -12), Vector2(-61, -11)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.116667, 0.166667, 0.233333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("87"), ExtResource("90"), ExtResource("89"), ExtResource("88"), ExtResource("6")]
 }
 
 [sub_resource type="Animation" id="16"]
@@ -661,6 +758,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(-73, -11), Vector2(-70, -11), Vector2(-86, -12), Vector2(-64, -11), Vector2(-71, -11), Vector2(-89, -11), Vector2(-78, -11), Vector2(-74, -11), Vector2(-61, -11)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.351, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("94"), ExtResource("98"), ExtResource("95"), ExtResource("93"), ExtResource("97"), ExtResource("91"), ExtResource("96"), ExtResource("92"), ExtResource("92"), ExtResource("6")]
+}
 
 [sub_resource type="Animation" id="17"]
 resource_name = "5C"
@@ -689,6 +798,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(-51, -4), Vector2(-98, -4), Vector2(-106, -5), Vector2(-67, -4), Vector2(-39, -4), Vector2(-47, -4), Vector2(-65, -4), Vector2(-128, -4), Vector2(-156, -4), Vector2(-82, -4), Vector2(-82, -4), Vector2(-124, -4), Vector2(-145, -4), Vector2(-66, -4), Vector2(-44, -4), Vector2(-55, -8), Vector2(-61, -11)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1, 0.133333, 0.166667, 0.2, 0.233333, 0.266667, 0.3, 0.366667, 0.416667, 0.466667, 0.516667, 0.566667, 0.616667, 0.666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("112"), ExtResource("113"), ExtResource("114"), ExtResource("99"), ExtResource("106"), ExtResource("100"), ExtResource("101"), ExtResource("110"), ExtResource("102"), ExtResource("109"), ExtResource("103"), ExtResource("104"), ExtResource("105"), ExtResource("107"), ExtResource("111"), ExtResource("108"), ExtResource("6")]
 }
 
 [sub_resource type="Animation" id="Animation_hptys"]
@@ -719,6 +840,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(-49, 126), Vector2(-106, 44), Vector2(-106, 44)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.166667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("339_q1uyu"), ExtResource("340_l736p"), ExtResource("340_l736p")]
+}
 
 [sub_resource type="Animation" id="Animation_trg78"]
 resource_name = "623B_2"
@@ -747,6 +880,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(-132, 40), Vector2(-141, 40), Vector2(-161, 40), Vector2(-106, 44), Vector2(-65, 108), Vector2(-111, 31), Vector2(-79, -9)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.0999999, 0.166667, 0.366667, 0.433333, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("341_hpnmr"), ExtResource("342_m18jb"), ExtResource("343_cmaq0"), ExtResource("340_l736p"), ExtResource("344_7nde0"), ExtResource("78"), ExtResource("72")]
 }
 
 [sub_resource type="Animation" id="48"]
@@ -777,6 +922,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(-74, -8), Vector2(-138, -7), Vector2(-191, -8), Vector2(-196, -2), Vector2(-204, -2), Vector2(-210, -1), Vector2(-191, -4), Vector2(-138, -7), Vector2(-61, -11)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.351, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("217"), ExtResource("220"), ExtResource("218"), ExtResource("219"), ExtResource("223"), ExtResource("224"), ExtResource("221"), ExtResource("222"), ExtResource("222"), ExtResource("6")]
+}
 
 [sub_resource type="Animation" id="40"]
 resource_name = "Block_Air_Enter"
@@ -805,6 +962,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(-78, -9), Vector2(-92, -10)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("76"), ExtResource("172")]
 }
 
 [sub_resource type="Animation" id="41"]
@@ -835,6 +1004,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(-92, -10), Vector2(-78, -9), Vector2(-79, -9)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("172"), ExtResource("76"), ExtResource("72")]
+}
 
 [sub_resource type="Animation" id="36"]
 resource_name = "Block_Crouch_Enter"
@@ -863,6 +1044,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(-85, -16), Vector2(-102, -15)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("170"), ExtResource("169")]
 }
 
 [sub_resource type="Animation" id="37"]
@@ -893,6 +1086,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(-102, -15), Vector2(-85, -16), Vector2(-77, -20)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("169"), ExtResource("170"), ExtResource("41")]
+}
 
 [sub_resource type="Animation" id="33"]
 resource_name = "Block_Neutral_Enter"
@@ -921,6 +1126,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(-82, -12), Vector2(-115, -12)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("166"), ExtResource("167")]
 }
 
 [sub_resource type="Animation" id="34"]
@@ -951,6 +1168,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(-115, -12), Vector2(-82, -12), Vector2(-61, -11)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("167"), ExtResource("166"), ExtResource("6")]
+}
 
 [sub_resource type="Animation" id="Animation_6phi8"]
 resource_name = "Blocking_Air"
@@ -979,6 +1208,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(-92, -10)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("172")]
 }
 
 [sub_resource type="Animation" id="Animation_xt3e1"]
@@ -1009,6 +1250,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(-102, -15)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("169")]
+}
 
 [sub_resource type="Animation" id="Animation_rdv84"]
 resource_name = "Blocking_Neutral"
@@ -1037,6 +1290,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(-115, -12)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("167")]
 }
 
 [sub_resource type="Animation" id="39"]
@@ -1067,6 +1332,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(-77, 3)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("173")]
+}
 
 [sub_resource type="Animation" id="38"]
 resource_name = "Blockstun_Crouch"
@@ -1095,6 +1372,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(-87, -15)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("171")]
 }
 
 [sub_resource type="Animation" id="35"]
@@ -1125,6 +1414,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(-103, -12)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("168")]
+}
 
 [sub_resource type="Animation" id="5"]
 resource_name = "Crouch_Enter"
@@ -1153,6 +1454,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(-76, -11), Vector2(-91, -11), Vector2(-103, -11), Vector2(-106, -20), Vector2(-77, -20)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("39"), ExtResource("38"), ExtResource("37"), ExtResource("40"), ExtResource("41")]
 }
 
 [sub_resource type="Animation" id="7"]
@@ -1183,6 +1496,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(-106, -20), Vector2(-103, -11), Vector2(-91, -11), Vector2(-76, -11), Vector2(-61, -11)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("40"), ExtResource("37"), ExtResource("38"), ExtResource("39"), ExtResource("6")]
+}
 
 [sub_resource type="Animation" id="6"]
 resource_name = "Crouching"
@@ -1211,6 +1536,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(-77, -20), Vector2(-77, -20)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.2, 0.266667, 0.333333, 0.4, 0.466667, 0.533333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("41"), ExtResource("47"), ExtResource("42"), ExtResource("44"), ExtResource("43"), ExtResource("48"), ExtResource("45"), ExtResource("46"), ExtResource("41")]
 }
 
 [sub_resource type="Animation" id="8"]
@@ -1241,6 +1578,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(-91, -11), Vector2(-124, 32), Vector2(-95, 106), Vector2(-87, 58), Vector2(-98, 22), Vector2(-97, -4), Vector2(-116, -4), Vector2(-126, -14), Vector2(-154, -34), Vector2(-143, 0), Vector2(-126, -5), Vector2(-61, -11)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.116667, 0.166667, 0.216667, 0.266667, 0.316667, 0.366667, 0.416667, 0.466667, 0.516667, 0.566667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("38"), ExtResource("61"), ExtResource("62"), ExtResource("63"), ExtResource("64"), ExtResource("69"), ExtResource("70"), ExtResource("66"), ExtResource("68"), ExtResource("67"), ExtResource("65"), ExtResource("6")]
+}
 
 [sub_resource type="Animation" id="9"]
 resource_name = "Dash_Forward"
@@ -1269,6 +1618,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(-158, -23), Vector2(-158, -23)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("58"), ExtResource("53"), ExtResource("55"), ExtResource("56"), ExtResource("57"), ExtResource("59"), ExtResource("49"), ExtResource("54"), ExtResource("52"), ExtResource("60"), ExtResource("50"), ExtResource("51"), ExtResource("58")]
 }
 
 [sub_resource type="Animation" id="10"]
@@ -1299,6 +1660,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(-79, -9), Vector2(-98, -9), Vector2(-79, -9)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("72"), ExtResource("71"), ExtResource("72")]
+}
 
 [sub_resource type="Animation" id="20"]
 resource_name = "Hit_Air_Strong"
@@ -1327,6 +1700,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(-88, -8), Vector2(-79, 8), Vector2(-72, 44), Vector2(-68, 62)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.133333, 0.216667, 0.283333),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("135"), ExtResource("133"), ExtResource("136"), ExtResource("130")]
 }
 
 [sub_resource type="Animation" id="22"]
@@ -1357,6 +1742,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(-88, -8), Vector2(-79, 8), Vector2(-72, 44), Vector2(-68, 62), Vector2(-65, 40), Vector2(-61, -11)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0833333, 0.15, 0.216667, 0.283333, 0.333334, 0.383333, 0.433333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("135"), ExtResource("133"), ExtResource("136"), ExtResource("130"), ExtResource("85"), ExtResource("84"), ExtResource("81"), ExtResource("74")]
+}
 
 [sub_resource type="Animation" id="21"]
 resource_name = "Hit_Crouch_Weak"
@@ -1385,6 +1782,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(-66, -11), Vector2(-74, -10), Vector2(-110, -10), Vector2(-93, -26), Vector2(-77, -20)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1, 0.133333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("124"), ExtResource("125"), ExtResource("126"), ExtResource("129"), ExtResource("41")]
 }
 
 [sub_resource type="Animation" id="32"]
@@ -1415,6 +1824,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(-53, -10)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.2, 0.266667, 0.333333, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("147"), ExtResource("164"), ExtResource("165"), ExtResource("162"), ExtResource("161"), ExtResource("163"), ExtResource("147")]
+}
 
 [sub_resource type="Animation" id="25"]
 resource_name = "Hit_Down"
@@ -1441,6 +1862,18 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
+"values": [ExtResource("138")]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
 "values": [ExtResource("138")]
 }
 
@@ -1472,6 +1905,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(-53, -10), Vector2(-102, -17), Vector2(-128, -29), Vector2(-128, -29), Vector2(-167, -19), Vector2(-165, -32)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.133333, 0.2, 0.333333, 0.433333, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("147"), ExtResource("145"), ExtResource("144"), ExtResource("144"), ExtResource("143"), ExtResource("138")]
+}
 
 [sub_resource type="Animation" id="23"]
 resource_name = "Hit_Falling"
@@ -1500,6 +1945,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(-79, 8), Vector2(-72, 44), Vector2(-68, 62), Vector2(-88, 62), Vector2(-96, 21), Vector2(-97, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("133"), ExtResource("136"), ExtResource("130"), ExtResource("131"), ExtResource("132"), ExtResource("134"), ExtResource("137"), ExtResource("134")]
 }
 
 [sub_resource type="Animation" id="26"]
@@ -1530,6 +1987,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(-156, -32), Vector2(-128, -29), Vector2(-102, -17), Vector2(-53, -10), Vector2(-61, -11)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.2, 0.266667, 0.333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("146"), ExtResource("144"), ExtResource("145"), ExtResource("147"), ExtResource("116"), ExtResource("6")]
+}
 
 [sub_resource type="Animation" id="24"]
 resource_name = "Hit_OnTheGround_1"
@@ -1558,6 +2027,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(-125, -1), Vector2(-104, -1), Vector2(-85, -3), Vector2(-76, -20), Vector2(-165, -32), Vector2(-167, -19), Vector2(-165, -32)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.300001),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("141"), ExtResource("139"), ExtResource("140"), ExtResource("142"), ExtResource("138"), ExtResource("143"), ExtResource("138")]
 }
 
 [sub_resource type="Animation" id="28"]
@@ -1588,6 +2069,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(-120, -12)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("153"), ExtResource("154"), ExtResource("155"), ExtResource("154"), ExtResource("153")]
+}
 
 [sub_resource type="Animation" id="29"]
 resource_name = "Hit_Spin_2"
@@ -1616,6 +2109,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(-120, -12)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("157"), ExtResource("156"), ExtResource("158"), ExtResource("156"), ExtResource("157")]
 }
 
 [sub_resource type="Animation" id="19"]
@@ -1646,6 +2151,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(-108, -9), Vector2(-124, -9), Vector2(-147, -13), Vector2(-45, -13), Vector2(-61, -11)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1, 0.133333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("121"), ExtResource("122"), ExtResource("123"), ExtResource("116"), ExtResource("6")]
+}
 
 [sub_resource type="Animation" id="30"]
 resource_name = "Hit_Sweep_1"
@@ -1674,6 +2191,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(-147, -5), Vector2(-161, -51), Vector2(-124, 9), Vector2(-167, -19), Vector2(-165, -32)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.2, 0.266667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("159"), ExtResource("160"), ExtResource("142"), ExtResource("143"), ExtResource("138")]
 }
 
 [sub_resource type="Animation" id="27"]
@@ -1704,6 +2233,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(-106, -8), Vector2(-140, -37), Vector2(-135, -4), Vector2(-121, -3), Vector2(-137, -15)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.2, 0.266667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("151"), ExtResource("152"), ExtResource("150"), ExtResource("149"), ExtResource("148")]
+}
 
 [sub_resource type="Animation" id="18"]
 resource_name = "Hit_Weak"
@@ -1732,6 +2273,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(-83, -9), Vector2(-94, -8), Vector2(-141, -8), Vector2(-45, -13), Vector2(-61, -11)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1, 0.133333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("117"), ExtResource("118"), ExtResource("115"), ExtResource("116"), ExtResource("6")]
 }
 
 [sub_resource type="Animation" id="1"]
@@ -1762,6 +2315,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(-61, -11), Vector2(-57, -11), Vector2(-56, -11), Vector2(-55, -11), Vector2(-54, -11), Vector2(-57, -11), Vector2(-59, -11), Vector2(-61, -11), Vector2(-62, -11), Vector2(-63, -11), Vector2(-61, -11)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 0
+tracks/2/loop_wrap = false
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [ExtResource("6"), ExtResource("5"), ExtResource("8"), ExtResource("10"), ExtResource("13"), ExtResource("11"), ExtResource("12"), ExtResource("14"), ExtResource("15"), ExtResource("7"), ExtResource("9"), ExtResource("1"), ExtResource("6")]
+}
 
 [sub_resource type="Animation" id="13"]
 resource_name = "Jump_Backwards"
@@ -1790,6 +2355,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(-92, -9), Vector2(-111, 31), Vector2(-45, 128), Vector2(-47, 150), Vector2(-40, 138), Vector2(-56, 130), Vector2(-72, 127), Vector2(-79, 9)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.116667, 0.166667, 0.216667, 0.266667, 0.316667, 0.366667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("73"), ExtResource("78"), ExtResource("83"), ExtResource("82"), ExtResource("84"), ExtResource("85"), ExtResource("81"), ExtResource("72")]
 }
 
 [sub_resource type="Animation" id="12"]
@@ -1820,6 +2397,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(-92, -9), Vector2(-72, 127), Vector2(-56, 130), Vector2(-40, 138), Vector2(-47, 150), Vector2(-45, 128), Vector2(-111, 31), Vector2(-79, 9)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.116667, 0.166667, 0.216667, 0.266667, 0.316667, 0.366667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("73"), ExtResource("81"), ExtResource("85"), ExtResource("84"), ExtResource("82"), ExtResource("83"), ExtResource("78"), ExtResource("72")]
+}
 
 [sub_resource type="Animation" id="11"]
 resource_name = "Jump_Neutral"
@@ -1849,6 +2438,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(-92, -9), Vector2(-61, -9), Vector2(-55, -9), Vector2(-78, -9), Vector2(-94, 82), Vector2(-116, 63), Vector2(-129, 68), Vector2(-111, 31), Vector2(-79, -9)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.116667, 0.166667, 0.216667, 0.266667, 0.316667, 0.366667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("73"), ExtResource("81"), ExtResource("85"), ExtResource("84"), ExtResource("82"), ExtResource("83"), ExtResource("78"), ExtResource("72")]
+}
 
 [sub_resource type="Animation" id="14"]
 resource_name = "Landing"
@@ -1877,6 +2478,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(-106, -20), Vector2(-77, -20), Vector2(-76, -11), Vector2(-61, -11)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("40"), ExtResource("86"), ExtResource("39"), ExtResource("6")]
 }
 
 [sub_resource type="Animation" id="2"]
@@ -1934,6 +2547,18 @@ tracks/1/keys = {
 "update": 1,
 "values": [Vector2(-58, -11), Vector2(-59, -11), Vector2(-62, -8), Vector2(-63, -8), Vector2(-61, -8), Vector2(-60, -8), Vector2(-63, -8), Vector2(-61, -8), Vector2(-60, -8), Vector2(-63, -8), Vector2(-61, -8), Vector2(-60, -8), Vector2(-63, -8), Vector2(-61, -8), Vector2(-60, -8), Vector2(-63, -8), Vector2(-61, -8), Vector2(-60, -8), Vector2(-63, -8), Vector2(-61, -8), Vector2(-60, -8), Vector2(-59, -11), Vector2(-58, -11)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.2, 0.266667, 0.333333, 0.4, 0.466667, 0.533333, 0.6, 0.666667, 0.733333, 0.8, 0.866667, 0.933333, 1, 1.06667, 1.13333, 1.2, 1.26667, 1.33333, 1.4, 1.46667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("284_7p1pn"), ExtResource("285_p81x1"), ExtResource("286_n0lul"), ExtResource("287_gxj1q"), ExtResource("288_iua8e"), ExtResource("289_vwwoq"), ExtResource("287_gxj1q"), ExtResource("288_iua8e"), ExtResource("289_vwwoq"), ExtResource("287_gxj1q"), ExtResource("288_iua8e"), ExtResource("289_vwwoq"), ExtResource("287_gxj1q"), ExtResource("288_iua8e"), ExtResource("289_vwwoq"), ExtResource("287_gxj1q"), ExtResource("288_iua8e"), ExtResource("289_vwwoq"), ExtResource("287_gxj1q"), ExtResource("288_iua8e"), ExtResource("289_vwwoq"), ExtResource("285_p81x1"), ExtResource("284_7p1pn")]
+}
 
 [sub_resource type="Animation" id="Animation_vawbm"]
 resource_name = "Throw_Enter"
@@ -1962,6 +2587,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(-57, -11), Vector2(-56, -11), Vector2(-55, -11), Vector2(-54, -11), Vector2(-61, -11)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.116667, 0.2, 0.266667, 0.316667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("291_fjuot"), ExtResource("292_7j8nm"), ExtResource("293_ftt01"), ExtResource("294_nq2ts"), ExtResource("295_0uqno"), ExtResource("6")]
 }
 
 [sub_resource type="Animation" id="Animation_d1oj1"]
@@ -1992,6 +2629,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(-83, -9), Vector2(-97, 1), Vector2(-76, -20), Vector2(-76, -20)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.433333, 0.500001),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("345_v47oh"), ExtResource("134"), ExtResource("142"), ExtResource("142")]
+}
 
 [sub_resource type="Animation" id="Animation_3ljre"]
 resource_name = "Throw_Sequence"
@@ -2020,6 +2669,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(-57, -11), Vector2(-41, 115), Vector2(-50, 110), Vector2(-89, 115), Vector2(-100, 73), Vector2(-152, -14), Vector2(-150, -13), Vector2(-152, -13), Vector2(-152, -18)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0833333, 0.3, 0.366667, 0.433333, 0.5, 0.566667, 0.633333, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("292_7j8nm"), ExtResource("296_f7ky3"), ExtResource("297_ybkmr"), ExtResource("298_1qddw"), ExtResource("300_6xb7l"), ExtResource("301_j4lax"), ExtResource("302_tku0h"), ExtResource("303_w1usg"), ExtResource("304_toqgh"), ExtResource("304_toqgh")]
 }
 
 [sub_resource type="Animation" id="4"]
@@ -2050,6 +2711,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(-83, -29), Vector2(-68, -29), Vector2(-59, -29), Vector2(-57, -29), Vector2(-54, -29), Vector2(-57, -29), Vector2(-59, -29), Vector2(-63, -29), Vector2(-96, -29), Vector2(-111, -29), Vector2(-103, -29), Vector2(-83, -29)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.401, 0.45, 0.5, 0.55),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("35"), ExtResource("34"), ExtResource("31"), ExtResource("36"), ExtResource("27"), ExtResource("33"), ExtResource("32"), ExtResource("30"), ExtResource("26"), ExtResource("26"), ExtResource("28"), ExtResource("29"), ExtResource("35")]
+}
 
 [sub_resource type="Animation" id="3"]
 resource_name = "Walk_Forward"
@@ -2078,6 +2751,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(-89, -29), Vector2(-103, -29), Vector2(-111, -29), Vector2(-113, -29), Vector2(-107, -29), Vector2(-100, -29), Vector2(-94, -29), Vector2(-80, -29), Vector2(-76, -29), Vector2(-74, -29), Vector2(-89, -29)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("18"), ExtResource("16"), ExtResource("19"), ExtResource("17"), ExtResource("20"), ExtResource("25"), ExtResource("22"), ExtResource("21"), ExtResource("24"), ExtResource("23"), ExtResource("18")]
 }
 
 [sub_resource type="Animation" id="45"]
@@ -2108,6 +2793,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(-32, -8), Vector2(-148, -8), Vector2(-162, -8), Vector2(-172, -8), Vector2(-32, -8), Vector2(-79, -9)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.0833333, 0.116667, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("200"), ExtResource("201"), ExtResource("202"), ExtResource("204"), ExtResource("203"), ExtResource("200"), ExtResource("72")]
+}
 
 [sub_resource type="Animation" id="46"]
 resource_name = "j_5B"
@@ -2137,6 +2834,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(-118, 53), Vector2(-149, 62), Vector2(-77, 59), Vector2(-71, 48), Vector2(-77, 42), Vector2(-118, 4), Vector2(-79, -9)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("205"), ExtResource("207"), ExtResource("206"), ExtResource("209"), ExtResource("210"), ExtResource("208"), ExtResource("72")]
+}
 
 [sub_resource type="Animation" id="47"]
 resource_name = "j_5C"
@@ -2165,6 +2874,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(-123, 19), Vector2(-133, 19), Vector2(-133, 26), Vector2(-128, 103), Vector2(-133, 70), Vector2(-140, 68), Vector2(-111, 31), Vector2(-79, -9)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1, 0.15, 0.2, 0.25, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("214"), ExtResource("216"), ExtResource("212"), ExtResource("211"), ExtResource("215"), ExtResource("213"), ExtResource("78"), ExtResource("72")]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_n2gjo"]
@@ -2742,6 +3463,7 @@ States = Array[Object]([ExtResource("9_wsoae"), ExtResource("10_utkgf"), ExtReso
 
 [node name="Sprite3D" type="Sprite3D" parent="Graphics/Mesh/KaedeGraphics"]
 layers = 2
+material_override = ExtResource("82_axt2r")
 centered = false
 pixel_size = 0.006
 texture_filter = 0

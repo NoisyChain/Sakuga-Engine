@@ -25,6 +25,7 @@ size = Vector3(20, 0.2, 2)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.722436, 0.540801, -0.430836, 0, 0.623102, 0.782141, 0.691437, -0.565047, 0.450152, 0, 2.2674, 0)
+layers = 3
 shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]

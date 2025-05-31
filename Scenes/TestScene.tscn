@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dr8cly8qy5pg2"]
+[gd_scene load_steps=11 format=3 uid="uid://dr8cly8qy5pg2"]
 
 [ext_resource type="Script" uid="uid://xmbdtaq2pt7v" path="res://Scripts/SakugaEngine/Game/GameManager.cs" id="1_ocl0l"]
 [ext_resource type="PackedScene" uid="uid://blnwu2aaw8s60" path="res://Scenes/Instances/Sakuga_UI.tscn" id="1_wexcy"]
@@ -8,6 +8,8 @@
 [ext_resource type="Script" uid="uid://8r60yfod0dqc" path="res://Scripts/SakugaEngine/Components/GameMonitor.cs" id="6_d185x"]
 [ext_resource type="Script" uid="uid://j5t0o28p2u6u" path="res://Scripts/SakugaEngine/Game/SakugaRollbackManager.cs" id="6_jke5l"]
 [ext_resource type="Resource" uid="uid://fxj4uvd0y37r" path="res://Soundtrack.tres" id="7_6xh1p"]
+[ext_resource type="Material" uid="uid://bq6qbm2ymofxw" path="res://pallete_test.tres" id="9_201fe"]
+[ext_resource type="Texture2D" uid="uid://bt6e0mjcexmoi" path="res://PaletteTest/simon.png" id="10_201fe"]
 
 [node name="Root" type="Node3D"]
 
@@ -79,3 +81,9 @@ boundsAdditionalFar = 1.95
 
 [node name="BGM" type="AudioStreamPlayer" parent="."]
 volume_db = -7.5
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+visible = false
+material_override = ExtResource("9_201fe")
+texture_filter = 0
+texture = ExtResource("10_201fe")

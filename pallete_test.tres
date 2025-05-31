@@ -1,0 +1,16 @@
+[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://bq6qbm2ymofxw"]
+
+[ext_resource type="Shader" uid="uid://2yb14h7j2sli" path="res://new_shader.gdshader" id="1_q4mu0"]
+[ext_resource type="Texture2D" uid="uid://dvsfe1yaag1ge" path="res://Fighters/Kaede/Sprites/1250-0.png" id="2_acqvn"]
+[ext_resource type="Texture2D" uid="uid://cp6jhmktqdrc5" path="res://Fighters/Kaede/Palettes/kaede_palette_1.png" id="3_o4c7q"]
+[ext_resource type="Texture2D" uid="uid://bohwmc7und3m0" path="res://Fighters/Kaede/Palettes/kaede_palette_2.png" id="3_vckvm"]
+
+[resource]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("1_q4mu0")
+shader_parameter/albedo_texture = ExtResource("2_acqvn")
+shader_parameter/num_colors = 43
+shader_parameter/precision = 0.01
+shader_parameter/palette_in = ExtResource("3_o4c7q")
+shader_parameter/palette_out = ExtResource("3_vckvm")

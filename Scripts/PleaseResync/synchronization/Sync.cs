@@ -235,8 +235,9 @@ namespace PleaseResync
                 {
                     //Using a somewhat fixed value for the starting frame to compensate packet loss
                     //TODO: replace it for something more optimized
-                    uint limitFrames = TimeSync.MaxRollbackFrames - 1;
-                    uint startingFrame = _timeSync.LocalFrame <= limitFrames ? 0 : (uint)_timeSync.LocalFrame - limitFrames;
+                    //uint limitFrames = TimeSync.MaxRollbackFrames - 1;
+                    //uint startingFrame = _timeSync.LocalFrame <= limitFrames ? 0 : (uint)_timeSync.LocalFrame - limitFrames;
+                    uint startingFrame = (uint)_timeSync.SyncFrame;
 
                     uint finalFrame = (uint)(_timeSync.LocalFrame + _deviceInputs[localDeviceId].GetFrameDelay());
 

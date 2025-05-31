@@ -14,7 +14,7 @@ func _run():   # this is the main function
 
 
 func interpolation_change(selection):
-	var anim_track_1 = selection[0].get_animation("Uncrouch") # get the Animation that you are interested in (change "default" to your Animation's name)
+	var anim_track_1 = selection[0].get_animation("Yotsuba_WalkF") # get the Animation that you are interested in (change "default" to your Animation's name)
 	var count  = anim_track_1.get_track_count() # get number of tracks (bones in your case)
 	print(count)
 	for i in count:

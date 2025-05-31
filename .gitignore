@@ -15,6 +15,7 @@ data_*/
 mono_crash.*.json
 
 Fighters/Anippe
+Fighters/Yotsuba
 Scenes/Test
 Scenes/ChecksumCalculator.tscn
 interpolation_editor.gd

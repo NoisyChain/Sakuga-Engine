@@ -3,30 +3,29 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://v5hgql6sgmbh"
-path.s3tc="res://.godot/imported/5020-21.png-58480466ec968ff04f85a32b9a09b22a.s3tc.ctex"
+path="res://.godot/imported/5020-21.png-58480466ec968ff04f85a32b9a09b22a.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://Fighters/Kaede/Sprites/5020-21.png"
-dest_files=["res://.godot/imported/5020-21.png-58480466ec968ff04f85a32b9a09b22a.s3tc.ctex"]
+dest_files=["res://.godot/imported/5020-21.png-58480466ec968ff04f85a32b9a09b22a.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=true
+mipmaps/generate=false
 mipmaps/limit=-1
-roughness/mode=0
+roughness/mode=1
 roughness/src_normal=""
-process/fix_alpha_border=true
+process/fix_alpha_border=false
 process/premult_alpha=false
 process/normal_map_invert_y=false
 process/hdr_as_srgb=false

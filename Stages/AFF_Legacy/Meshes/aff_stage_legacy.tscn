@@ -24,6 +24,7 @@ surface_material_override/0 = ExtResource("2_w81la")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." index="2"]
 transform = Transform3D(0.523532, -0.423177, 0.739483, -0.176238, 0.795373, 0.579932, -0.833579, -0.433938, 0.341824, 4.2018, 7.31484, 5.47539)
+layers = 3
 shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." index="3"]

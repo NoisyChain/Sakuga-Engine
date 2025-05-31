@@ -68,7 +68,6 @@ namespace PleaseResync
         {
             if (!Started) return;
 
-            //if (canRender) sessionState.Render();
             if (!UseSeparateThread) GameLoop();
             mutex.WaitOne();
             sessionState.Render();
