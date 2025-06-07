@@ -55,4 +55,5 @@ hitboxStates = null
 animationEvents = null
 throwPivot = null
 stateTransitions = Array[Object]([SubResource("Resource_tgva5")])
+animationSettings = null
 AIFlags = 0

@@ -69,4 +69,5 @@ hitboxStates = null
 animationEvents = null
 throwPivot = null
 stateTransitions = Array[Object]([SubResource("Resource_6jefl")])
+animationSettings = null
 AIFlags = 0

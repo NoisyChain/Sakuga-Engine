@@ -1,9 +1,19 @@
-[gd_resource type="Resource" script_class="FighterState" load_steps=10 format=3 uid="uid://bk10df3h23sqs"]
+[gd_resource type="Resource" script_class="FighterState" load_steps=12 format=3 uid="uid://bk10df3h23sqs"]
 
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="1_6duet"]
+[ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_xsgjr"]
 [ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="2_s0rim"]
 [ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Resources/StatePhysics.cs" id="3_2g7k5"]
 [ext_resource type="Script" uid="uid://bia88bspuvxd" path="res://Scripts/SakugaEngine/Resources/StateTransitionSettings.cs" id="4_13o3u"]
+
+[sub_resource type="Resource" id="Resource_ojn4h"]
+script = ExtResource("1_xsgjr")
+StateRange = Vector2i(0, 18)
+SourceAnimation = "Throw_Enter"
+LimitRange = false
+AnimationRange = Vector2i(0, 0)
+Offset = Vector3(0, 0, 0)
+metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
 
 [sub_resource type="Resource" id="Resource_5e2ap"]
 script = ExtResource("1_6duet")
@@ -60,4 +70,5 @@ hitboxStates = Array[Object]([SubResource("Resource_5e2ap"), SubResource("Resour
 animationEvents = null
 throwPivot = null
 stateTransitions = Array[Object]([SubResource("Resource_07r8c")])
+animationSettings = Array[Object]([SubResource("Resource_ojn4h")])
 AIFlags = 18

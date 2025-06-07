@@ -1,8 +1,18 @@
-[gd_resource type="Resource" script_class="FighterState" load_steps=6 format=3 uid="uid://2u20mmi7cl70"]
+[gd_resource type="Resource" script_class="FighterState" load_steps=8 format=3 uid="uid://2u20mmi7cl70"]
 
 [ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="1"]
+[ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_jce4f"]
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2"]
 [ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Resources/StatePhysics.cs" id="3"]
+
+[sub_resource type="Resource" id="Resource_25rob"]
+script = ExtResource("1_jce4f")
+AtFrame = 0
+SourceAnimation = "Blocking_Crouch"
+LimitRange = false
+AnimationRange = Vector2i(0, 0)
+Offset = Vector3(0, 0, 0)
+metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
 
 [sub_resource type="Resource" id="1"]
 script = ExtResource("2")
@@ -40,4 +50,5 @@ hitboxStates = [SubResource("1")]
 animationEvents = null
 throwPivot = null
 stateTransitions = null
+animationSettings = Array[Object]([SubResource("Resource_25rob")])
 AIFlags = 578

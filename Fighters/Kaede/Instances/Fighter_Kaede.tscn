@@ -885,12 +885,12 @@ tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
+tracks/2/interp = 0
+tracks/2/loop_wrap = false
 tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.05, 0.0999999, 0.166667, 0.366667, 0.433333, 0.5),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
-"update": 1,
+"update": 0,
 "values": [ExtResource("341_hpnmr"), ExtResource("342_m18jb"), ExtResource("343_cmaq0"), ExtResource("340_l736p"), ExtResource("344_7nde0"), ExtResource("78"), ExtResource("72")]
 }
 
@@ -3453,11 +3453,12 @@ VoicesList = ExtResource("5_skjfo")
 [node name="Graphics" type="Node3D" parent="."]
 script = ExtResource("2")
 
-[node name="Mesh" type="Node3D" parent="Graphics" node_paths=PackedStringArray("players")]
+[node name="Mesh" type="Node3D" parent="Graphics" node_paths=PackedStringArray("players", "OffsetNode")]
 script = ExtResource("3_nysqa")
 players = [NodePath("KaedeGraphics/AnimationPlayer")]
 prefix = PackedStringArray("")
 States = Array[Object]([ExtResource("9_wsoae"), ExtResource("10_utkgf"), ExtResource("11_l3782"), ExtResource("12_xioyw"), ExtResource("13_pdmus"), ExtResource("14_nlh1m"), ExtResource("15_l6bdc"), ExtResource("16_wjrha"), ExtResource("17_3xr3r"), ExtResource("18_2esu6"), ExtResource("19_pshwo"), ExtResource("20_uo01q"), ExtResource("21_a0t8w"), ExtResource("22_7pky6"), ExtResource("23_4j7xj"), ExtResource("24_raljo"), ExtResource("25_5q5ed"), ExtResource("26_f7my3"), ExtResource("27_8y2w6"), ExtResource("28_3os2r"), ExtResource("29_02irm"), ExtResource("30_318jd"), ExtResource("31_ieg0e"), ExtResource("32_fvvbw"), ExtResource("33_q214j"), ExtResource("34_7ilbj"), ExtResource("35_v6att"), ExtResource("36_5qvfy"), ExtResource("37_fuwp2"), ExtResource("38_68tqi"), ExtResource("39_m1a46"), ExtResource("40_3v6tf"), ExtResource("41_e15mb"), ExtResource("42_r36dh"), ExtResource("43_uao2p"), ExtResource("44_eneqy"), ExtResource("45_dinfy"), ExtResource("46_rmqg2"), ExtResource("47_uqpvf"), ExtResource("48_2li8y"), ExtResource("49_vpifq"), ExtResource("50_x7f1y"), ExtResource("51_r1ryy"), ExtResource("52_cvwc0"), ExtResource("53_nt7mr"), ExtResource("54_6djca"), ExtResource("55_b13s5"), ExtResource("56_wg0m0"), ExtResource("57_qoiwo"), ExtResource("58_1m6l5"), ExtResource("59_rgi2i"), ExtResource("60_c3d5a"), ExtResource("61_5058h"), ExtResource("62_0xafr"), ExtResource("63_7epe3"), ExtResource("64_t2soe"), ExtResource("65_cq6r7"), ExtResource("66_cppdp"), ExtResource("67_5ag8r"), ExtResource("68_0rha1"), ExtResource("69_yu5pr"), ExtResource("70_8nutq"), ExtResource("71_c6pb1"), ExtResource("72_48f00"), ExtResource("73_kfssi"), ExtResource("74_ncsaf"), ExtResource("75_ggx65"), ExtResource("76_xl4vt"), ExtResource("77_xw0qx"), ExtResource("78_m47lt"), ExtResource("79_vcis5"), ExtResource("80_6ymdq"), ExtResource("81_m554x"), ExtResource("17_3xr3r")])
+OffsetNode = NodePath("KaedeGraphics")
 
 [node name="KaedeGraphics" type="Node3D" parent="Graphics/Mesh"]
 

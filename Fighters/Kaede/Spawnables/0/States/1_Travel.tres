@@ -33,4 +33,5 @@ hitboxStates = null
 animationEvents = null
 throwPivot = null
 stateTransitions = null
+animationSettings = null
 AIFlags = 0

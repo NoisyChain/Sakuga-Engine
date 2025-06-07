@@ -1,10 +1,11 @@
-[gd_resource type="Resource" script_class="FighterState" load_steps=17 format=3 uid="uid://c4h470mmhnes4"]
+[gd_resource type="Resource" script_class="FighterState" load_steps=19 format=3 uid="uid://c4h470mmhnes4"]
 
 [ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="1"]
 [ext_resource type="Script" uid="uid://bx8e460frmhfd" path="res://Scripts/SakugaEngine/Resources/Animation Events/SuperArmorAnimationEvent.cs" id="1_myh1j"]
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2"]
 [ext_resource type="Script" uid="uid://bwm15ys7iwmfc" path="res://Scripts/SakugaEngine/Resources/AnimationEventsList.cs" id="2_dlo0l"]
 [ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Resources/StatePhysics.cs" id="3"]
+[ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="3_3rgdk"]
 [ext_resource type="Script" uid="uid://bia88bspuvxd" path="res://Scripts/SakugaEngine/Resources/StateTransitionSettings.cs" id="4_w2dw3"]
 
 [sub_resource type="Resource" id="Resource_fi3yh"]
@@ -24,6 +25,15 @@ ArmorValue = 0
 script = ExtResource("2_dlo0l")
 Frame = 16
 Events = Array[Object]([SubResource("Resource_tmsc3")])
+
+[sub_resource type="Resource" id="Resource_i24ac"]
+script = ExtResource("3_3rgdk")
+StateRange = Vector2i(0, 39)
+SourceAnimation = "5C"
+LimitRange = false
+AnimationRange = Vector2i(0, 0)
+Offset = Vector3(0, 0, 0)
+metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
 
 [sub_resource type="Resource" id="2"]
 script = ExtResource("2")
@@ -94,4 +104,5 @@ hitboxStates = [SubResource("2"), SubResource("3"), SubResource("4")]
 animationEvents = Array[Object]([SubResource("Resource_ix1su"), SubResource("Resource_mq13r")])
 throwPivot = null
 stateTransitions = Array[Object]([SubResource("Resource_6gdsy")])
+animationSettings = Array[Object]([SubResource("Resource_i24ac")])
 AIFlags = 18

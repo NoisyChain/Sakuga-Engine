@@ -1,10 +1,20 @@
-[gd_resource type="Resource" script_class="FighterState" load_steps=14 format=3 uid="uid://lsdkvfkujmo1"]
+[gd_resource type="Resource" script_class="FighterState" load_steps=16 format=3 uid="uid://lsdkvfkujmo1"]
 
+[ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_cmw0w"]
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="1_i8ccd"]
 [ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="2_6lmbh"]
 [ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Resources/StatePhysics.cs" id="3_iybha"]
 [ext_resource type="Script" uid="uid://bia88bspuvxd" path="res://Scripts/SakugaEngine/Resources/StateTransitionSettings.cs" id="4_cenjs"]
 [ext_resource type="Script" uid="uid://5pyrbnu5lbp1" path="res://Scripts/SakugaEngine/Resources/FrameProperties.cs" id="4_mcnls"]
+
+[sub_resource type="Resource" id="Resource_6sel8"]
+script = ExtResource("1_cmw0w")
+StateRange = Vector2i(0, 28)
+SourceAnimation = "236C_1"
+LimitRange = false
+AnimationRange = Vector2i(0, 0)
+Offset = Vector3(0, 0, 0)
+metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
 
 [sub_resource type="Resource" id="Resource_i1dcw"]
 script = ExtResource("1_i8ccd")
@@ -85,4 +95,5 @@ hitboxStates = Array[Object]([SubResource("Resource_i1dcw"), SubResource("Resour
 animationEvents = null
 throwPivot = null
 stateTransitions = Array[Object]([SubResource("Resource_1k4x6")])
+animationSettings = Array[Object]([SubResource("Resource_6sel8")])
 AIFlags = 18
