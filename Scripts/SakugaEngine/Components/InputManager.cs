@@ -29,23 +29,26 @@ namespace SakugaEngine
                 {
                     int HistoryIndex = (startingInput + j) % Global.InputHistorySize;
 
-                    int directionNumber = (int)motion.ValidInputs[i].Inputs[j].Directional;
-                    int buttonNumber = (int)motion.ValidInputs[i].Inputs[j].Buttons;
+                    Global.DirectionalInputs directionals = motion.ValidInputs[i].Inputs[j].Directional;
+                    Global.ButtonInputs buttons = motion.ValidInputs[i].Inputs[j].Buttons;
+
+                    Global.ButtonMode dirMode = motion.ValidInputs[i].Inputs[j].DirectionalMode;
+                    Global.ButtonMode butMode = motion.ValidInputs[i].Inputs[j].ButtonMode;
 
                     bool validBuffer = motion.InputBuffer == 0 ||
                         InputHistory[HistoryIndex].duration <= motion.InputBuffer;
 
                     bool validInput;
 
-                    if (directionNumber != 5 && buttonNumber == 0)
-                        validInput = CheckDirectionalInputs(HistoryIndex, directionNumber, (int)motion.ValidInputs[i].Inputs[j].DirectionalMode, motion.AbsoluteDirection);
-                    else if (directionNumber == 5 && buttonNumber > 0)
-                        validInput = CheckButtonInputs(HistoryIndex, buttonNumber, (int)motion.ValidInputs[i].Inputs[j].ButtonMode);
+                    if (directionals != Global.DirectionalInputs.NEUTRAL && buttons == 0)
+                        validInput = CheckDirectionalInputs(HistoryIndex, directionals, dirMode, motion.AbsoluteDirection);
+                    else if (directionals == Global.DirectionalInputs.NEUTRAL && buttons > 0)
+                        validInput = CheckButtonInputs(HistoryIndex, buttons, butMode);
                     else
-                        validInput = CheckDirectionalInputs(HistoryIndex, directionNumber, (int)motion.ValidInputs[i].Inputs[j].DirectionalMode, motion.AbsoluteDirection) &&
-                        CheckButtonInputs(HistoryIndex, buttonNumber, (int)motion.ValidInputs[i].Inputs[j].ButtonMode);
-
-                    bool chargedInput = CheckChargeInputs(HistoryIndex, directionNumber, motion.DirectionalChargeLimit);
+                        validInput = CheckDirectionalInputs(HistoryIndex, directionals, dirMode, motion.AbsoluteDirection) &&
+                        CheckButtonInputs(HistoryIndex, buttons, butMode);
+                        
+                    bool chargedInput = CheckChargeInputs(HistoryIndex, directionals, motion.DirectionalChargeLimit);
                     
                     inputFound = (validBuffer && validInput) || chargedInput;
                     if (!inputFound) break;
@@ -58,18 +61,18 @@ namespace SakugaEngine
 
         public bool CheckInputEnd(MotionInputs motion)
         {
-            int directionNumber = (int)motion.ValidInputs[0].Inputs[motion.ValidInputs[0].Inputs.Length - 1].Directional;
-            int buttonNumber = (int)motion.ValidInputs[0].Inputs[motion.ValidInputs[0].Inputs.Length - 1].Buttons;
+            Global.DirectionalInputs directionals = motion.ValidInputs[0].Inputs[motion.ValidInputs[0].Inputs.Length - 1].Directional;
+            Global.ButtonInputs buttons = motion.ValidInputs[0].Inputs[motion.ValidInputs[0].Inputs.Length - 1].Buttons;
 
             bool validInput;
 
-            if (directionNumber != 5 && buttonNumber == 0)
-                validInput = !CheckDirectionalInputs(CurrentHistory, directionNumber, 1, motion.AbsoluteDirection);
-            else if (directionNumber == 5 && buttonNumber > 0)
-                validInput = !CheckButtonInputs(CurrentHistory, buttonNumber, 1);
+            if (directionals != Global.DirectionalInputs.NEUTRAL && buttons == 0)
+                validInput = !CheckDirectionalInputs(CurrentHistory, directionals, Global.ButtonMode.HOLD, motion.AbsoluteDirection);
+            else if (directionals == Global.DirectionalInputs.NEUTRAL && buttons > 0)
+                validInput = !CheckButtonInputs(CurrentHistory, buttons, Global.ButtonMode.HOLD);
             else
-                validInput = !CheckDirectionalInputs(CurrentHistory, directionNumber, 1, motion.AbsoluteDirection) &&
-                !CheckButtonInputs(CurrentHistory, buttonNumber, 1);
+                validInput = !CheckDirectionalInputs(CurrentHistory, directionals, Global.ButtonMode.HOLD, motion.AbsoluteDirection) &&
+                !CheckButtonInputs(CurrentHistory, buttons, Global.ButtonMode.HOLD);
 
             if (!validInput)
                 return false;
@@ -77,7 +80,7 @@ namespace SakugaEngine
             return true;
         }
 
-        public bool CheckDirectionalInputs(int index, int buttonNumber, int buttonMode, bool absDirection)
+        public bool CheckDirectionalInputs(int index, Global.DirectionalInputs buttonNumber, Global.ButtonMode buttonMode, bool absDirection)
         {
             bool left = false;
             bool right = false;
@@ -92,31 +95,31 @@ namespace SakugaEngine
 
             switch (buttonMode)
             {
-                case 0:
+                case Global.ButtonMode.PRESS:
                     left = WasPressed(index, _left);
                     right = WasPressed(index, _right);
                     up = WasPressed(index, Global.INPUT_UP);
                     down = WasPressed(index, Global.INPUT_DOWN);
                     break;
-                case 1:
+                case Global.ButtonMode.HOLD:
                     left = IsBeingPressed(index, _left);
                     right = IsBeingPressed(index, _right);
                     up = IsBeingPressed(index, Global.INPUT_UP);
                     down = IsBeingPressed(index, Global.INPUT_DOWN);
                     break;
-                case 2:
+                case Global.ButtonMode.RELEASE:
                     left = WasReleased(index, _left);
                     right = WasReleased(index, _right);
                     up = WasReleased(index, Global.INPUT_UP);
                     down = WasReleased(index, Global.INPUT_DOWN);
                     break;
-                case 3:
+                case Global.ButtonMode.WAS_PRESSED:
                     left = WasBeingPressed(index, _left);
                     right = WasBeingPressed(index, _right);
                     up = WasBeingPressed(index, Global.INPUT_UP);
                     down = WasBeingPressed(index, Global.INPUT_DOWN);
                     break;
-                case 4:
+                case Global.ButtonMode.NOT_PRESSED:
                     left = !IsBeingPressed(index, _left);
                     right = !IsBeingPressed(index, _right);
                     up = !IsBeingPressed(index, Global.INPUT_UP);
@@ -127,84 +130,86 @@ namespace SakugaEngine
             bool absV = absDirection ? !up && !down : true;
             bool absH = absDirection ? !left && !right : true;
 
-            if (buttonMode == 4) return (buttonNumber == 2 && down) ||
-                (buttonNumber == 4 && left) ||
-                (buttonNumber == 6 && right) ||
-                (buttonNumber == 8 && up) ||
-                (buttonNumber == 1 && down && left) ||
-                (buttonNumber == 3 && down && right) ||
-                (buttonNumber == 7 && up && left) ||
-                (buttonNumber == 9 && up && right) ||
-                (buttonNumber == 5 && down && up && left && right);
-
-            else return (buttonNumber == 2 && down && !up && absH) ||
-                (buttonNumber == 4 && absV && left && !right) ||
-                (buttonNumber == 6 && absV && !left && right) ||
-                (buttonNumber == 8 && !down && up && absH) ||
-                (buttonNumber == 1 && down && !up && left && !right) ||
-                (buttonNumber == 3 && down && !up && !left && right) ||
-                (buttonNumber == 7 && !down && up && left && !right) ||
-                (buttonNumber == 9 && !down && up && !left && right) ||
-                (buttonNumber == 5 && !down && !up && !left && !right);
+            if (buttonMode == Global.ButtonMode.NOT_PRESSED)
+                return (buttonNumber == Global.DirectionalInputs.DOWN && down) ||
+                    (buttonNumber == Global.DirectionalInputs.LEFT && left) ||
+                    (buttonNumber == Global.DirectionalInputs.RIGHT && right) ||
+                    (buttonNumber == Global.DirectionalInputs.UP && up) ||
+                    (buttonNumber == Global.DirectionalInputs.DOWN_LEFT && down && left) ||
+                    (buttonNumber == Global.DirectionalInputs.DOWN_RIGHT && down && right) ||
+                    (buttonNumber == Global.DirectionalInputs.UP_LEFT && up && left) ||
+                    (buttonNumber == Global.DirectionalInputs.UP_RIGHT && up && right) ||
+                    (buttonNumber == Global.DirectionalInputs.NEUTRAL && down && up && left && right);
+            else
+                return (buttonNumber == Global.DirectionalInputs.DOWN && down && !up && absH) ||
+                    (buttonNumber == Global.DirectionalInputs.LEFT && absV && left && !right) ||
+                    (buttonNumber == Global.DirectionalInputs.RIGHT && absV && !left && right) ||
+                    (buttonNumber == Global.DirectionalInputs.UP && !down && up && absH) ||
+                    (buttonNumber == Global.DirectionalInputs.DOWN_LEFT && down && !up && left && !right) ||
+                    (buttonNumber == Global.DirectionalInputs.DOWN_RIGHT && down && !up && !left && right) ||
+                    (buttonNumber == Global.DirectionalInputs.UP_LEFT && !down && up && left && !right) ||
+                    (buttonNumber == Global.DirectionalInputs.UP_RIGHT && !down && up && !left && right) ||
+                    (buttonNumber == Global.DirectionalInputs.NEUTRAL && !down && !up && !left && !right);
         }
 
-        public bool CheckButtonInputs(int index, int buttonNumber, int buttonMode)
+        public bool CheckButtonInputs(int index, Global.ButtonInputs buttonNumber, Global.ButtonMode buttonMode)
         {
-            bool action_b1 = false;
-            bool action_b2 = false;
-            bool action_b3 = false;
-            bool action_b4 = false;
+            bool action_ba = false;
+            bool action_bb = false;
+            bool action_bc = false;
+            bool action_bd = false;
 
             switch (buttonMode)
             {
-                case 0:
-                    action_b1 = WasPressed(index, Global.INPUT_FACE_A);
-                    action_b2 = WasPressed(index, Global.INPUT_FACE_B);
-                    action_b3 = WasPressed(index, Global.INPUT_FACE_C);
-                    action_b4 = WasPressed(index, Global.INPUT_FACE_D);
+                case Global.ButtonMode.PRESS:
+                    action_ba = WasPressed(index, Global.INPUT_FACE_A);
+                    action_bb = WasPressed(index, Global.INPUT_FACE_B);
+                    action_bc = WasPressed(index, Global.INPUT_FACE_C);
+                    action_bd = WasPressed(index, Global.INPUT_FACE_D);
                     break;
-                case 1:
-                    action_b1 = IsBeingPressed(index, Global.INPUT_FACE_A);
-                    action_b2 = IsBeingPressed(index, Global.INPUT_FACE_B);
-                    action_b3 = IsBeingPressed(index, Global.INPUT_FACE_C);
-                    action_b4 = IsBeingPressed(index, Global.INPUT_FACE_D);
+                case Global.ButtonMode.HOLD:
+                    action_ba = IsBeingPressed(index, Global.INPUT_FACE_A);
+                    action_bb = IsBeingPressed(index, Global.INPUT_FACE_B);
+                    action_bc = IsBeingPressed(index, Global.INPUT_FACE_C);
+                    action_bd = IsBeingPressed(index, Global.INPUT_FACE_D);
                     break;
-                case 2:
-                    action_b1 = WasReleased(index, Global.INPUT_FACE_A);
-                    action_b2 = WasReleased(index, Global.INPUT_FACE_B);
-                    action_b3 = WasReleased(index, Global.INPUT_FACE_C);
-                    action_b4 = WasReleased(index, Global.INPUT_FACE_D);
+                case Global.ButtonMode.RELEASE:
+                    action_ba = WasReleased(index, Global.INPUT_FACE_A);
+                    action_bb = WasReleased(index, Global.INPUT_FACE_B);
+                    action_bc = WasReleased(index, Global.INPUT_FACE_C);
+                    action_bd = WasReleased(index, Global.INPUT_FACE_D);
                     break;
-                case 3:
-                    action_b1 = WasBeingPressed(index, Global.INPUT_FACE_A);
-                    action_b2 = WasBeingPressed(index, Global.INPUT_FACE_B);
-                    action_b3 = WasBeingPressed(index, Global.INPUT_FACE_C);
-                    action_b4 = WasBeingPressed(index, Global.INPUT_FACE_D);
+                case Global.ButtonMode.WAS_PRESSED:
+                    action_ba = WasBeingPressed(index, Global.INPUT_FACE_A);
+                    action_bb = WasBeingPressed(index, Global.INPUT_FACE_B);
+                    action_bc = WasBeingPressed(index, Global.INPUT_FACE_C);
+                    action_bd = WasBeingPressed(index, Global.INPUT_FACE_D);
                     break;
-                case 4:
-                    action_b1 = !IsBeingPressed(index, Global.INPUT_FACE_A);
-                    action_b2 = !IsBeingPressed(index, Global.INPUT_FACE_B);
-                    action_b3 = !IsBeingPressed(index, Global.INPUT_FACE_C);
-                    action_b4 = !IsBeingPressed(index, Global.INPUT_FACE_D);
+                case Global.ButtonMode.NOT_PRESSED:
+                    action_ba = !IsBeingPressed(index, Global.INPUT_FACE_A);
+                    action_bb = !IsBeingPressed(index, Global.INPUT_FACE_B);
+                    action_bc = !IsBeingPressed(index, Global.INPUT_FACE_C);
+                    action_bd = !IsBeingPressed(index, Global.INPUT_FACE_D);
                     break;
             }
-
             
-            return (buttonNumber == 0 && !action_b1 && !action_b2 && !action_b3 && !action_b4) ||
-                (buttonNumber == 1 && action_b1) ||
-                (buttonNumber == 2 && action_b2) ||
-                (buttonNumber == 3 && action_b3) ||
-                (buttonNumber == 4 && action_b4) ||
-                (buttonNumber == 5 && action_b1 && action_b2) ||
-                (buttonNumber == 6 && action_b1 && action_b3) ||
-                (buttonNumber == 7 && action_b2 && action_b3) ||
-                (buttonNumber == 8 && action_b1 && action_b2 && action_b3) ||
-                (buttonNumber == 9 && action_b1 && action_b2 && action_b3 && action_b4) ||
-                (buttonNumber == 10 && (action_b1 || action_b2 || action_b3 || action_b4));
+            return (buttonNumber == Global.ButtonInputs.NULL && !action_ba && !action_bb && !action_bc && !action_bd) ||
+                (buttonNumber == Global.ButtonInputs.FACE_A && action_ba) ||
+                (buttonNumber == Global.ButtonInputs.FACE_B && action_bb) ||
+                (buttonNumber == Global.ButtonInputs.FACE_C && action_bc) ||
+                (buttonNumber == Global.ButtonInputs.FACE_D && action_bd) ||
+                (buttonNumber == Global.ButtonInputs.FACE_AB && action_ba && action_bb) ||
+                (buttonNumber == Global.ButtonInputs.FACE_AC && action_ba && action_bc) ||
+                (buttonNumber == Global.ButtonInputs.FACE_BC && action_bb && action_bc) ||
+                (buttonNumber == Global.ButtonInputs.FACE_ABC && action_ba && action_bb && action_bc) ||
+                (buttonNumber == Global.ButtonInputs.FACE_ABCD && action_ba && action_bb && action_bc && action_bd) ||
+                (buttonNumber == Global.ButtonInputs.FACE_ANY && (action_ba || action_bb || action_bc || action_bd));
         }
 
-        public bool CheckChargeInputs(int index, int buttonNumber, int DirectionalChargeLimit)
+        public bool CheckChargeInputs(int index, Global.DirectionalInputs buttonNumber, int dirCharge)
         {
+            if (dirCharge == 0) return false;
+
             bool _left = IsBeingPressed(index, Global.INPUT_LEFT);
             bool _right = IsBeingPressed(index, Global.INPUT_RIGHT);
             
@@ -217,13 +222,12 @@ namespace SakugaEngine
             bool up = IsBeingPressed(index, Global.INPUT_UP);
             bool down = IsBeingPressed(index, Global.INPUT_DOWN);
 
-            bool checkInputs = (buttonNumber == 10 && left && Mathf.Abs(InputHistory[index].hCharge) >= DirectionalChargeLimit) ||
-                (buttonNumber == 11 && down && Mathf.Abs(InputHistory[index].vCharge) >= DirectionalChargeLimit) ||
-                (buttonNumber == 12 && left && Mathf.Abs(InputHistory[index].hCharge) >= DirectionalChargeLimit && down && InputHistory[index].vCharge <= -DirectionalChargeLimit) ||
-                (buttonNumber == 13 && left && Mathf.Abs(InputHistory[index].hCharge) >= DirectionalChargeLimit && up && InputHistory[index].vCharge >= DirectionalChargeLimit);
-            //bool isChargedEnough = InputHistory[index].duration >= DirectionalChargeLimit;
+            bool checkInputs = (buttonNumber == Global.DirectionalInputs.LEFT && left && Mathf.Abs(InputHistory[index].hCharge) >= dirCharge) ||
+                (buttonNumber == Global.DirectionalInputs.DOWN && down && Mathf.Abs(InputHistory[index].vCharge) >= dirCharge) ||
+                (buttonNumber == Global.DirectionalInputs.DOWN_LEFT && left && Mathf.Abs(InputHistory[index].hCharge) >= dirCharge && down && InputHistory[index].vCharge <= -dirCharge) ||
+                (buttonNumber == Global.DirectionalInputs.UP_LEFT && left && Mathf.Abs(InputHistory[index].hCharge) >= dirCharge && up && InputHistory[index].vCharge >= dirCharge);
 
-            return checkInputs;// && isChargedEnough;
+            return checkInputs;
         }
 
         public void InsertToHistory(ushort input)

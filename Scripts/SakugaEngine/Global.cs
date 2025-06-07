@@ -39,7 +39,7 @@ namespace SakugaEngine
         public const int INPUT_FACE_C = 1 << 6;
         public const int INPUT_FACE_D = 1 << 7;
         //Free space
-        public const int INPUT_MACRO_DASH = 1 << 12;
+        public const int INPUT_DASH = 1 << 12;
         public const int INPUT_TAUNT = 1 << 13;
         public const int INPUT_MENU = 1 << 14;
         public const int INPUT_BACK = 1 << 15;
@@ -66,7 +66,7 @@ namespace SakugaEngine
         public enum PauseMode { PRESS, HOLD, LOCK }
         public enum SelectedMode { ARCADE, VERSUS, ONLINE, TRAINING }
         public enum BotDifficulty { BEGINNER, EASY, MEDIUM, HARD, VERY_HARD, PRO }
-        public enum BotMode {ANY = -1, AGGRESSIVE, DEFENSIVE}
+        public enum BotMode { ANY = -1, AGGRESSIVE, DEFENSIVE }
         //...
         public enum DirectionalInputs
         {
@@ -79,10 +79,6 @@ namespace SakugaEngine
             UP_LEFT = 7,
             UP = 8,
             UP_RIGHT = 9,
-            HORIZONTAL_CHARGE = 10,
-            VERTICAL_CHARGE = 11,
-            DIAGIONAL_CHARGE_UP = 12,
-            DIAGIONAL_CHARGE_DOWN = 13
         }
 
         public enum ButtonInputs
@@ -98,10 +94,37 @@ namespace SakugaEngine
             FACE_ABC = 8,
             FACE_ABCD = 9,
             FACE_ANY = 10,
-            TAUNT = 11
+            TAUNT = 11,
+            DASH = 12
         }
 
         //Global bit flags
+        /*[Flags]
+        public enum DirectionalInputs : ushort
+        {
+            DOWN = 1 << 0,
+            LEFT = 1 << 1,
+            RIGHT = 1 << 2,
+            UP = 1 << 3,
+            DOWN_LEFT = DOWN | LEFT,
+            DOWN_RIGHT = DOWN | RIGHT,
+            UP_LEFT = UP | LEFT,
+            UP_RIGHT = UP | RIGHT,
+            ANY_DIRECTION = DOWN | LEFT | RIGHT | UP
+        }
+
+        [Flags]
+        public enum ButtonInputs : ushort
+        {
+            FACE_A = 1 << 0,
+            FACE_B = 1 << 1,
+            FACE_C = 1 << 2,
+            FACE_D = 1 << 3,
+            DASH = 1 << 4,
+            TAUNT = 1 << 5,
+            ANY_BUTTON = FACE_A | FACE_B | FACE_C | FACE_D
+        }*/
+
         [Flags]
         public enum FrameProperties : byte
         {
@@ -196,7 +219,7 @@ namespace SakugaEngine
         {
             int dx = b.X - a.X;
             int dy = b.Y - a.Y;
-            
+
             if (b.X < a.X) dx = a.X - b.X;
             if (b.Y < a.Y) dx = a.Y - b.Y;
 

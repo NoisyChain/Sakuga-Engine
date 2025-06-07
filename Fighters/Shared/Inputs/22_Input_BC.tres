@@ -8,8 +8,8 @@
 script = ExtResource("1_0djdq")
 Directional = 5
 Buttons = 7
-DirectionalMode = 0
 ButtonMode = 0
+DirectionalMode = 0
 
 [sub_resource type="Resource" id="Resource_6ria7"]
 script = ExtResource("2_bgjjb")
@@ -19,15 +19,15 @@ Inputs = Array[Object]([SubResource("Resource_tyq07")])
 script = ExtResource("1_0djdq")
 Directional = 5
 Buttons = 2
-DirectionalMode = 0
 ButtonMode = 1
+DirectionalMode = 0
 
 [sub_resource type="Resource" id="Resource_nphqb"]
 script = ExtResource("1_0djdq")
 Directional = 5
 Buttons = 3
-DirectionalMode = 0
 ButtonMode = 0
+DirectionalMode = 0
 
 [sub_resource type="Resource" id="Resource_bam1f"]
 script = ExtResource("2_bgjjb")
@@ -37,15 +37,15 @@ Inputs = Array[Object]([SubResource("Resource_ybiua"), SubResource("Resource_nph
 script = ExtResource("1_0djdq")
 Directional = 5
 Buttons = 3
-DirectionalMode = 0
 ButtonMode = 1
+DirectionalMode = 0
 
 [sub_resource type="Resource" id="Resource_6m8d1"]
 script = ExtResource("1_0djdq")
 Directional = 5
 Buttons = 2
-DirectionalMode = 0
 ButtonMode = 0
+DirectionalMode = 0
 
 [sub_resource type="Resource" id="Resource_ejgb2"]
 script = ExtResource("2_bgjjb")
@@ -56,5 +56,5 @@ script = ExtResource("1_wcy8y")
 ValidInputs = Array[Object]([SubResource("Resource_6ria7"), SubResource("Resource_bam1f"), SubResource("Resource_ejgb2")])
 AbsoluteDirection = false
 InputBuffer = 2
-DirectionalChargeLimit = 30
+DirectionalChargeLimit = 0
 ButtonChargeLimit = 30

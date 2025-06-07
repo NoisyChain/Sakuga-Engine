@@ -8,8 +8,8 @@
 script = ExtResource("1_7dhvp")
 Directional = 7
 Buttons = 0
-DirectionalMode = 1
 ButtonMode = 0
+DirectionalMode = 1
 
 [sub_resource type="Resource" id="Resource_x1mfj"]
 script = ExtResource("2_h6ob1")
@@ -20,5 +20,5 @@ script = ExtResource("2_je3d3")
 ValidInputs = Array[Object]([SubResource("Resource_x1mfj")])
 AbsoluteDirection = true
 InputBuffer = 0
-DirectionalChargeLimit = 30
-ButtonChargeLimit = 30
+DirectionalChargeLimit = 0
+ButtonChargeLimit = 0

@@ -1,11 +1,79 @@
-[gd_resource type="Resource" script_class="MotionInputs" load_steps=2 format=3 uid="uid://b4tlhryarsqfi"]
+[gd_resource type="Resource" script_class="MotionInputs" load_steps=13 format=3 uid="uid://b4tlhryarsqfi"]
 
+[ext_resource type="Script" uid="uid://87xpa7lbksa8" path="res://Scripts/SakugaEngine/Resources/InputSequence.cs" id="1_x3gmq"]
 [ext_resource type="Script" uid="uid://di4jwsd3y2x8w" path="res://Scripts/SakugaEngine/Resources/MotionInputs.cs" id="2_jtyoh"]
+[ext_resource type="Script" uid="uid://ce6shsv0dij5v" path="res://Scripts/SakugaEngine/Resources/InputOption.cs" id="2_s5pwa"]
+
+[sub_resource type="Resource" id="Resource_8dctg"]
+script = ExtResource("1_x3gmq")
+Directional = 2
+Buttons = 1
+DirectionalMode = 1
+ButtonMode = 1
+metadata/_custom_type_script = "uid://87xpa7lbksa8"
+
+[sub_resource type="Resource" id="Resource_jce4a"]
+script = ExtResource("1_x3gmq")
+Directional = 3
+Buttons = 1
+DirectionalMode = 1
+ButtonMode = 1
+metadata/_custom_type_script = "uid://87xpa7lbksa8"
+
+[sub_resource type="Resource" id="Resource_str13"]
+script = ExtResource("1_x3gmq")
+Directional = 6
+Buttons = 1
+DirectionalMode = 2
+ButtonMode = 2
+metadata/_custom_type_script = "uid://87xpa7lbksa8"
+
+[sub_resource type="Resource" id="Resource_25j0n"]
+script = ExtResource("1_x3gmq")
+Directional = 5
+Buttons = 1
+DirectionalMode = 0
+ButtonMode = 1
+metadata/_custom_type_script = "uid://87xpa7lbksa8"
+
+[sub_resource type="Resource" id="Resource_x3gmq"]
+script = ExtResource("1_x3gmq")
+Directional = 5
+Buttons = 1
+DirectionalMode = 0
+ButtonMode = 2
+metadata/_custom_type_script = "uid://87xpa7lbksa8"
+
+[sub_resource type="Resource" id="Resource_uksfl"]
+script = ExtResource("2_s5pwa")
+Inputs = Array[Object]([SubResource("Resource_8dctg"), SubResource("Resource_jce4a"), SubResource("Resource_str13"), SubResource("Resource_25j0n"), SubResource("Resource_x3gmq")])
+metadata/_custom_type_script = "uid://ce6shsv0dij5v"
+
+[sub_resource type="Resource" id="Resource_ne4vf"]
+script = ExtResource("1_x3gmq")
+Directional = 6
+Buttons = 1
+DirectionalMode = 1
+ButtonMode = 1
+metadata/_custom_type_script = "uid://87xpa7lbksa8"
+
+[sub_resource type="Resource" id="Resource_ig8g6"]
+script = ExtResource("1_x3gmq")
+Directional = 5
+Buttons = 1
+DirectionalMode = 0
+ButtonMode = 2
+metadata/_custom_type_script = "uid://87xpa7lbksa8"
+
+[sub_resource type="Resource" id="Resource_s5pwa"]
+script = ExtResource("2_s5pwa")
+Inputs = Array[Object]([SubResource("Resource_8dctg"), SubResource("Resource_jce4a"), SubResource("Resource_ne4vf"), SubResource("Resource_ig8g6")])
+metadata/_custom_type_script = "uid://ce6shsv0dij5v"
 
 [resource]
 script = ExtResource("2_jtyoh")
-ValidInputs = null
+ValidInputs = Array[Object]([SubResource("Resource_uksfl"), SubResource("Resource_s5pwa")])
 AbsoluteDirection = true
 InputBuffer = 8
-DirectionalChargeLimit = 30
-ButtonChargeLimit = 30
+DirectionalChargeLimit = 0
+ButtonChargeLimit = 0

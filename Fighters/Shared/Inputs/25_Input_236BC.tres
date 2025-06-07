@@ -8,29 +8,29 @@
 script = ExtResource("1_n0fyk")
 Directional = 2
 Buttons = 0
-DirectionalMode = 1
 ButtonMode = 0
+DirectionalMode = 1
 
 [sub_resource type="Resource" id="Resource_dj7hw"]
 script = ExtResource("1_n0fyk")
 Directional = 3
 Buttons = 0
-DirectionalMode = 1
 ButtonMode = 0
+DirectionalMode = 1
 
 [sub_resource type="Resource" id="Resource_3y8bu"]
 script = ExtResource("1_n0fyk")
 Directional = 6
 Buttons = 0
-DirectionalMode = 1
 ButtonMode = 0
+DirectionalMode = 1
 
 [sub_resource type="Resource" id="Resource_rwynb"]
 script = ExtResource("1_n0fyk")
 Directional = 5
 Buttons = 7
-DirectionalMode = 0
 ButtonMode = 0
+DirectionalMode = 0
 
 [sub_resource type="Resource" id="Resource_bmb7m"]
 script = ExtResource("2_5p1sg")
@@ -40,29 +40,29 @@ Inputs = Array[Object]([SubResource("Resource_ogkmu"), SubResource("Resource_dj7
 script = ExtResource("1_n0fyk")
 Directional = 2
 Buttons = 0
-DirectionalMode = 1
 ButtonMode = 0
+DirectionalMode = 1
 
 [sub_resource type="Resource" id="Resource_khemx"]
 script = ExtResource("1_n0fyk")
 Directional = 6
 Buttons = 0
-DirectionalMode = 1
 ButtonMode = 0
+DirectionalMode = 1
 
 [sub_resource type="Resource" id="Resource_dvm5t"]
 script = ExtResource("1_n0fyk")
 Directional = 5
 Buttons = 0
-DirectionalMode = 0
 ButtonMode = 0
+DirectionalMode = 0
 
 [sub_resource type="Resource" id="Resource_3w0kw"]
 script = ExtResource("1_n0fyk")
 Directional = 5
 Buttons = 7
-DirectionalMode = 0
 ButtonMode = 0
+DirectionalMode = 0
 
 [sub_resource type="Resource" id="Resource_o2f2p"]
 script = ExtResource("2_5p1sg")
@@ -72,15 +72,15 @@ Inputs = Array[Object]([SubResource("Resource_xqenf"), SubResource("Resource_dj7
 script = ExtResource("1_n0fyk")
 Directional = 6
 Buttons = 2
-DirectionalMode = 1
 ButtonMode = 1
+DirectionalMode = 1
 
 [sub_resource type="Resource" id="Resource_hf4xf"]
 script = ExtResource("1_n0fyk")
 Directional = 5
 Buttons = 3
-DirectionalMode = 0
 ButtonMode = 0
+DirectionalMode = 0
 
 [sub_resource type="Resource" id="Resource_n6tt4"]
 script = ExtResource("2_5p1sg")
@@ -91,5 +91,5 @@ script = ExtResource("3_dkmxs")
 ValidInputs = Array[Object]([SubResource("Resource_bmb7m"), SubResource("Resource_o2f2p"), SubResource("Resource_n6tt4")])
 AbsoluteDirection = true
 InputBuffer = 8
-DirectionalChargeLimit = 30
-ButtonChargeLimit = 30
+DirectionalChargeLimit = 0
+ButtonChargeLimit = 0

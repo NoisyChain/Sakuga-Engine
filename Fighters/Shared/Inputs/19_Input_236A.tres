@@ -95,5 +95,5 @@ script = ExtResource("2_qyo5u")
 ValidInputs = Array[Object]([SubResource("Resource_tb716"), SubResource("Resource_dk7tm"), SubResource("Resource_yp7wm"), SubResource("Resource_q2krt")])
 AbsoluteDirection = true
 InputBuffer = 8
-DirectionalChargeLimit = 30
-ButtonChargeLimit = 30
+DirectionalChargeLimit = 0
+ButtonChargeLimit = 0

@@ -2442,13 +2442,13 @@ tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
+tracks/2/interp = 0
+tracks/2/loop_wrap = false
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.0666667, 0.116667, 0.166667, 0.216667, 0.266667, 0.316667, 0.366667),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [ExtResource("73"), ExtResource("81"), ExtResource("85"), ExtResource("84"), ExtResource("82"), ExtResource("83"), ExtResource("78"), ExtResource("72")]
+"times": PackedFloat32Array(0, 0.0666667, 0.116667, 0.166667, 0.216667, 0.266667, 0.316667, 0.317667, 0.366667, 0.416667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [ExtResource("73"), ExtResource("74"), ExtResource("80"), ExtResource("76"), ExtResource("79"), ExtResource("77"), ExtResource("75"), ExtResource("75"), ExtResource("78"), ExtResource("72")]
 }
 
 [sub_resource type="Animation" id="14"]

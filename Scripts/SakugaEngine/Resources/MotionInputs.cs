@@ -8,7 +8,7 @@ namespace SakugaEngine.Resources
         [Export] public InputOption[] ValidInputs;
         [Export] public bool AbsoluteDirection;
         [Export] public int InputBuffer = 8;
-        [Export] public int DirectionalChargeLimit = 30;
-        [Export] public int ButtonChargeLimit = 30;
+        [Export] public int DirectionalChargeLimit = 0;
+        [Export] public int ButtonChargeLimit = 0;
     }
 }
