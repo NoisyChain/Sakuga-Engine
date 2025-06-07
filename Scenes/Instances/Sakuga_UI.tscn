@@ -701,7 +701,6 @@ color = Color(0, 0, 0, 0)
 script = ExtResource("12_uu21w")
 
 [node name="Debug" type="Control" parent="."]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

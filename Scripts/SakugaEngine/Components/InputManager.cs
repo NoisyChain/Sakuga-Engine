@@ -357,8 +357,6 @@ namespace SakugaEngine
 
             if (IsBeingPressed(CurrentHistory, Global.INPUT_ANY_BUTTON))
             {
-                if (InputHistory[CurrentHistory].bCharge > 0 && FaceButtonsChanged(CurrentHistory))
-                    InputHistory[CurrentHistory].bCharge = 0;
                 InputHistory[CurrentHistory].bCharge++;
             }
             else

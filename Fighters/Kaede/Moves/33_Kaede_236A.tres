@@ -1,13 +1,13 @@
 [gd_resource type="Resource" script_class="MoveSettings" load_steps=3 format=3 uid="uid://dnlvmw48b16sg"]
 
-[ext_resource type="Resource" uid="uid://b4tlhryarsqfi" path="res://Fighters/Shared/Inputs/20_Input_236]A[.tres" id="1_a88jv"]
+[ext_resource type="Resource" uid="uid://cxbefdoq5df5p" path="res://Fighters/Shared/Inputs/19_Input_236A.tres" id="1_g7fx1"]
 [ext_resource type="Script" uid="uid://gk1rkw667o4n" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_ru1rl"]
 
 [resource]
 script = ExtResource("2_ru1rl")
 MoveName = "236A"
 MoveState = 62
-Inputs = ExtResource("1_a88jv")
+Inputs = ExtResource("1_g7fx1")
 SideChange = 0
 SuperGaugeRequired = 0
 BuildSuperGauge = 0
