@@ -338,64 +338,25 @@ namespace SakugaEngine
             int left = side ? Global.INPUT_LEFT : Global.INPUT_RIGHT;
             int right = side ? Global.INPUT_RIGHT : Global.INPUT_LEFT;
 
-            switch (input.Direction)
-            {
-                case Global.DirectionalInputs.UP:
-                    result |= Global.INPUT_UP;
-                    break;
-                case Global.DirectionalInputs.UP_LEFT:
-                    result |= Global.INPUT_UP | left;
-                    break;
-                case Global.DirectionalInputs.UP_RIGHT:
-                    result |= Global.INPUT_UP | right;
-                    break;
-                case Global.DirectionalInputs.DOWN:
-                    result |= Global.INPUT_DOWN;
-                    break;
-                case Global.DirectionalInputs.DOWN_LEFT:
-                    result |= Global.INPUT_DOWN | left;
-                    break;
-                case Global.DirectionalInputs.DOWN_RIGHT:
-                    result |= Global.INPUT_DOWN | right;
-                    break;
-                case Global.DirectionalInputs.LEFT:
-                    result |= left;
-                    break;
-                case Global.DirectionalInputs.RIGHT:
-                    result |= right;
-                    break;
-            }
-
-            switch (input.Buttons)
-            {
-                case Global.ButtonInputs.FACE_A:
-                    result |= Global.INPUT_FACE_A;
-                    break;
-                case Global.ButtonInputs.FACE_B:
-                    result |= Global.INPUT_FACE_B;
-                    break;
-                case Global.ButtonInputs.FACE_C:
-                    result |= Global.INPUT_FACE_C;
-                    break;
-                case Global.ButtonInputs.FACE_D:
-                    result |= Global.INPUT_FACE_D;
-                    break;
-                case Global.ButtonInputs.FACE_AB:
-                    result |= Global.INPUT_FACE_A | Global.INPUT_FACE_B;
-                    break;
-                case Global.ButtonInputs.FACE_AC:
-                    result |= Global.INPUT_FACE_A | Global.INPUT_FACE_C;
-                    break;
-                case Global.ButtonInputs.FACE_BC:
-                    result |= Global.INPUT_FACE_B | Global.INPUT_FACE_C;
-                    break;
-                case Global.ButtonInputs.FACE_ABC:
-                    result |= Global.INPUT_FACE_A | Global.INPUT_FACE_B | Global.INPUT_FACE_C;
-                    break;
-                case Global.ButtonInputs.FACE_ABCD:
-                    result |= Global.INPUT_FACE_A | Global.INPUT_FACE_B | Global.INPUT_FACE_C | Global.INPUT_FACE_D;
-                    break;
-            }
+            // Directional inputs
+            if ((input.Direction & Global.DirectionalInputs.UP) > 0)
+                result |= Global.INPUT_UP;
+            if ((input.Direction & Global.DirectionalInputs.DOWN) > 0)
+                result |= Global.INPUT_DOWN;
+            if ((input.Direction & Global.DirectionalInputs.LEFT) > 0)
+                result |= left;
+            if ((input.Direction & Global.DirectionalInputs.RIGHT) > 0)
+                result |= right;
+            
+            // Face button inputs
+            if ((input.Buttons & Global.ButtonInputs.FACE_A) > 0)
+                result |= Global.INPUT_FACE_A;
+            if ((input.Buttons & Global.ButtonInputs.FACE_B) > 0)
+                result |= Global.INPUT_FACE_B;
+            if ((input.Buttons & Global.ButtonInputs.FACE_C) > 0)
+                result |= Global.INPUT_FACE_C;
+            if ((input.Buttons & Global.ButtonInputs.FACE_D) > 0)
+                result |= Global.INPUT_FACE_D;
 
             return (ushort)result;
         }

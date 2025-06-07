@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://b8nxc8lk7cd5"]
+
+[ext_resource type="PackedScene" uid="uid://dex8ic8xpxhe" path="res://Prototyping/Meshes/Fountain.gltf" id="1_oc7ic"]
+[ext_resource type="Material" uid="uid://cio0cpsfimapv" path="res://Prototyping/Materials/MAT_Prototype_Green.tres" id="2_u4yun"]
+[ext_resource type="Material" uid="uid://degncfa8okq54" path="res://Prototyping/Materials/MAT_Prototype_Cyan.tres" id="3_lqb5r"]
+
+[node name="Fountain" instance=ExtResource("1_oc7ic")]
+
+[node name="Fountain" parent="." index="0"]
+material_override = ExtResource("2_u4yun")
+
+[node name="WaterSquirt" parent="." index="1"]
+material_override = ExtResource("3_lqb5r")
+
+[node name="Water" parent="." index="2"]
+material_override = ExtResource("3_lqb5r")

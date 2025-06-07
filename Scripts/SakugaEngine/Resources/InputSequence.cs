@@ -6,9 +6,11 @@ namespace SakugaEngine.Resources
     [GlobalClass]
     public partial class InputSequence : Resource
     {
-        [Export] public Global.DirectionalInputs Directional = Global.DirectionalInputs.NEUTRAL;
-        [Export] public Global.ButtonInputs Buttons = Global.ButtonInputs.NULL;
+        [ExportSubgroup("Directional Inputs")]
+        [Export] public Global.DirectionalInputs Directional;
         [Export] public Global.ButtonMode DirectionalMode;
+        [ExportSubgroup("Face Button Inputs")]
+        [Export] public Global.ButtonInputs Buttons;
         [Export] public Global.ButtonMode ButtonMode;
     }
 }

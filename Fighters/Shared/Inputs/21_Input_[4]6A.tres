@@ -6,17 +6,17 @@
 
 [sub_resource type="Resource" id="Resource_afufi"]
 script = ExtResource("1_gwj4k")
-Directional = 4
+Directional = 2
+DirectionalMode = 1
 Buttons = 0
 ButtonMode = 0
-DirectionalMode = 0
 
 [sub_resource type="Resource" id="Resource_05di8"]
 script = ExtResource("1_gwj4k")
-Directional = 6
+Directional = 4
+DirectionalMode = 0
 Buttons = 1
 ButtonMode = 0
-DirectionalMode = 0
 
 [sub_resource type="Resource" id="Resource_oia6a"]
 script = ExtResource("2_lqqgy")
@@ -24,24 +24,24 @@ Inputs = Array[Object]([SubResource("Resource_afufi"), SubResource("Resource_05d
 
 [sub_resource type="Resource" id="Resource_kex3u"]
 script = ExtResource("1_gwj4k")
-Directional = 4
+Directional = 2
+DirectionalMode = 1
 Buttons = 0
 ButtonMode = 0
-DirectionalMode = 0
 
 [sub_resource type="Resource" id="Resource_ushxj"]
 script = ExtResource("1_gwj4k")
-Directional = 4
+Directional = 2
+DirectionalMode = 3
 Buttons = 0
 ButtonMode = 0
-DirectionalMode = 3
 
 [sub_resource type="Resource" id="Resource_khkds"]
 script = ExtResource("1_gwj4k")
-Directional = 6
+Directional = 4
+DirectionalMode = 0
 Buttons = 1
 ButtonMode = 0
-DirectionalMode = 0
 
 [sub_resource type="Resource" id="Resource_3vdkq"]
 script = ExtResource("2_lqqgy")
@@ -49,31 +49,31 @@ Inputs = Array[Object]([SubResource("Resource_kex3u"), SubResource("Resource_ush
 
 [sub_resource type="Resource" id="Resource_v0w5w"]
 script = ExtResource("1_gwj4k")
-Directional = 4
+Directional = 2
+DirectionalMode = 1
 Buttons = 0
 ButtonMode = 0
-DirectionalMode = 0
 
 [sub_resource type="Resource" id="Resource_excxp"]
 script = ExtResource("1_gwj4k")
-Directional = 4
+Directional = 2
+DirectionalMode = 3
 Buttons = 0
 ButtonMode = 0
-DirectionalMode = 3
 
 [sub_resource type="Resource" id="Resource_pfeql"]
 script = ExtResource("1_gwj4k")
-Directional = 6
+Directional = 4
+DirectionalMode = 1
 Buttons = 0
 ButtonMode = 0
-DirectionalMode = 1
 
 [sub_resource type="Resource" id="Resource_6v6fc"]
 script = ExtResource("1_gwj4k")
-Directional = 6
+Directional = 4
+DirectionalMode = 1
 Buttons = 1
 ButtonMode = 0
-DirectionalMode = 1
 
 [sub_resource type="Resource" id="Resource_awmub"]
 script = ExtResource("2_lqqgy")

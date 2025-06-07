@@ -68,7 +68,7 @@ namespace SakugaEngine
         public enum BotDifficulty { BEGINNER, EASY, MEDIUM, HARD, VERY_HARD, PRO }
         public enum BotMode { ANY = -1, AGGRESSIVE, DEFENSIVE }
         //...
-        public enum DirectionalInputs
+        /*public enum DirectionalInputs
         {
             DOWN_LEFT = 1,
             DOWN = 2,
@@ -96,10 +96,10 @@ namespace SakugaEngine
             FACE_ANY = 10,
             TAUNT = 11,
             DASH = 12
-        }
+        }*/
 
         //Global bit flags
-        /*[Flags]
+        [Flags]
         public enum DirectionalInputs : ushort
         {
             DOWN = 1 << 0,
@@ -123,7 +123,7 @@ namespace SakugaEngine
             DASH = 1 << 4,
             TAUNT = 1 << 5,
             ANY_BUTTON = FACE_A | FACE_B | FACE_C | FACE_D
-        }*/
+        }
 
         [Flags]
         public enum FrameProperties : byte

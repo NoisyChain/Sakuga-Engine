@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://bt54bch7f0upo"]
+
+[ext_resource type="Texture2D" uid="uid://bi7d5hee2ocp0" path="res://Prototyping/Textures/Grid.png" id="1_ibudd"]
+
+[resource]
+albedo_color = Color(0.843137, 0.435294, 0.0901961, 1)
+detail_enabled = true
+detail_albedo = ExtResource("1_ibudd")
+uv1_world_triplanar = true

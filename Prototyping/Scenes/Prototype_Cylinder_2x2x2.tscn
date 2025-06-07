@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://hp13ekk08ulm"]
+
+[ext_resource type="PackedScene" uid="uid://dtxh6awybgm7m" path="res://Prototyping/Meshes/prototype_cylinder_2x2x2.gltf" id="1_1hw7t"]
+
+[node name="Cylinder" type="Node3D"]
+
+[node name="prototype_cylinder_2x2x2" parent="." instance=ExtResource("1_1hw7t")]

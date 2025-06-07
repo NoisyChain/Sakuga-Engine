@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://b8utoyobajxj"]
+
+[ext_resource type="PackedScene" uid="uid://dyihxm2c6m6b0" path="res://Prototyping/Meshes/prototype_cube_2x2x2.gltf" id="1_50n0t"]
+
+[node name="Cube" type="Node3D"]
+
+[node name="prototype_cube_2x2x2" parent="." instance=ExtResource("1_50n0t")]

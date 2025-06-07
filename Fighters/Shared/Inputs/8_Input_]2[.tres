@@ -6,10 +6,10 @@
 
 [sub_resource type="Resource" id="Resource_vyw6d"]
 script = ExtResource("1_a06lw")
-Directional = 2
+Directional = 1
+DirectionalMode = 4
 Buttons = 0
 ButtonMode = 0
-DirectionalMode = 4
 
 [sub_resource type="Resource" id="Resource_birhb"]
 script = ExtResource("2_0auth")

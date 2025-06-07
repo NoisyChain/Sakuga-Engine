@@ -6,31 +6,31 @@
 
 [sub_resource type="Resource" id="Resource_ogkmu"]
 script = ExtResource("1_wxs8c")
-Directional = 2
+Directional = 1
+DirectionalMode = 1
 Buttons = 0
 ButtonMode = 0
-DirectionalMode = 1
 
 [sub_resource type="Resource" id="Resource_dj7hw"]
 script = ExtResource("1_wxs8c")
-Directional = 3
+Directional = 5
+DirectionalMode = 1
 Buttons = 0
 ButtonMode = 0
-DirectionalMode = 1
 
 [sub_resource type="Resource" id="Resource_3y8bu"]
 script = ExtResource("1_wxs8c")
-Directional = 6
+Directional = 4
+DirectionalMode = 1
 Buttons = 0
 ButtonMode = 0
-DirectionalMode = 1
 
 [sub_resource type="Resource" id="Resource_rwynb"]
 script = ExtResource("1_wxs8c")
-Directional = 5
+Directional = 0
+DirectionalMode = 0
 Buttons = 2
 ButtonMode = 0
-DirectionalMode = 0
 
 [sub_resource type="Resource" id="Resource_bmb7m"]
 script = ExtResource("2_rdixw")
@@ -38,31 +38,31 @@ Inputs = Array[Object]([SubResource("Resource_ogkmu"), SubResource("Resource_dj7
 
 [sub_resource type="Resource" id="Resource_xqenf"]
 script = ExtResource("1_wxs8c")
-Directional = 2
+Directional = 1
+DirectionalMode = 1
 Buttons = 0
 ButtonMode = 0
-DirectionalMode = 1
 
 [sub_resource type="Resource" id="Resource_khemx"]
 script = ExtResource("1_wxs8c")
-Directional = 6
+Directional = 4
+DirectionalMode = 1
 Buttons = 0
 ButtonMode = 0
-DirectionalMode = 1
 
 [sub_resource type="Resource" id="Resource_dvm5t"]
 script = ExtResource("1_wxs8c")
-Directional = 5
+Directional = 0
+DirectionalMode = 0
 Buttons = 0
 ButtonMode = 0
-DirectionalMode = 0
 
 [sub_resource type="Resource" id="Resource_3w0kw"]
 script = ExtResource("1_wxs8c")
-Directional = 5
+Directional = 0
+DirectionalMode = 0
 Buttons = 2
 ButtonMode = 0
-DirectionalMode = 0
 
 [sub_resource type="Resource" id="Resource_o2f2p"]
 script = ExtResource("2_rdixw")
@@ -70,17 +70,17 @@ Inputs = Array[Object]([SubResource("Resource_xqenf"), SubResource("Resource_dj7
 
 [sub_resource type="Resource" id="Resource_d07vx"]
 script = ExtResource("1_wxs8c")
-Directional = 3
+Directional = 5
+DirectionalMode = 1
 Buttons = 0
 ButtonMode = 0
-DirectionalMode = 1
 
 [sub_resource type="Resource" id="Resource_y1sd5"]
 script = ExtResource("1_wxs8c")
-Directional = 6
+Directional = 4
+DirectionalMode = 1
 Buttons = 2
 ButtonMode = 0
-DirectionalMode = 1
 
 [sub_resource type="Resource" id="Resource_n6tt4"]
 script = ExtResource("2_rdixw")
@@ -88,24 +88,24 @@ Inputs = Array[Object]([SubResource("Resource_xqenf"), SubResource("Resource_d07
 
 [sub_resource type="Resource" id="Resource_ed0h0"]
 script = ExtResource("1_wxs8c")
-Directional = 3
+Directional = 5
+DirectionalMode = 1
 Buttons = 0
 ButtonMode = 0
-DirectionalMode = 1
 
 [sub_resource type="Resource" id="Resource_3w3tv"]
 script = ExtResource("1_wxs8c")
-Directional = 6
+Directional = 4
+DirectionalMode = 0
 Buttons = 0
 ButtonMode = 0
-DirectionalMode = 0
 
 [sub_resource type="Resource" id="Resource_jqfyp"]
 script = ExtResource("1_wxs8c")
-Directional = 6
+Directional = 4
+DirectionalMode = 0
 Buttons = 2
 ButtonMode = 0
-DirectionalMode = 0
 
 [sub_resource type="Resource" id="Resource_ci1x1"]
 script = ExtResource("2_rdixw")

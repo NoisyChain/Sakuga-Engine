@@ -6,7 +6,9 @@ namespace SakugaEngine.Resources
     [GlobalClass]
     public partial class AIInput : Resource
     {
-        [Export] public Global.DirectionalInputs Direction = Global.DirectionalInputs.NEUTRAL;
-        [Export] public Global.ButtonInputs Buttons = Global.ButtonInputs.NULL;
+        [ExportSubgroup("Directional Inputs")]
+        [Export] public Global.DirectionalInputs Direction;
+        [ExportSubgroup("Face Button Inputs")]
+        [Export] public Global.ButtonInputs Buttons;
     }
 }

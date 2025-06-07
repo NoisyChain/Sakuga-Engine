@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="MotionInputs" load_steps=13 format=3 uid="uid://b4tlhryarsqfi"]
+[gd_resource type="Resource" script_class="MotionInputs" load_steps=18 format=3 uid="uid://b4tlhryarsqfi"]
 
 [ext_resource type="Script" uid="uid://87xpa7lbksa8" path="res://Scripts/SakugaEngine/Resources/InputSequence.cs" id="1_x3gmq"]
 [ext_resource type="Script" uid="uid://di4jwsd3y2x8w" path="res://Scripts/SakugaEngine/Resources/MotionInputs.cs" id="2_jtyoh"]
@@ -6,73 +6,110 @@
 
 [sub_resource type="Resource" id="Resource_8dctg"]
 script = ExtResource("1_x3gmq")
-Directional = 2
-Buttons = 1
+Directional = 1
 DirectionalMode = 1
+Buttons = 1
 ButtonMode = 1
 metadata/_custom_type_script = "uid://87xpa7lbksa8"
 
 [sub_resource type="Resource" id="Resource_jce4a"]
 script = ExtResource("1_x3gmq")
-Directional = 3
-Buttons = 1
+Directional = 5
 DirectionalMode = 1
+Buttons = 1
 ButtonMode = 1
 metadata/_custom_type_script = "uid://87xpa7lbksa8"
 
 [sub_resource type="Resource" id="Resource_str13"]
 script = ExtResource("1_x3gmq")
-Directional = 6
-Buttons = 1
+Directional = 4
 DirectionalMode = 2
+Buttons = 1
 ButtonMode = 2
 metadata/_custom_type_script = "uid://87xpa7lbksa8"
 
 [sub_resource type="Resource" id="Resource_25j0n"]
 script = ExtResource("1_x3gmq")
-Directional = 5
+Directional = 4
+DirectionalMode = 2
 Buttons = 1
-DirectionalMode = 0
-ButtonMode = 1
-metadata/_custom_type_script = "uid://87xpa7lbksa8"
-
-[sub_resource type="Resource" id="Resource_x3gmq"]
-script = ExtResource("1_x3gmq")
-Directional = 5
-Buttons = 1
-DirectionalMode = 0
 ButtonMode = 2
 metadata/_custom_type_script = "uid://87xpa7lbksa8"
 
 [sub_resource type="Resource" id="Resource_uksfl"]
 script = ExtResource("2_s5pwa")
-Inputs = Array[Object]([SubResource("Resource_8dctg"), SubResource("Resource_jce4a"), SubResource("Resource_str13"), SubResource("Resource_25j0n"), SubResource("Resource_x3gmq")])
+Inputs = Array[Object]([SubResource("Resource_8dctg"), SubResource("Resource_jce4a"), SubResource("Resource_str13"), SubResource("Resource_25j0n")])
 metadata/_custom_type_script = "uid://ce6shsv0dij5v"
 
 [sub_resource type="Resource" id="Resource_ne4vf"]
 script = ExtResource("1_x3gmq")
-Directional = 6
-Buttons = 1
+Directional = 4
 DirectionalMode = 1
+Buttons = 1
 ButtonMode = 1
 metadata/_custom_type_script = "uid://87xpa7lbksa8"
 
 [sub_resource type="Resource" id="Resource_ig8g6"]
 script = ExtResource("1_x3gmq")
-Directional = 5
-Buttons = 1
+Directional = 0
 DirectionalMode = 0
+Buttons = 1
+ButtonMode = 1
+metadata/_custom_type_script = "uid://87xpa7lbksa8"
+
+[sub_resource type="Resource" id="Resource_x3gmq"]
+script = ExtResource("1_x3gmq")
+Directional = 0
+DirectionalMode = 0
+Buttons = 1
 ButtonMode = 2
 metadata/_custom_type_script = "uid://87xpa7lbksa8"
 
 [sub_resource type="Resource" id="Resource_s5pwa"]
 script = ExtResource("2_s5pwa")
-Inputs = Array[Object]([SubResource("Resource_8dctg"), SubResource("Resource_jce4a"), SubResource("Resource_ne4vf"), SubResource("Resource_ig8g6")])
+Inputs = Array[Object]([SubResource("Resource_8dctg"), SubResource("Resource_jce4a"), SubResource("Resource_ne4vf"), SubResource("Resource_ig8g6"), SubResource("Resource_x3gmq")])
+metadata/_custom_type_script = "uid://ce6shsv0dij5v"
+
+[sub_resource type="Resource" id="Resource_qp4yy"]
+script = ExtResource("1_x3gmq")
+Directional = 1
+DirectionalMode = 1
+Buttons = 1
+ButtonMode = 1
+metadata/_custom_type_script = "uid://87xpa7lbksa8"
+
+[sub_resource type="Resource" id="Resource_loyg4"]
+script = ExtResource("1_x3gmq")
+Directional = 5
+DirectionalMode = 1
+Buttons = 1
+ButtonMode = 1
+metadata/_custom_type_script = "uid://87xpa7lbksa8"
+
+[sub_resource type="Resource" id="Resource_tbt72"]
+script = ExtResource("1_x3gmq")
+Directional = 4
+DirectionalMode = 1
+Buttons = 1
+ButtonMode = 1
+metadata/_custom_type_script = "uid://87xpa7lbksa8"
+
+[sub_resource type="Resource" id="Resource_cq14f"]
+script = ExtResource("1_x3gmq")
+Directional = 4
+DirectionalMode = 1
+Buttons = 1
+ButtonMode = 2
+metadata/_custom_type_script = "uid://87xpa7lbksa8"
+
+[sub_resource type="Resource" id="Resource_nbbd7"]
+script = ExtResource("2_s5pwa")
+Inputs = Array[Object]([SubResource("Resource_qp4yy"), SubResource("Resource_loyg4"), SubResource("Resource_tbt72"), SubResource("Resource_cq14f")])
 metadata/_custom_type_script = "uid://ce6shsv0dij5v"
 
 [resource]
 script = ExtResource("2_jtyoh")
-ValidInputs = Array[Object]([SubResource("Resource_uksfl"), SubResource("Resource_s5pwa")])
+ValidInputs = Array[Object]([SubResource("Resource_uksfl"), SubResource("Resource_s5pwa"), SubResource("Resource_nbbd7")])
 AbsoluteDirection = true
 InputBuffer = 8
 DirectionalChargeLimit = 0

@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=4 uid="uid://cdiqpm1fkqdey"]
+
+[ext_resource type="Material" uid="uid://bt54bch7f0upo" path="res://Prototyping/Materials/MAT_Prototype_Orange.tres" id="1_epr8n"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_aak7w"]
+_surfaces = [{
+"aabb": AABB(-1, -0.75, -1, 2.00001, 0.75001, 2),
+"format": 34896613377,
+"index_count": 60,
+"index_data": PackedByteArray("AAAGAAQAAAACAAYABQALAAkABQABAAsAAQAKAAsAAQADAAoABQADAAEABQAHAAMABwAJAAgABwAFAAkAAwAIAAoAAwAHAAgACQAAAAQACQALAAAACwACAAAACwAKAAIACAAEAAYACAAJAAQACgAGAAIACgAIAAYA"),
+"name": "MAT_Prototype_Blue",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 12,
+"vertex_data": PackedByteArray("/v/+/wAAAADL7AAAMxMAAP7//v///wAAy+wAAMvsAAAAAP7/AAAAADMTAAAzEwAAAAD+////AAAzEwAAy+wAAAAAVFX//wAAAABUVQAAAAD+/1RV//8AAP7/VFUAAAAA")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_3nf7t"]
+resource_name = "prototype_platform_2x2x1_prototype_platform_2x2x1"
+_surfaces = [{
+"aabb": AABB(-1, -0.75, -1, 2.00001, 0.75001, 2),
+"attribute_data": PackedByteArray("/5////+/////n///Mntl9v+HZfb/h2X2/5//f/+//3//n/9/MnuZif+HmYn/h5mJ/5//f/+f/3///////4eZicxEZfb/h5mJ/5////+f//////9//4dl9sxEmYn/h2X2/4////+P////j////4////+P/3//j/9//4//f/+P/3//j/9//4//f/+P/3//j/9//4////+P////j////4///w=="),
+"format": 34896613399,
+"index_count": 60,
+"index_data": PackedByteArray("AQAUAA4AAQAHABQAEQAkAB4AEQAEACQABQAiACYABQALACIAEAAJAAMAEAAWAAkAFQAdABkAFQAPAB0ACgAaACAACgAXABoAHwAAAA0AHwAlAAAAJwAIAAIAJwAjAAgAGAAMABIAGAAcAAwAIQATAAYAIQAbABMA"),
+"material": ExtResource("1_epr8n"),
+"name": "MAT_Prototype_Blue",
+"primitive": 3,
+"uv_scale": Vector4(4, 2, 0, 0),
+"vertex_count": 40,
+"vertex_data": PackedByteArray("/v/+/wAAAAD+//7/AAD///7//v8AAFTVy+wAADMT/7/L7AAAMxN5D8vsAAAzE/zJ/v/+/////z/+//7///////7//v///1TVy+wAAMvs/7/L7AAAy+wXPcvsAADL7PzJAAD+/wAAVNUAAP7/AAAAAAAA/v8AAP//MxMAADMT/+IzEwAAMxP/vzMTAAAzE3kPAAD+////VNUAAP7/////PwAA/v//////MxMAAMvs/+IzEwAAy+z/vzMTAADL7Bc9AABUVf//VNUAAFRV////4gAAVFX//xc9AABUVf///z8AAFRVAABU1QAAVFUAAP/iAABUVQAAeQ8AAFRVAAAAAP7/VFX//xc9/v9UVf///z/+/1RV///8yf7/VFX//1TV/v9UVQAAeQ/+/1RVAAAAAP7/VFUAAPzJ/v9UVQAAVNX/v/+//3//v6oqqioAAP9/yEfIR/whBjz//////3//v6oqqioAAP9/0BYu6fwhBjxU1VTV/7//v/9//78ezsHjAAD/f8hHyEdU1VTV//////9//78ezsHjAAD/f9AWLulU1VTVHs7B49AWLun/////VNVU1R7OwePIR8hH/7//v9AWLun//////CEGPKoqqirIR8hH/7//v/whBjyqKqoq")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_aak7w")
+
+[node name="Platform" type="Node3D"]
+
+[node name="prototype_platform_2x2x1" type="MeshInstance3D" parent="."]
+mesh = SubResource("ArrayMesh_3nf7t")
+skeleton = NodePath("")

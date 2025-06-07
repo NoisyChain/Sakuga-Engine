@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=4 uid="uid://cvshpgayom0nj"]
+
+[ext_resource type="Material" uid="uid://ngosl3iqq2bp" path="res://Prototyping/Materials/MAT_Prototype_Blue.tres" id="1_w4im0"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_lbbvv"]
+_surfaces = [{
+"aabb": AABB(-0.5, -0.5, -0.5, 1.00001, 1.00001, 1),
+"format": 34896613377,
+"index_count": 36,
+"index_data": PackedByteArray("AAAGAAQAAAACAAYAAwAGAAIAAwAHAAYABwAEAAYABwAFAAQABQADAAEABQAHAAMAAQACAAAAAQADAAIABQAAAAQABQABAAAA"),
+"name": "MAT_Prototype_Blue",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("/v/+/wAAAAD+/wAAAAAAAP7//v///wAA/v8AAP//AAAAAP7/AAAAAAAAAAAAAAAAAAD+////AAAAAAAA//8AAA==")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_ywgb6"]
+resource_name = "prototype_cube_1x1_prototype_cube_1x1"
+_surfaces = [{
+"aabb": AABB(-0.5, -0.5, -0.5, 1.00001, 1.00001, 1),
+"attribute_data": PackedByteArray("/7//v/+//7//v/+//3//v/9//7//f/+//7//n/+//5//v/+f/3//n/9//5//f/+f/7//3/+//9////+//3//3/8//7//f//f/7////+//3////+f/3////8//5//f/9/"),
+"format": 34896613399,
+"index_count": 36,
+"index_data": PackedByteArray("AQAUAA4AAQAHABQACgATAAYACgAXABMAFQAMABIAFQAPAAwAEAAJAAMAEAAWAAkABQAIAAIABQALAAgAEQAAAA0AEQAEAAAA"),
+"material": ExtResource("1_w4im0"),
+"name": "MAT_Prototype_Blue",
+"primitive": 3,
+"uv_scale": Vector4(2, 4, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("/v/+/wAA///+//7/AAD///7//v8AAFTV/v8AAAAA/7/+/wAAAAD///7/AAAAAFTV/v/+/////7/+//7///////7//v///1TV/v8AAP///7/+/wAA////v/7/AAD//1TVAAD+/wAAVNUAAP7/AAD//wAA/v8AAP//AAAAAAAAVNUAAAAAAAD/vwAAAAAAAP//AAD+////VNUAAP7/////vwAA/v//////AAAAAP//VNUAAAAA////vwAAAAD///+//7//v/9//7+qKqoqAAD/f/+//7+qKqoq//////9//7+qKqoqAAD/f/////+qKqoqVNVU1f+//7//f/+/VNVU1QAA/3//v/+/VNVU1f//////f/+/VNVU1QAA/3//////")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_lbbvv")
+
+[node name="Cube_Small" type="Node3D"]
+
+[node name="prototype_cube_1x1" type="MeshInstance3D" parent="."]
+mesh = SubResource("ArrayMesh_ywgb6")
+skeleton = NodePath("")

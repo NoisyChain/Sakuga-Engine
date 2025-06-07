@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cm75vsl6ih7wa"]
+
+[ext_resource type="PackedScene" uid="uid://gfrdgi74bxf4" path="res://Prototyping/Meshes/prototype_floor_2x2.gltf" id="1_lrpl8"]
+
+[node name="Floor_Small" type="Node3D"]
+
+[node name="prototype_floor_2x2" parent="." instance=ExtResource("1_lrpl8")]

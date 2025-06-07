@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://d281ucn7lmqhm"]
+
+[ext_resource type="PackedScene" uid="uid://cas4dyd7yuahk" path="res://Prototyping/Meshes/prototype_wall_4x2.gltf" id="1_gclwn"]
+
+[node name="Wall_Big" type="Node3D"]
+
+[node name="prototype_wall_4x22" parent="." instance=ExtResource("1_gclwn")]
