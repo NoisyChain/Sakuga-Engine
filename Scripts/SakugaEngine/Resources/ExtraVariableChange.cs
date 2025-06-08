@@ -7,5 +7,6 @@ namespace SakugaEngine.Resources
     {
         [Export] public Global.ExtraVariableChange ChangeMode;
         [Export] public int ChangeValue;
+        [Export] public int RandomRange = -1;
     }
 }

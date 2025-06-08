@@ -12,6 +12,6 @@ namespace SakugaEngine.Resources
         [Export] public int Index;
         [Export] public bool IsRandom;
         [Export] public int Range;
-        [Export] public int FromExtraVariable;
+        [Export] public int FromExtraVariable = -1;
     }
 }

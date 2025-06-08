@@ -119,16 +119,20 @@ namespace SakugaEngine
             {
                 if (ToChange[i] == null) continue;
 
+                int val = ToChange[i].ChangeValue;
+                if (ToChange[i].RandomRange >= 0)
+                    val = Global.RNG.Next(ToChange[i].ChangeValue, ToChange[i].RandomRange);
+
                 switch ((byte)ToChange[i].ChangeMode)
                 {
                     case 0:
-                        ExtraVariables[i].Set(ToChange[i].ChangeValue);
+                        ExtraVariables[i].Set(val);
                         break;
                     case 1:
-                        ExtraVariables[i].Add(ToChange[i].ChangeValue);
+                        ExtraVariables[i].Add(val);
                         break;
                     case 2:
-                        ExtraVariables[i].Subtract(ToChange[i].ChangeValue);
+                        ExtraVariables[i].Subtract(val);
                         break;
                 }
             }

@@ -175,7 +175,9 @@ namespace SakugaEngine
                             int ind = spawnEvent.IsRandom ? 
                                 Global.RNG.Next(spawnEvent.Index, spawnEvent.Range) : 
                                 spawnEvent.Index;
-                            switch(spawnEvent.Object)
+                            if (spawnEvent.FromExtraVariable >= 0)
+                                ind = Variables.ExtraVariables[spawnEvent.FromExtraVariable].CurrentValue;
+                            switch (spawnEvent.Object)
                             {
                                 case Global.ObjectType.SPAWNABLE:
                                     FighterReference().SpawnSpawnable(ind, dst);
@@ -184,6 +186,8 @@ namespace SakugaEngine
                                     FighterReference().SpawnVFX(ind, dst);
                                     break;
                             }
+                            if (spawnEvent.FromExtraVariable >= 0)
+                                Variables.ExtraVariables[spawnEvent.FromExtraVariable].ChangeOnUse();
                             break;
                         case TeleportAnimationEvent teleportEvent: //Teleport
                             dst = Teleport(teleportEvent.TargetPosition, teleportEvent.Index,
@@ -262,6 +266,8 @@ namespace SakugaEngine
             if (VoicesList == null) return;
             
             int ind = soundEvent.IsRandom ? Global.RNG.Next(soundEvent.Index, soundEvent.Range) : soundEvent.Index;
+            if (soundEvent.FromExtraVariable >= 0)
+                ind = Variables.ExtraVariables[soundEvent.FromExtraVariable].CurrentValue;
             AudioStream selectedSound = null;
             switch ((int)soundEvent.SoundType)
             {
@@ -273,7 +279,8 @@ namespace SakugaEngine
                     break;
             }
             Sounds[soundEvent.Source].QueueSound(selectedSound);
-            GD.Print("Sound queued");
+            if (soundEvent.FromExtraVariable >= 0)
+                Variables.ExtraVariables[soundEvent.FromExtraVariable].ChangeOnUse();
         }
 
         public Vector2I Teleport(Vector2I Target, int index, int xRelative, int yRelative)

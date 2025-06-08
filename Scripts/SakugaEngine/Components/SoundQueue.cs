@@ -5,7 +5,7 @@ namespace SakugaEngine
     [GlobalClass]
     public partial class SoundQueue : AudioStreamPlayer3D
     {
-        [Export] private ushort TimeToAllowSameQueue = 12;
+        [Export] private ushort QueueDelay = 12;
         private bool Queued;
         public ushort QueueTimer = 0;
 
@@ -35,7 +35,7 @@ namespace SakugaEngine
             if (QueueTimer > 0) return;
 
             Play();
-            QueueTimer = TimeToAllowSameQueue;
+            QueueTimer = QueueDelay;
             Queued = false;
         }
 

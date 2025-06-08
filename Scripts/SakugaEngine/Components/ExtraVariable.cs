@@ -18,6 +18,7 @@ namespace SakugaEngine
         [Export] private ExtraVariableBehavior BehaviorOnMoveExit;
         [Export] private ExtraVariableBehavior BehaviorOnFull;
         [Export] private ExtraVariableBehavior BehaviorOnEmpty;
+        [Export] private ExtraVariableBehavior BehaviorOnUse;
 
         public int CurrentValue;
         public int CurrentFactor;
@@ -82,48 +83,63 @@ namespace SakugaEngine
         {
             if (BehaviorOnHit == null) return;
             
-            CurrentFactor = BehaviorOnHit.Factor;
-            CurrentMode = (byte)BehaviorOnHit.Mode;
+            SetVariable(BehaviorOnHit);
         }
 
         public void ChangeOnDamage()
         {
             if (BehaviorOnDamage == null) return;
             
-            CurrentFactor = BehaviorOnDamage.Factor;
-            CurrentMode = (byte)BehaviorOnDamage.Mode;
+            SetVariable(BehaviorOnDamage);
         }
 
         public void ChangeOnMoveEnter()
         {
             if (BehaviorOnMoveEnter == null) return;
             
-            CurrentFactor = BehaviorOnMoveEnter.Factor;
-            CurrentMode = (byte)BehaviorOnMoveEnter.Mode;
+            SetVariable(BehaviorOnMoveEnter);
         }
 
         public void ChangeOnMoveExit()
         {
             if (BehaviorOnMoveExit == null) return;
             
-            CurrentFactor = BehaviorOnMoveExit.Factor;
-            CurrentMode = (byte)BehaviorOnMoveExit.Mode;
+            SetVariable(BehaviorOnMoveExit);
         }
 
         public void ChangeOnFull()
         {
             if (BehaviorOnFull == null) return;
             
-            CurrentFactor = BehaviorOnFull.Factor;
-            CurrentMode = (byte)BehaviorOnFull.Mode;
+            SetVariable(BehaviorOnFull);
         }
 
         public void ChangeOnEmpty()
         {
             if (BehaviorOnEmpty == null) return;
             
-            CurrentFactor = BehaviorOnEmpty.Factor;
-            CurrentMode = (byte)BehaviorOnEmpty.Mode;
+            SetVariable(BehaviorOnEmpty);
+        }
+
+        public void ChangeOnUse()
+        {
+            if (BehaviorOnUse == null) return;
+            
+            SetVariable(BehaviorOnUse);
+        }
+
+        private void SetVariable(ExtraVariableBehavior behavior)
+        {
+            if (behavior.SetValue)
+            {
+                if (behavior.RandomRange >= 0)
+                    CurrentValue = Global.RNG.Next(behavior.Value, behavior.RandomRange);
+                else
+                    CurrentValue = behavior.Value;
+            }
+
+            CurrentFactor = behavior.Factor;
+            CurrentMode = (byte)behavior.Mode;
         }
 
         public void Serialize(BinaryWriter bw)
