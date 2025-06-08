@@ -8,7 +8,7 @@
 
 [sub_resource type="Resource" id="Resource_uxwlk"]
 script = ExtResource("1_gayr5")
-StateRange = Vector2i(0, 9)
+AtFrame = 0
 SourceAnimation = "623B"
 LimitRange = false
 AnimationRange = Vector2i(0, 0)

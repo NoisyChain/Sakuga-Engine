@@ -8,7 +8,7 @@
 
 [sub_resource type="Resource" id="Resource_ldev4"]
 script = ExtResource("1_lbm1r")
-StateRange = Vector2i(0, 14)
+AtFrame = 0
 SourceAnimation = "j_5B"
 LimitRange = false
 AnimationRange = Vector2i(0, 0)

@@ -28,7 +28,7 @@ Events = Array[Object]([SubResource("Resource_tmsc3")])
 
 [sub_resource type="Resource" id="Resource_i24ac"]
 script = ExtResource("3_3rgdk")
-StateRange = Vector2i(0, 39)
+AtFrame = 0
 SourceAnimation = "5C"
 LimitRange = false
 AnimationRange = Vector2i(0, 0)

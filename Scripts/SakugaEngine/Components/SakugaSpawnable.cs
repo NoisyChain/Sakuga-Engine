@@ -10,6 +10,7 @@ namespace SakugaEngine
     {
         [ExportCategory("Timers")]
         [Export] public FrameTimer LifeTime;
+        [Export] public FrameTimer HitStop;
 
         [ExportCategory("Variables")]
         [Export] public int InitialState;
@@ -57,7 +58,7 @@ namespace SakugaEngine
             Body.Initialize(this);
             Body.CurrentHitbox = -1;
             Body.IsLeftSide = GetFighterOwner().Body.IsLeftSide;
-            Inputs = _owner.Inputs;
+            Inputs = GetFighterOwner().Inputs;
             Animator.PlayState(InitialState);
             Animator.Frame = -1;
         }
@@ -90,11 +91,12 @@ namespace SakugaEngine
         public override void PreTick()
         {
             if (!IsActive) return;
-            EventExecuted = false;
-
-            Body.IsMovable = !GetFighterOwner().HitStop.IsRunning();
             
-            if (!GetFighterOwner().HitStop.IsRunning())
+            HitStop.Run();
+            EventExecuted = false;
+            Body.IsMovable = !HitStop.IsRunning();
+            
+            if (!HitStop.IsRunning())
             {
                 LifeTime.Run();
                 Animator.RunState();
@@ -140,11 +142,11 @@ namespace SakugaEngine
         {
             GD.Print(hitEffect);
             GetFighterOwner().LayerSorting = 1;
-            GetFighterOwner().Body.IsMovable = false;
+            Body.IsMovable = false;
             Body.HitConfirmed = true;
             Body.IsMovable = false;
             GetFighterOwner().Variables.AddSuperGauge(superGaugeGain);
-            GetFighterOwner().HitStop.Start(hitStopDuration);
+            HitStop.Start(hitStopDuration);
             if (hitEffect >= 0)
             {
                 GetFighterOwner().SpawnVFX(hitEffect, VFXSpawn);
@@ -237,6 +239,7 @@ namespace SakugaEngine
             if (Variables != null) Variables.Serialize(bw);
             Animator.Serialize(bw);
             LifeTime.Serialize(bw);
+            HitStop.Serialize(bw);
 
             bw.Write(EventExecuted);
         }
@@ -248,6 +251,7 @@ namespace SakugaEngine
             if (Variables != null) Variables.Deserialize(br);
             Animator.Deserialize(br);
             LifeTime.Deserialize(br);
+            HitStop.Deserialize(br);
 
             EventExecuted = br.ReadBoolean();
 

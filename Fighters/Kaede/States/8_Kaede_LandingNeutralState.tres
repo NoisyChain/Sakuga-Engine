@@ -8,7 +8,7 @@
 
 [sub_resource type="Resource" id="Resource_y1hbm"]
 script = ExtResource("1_cosqm")
-StateRange = Vector2i(0, 11)
+AtFrame = 0
 SourceAnimation = "Crouch_Exit"
 LimitRange = false
 AnimationRange = Vector2i(0, 0)

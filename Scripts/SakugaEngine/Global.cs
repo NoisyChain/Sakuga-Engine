@@ -19,9 +19,9 @@ namespace SakugaEngine
         public const int KaraCancelWindow = 3;
         //public const int RoundsToWin = 2; //<= Move this to the GameMonitor
         //public const int GameTimer = 99;  //<= Move this to the GameMonitor
-        public const int ThrowHitStunAdditional = 8;
+        public const int ThrowHitStunAdditional = 12;
         public const int GravityDecay = 2500;
-        public const int HitstunDecayMinCombo = 5;
+        public const int HitstunDecayMinCombo = 8;
         public const int MinHitstun = 8;
         public const int RecoveryJumpVelocity = 60000;
         public const int RecoveryGravity = 200000;

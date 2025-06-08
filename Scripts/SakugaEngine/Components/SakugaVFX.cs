@@ -40,6 +40,7 @@ public partial class SakugaVFX : SakugaNode
         Sound.SimpleQueueSound();
         IsActive = true;
     }
+
     public override void LateTick()
     {
         if (!IsActive) return;
@@ -49,20 +50,20 @@ public partial class SakugaVFX : SakugaNode
     }
 
     public override void Serialize(BinaryWriter bw)
-        {
-            bw.Write(FixedPosition.X);
-            bw.Write(FixedPosition.Y);
-            bw.Write(IsActive);
-            bw.Write(Frame);
-            bw.Write(Side);
-        }
+    {
+        bw.Write(FixedPosition.X);
+        bw.Write(FixedPosition.Y);
+        bw.Write(IsActive);
+        bw.Write(Frame);
+        bw.Write(Side);
+    }
 
-        public override void Deserialize(BinaryReader br)
-        {
-            FixedPosition.X = br.ReadInt32();
-            FixedPosition.Y = br.ReadInt32();
-            IsActive = br.ReadBoolean();
-            Frame = br.ReadInt32();
-            Side = br.ReadInt32();
-        }
+    public override void Deserialize(BinaryReader br)
+    {
+        FixedPosition.X = br.ReadInt32();
+        FixedPosition.Y = br.ReadInt32();
+        IsActive = br.ReadBoolean();
+        Frame = br.ReadInt32();
+        Side = br.ReadInt32();
+    }
 }

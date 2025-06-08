@@ -25,7 +25,7 @@ Events = Array[Object]([SubResource("Resource_ld3k7")])
 
 [sub_resource type="Resource" id="Resource_bcfn1"]
 script = ExtResource("3_xljix")
-StateRange = Vector2i(0, 41)
+AtFrame = 0
 SourceAnimation = "Throw_Sequence"
 LimitRange = false
 AnimationRange = Vector2i(0, 0)

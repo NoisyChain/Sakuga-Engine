@@ -7,7 +7,7 @@
 
 [sub_resource type="Resource" id="Resource_ab25c"]
 script = ExtResource("1_8famv")
-StateRange = Vector2i(0, 32)
+AtFrame = 0
 SourceAnimation = "Walk_Backwards"
 LimitRange = false
 AnimationRange = Vector2i(0, 0)

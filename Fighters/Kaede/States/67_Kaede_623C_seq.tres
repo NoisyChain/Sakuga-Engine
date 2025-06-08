@@ -22,7 +22,7 @@ Events = Array[Object]([SubResource("Resource_shu43")])
 
 [sub_resource type="Resource" id="Resource_xp4fn"]
 script = ExtResource("3_rmcib")
-StateRange = Vector2i(0, 29)
+AtFrame = 0
 SourceAnimation = "623B_2"
 LimitRange = false
 AnimationRange = Vector2i(0, 0)

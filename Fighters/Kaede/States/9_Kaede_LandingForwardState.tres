@@ -8,7 +8,7 @@
 
 [sub_resource type="Resource" id="Resource_xpbfy"]
 script = ExtResource("1_ffih7")
-StateRange = Vector2i(0, 11)
+AtFrame = 0
 SourceAnimation = "Crouch_Exit"
 LimitRange = false
 AnimationRange = Vector2i(0, 0)

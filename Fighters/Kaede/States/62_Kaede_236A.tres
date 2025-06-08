@@ -26,7 +26,7 @@ Events = Array[Object]([SubResource("Resource_cnjr5")])
 
 [sub_resource type="Resource" id="Resource_d340o"]
 script = ExtResource("3_qyjru")
-StateRange = Vector2i(0, 28)
+AtFrame = 0
 SourceAnimation = "236C_3"
 LimitRange = false
 AnimationRange = Vector2i(0, 0)

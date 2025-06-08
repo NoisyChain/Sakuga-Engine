@@ -9,7 +9,7 @@
 
 [sub_resource type="Resource" id="Resource_op4o3"]
 script = ExtResource("1_b6yb3")
-StateRange = Vector2i(0, 21)
+AtFrame = 0
 SourceAnimation = "Jump_Backwards"
 LimitRange = false
 AnimationRange = Vector2i(0, 0)

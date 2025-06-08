@@ -8,7 +8,7 @@
 
 [sub_resource type="Resource" id="Resource_gm6mq"]
 script = ExtResource("1_qgnsc")
-StateRange = Vector2i(0, 5)
+AtFrame = 0
 SourceAnimation = "Falling"
 LimitRange = false
 AnimationRange = Vector2i(0, 0)

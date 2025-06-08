@@ -8,7 +8,7 @@
 
 [sub_resource type="Resource" id="Resource_wsftv"]
 script = ExtResource("1_wsp2c")
-StateRange = Vector2i(0, 39)
+AtFrame = 0
 SourceAnimation = "236C_3"
 LimitRange = false
 AnimationRange = Vector2i(0, 0)

@@ -119,9 +119,10 @@ _data = {
 &"Travel": SubResource("Animation_4g5j5")
 }
 
-[node name="Kaede_Spawnable" type="Node3D" node_paths=PackedStringArray("LifeTime", "Body", "Animator", "Sounds", "Graphics")]
+[node name="Kaede_Spawnable" type="Node3D" node_paths=PackedStringArray("LifeTime", "HitStop", "Body", "Animator", "Sounds", "Graphics")]
 script = ExtResource("1_dhydb")
 LifeTime = NodePath("Timers/LifeTime")
+HitStop = NodePath("Timers/HitStop")
 DeathState = 2
 DieOnGround = true
 DieOnWalls = true
@@ -157,7 +158,7 @@ region_rect = Rect2(711.25, 46.25, 2, 0)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Graphics/Mesh/ProjectileGraphics"]
 libraries = {
-"": SubResource("AnimationLibrary_efsgm")
+&"": SubResource("AnimationLibrary_efsgm")
 }
 
 [node name="HitboxViewer" parent="." node_paths=PackedStringArray("body") instance=ExtResource("281_wh8kr")]
@@ -182,3 +183,6 @@ HitboxPresets = Array[Object]([ExtResource("230_by1ut")])
 [node name="LifeTime" type="Node" parent="Timers"]
 script = ExtResource("302_0eu8l")
 WaitTime = 40
+
+[node name="HitStop" type="Node" parent="Timers"]
+script = ExtResource("302_0eu8l")

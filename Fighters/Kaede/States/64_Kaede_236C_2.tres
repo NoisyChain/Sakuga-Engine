@@ -9,7 +9,7 @@
 
 [sub_resource type="Resource" id="Resource_5pb2k"]
 script = ExtResource("1_xybcm")
-StateRange = Vector2i(0, 28)
+AtFrame = 0
 SourceAnimation = "236C_2"
 LimitRange = false
 AnimationRange = Vector2i(0, 0)

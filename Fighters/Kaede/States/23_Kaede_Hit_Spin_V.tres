@@ -8,7 +8,7 @@
 
 [sub_resource type="Resource" id="Resource_xo0au"]
 script = ExtResource("1_ca2wk")
-StateRange = Vector2i(0, 15)
+AtFrame = 0
 SourceAnimation = "Hit_Spin_2"
 LimitRange = false
 AnimationRange = Vector2i(0, 0)

@@ -7,7 +7,7 @@
 
 [sub_resource type="Resource" id="Resource_wgdg7"]
 script = ExtResource("1_5i4x2")
-StateRange = Vector2i(0, 7)
+AtFrame = 0
 SourceAnimation = "Hit_Strong"
 LimitRange = false
 AnimationRange = Vector2i(0, 0)

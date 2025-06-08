@@ -8,7 +8,7 @@
 
 [sub_resource type="Resource" id="Resource_s3dso"]
 script = ExtResource("1_n2mmf")
-StateRange = Vector2i(0, 11)
+AtFrame = 0
 SourceAnimation = "Crouch_Enter"
 LimitRange = false
 AnimationRange = Vector2i(0, 0)

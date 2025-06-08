@@ -8,7 +8,7 @@
 
 [sub_resource type="Resource" id="Resource_i2c2m"]
 script = ExtResource("1_g42id")
-StateRange = Vector2i(0, 14)
+AtFrame = 0
 SourceAnimation = "j_5A"
 LimitRange = false
 AnimationRange = Vector2i(0, 0)

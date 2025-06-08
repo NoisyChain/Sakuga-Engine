@@ -890,9 +890,9 @@ namespace SakugaEngine
                 CallBlockState(2);
             }
         }
-#endregion
+        #endregion
 
-#region Game State
+        #region Game State
         public override void Serialize(BinaryWriter bw)
         {
             //Components

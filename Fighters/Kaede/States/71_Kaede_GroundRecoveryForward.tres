@@ -8,7 +8,7 @@
 
 [sub_resource type="Resource" id="Resource_igooh"]
 script = ExtResource("1_dmsk6")
-StateRange = Vector2i(0, 39)
+AtFrame = 0
 SourceAnimation = "Crouching"
 LimitRange = false
 AnimationRange = Vector2i(0, 0)

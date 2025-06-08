@@ -1,15 +1,17 @@
 using Godot;
-using System;
 
 namespace SakugaEngine
 {
     [GlobalClass]
     public partial class SoundQueue : AudioStreamPlayer3D
     {
+        [Export] private ushort TimeToAllowSameQueue = 12;
         private bool Queued;
+        public ushort QueueTimer = 0;
 
-        public override void _Process(double delta)
+        public override void _PhysicsProcess(double delta)
         {
+            TickQueueTimer();
             PlayQueue();
         }
 
@@ -30,10 +32,18 @@ namespace SakugaEngine
         {
             if (!Queued) return;
             if (Stream == null) return;
-            if (Playing) return;
+            if (QueueTimer > 0) return;
 
             Play();
+            QueueTimer = TimeToAllowSameQueue;
             Queued = false;
+        }
+
+        private void TickQueueTimer()
+        {
+            if (QueueTimer == 0) return;
+
+            QueueTimer--;
         }
     }
 }

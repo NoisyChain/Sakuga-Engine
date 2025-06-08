@@ -9,7 +9,7 @@
 
 [sub_resource type="Resource" id="Resource_1wvpj"]
 script = ExtResource("1_uq60h")
-StateRange = Vector2i(0, 33)
+AtFrame = 0
 SourceAnimation = "Dash_Backwards"
 LimitRange = false
 AnimationRange = Vector2i(0, 0)

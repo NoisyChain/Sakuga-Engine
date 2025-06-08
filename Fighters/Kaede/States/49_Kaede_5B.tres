@@ -8,7 +8,7 @@
 
 [sub_resource type="Resource" id="Resource_g3upw"]
 script = ExtResource("1_f1cv5")
-StateRange = Vector2i(0, 23)
+AtFrame = 0
 SourceAnimation = "5B"
 LimitRange = false
 AnimationRange = Vector2i(0, 0)

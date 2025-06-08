@@ -6,7 +6,7 @@
 
 [sub_resource type="Resource" id="Resource_42reb"]
 script = ExtResource("1_brj3i")
-StateRange = Vector2i(0, 29)
+AtFrame = 0
 SourceAnimation = "Throw_Reaction"
 LimitRange = false
 AnimationRange = Vector2i(0, 0)
