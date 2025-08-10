@@ -149,7 +149,7 @@ namespace SakugaEngine
             HitStop.Start(hitStopDuration);
             if (hitEffect >= 0)
             {
-                GetFighterOwner().SpawnVFX(hitEffect, VFXSpawn);
+                GetFighterOwner().SpawnVFX(hitEffect, VFXSpawn, null);
             }
 
             if (DieOnHit)

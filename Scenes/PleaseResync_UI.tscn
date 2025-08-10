@@ -1,0 +1,319 @@
+[gd_scene load_steps=2 format=3 uid="uid://dxj20xhmbkdbs"]
+
+[ext_resource type="Script" uid="uid://c1l1of15r75hp" path="res://Scripts/PleaseResync/Godot/ConnectionUI.cs" id="1_l2w7k"]
+
+[node name="PleaseResync_UI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_l2w7k")
+
+[node name="Connection_Status" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="Connection_Status"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -37.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Simulation_Info" type="Label" parent="Connection_Status"]
+layout_mode = 0
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -30.0
+offset_right = 72.0
+offset_bottom = -7.0
+text = "9999(-1)"
+
+[node name="Ping_Info" type="Label" parent="Connection_Status"]
+layout_mode = 0
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -110.0
+offset_top = -30.0
+offset_right = -17.0
+offset_bottom = -7.0
+text = "Ping: 999ms"
+
+[node name="Rollback_Info" type="Label" parent="Connection_Status"]
+layout_mode = 0
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -30.0
+offset_right = -152.0
+offset_bottom = -7.0
+text = "RB: 8F"
+
+[node name="Connection_Panel" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button_OnlinePlay" type="Button" parent="Connection_Panel"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 159.0
+offset_right = 131.0
+offset_bottom = 190.0
+text = "Online Game"
+
+[node name="Button_OfflinePlay" type="Button" parent="Connection_Panel"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 195.0
+offset_right = 133.0
+offset_bottom = 226.0
+text = "Offline Game"
+
+[node name="Button_Replay" type="Button" parent="Connection_Panel"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 235.0
+offset_right = 82.0
+offset_bottom = 266.0
+text = "Replay"
+
+[node name="P1_IP" type="LineEdit" parent="Connection_Panel"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 23.0
+offset_right = 192.0
+offset_bottom = 54.0
+placeholder_text = "P1 IP address"
+
+[node name="P1_Port" type="LineEdit" parent="Connection_Panel"]
+layout_mode = 0
+offset_left = 209.0
+offset_top = 23.0
+offset_right = 276.063
+offset_bottom = 54.0
+placeholder_text = "P1 Port"
+
+[node name="P2_IP" type="LineEdit" parent="Connection_Panel"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 58.0
+offset_right = 192.0
+offset_bottom = 89.0
+placeholder_text = "P2 IP address"
+
+[node name="P2_Port" type="LineEdit" parent="Connection_Panel"]
+layout_mode = 0
+offset_left = 209.0
+offset_top = 58.0
+offset_right = 276.063
+offset_bottom = 89.0
+placeholder_text = "P2 Port"
+
+[node name="Player_Index" type="LineEdit" parent="Connection_Panel"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 99.0
+offset_right = 138.0
+offset_bottom = 130.0
+placeholder_text = "Player Index"
+
+[node name="Spectator_Count" type="LineEdit" parent="Connection_Panel"]
+layout_mode = 0
+offset_left = 156.0
+offset_top = 99.0
+offset_right = 272.0
+offset_bottom = 130.0
+placeholder_text = "Spec. Count"
+
+[node name="Spectator_Settings" type="Control" parent="Connection_Panel"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+grow_vertical = 2
+
+[node name="Spectator_Label" type="Label" parent="Connection_Panel/Spectator_Settings"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 278.0
+offset_right = 145.0
+offset_bottom = 301.0
+text = "Spectator mode"
+
+[node name="Spectator_Toggle" type="CheckButton" parent="Connection_Panel/Spectator_Settings"]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 280.0
+offset_right = 194.0
+offset_bottom = 304.0
+
+[node name="S1_IP" type="LineEdit" parent="Connection_Panel/Spectator_Settings"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 315.0
+offset_right = 192.0
+offset_bottom = 346.0
+placeholder_text = "S1 IP address"
+
+[node name="S1_Port" type="LineEdit" parent="Connection_Panel/Spectator_Settings"]
+layout_mode = 0
+offset_left = 209.0
+offset_top = 315.0
+offset_right = 277.563
+offset_bottom = 346.0
+placeholder_text = "S1 Port"
+
+[node name="S2_IP" type="LineEdit" parent="Connection_Panel/Spectator_Settings"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 350.0
+offset_right = 192.0
+offset_bottom = 381.0
+placeholder_text = "S2 IP address"
+
+[node name="S2_Port" type="LineEdit" parent="Connection_Panel/Spectator_Settings"]
+layout_mode = 0
+offset_left = 209.0
+offset_top = 350.0
+offset_right = 277.563
+offset_bottom = 381.0
+placeholder_text = "S2 Port"
+
+[node name="S3_IP" type="LineEdit" parent="Connection_Panel/Spectator_Settings"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 385.0
+offset_right = 192.0
+offset_bottom = 416.0
+placeholder_text = "S3 IP address"
+
+[node name="S3_Port" type="LineEdit" parent="Connection_Panel/Spectator_Settings"]
+layout_mode = 0
+offset_left = 209.0
+offset_top = 385.0
+offset_right = 277.563
+offset_bottom = 416.0
+placeholder_text = "S3 Port"
+
+[node name="S4_IP" type="LineEdit" parent="Connection_Panel/Spectator_Settings"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 420.0
+offset_right = 192.0
+offset_bottom = 451.0
+placeholder_text = "S4 IP address"
+
+[node name="S4_Port" type="LineEdit" parent="Connection_Panel/Spectator_Settings"]
+layout_mode = 0
+offset_left = 209.0
+offset_top = 420.0
+offset_right = 277.563
+offset_bottom = 451.0
+placeholder_text = "S4 Port"
+
+[node name="S5_IP" type="LineEdit" parent="Connection_Panel/Spectator_Settings"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 455.0
+offset_right = 192.0
+offset_bottom = 486.0
+placeholder_text = "S5 IP address"
+
+[node name="S5_Port" type="LineEdit" parent="Connection_Panel/Spectator_Settings"]
+layout_mode = 0
+offset_left = 209.0
+offset_top = 455.0
+offset_right = 277.563
+offset_bottom = 486.0
+placeholder_text = "S5 Port"
+
+[node name="S6_IP" type="LineEdit" parent="Connection_Panel/Spectator_Settings"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 490.0
+offset_right = 192.0
+offset_bottom = 521.0
+placeholder_text = "S6 IP address"
+
+[node name="S6_Port" type="LineEdit" parent="Connection_Panel/Spectator_Settings"]
+layout_mode = 0
+offset_left = 209.0
+offset_top = 490.0
+offset_right = 277.563
+offset_bottom = 521.0
+placeholder_text = "S6 Port"
+
+[node name="S7_IP" type="LineEdit" parent="Connection_Panel/Spectator_Settings"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 525.0
+offset_right = 192.0
+offset_bottom = 556.0
+placeholder_text = "S7 IP address"
+
+[node name="S7_Port" type="LineEdit" parent="Connection_Panel/Spectator_Settings"]
+layout_mode = 0
+offset_left = 209.0
+offset_top = 525.0
+offset_right = 277.563
+offset_bottom = 556.0
+placeholder_text = "S7 Port"
+
+[node name="S8_IP" type="LineEdit" parent="Connection_Panel/Spectator_Settings"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 560.0
+offset_right = 192.0
+offset_bottom = 591.0
+placeholder_text = "S8 IP address"
+
+[node name="S8_Port" type="LineEdit" parent="Connection_Panel/Spectator_Settings"]
+layout_mode = 0
+offset_left = 209.0
+offset_top = 560.0
+offset_right = 277.563
+offset_bottom = 591.0
+placeholder_text = "S8 Port"
+
+[node name="Connected_Panel" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button_Close" type="Button" parent="Connected_Panel"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 7.0
+offset_top = -68.0
+offset_right = 106.0
+offset_bottom = -37.0
+grow_vertical = 0
+text = "Close Game"
+
+[connection signal="pressed" from="Connection_Panel/Button_OnlinePlay" to="." method="OnButton_OnlinePlayPressed"]
+[connection signal="pressed" from="Connection_Panel/Button_OfflinePlay" to="." method="OnButton_OfflinePlayPressed"]
+[connection signal="pressed" from="Connection_Panel/Button_Replay" to="." method="OnButton_ReplayPressed"]
+[connection signal="pressed" from="Connected_Panel/Button_Close" to="." method="OnButton_ClosePressed"]

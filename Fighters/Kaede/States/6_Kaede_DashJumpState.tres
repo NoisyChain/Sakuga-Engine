@@ -108,6 +108,7 @@ statePhysics = [SubResource("1"), SubResource("Resource_vxydu"), SubResource("3"
 hitboxStates = [SubResource("2"), SubResource("5"), SubResource("6")]
 animationEvents = null
 throwPivot = null
+frameData = null
 stateTransitions = Array[Object]([SubResource("Resource_x0rp8")])
 animationSettings = Array[Object]([SubResource("Resource_xpdaa")])
 AIFlags = 12

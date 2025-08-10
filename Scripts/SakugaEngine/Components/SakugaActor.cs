@@ -170,28 +170,29 @@ namespace SakugaEngine
                     {
                         case SpawnObjectAnimationEvent spawnEvent: //Spawn Object (Spawnable, VFX)
                             Vector2I dst = Teleport(spawnEvent.TargetPosition, spawnEvent.Index,
-                                    (int)spawnEvent.xRelativeTo, (int)spawnEvent.yRelativeTo);
+                                    spawnEvent.xRelativeTo, spawnEvent.yRelativeTo);
                             
                             int ind = spawnEvent.IsRandom ? 
                                 Global.RNG.Next(spawnEvent.Index, spawnEvent.Range) : 
                                 spawnEvent.Index;
                             if (spawnEvent.FromExtraVariable >= 0)
-                                ind = Variables.ExtraVariables[spawnEvent.FromExtraVariable].CurrentValue;
-                            switch (spawnEvent.Object)
                             {
-                                case Global.ObjectType.SPAWNABLE:
-                                    FighterReference().SpawnSpawnable(ind, dst);
-                                    break;
-                                case Global.ObjectType.VFX:
-                                    FighterReference().SpawnVFX(ind, dst);
-                                    break;
-                            }
-                            if (spawnEvent.FromExtraVariable >= 0)
+                                ind = Variables.ExtraVariables[spawnEvent.FromExtraVariable].CurrentValue;
                                 Variables.ExtraVariables[spawnEvent.FromExtraVariable].ChangeOnUse();
+                            }
+                            switch (spawnEvent.Object)
+                                {
+                                    case Global.ObjectType.SPAWNABLE:
+                                        FighterReference().SpawnSpawnable(ind, dst);
+                                        break;
+                                    case Global.ObjectType.VFX:
+                                        FighterReference().SpawnVFX(ind, dst, spawnEvent.FollowParent ? Body : null);
+                                        break;
+                                }
                             break;
                         case TeleportAnimationEvent teleportEvent: //Teleport
                             dst = Teleport(teleportEvent.TargetPosition, teleportEvent.Index,
-                                    (int)teleportEvent.xRelativeTo, (int)teleportEvent.yRelativeTo);
+                                    teleportEvent.xRelativeTo, teleportEvent.yRelativeTo);
                             
                             Body.MoveTo(dst);
                             break;
@@ -283,23 +284,23 @@ namespace SakugaEngine
                 Variables.ExtraVariables[soundEvent.FromExtraVariable].ChangeOnUse();
         }
 
-        public Vector2I Teleport(Vector2I Target, int index, int xRelative, int yRelative)
+        public Vector2I Teleport(Vector2I Target, int index, Global.RelativeTo xRelative, Global.RelativeTo yRelative)
         {
             int relativePosX = 0;
             int relativePosY = 0;
             switch (xRelative)
             {
-                case 0: //World
+                case Global.RelativeTo.WORLD:
                     break;
-                case 1: //Self
+                case Global.RelativeTo.SELF:
                     relativePosX = Body.FixedPosition.X;
                     Target.X *= Body.PlayerSide;
                     break;
-                case 2: //Opponent
+                case Global.RelativeTo.OPPONENT:
                     relativePosX = FighterReference().GetOpponent().Body.FixedPosition.X;
                     Target.X *= FighterReference().GetOpponent().Body.PlayerSide;
                     break;
-                case 3: //Fighter (by index)
+                case Global.RelativeTo.FIGHTER: //By index
                     switch (index)
                     {
                         case 0:
@@ -312,7 +313,7 @@ namespace SakugaEngine
                             break;
                     }
                     break;
-                case 4: //Spawnable (by index)
+                case Global.RelativeTo.SPAWNABLE: //By index
                     relativePosX = FighterReference().GetActiveSpawnable(index).Body.FixedPosition.X;
                     Target.X *= FighterReference().GetActiveSpawnable(index).Body.PlayerSide;
                     break;
@@ -320,15 +321,15 @@ namespace SakugaEngine
 
             switch (yRelative)
             {
-                case 0: //World
+                case Global.RelativeTo.WORLD:
                     break;
-                case 1: //Self
+                case Global.RelativeTo.SELF:
                     relativePosY = Body.FixedPosition.Y;
                     break;
-                case 2: //Opponent
+                case Global.RelativeTo.OPPONENT:
                     relativePosY = FighterReference().GetOpponent().Body.FixedPosition.Y;
                     break;
-                case 3: //Fighter (by index)
+                case Global.RelativeTo.FIGHTER: //By index
                     switch (index)
                     {
                         case 0:
@@ -339,7 +340,7 @@ namespace SakugaEngine
                             break;
                     }
                     break;
-                case 4: //Spawnable (by index)
+                case Global.RelativeTo.SPAWNABLE: //By index
                     relativePosY = FighterReference().GetActiveSpawnable(index).Body.FixedPosition.Y;
                     break;
             }

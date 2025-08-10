@@ -9,16 +9,19 @@
 script = ExtResource("1_a0xfh")
 ChangeMode = 1
 ChangeValue = 1
+RandomRange = -1
 
 [sub_resource type="Resource" id="Resource_lbvbg"]
 script = ExtResource("1_a0xfh")
 ChangeMode = 1
 ChangeValue = 1
+RandomRange = -1
 
 [sub_resource type="Resource" id="Resource_5pv8u"]
 script = ExtResource("1_a0xfh")
 ChangeMode = 0
 ChangeValue = 0
+RandomRange = -1
 
 [sub_resource type="Resource" id="Resource_tv5qw"]
 script = ExtResource("2_fkcae")

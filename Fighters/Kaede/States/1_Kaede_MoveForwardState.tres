@@ -1,9 +1,30 @@
-[gd_resource type="Resource" script_class="FighterState" load_steps=8 format=3 uid="uid://poi0qgahi6mb"]
+[gd_resource type="Resource" script_class="FighterState" load_steps=12 format=3 uid="uid://poi0qgahi6mb"]
 
 [ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="1"]
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="1_0wau2"]
 [ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_8ox1y"]
+[ext_resource type="Script" uid="uid://gkg7v04bkm2y" path="res://Scripts/SakugaEngine/Resources/Animation Events/SpawnObjectAnimationEvent.cs" id="1_ts4ls"]
 [ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Resources/StatePhysics.cs" id="2"]
+[ext_resource type="Script" uid="uid://bwm15ys7iwmfc" path="res://Scripts/SakugaEngine/Resources/AnimationEventsList.cs" id="2_g37q8"]
+
+[sub_resource type="Resource" id="Resource_fgf82"]
+script = ExtResource("1_ts4ls")
+Object = 1
+TargetPosition = Vector2i(3000, 5000)
+xRelativeTo = 1
+yRelativeTo = 1
+Index = 3
+IsRandom = false
+Range = 0
+FromExtraVariable = -1
+FollowParent = true
+metadata/_custom_type_script = "uid://gkg7v04bkm2y"
+
+[sub_resource type="Resource" id="Resource_rslvc"]
+script = ExtResource("2_g37q8")
+Frame = 1
+Events = Array[Object]([SubResource("Resource_fgf82")])
+metadata/_custom_type_script = "uid://bwm15ys7iwmfc"
 
 [sub_resource type="Resource" id="Resource_mjtro"]
 script = ExtResource("1_8ox1y")
@@ -47,8 +68,9 @@ HitStunFrameLimit = -1
 stateProperties = null
 statePhysics = [SubResource("1")]
 hitboxStates = Array[Object]([SubResource("Resource_5hurg")])
-animationEvents = null
+animationEvents = Array[Object]([SubResource("Resource_rslvc")])
 throwPivot = null
+frameData = null
 stateTransitions = null
 animationSettings = Array[Object]([SubResource("Resource_mjtro")])
 AIFlags = 10

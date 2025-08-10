@@ -195,19 +195,16 @@ namespace SakugaEngine.Game
 
             for (int i = 0; i < Nodes.Count; i++)
                 Nodes[i].PreTick();
-            
+
             for (int i = 0; i < Nodes.Count; i++)
                 Nodes[i].Tick();
-            
+
             World.Simulate();
 
             if (Fighters[0].Body.FixedPosition.X < Fighters[1].Body.FixedPosition.X)
             { Fighters[0].UpdateSide(true); Fighters[1].UpdateSide(false); }
             else if (Fighters[0].Body.FixedPosition.X > Fighters[1].Body.FixedPosition.X)
             { Fighters[0].UpdateSide(false); Fighters[1].UpdateSide(true); }
-
-            for (int i = 0; i < Nodes.Count; i++)
-                Nodes[i].LateTick();
 
             for (int i = 0; i < Fighters.Length; i++)
             {
@@ -218,6 +215,9 @@ namespace SakugaEngine.Game
                 );
                 Fighters[i].Body.UpdateColliders();
             }
+            
+            for (int i = 0; i < Nodes.Count; i++)
+                Nodes[i].LateTick();
         }
 
         // Generate inputs for your game

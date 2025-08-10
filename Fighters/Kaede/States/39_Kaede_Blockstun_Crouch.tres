@@ -57,6 +57,7 @@ statePhysics = [SubResource("5")]
 hitboxStates = [SubResource("1")]
 animationEvents = null
 throwPivot = null
+frameData = null
 stateTransitions = Array[Object]([SubResource("Resource_3sbjx")])
 animationSettings = Array[Object]([SubResource("Resource_w6ofy")])
 AIFlags = 578

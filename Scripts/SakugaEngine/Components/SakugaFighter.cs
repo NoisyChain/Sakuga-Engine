@@ -2,6 +2,7 @@ using Godot;
 using System.IO;
 using SakugaEngine.Resources;
 using SakugaEngine.Game;
+using SakugaEngine.Collision;
 
 namespace SakugaEngine
 {
@@ -531,10 +532,10 @@ namespace SakugaEngine
             return null;
         }
 
-        public void SpawnVFX(int index, Vector2I pos)
+        public void SpawnVFX(int index, Vector2I pos, PhysicsBody parentBody)
         {
             if (VFX[index].Length == 1)
-                VFX[index][0].Spawn(pos, Body.PlayerSide);
+                VFX[index][0].Spawn(pos, Body.PlayerSide, parentBody);
             else
             {
                 for (int i = 0; i < VFX[index].Length; ++i)
@@ -543,14 +544,14 @@ namespace SakugaEngine
                     {
                         if (i == VFX[index].Length - 1)
                         {
-                            VFX[index][0].Spawn(pos, Body.PlayerSide);
+                            VFX[index][0].Spawn(pos, Body.PlayerSide, parentBody);
                             break;
                         }
                         else continue;
                     }
                     else
                     {
-                        VFX[index][i].Spawn(pos, Body.PlayerSide);
+                        VFX[index][i].Spawn(pos, Body.PlayerSide, parentBody);
                         break;
                     }
                 }
@@ -756,7 +757,7 @@ namespace SakugaEngine
             HitStop.Start(hitStopDuration);
             if (hitEffect >= 0 && VFXSpawn != Vector2I.Zero)
             {
-                SpawnVFX(hitEffect, VFXSpawn);
+                SpawnVFX(hitEffect, VFXSpawn, null);
             }
 
             if (hitConfirmAnimation >= 0)
@@ -832,7 +833,7 @@ namespace SakugaEngine
             HitDamage(box, true);
             if (box.HitEffectIndex >= 0 && contact != Vector2I.Zero)
             {
-                SpawnVFX(box.HitEffectIndex, contact);
+                SpawnVFX(box.HitEffectIndex, contact, null);
             }
             GD.Print("Fighter: Traded!");
         }

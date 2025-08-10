@@ -25,6 +25,7 @@ namespace SakugaEngine
             if (Queued && Stream == sound) return;
 
             Stream = sound;
+            QueueTimer = 0;
             Queued = true;
         }
 

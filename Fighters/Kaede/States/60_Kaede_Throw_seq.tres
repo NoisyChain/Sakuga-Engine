@@ -144,6 +144,7 @@ statePhysics = Array[Object]([SubResource("Resource_mpd63")])
 hitboxStates = Array[Object]([SubResource("Resource_5e2ap")])
 animationEvents = Array[Object]([SubResource("Resource_npwel")])
 throwPivot = Array[Object]([SubResource("Resource_ksa0j"), SubResource("Resource_cwgmc"), SubResource("Resource_id3s2"), SubResource("Resource_anryf"), SubResource("Resource_yley4")])
+frameData = null
 stateTransitions = Array[Object]([SubResource("Resource_ejds0")])
 animationSettings = Array[Object]([SubResource("Resource_bcfn1")])
 AIFlags = 4114
