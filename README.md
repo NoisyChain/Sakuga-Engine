@@ -14,10 +14,10 @@ I was planning to migrate since a while, so let's see how it goes.
 - Stances
 - Projectiles
 - Pseudorandom number generator
+- AI (in progress)
 - An example character
 ### For the future
 - Game modes
-- AI
 - Puppets
 - Cinematics
 - Default Steamworks support
