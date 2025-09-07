@@ -13,14 +13,11 @@ namespace SakugaEngine.Resources
         [Export] public Vector2I LoopFrames;
         [Export] public int TurnState = -1;
         [Export] public int HitStunFrameLimit = -1;
-        //-----Replace all of this for the new loop-----
         [Export] public FrameProperties[] stateProperties;
         [Export] public StatePhysics[] statePhysics;
         [Export] public HitboxState[] hitboxStates;
         [Export] public AnimationEventsList[] animationEvents;
         [Export] public ThrowPivot[] throwPivot;
-        //-----------------------------------------------
-        [Export] public FrameDataSettings[] frameData;
         [Export] public StateTransitionSettings[] stateTransitions;
         [Export] public AnimationSettings[] animationSettings;
         [ExportSubgroup("AI Flags")]

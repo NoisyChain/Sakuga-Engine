@@ -1,7 +1,6 @@
 using Godot;
 using SakugaEngine;
 using SakugaEngine.Resources;
-using System;
 
 public partial class SelectScreen : Node
 {

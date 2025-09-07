@@ -41,10 +41,10 @@ namespace SakugaEngine
         {
             if (Animator.GetCurrentState().statePhysics.Length == 0) return;
 
-            for(int i = 0; i < Animator.GetCurrentState().statePhysics.Length; ++i)
+            for (int i = 0; i < Animator.GetCurrentState().statePhysics.Length; ++i)
             {
-                int nextFrame = i + 1 < Animator.GetCurrentState().statePhysics.Length ? 
-                                        Animator.GetCurrentState().statePhysics[i + 1].Frame : 
+                int nextFrame = i + 1 < Animator.GetCurrentState().statePhysics.Length ?
+                                        Animator.GetCurrentState().statePhysics[i + 1].Frame :
                                         Animator.GetCurrentState().Duration;
                 if (Animator.Frame >= Animator.GetCurrentState().statePhysics[i].Frame && Animator.Frame < nextFrame)
                 {
@@ -70,7 +70,7 @@ namespace SakugaEngine
                                 InputSide = 1;
                             else if (Inputs.IsBeingPressed(Inputs.CurrentHistory, Global.INPUT_DOWN))
                                 InputSide = -1;
-                        
+
                         if (Animator.GetCurrentState().statePhysics[i].UseVerticalInertia)
                             Body.AddVerticalAcceleration(Animator.GetCurrentState().statePhysics[i].VerticalSpeed * InputSide);
                         else

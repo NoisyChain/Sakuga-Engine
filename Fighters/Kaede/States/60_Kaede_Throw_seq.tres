@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="FighterState" load_steps=20 format=3 uid="uid://cywyov8k7d28t"]
+[gd_resource type="Resource" script_class="FighterState" load_steps=22 format=3 uid="uid://cywyov8k7d28t"]
 
 [ext_resource type="Script" uid="uid://by2qprudfmxwx" path="res://Scripts/SakugaEngine/Resources/Animation Events/ApplyDamageAnimationEvent.cs" id="1_1inkj"]
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="1_qo4pe"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="3_xljix"]
 [ext_resource type="Script" uid="uid://bia88bspuvxd" path="res://Scripts/SakugaEngine/Resources/StateTransitionSettings.cs" id="4_xs5ao"]
 [ext_resource type="Script" uid="uid://cjn4b20f8smxi" path="res://Scripts/SakugaEngine/Resources/ThrowPivot.cs" id="5_mmk8x"]
+[ext_resource type="Script" uid="uid://cvhscwjk3c8kw" path="res://Scripts/SakugaEngine/Resources/ThrowDetachmentSettings.cs" id="9_bcfn1"]
 
 [sub_resource type="Resource" id="Resource_ld3k7"]
 script = ExtResource("1_1inkj")
@@ -46,6 +47,7 @@ LateralSpeed = 0
 UseVerticalSpeed = true
 VerticalSpeed = 0
 UseGravity = false
+ResetGravity = false
 Gravity = 0
 UseLateralInertia = false
 UseVerticalInertia = false
@@ -64,70 +66,46 @@ script = ExtResource("5_mmk8x")
 Frame = 1
 PivotPosition = Vector2i(3000, 0)
 ThrowState = -1
-Dettach = false
-DettachInvertSide = false
-DettachHitstunType = 0
-DettachHitKnockback = Vector2i(0, 0)
-DettachHitKnockbackGravity = 0
-DettachHitKnockbackTime = 8
-DettachHitKnockbackInertia = false
-DettachHitstun = 8
 
 [sub_resource type="Resource" id="Resource_cwgmc"]
 script = ExtResource("5_mmk8x")
 Frame = 17
 PivotPosition = Vector2i(5000, 8000)
 ThrowState = -1
-Dettach = false
-DettachInvertSide = false
-DettachHitstunType = 0
-DettachHitKnockback = Vector2i(0, 0)
-DettachHitKnockbackGravity = 0
-DettachHitKnockbackTime = 8
-DettachHitKnockbackInertia = false
-DettachHitstun = 8
 
 [sub_resource type="Resource" id="Resource_id3s2"]
 script = ExtResource("5_mmk8x")
 Frame = 21
 PivotPosition = Vector2i(0, 10000)
 ThrowState = -1
-Dettach = false
-DettachInvertSide = false
-DettachHitstunType = 0
-DettachHitKnockback = Vector2i(0, 0)
-DettachHitKnockbackGravity = 0
-DettachHitKnockbackTime = 8
-DettachHitKnockbackInertia = false
-DettachHitstun = 8
 
 [sub_resource type="Resource" id="Resource_anryf"]
 script = ExtResource("5_mmk8x")
 Frame = 25
 PivotPosition = Vector2i(-8000, 0)
 ThrowState = -1
-Dettach = false
-DettachInvertSide = false
-DettachHitstunType = 0
-DettachHitKnockback = Vector2i(0, 0)
-DettachHitKnockbackGravity = 0
-DettachHitKnockbackTime = 8
-DettachHitKnockbackInertia = false
-DettachHitstun = 8
+
+[sub_resource type="Resource" id="Resource_ko6u0"]
+script = ExtResource("9_bcfn1")
+InvertSide = false
+HitstunType = 2
+HitKnockback = Vector2i(-20000, 60000)
+HitKnockbackGravity = 200000
+HitKnockbackTime = 8
+HitKnockbackInertia = true
+Hitstun = 50
+HorizontalBounce = 0
+HorizontalBounceIntensity = 0
+VerticalBounce = 0
+VerticalBounceIntensity = 0
+metadata/_custom_type_script = "uid://cvhscwjk3c8kw"
 
 [sub_resource type="Resource" id="Resource_yley4"]
 script = ExtResource("5_mmk8x")
 Frame = 29
 PivotPosition = Vector2i(-8000, 0)
 ThrowState = 4
-Dettach = true
-DettachInvertSide = false
-DettachHitstunType = 2
-DettachHitKnockback = Vector2i(-20000, 60000)
-DettachHitKnockbackGravity = 200000
-DettachHitKnockbackTime = 8
-DettachHitKnockbackInertia = true
-DettachHitstun = 50
+ThrowDetach = SubResource("Resource_ko6u0")
 
 [resource]
 script = ExtResource("2_264bk")
@@ -144,7 +122,6 @@ statePhysics = Array[Object]([SubResource("Resource_mpd63")])
 hitboxStates = Array[Object]([SubResource("Resource_5e2ap")])
 animationEvents = Array[Object]([SubResource("Resource_npwel")])
 throwPivot = Array[Object]([SubResource("Resource_ksa0j"), SubResource("Resource_cwgmc"), SubResource("Resource_id3s2"), SubResource("Resource_anryf"), SubResource("Resource_yley4")])
-frameData = null
 stateTransitions = Array[Object]([SubResource("Resource_ejds0")])
 animationSettings = Array[Object]([SubResource("Resource_bcfn1")])
 AIFlags = 4114

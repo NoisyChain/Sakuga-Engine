@@ -8,7 +8,8 @@ namespace SakugaEngine.Resources
         [Export] public bool SetValue;
         [Export] public int Factor;
         [Export] public int Value;
-        [Export] public int RandomRange = -1;
+        [Export] public bool IsRandom;
+        [Export] public int Range;
         [Export] public Global.ExtraVariableMode Mode;
     }
 }

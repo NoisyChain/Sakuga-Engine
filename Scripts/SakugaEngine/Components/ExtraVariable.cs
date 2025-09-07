@@ -132,8 +132,8 @@ namespace SakugaEngine
         {
             if (behavior.SetValue)
             {
-                if (behavior.RandomRange >= 0)
-                    CurrentValue = Global.RNG.Next(behavior.Value, behavior.RandomRange);
+                if (behavior.IsRandom)
+                    CurrentValue = Global.RNG.Next(behavior.Value, behavior.Range);
                 else
                     CurrentValue = behavior.Value;
             }

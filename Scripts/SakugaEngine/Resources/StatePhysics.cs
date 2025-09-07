@@ -11,6 +11,7 @@ namespace SakugaEngine.Resources
         [Export] public bool UseVerticalSpeed;
         [Export] public int VerticalSpeed = 0;
         [Export] public bool UseGravity;
+        [Export] public bool ResetGravity;
         [Export] public int Gravity = 0;
         [Export] public bool UseLateralInertia;
         [Export] public bool UseVerticalInertia;

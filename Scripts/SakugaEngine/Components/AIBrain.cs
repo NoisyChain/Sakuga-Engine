@@ -11,7 +11,9 @@ namespace SakugaEngine
         [Export] public AIAction[] Actions;
         [Export] public int HighBlockAction;
         [Export] public int LowBlockAction;
-        [Export] public int TechAction;
+        [Export] public int ForwardRecoveryAction;
+        [Export] public int BackRecoveryAction;
+        [Export] public int ThrowEscapeAction;
 
         [ExportCategory("Behaviors")]
         [Export] private AIBehavior BehaviorBeginner;
@@ -34,6 +36,7 @@ namespace SakugaEngine
         public bool canAdvance;
         public bool inputFinished = true;
         public bool blocking;
+        public bool teching;
         public Global.HitType proximityHit;
 
         public void Initialize(SakugaFighter owner)
@@ -89,6 +92,7 @@ namespace SakugaEngine
             }
             currentCommand = 0;
             currentInputIndex = 0;
+            teching = false;
             canAdvance = false;
             inputFinished = true;
         }
@@ -99,17 +103,60 @@ namespace SakugaEngine
             if (_owner.LifeEnded()) return;
             if (_owner.GetOpponent().LifeEnded()) return;
 
-            //If a command is still running, let it do its thing
-            if ((currentCommand > 0 || currentInputIndex > 0 && !canAdvance) && _owner.Stance.CurrentMove < 0)// This is a safety check, in case a command can't continue for any reason, everything resets
-            { Reset(); }
-            bool MoveEnded = (currentCommand == 0 || currentCommand >= currentCommandList.Length) && currentInputIndex == 0;
-            //GD.Print($"{currentCommand == 0 || currentCommand >= currentCommandList.Length}, {currentInputIndex == 0}");
-            if (!MoveEnded) { tick = 0; return; }
+            //if ((currentCommand > 0 || currentInputIndex > 0 && !canAdvance) && _owner.Stance.CurrentMove < 0)
+            //{ Reset(); }
+            //bool MoveEnded = (currentCommand == 0 || currentCommand >= currentCommandList.Length) && currentInputIndex == 0;
+            //if (!MoveEnded) { tick = 0; return; }
 
             //Reset the values if the character is busy
             if (_owner.Animator.StateType() > 1)
             {
-                if (_owner.Animator.StateType() == 0 || _owner.Animator.StateType() > 2) Reset();
+                if (_owner.Animator.StateType() == 4)
+                {
+                    if (!teching)
+                    {
+                        if (_owner.IsGrabbed() && _owner.HitStop.IsRunning())
+                        {
+                            int rnd = Global.RNG.Next(0, 10);
+                            if (rnd < currentBehavior.TechingRate)
+                                currentCommandList = new int[] { ThrowEscapeAction };
+
+                            teching = true;
+                        }
+                        else if (_owner.HitStun.IsRunning())
+                        {
+                            int rnd = Global.RNG.Next(0, 10);
+                            if (rnd < currentBehavior.TechingRate)
+                            {
+                                rnd = Global.RNG.Next(0, 10);
+                                currentCommandList = new int[1];
+                                switch (mode)
+                                {
+                                    default:
+                                        break;
+                                    case Global.BotMode.AGGRESSIVE:
+                                        if (rnd < currentBehavior.TechingRate)
+                                            currentCommandList[0] = ForwardRecoveryAction;
+                                        else
+                                            currentCommandList[0] = BackRecoveryAction;
+                                        break;
+                                    case Global.BotMode.DEFENSIVE:
+                                        if (rnd < currentBehavior.TechingRate)
+                                            currentCommandList[0] = BackRecoveryAction;
+                                        else
+                                            currentCommandList[0] = ForwardRecoveryAction;
+                                        break;
+                                }
+                                
+                                
+                            }
+                            teching = true;
+                        }
+                        
+                        return;
+                    }
+                }
+                if (_owner.Animator.StateType() > 2) Reset();
 
                 tick = 0;
                 return;
@@ -129,9 +176,19 @@ namespace SakugaEngine
                     blocking = true;
                 }
                 tick = 0;
+                tickLimit = 1;
                 inputTick = 0;
+                inputTickLimit = 1;
                 return;
             }
+
+            //If a command is still running, let it do its thing
+            if ((currentCommand >= currentCommandList.Length || (currentCommand >= 0 && inputFinished && !canAdvance
+                && !Actions[currentCommandList[currentCommand]].AutoAdvance)) && _owner.Stance.CurrentMove < 0)
+            { Reset(); }
+            bool MoveEnded = (currentCommand == 0 || currentCommand >= currentCommandList.Length) && currentInputIndex == 0;
+            //GD.Print($"{currentCommand == 0 || currentCommand >= currentCommandList.Length}, {currentInputIndex == 0}");
+            if (!MoveEnded) { tick = 0; return; }
 
             //Advance decision tick
             //Select a different decision range depending on the character's availability

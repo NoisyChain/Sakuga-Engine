@@ -370,7 +370,7 @@ namespace SakugaEngine
                     int hitReaction = currentPivot.ThrowState;
                     if (hitReaction >=  0)
                         Animator.PlayState(Stance.GetCurrentStance().HitReactions[hitReaction], true);
-                    if (!currentPivot.Dettach)
+                    if (currentPivot.ThrowDetach == null)
                     {
                         Body.FixedVelocity = Vector2I.Zero;
                         Body.FixedPosition.X = GetOpponent().Body.FixedPosition.X + currentPivot.PivotPosition.X * side;
@@ -378,15 +378,21 @@ namespace SakugaEngine
                     }
                     else
                     {
-                        Body.PlayerSide = currentPivot.DettachInvertSide ? -side : side;
-                        HitstunType = (byte)currentPivot.DettachHitstunType;
-                        HitStun.Start((uint)currentPivot.DettachHitstun);
+                        Body.PlayerSide = currentPivot.ThrowDetach.InvertSide ? -side : side;
+                        HitstunType = (byte)currentPivot.ThrowDetach.HitstunType;
+                        HitStun.Start((uint)currentPivot.ThrowDetach.Hitstun);
+                        HBounceIntensity = currentPivot.ThrowDetach.HorizontalBounceIntensity;
+                        VBounceIntensity = currentPivot.ThrowDetach.VerticalBounceIntensity;
+                        if (currentPivot.ThrowDetach.HorizontalBounce > 0)
+                            HorizontalBounce.Start((uint)currentPivot.ThrowDetach.HorizontalBounce);
+                        if (currentPivot.ThrowDetach.VerticalBounce > 0)
+                            VerticalBounce.Start((uint)currentPivot.ThrowDetach.VerticalBounce);
                         PushCharacter(
-                            currentPivot.DettachHitKnockbackTime,
-                            currentPivot.DettachHitKnockback.X * side,
-                            currentPivot.DettachHitKnockback.Y,
-                            currentPivot.DettachHitKnockbackGravity,
-                            currentPivot.DettachHitKnockbackInertia
+                            currentPivot.ThrowDetach.HitKnockbackTime,
+                            currentPivot.ThrowDetach.HitKnockback.X * side,
+                            currentPivot.ThrowDetach.HitKnockback.Y,
+                            currentPivot.ThrowDetach.HitKnockbackGravity,
+                            currentPivot.ThrowDetach.HitKnockbackInertia
                         );
                     }
                 }
@@ -488,6 +494,7 @@ namespace SakugaEngine
 
         public void SpawnSpawnable(int index, Vector2I pos)
         {
+            GD.PrintErr(index);
             if (Spawnables[index].Length == 1)
                 Spawnables[index][0].Spawn(pos);
             else
@@ -772,6 +779,7 @@ namespace SakugaEngine
         public bool IsCrouching() => Body.IsOnGround && !Uncrouched && Inputs.IsBeingPressed(Inputs.CurrentHistory, Global.INPUT_DOWN);
         public bool IsBlocking() => IsBlockableState() && Inputs.IsBeingPressed(Inputs.CurrentHistory, Body.IsLeftSide ? Global.INPUT_LEFT : Global.INPUT_RIGHT);
         public bool IsKO() => Variables.CurrentHealth <= 0;
+        public bool IsGrabbed() => HitstunType == (int)Global.HitstunType.STAGGER + 1;
         public bool IsGroundHit() => Body.IsOnGround && !Animator.GetCurrentState().OffTheGround;
         public bool IsStunLocked() => HitStun.TimeLeft >= Animator.GetCurrentState().Duration - Animator.GetCurrentState().HitStunFrameLimit + 1 && Animator.Frame >= Animator.GetCurrentState().HitStunFrameLimit;
         public override bool LifeEnded() { return Variables.CurrentHealth <= 0; }
@@ -847,9 +855,8 @@ namespace SakugaEngine
                                     (box.GroundThrow && box.AirThrow));
             if (!isThrowAllowed) return;
 
-            uint finalHitstop = (uint)box.ThrowHitStopDuration;
-            if (GetOpponent().Animator.StateType() == 4) finalHitstop += Global.ThrowHitStunAdditional;
-            
+            uint finalHitstop = (uint)box.ThrowHitstop;
+            if (GetOpponent().Animator.StateType() == 4) finalHitstop = (uint)box.ThrowHitstopAfterHit;
             
             GetOpponent().ThrowHit(box, finalHitstop);
             HitConfirm(0, finalHitstop, box.HitConfirmState, -1, Vector2I.Zero);

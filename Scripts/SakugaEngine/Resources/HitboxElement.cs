@@ -72,7 +72,8 @@ namespace SakugaEngine.Resources
         [ExportGroup("Throw Hit Settings")]
         [Export] public bool GroundThrow;
         [Export] public bool AirThrow;
-        [Export] public int ThrowHitStopDuration = 8;
+        [Export] public int ThrowHitstop = 16;
+        [Export] public int ThrowHitstopAfterHit = 30;
         [Export] public int ThrowHitReaction = -1;
 
         //Pushback settings

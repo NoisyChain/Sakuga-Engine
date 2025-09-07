@@ -34,7 +34,6 @@ statePhysics = null
 hitboxStates = [SubResource("2")]
 animationEvents = null
 throwPivot = null
-frameData = null
 stateTransitions = null
 animationSettings = Array[Object]([SubResource("Resource_dkalb")])
 AIFlags = 161
