@@ -26,3 +26,5 @@ I was planning to migrate since a while, so let's see how it goes.
 - Made completely in C#
 - Currently using Godot 4.4.1 .NET
 - It's strongly advised to know the basics of Godot to use it properly
+
+[Join the Discord server!](https://discord.gg/aUXkyJVG)
