@@ -7,13 +7,6 @@ namespace SakugaEngine
     [GlobalClass]
     public partial class FighterVariables : SakugaVariables
     {
-        [Export] public ushort BaseAttack = 100;
-        [Export] public ushort BaseDefense = 100;
-        [Export] public ushort BaseMinDamageScaling = 35;
-        [Export] public ushort BaseMaxDamageScaling = 100;
-        [Export] public ushort CornerMinDamageScaling = 45;
-        [Export] public ushort CornerMaxDamageScaling = 120;
-        
         public ushort CurrentAttack;
         public ushort CurrentDefense;
         public ushort CurrentDamageScaling;
@@ -29,11 +22,11 @@ namespace SakugaEngine
             base.Initialize();
             LostHealth = CurrentHealth;
 
-            CurrentAttack = BaseAttack;
-            CurrentDefense = BaseDefense;
+            CurrentAttack = owner.Data.BaseAttack;
+            CurrentDefense = owner.Data.BaseDefense;
 
-            CurrentBaseDamageScaling = BaseMaxDamageScaling;
-            CurrentCornerDamageScaling = CornerMaxDamageScaling;
+            CurrentBaseDamageScaling = Global.BaseMaxDamageScaling;
+            CurrentCornerDamageScaling = Global.CornerMaxDamageScaling;
             CurrentDamageScaling = CurrentBaseDamageScaling;
 
             CurrentDamageProration = 100;
@@ -49,19 +42,19 @@ namespace SakugaEngine
 
         public void RemoveDamageScaling(ushort value)
         {
-            if (CurrentBaseDamageScaling - value < BaseMinDamageScaling)
-                CurrentBaseDamageScaling = BaseMinDamageScaling;
+            if (CurrentBaseDamageScaling - value < Global.BaseMinDamageScaling)
+                CurrentBaseDamageScaling = Global.BaseMinDamageScaling;
             else CurrentBaseDamageScaling -= value;
 
-            if (CurrentCornerDamageScaling - value < CornerMinDamageScaling)
-                CurrentCornerDamageScaling = CornerMinDamageScaling;
+            if (CurrentCornerDamageScaling - value < Global.CornerMinDamageScaling)
+                CurrentCornerDamageScaling = Global.CornerMinDamageScaling;
             else CurrentCornerDamageScaling -= value;
         }
 
         public void ResetDamageStatus()
         {
-            CurrentBaseDamageScaling = BaseMaxDamageScaling;
-            CurrentCornerDamageScaling = CornerMaxDamageScaling;
+            CurrentBaseDamageScaling = Global.BaseMaxDamageScaling;
+            CurrentCornerDamageScaling = Global.CornerMaxDamageScaling;
             CurrentDamageProration = 100;
             CurrentGravityProration = 100;
             UpdateLostHealth();
@@ -70,7 +63,7 @@ namespace SakugaEngine
         public void UpdateLostHealth()
         {
             if (LostHealth > CurrentHealth)
-                LostHealth -= MaxHealth / 200;
+                LostHealth -= owner.Data.MaxHealth / 200;
             else if (LostHealth < CurrentHealth)
                 LostHealth = CurrentHealth;
         }

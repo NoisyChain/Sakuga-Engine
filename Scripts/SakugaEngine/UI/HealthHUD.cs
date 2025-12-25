@@ -28,19 +28,19 @@ namespace SakugaEngine.UI
 
         public void Setup(SakugaFighter[] fighters)
         {
-            P1Health.MaxValue = fighters[0].Variables.MaxHealth;
-            P2Health.MaxValue = fighters[1].Variables.MaxHealth;
+            P1Health.MaxValue = fighters[0].Data.MaxHealth;
+            P2Health.MaxValue = fighters[1].Data.MaxHealth;
             
-            if (fighters[0].Profile.Portrait != null)
+            if (fighters[0].Data.Profile.Portrait != null)
             {
-                P1Portrait.Texture = fighters[0].Profile.Portrait;
-                P1Name.Text = fighters[0].Profile.ShortName;
+                P1Portrait.Texture = fighters[0].Data.Profile.Portrait;
+                P1Name.Text = fighters[0].Data.Profile.ShortName;
             }
 
-            if (fighters[1].Profile.Portrait != null)
+            if (fighters[1].Data.Profile.Portrait != null)
             {
-                P2Portrait.Texture = fighters[1].Profile.Portrait;
-                P2Name.Text = fighters[1].Profile.ShortName;
+                P2Portrait.Texture = fighters[1].Data.Profile.Portrait;
+                P2Name.Text = fighters[1].Data.Profile.ShortName;
             }
 
             P1Rounds.Setup();

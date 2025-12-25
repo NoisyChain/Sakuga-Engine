@@ -7,9 +7,8 @@ namespace SakugaEngine
     [GlobalClass]
     public partial class StanceManager : Node
     {
-        private SakugaFighter owner;
+        [Export] private SakugaFighter owner;
         [Export] public int DefaultStance = 0;
-        [Export] public FighterStance[] Stances;
 
         public int CurrentStance;
         public int BufferedMove = -1;
@@ -18,9 +17,8 @@ namespace SakugaEngine
 
         private ushort buttonChargeState;
 
-        public void Initialize(SakugaFighter owner)
+        public void Initialize()
         {
-            this.owner = owner;
             CurrentStance = DefaultStance;
         }
 
@@ -201,12 +199,33 @@ namespace SakugaEngine
         {
             if (CurrentMove < 0) return;
 
-            if ((int)GetCurrentMove().MoveEnd == 0 && owner.Animator.CurrentState != GetCurrentMove().MoveState ||
-                (int)GetCurrentMove().MoveEnd == 1 && owner.Inputs.CheckInputEnd(GetCurrentMove().Inputs) ||
-                (int)GetCurrentMove().MoveEnd == 2 && owner.Animator.StateType() != (int)owner.Animator.States[GetCurrentMove().MoveState].Type)
+            switch (GetCurrentMove().MoveEnd)
+            {
+                case Global.MoveEndCondition.STATE_END:
+                    if (owner.Animator.CurrentState != GetCurrentMove().MoveState)
+                        ResetStance();
+                    break;
+                case Global.MoveEndCondition.RELEASE_BUTTON:
+                    if (owner.Inputs.CheckInputEnd(GetCurrentMove().Inputs))
+                        ResetStance();
+                    break;
+                case Global.MoveEndCondition.STATE_TYPE_CHANGE:
+                    if (owner.Animator.StateType() != (int)owner.Data.States[GetCurrentMove().MoveState].Type)
+                        ResetStance();
+                    break;
+                case Global.MoveEndCondition.ON_FALL:
+                    if (owner.Body.IsFalling)
+                        ResetStance();
+                    break;
+            }
+
+            /*if (GetCurrentMove().MoveEnd == Global.MoveEndCondition.STATE_END && owner.Animator.CurrentState != GetCurrentMove().MoveState ||
+                GetCurrentMove().MoveEnd == Global.MoveEndCondition.RELEASE_BUTTON && owner.Inputs.CheckInputEnd(GetCurrentMove().Inputs) ||
+                GetCurrentMove().MoveEnd == Global.MoveEndCondition.STATE_TYPE_CHANGE && owner.Animator.StateType() != (int)owner.Data.States[GetCurrentMove().MoveState].Type ||
+                GetCurrentMove().MoveEnd == Global.MoveEndCondition.ON_FALL && owner.Body.IsFalling)
             {
                 ResetStance();
-            }
+            }*/
         }
 
         public void ResetStance()
@@ -286,7 +305,7 @@ namespace SakugaEngine
             return false;
         }
 
-        public FighterStance GetCurrentStance() => Stances[CurrentStance];
+        public FighterStance GetCurrentStance() => owner.Data.Stances[CurrentStance];
         public MoveSettings GetMove(int index) => GetCurrentStance().Moves[index];
         public MoveSettings GetCurrentMove() => GetMove(CurrentMove);
         public int GetMoveListLength() => GetCurrentStance().Moves.Length;

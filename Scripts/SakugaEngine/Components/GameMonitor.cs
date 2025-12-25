@@ -45,8 +45,8 @@ namespace SakugaEngine
             //Do not compare the current healths directly to not mess up with characters
             //with different base health values.
             //Convert them into percentages instead... but a bit bigger for extra precision
-            int p1HealthPercentage = _fighters[0].Variables.CurrentHealth * 1000 / _fighters[0].Variables.MaxHealth;
-            int p2HealthPercentage = _fighters[1].Variables.CurrentHealth * 1000 / _fighters[1].Variables.MaxHealth;
+            int p1HealthPercentage = _fighters[0].Variables.CurrentHealth * 1000 / _fighters[0].Data.MaxHealth;
+            int p2HealthPercentage = _fighters[1].Variables.CurrentHealth * 1000 / _fighters[1].Data.MaxHealth;
             
             if (_fighters[1].IsKO() && _fighters[biggerHealth].IsKO())
                 biggerHealth = -1; //Double K.O.

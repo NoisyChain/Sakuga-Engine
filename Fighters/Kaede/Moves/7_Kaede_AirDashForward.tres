@@ -9,30 +9,23 @@
 script = ExtResource("1_brm3y")
 ChangeMode = 1
 ChangeValue = 1
-RandomRange = -1
 
 [sub_resource type="Resource" id="Resource_5yot0"]
 script = ExtResource("1_brm3y")
 ChangeMode = 1
 ChangeValue = 1
-RandomRange = -1
 
 [sub_resource type="Resource" id="Resource_4o5yg"]
 script = ExtResource("1_brm3y")
-ChangeMode = 0
-ChangeValue = 0
-RandomRange = -1
 
 [sub_resource type="Resource" id="Resource_xhdh4"]
 script = ExtResource("2_gvude")
 Value = 1
-Mode = 0
 CompareMode = 3
 
 [sub_resource type="Resource" id="Resource_q3i0w"]
 script = ExtResource("2_gvude")
 Value = 1
-Mode = 0
 CompareMode = 3
 
 [resource]
@@ -40,30 +33,10 @@ script = ExtResource("2_t35im")
 MoveName = "Forward Air Dash"
 MoveState = 15
 Inputs = ExtResource("1_82tvm")
-SideChange = 0
-SuperGaugeRequired = 0
 BuildSuperGauge = 5
-HealthThreshold = Vector2i(0, 99999)
-SpendHealth = 0
 DistanceArea = Vector2i(0, 99999)
-IsSequenceFromStates = PackedInt32Array()
-IgnoreStates = PackedInt32Array()
-CancelsTo = PackedInt32Array()
-KaraCancelsTo = PackedInt32Array()
 buttonChargeSequence = null
 ExtraVariablesRequirement = Array[Object]([SubResource("Resource_xhdh4"), SubResource("Resource_q3i0w")])
 ExtraVariablesChange = Array[Object]([SubResource("Resource_q3ycg"), SubResource("Resource_5yot0"), SubResource("Resource_4o5yg")])
-MoveEnd = 0
-MoveEndState = -1
-ChangeStance = -1
-FrameLimit = -1
-SuperFlash = 0
 Priority = 4
-CanBeOverrided = false
-CanOverrideToSelf = false
-IgnoreSamePriority = true
-InterruptCornerPushback = false
-PriorityBuffer = false
-WaitForNullStates = true
-UseOnGround = false
 UseOnAir = true

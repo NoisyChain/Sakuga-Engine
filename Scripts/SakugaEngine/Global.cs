@@ -17,6 +17,10 @@ namespace SakugaEngine
         public const int MaxPlayersDistance = 70000;
         public const int InputHistorySize = 16;
         public const int KaraCancelWindow = 3;
+        public const int DefaultGravity = 200000;
+        public const int DefaultAcceleration = 200000;
+        public const int DefaultDeceleration = 150000;
+        public const int DefaultFriction = 300000;
         public const int GravityDecay = 2500;
         public const int HitstunDecayMinCombo = 8;
         public const int MinHitstun = 8;
@@ -25,6 +29,10 @@ namespace SakugaEngine
         public const int RecoveryHorizontalSpeed = 45000;
         public const int ThrowEscapePushForce = 45000;
         public const int GuardCrushHitstun = 40;
+        public const ushort BaseMinDamageScaling = 35;
+        public const ushort BaseMaxDamageScaling = 100;
+        public const ushort CornerMinDamageScaling = 45;
+        public const ushort CornerMaxDamageScaling = 120;
 
         //Global inputs
         public const int INPUT_UP = 1 << 0;
@@ -46,8 +54,9 @@ namespace SakugaEngine
         //Global enumerators
         public enum AnimationStage { STARTUP, ACTIVE, RECOVERY }
         public enum ButtonMode { PRESS, HOLD, RELEASE, WAS_PRESSED, NOT_PRESSED }
-        public enum MoveEndCondition { STATE_END, RELEASE_BUTTON, STATE_TYPE_CHANGE }
+        public enum MoveEndCondition { STATE_END, RELEASE_BUTTON, STATE_TYPE_CHANGE, ON_FALL }
         public enum SideChangeMode { NONE, CHANGE_SIDE, INTERRUPT }
+        public enum MasterStance { GROUND, CROUCH, AIR }
         public enum StateType { NULL, MOVEMENT, COMBAT, BLOCKING, HIT_REACTION, LOCKED }
         public enum HitboxType { HURTBOX, HITBOX, PROXIMITY_BLOCK, PROJECTILE, THROW, COUNTER, DEFLECT }
         public enum HitType { HIGH, MEDIUM, LOW, UNBLOCKABLE }

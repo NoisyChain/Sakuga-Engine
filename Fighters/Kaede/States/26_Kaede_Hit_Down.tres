@@ -8,58 +8,34 @@
 
 [sub_resource type="Resource" id="Resource_57vhf"]
 script = ExtResource("1_06qtc")
-AtFrame = 0
 SourceAnimation = "Hit_Down"
-LimitRange = false
-AnimationRange = Vector2i(0, 0)
-Offset = Vector3(0, 0, 0)
 metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
 
 [sub_resource type="Resource" id="Resource_f34wn"]
 script = ExtResource("1_711nk")
-animationStage = 0
-Frame = 0
 HitboxIndex = 29
 
 [sub_resource type="Resource" id="Resource_gn5fu"]
 script = ExtResource("3_h8irb")
-Frame = 0
 UseLateralSpeed = true
-LateralSpeed = 0
 UseVerticalSpeed = true
-VerticalSpeed = 0
 UseGravity = true
-ResetGravity = false
-Gravity = 0
-UseLateralInertia = false
-UseVerticalInertia = false
-UseHorizontalInput = false
-UseVerticalInput = false
 
 [sub_resource type="Resource" id="Resource_rgluj"]
 script = ExtResource("2_7vssx")
 StateIndex = 27
 Condition = 1
-AtFrame = -1
-DistanceArea = Vector2i(0, 999999)
 
 [sub_resource type="Resource" id="Resource_sr4mv"]
 script = ExtResource("2_7vssx")
 StateIndex = 32
 Condition = 32
-AtFrame = -1
-DistanceArea = Vector2i(0, 999999)
 
 [resource]
 script = ExtResource("1")
 StateName = "Hit_Down"
 Type = 4
-OffTheGround = false
 Duration = 16
-Loop = false
-LoopFrames = Vector2i(0, 0)
-TurnState = -1
-HitStunFrameLimit = -1
 stateProperties = null
 statePhysics = Array[Object]([SubResource("Resource_gn5fu")])
 hitboxStates = Array[Object]([SubResource("Resource_f34wn")])

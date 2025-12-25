@@ -7,44 +7,22 @@
 
 [sub_resource type="Resource" id="Resource_5rp4v"]
 script = ExtResource("1_xjnw5")
-AtFrame = 0
 SourceAnimation = "Taunt"
-LimitRange = false
-AnimationRange = Vector2i(0, 0)
-Offset = Vector3(0, 0, 0)
 metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
 
 [sub_resource type="Resource" id="Resource_5e2ap"]
 script = ExtResource("1_236vv")
-animationStage = 0
-Frame = 0
-HitboxIndex = 0
 
 [sub_resource type="Resource" id="Resource_mpd63"]
 script = ExtResource("3_qb2lk")
-Frame = 0
 UseLateralSpeed = true
-LateralSpeed = 0
 UseVerticalSpeed = true
-VerticalSpeed = 0
-UseGravity = false
-ResetGravity = false
-Gravity = 0
-UseLateralInertia = false
-UseVerticalInertia = false
-UseHorizontalInput = false
-UseVerticalInput = false
 
 [resource]
 script = ExtResource("1_0v5me")
 StateName = "Taunt"
 Type = 2
-OffTheGround = false
 Duration = 92
-Loop = false
-LoopFrames = Vector2i(0, 0)
-TurnState = -1
-HitStunFrameLimit = -1
 stateProperties = null
 statePhysics = Array[Object]([SubResource("Resource_mpd63")])
 hitboxStates = Array[Object]([SubResource("Resource_5e2ap")])

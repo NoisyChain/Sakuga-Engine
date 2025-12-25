@@ -9,91 +9,51 @@
 
 [sub_resource type="Resource" id="Resource_abic5"]
 script = ExtResource("1_5aaa0")
-AtFrame = 0
 SourceAnimation = "Jump_Neutral"
-LimitRange = false
-AnimationRange = Vector2i(0, 0)
-Offset = Vector3(0, 0, 0)
 metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
 
 [sub_resource type="Resource" id="Resource_6brnl"]
 script = ExtResource("1_2hcvm")
-animationStage = 0
-Frame = 0
-HitboxIndex = 0
 
 [sub_resource type="Resource" id="1"]
 script = ExtResource("2")
-Frame = 0
 UseLateralSpeed = true
-LateralSpeed = 0
 UseVerticalSpeed = true
-VerticalSpeed = 0
 UseGravity = true
-ResetGravity = false
-Gravity = 0
-UseLateralInertia = false
-UseVerticalInertia = false
-UseHorizontalInput = false
-UseVerticalInput = false
 
 [sub_resource type="Resource" id="4"]
 script = ExtResource("2")
 Frame = 4
 UseLateralSpeed = true
-LateralSpeed = 0
 UseVerticalSpeed = true
 VerticalSpeed = 80000
-UseGravity = false
-ResetGravity = false
-Gravity = 0
-UseLateralInertia = false
-UseVerticalInertia = false
-UseHorizontalInput = false
-UseVerticalInput = false
 
 [sub_resource type="Resource" id="3"]
 script = ExtResource("2")
 Frame = 5
-UseLateralSpeed = false
-LateralSpeed = 0
-UseVerticalSpeed = false
-VerticalSpeed = 0
 UseGravity = true
-ResetGravity = false
 Gravity = 200000
-UseLateralInertia = false
-UseVerticalInertia = false
-UseHorizontalInput = false
-UseVerticalInput = false
 
 [sub_resource type="Resource" id="Resource_l5iry"]
 script = ExtResource("4_tiw0u")
-Frame = 0
 Properties = 18
 
 [sub_resource type="Resource" id="Resource_hr20f"]
 script = ExtResource("4_tiw0u")
 Frame = 4
-Properties = 0
 
 [sub_resource type="Resource" id="Resource_c502o"]
 script = ExtResource("3_rnvg4")
 StateIndex = 7
 Condition = 1
-AtFrame = -1
 DistanceArea = Vector2i(0, 99999)
 
 [resource]
 script = ExtResource("1")
 StateName = "Jump_Neutral"
+BaseStance = 2
 Type = 1
-OffTheGround = false
 Duration = 25
-Loop = false
-LoopFrames = Vector2i(0, 0)
-TurnState = -1
-HitStunFrameLimit = -1
 stateProperties = Array[Object]([SubResource("Resource_l5iry"), SubResource("Resource_hr20f")])
 statePhysics = [SubResource("1"), SubResource("4"), SubResource("3")]
 hitboxStates = Array[Object]([SubResource("Resource_6brnl")])

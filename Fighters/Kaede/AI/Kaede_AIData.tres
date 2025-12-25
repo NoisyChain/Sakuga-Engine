@@ -1,0 +1,355 @@
+[gd_resource type="Resource" script_class="AIData" load_steps=70 format=3 uid="uid://cjarssd2mjnuw"]
+
+[ext_resource type="Resource" uid="uid://ctkuakk7dip6y" path="res://Fighters/Kaede/AI/Kaede_AI_Medium.tres" id="1_5yprj"]
+[ext_resource type="Script" uid="uid://qkcdnntram58" path="res://Scripts/SakugaEngine/Resources/AI/AIInput.cs" id="1_81itq"]
+[ext_resource type="Script" uid="uid://dhvotekjrqw07" path="res://Scripts/SakugaEngine/Resources/AI/AIData.cs" id="1_uq4w1"]
+[ext_resource type="Script" uid="uid://be0e6utc5xgk8" path="res://Scripts/SakugaEngine/Resources/AI/AIAction.cs" id="2_aqndq"]
+
+[sub_resource type="Resource" id="Resource_qd5c5"]
+script = ExtResource("1_81itq")
+Direction = 4
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_71e7y"]
+script = ExtResource("2_aqndq")
+InputName = "Move Forward"
+Inputs = Array[Object]([SubResource("Resource_qd5c5")])
+metadata/_custom_type_script = "uid://be0e6utc5xgk8"
+
+[sub_resource type="Resource" id="Resource_c10q0"]
+script = ExtResource("1_81itq")
+Direction = 2
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_4a4ew"]
+script = ExtResource("2_aqndq")
+InputName = "Move Backwards"
+Inputs = Array[Object]([SubResource("Resource_c10q0")])
+metadata/_custom_type_script = "uid://be0e6utc5xgk8"
+
+[sub_resource type="Resource" id="Resource_gkcsx"]
+script = ExtResource("1_81itq")
+Direction = 4
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_1wko7"]
+script = ExtResource("1_81itq")
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_lwtap"]
+script = ExtResource("1_81itq")
+Direction = 4
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_60gui"]
+script = ExtResource("2_aqndq")
+InputName = "Dash Forward"
+Inputs = Array[Object]([SubResource("Resource_gkcsx"), SubResource("Resource_1wko7"), SubResource("Resource_lwtap")])
+metadata/_custom_type_script = "uid://be0e6utc5xgk8"
+
+[sub_resource type="Resource" id="Resource_nhsbo"]
+script = ExtResource("1_81itq")
+Direction = 2
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_vs1ro"]
+script = ExtResource("1_81itq")
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_fqy5l"]
+script = ExtResource("1_81itq")
+Direction = 2
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_igiue"]
+script = ExtResource("1_81itq")
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_jipdd"]
+script = ExtResource("2_aqndq")
+InputName = "Dash Backwards"
+Inputs = Array[Object]([SubResource("Resource_nhsbo"), SubResource("Resource_vs1ro"), SubResource("Resource_fqy5l"), SubResource("Resource_igiue")])
+metadata/_custom_type_script = "uid://be0e6utc5xgk8"
+
+[sub_resource type="Resource" id="Resource_81itq"]
+script = ExtResource("1_81itq")
+Direction = 8
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_aqndq"]
+script = ExtResource("1_81itq")
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_818lh"]
+script = ExtResource("2_aqndq")
+InputName = "Jump Neutral"
+Inputs = Array[Object]([SubResource("Resource_81itq"), SubResource("Resource_aqndq")])
+AutoAdvance = true
+metadata/_custom_type_script = "uid://be0e6utc5xgk8"
+
+[sub_resource type="Resource" id="Resource_h31e4"]
+script = ExtResource("1_81itq")
+Direction = 12
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_o12js"]
+script = ExtResource("1_81itq")
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_hor48"]
+script = ExtResource("2_aqndq")
+InputName = "Jump Forward"
+Inputs = Array[Object]([SubResource("Resource_h31e4"), SubResource("Resource_o12js")])
+AutoAdvance = true
+metadata/_custom_type_script = "uid://be0e6utc5xgk8"
+
+[sub_resource type="Resource" id="Resource_kwf30"]
+script = ExtResource("1_81itq")
+Direction = 6
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_08qoa"]
+script = ExtResource("1_81itq")
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_8cjx6"]
+script = ExtResource("2_aqndq")
+InputName = "Jump Backwards"
+Inputs = Array[Object]([SubResource("Resource_kwf30"), SubResource("Resource_08qoa")])
+AutoAdvance = true
+metadata/_custom_type_script = "uid://be0e6utc5xgk8"
+
+[sub_resource type="Resource" id="Resource_eqvtg"]
+script = ExtResource("1_81itq")
+Direction = 1
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_gdbfb"]
+script = ExtResource("2_aqndq")
+InputName = "Crouch"
+Inputs = Array[Object]([SubResource("Resource_eqvtg")])
+metadata/_custom_type_script = "uid://be0e6utc5xgk8"
+
+[sub_resource type="Resource" id="Resource_0h5r0"]
+script = ExtResource("1_81itq")
+Direction = 3
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_hgi7w"]
+script = ExtResource("2_aqndq")
+InputName = "Crouch Block"
+Inputs = Array[Object]([SubResource("Resource_0h5r0")])
+metadata/_custom_type_script = "uid://be0e6utc5xgk8"
+
+[sub_resource type="Resource" id="Resource_llcf8"]
+script = ExtResource("1_81itq")
+Buttons = 1
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_tup8d"]
+script = ExtResource("1_81itq")
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_lvawa"]
+script = ExtResource("2_aqndq")
+InputName = "5A"
+Inputs = Array[Object]([SubResource("Resource_llcf8"), SubResource("Resource_tup8d")])
+metadata/_custom_type_script = "uid://be0e6utc5xgk8"
+
+[sub_resource type="Resource" id="Resource_45o64"]
+script = ExtResource("1_81itq")
+Buttons = 2
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_kubv0"]
+script = ExtResource("1_81itq")
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_2evro"]
+script = ExtResource("2_aqndq")
+InputName = "5B"
+Inputs = Array[Object]([SubResource("Resource_45o64"), SubResource("Resource_kubv0")])
+metadata/_custom_type_script = "uid://be0e6utc5xgk8"
+
+[sub_resource type="Resource" id="Resource_0sybw"]
+script = ExtResource("1_81itq")
+Buttons = 4
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_r4yof"]
+script = ExtResource("1_81itq")
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_c6cxd"]
+script = ExtResource("2_aqndq")
+InputName = "5C"
+Inputs = Array[Object]([SubResource("Resource_0sybw"), SubResource("Resource_r4yof")])
+metadata/_custom_type_script = "uid://be0e6utc5xgk8"
+
+[sub_resource type="Resource" id="Resource_68wih"]
+script = ExtResource("1_81itq")
+Direction = 1
+Buttons = 1
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_7x4su"]
+script = ExtResource("1_81itq")
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_w5dcs"]
+script = ExtResource("2_aqndq")
+InputName = "2A"
+Inputs = Array[Object]([SubResource("Resource_68wih"), SubResource("Resource_7x4su")])
+metadata/_custom_type_script = "uid://be0e6utc5xgk8"
+
+[sub_resource type="Resource" id="Resource_rr8jl"]
+script = ExtResource("1_81itq")
+Direction = 1
+Buttons = 2
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_8bw65"]
+script = ExtResource("1_81itq")
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_2k0q8"]
+script = ExtResource("2_aqndq")
+InputName = "2B"
+Inputs = Array[Object]([SubResource("Resource_rr8jl"), SubResource("Resource_8bw65")])
+metadata/_custom_type_script = "uid://be0e6utc5xgk8"
+
+[sub_resource type="Resource" id="Resource_qbq5n"]
+script = ExtResource("1_81itq")
+Direction = 1
+Buttons = 4
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_u8vcl"]
+script = ExtResource("1_81itq")
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_upo2t"]
+script = ExtResource("2_aqndq")
+InputName = "2C"
+Inputs = Array[Object]([SubResource("Resource_qbq5n"), SubResource("Resource_u8vcl")])
+metadata/_custom_type_script = "uid://be0e6utc5xgk8"
+
+[sub_resource type="Resource" id="Resource_fpj0s"]
+script = ExtResource("1_81itq")
+Buttons = 3
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_y7bdh"]
+script = ExtResource("1_81itq")
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_g1b7r"]
+script = ExtResource("2_aqndq")
+InputName = "AB"
+Inputs = Array[Object]([SubResource("Resource_fpj0s"), SubResource("Resource_y7bdh")])
+metadata/_custom_type_script = "uid://be0e6utc5xgk8"
+
+[sub_resource type="Resource" id="Resource_qxec2"]
+script = ExtResource("1_81itq")
+Direction = 1
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_a7a7a"]
+script = ExtResource("1_81itq")
+Direction = 5
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_s6c40"]
+script = ExtResource("1_81itq")
+Direction = 4
+Buttons = 1
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_kdfbq"]
+script = ExtResource("1_81itq")
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_ixsn1"]
+script = ExtResource("2_aqndq")
+InputName = "Fireball"
+Inputs = Array[Object]([SubResource("Resource_qxec2"), SubResource("Resource_a7a7a"), SubResource("Resource_s6c40"), SubResource("Resource_kdfbq")])
+metadata/_custom_type_script = "uid://be0e6utc5xgk8"
+
+[sub_resource type="Resource" id="Resource_2yygs"]
+script = ExtResource("1_81itq")
+Direction = 4
+Buttons = 2
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_hugxg"]
+script = ExtResource("2_aqndq")
+InputName = "Rekka"
+Inputs = Array[Object]([SubResource("Resource_qxec2"), SubResource("Resource_a7a7a"), SubResource("Resource_2yygs"), SubResource("Resource_kdfbq")])
+metadata/_custom_type_script = "uid://be0e6utc5xgk8"
+
+[sub_resource type="Resource" id="Resource_5f3jf"]
+script = ExtResource("1_81itq")
+Direction = 4
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_5swlr"]
+script = ExtResource("1_81itq")
+Direction = 1
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_h7pod"]
+script = ExtResource("1_81itq")
+Direction = 5
+Buttons = 4
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_6jqbg"]
+script = ExtResource("1_81itq")
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_0eij2"]
+script = ExtResource("2_aqndq")
+InputName = "DiveKick"
+Inputs = Array[Object]([SubResource("Resource_5f3jf"), SubResource("Resource_5swlr"), SubResource("Resource_h7pod"), SubResource("Resource_6jqbg")])
+metadata/_custom_type_script = "uid://be0e6utc5xgk8"
+
+[sub_resource type="Resource" id="Resource_uxysm"]
+script = ExtResource("1_81itq")
+Direction = 1
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_gqqml"]
+script = ExtResource("1_81itq")
+Direction = 5
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_cvis3"]
+script = ExtResource("1_81itq")
+Direction = 4
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_kkolj"]
+script = ExtResource("1_81itq")
+Buttons = 6
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_rfk3p"]
+script = ExtResource("1_81itq")
+metadata/_custom_type_script = "uid://qkcdnntram58"
+
+[sub_resource type="Resource" id="Resource_nme4i"]
+script = ExtResource("2_aqndq")
+InputName = "Super"
+Inputs = Array[Object]([SubResource("Resource_uxysm"), SubResource("Resource_gqqml"), SubResource("Resource_cvis3"), SubResource("Resource_kkolj"), SubResource("Resource_rfk3p")])
+metadata/_custom_type_script = "uid://be0e6utc5xgk8"
+
+[resource]
+script = ExtResource("1_uq4w1")
+Actions = Array[Object]([SubResource("Resource_71e7y"), SubResource("Resource_4a4ew"), SubResource("Resource_60gui"), SubResource("Resource_jipdd"), SubResource("Resource_818lh"), SubResource("Resource_hor48"), SubResource("Resource_8cjx6"), SubResource("Resource_gdbfb"), SubResource("Resource_hgi7w"), SubResource("Resource_lvawa"), SubResource("Resource_2evro"), SubResource("Resource_c6cxd"), SubResource("Resource_w5dcs"), SubResource("Resource_2k0q8"), SubResource("Resource_upo2t"), SubResource("Resource_g1b7r"), SubResource("Resource_ixsn1"), SubResource("Resource_hugxg"), SubResource("Resource_0eij2"), SubResource("Resource_nme4i")])
+HighBlockAction = 1
+LowBlockAction = 8
+ForwardRecoveryAction = 15
+BackRecoveryAction = 15
+ThrowEscapeAction = 15
+BehaviorMedium = ExtResource("1_5yprj")
+metadata/_custom_type_script = "uid://dhvotekjrqw07"

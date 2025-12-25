@@ -86,7 +86,7 @@ namespace SakugaEngine.Game
         /// </summary>
         private void GenerateBaseSeed()
         {
-            string seedText = Global.baseSeed + Fighters[0].Profile.FighterName + Fighters[1].Profile.FighterName;
+            string seedText = Global.baseSeed + Fighters[0].Data.Profile.FighterName + Fighters[1].Data.Profile.FighterName;
             byte[] seedArray = Encoding.ASCII.GetBytes(seedText);
             generatedSeed = (int)Platform.GetChecksum(seedArray);
         }

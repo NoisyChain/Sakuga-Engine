@@ -6,51 +6,23 @@
 
 [sub_resource type="Resource" id="Resource_7a8kx"]
 script = ExtResource("1_0ksmv")
-ChangeMode = 0
-ChangeValue = 0
-RandomRange = -1
 
 [sub_resource type="Resource" id="Resource_h8656"]
 script = ExtResource("1_0ksmv")
-ChangeMode = 0
-ChangeValue = 0
-RandomRange = -1
 
 [sub_resource type="Resource" id="Resource_snvw5"]
 script = ExtResource("1_0ksmv")
-ChangeMode = 0
-ChangeValue = 0
-RandomRange = -1
 
 [resource]
 script = ExtResource("2_xouv3")
 MoveName = "Forward Jump"
 MoveState = 4
 Inputs = ExtResource("1_vj153")
-SideChange = 0
-SuperGaugeRequired = 0
 BuildSuperGauge = 4
-HealthThreshold = Vector2i(0, 99999)
-SpendHealth = 0
-DistanceArea = Vector2i(0, 999999)
-IsSequenceFromStates = PackedInt32Array()
-IgnoreStates = PackedInt32Array()
-CancelsTo = PackedInt32Array()
-KaraCancelsTo = PackedInt32Array()
 buttonChargeSequence = null
 ExtraVariablesRequirement = null
 ExtraVariablesChange = Array[Object]([SubResource("Resource_7a8kx"), SubResource("Resource_h8656"), SubResource("Resource_snvw5")])
-MoveEnd = 0
-MoveEndState = -1
-ChangeStance = -1
-FrameLimit = -1
-SuperFlash = 0
 Priority = 1
 CanBeOverrided = true
-CanOverrideToSelf = false
-IgnoreSamePriority = true
 InterruptCornerPushback = true
-PriorityBuffer = false
-WaitForNullStates = true
 UseOnGround = true
-UseOnAir = false

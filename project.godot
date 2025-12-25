@@ -13,7 +13,7 @@ config_version=5
 config/name="Sakuga Engine"
 config/tags=PackedStringArray("game", "high_priority", "library")
 run/main_scene="uid://du8qdk1pkkc5e"
-config/features=PackedStringArray("4.4", "C#", "GL Compatibility")
+config/features=PackedStringArray("4.5", "C#", "GL Compatibility")
 run/max_fps=60
 config/icon="res://Sprites/Icons/Icon_Fighter.png"
 

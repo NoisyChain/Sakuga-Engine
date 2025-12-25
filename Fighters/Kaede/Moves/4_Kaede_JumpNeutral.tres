@@ -6,51 +6,22 @@
 
 [sub_resource type="Resource" id="Resource_pgsid"]
 script = ExtResource("1_tgybi")
-ChangeMode = 0
-ChangeValue = 0
-RandomRange = -1
 
 [sub_resource type="Resource" id="Resource_03i2g"]
 script = ExtResource("1_tgybi")
-ChangeMode = 0
-ChangeValue = 0
-RandomRange = -1
 
 [sub_resource type="Resource" id="Resource_l01v7"]
 script = ExtResource("1_tgybi")
-ChangeMode = 0
-ChangeValue = 0
-RandomRange = -1
 
 [resource]
 script = ExtResource("2_p16oi")
 MoveName = "Neutral Jump"
 MoveState = 3
 Inputs = ExtResource("1_qe0ft")
-SideChange = 0
-SuperGaugeRequired = 0
-BuildSuperGauge = 0
-HealthThreshold = Vector2i(0, 99999)
-SpendHealth = 0
-DistanceArea = Vector2i(0, 999999)
-IsSequenceFromStates = PackedInt32Array()
-IgnoreStates = PackedInt32Array()
-CancelsTo = PackedInt32Array()
-KaraCancelsTo = PackedInt32Array()
 buttonChargeSequence = null
 ExtraVariablesRequirement = Array[Object]([])
 ExtraVariablesChange = Array[Object]([SubResource("Resource_pgsid"), SubResource("Resource_03i2g"), SubResource("Resource_l01v7")])
-MoveEnd = 0
-MoveEndState = -1
-ChangeStance = -1
-FrameLimit = -1
-SuperFlash = 0
 Priority = 1
 CanBeOverrided = true
-CanOverrideToSelf = false
-IgnoreSamePriority = true
 InterruptCornerPushback = true
-PriorityBuffer = false
-WaitForNullStates = true
 UseOnGround = true
-UseOnAir = false

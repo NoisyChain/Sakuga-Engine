@@ -8,51 +8,28 @@
 
 [sub_resource type="Resource" id="Resource_mbk4p"]
 script = ExtResource("1_26rhx")
-AtFrame = 0
 SourceAnimation = "Idle"
-LimitRange = false
-AnimationRange = Vector2i(0, 0)
-Offset = Vector3(0, 0, 0)
 metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
 
 [sub_resource type="Resource" id="Resource_uhee2"]
 script = ExtResource("1_axg0y")
-animationStage = 0
-Frame = 0
-HitboxIndex = 0
 
 [sub_resource type="Resource" id="Resource_3l6il"]
 script = ExtResource("3_04vj6")
-Frame = 0
 UseLateralSpeed = true
-LateralSpeed = 0
 UseVerticalSpeed = true
-VerticalSpeed = 0
 UseGravity = true
-ResetGravity = false
-Gravity = 0
-UseLateralInertia = false
-UseVerticalInertia = false
-UseHorizontalInput = false
-UseVerticalInput = false
 
 [sub_resource type="Resource" id="Resource_1k4x6"]
 script = ExtResource("4_77wah")
 StateIndex = 0
 Condition = 1
-AtFrame = -1
-DistanceArea = Vector2i(0, 999999)
 
 [resource]
 script = ExtResource("2_bn2pj")
 StateName = "Idle"
 Type = 5
-OffTheGround = false
 Duration = 20
-Loop = false
-LoopFrames = Vector2i(0, 0)
-TurnState = -1
-HitStunFrameLimit = -1
 stateProperties = null
 statePhysics = Array[Object]([SubResource("Resource_3l6il")])
 hitboxStates = Array[Object]([SubResource("Resource_uhee2")])

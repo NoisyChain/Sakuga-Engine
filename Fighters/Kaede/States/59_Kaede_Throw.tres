@@ -8,17 +8,11 @@
 
 [sub_resource type="Resource" id="Resource_ojn4h"]
 script = ExtResource("1_xsgjr")
-AtFrame = 0
 SourceAnimation = "Throw_Enter"
-LimitRange = false
-AnimationRange = Vector2i(0, 0)
-Offset = Vector3(0, 0, 0)
 metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
 
 [sub_resource type="Resource" id="Resource_5e2ap"]
 script = ExtResource("1_6duet")
-animationStage = 0
-Frame = 0
 HitboxIndex = 18
 
 [sub_resource type="Resource" id="Resource_oxicv"]
@@ -35,36 +29,19 @@ HitboxIndex = 18
 
 [sub_resource type="Resource" id="Resource_mpd63"]
 script = ExtResource("3_2g7k5")
-Frame = 0
 UseLateralSpeed = true
-LateralSpeed = 0
 UseVerticalSpeed = true
-VerticalSpeed = 0
-UseGravity = false
-ResetGravity = false
-Gravity = 0
-UseLateralInertia = false
-UseVerticalInertia = false
-UseHorizontalInput = false
-UseVerticalInput = false
 
 [sub_resource type="Resource" id="Resource_07r8c"]
 script = ExtResource("4_13o3u")
 StateIndex = 0
 Condition = 1
-AtFrame = -1
-DistanceArea = Vector2i(0, 999999)
 
 [resource]
 script = ExtResource("2_s0rim")
 StateName = "Throw_Enter"
 Type = 2
-OffTheGround = false
 Duration = 19
-Loop = false
-LoopFrames = Vector2i(0, 0)
-TurnState = -1
-HitStunFrameLimit = -1
 stateProperties = null
 statePhysics = Array[Object]([SubResource("Resource_mpd63")])
 hitboxStates = Array[Object]([SubResource("Resource_5e2ap"), SubResource("Resource_oxicv"), SubResource("Resource_nl4j0")])

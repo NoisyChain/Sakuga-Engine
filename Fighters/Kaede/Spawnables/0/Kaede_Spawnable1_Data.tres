@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="DataContainer" load_steps=9 format=3 uid="uid://blg5tsr3o8aai"]
+
+[ext_resource type="Resource" uid="uid://dyam6gxn4slhs" path="res://Fighters/Kaede/Spawnables/0/Hitboxes/0_Hitbox_Spawnable_Basic.tres" id="1_vp2nd"]
+[ext_resource type="Resource" uid="uid://cwuwbygqhrjcb" path="res://Fighters/Kaede/Spawnables/0/States/0_Spawn.tres" id="3_woiq1"]
+[ext_resource type="Resource" uid="uid://iwa20g1seshl" path="res://Fighters/Kaede/Spawnables/0/States/1_Travel.tres" id="4_20loy"]
+[ext_resource type="Resource" uid="uid://bgjd35gpl3n3l" path="res://Fighters/Kaede/Spawnables/0/States/2_Death.tres" id="5_nquwq"]
+[ext_resource type="Resource" uid="uid://k31pv0ejfv2s" path="res://Fighters/Shared/Shared_SFXList.tres" id="32_747ry"]
+[ext_resource type="Resource" uid="uid://b6a4cqdykhhg" path="res://Fighters/Shared/Shared_VFXList.tres" id="108_r1tr3"]
+[ext_resource type="Resource" uid="uid://c8h8jltu6u5pb" path="res://Fighters/Shared/Shared_VoiceLines.tres" id="109_xw0s4"]
+[ext_resource type="Script" uid="uid://bsbjg1nuyall1" path="res://Scripts/SakugaEngine/Resources/DataContainer.cs" id="110_kjvmu"]
+
+[resource]
+script = ExtResource("110_kjvmu")
+Hitboxes = Array[Object]([ExtResource("1_vp2nd")])
+States = Array[Object]([ExtResource("3_woiq1"), ExtResource("4_20loy"), ExtResource("5_nquwq")])
+Stances = null
+VFXList = ExtResource("108_r1tr3")
+SFXList = ExtResource("32_747ry")
+VoiceLines = ExtResource("109_xw0s4")
+metadata/_custom_type_script = "uid://bsbjg1nuyall1"

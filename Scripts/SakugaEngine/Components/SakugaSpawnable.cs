@@ -173,8 +173,8 @@ namespace SakugaEngine
             if (!isHitAllowed) return;
 
             bool HitPosition = box.HitType == Global.HitType.UNBLOCKABLE || 
-                                box.HitType == Global.HitType.HIGH && Opp.IsCrouching() || 
-                                box.HitType == Global.HitType.LOW && !Opp.IsCrouching();
+                                box.HitType == Global.HitType.HIGH && Opp.IsCrouchState() || 
+                                box.HitType == Global.HitType.LOW && Opp.IsGroundState();
             if (Opp.Variables.SuperArmor > 0)
             {
                 Opp.ArmorHit(box);

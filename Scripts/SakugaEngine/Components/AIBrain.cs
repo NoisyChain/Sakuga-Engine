@@ -8,20 +8,6 @@ namespace SakugaEngine
     public partial class AIBrain : Node
     {
         private SakugaFighter _owner;
-        [Export] public AIAction[] Actions;
-        [Export] public int HighBlockAction;
-        [Export] public int LowBlockAction;
-        [Export] public int ForwardRecoveryAction;
-        [Export] public int BackRecoveryAction;
-        [Export] public int ThrowEscapeAction;
-
-        [ExportCategory("Behaviors")]
-        [Export] private AIBehavior BehaviorBeginner;
-        [Export] private AIBehavior BehaviorEasy;
-        [Export] private AIBehavior BehaviorMedium;
-        [Export] private AIBehavior BehaviorHard;
-        [Export] private AIBehavior BehaviorVeryHard;
-        [Export] private AIBehavior BehaviorPro;
 
         private Global.BotMode mode = Global.BotMode.AGGRESSIVE;
         private AIBehavior currentBehavior;
@@ -39,6 +25,8 @@ namespace SakugaEngine
         public bool teching;
         public Global.HitType proximityHit;
 
+        private AIData data => _owner.Data._aiData;
+
         public void Initialize(SakugaFighter owner)
         {
             _owner = owner;
@@ -46,22 +34,22 @@ namespace SakugaEngine
             switch (Global.Match.botDifficulty)
             {
                 case Global.BotDifficulty.BEGINNER:
-                    currentBehavior = BehaviorBeginner;
+                    currentBehavior = data.BehaviorBeginner;
                     break;
                 case Global.BotDifficulty.EASY:
-                    currentBehavior = BehaviorEasy;
+                    currentBehavior = data.BehaviorEasy;
                     break;
                 case Global.BotDifficulty.MEDIUM:
-                    currentBehavior = BehaviorMedium;
+                    currentBehavior = data.BehaviorMedium;
                     break;
                 case Global.BotDifficulty.HARD:
-                    currentBehavior = BehaviorHard;
+                    currentBehavior = data.BehaviorHard;
                     break;
                 case Global.BotDifficulty.VERY_HARD:
-                    currentBehavior = BehaviorVeryHard;
+                    currentBehavior = data.BehaviorVeryHard;
                     break;
                 case Global.BotDifficulty.PRO:
-                    currentBehavior = BehaviorPro;
+                    currentBehavior = data.BehaviorPro;
                     break;
             }
 
@@ -119,7 +107,7 @@ namespace SakugaEngine
                         {
                             int rnd = Global.RNG.Next(0, 10);
                             if (rnd < currentBehavior.TechingRate)
-                                currentCommandList = new int[] { ThrowEscapeAction };
+                                currentCommandList = new int[] { data.ThrowEscapeAction };
 
                             teching = true;
                         }
@@ -136,15 +124,15 @@ namespace SakugaEngine
                                         break;
                                     case Global.BotMode.AGGRESSIVE:
                                         if (rnd < currentBehavior.TechingRate)
-                                            currentCommandList[0] = ForwardRecoveryAction;
+                                            currentCommandList[0] = data.ForwardRecoveryAction;
                                         else
-                                            currentCommandList[0] = BackRecoveryAction;
+                                            currentCommandList[0] = data.BackRecoveryAction;
                                         break;
                                     case Global.BotMode.DEFENSIVE:
                                         if (rnd < currentBehavior.TechingRate)
-                                            currentCommandList[0] = BackRecoveryAction;
+                                            currentCommandList[0] = data.BackRecoveryAction;
                                         else
-                                            currentCommandList[0] = ForwardRecoveryAction;
+                                            currentCommandList[0] = data.ForwardRecoveryAction;
                                         break;
                                 }
                                 
@@ -169,7 +157,7 @@ namespace SakugaEngine
                     int rnd = Global.RNG.Next(0, 10);
                     if (rnd < currentBehavior.BlockingRate)
                     {
-                        int blockStance = proximityHit == Global.HitType.LOW ? LowBlockAction : HighBlockAction;
+                        int blockStance = proximityHit == Global.HitType.LOW ? data.LowBlockAction : data.HighBlockAction;
                         currentCommandList = new int[] { blockStance };
                     }
 
@@ -184,7 +172,7 @@ namespace SakugaEngine
 
             //If a command is still running, let it do its thing
             if ((currentCommand >= currentCommandList.Length || (currentCommand >= 0 && inputFinished && !canAdvance
-                && !Actions[currentCommandList[currentCommand]].AutoAdvance)) && _owner.Stance.CurrentMove < 0)
+                && !data.Actions[currentCommandList[currentCommand]].AutoAdvance)) && _owner.Stance.CurrentMove < 0)
             { Reset(); }
             bool MoveEnded = (currentCommand == 0 || currentCommand >= currentCommandList.Length) && currentInputIndex == 0;
             //GD.Print($"{currentCommand == 0 || currentCommand >= currentCommandList.Length}, {currentInputIndex == 0}");
@@ -310,8 +298,8 @@ namespace SakugaEngine
             if (curr < 0) { _owner.ParseInputs(0); return; }
 
             inputTick++;
-            inputFinished = currentInputIndex >= Actions[curr].Inputs.Length - 1;
-            _owner.ParseInputs(GenerateInput(Actions[curr].Inputs[currentInputIndex]));
+            inputFinished = currentInputIndex >= data.Actions[curr].Inputs.Length - 1;
+            _owner.ParseInputs(GenerateInput(data.Actions[curr].Inputs[currentInputIndex]));
 
             if (inputTick <= inputTickLimit) return;
             else
@@ -320,9 +308,9 @@ namespace SakugaEngine
                 inputTick = 0;
             }
             currentInputIndex++;
-            currentInputIndex = Mathf.Clamp(currentInputIndex, 0, Actions[curr].Inputs.Length - 1);
+            currentInputIndex = Mathf.Clamp(currentInputIndex, 0, data.Actions[curr].Inputs.Length - 1);
 
-            if (inputFinished && (canAdvance || Actions[curr].AutoAdvance) && currentCommand < currentCommandList.Length)
+            if (inputFinished && (canAdvance || data.Actions[curr].AutoAdvance) && currentCommand < currentCommandList.Length)
             {
                 currentCommand++;
                 currentInputIndex = 0;

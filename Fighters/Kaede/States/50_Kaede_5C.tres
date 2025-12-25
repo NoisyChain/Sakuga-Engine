@@ -14,12 +14,10 @@ ArmorValue = 3
 
 [sub_resource type="Resource" id="Resource_ix1su"]
 script = ExtResource("2_dlo0l")
-Frame = 0
 Events = Array[Object]([SubResource("Resource_fi3yh")])
 
 [sub_resource type="Resource" id="Resource_tmsc3"]
 script = ExtResource("1_myh1j")
-ArmorValue = 0
 
 [sub_resource type="Resource" id="Resource_mq13r"]
 script = ExtResource("2_dlo0l")
@@ -28,17 +26,11 @@ Events = Array[Object]([SubResource("Resource_tmsc3")])
 
 [sub_resource type="Resource" id="Resource_i24ac"]
 script = ExtResource("3_3rgdk")
-AtFrame = 0
 SourceAnimation = "5C"
-LimitRange = false
-AnimationRange = Vector2i(0, 0)
-Offset = Vector3(0, 0, 0)
 metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
 
 [sub_resource type="Resource" id="2"]
 script = ExtResource("2")
-animationStage = 0
-Frame = 0
 HitboxIndex = 5
 
 [sub_resource type="Resource" id="3"]
@@ -51,55 +43,32 @@ HitboxIndex = 8
 script = ExtResource("2")
 animationStage = 2
 Frame = 22
-HitboxIndex = 0
 
 [sub_resource type="Resource" id="5"]
 script = ExtResource("3")
-Frame = 0
 UseLateralSpeed = true
 LateralSpeed = 30000
 UseVerticalSpeed = true
-VerticalSpeed = 0
 UseGravity = true
-ResetGravity = false
-Gravity = 0
-UseLateralInertia = false
-UseVerticalInertia = false
-UseHorizontalInput = false
-UseVerticalInput = false
 
 [sub_resource type="Resource" id="6"]
 script = ExtResource("3")
 Frame = 16
 UseLateralSpeed = true
-LateralSpeed = 0
 UseVerticalSpeed = true
-VerticalSpeed = 0
 UseGravity = true
-ResetGravity = false
-Gravity = 0
-UseLateralInertia = false
-UseVerticalInertia = false
-UseHorizontalInput = false
-UseVerticalInput = false
 
 [sub_resource type="Resource" id="Resource_6gdsy"]
 script = ExtResource("4_w2dw3")
 StateIndex = 0
 Condition = 1
-AtFrame = -1
 DistanceArea = Vector2i(0, 99999)
 
 [resource]
 script = ExtResource("1")
 StateName = "5C"
 Type = 2
-OffTheGround = false
 Duration = 40
-Loop = false
-LoopFrames = Vector2i(0, 0)
-TurnState = -1
-HitStunFrameLimit = -1
 stateProperties = null
 statePhysics = [SubResource("5"), SubResource("6")]
 hitboxStates = [SubResource("2"), SubResource("3"), SubResource("4")]

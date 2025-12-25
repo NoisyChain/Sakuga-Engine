@@ -19,7 +19,6 @@ namespace SakugaEngine.Resources
         [Export] public bool ChipDeath;
         [Export] public bool KillingBlow = true;
         [Export] public bool GuardCrush;
-        [Export] public bool Uncrouch;
         [Export] public int GuardCrushDamage = 100;
         [Export] public int SelfSuperGaugeGain = 250;
         [Export] public int OpponentSuperGaugeGain = 100;

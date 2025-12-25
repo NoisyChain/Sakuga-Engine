@@ -26,78 +26,50 @@ Events = Array[Object]([SubResource("Resource_ld3k7")])
 
 [sub_resource type="Resource" id="Resource_bcfn1"]
 script = ExtResource("3_xljix")
-AtFrame = 0
 SourceAnimation = "Throw_Sequence"
-LimitRange = false
-AnimationRange = Vector2i(0, 0)
-Offset = Vector3(0, 0, 0)
 metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
 
 [sub_resource type="Resource" id="Resource_5e2ap"]
 script = ExtResource("1_qo4pe")
-animationStage = 0
-Frame = 0
 HitboxIndex = -1
 
 [sub_resource type="Resource" id="Resource_mpd63"]
 script = ExtResource("3_iy0dy")
-Frame = 0
 UseLateralSpeed = true
-LateralSpeed = 0
 UseVerticalSpeed = true
-VerticalSpeed = 0
-UseGravity = false
-ResetGravity = false
-Gravity = 0
-UseLateralInertia = false
-UseVerticalInertia = false
-UseHorizontalInput = false
-UseVerticalInput = false
 
 [sub_resource type="Resource" id="Resource_ejds0"]
 script = ExtResource("4_xs5ao")
 StateIndex = 8
 Condition = 1
-AtFrame = -1
-DistanceArea = Vector2i(0, 999999)
 
 [sub_resource type="Resource" id="Resource_ksa0j"]
 script = ExtResource("5_mmk8x")
 Frame = 1
 PivotPosition = Vector2i(3000, 0)
-ThrowState = -1
 
 [sub_resource type="Resource" id="Resource_cwgmc"]
 script = ExtResource("5_mmk8x")
 Frame = 17
 PivotPosition = Vector2i(5000, 8000)
-ThrowState = -1
 
 [sub_resource type="Resource" id="Resource_id3s2"]
 script = ExtResource("5_mmk8x")
 Frame = 21
 PivotPosition = Vector2i(0, 10000)
-ThrowState = -1
 
 [sub_resource type="Resource" id="Resource_anryf"]
 script = ExtResource("5_mmk8x")
 Frame = 25
 PivotPosition = Vector2i(-8000, 0)
-ThrowState = -1
 
 [sub_resource type="Resource" id="Resource_ko6u0"]
 script = ExtResource("9_bcfn1")
-InvertSide = false
 HitstunType = 2
 HitKnockback = Vector2i(-20000, 60000)
 HitKnockbackGravity = 200000
-HitKnockbackTime = 8
 HitKnockbackInertia = true
 Hitstun = 50
-HorizontalBounce = 0
-HorizontalBounceIntensity = 0
-VerticalBounce = 0
-VerticalBounceIntensity = 0
 metadata/_custom_type_script = "uid://cvhscwjk3c8kw"
 
 [sub_resource type="Resource" id="Resource_yley4"]
@@ -111,12 +83,7 @@ ThrowDetach = SubResource("Resource_ko6u0")
 script = ExtResource("2_264bk")
 StateName = "Throw_Sequence"
 Type = 2
-OffTheGround = false
 Duration = 42
-Loop = false
-LoopFrames = Vector2i(0, 0)
-TurnState = -1
-HitStunFrameLimit = -1
 stateProperties = Array[Object]([])
 statePhysics = Array[Object]([SubResource("Resource_mpd63")])
 hitboxStates = Array[Object]([SubResource("Resource_5e2ap")])

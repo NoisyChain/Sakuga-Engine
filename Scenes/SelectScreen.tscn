@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://du8qdk1pkkc5e"]
+[gd_scene load_steps=18 format=3 uid="uid://du8qdk1pkkc5e"]
 
 [ext_resource type="Script" uid="uid://cei16d41occwt" path="res://Scripts/SakugaEngine/UI/SelectScreen.cs" id="1_c6n7t"]
 [ext_resource type="Resource" uid="uid://c8s3ip7gkhwq6" path="res://Roster.tres" id="2_d1pnq"]
@@ -16,7 +16,6 @@
 [ext_resource type="Texture2D" uid="uid://6ctweo6uvot8" path="res://icon.svg" id="10_d1pnq"]
 [ext_resource type="Texture2D" uid="uid://btffyblli32iy" path="res://Sprites/P2_CSS.png" id="10_vt3nd"]
 [ext_resource type="Texture2D" uid="uid://crn7f11jusxo0" path="res://Sprites/Song_Icon.png" id="11_83tgi"]
-[ext_resource type="Texture2D" uid="uid://c3cyqacvyusmv" path="res://Fighters/Dummy/capsule_render.png" id="12_7p58r"]
 [ext_resource type="Texture2D" uid="uid://cw7llwhkqnheo" path="res://Sprites/Arrow.png" id="18_7p58r"]
 
 [node name="Control" type="Control" node_paths=PackedStringArray("CharacterSelectMode", "StageSelectMode", "P1SelectedRender", "P2SelectedRender", "P1SelectedName", "P2SelectedName", "P1Cursor", "P2Cursor", "charactersContainer", "StageSelectedRender", "StageSelectedName", "SongSelectedName", "P1SelectingStage", "P2SelectingStage", "StageCursor", "stagesContainer")]
@@ -72,7 +71,7 @@ texture = ExtResource("6_vt3nd")
 layout_mode = 0
 offset_right = 596.0
 offset_bottom = 980.0
-texture = ExtResource("12_7p58r")
+texture = ExtResource("5_v0euj")
 expand_mode = 1
 stretch_mode = 5
 

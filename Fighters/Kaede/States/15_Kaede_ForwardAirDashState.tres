@@ -9,88 +9,53 @@
 
 [sub_resource type="Resource" id="Resource_c3jrc"]
 script = ExtResource("1_f5dqb")
-AtFrame = 0
 SourceAnimation = "Jump_Forward"
-LimitRange = false
-AnimationRange = Vector2i(0, 0)
-Offset = Vector3(0, 0, 0)
 metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
 
 [sub_resource type="Resource" id="2"]
 script = ExtResource("3")
-animationStage = 0
-Frame = 0
-HitboxIndex = 0
 
 [sub_resource type="Resource" id="5"]
 script = ExtResource("3")
-animationStage = 0
 Frame = 4
 HitboxIndex = 2
 
 [sub_resource type="Resource" id="6"]
 script = ExtResource("3")
-animationStage = 0
 Frame = 18
-HitboxIndex = 0
 
 [sub_resource type="Resource" id="1"]
 script = ExtResource("1")
-Frame = 0
 UseLateralSpeed = true
-LateralSpeed = 0
 UseVerticalSpeed = true
-VerticalSpeed = 0
 UseGravity = true
-ResetGravity = false
-Gravity = 0
-UseLateralInertia = false
-UseVerticalInertia = false
-UseHorizontalInput = false
-UseVerticalInput = false
 
 [sub_resource type="Resource" id="7"]
 script = ExtResource("1")
-Frame = 0
 UseLateralSpeed = true
 LateralSpeed = 40000
 UseVerticalSpeed = true
-VerticalSpeed = 0
-UseGravity = false
-ResetGravity = false
-Gravity = 0
-UseLateralInertia = false
-UseVerticalInertia = false
-UseHorizontalInput = false
-UseVerticalInput = false
 
 [sub_resource type="Resource" id="Resource_lil5x"]
 script = ExtResource("4_7pmi8")
-Frame = 0
 Properties = 2
 
 [sub_resource type="Resource" id="Resource_bg7sg"]
 script = ExtResource("4_7pmi8")
 Frame = 4
-Properties = 0
 
 [sub_resource type="Resource" id="Resource_frio6"]
 script = ExtResource("4_jva85")
 StateIndex = 7
 Condition = 1
-AtFrame = -1
 DistanceArea = Vector2i(0, 99999)
 
 [resource]
 script = ExtResource("2")
 StateName = "Jump_Forward"
+BaseStance = 2
 Type = 1
-OffTheGround = false
 Duration = 22
-Loop = false
-LoopFrames = Vector2i(0, 0)
-TurnState = -1
-HitStunFrameLimit = -1
 stateProperties = Array[Object]([SubResource("Resource_lil5x"), SubResource("Resource_bg7sg")])
 statePhysics = [SubResource("1"), SubResource("7")]
 hitboxStates = [SubResource("2"), SubResource("5"), SubResource("6")]

@@ -8,51 +8,29 @@
 
 [sub_resource type="Resource" id="Resource_u5px2"]
 script = ExtResource("1_gmu35")
-AtFrame = 0
 SourceAnimation = "Falling"
-LimitRange = false
-AnimationRange = Vector2i(0, 0)
-Offset = Vector3(0, 0, 0)
 metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
 
 [sub_resource type="Resource" id="Resource_uhee2"]
 script = ExtResource("1_ggqvs")
-animationStage = 0
-Frame = 0
-HitboxIndex = 0
 
 [sub_resource type="Resource" id="Resource_3l6il"]
 script = ExtResource("3_dgmp6")
-Frame = 0
 UseLateralSpeed = true
-LateralSpeed = 0
 UseVerticalSpeed = true
-VerticalSpeed = 0
 UseGravity = true
-ResetGravity = false
-Gravity = 0
-UseLateralInertia = false
-UseVerticalInertia = false
-UseHorizontalInput = false
-UseVerticalInput = false
 
 [sub_resource type="Resource" id="Resource_fyawy"]
 script = ExtResource("4_gyt53")
 StateIndex = 7
 Condition = 1
-AtFrame = -1
-DistanceArea = Vector2i(0, 999999)
 
 [resource]
 script = ExtResource("2_qh4pd")
 StateName = "Falling"
+BaseStance = 2
 Type = 5
-OffTheGround = false
 Duration = 20
-Loop = false
-LoopFrames = Vector2i(0, 0)
-TurnState = -1
-HitStunFrameLimit = -1
 stateProperties = null
 statePhysics = Array[Object]([SubResource("Resource_3l6il")])
 hitboxStates = Array[Object]([SubResource("Resource_uhee2")])

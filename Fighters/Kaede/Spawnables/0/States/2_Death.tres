@@ -7,44 +7,22 @@
 
 [sub_resource type="Resource" id="Resource_w716p"]
 script = ExtResource("1_q80vs")
-AtFrame = 0
 SourceAnimation = "Death"
-LimitRange = false
-AnimationRange = Vector2i(0, 0)
-Offset = Vector3(0, 0, 0)
 metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
 
 [sub_resource type="Resource" id="1"]
 script = ExtResource("2")
-animationStage = 0
-Frame = 0
 HitboxIndex = -1
 
 [sub_resource type="Resource" id="2"]
 script = ExtResource("3")
-Frame = 0
 UseLateralSpeed = true
-LateralSpeed = 0
 UseVerticalSpeed = true
-VerticalSpeed = 0
-UseGravity = false
-ResetGravity = false
-Gravity = 0
-UseLateralInertia = false
-UseVerticalInertia = false
-UseHorizontalInput = false
-UseVerticalInput = false
 
 [resource]
 script = ExtResource("1")
 StateName = "Death"
-Type = 0
-OffTheGround = false
 Duration = 12
-Loop = false
-LoopFrames = Vector2i(0, 0)
-TurnState = -1
-HitStunFrameLimit = -1
 stateProperties = null
 statePhysics = [SubResource("2")]
 hitboxStates = [SubResource("1")]
@@ -52,4 +30,3 @@ animationEvents = null
 throwPivot = null
 stateTransitions = null
 animationSettings = Array[Object]([SubResource("Resource_w716p")])
-AIFlags = 0

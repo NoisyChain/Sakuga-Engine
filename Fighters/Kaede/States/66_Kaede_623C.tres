@@ -8,17 +8,11 @@
 
 [sub_resource type="Resource" id="Resource_uxwlk"]
 script = ExtResource("1_gayr5")
-AtFrame = 0
 SourceAnimation = "623B"
-LimitRange = false
-AnimationRange = Vector2i(0, 0)
-Offset = Vector3(0, 0, 0)
 metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
 
 [sub_resource type="Resource" id="Resource_qlmxr"]
 script = ExtResource("1_t6dje")
-animationStage = 0
-Frame = 0
 HitboxIndex = 24
 
 [sub_resource type="Resource" id="Resource_p8vrw"]
@@ -29,18 +23,8 @@ HitboxIndex = 25
 
 [sub_resource type="Resource" id="Resource_mpd63"]
 script = ExtResource("3_sl2vc")
-Frame = 0
 UseLateralSpeed = true
-LateralSpeed = 0
 UseVerticalSpeed = true
-VerticalSpeed = 0
-UseGravity = false
-ResetGravity = false
-Gravity = 0
-UseLateralInertia = false
-UseVerticalInertia = false
-UseHorizontalInput = false
-UseVerticalInput = false
 
 [sub_resource type="Resource" id="Resource_ijji8"]
 script = ExtResource("3_sl2vc")
@@ -49,31 +33,20 @@ UseLateralSpeed = true
 LateralSpeed = 40000
 UseVerticalSpeed = true
 VerticalSpeed = -60000
-UseGravity = false
-ResetGravity = false
-Gravity = 0
-UseLateralInertia = false
-UseVerticalInertia = false
-UseHorizontalInput = false
-UseVerticalInput = false
 
 [sub_resource type="Resource" id="Resource_1k4x6"]
 script = ExtResource("4_aats5")
 StateIndex = 8
 Condition = 4
-AtFrame = -1
-DistanceArea = Vector2i(0, 999999)
 
 [resource]
 script = ExtResource("2_kqw1i")
 StateName = "623B"
+BaseStance = 2
 Type = 2
-OffTheGround = false
 Duration = 10
 Loop = true
 LoopFrames = Vector2i(6, 9)
-TurnState = -1
-HitStunFrameLimit = -1
 stateProperties = null
 statePhysics = Array[Object]([SubResource("Resource_mpd63"), SubResource("Resource_ijji8")])
 hitboxStates = Array[Object]([SubResource("Resource_qlmxr"), SubResource("Resource_p8vrw")])

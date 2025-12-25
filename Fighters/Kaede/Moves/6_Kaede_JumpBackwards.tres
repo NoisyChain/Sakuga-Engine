@@ -6,51 +6,23 @@
 
 [sub_resource type="Resource" id="Resource_e20mk"]
 script = ExtResource("1_463tg")
-ChangeMode = 0
-ChangeValue = 0
-RandomRange = -1
 
 [sub_resource type="Resource" id="Resource_mf2wc"]
 script = ExtResource("1_463tg")
-ChangeMode = 0
-ChangeValue = 0
-RandomRange = -1
 
 [sub_resource type="Resource" id="Resource_vprgh"]
 script = ExtResource("1_463tg")
-ChangeMode = 0
-ChangeValue = 0
-RandomRange = -1
 
 [resource]
 script = ExtResource("2_niv4w")
 MoveName = "Backwards Jump"
 MoveState = 5
 Inputs = ExtResource("1_yd4op")
-SideChange = 0
-SuperGaugeRequired = 0
-BuildSuperGauge = 0
-HealthThreshold = Vector2i(0, 99999)
-SpendHealth = 0
 DistanceArea = Vector2i(0, 99999)
-IsSequenceFromStates = PackedInt32Array()
-IgnoreStates = PackedInt32Array()
-CancelsTo = PackedInt32Array()
-KaraCancelsTo = PackedInt32Array()
 buttonChargeSequence = null
 ExtraVariablesRequirement = null
 ExtraVariablesChange = Array[Object]([SubResource("Resource_e20mk"), SubResource("Resource_mf2wc"), SubResource("Resource_vprgh")])
-MoveEnd = 0
-MoveEndState = -1
-ChangeStance = -1
-FrameLimit = -1
-SuperFlash = 0
 Priority = 1
 CanBeOverrided = true
-CanOverrideToSelf = false
-IgnoreSamePriority = true
 InterruptCornerPushback = true
-PriorityBuffer = false
-WaitForNullStates = true
 UseOnGround = true
-UseOnAir = false

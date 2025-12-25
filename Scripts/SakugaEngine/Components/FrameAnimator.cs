@@ -8,13 +8,14 @@ namespace SakugaEngine
     [GlobalClass]
     public partial class FrameAnimator : Node
     {
+        [Export] private SakugaActor owner;
         [Export] private AnimationPlayer[] players;
         [Export] private string[] prefix;
-        [Export] public FighterState[] States;
         [Export] public Node3D OffsetNode;
 
         public int CurrentState;
         public int Frame;
+        private int targetFrame = 0;
 
         public void ViewAnimations()
         {
@@ -25,16 +26,27 @@ namespace SakugaEngine
             if (anim == null) return;
             if (anim.SourceAnimation == "") return;
 
-            int targetFrame = Frame - anim.AtFrame;
+            int modTarget = (Frame - anim.AtFrame) % anim.FrameStepping;
+
             if (anim.LimitRange)
             {
                 targetFrame = (Frame - anim.AtFrame) + anim.AnimationRange.X;
                 targetFrame = Mathf.Clamp(targetFrame, anim.AnimationRange.X, anim.AnimationRange.Y);
+                if (anim.AnimationRange.Y > anim.AnimationRange.X)
+                    targetFrame -= modTarget;
+            }
+            else
+            {
+                targetFrame = Frame - anim.AtFrame;
+                targetFrame -= modTarget;
             }
 
             for (int a = 0; a < players.Length; a++)
             {
-                players[a].Play(prefix[a] + anim.SourceAnimation);
+                string prfx = "";
+                if (prefix != null && prefix.Length > a) prfx = prefix[a];
+                players[a].SpeedScale = anim.Speed;
+                players[a].Play(prfx + anim.SourceAnimation);
                 players[a].Seek(targetFrame / (float)Global.TicksPerSecond, true);
             }
 
@@ -69,7 +81,7 @@ namespace SakugaEngine
                 if (canLoop)
                     Frame = GetCurrentState().LoopFrames.X;
                 else
-                    Frame = frameLimit;
+                    Frame = GetCurrentState().Duration;
             }
         }
 
@@ -85,10 +97,11 @@ namespace SakugaEngine
             CurrentState = br.ReadInt32();
         }
 
-        public FighterState GetCurrentState() => States[CurrentState];
+        public FighterState GetCurrentState() => owner.Data.States[CurrentState];
         public int StateType() => (int)GetCurrentState().Type;
+        public bool StateEnded() => Frame >= GetCurrentState().Duration;
 
-        private AnimationSettings GetCurrentAnimationSettings()
+        public AnimationSettings GetCurrentAnimationSettings()
         {
             if (GetCurrentState().animationSettings.Length == 1)
                 return GetCurrentState().animationSettings[0];

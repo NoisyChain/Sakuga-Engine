@@ -7,44 +7,26 @@
 
 [sub_resource type="Resource" id="Resource_2b4ba"]
 script = ExtResource("1_6tudy")
-AtFrame = 0
 SourceAnimation = "Dash_Forward"
-LimitRange = false
-AnimationRange = Vector2i(0, 0)
-Offset = Vector3(0, 0, 0)
 metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
 
 [sub_resource type="Resource" id="2"]
 script = ExtResource("3")
-animationStage = 0
-Frame = 0
 HitboxIndex = 3
 
 [sub_resource type="Resource" id="1"]
 script = ExtResource("1")
-Frame = 0
 UseLateralSpeed = true
 LateralSpeed = 40000
 UseVerticalSpeed = true
-VerticalSpeed = 0
-UseGravity = false
-ResetGravity = false
-Gravity = 0
-UseLateralInertia = false
-UseVerticalInertia = false
-UseHorizontalInput = false
-UseVerticalInput = false
 
 [resource]
 script = ExtResource("2")
 StateName = "Dash_Forward"
 Type = 1
-OffTheGround = false
 Duration = 36
 Loop = true
 LoopFrames = Vector2i(0, 35)
-TurnState = -1
-HitStunFrameLimit = -1
 stateProperties = null
 statePhysics = [SubResource("1")]
 hitboxStates = [SubResource("2")]

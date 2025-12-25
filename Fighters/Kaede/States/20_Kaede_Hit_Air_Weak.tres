@@ -8,65 +8,38 @@
 
 [sub_resource type="Resource" id="Resource_klx2d"]
 script = ExtResource("1_sd7yn")
-AtFrame = 0
 SourceAnimation = "Hit_Air_Weak"
-LimitRange = false
-AnimationRange = Vector2i(0, 0)
-Offset = Vector3(0, 0, 0)
 metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
 
 [sub_resource type="Resource" id="2"]
 script = ExtResource("2")
-animationStage = 0
-Frame = 0
-HitboxIndex = 0
 
 [sub_resource type="Resource" id="Resource_b6fs7"]
 script = ExtResource("3")
-Frame = 0
-UseLateralSpeed = false
-LateralSpeed = 0
-UseVerticalSpeed = false
-VerticalSpeed = 0
 UseGravity = true
-ResetGravity = false
 Gravity = 200000
-UseLateralInertia = false
-UseVerticalInertia = false
-UseHorizontalInput = false
-UseVerticalInput = false
 
 [sub_resource type="Resource" id="Resource_jlgvt"]
 script = ExtResource("4_i4iwo")
 StateIndex = 7
 Condition = 1
-AtFrame = -1
-DistanceArea = Vector2i(0, 999999)
 
 [sub_resource type="Resource" id="Resource_pd3ux"]
 script = ExtResource("4_i4iwo")
 StateIndex = 8
 Condition = 4
-AtFrame = -1
-DistanceArea = Vector2i(0, 999999)
 
 [sub_resource type="Resource" id="Resource_1m76o"]
 script = ExtResource("4_i4iwo")
 StateIndex = 21
 Condition = 32
-AtFrame = -1
-DistanceArea = Vector2i(0, 999999)
 
 [resource]
 script = ExtResource("1")
 StateName = "Hit_Air_Weak"
+BaseStance = 2
 Type = 4
-OffTheGround = true
 Duration = 26
-Loop = false
-LoopFrames = Vector2i(0, 0)
-TurnState = -1
-HitStunFrameLimit = -1
 stateProperties = null
 statePhysics = [SubResource("Resource_b6fs7")]
 hitboxStates = [SubResource("2")]

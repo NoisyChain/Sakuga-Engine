@@ -9,30 +9,23 @@
 script = ExtResource("1_cpv61")
 ChangeMode = 1
 ChangeValue = 1
-RandomRange = -1
 
 [sub_resource type="Resource" id="Resource_gmgb4"]
 script = ExtResource("1_cpv61")
 ChangeMode = 1
 ChangeValue = 1
-RandomRange = -1
 
 [sub_resource type="Resource" id="Resource_2r0h2"]
 script = ExtResource("1_cpv61")
-ChangeMode = 0
-ChangeValue = 0
-RandomRange = -1
 
 [sub_resource type="Resource" id="Resource_jjs70"]
 script = ExtResource("2_etow4")
 Value = 1
-Mode = 0
 CompareMode = 3
 
 [sub_resource type="Resource" id="Resource_5lyqc"]
 script = ExtResource("2_etow4")
 Value = 1
-Mode = 0
 CompareMode = 3
 
 [resource]
@@ -40,30 +33,13 @@ script = ExtResource("2_4p11v")
 MoveName = "Forward Air Jump"
 MoveState = 4
 Inputs = ExtResource("1_alim2")
-SideChange = 0
-SuperGaugeRequired = 0
 BuildSuperGauge = 5
-HealthThreshold = Vector2i(0, 99999)
-SpendHealth = 0
 DistanceArea = Vector2i(0, 99999)
-IsSequenceFromStates = PackedInt32Array()
-IgnoreStates = PackedInt32Array()
-CancelsTo = PackedInt32Array()
-KaraCancelsTo = PackedInt32Array()
 buttonChargeSequence = null
 ExtraVariablesRequirement = Array[Object]([SubResource("Resource_jjs70"), SubResource("Resource_5lyqc")])
 ExtraVariablesChange = Array[Object]([SubResource("Resource_m2dhn"), SubResource("Resource_gmgb4"), SubResource("Resource_2r0h2")])
-MoveEnd = 0
-MoveEndState = -1
-ChangeStance = -1
-FrameLimit = -1
-SuperFlash = 0
 Priority = 4
 CanBeOverrided = true
 CanOverrideToSelf = true
 IgnoreSamePriority = false
-InterruptCornerPushback = false
-PriorityBuffer = false
-WaitForNullStates = true
-UseOnGround = false
 UseOnAir = true

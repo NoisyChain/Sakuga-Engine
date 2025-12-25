@@ -6,8 +6,8 @@ namespace SakugaEngine.Resources
     public partial class FighterState : Resource
     {
         [Export] public string StateName;
+        [Export] public Global.MasterStance BaseStance;
         [Export] public Global.StateType Type;
-        [Export] public bool OffTheGround;
         [Export] public int Duration;
         [Export] public bool Loop;
         [Export] public Vector2I LoopFrames;

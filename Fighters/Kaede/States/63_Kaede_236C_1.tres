@@ -9,17 +9,11 @@
 
 [sub_resource type="Resource" id="Resource_6sel8"]
 script = ExtResource("1_cmw0w")
-AtFrame = 0
 SourceAnimation = "236C_1"
-LimitRange = false
-AnimationRange = Vector2i(0, 0)
-Offset = Vector3(0, 0, 0)
 metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
 
 [sub_resource type="Resource" id="Resource_i1dcw"]
 script = ExtResource("1_i8ccd")
-animationStage = 0
-Frame = 0
 HitboxIndex = 20
 
 [sub_resource type="Resource" id="Resource_ocw0y"]
@@ -36,33 +30,15 @@ HitboxIndex = 3
 
 [sub_resource type="Resource" id="Resource_mpd63"]
 script = ExtResource("3_iybha")
-Frame = 0
 UseLateralSpeed = true
 LateralSpeed = 50000
 UseVerticalSpeed = true
-VerticalSpeed = 0
-UseGravity = false
-ResetGravity = false
-Gravity = 0
-UseLateralInertia = false
-UseVerticalInertia = false
-UseHorizontalInput = false
-UseVerticalInput = false
 
 [sub_resource type="Resource" id="Resource_ijji8"]
 script = ExtResource("3_iybha")
 Frame = 12
 UseLateralSpeed = true
-LateralSpeed = 0
 UseVerticalSpeed = true
-VerticalSpeed = 0
-UseGravity = false
-ResetGravity = false
-Gravity = 0
-UseLateralInertia = false
-UseVerticalInertia = false
-UseHorizontalInput = false
-UseVerticalInput = false
 
 [sub_resource type="Resource" id="Resource_vikdw"]
 script = ExtResource("4_mcnls")
@@ -72,25 +48,17 @@ Properties = 8
 [sub_resource type="Resource" id="Resource_3tcab"]
 script = ExtResource("4_mcnls")
 Frame = 25
-Properties = 0
 
 [sub_resource type="Resource" id="Resource_1k4x6"]
 script = ExtResource("4_cenjs")
 StateIndex = 0
 Condition = 1
-AtFrame = -1
-DistanceArea = Vector2i(0, 999999)
 
 [resource]
 script = ExtResource("2_6lmbh")
 StateName = "236C_1"
 Type = 2
-OffTheGround = false
 Duration = 29
-Loop = false
-LoopFrames = Vector2i(0, 0)
-TurnState = -1
-HitStunFrameLimit = -1
 stateProperties = Array[Object]([SubResource("Resource_vikdw"), SubResource("Resource_3tcab")])
 statePhysics = Array[Object]([SubResource("Resource_mpd63"), SubResource("Resource_ijji8")])
 hitboxStates = Array[Object]([SubResource("Resource_i1dcw"), SubResource("Resource_ocw0y"), SubResource("Resource_kwuew")])

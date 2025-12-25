@@ -5,7 +5,8 @@ using SakugaEngine.Resources;
 namespace SakugaEngine
 {
 	public partial class SakugaActor : SakugaNode
-	{
+    {
+        [Export] public DataContainer Data;
 		[ExportCategory("Components")]
 		[Export] public PhysicsBody Body;
 		[Export] public InputManager Inputs;
@@ -17,11 +18,6 @@ namespace SakugaEngine
 
 		[ExportCategory("Visuals")]
         [Export] protected Node3D[] Graphics;
-
-        [ExportCategory("Lists")]
-        [Export] public SpawnsList VFXList;
-        [Export] public SoundsList SFXList;
-        [Export] public SoundsList VoicesList;
 
         protected bool EventExecuted;
 
@@ -36,6 +32,10 @@ namespace SakugaEngine
                 g.Scale = new Vector3(Body.PlayerSide, 1, 1);
             Animator.ViewAnimations();
         }
+
+        public bool IsGroundState() => Animator.GetCurrentState().BaseStance == Global.MasterStance.GROUND;
+        public bool IsCrouchState() => Animator.GetCurrentState().BaseStance == Global.MasterStance.CROUCH;
+        public bool IsAirState() => Animator.GetCurrentState().BaseStance == Global.MasterStance.AIR;
 
 		public void UpdateFighterPhysics()
         {
@@ -77,7 +77,11 @@ namespace SakugaEngine
                             Body.SetVerticalVelocity(Animator.GetCurrentState().statePhysics[i].VerticalSpeed * InputSide);
                     }
                     if (Animator.GetCurrentState().statePhysics[i].UseGravity)
-                        Body.AddGravity(Animator.GetCurrentState().statePhysics[i].Gravity);
+                    {
+                        int CurrentGravity = Animator.GetCurrentState().statePhysics[i].ResetGravity ?
+                                        Global.DefaultGravity : Animator.GetCurrentState().statePhysics[i].Gravity;
+                        Body.AddGravity(CurrentGravity);
+                    }
                 }
             }
         }
@@ -119,37 +123,43 @@ namespace SakugaEngine
                 
                 byte conditions = (byte)Animator.GetCurrentState().stateTransitions[i].Condition;
                 if (conditions == 0) return;
+
+                bool flag1 = (conditions & (byte)Global.TransitionCondition.STATE_END) != 0;
+                bool flag2 = (conditions & (byte)Global.TransitionCondition.AT_FRAME) != 0;
+                bool flag3 = (conditions & (byte)Global.TransitionCondition.ON_GROUND) != 0;
+                bool flag4 = (conditions & (byte)Global.TransitionCondition.ON_WALLS) != 0;
+                bool flag5 = (conditions & (byte)Global.TransitionCondition.ON_FALL) != 0;
+                bool flag6 = (conditions & (byte)Global.TransitionCondition.ON_LIFE_END) != 0;
+                bool flag7 = (conditions & (byte)Global.TransitionCondition.ON_INPUT_COMMAND) != 0;
+                bool flag8 = (conditions & (byte)Global.TransitionCondition.ON_DISTANCE) != 0;
+
+                bool stateEnded = Animator.StateEnded();
+                bool isAtFrame = Animator.Frame == Animator.GetCurrentState().stateTransitions[i].AtFrame;
+                bool isOnGround = Body.IsOnGround && Body.FixedVelocity.Y <= 0;
+                bool isOnWall = Body.IsOnWall;
+                bool isFalling = Body.IsFalling;
+                bool isDead = LifeEnded();
+                bool validInput = Inputs.CheckMotionInputs(Animator.GetCurrentState().stateTransitions[i].Inputs);
+                int distance = Global.Distance(FighterReference().GetOpponent().Body.FixedPosition, Body.FixedPosition).X;
+                bool isDistanceRange = distance >= Animator.GetCurrentState().stateTransitions[i].DistanceArea.X &&
+                                        distance <= Animator.GetCurrentState().stateTransitions[i].DistanceArea.Y;
                 
                 //Condition 1: State End
-                bool c1 = (conditions & (byte)Global.TransitionCondition.STATE_END) == 0 ||
-                        ((conditions & (byte)Global.TransitionCondition.STATE_END) != 0 && 
-                        Animator.Frame >= Animator.GetCurrentState().Duration - 1);
+                bool c1 = !flag1 || flag1 && stateEnded;
                 //Condition 2: At Frame
-                bool c2 = (conditions & (byte)Global.TransitionCondition.AT_FRAME) == 0 ||
-                    ((conditions & (byte)Global.TransitionCondition.AT_FRAME) != 0 && 
-                    Animator.Frame == Animator.GetCurrentState().stateTransitions[i].AtFrame);
+                bool c2 = !flag2 || flag2 && isAtFrame;
                 //Condition 3: On Ground
-                bool c3 = (conditions & (byte)Global.TransitionCondition.ON_GROUND) == 0 ||
-                    ((conditions & (byte)Global.TransitionCondition.ON_GROUND) != 0 && Body.IsOnGround && Body.FixedVelocity.Y <= 0);
+                bool c3 = !flag3 || flag3 && isOnGround;
                 //Condition 4: On Walls
-                bool c4 = (conditions & (byte)Global.TransitionCondition.ON_WALLS) == 0 ||
-                    ((conditions & (byte)Global.TransitionCondition.ON_WALLS) != 0 && Body.IsOnWall);
+                bool c4 = !flag4 || flag4 && isOnWall;
                 //Condition 5: On Fall
-                bool c5 = (conditions & (byte)Global.TransitionCondition.ON_FALL) == 0 ||
-                    ((conditions & (byte)Global.TransitionCondition.ON_FALL) != 0 && Body.IsFalling);
+                bool c5 = !flag5 || flag5 && isFalling;
                 //Condition 6: On Life End
-                bool c6 = (conditions & (byte)Global.TransitionCondition.ON_LIFE_END) == 0 ||
-                    ((conditions & (byte)Global.TransitionCondition.ON_LIFE_END) != 0 && LifeEnded());
+                bool c6 = !flag6 || flag6 && isDead;
                 //Condition 7: On Input Command
-                bool c7 = (conditions & (byte)Global.TransitionCondition.ON_INPUT_COMMAND) == 0 ||
-                    ((conditions & (byte)Global.TransitionCondition.ON_INPUT_COMMAND) != 0 && 
-                    Inputs.CheckMotionInputs(Animator.GetCurrentState().stateTransitions[i].Inputs));
+                bool c7 = !flag7 || flag7 && validInput;
                 //Condition 8: On Distance
-                int distance = Global.Distance(FighterReference().GetOpponent().Body.FixedPosition, Body.FixedPosition).X;
-                bool c8 = (conditions & (byte)Global.TransitionCondition.ON_DISTANCE) == 0 ||
-                    ((conditions & (byte)Global.TransitionCondition.ON_DISTANCE) != 0 && 
-                    distance >= Animator.GetCurrentState().stateTransitions[i].DistanceArea.X &&
-                    distance <= Animator.GetCurrentState().stateTransitions[i].DistanceArea.Y);
+                bool c8 = !flag8 || flag8 && isDistanceRange;
 
                 bool ValidTransition = c1 && c2 && c3 && c4 && c5 && c6 && c7 && c8;
                 if (ValidTransition) Animator.PlayState(Animator.GetCurrentState().stateTransitions[i].StateIndex);
@@ -263,8 +273,8 @@ namespace SakugaEngine
 
         public void SoundEvents(PlaySoundAnimationEvent soundEvent)
         {
-            if (SFXList == null) return;
-            if (VoicesList == null) return;
+            if (Data.SFXList == null) return;
+            if (Data.VoiceLines == null) return;
             
             int ind = soundEvent.IsRandom ? Global.RNG.Next(soundEvent.Index, soundEvent.Range) : soundEvent.Index;
             if (soundEvent.FromExtraVariable >= 0)
@@ -273,10 +283,10 @@ namespace SakugaEngine
             switch ((int)soundEvent.SoundType)
             {
                 case 0:
-                    selectedSound = SFXList.Sounds[ind];
+                    selectedSound = Data.SFXList.Sounds[ind];
                     break;
                 case 1:
-                    selectedSound = VoicesList.Sounds[ind];
+                    selectedSound = Data.VoiceLines.Sounds[ind];
                     break;
             }
             Sounds[soundEvent.Source].QueueSound(selectedSound);

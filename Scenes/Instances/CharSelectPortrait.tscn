@@ -1,6 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://dw8jr0o1wc7hl"]
-
-[ext_resource type="Texture2D" uid="uid://bl2kh1qcrge2w" path="res://Fighters/Anippe/Models/Anippe_Portrait_TEMP.png" id="1_6jmiu"]
+[gd_scene format=3 uid="uid://dw8jr0o1wc7hl"]
 
 [node name="Control" type="TextureRect"]
 anchors_preset = 8
@@ -16,12 +14,10 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-texture = ExtResource("1_6jmiu")
 expand_mode = 1
 stretch_mode = 4
 
 [node name="Frame" type="TextureRect" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

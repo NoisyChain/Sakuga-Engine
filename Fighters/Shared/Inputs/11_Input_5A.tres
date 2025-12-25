@@ -6,10 +6,7 @@
 
 [sub_resource type="Resource" id="Resource_6t0yt"]
 script = ExtResource("1_i82rv")
-Directional = 0
-DirectionalMode = 0
 Buttons = 1
-ButtonMode = 0
 
 [sub_resource type="Resource" id="Resource_4uo5i"]
 script = ExtResource("2_iyydw")
@@ -19,6 +16,3 @@ Inputs = Array[Object]([SubResource("Resource_6t0yt")])
 script = ExtResource("3_y85aa")
 ValidInputs = Array[Object]([SubResource("Resource_4uo5i")])
 AbsoluteDirection = true
-InputBuffer = 8
-DirectionalChargeLimit = 0
-ButtonChargeLimit = 0

@@ -45,7 +45,6 @@
 script = ExtResource("9")
 IsDamagePersistent = true
 IsRoundPersistent = true
-NeutralState = 0
 Moves = Array[Object]([ExtResource("1_8fbso"), ExtResource("2_2lsvi"), ExtResource("3_6kbo2"), ExtResource("4_tbqt5"), ExtResource("5_73twn"), ExtResource("6_6ue60"), ExtResource("7_6m2w4"), ExtResource("8_yqhy4"), ExtResource("9_euwau"), ExtResource("10_wd1qc"), ExtResource("11_ukwti"), ExtResource("11_67cbe"), ExtResource("12_7ub3m"), ExtResource("13_my6eh"), ExtResource("14_1y84m"), ExtResource("15_d1exm"), ExtResource("17_ac1gc"), ExtResource("18_ms8a6"), ExtResource("18_l7ox0"), ExtResource("19_do64y"), ExtResource("20_2lesk"), ExtResource("21_kox32"), ExtResource("22_j4ow5"), ExtResource("23_w3q8g"), ExtResource("24_r1o0n"), ExtResource("25_wm31i"), ExtResource("26_whrma"), ExtResource("27_u6dhq"), ExtResource("29_s04dg"), ExtResource("30_qxr8y"), ExtResource("31_cxwv4"), ExtResource("32_32yfm"), ExtResource("33_wutca"), ExtResource("34_ilijk"), ExtResource("35_8yr8l"), ExtResource("36_3jsdh"), ExtResource("37_t24cr"), ExtResource("38_ikbmw"), ExtResource("39_7g1w4")])
 HitReactions = PackedInt32Array(17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 61)
 GroundBlockInitialState = 33

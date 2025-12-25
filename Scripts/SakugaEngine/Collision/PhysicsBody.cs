@@ -7,14 +7,12 @@ namespace SakugaEngine.Collision
     [GlobalClass]
     public partial class PhysicsBody : Node
     {
+        [Export] private SakugaActor owner;
         [Export] public bool IsStatic;
         [Export] public bool StayOnBounds;
         [Export] public bool IgnoreWalls;
-        [Export] public int FixedAcceleration;
-        [Export] public int FixedDeceleration;
-        [Export] public int FixedFriction;
         [Export] public int HitboxesLimit = 16;
-        [Export] public HitboxSettings[] HitboxPresets;
+
         public IDamage Parent;
         public uint ID;
         public Collider Pushbox;
@@ -67,20 +65,20 @@ namespace SakugaEngine.Collision
             if (newVelocity != 0 && Mathf.Sign(newVelocity) > 0)
             {
                 if (FixedVelocity.X < 0)
-                    FixedVelocity.X += FixedFriction / Global.TicksPerSecond;
+                    FixedVelocity.X += Global.DefaultFriction / Global.TicksPerSecond;
                 else if (FixedVelocity.X < absVelocity)
-                    FixedVelocity.X += FixedAcceleration / Global.TicksPerSecond;
+                    FixedVelocity.X += Global.DefaultAcceleration / Global.TicksPerSecond;
                     
             }
             else if (newVelocity != 0 && Mathf.Sign(newVelocity) < 0)
             {
                 if (FixedVelocity.X > 0)
-                    FixedVelocity.X -= FixedFriction / Global.TicksPerSecond;
+                    FixedVelocity.X -= Global.DefaultFriction / Global.TicksPerSecond;
                 else if (FixedVelocity.X > -absVelocity)
-                    FixedVelocity.X -= FixedAcceleration / Global.TicksPerSecond;
+                    FixedVelocity.X -= Global.DefaultAcceleration / Global.TicksPerSecond;
             }
             else
-                FixedVelocity.X -= Mathf.Min(Mathf.Abs(FixedVelocity.X), FixedDeceleration / Global.TicksPerSecond) * Mathf.Sign(FixedVelocity.X);
+                FixedVelocity.X -= Mathf.Min(Mathf.Abs(FixedVelocity.X), Global.DefaultDeceleration / Global.TicksPerSecond) * Mathf.Sign(FixedVelocity.X);
         }
         public void AddVerticalAcceleration(int newVelocity)
         {
@@ -88,20 +86,20 @@ namespace SakugaEngine.Collision
             if (newVelocity != 0 && Mathf.Sign(newVelocity) > 0)
             {
                 if (FixedVelocity.Y < 0)
-                    FixedVelocity.Y += FixedFriction / Global.TicksPerSecond;
+                    FixedVelocity.Y += Global.DefaultFriction / Global.TicksPerSecond;
                 else if (FixedVelocity.Y < absVelocity)
-                    FixedVelocity.Y += FixedAcceleration / Global.TicksPerSecond;
+                    FixedVelocity.Y += Global.DefaultAcceleration / Global.TicksPerSecond;
                     
             }
             else if (newVelocity != 0 && Mathf.Sign(newVelocity) < 0)
             {
                 if (FixedVelocity.Y > 0)
-                    FixedVelocity.Y -= FixedFriction / Global.TicksPerSecond;
+                    FixedVelocity.Y -= Global.DefaultFriction / Global.TicksPerSecond;
                 else if (FixedVelocity.Y > -absVelocity)
-                    FixedVelocity.Y -= FixedAcceleration / Global.TicksPerSecond;
+                    FixedVelocity.Y -= Global.DefaultAcceleration / Global.TicksPerSecond;
             }
             else
-                FixedVelocity.Y -= Mathf.Min(Mathf.Abs(FixedVelocity.Y), FixedDeceleration / Global.TicksPerSecond) * Mathf.Sign(FixedVelocity.Y);
+                FixedVelocity.Y -= Mathf.Min(Mathf.Abs(FixedVelocity.Y), Global.DefaultDeceleration / Global.TicksPerSecond) * Mathf.Sign(FixedVelocity.Y);
         }
         public void AddGravity(int gravity)
         {
@@ -171,7 +169,7 @@ namespace SakugaEngine.Collision
             }
         }
 
-        public HitboxSettings GetCurrentHitbox() => HitboxPresets[CurrentHitbox];
+        public HitboxSettings GetCurrentHitbox() => owner.Data.Hitboxes[CurrentHitbox];
 
         public void Serialize(BinaryWriter bw)
         {

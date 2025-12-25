@@ -7,10 +7,7 @@ namespace SakugaEngine
     [GlobalClass]
     public partial class SakugaVariables : Node
     {
-        [ExportCategory("Main")]
-        [Export] public int MaxHealth = 10000;
-        [Export] public int MaxSuperGauge = 10000;
-
+        [Export] protected SakugaActor owner;
         [ExportCategory("Extra Variables")]
         [Export] public ExtraVariable[] ExtraVariables;
 
@@ -20,7 +17,7 @@ namespace SakugaEngine
 
         public virtual void Initialize()
         {
-            CurrentHealth = MaxHealth;
+            CurrentHealth = owner.Data.MaxHealth;
             CurrentSuperGauge = 0;
             SuperArmor = 0;
 
@@ -34,25 +31,25 @@ namespace SakugaEngine
         public void AddHealth(int value)
         {
             CurrentHealth += value;
-            CurrentHealth = Mathf.Clamp(CurrentHealth, 0, MaxHealth);
+            CurrentHealth = Mathf.Clamp(CurrentHealth, 0, owner.Data.MaxHealth);
         }
 
         public void RemoveHealth(int value)
         {
             CurrentHealth -= value;
-            CurrentHealth = Mathf.Clamp(CurrentHealth, 0, MaxHealth);
+            CurrentHealth = Mathf.Clamp(CurrentHealth, 0, owner.Data.MaxHealth);
         }
 
         public void AddSuperGauge(int value)
         {
             CurrentSuperGauge += value;
-            CurrentSuperGauge = Mathf.Clamp(CurrentSuperGauge, 0, MaxSuperGauge);
+            CurrentSuperGauge = Mathf.Clamp(CurrentSuperGauge, 0, owner.Data.MaxSuperGauge);
         }
 
         public void RemoveSuperGauge(int value)
         {
             CurrentSuperGauge -= value;
-            CurrentSuperGauge = Mathf.Clamp(CurrentSuperGauge, 0, MaxSuperGauge);
+            CurrentSuperGauge = Mathf.Clamp(CurrentSuperGauge, 0, owner.Data.MaxSuperGauge);
         }
 
         public void RemoveSuperArmor(sbyte value)

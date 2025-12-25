@@ -5,29 +5,17 @@
 
 [sub_resource type="Resource" id="Resource_pvqg3"]
 script = ExtResource("2_kncu8")
-Frame = 0
 UseLateralSpeed = true
 LateralSpeed = -17000
 UseVerticalSpeed = true
-VerticalSpeed = 0
-UseGravity = false
-ResetGravity = false
-Gravity = 0
-UseLateralInertia = false
-UseVerticalInertia = false
-UseHorizontalInput = false
-UseVerticalInput = false
 
 [resource]
 script = ExtResource("1_bhdhx")
-StateName = ""
 Type = 1
-OffTheGround = false
 Duration = 80
 Loop = true
 LoopFrames = Vector2i(0, 79)
 TurnState = 0
-HitStunFrameLimit = -1
 stateProperties = null
 statePhysics = Array[Object]([SubResource("Resource_pvqg3")])
 hitboxStates = null
@@ -35,4 +23,3 @@ animationEvents = null
 throwPivot = null
 stateTransitions = Array[Object]([])
 animationSettings = null
-AIFlags = 0

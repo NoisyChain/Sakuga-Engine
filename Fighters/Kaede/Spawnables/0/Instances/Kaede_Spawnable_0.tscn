@@ -1,14 +1,9 @@
-[gd_scene load_steps=29 format=3 uid="uid://domhsm5n4i2q1"]
+[gd_scene load_steps=23 format=3 uid="uid://domhsm5n4i2q1"]
 
 [ext_resource type="Script" uid="uid://ocvrnnvvf610" path="res://Scripts/SakugaEngine/Components/SakugaSpawnable.cs" id="1_dhydb"]
-[ext_resource type="Resource" uid="uid://b6a4cqdykhhg" path="res://Fighters/Shared/Shared_VFXList.tres" id="2_mmp44"]
-[ext_resource type="Resource" uid="uid://k31pv0ejfv2s" path="res://Fighters/Shared/Shared_SFXList.tres" id="3_mac18"]
+[ext_resource type="Resource" uid="uid://blg5tsr3o8aai" path="res://Fighters/Kaede/Spawnables/0/Kaede_Spawnable1_Data.tres" id="2_0aw3w"]
 [ext_resource type="Script" uid="uid://cqd8ai3a40alf" path="res://Scripts/SakugaEngine/Utils/FOV_Correction.cs" id="3_vniop"]
-[ext_resource type="Resource" uid="uid://cwuwbygqhrjcb" path="res://Fighters/Kaede/Spawnables/0/States/0_Spawn.tres" id="4_a4ayh"]
 [ext_resource type="Script" uid="uid://bx452hpssiy38" path="res://Scripts/SakugaEngine/Components/FrameAnimator.cs" id="4_ao37v"]
-[ext_resource type="Resource" uid="uid://c8h8jltu6u5pb" path="res://Fighters/Shared/Shared_VoiceLines.tres" id="4_vrrx0"]
-[ext_resource type="Resource" uid="uid://iwa20g1seshl" path="res://Fighters/Kaede/Spawnables/0/States/1_Travel.tres" id="5_xqrih"]
-[ext_resource type="Resource" uid="uid://bgjd35gpl3n3l" path="res://Fighters/Kaede/Spawnables/0/States/2_Death.tres" id="6_1hw44"]
 [ext_resource type="Texture2D" uid="uid://dho2rxfy6hkug" path="res://Fighters/Kaede/Spawnables/0/Sprites/1210-5.png" id="7_1jm7p"]
 [ext_resource type="Texture2D" uid="uid://buaxs0u1qu3bu" path="res://Fighters/Kaede/Spawnables/0/Sprites/1210-0.png" id="8_20w5q"]
 [ext_resource type="Texture2D" uid="uid://ceu1vxkao34tk" path="res://Fighters/Kaede/Spawnables/0/Sprites/1210-1.png" id="9_qyvgt"]
@@ -20,7 +15,6 @@
 [ext_resource type="Texture2D" uid="uid://dlsfasp5w35ob" path="res://Fighters/Kaede/Spawnables/0/Sprites/1210-8.png" id="15_exb3l"]
 [ext_resource type="Texture2D" uid="uid://33q2at6e5oq7" path="res://Fighters/Kaede/Spawnables/0/Sprites/1211-0.png" id="16_g0add"]
 [ext_resource type="Script" uid="uid://3uu6r0mhj3p3" path="res://Scripts/SakugaEngine/Components/SoundQueue.cs" id="18_d0kas"]
-[ext_resource type="Resource" uid="uid://dyam6gxn4slhs" path="res://Fighters/Kaede/Spawnables/0/Hitboxes/0_Hitbox_Spawnable_Basic.tres" id="230_by1ut"]
 [ext_resource type="PackedScene" uid="uid://dduf0jsq56ggk" path="res://Scenes/Instances/HitboxViewer.tscn" id="281_wh8kr"]
 [ext_resource type="Script" uid="uid://hg0vcp1gy2ny" path="res://Scripts/SakugaEngine/Collision/PhysicsBody.cs" id="282_or0ge"]
 [ext_resource type="Script" uid="uid://cmq3cp1n0copp" path="res://Scripts/SakugaEngine/Components/FrameTimer.cs" id="302_0eu8l"]
@@ -128,22 +122,21 @@ DieOnGround = true
 DieOnWalls = true
 DieOnHit = true
 Deflectable = true
+Data = ExtResource("2_0aw3w")
 Body = NodePath("PhysicsBody")
 Animator = NodePath("Graphics/Mesh")
 Sounds = [NodePath("Sounds/SFX_0")]
 Graphics = [NodePath("Graphics/Mesh/ProjectileGraphics")]
-VFXList = ExtResource("2_mmp44")
-SFXList = ExtResource("3_mac18")
-VoicesList = ExtResource("4_vrrx0")
 
 [node name="Graphics" type="Node3D" parent="."]
 script = ExtResource("3_vniop")
+intensity = 0.25
 
-[node name="Mesh" type="Node3D" parent="Graphics" node_paths=PackedStringArray("players")]
+[node name="Mesh" type="Node3D" parent="Graphics" node_paths=PackedStringArray("owner", "players", "OffsetNode")]
 script = ExtResource("4_ao37v")
+owner = NodePath("../..")
 players = [NodePath("ProjectileGraphics/AnimationPlayer")]
-prefix = PackedStringArray("")
-States = Array[Object]([ExtResource("4_a4ayh"), ExtResource("5_xqrih"), ExtResource("6_1hw44")])
+OffsetNode = NodePath("..")
 
 [node name="ProjectileGraphics" type="Node3D" parent="Graphics/Mesh"]
 
@@ -169,14 +162,11 @@ body = NodePath("../PhysicsBody")
 [node name="SFX_0" type="AudioStreamPlayer3D" parent="Sounds"]
 script = ExtResource("18_d0kas")
 
-[node name="PhysicsBody" type="Node" parent="."]
+[node name="PhysicsBody" type="Node" parent="." node_paths=PackedStringArray("owner")]
 script = ExtResource("282_or0ge")
+owner = NodePath("..")
 StayOnBounds = true
-FixedAcceleration = 35000
-FixedDeceleration = 40000
-FixedFriction = 75000
 HitboxesLimit = 3
-HitboxPresets = Array[Object]([ExtResource("230_by1ut")])
 
 [node name="Timers" type="Node" parent="."]
 

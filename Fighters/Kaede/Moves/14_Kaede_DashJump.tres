@@ -6,51 +6,25 @@
 
 [sub_resource type="Resource" id="Resource_ftr5y"]
 script = ExtResource("1_22eis")
-ChangeMode = 0
-ChangeValue = 0
-RandomRange = -1
 
 [sub_resource type="Resource" id="Resource_7mou8"]
 script = ExtResource("1_22eis")
-ChangeMode = 0
-ChangeValue = 0
-RandomRange = -1
 
 [sub_resource type="Resource" id="Resource_gr7r5"]
 script = ExtResource("1_22eis")
-ChangeMode = 0
 ChangeValue = 1
-RandomRange = -1
 
 [resource]
 script = ExtResource("2_d667q")
 MoveName = "Dash Jump"
 MoveState = 6
 Inputs = ExtResource("1_hdl2k")
-SideChange = 0
-SuperGaugeRequired = 0
 BuildSuperGauge = 6
-HealthThreshold = Vector2i(0, 99999)
-SpendHealth = 0
 DistanceArea = Vector2i(0, 99999)
 IsSequenceFromStates = PackedInt32Array(13)
-IgnoreStates = PackedInt32Array()
-CancelsTo = PackedInt32Array()
-KaraCancelsTo = PackedInt32Array()
 buttonChargeSequence = null
 ExtraVariablesRequirement = Array[Object]([])
 ExtraVariablesChange = Array[Object]([SubResource("Resource_ftr5y"), SubResource("Resource_7mou8"), SubResource("Resource_gr7r5")])
-MoveEnd = 0
-MoveEndState = -1
-ChangeStance = -1
-FrameLimit = -1
-SuperFlash = 0
 Priority = 3
 CanBeOverrided = true
-CanOverrideToSelf = false
-IgnoreSamePriority = true
-InterruptCornerPushback = false
-PriorityBuffer = false
-WaitForNullStates = true
 UseOnGround = true
-UseOnAir = false

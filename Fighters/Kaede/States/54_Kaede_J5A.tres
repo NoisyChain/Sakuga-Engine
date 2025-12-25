@@ -8,17 +8,11 @@
 
 [sub_resource type="Resource" id="Resource_i2c2m"]
 script = ExtResource("1_g42id")
-AtFrame = 0
 SourceAnimation = "j_5A"
-LimitRange = false
-AnimationRange = Vector2i(0, 0)
-Offset = Vector3(0, 0, 0)
 metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
 
 [sub_resource type="Resource" id="Resource_almkl"]
 script = ExtResource("2")
-animationStage = 0
-Frame = 0
 HitboxIndex = 13
 
 [sub_resource type="Resource" id="Resource_isvvb"]
@@ -31,47 +25,30 @@ HitboxIndex = 14
 script = ExtResource("2")
 animationStage = 2
 Frame = 7
-HitboxIndex = 0
 
 [sub_resource type="Resource" id="5"]
 script = ExtResource("3")
-Frame = 0
-UseLateralSpeed = false
-LateralSpeed = 0
-UseVerticalSpeed = false
-VerticalSpeed = 0
 UseGravity = true
-ResetGravity = false
 Gravity = 200000
-UseLateralInertia = false
-UseVerticalInertia = false
-UseHorizontalInput = false
-UseVerticalInput = false
 
 [sub_resource type="Resource" id="Resource_w8r8c"]
 script = ExtResource("4_vs6qy")
 StateIndex = 7
 Condition = 1
-AtFrame = -1
 DistanceArea = Vector2i(0, 99999)
 
 [sub_resource type="Resource" id="Resource_t2la3"]
 script = ExtResource("4_vs6qy")
 StateIndex = 8
 Condition = 4
-AtFrame = -1
 DistanceArea = Vector2i(0, 99999)
 
 [resource]
 script = ExtResource("1")
 StateName = "j_5A"
+BaseStance = 2
 Type = 2
-OffTheGround = false
 Duration = 15
-Loop = false
-LoopFrames = Vector2i(0, 0)
-TurnState = -1
-HitStunFrameLimit = -1
 stateProperties = null
 statePhysics = [SubResource("5")]
 hitboxStates = [SubResource("Resource_almkl"), SubResource("Resource_isvvb"), SubResource("4")]
