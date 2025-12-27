@@ -441,7 +441,6 @@ tint_under = Color(0.509804, 0.509804, 0.509804, 1)
 tint_progress = Color(0.301961, 0.745098, 0.243137, 1)
 
 [node name="TrainingInfo" type="Control" parent="GameHUD_Foreground"]
-visible = false
 anchors_preset = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
