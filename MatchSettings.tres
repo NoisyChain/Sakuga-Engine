@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="MatchSettings" load_steps=8 format=3 uid="uid://c320twmibeytx"]
+
+[ext_resource type="Resource" uid="uid://cael5gk6lucpo" path="res://GameModes/GM_Arcade.tres" id="1_nhb7f"]
+[ext_resource type="Script" uid="uid://uuxc0vny3l5x" path="res://Scripts/SakugaEngine/Resources/MatchSettings.cs" id="1_oyneo"]
+[ext_resource type="Resource" uid="uid://yxnfsmpj1d2d" path="res://GameModes/GM_Versus.tres" id="2_xs2pd"]
+[ext_resource type="Resource" uid="uid://cpbx0rea3ud0k" path="res://GameModes/GM_Online.tres" id="3_lmfa8"]
+[ext_resource type="Resource" uid="uid://dtmnvy5026dqe" path="res://GameModes/GM_Training.tres" id="4_wa1jn"]
+[ext_resource type="Resource" uid="uid://bfdtyaj07885k" path="res://GameModes/GM_Replay.tres" id="5_j0byi"]
+[ext_resource type="Resource" uid="uid://cowlfyoj6rfoj" path="res://GameModes/GM_Debug.tres" id="6_xldqt"]
+
+[resource]
+script = ExtResource("1_oyneo")
+GameModes = Array[Object]([ExtResource("1_nhb7f"), ExtResource("2_xs2pd"), ExtResource("3_lmfa8"), ExtResource("4_wa1jn"), ExtResource("5_j0byi"), ExtResource("6_xldqt")])
+SelectedMode = 5
+TimeLimit = 99
+P1SelectedDevice = 0
+metadata/_custom_type_script = "uid://uuxc0vny3l5x"

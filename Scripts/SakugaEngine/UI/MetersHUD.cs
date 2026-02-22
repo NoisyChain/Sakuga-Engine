@@ -13,6 +13,14 @@ namespace SakugaEngine.UI
 
         private int CurrentFrameAdvantage;
 
+        /*public override void _Ready()
+        {
+            P1Meter = GetNode<TextureProgressBar>("Meters/P1Meter");
+            P2Meter = GetNode<TextureProgressBar>("Meters/P2Meter");
+            P1TrainingInfo = GetNode<Label>("TrainingInfo/P1Info/Information");
+            P2TrainingInfo = GetNode<Label>("TrainingInfo/P2Info/Information");
+        }*/
+
         public void Setup(SakugaFighter[] fighters)
         {
             P1Meter.MaxValue = fighters[0].Data.MaxSuperGauge;

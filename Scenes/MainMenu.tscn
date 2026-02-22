@@ -1,8 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://dn8hnj6b1vxko"]
+[gd_scene load_steps=3 format=3 uid="uid://dn8hnj6b1vxko"]
 
 [ext_resource type="Script" uid="uid://c2l2206ftntd2" path="res://Scripts/SakugaEngine/UI/MainMenu.cs" id="1_tt5f1"]
+[ext_resource type="Resource" uid="uid://c320twmibeytx" path="res://MatchSettings.tres" id="2_853f1"]
 
-[node name="Control" type="Control" node_paths=PackedStringArray("firstButton")]
+[node name="Control" type="Control" node_paths=PackedStringArray("firstButton", "InputSelectMenu", "DeviceWidgetKeyboard1", "DeviceWidgetKeyboard2", "DeviceWidgetController1", "DeviceWidgetController2", "PivotP1", "PivotP2")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,24 +12,41 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(943, -251)
 script = ExtResource("1_tt5f1")
-firstButton = NodePath("VBoxContainer/Button_Online")
+firstButton = NodePath("MainMenu/VBoxContainer/Button_Online")
+matchSettings = ExtResource("2_853f1")
+InputSelectMenu = NodePath("InputSelection")
+DeviceWidgetKeyboard1 = NodePath("InputSelection/Widget_Key1")
+DeviceWidgetKeyboard2 = NodePath("InputSelection/Widget_Key2")
+DeviceWidgetController1 = NodePath("InputSelection/Widget_Joy1")
+DeviceWidgetController2 = NodePath("InputSelection/Widget_Joy2")
+PivotP1 = NodePath("InputSelection/Pivot_P1")
+PivotP2 = NodePath("InputSelection/Pivot_P2")
 
-[node name="Label" type="Label" parent="."]
+[node name="MainMenu" type="Control" parent="."]
 layout_mode = 1
-anchors_preset = -1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 216.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="MainMenu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -960.0
 offset_top = 50.0
-offset_right = -893.0
-offset_bottom = -635.0
+offset_right = -576.0
+offset_bottom = 89.399994
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(5, 5)
 text = "Sakuga Engine"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -43,32 +61,378 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="Button_Online" type="Button" parent="VBoxContainer"]
+[node name="Button_Online" type="Button" parent="MainMenu/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 11
+disabled = true
 text = " Online mode"
 
-[node name="Button_Arcade" type="Button" parent="VBoxContainer"]
+[node name="Button_Arcade" type="Button" parent="MainMenu/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 11
+disabled = true
 text = "Arcade mode"
 
-[node name="Button_Versus" type="Button" parent="VBoxContainer"]
+[node name="Button_Versus" type="Button" parent="MainMenu/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 11
 text = "Versus mode"
 
-[node name="Button_Training" type="Button" parent="VBoxContainer"]
+[node name="Button_Training" type="Button" parent="MainMenu/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 11
 text = "Training mode"
 
-[node name="Button_Replay" type="Button" parent="VBoxContainer"]
+[node name="Button_Replay" type="Button" parent="MainMenu/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 11
+disabled = true
 text = "Replay mode"
 
-[node name="Button_Quit" type="Button" parent="VBoxContainer"]
+[node name="Button_Quit" type="Button" parent="MainMenu/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 11
 text = "Quit Game"
+
+[node name="InputSelection" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="InputSelection"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.20392157)
+
+[node name="P1Back" type="ColorRect" parent="InputSelection"]
+layout_mode = 0
+offset_left = -408.0
+offset_top = -420.0
+offset_right = 378.0
+offset_bottom = 1032.4231
+rotation = 0.43633232
+color = Color(0, 0, 0, 1)
+
+[node name="P2Back" type="ColorRect" parent="InputSelection"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -320.00024
+offset_top = -93.999985
+offset_right = 465.99976
+offset_bottom = 1358.4231
+grow_horizontal = 0
+rotation = -0.43633232
+color = Color(0, 0, 0, 1)
+
+[node name="P1Selecting" type="Control" parent="InputSelection"]
+anchors_preset = 0
+offset_right = 194.0
+offset_bottom = 75.0
+
+[node name="ColorRect" type="ColorRect" parent="InputSelection/P1Selecting"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.265614, 0.478296, 1, 1)
+
+[node name="Label" type="Label" parent="InputSelection/P1Selecting"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 12.0
+offset_right = 143.0
+offset_bottom = 61.0
+theme_override_font_sizes/font_size = 35
+text = "Player 1"
+
+[node name="P2Selecting" type="Control" parent="InputSelection"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -194.0
+offset_bottom = 75.0
+grow_horizontal = 0
+
+[node name="ColorRect" type="ColorRect" parent="InputSelection/P2Selecting"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.806418, 0.171456, 0.231435, 1)
+
+[node name="Label" type="Label" parent="InputSelection/P2Selecting"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -149.0
+offset_top = 12.0
+offset_right = -14.0
+offset_bottom = 62.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 35
+text = "Player 2"
+horizontal_alignment = 2
+
+[node name="Label" type="Label" parent="InputSelection"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -228.0
+offset_right = 229.0
+offset_bottom = 110.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 80
+text = "Input Select"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Pivot_P1" type="Control" parent="InputSelection"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -90.0
+offset_bottom = -90.0
+grow_vertical = 2
+
+[node name="Pivot_P2" type="Control" parent="InputSelection"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -90.0
+offset_right = -320.0
+offset_bottom = -90.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Widget_Key1" type="Control" parent="InputSelection"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -297.40002
+offset_top = 1.5
+offset_right = 40.599976
+offset_bottom = 191.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.7, 0.7)
+pivot_offset = Vector2(169, 95)
+metadata/_edit_group_ = true
+
+[node name="ColorRect" type="ColorRect" parent="InputSelection/Widget_Key1"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -161.0
+offset_top = -84.0
+offset_right = 161.0
+offset_bottom = 84.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.3180198, 0.31801978, 0.31801975, 1)
+
+[node name="Label" type="Label" parent="InputSelection/Widget_Key1"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -37.0
+offset_top = -24.5
+offset_right = 37.0
+offset_bottom = 24.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+text = "Keyboard
+1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Widget_Key2" type="Control" parent="InputSelection"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -54.700012
+offset_top = 7.5
+offset_right = 283.30005
+offset_bottom = 197.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.7, 0.7)
+pivot_offset = Vector2(169, 95)
+metadata/_edit_group_ = true
+
+[node name="ColorRect" type="ColorRect" parent="InputSelection/Widget_Key2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -161.0
+offset_top = -84.0
+offset_right = 161.0
+offset_bottom = 84.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.3180198, 0.31801978, 0.31801975, 1)
+
+[node name="Label" type="Label" parent="InputSelection/Widget_Key2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -37.0
+offset_top = -24.5
+offset_right = 37.0
+offset_bottom = 24.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+text = "Keyboard
+2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Widget_Joy1" type="Control" parent="InputSelection"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -302.7
+offset_top = 151.0
+offset_right = 35.30005
+offset_bottom = 341.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.7, 0.7)
+pivot_offset = Vector2(169, 95)
+metadata/_edit_group_ = true
+
+[node name="ColorRect" type="ColorRect" parent="InputSelection/Widget_Joy1"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -161.0
+offset_top = -84.0
+offset_right = 161.0
+offset_bottom = 84.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.3180198, 0.31801978, 0.31801975, 1)
+
+[node name="Label" type="Label" parent="InputSelection/Widget_Joy1"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -37.0
+offset_top = -24.5
+offset_right = 37.0
+offset_bottom = 24.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+text = "Controller
+1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Widget_Joy2" type="Control" parent="InputSelection"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.0
+offset_top = 146.0
+offset_right = 286.0
+offset_bottom = 336.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.7, 0.7)
+pivot_offset = Vector2(169, 95)
+metadata/_edit_group_ = true
+
+[node name="ColorRect" type="ColorRect" parent="InputSelection/Widget_Joy2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -161.0
+offset_top = -84.0
+offset_right = 161.0
+offset_bottom = 84.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.3180198, 0.31801978, 0.31801975, 1)
+
+[node name="Label" type="Label" parent="InputSelection/Widget_Joy2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -37.0
+offset_top = -24.5
+offset_right = 37.0
+offset_bottom = 24.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+text = "Controller
+2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="MainMenu/VBoxContainer/Button_Online" to="." method="_OnOnlineButtonPressed"]
+[connection signal="pressed" from="MainMenu/VBoxContainer/Button_Arcade" to="." method="_OnArcadeButtonPressed"]
+[connection signal="pressed" from="MainMenu/VBoxContainer/Button_Versus" to="." method="_OnVersusButtonPressed"]
+[connection signal="pressed" from="MainMenu/VBoxContainer/Button_Training" to="." method="_OnTrainingButtonPressed"]
+[connection signal="pressed" from="MainMenu/VBoxContainer/Button_Replay" to="." method="_OnReplayButtonPressed"]
+[connection signal="pressed" from="MainMenu/VBoxContainer/Button_Quit" to="." method="_OnQuitButtonPressed"]

@@ -5,9 +5,11 @@ using SakugaEngine.Resources;
 public partial class SelectScreen : Node
 {
     [ExportCategory("Settings")]
+    [Export] private MatchSettings Match;
     [Export] private FighterList fightersList;
     [Export] private StageList stagesList;
     [Export] private BGMList songsList;
+    [Export(PropertyHint.Enum, "Versus,Player1,Player2")] private byte PlayerSelection;
     [Export(PropertyHint.Enum, "Character_Select,Stage_Select")] private byte selectionMode;
     [Export] private Control CharacterSelectMode;
     [Export] private Control StageSelectMode;
@@ -51,11 +53,21 @@ public partial class SelectScreen : Node
 
     private System.Random randomSelection;
 
+    string p1Prefix;
+    string p2Prefix;
+
     public override void _Ready()
     {
         base._Ready();
 
         randomSelection = new System.Random();
+
+        if (Match.P1SelectedDevice > -1 && Match.P2SelectedDevice > -1) PlayerSelection = 0;
+        else if (Match.P2SelectedDevice == -1) PlayerSelection = 1;
+        else if (Match.P1SelectedDevice == -1) PlayerSelection = 2;
+
+        p1Prefix = Global.GetPlayerPrefix(Match.P1SelectedDevice);
+        p2Prefix = Global.GetPlayerPrefix(Match.P2SelectedDevice);
 
         characterButtons = new TextureRect[fightersList.elements.Length + 1];
         for (int i = 0; i <= fightersList.elements.Length; i++)
@@ -103,24 +115,69 @@ public partial class SelectScreen : Node
     {
         if (AllSet) return;
         base._PhysicsProcess(delta);
+
+        string p1SelectPrefix = PlayerSelection != 2 ? p1Prefix : p2Prefix;
+        string p2SelectPrefix = PlayerSelection != 1 ? p2Prefix : p1Prefix;
+        
         //Player 1 inputs
-        bool P1Up = Input.IsActionJustPressed("k1_up");
-        bool P1Down = Input.IsActionJustPressed("k1_down");
-        bool P1Left = Input.IsActionJustPressed("k1_left");
-        bool P1Right = Input.IsActionJustPressed("k1_right");
-        bool P1Confirm = Input.IsActionJustPressed("k1_face_a");
-        bool P1Return = Input.IsActionJustPressed("k1_face_b");
+        bool P1Up = Input.IsActionJustPressed(p1SelectPrefix + "_up");
+        bool P1Down = Input.IsActionJustPressed(p1SelectPrefix + "_down");
+        bool P1Left = Input.IsActionJustPressed(p1SelectPrefix + "_left");
+        bool P1Right = Input.IsActionJustPressed(p1SelectPrefix + "_right");
+        bool P1Confirm = Input.IsActionJustPressed(p1SelectPrefix + "_accept");
+        bool P1Return = Input.IsActionJustPressed(p1SelectPrefix + "_return");
         //Player 2 inputs
-        bool P2Up = Input.IsActionJustPressed("k2_up");
-        bool P2Down = Input.IsActionJustPressed("k2_down");
-        bool P2Left = Input.IsActionJustPressed("k2_left");
-        bool P2Right = Input.IsActionJustPressed("k2_right");
-        bool P2Confirm = Input.IsActionJustPressed("k2_face_a");
-        bool P2Return = Input.IsActionJustPressed("k2_face_b");
+        bool P2Up = Input.IsActionJustPressed(p2SelectPrefix + "_up");
+        bool P2Down = Input.IsActionJustPressed(p2SelectPrefix + "_down");
+        bool P2Left = Input.IsActionJustPressed(p2SelectPrefix + "_left");
+        bool P2Right = Input.IsActionJustPressed(p2SelectPrefix + "_right");
+        bool P2Confirm = Input.IsActionJustPressed(p2SelectPrefix + "_accept");
+        bool P2Return = Input.IsActionJustPressed(p2SelectPrefix + "_return");
 
         switch (selectionMode)
         {
             case 0:
+                //Player 2 character selection
+                if (!P2Finished && (PlayerSelection == 0 || P1Finished))
+                {
+                    if (P2Up)
+                    {
+                        P2Selected -= charactersContainer.Columns;
+                        if (P2Selected < 0) P2Selected = 0;
+                    }
+                    if (P2Down)
+                    {
+                        P2Selected += charactersContainer.Columns;
+                        if (P2Selected > fightersList.elements.Length) 
+                            P2Selected = fightersList.elements.Length;
+                    }
+                    if (P2Left)
+                    {
+                        P2Selected--;
+                        if (P2Selected < 0) P2Selected = 0;
+                    }
+                    if (P2Right)
+                    {
+                        P2Selected++;
+                        if (P2Selected > fightersList.elements.Length) 
+                            P2Selected = fightersList.elements.Length;
+                    }
+                    if (P2Confirm)
+                    {
+                        if (P2Selected >= fightersList.elements.Length)
+                            P2Selected = randomSelection.Next(0, fightersList.elements.Length);
+
+                        if (!P1Finished) isPlayer1SelectingStage = false;
+                        P2Finished = true;
+                    }
+                }
+                else
+                {
+                    if (P2Return)
+                    {
+                        P2Finished = false;
+                    }
+                }
                 //Player 1 character selection
                 if (!P1Finished)
                 {
@@ -160,47 +217,6 @@ public partial class SelectScreen : Node
                     if (P1Return)
                     {
                         P1Finished = false;
-                    }
-                }
-                //Player 2 character selection
-                if (!P2Finished)
-                {
-                    if (P2Up)
-                    {
-                        P2Selected -= charactersContainer.Columns;
-                        if (P2Selected < 0) P2Selected = 0;
-                    }
-                    if (P2Down)
-                    {
-                        P2Selected += charactersContainer.Columns;
-                        if (P2Selected > fightersList.elements.Length) 
-                            P2Selected = fightersList.elements.Length;
-                    }
-                    if (P2Left)
-                    {
-                        P2Selected--;
-                        if (P2Selected < 0) P2Selected = 0;
-                    }
-                    if (P2Right)
-                    {
-                        P2Selected++;
-                        if (P2Selected > fightersList.elements.Length) 
-                            P2Selected = fightersList.elements.Length;
-                    }
-                    if (P2Confirm)
-                    {
-                        if (P2Selected >= fightersList.elements.Length)
-                            P2Selected = randomSelection.Next(0, fightersList.elements.Length);
-
-                        if (!P1Finished) isPlayer1SelectingStage = false;
-                        P2Finished = true;
-                    }
-                }
-                else
-                {
-                    if (P2Return)
-                    {
-                        P2Finished = false;
                     }
                 }
                 break;
@@ -366,25 +382,17 @@ public partial class SelectScreen : Node
 
     void MatchSetup()
     {
-        Global.Match.Player1 = new MatchPlayerSettings()
-        {
-            selectedCharacter = P1Selected,
-            selectedColor = 0,
-            selectedDevice = 0
-        };
-
-        Global.Match.Player2 = new MatchPlayerSettings()
-        {
-            selectedCharacter = P2Selected,
-            selectedColor = 0,
-            selectedDevice = 1
-        };
-        
-        Global.Match.selectedStage = StageSelected;
-        Global.Match.selectedBGM = BGMSelected;
-        Global.Match.roundsToWin = 2;
-        Global.Match.roundTime = 99;
-        Global.Match.botDifficulty = Global.BotDifficulty.MEDIUM;
-        Global.Match.selectedMode = Global.SelectedMode.VERSUS;
+        // Player 1 settings
+        Match.P1SelectedCharacter = P1Selected;
+        Match.P1SelectedColor = 0;
+        // Player 2 settings
+        Match.P2SelectedCharacter = P2Selected;
+        Match.P2SelectedColor = 0;
+        //Other settings
+        Match.SelectedStage = StageSelected;
+        Match.SelectedBGM = BGMSelected;
+        //Match.RoundsToWin = 2;
+        //Match.TimeLimit = 99;
+        //Match.Difficulty = Global.BotDifficulty.MEDIUM;
     }
 }

@@ -1,37 +1,33 @@
-[gd_resource type="Resource" script_class="MoveSettings" load_steps=3 format=3 uid="uid://e8k6uiwvnacl"]
+[gd_resource type="Resource" script_class="MoveSettings" load_steps=6 format=3 uid="uid://e8k6uiwvnacl"]
 
 [ext_resource type="Script" uid="uid://gk1rkw667o4n" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="1"]
+[ext_resource type="Script" uid="uid://dpgs1fcn5u351" path="res://Scripts/SakugaEngine/Resources/MoveCancelSettings.cs" id="1_ax3js"]
 [ext_resource type="Resource" uid="uid://bii142i8da7oq" path="res://Fighters/Shared/Inputs/13_Input_5C.tres" id="1_xppl2"]
+
+[sub_resource type="Resource" id="Resource_dr1tj"]
+script = ExtResource("1_ax3js")
+MoveIndex = 28
+Conditions = 8
+metadata/_custom_type_script = "uid://dpgs1fcn5u351"
+
+[sub_resource type="Resource" id="Resource_2bm83"]
+script = ExtResource("1_ax3js")
+MoveIndex = 38
+Conditions = 8
+metadata/_custom_type_script = "uid://dpgs1fcn5u351"
 
 [resource]
 script = ExtResource("1")
 MoveName = "5C"
 MoveState = 50
 Inputs = ExtResource("1_xppl2")
-SideChange = 0
-SuperGaugeRequired = 0
-BuildSuperGauge = 0
-HealthThreshold = Vector2i(0, 99999)
-SpendHealth = 0
-DistanceArea = Vector2i(0, 999999)
-IsSequenceFromStates = PackedInt32Array()
-IgnoreStates = PackedInt32Array()
-CancelsTo = PackedInt32Array()
-KaraCancelsTo = PackedInt32Array(28, 38)
-buttonChargeSequence = null
+CanCancelTo = Array[Object]([SubResource("Resource_dr1tj"), SubResource("Resource_2bm83")])
 ExtraVariablesRequirement = null
 ExtraVariablesChange = null
 MoveEnd = 2
-MoveEndState = -1
-ChangeStance = -1
-FrameLimit = -1
-SuperFlash = 0
 Priority = 5
-CanBeOverrided = false
-CanOverrideToSelf = false
+CanBeOverrided = true
 IgnoreSamePriority = false
-InterruptCornerPushback = false
-PriorityBuffer = false
-WaitForNullStates = false
+AcceptNullStates = true
+AcceptCombatStates = true
 UseOnGround = true
-UseOnAir = false

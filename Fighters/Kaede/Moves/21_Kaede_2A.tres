@@ -1,37 +1,35 @@
-[gd_resource type="Resource" script_class="MoveSettings" load_steps=3 format=3 uid="uid://c4rrn130o8wh7"]
+[gd_resource type="Resource" script_class="MoveSettings" load_steps=6 format=3 uid="uid://c4rrn130o8wh7"]
 
 [ext_resource type="Resource" uid="uid://b7xl8m7kdvbg7" path="res://Fighters/Shared/Inputs/15_Input_2A.tres" id="1_udhq3"]
+[ext_resource type="Script" uid="uid://dpgs1fcn5u351" path="res://Scripts/SakugaEngine/Resources/MoveCancelSettings.cs" id="1_vyoic"]
 [ext_resource type="Script" uid="uid://gk1rkw667o4n" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_8k45x"]
+
+[sub_resource type="Resource" id="Resource_0aqov"]
+script = ExtResource("1_vyoic")
+MoveIndex = 22
+Conditions = 6
+FrameThreshold = Vector2i(0, 999)
+metadata/_custom_type_script = "uid://dpgs1fcn5u351"
+
+[sub_resource type="Resource" id="Resource_gtrm2"]
+script = ExtResource("1_vyoic")
+MoveIndex = 33
+Conditions = 6
+FrameThreshold = Vector2i(0, 999)
+metadata/_custom_type_script = "uid://dpgs1fcn5u351"
 
 [resource]
 script = ExtResource("2_8k45x")
 MoveName = "2A"
 MoveState = 51
 Inputs = ExtResource("1_udhq3")
-SideChange = 0
-SuperGaugeRequired = 0
-BuildSuperGauge = 0
-HealthThreshold = Vector2i(0, 99999)
-SpendHealth = 0
-DistanceArea = Vector2i(0, 999999)
-IsSequenceFromStates = PackedInt32Array()
-IgnoreStates = PackedInt32Array()
-CancelsTo = PackedInt32Array(22)
-KaraCancelsTo = PackedInt32Array()
-buttonChargeSequence = null
+CanCancelTo = Array[Object]([SubResource("Resource_0aqov"), SubResource("Resource_gtrm2")])
 ExtraVariablesRequirement = null
 ExtraVariablesChange = null
 MoveEnd = 2
-MoveEndState = -1
-ChangeStance = -1
-FrameLimit = -1
-SuperFlash = 0
 Priority = 5
-CanBeOverrided = false
-CanOverrideToSelf = false
+CanBeOverrided = true
 IgnoreSamePriority = false
-InterruptCornerPushback = false
-PriorityBuffer = false
-WaitForNullStates = false
+AcceptNullStates = true
+AcceptCombatStates = true
 UseOnGround = true
-UseOnAir = false

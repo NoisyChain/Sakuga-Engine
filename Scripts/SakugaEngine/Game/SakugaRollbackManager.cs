@@ -6,21 +6,30 @@ namespace SakugaEngine.Game
 {
     public partial class SakugaRollbackManager : PleaseResyncManager
     {
-        [Export] private bool AutoStart;
-
         [Export] private GameManager GameManager;
 
         public override void _Ready()
         {
             base._Ready();
             GameManager.InputSize = InputSize;
-            
-            if (AutoStart)
+            //UseLAN = GameManager.Match.SelectedModeSettings.UseLAN;
+
+            GD.Print($"Starting {GameManager.Match.SelectedModeSettings.ModeName} mode.");
+
+            if (GameManager.Match.SelectedModeSettings.AutoStart)
             {
-                GameManager.player1Character = Global.Match.Player1.selectedCharacter;
-                GameManager.player2Character = Global.Match.Player2.selectedCharacter;
-                GameManager.selectedStage = Global.Match.selectedStage;
-                GameManager.selectedBGM = Global.Match.selectedBGM;
+                switch(GameManager.Match.SelectedModeSettings.NetcodeMode)
+                {
+                    case Global.NetcodeMode.LOCAL:
+                        LocalGame(2);
+                        break;
+                    case Global.NetcodeMode.ONLINE:
+                        OnlineGame(GameManager.Match.IsSpectator, 2, (uint)GameManager.Match.SpectatorCount, (uint)GameManager.Match.PlayerID);
+                        break;
+                    case Global.NetcodeMode.REPLAY:
+                        ReplayMode(2);
+                        break;
+                }
             }
         }
 

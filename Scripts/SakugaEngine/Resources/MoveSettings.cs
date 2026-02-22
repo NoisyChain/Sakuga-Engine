@@ -8,6 +8,7 @@ namespace SakugaEngine.Resources
     {
         [Export] public string MoveName;
         [Export] public int MoveState;
+        [Export] public bool SkipCheck;
         [Export] public MotionInputs Inputs;
         [Export] public Global.SideChangeMode SideChange;
         [Export] public int SuperGaugeRequired = 0;
@@ -15,11 +16,13 @@ namespace SakugaEngine.Resources
         [Export] public Vector2I HealthThreshold = new Vector2I(0, 99999);
         [Export] public int SpendHealth = 0;
         [Export] public Vector2I DistanceArea = new Vector2I(0, 999999);
+        [Export] public int MinimumHeight = 0;
         [Export] public int[] IsSequenceFromStates;
         [Export] public int[] IgnoreStates;
-        [Export] public int[] CancelsTo;
-        [Export] public int[] KaraCancelsTo;
-        [Export] public ButtonChargeSequence[] buttonChargeSequence;
+        [Export] public MoveCancelSettings[] CanCancelTo;
+        //[Export] public int[] CancelsTo;
+        //[Export] public int[] KaraCancelsTo;
+        //[Export] public ButtonChargeSequence[] buttonChargeSequence;
         [Export] public ExtraVariableCondition[] ExtraVariablesRequirement;
         [Export] public ExtraVariableChange[] ExtraVariablesChange;
         [Export] public Global.MoveEndCondition MoveEnd;
@@ -33,7 +36,12 @@ namespace SakugaEngine.Resources
         [Export] public bool IgnoreSamePriority = true;
         [Export] public bool InterruptCornerPushback = false;
         [Export] public bool PriorityBuffer;
-        [Export] public bool WaitForNullStates = true;
+        [Export] public bool AcceptNullStates = false;
+        [Export] public bool AcceptCombatStates = false;
+        [Export] public bool AcceptBlockingStates = false;
+        [Export] public bool AcceptHitReactionStates = false;
+        [Export] public bool IgnoreHitstop = false;
+        [Export] public bool IgnoreHitstun = false;
         [Export] public bool UseOnGround, UseOnAir;
     }
 }

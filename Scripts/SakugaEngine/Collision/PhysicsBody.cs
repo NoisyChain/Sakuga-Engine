@@ -7,7 +7,7 @@ namespace SakugaEngine.Collision
     [GlobalClass]
     public partial class PhysicsBody : Node
     {
-        [Export] private SakugaActor owner;
+        private SakugaActor _owner;
         [Export] public bool IsStatic;
         [Export] public bool StayOnBounds;
         [Export] public bool IgnoreWalls;
@@ -36,11 +36,12 @@ namespace SakugaEngine.Collision
         public bool IsOnWall => IsOnLeftWall || IsOnRightWall;
         
 
-        public void Initialize(IDamage owner)
+        public void Initialize(SakugaActor newOwner, IDamage newParent)
         {
+            _owner = newOwner;
+            Parent = newParent;
             FixedPosition = Vector2I.Zero;
             FixedVelocity = Vector2I.Zero;
-            Parent = owner;
             Hitboxes = new Collider[HitboxesLimit];
         }
         public void SetID(uint newID)
@@ -169,7 +170,7 @@ namespace SakugaEngine.Collision
             }
         }
 
-        public HitboxSettings GetCurrentHitbox() => owner.Data.Hitboxes[CurrentHitbox];
+        public HitboxSettings GetCurrentHitbox() => _owner.Data.Hitboxes[CurrentHitbox];
 
         public void Serialize(BinaryWriter bw)
         {

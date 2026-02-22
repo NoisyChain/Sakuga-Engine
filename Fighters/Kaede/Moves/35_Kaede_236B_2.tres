@@ -1,37 +1,30 @@
-[gd_resource type="Resource" script_class="MoveSettings" load_steps=3 format=3 uid="uid://17nydissovtx"]
+[gd_resource type="Resource" script_class="MoveSettings" load_steps=5 format=3 uid="uid://17nydissovtx"]
 
 [ext_resource type="Resource" uid="uid://dnsaxvbcfkp5k" path="res://Fighters/Shared/Inputs/19_Input_236B.tres" id="1_j8o1w"]
+[ext_resource type="Script" uid="uid://dpgs1fcn5u351" path="res://Scripts/SakugaEngine/Resources/MoveCancelSettings.cs" id="1_ymqq2"]
 [ext_resource type="Script" uid="uid://gk1rkw667o4n" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_fx161"]
+
+[sub_resource type="Resource" id="Resource_ftlsk"]
+script = ExtResource("1_ymqq2")
+MoveIndex = 36
+Conditions = 7
+FrameThreshold = Vector2i(10, 999)
+metadata/_custom_type_script = "uid://dpgs1fcn5u351"
 
 [resource]
 script = ExtResource("2_fx161")
 MoveName = "236B_2"
 MoveState = 64
+SkipCheck = true
 Inputs = ExtResource("1_j8o1w")
-SideChange = 0
-SuperGaugeRequired = 0
-BuildSuperGauge = 0
-HealthThreshold = Vector2i(0, 99999)
-SpendHealth = 0
-DistanceArea = Vector2i(0, 999999)
 IsSequenceFromStates = PackedInt32Array(63)
-IgnoreStates = PackedInt32Array()
-CancelsTo = PackedInt32Array(36)
-KaraCancelsTo = PackedInt32Array()
-buttonChargeSequence = null
+CanCancelTo = Array[Object]([SubResource("Resource_ftlsk")])
 ExtraVariablesRequirement = null
 ExtraVariablesChange = null
 MoveEnd = 2
-MoveEndState = -1
-ChangeStance = -1
-FrameLimit = -1
-SuperFlash = 0
 Priority = 7
 CanBeOverrided = true
-CanOverrideToSelf = false
 IgnoreSamePriority = false
-InterruptCornerPushback = false
-PriorityBuffer = false
-WaitForNullStates = false
+AcceptNullStates = true
+AcceptCombatStates = true
 UseOnGround = true
-UseOnAir = false

@@ -1,7 +1,42 @@
-[gd_resource type="Resource" script_class="MoveSettings" load_steps=3 format=3 uid="uid://b676yw3nusi5x"]
+[gd_resource type="Resource" script_class="MoveSettings" load_steps=9 format=3 uid="uid://b676yw3nusi5x"]
 
 [ext_resource type="Resource" uid="uid://cjtxv3hfn8vc4" path="res://Fighters/Shared/Inputs/8_Input_]2[.tres" id="1_81gut"]
+[ext_resource type="Script" uid="uid://dpgs1fcn5u351" path="res://Scripts/SakugaEngine/Resources/MoveCancelSettings.cs" id="1_152hl"]
 [ext_resource type="Script" uid="uid://gk1rkw667o4n" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_ylf0d"]
+
+[sub_resource type="Resource" id="Resource_sjv4h"]
+script = ExtResource("1_152hl")
+Conditions = 1
+FrameThreshold = Vector2i(0, 999)
+metadata/_custom_type_script = "uid://dpgs1fcn5u351"
+
+[sub_resource type="Resource" id="Resource_encta"]
+script = ExtResource("1_152hl")
+MoveIndex = 1
+Conditions = 1
+FrameThreshold = Vector2i(0, 999)
+metadata/_custom_type_script = "uid://dpgs1fcn5u351"
+
+[sub_resource type="Resource" id="Resource_ia6ow"]
+script = ExtResource("1_152hl")
+MoveIndex = 4
+Conditions = 1
+FrameThreshold = Vector2i(0, 999)
+metadata/_custom_type_script = "uid://dpgs1fcn5u351"
+
+[sub_resource type="Resource" id="Resource_1kyce"]
+script = ExtResource("1_152hl")
+MoveIndex = 5
+Conditions = 1
+FrameThreshold = Vector2i(0, 999)
+metadata/_custom_type_script = "uid://dpgs1fcn5u351"
+
+[sub_resource type="Resource" id="Resource_4g8ww"]
+script = ExtResource("1_152hl")
+MoveIndex = 6
+Conditions = 1
+FrameThreshold = Vector2i(0, 999)
+metadata/_custom_type_script = "uid://dpgs1fcn5u351"
 
 [resource]
 script = ExtResource("2_ylf0d")
@@ -10,13 +45,11 @@ MoveState = 8
 Inputs = ExtResource("1_81gut")
 SideChange = 1
 IsSequenceFromStates = PackedInt32Array(11, 12)
-CancelsTo = PackedInt32Array(0, 1, 4, 5, 6)
-buttonChargeSequence = null
+CanCancelTo = Array[Object]([SubResource("Resource_sjv4h"), SubResource("Resource_encta"), SubResource("Resource_ia6ow"), SubResource("Resource_1kyce"), SubResource("Resource_4g8ww")])
 ExtraVariablesRequirement = null
 ExtraVariablesChange = null
 CanBeOverrided = true
 CanOverrideToSelf = true
 IgnoreSamePriority = false
 PriorityBuffer = true
-WaitForNullStates = false
 UseOnGround = true

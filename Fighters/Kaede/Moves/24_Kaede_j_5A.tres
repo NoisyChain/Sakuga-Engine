@@ -1,37 +1,49 @@
-[gd_resource type="Resource" script_class="MoveSettings" load_steps=3 format=3 uid="uid://pj7k3yeikvrs"]
+[gd_resource type="Resource" script_class="MoveSettings" load_steps=8 format=3 uid="uid://pj7k3yeikvrs"]
 
 [ext_resource type="Resource" uid="uid://d0wfxlb0qkmur" path="res://Fighters/Shared/Inputs/11_Input_5A.tres" id="1_nthon"]
+[ext_resource type="Script" uid="uid://dpgs1fcn5u351" path="res://Scripts/SakugaEngine/Resources/MoveCancelSettings.cs" id="1_y7u35"]
 [ext_resource type="Script" uid="uid://gk1rkw667o4n" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_4qn0c"]
+
+[sub_resource type="Resource" id="Resource_c16ij"]
+script = ExtResource("1_y7u35")
+MoveIndex = 11
+Conditions = 6
+FrameThreshold = Vector2i(0, 999)
+metadata/_custom_type_script = "uid://dpgs1fcn5u351"
+
+[sub_resource type="Resource" id="Resource_g37c3"]
+script = ExtResource("1_y7u35")
+MoveIndex = 12
+Conditions = 6
+FrameThreshold = Vector2i(0, 999)
+metadata/_custom_type_script = "uid://dpgs1fcn5u351"
+
+[sub_resource type="Resource" id="Resource_0fkb8"]
+script = ExtResource("1_y7u35")
+MoveIndex = 13
+Conditions = 6
+FrameThreshold = Vector2i(0, 999)
+metadata/_custom_type_script = "uid://dpgs1fcn5u351"
+
+[sub_resource type="Resource" id="Resource_p1ox2"]
+script = ExtResource("1_y7u35")
+MoveIndex = 25
+Conditions = 6
+FrameThreshold = Vector2i(0, 999)
+metadata/_custom_type_script = "uid://dpgs1fcn5u351"
 
 [resource]
 script = ExtResource("2_4qn0c")
 MoveName = "j.5A"
 MoveState = 54
 Inputs = ExtResource("1_nthon")
-SideChange = 0
-SuperGaugeRequired = 0
-BuildSuperGauge = 0
-HealthThreshold = Vector2i(0, 99999)
-SpendHealth = 0
-DistanceArea = Vector2i(0, 999999)
-IsSequenceFromStates = PackedInt32Array()
-IgnoreStates = PackedInt32Array()
-CancelsTo = PackedInt32Array(11, 12, 13, 25)
-KaraCancelsTo = PackedInt32Array()
-buttonChargeSequence = null
+CanCancelTo = Array[Object]([SubResource("Resource_c16ij"), SubResource("Resource_g37c3"), SubResource("Resource_0fkb8"), SubResource("Resource_p1ox2")])
 ExtraVariablesRequirement = null
 ExtraVariablesChange = null
 MoveEnd = 2
-MoveEndState = -1
-ChangeStance = -1
-FrameLimit = -1
-SuperFlash = 0
 Priority = 5
-CanBeOverrided = false
-CanOverrideToSelf = false
+CanBeOverrided = true
 IgnoreSamePriority = false
-InterruptCornerPushback = false
-PriorityBuffer = false
-WaitForNullStates = false
-UseOnGround = false
+AcceptNullStates = true
+AcceptCombatStates = true
 UseOnAir = true

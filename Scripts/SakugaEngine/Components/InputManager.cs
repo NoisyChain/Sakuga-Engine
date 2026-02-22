@@ -8,6 +8,8 @@ namespace SakugaEngine
     public partial class InputManager : Node
     {
         public InputRegistry[] InputHistory = new InputRegistry[Global.InputHistorySize];
+        public short hCharge;
+        public short vCharge;
         public int CurrentHistory = 0;
         public int InputSide;
 
@@ -82,50 +84,16 @@ namespace SakugaEngine
 
         public bool CheckDirectionalInputs(int index, Global.DirectionalInputs buttonNumber, Global.ButtonMode buttonMode, bool absDirection)
         {
-            bool left = false;
-            bool right = false;
-            bool up = false;
-            bool down = false;
-
             int _left = Global.INPUT_LEFT;
             if (InputSide < 0) _left = Global.INPUT_RIGHT;
 
             int _right = Global.INPUT_RIGHT;
             if (InputSide < 0) _right = Global.INPUT_LEFT;
 
-            switch (buttonMode)
-            {
-                case Global.ButtonMode.PRESS:
-                    left = WasPressed(index, _left);
-                    right = WasPressed(index, _right);
-                    up = WasPressed(index, Global.INPUT_UP);
-                    down = WasPressed(index, Global.INPUT_DOWN);
-                    break;
-                case Global.ButtonMode.HOLD:
-                    left = IsBeingPressed(index, _left);
-                    right = IsBeingPressed(index, _right);
-                    up = IsBeingPressed(index, Global.INPUT_UP);
-                    down = IsBeingPressed(index, Global.INPUT_DOWN);
-                    break;
-                case Global.ButtonMode.RELEASE:
-                    left = WasReleased(index, _left);
-                    right = WasReleased(index, _right);
-                    up = WasReleased(index, Global.INPUT_UP);
-                    down = WasReleased(index, Global.INPUT_DOWN);
-                    break;
-                case Global.ButtonMode.WAS_PRESSED:
-                    left = WasBeingPressed(index, _left);
-                    right = WasBeingPressed(index, _right);
-                    up = WasBeingPressed(index, Global.INPUT_UP);
-                    down = WasBeingPressed(index, Global.INPUT_DOWN);
-                    break;
-                case Global.ButtonMode.NOT_PRESSED:
-                    left = !IsBeingPressed(index, _left);
-                    right = !IsBeingPressed(index, _right);
-                    up = !IsBeingPressed(index, Global.INPUT_UP);
-                    down = !IsBeingPressed(index, Global.INPUT_DOWN);
-                    break;
-            }
+            bool left = GetButtonState(_left, index, buttonMode);
+            bool right = GetButtonState(_right, index, buttonMode);
+            bool up = GetButtonState(Global.INPUT_UP, index, buttonMode);
+            bool down = GetButtonState(Global.INPUT_DOWN, index, buttonMode);
 
             bool absV = absDirection ? !up && !down : true;
             bool absH = absDirection ? !left && !right : true;
@@ -148,53 +116,27 @@ namespace SakugaEngine
 
         public bool CheckButtonInputs(int index, Global.ButtonInputs buttonNumber, Global.ButtonMode buttonMode)
         {
-            bool action_ba = false;
-            bool action_bb = false;
-            bool action_bc = false;
-            bool action_bd = false;
-
-            switch (buttonMode)
-            {
-                case Global.ButtonMode.PRESS:
-                    action_ba = WasPressed(index, Global.INPUT_FACE_A);
-                    action_bb = WasPressed(index, Global.INPUT_FACE_B);
-                    action_bc = WasPressed(index, Global.INPUT_FACE_C);
-                    action_bd = WasPressed(index, Global.INPUT_FACE_D);
-                    break;
-                case Global.ButtonMode.HOLD:
-                    action_ba = IsBeingPressed(index, Global.INPUT_FACE_A);
-                    action_bb = IsBeingPressed(index, Global.INPUT_FACE_B);
-                    action_bc = IsBeingPressed(index, Global.INPUT_FACE_C);
-                    action_bd = IsBeingPressed(index, Global.INPUT_FACE_D);
-                    break;
-                case Global.ButtonMode.RELEASE:
-                    action_ba = WasReleased(index, Global.INPUT_FACE_A);
-                    action_bb = WasReleased(index, Global.INPUT_FACE_B);
-                    action_bc = WasReleased(index, Global.INPUT_FACE_C);
-                    action_bd = WasReleased(index, Global.INPUT_FACE_D);
-                    break;
-                case Global.ButtonMode.WAS_PRESSED:
-                    action_ba = WasBeingPressed(index, Global.INPUT_FACE_A);
-                    action_bb = WasBeingPressed(index, Global.INPUT_FACE_B);
-                    action_bc = WasBeingPressed(index, Global.INPUT_FACE_C);
-                    action_bd = WasBeingPressed(index, Global.INPUT_FACE_D);
-                    break;
-                case Global.ButtonMode.NOT_PRESSED:
-                    action_ba = !IsBeingPressed(index, Global.INPUT_FACE_A);
-                    action_bb = !IsBeingPressed(index, Global.INPUT_FACE_B);
-                    action_bc = !IsBeingPressed(index, Global.INPUT_FACE_C);
-                    action_bd = !IsBeingPressed(index, Global.INPUT_FACE_D);
-                    break;
-            }
+            bool action_ba = GetButtonState(Global.INPUT_FACE_A, index, buttonMode);
+            bool action_bb = GetButtonState(Global.INPUT_FACE_B, index, buttonMode);
+            bool action_bc = GetButtonState(Global.INPUT_FACE_C, index, buttonMode);
+            bool action_bd = GetButtonState(Global.INPUT_FACE_D, index, buttonMode);
+            bool action_be = GetButtonState(Global.INPUT_FACE_E, index, buttonMode);
+            bool action_bf = GetButtonState(Global.INPUT_FACE_F, index, buttonMode);
+            bool action_bg = GetButtonState(Global.INPUT_FACE_G, index, buttonMode);
+            bool action_bh = GetButtonState(Global.INPUT_FACE_H, index, buttonMode);
 
             bool canA = (buttonNumber & Global.ButtonInputs.FACE_A) > 0;
             bool canB = (buttonNumber & Global.ButtonInputs.FACE_B) > 0;
             bool canC = (buttonNumber & Global.ButtonInputs.FACE_C) > 0;
             bool canD = (buttonNumber & Global.ButtonInputs.FACE_D) > 0;
+            bool canE = (buttonNumber & Global.ButtonInputs.FACE_E) > 0;
+            bool canF = (buttonNumber & Global.ButtonInputs.FACE_F) > 0;
+            bool canG = (buttonNumber & Global.ButtonInputs.FACE_G) > 0;
+            bool canH = (buttonNumber & Global.ButtonInputs.FACE_H) > 0;
 
-            return (buttonNumber == 0 && !action_ba && !action_bb && !action_bc && !action_bd) ||
-                (!canA || canA == action_ba) && (!canB || canB == action_bb) &&
-                (!canC || canC == action_bc) && (!canD || canD == action_bd);
+            return (buttonNumber == 0 && !action_ba && !action_bb && !action_bc && !action_bd && !action_be && !action_bf && !action_bg && !action_bh) ||
+                (!canA || canA == action_ba) && (!canB || canB == action_bb) && (!canC || canC == action_bc) && (!canD || canD == action_bd) && 
+                (!canE || canE == action_be) && (!canF || canF == action_bf) && (!canG || canG == action_bg) && (!canH || canH == action_bh);
         }
 
         public bool CheckChargeInputs(int index, Global.DirectionalInputs buttonNumber, int dirCharge)
@@ -213,10 +155,10 @@ namespace SakugaEngine
             bool up = IsBeingPressed(index, Global.INPUT_UP);
             bool down = IsBeingPressed(index, Global.INPUT_DOWN);
 
-            bool checkInputs = (buttonNumber == Global.DirectionalInputs.LEFT && left && Mathf.Abs(InputHistory[index].hCharge) >= dirCharge) ||
-                (buttonNumber == Global.DirectionalInputs.DOWN && down && Mathf.Abs(InputHistory[index].vCharge) >= dirCharge) ||
-                (buttonNumber == Global.DirectionalInputs.DOWN_LEFT && left && Mathf.Abs(InputHistory[index].hCharge) >= dirCharge && down && InputHistory[index].vCharge <= -dirCharge) ||
-                (buttonNumber == Global.DirectionalInputs.UP_LEFT && left && Mathf.Abs(InputHistory[index].hCharge) >= dirCharge && up && InputHistory[index].vCharge >= dirCharge);
+            bool checkInputs = (buttonNumber == Global.DirectionalInputs.LEFT && left && Mathf.Abs(hCharge) >= dirCharge) ||
+                (buttonNumber == Global.DirectionalInputs.DOWN && down && Mathf.Abs(vCharge) >= dirCharge) ||
+                (buttonNumber == Global.DirectionalInputs.DOWN_LEFT && left && Mathf.Abs(hCharge) >= dirCharge && down && vCharge <= -dirCharge) ||
+                (buttonNumber == Global.DirectionalInputs.UP_LEFT && left && Mathf.Abs(hCharge) >= dirCharge && up && vCharge >= dirCharge);
 
             return checkInputs;
         }
@@ -232,12 +174,12 @@ namespace SakugaEngine
                 InputHistory[CurrentHistory].duration = 0;
 
                 //Get the charge values from the previous input
-                int previousInput = CurrentHistory - 1;
-                if (previousInput < 0) previousInput += Global.InputHistorySize;
+                //int previousInput = CurrentHistory - 1;
+                //if (previousInput < 0) previousInput += Global.InputHistorySize;
 
-                InputHistory[CurrentHistory].hCharge = InputHistory[previousInput].hCharge;
-                InputHistory[CurrentHistory].vCharge = InputHistory[previousInput].vCharge;
-                InputHistory[CurrentHistory].bCharge = InputHistory[previousInput].bCharge;
+                //InputHistory[CurrentHistory].hCharge = InputHistory[previousInput].hCharge;
+                //InputHistory[CurrentHistory].vCharge = InputHistory[previousInput].vCharge;
+                //InputHistory[CurrentHistory].bCharge = InputHistory[previousInput].bCharge;
             }
 
             InputHistory[CurrentHistory].duration++;
@@ -318,46 +260,56 @@ namespace SakugaEngine
         {
             if (IsBeingPressed(CurrentHistory, Global.INPUT_LEFT))
             {
-                if (InputHistory[CurrentHistory].hCharge > 0) InputHistory[CurrentHistory].hCharge = 0;
-                InputHistory[CurrentHistory].hCharge--;
+                if (hCharge > 0) hCharge = 0;
+                hCharge--;
             }
             else if (IsBeingPressed(CurrentHistory, Global.INPUT_RIGHT))
             {
-                if (InputHistory[CurrentHistory].hCharge < 0) InputHistory[CurrentHistory].hCharge = 0;
-                InputHistory[CurrentHistory].hCharge++;
+                if (hCharge < 0) hCharge = 0;
+                hCharge++;
             }
             else
             {
-                if (InputHistory[CurrentHistory].hCharge != 0) InputHistory[CurrentHistory].hCharge = 0;
+                if (hCharge != 0) hCharge = 0;
             }
 
             if (IsBeingPressed(CurrentHistory, Global.INPUT_UP))
             {
-                if (InputHistory[CurrentHistory].vCharge < 0) InputHistory[CurrentHistory].vCharge = 0;
-                InputHistory[CurrentHistory].vCharge++;
+                if (vCharge < 0) vCharge = 0;
+                vCharge++;
             }
             else if (IsBeingPressed(CurrentHistory, Global.INPUT_DOWN))
             {
-                if (InputHistory[CurrentHistory].vCharge > 0) InputHistory[CurrentHistory].vCharge = 0;
-                InputHistory[CurrentHistory].vCharge--;
+                if (vCharge > 0) vCharge = 0;
+                vCharge--;
             }
             else
             {
-                if (InputHistory[CurrentHistory].vCharge != 0) InputHistory[CurrentHistory].vCharge = 0;
+                if (vCharge != 0) vCharge = 0;
             }
+        }
 
-            if (IsBeingPressed(CurrentHistory, Global.INPUT_ANY_BUTTON))
+        private bool GetButtonState(int buttonFlag, int index, Global.ButtonMode mode)
+        {
+            switch (mode)
             {
-                InputHistory[CurrentHistory].bCharge++;
-            }
-            else
-            {
-                InputHistory[CurrentHistory].bCharge = 0;
+                case Global.ButtonMode.PRESS:
+                    return WasPressed(index, buttonFlag);
+                case Global.ButtonMode.HOLD:
+                    return IsBeingPressed(index, buttonFlag);
+                case Global.ButtonMode.RELEASE:
+                    return WasReleased(index, buttonFlag);
+                case Global.ButtonMode.WAS_PRESSED:
+                    return WasBeingPressed(index, buttonFlag);
+                case Global.ButtonMode.NOT_PRESSED:
+                    return !IsBeingPressed(index, buttonFlag);
+                default:
+                    return false;
             }
         }
 
         public InputRegistry CurrentInput() => InputHistory[CurrentHistory];
-        public ushort InputBufferDuration() => CurrentInput().bCharge;
+        //public ushort InputBufferDuration() => CurrentInput().bCharge;
         public bool IsNeutral() => CurrentInput().IsNull;
 
         public void Serialize(BinaryWriter bw)
@@ -367,6 +319,8 @@ namespace SakugaEngine
             
             bw.Write(CurrentHistory);
             bw.Write(InputSide);
+            bw.Write(hCharge);
+            bw.Write(vCharge);
         }
 
         public void Deserialize(BinaryReader br)
@@ -376,6 +330,8 @@ namespace SakugaEngine
             
             CurrentHistory = br.ReadInt32();
             InputSide = br.ReadInt32();
+            hCharge = br.ReadInt16();
+            vCharge = br.ReadInt16();
         }
 
         
@@ -386,9 +342,9 @@ namespace SakugaEngine
     {
         public ushort rawInput;
         public ushort duration;
-        public short hCharge;
-        public short vCharge;
-        public ushort bCharge;
+        //public short hCharge;
+        //public short vCharge;
+        //public ushort bCharge;
 
         public bool IsNull => rawInput == 0;
 
@@ -396,18 +352,18 @@ namespace SakugaEngine
         {
             bw.Write(rawInput);
             bw.Write(duration);
-            bw.Write(hCharge);
-            bw.Write(vCharge);
-            bw.Write(bCharge);
+            //bw.Write(hCharge);
+            //bw.Write(vCharge);
+            //bw.Write(bCharge);
         }
 
         public void Deserialize(BinaryReader br)
         {
             rawInput = br.ReadUInt16();
             duration = br.ReadUInt16();
-            hCharge = br.ReadInt16();
-            vCharge = br.ReadInt16();
-            bCharge = br.ReadUInt16();
+            //hCharge = br.ReadInt16();
+            //vCharge = br.ReadInt16();
+            //bCharge = br.ReadUInt16();
         }
         
         public override string ToString()

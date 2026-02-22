@@ -8,5 +8,6 @@ namespace SakugaEngine.Resources
         [Export] public Global.AnimationStage animationStage;
         [Export] public int Frame;
         [Export] public int HitboxIndex;
+        [Export] public bool ResetHits;
     }
 }

@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://dr8cly8qy5pg2"]
+[gd_scene load_steps=10 format=3 uid="uid://dr8cly8qy5pg2"]
 
 [ext_resource type="Script" uid="uid://xmbdtaq2pt7v" path="res://Scripts/SakugaEngine/Game/GameManager.cs" id="1_ocl0l"]
 [ext_resource type="PackedScene" uid="uid://blnwu2aaw8s60" path="res://Scenes/Instances/Sakuga_UI.tscn" id="1_wexcy"]
 [ext_resource type="Script" uid="uid://vkei5fxedpo3" path="res://Scripts/SakugaEngine/Components/FighterCamera.cs" id="2_dh05b"]
+[ext_resource type="Resource" uid="uid://c320twmibeytx" path="res://MatchSettings.tres" id="5_5rbs6"]
 [ext_resource type="Resource" uid="uid://c8s3ip7gkhwq6" path="res://Roster.tres" id="5_pp7s2"]
 [ext_resource type="Resource" uid="uid://bl30fi0muatu1" path="res://StageSelect.tres" id="6_c264a"]
 [ext_resource type="Script" uid="uid://8r60yfod0dqc" path="res://Scripts/SakugaEngine/Components/GameMonitor.cs" id="6_d185x"]
@@ -13,7 +14,7 @@
 
 [node name="CanvasLayer" parent="." instance=ExtResource("1_wexcy")]
 
-[node name="SeedViewer" type="Control" parent="."]
+[node name="OnlineHUD" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -23,7 +24,8 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Seed" type="Label" parent="SeedViewer"]
+[node name="Seed" type="Label" parent="OnlineHUD"]
+visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -40,29 +42,27 @@ text = "Seed"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="RollbackManager" type="Node" parent="." node_paths=PackedStringArray("GameManager")]
-script = ExtResource("6_jke5l")
-AutoStart = true
-GameManager = NodePath("../GameManager")
-SpectatorDelay = 20
-InputSize = 2
-
 [node name="GameMonitor" type="Node" parent="."]
 script = ExtResource("6_d185x")
 
 [node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("Monitor", "FighterUI", "Camera", "BGMSource", "SeedViewer")]
 process_priority = 1
 script = ExtResource("1_ocl0l")
+Match = ExtResource("5_5rbs6")
 Monitor = NodePath("../GameMonitor")
 fightersList = ExtResource("5_pp7s2")
 stagesList = ExtResource("6_c264a")
 songsList = ExtResource("7_6xh1p")
-player1Character = 2
-player2Character = 1
 FighterUI = NodePath("../CanvasLayer")
 Camera = NodePath("../Camera3D")
 BGMSource = NodePath("../BGM")
-SeedViewer = NodePath("../SeedViewer/Seed")
+SeedViewer = NodePath("../OnlineHUD/Seed")
+
+[node name="RollbackManager" type="Node" parent="." node_paths=PackedStringArray("GameManager")]
+script = ExtResource("6_jke5l")
+GameManager = NodePath("../GameManager")
+SpectatorDelay = 20
+InputSize = 2
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, -7)

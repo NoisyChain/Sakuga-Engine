@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="GameModeSettings" load_steps=2 format=3 uid="uid://cael5gk6lucpo"]
+
+[ext_resource type="Script" uid="uid://b0tk35wf5y1p8" path="res://Scripts/SakugaEngine/Resources/GameModeSettings.cs" id="1_8uqlr"]
+
+[resource]
+script = ExtResource("1_8uqlr")
+ModeName = "Arcade"
+AutoStart = true
+CanKO = true
+ShowMatchIntro = true
+ShowMatchCards = true
+metadata/_custom_type_script = "uid://b0tk35wf5y1p8"

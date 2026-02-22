@@ -12,7 +12,7 @@ namespace SakugaEngine
 		[Export] public InputManager Inputs;
 		[Export] public SakugaVariables Variables;
 		[Export] public FrameAnimator Animator;
-		[Export] public StanceManager Stance;
+		[Export] public SakugaStateMachine StateMachine;
 		[Export] public CombatTracker Tracker;
         [Export] public SoundQueue[] Sounds;
 
@@ -24,13 +24,15 @@ namespace SakugaEngine
         public virtual SakugaFighter FighterReference() { return null; }
 
         public virtual bool LifeEnded() { return false; }
+
+        public Global.CancelCondition CancelConditions;
         
         public override void Render()
         {
             GlobalPosition = Global.ToScaledVector3(Body.FixedPosition);
             foreach (Node3D g in Graphics)
                 g.Scale = new Vector3(Body.PlayerSide, 1, 1);
-            Animator.ViewAnimations();
+            Animator.ViewAnimations(Animator.GetCurrentAnimationSettings(), Animator.CurrentStateFrame);
         }
 
         public bool IsGroundState() => Animator.GetCurrentState().BaseStance == Global.MasterStance.GROUND;
@@ -46,7 +48,7 @@ namespace SakugaEngine
                 int nextFrame = i + 1 < Animator.GetCurrentState().statePhysics.Length ?
                                         Animator.GetCurrentState().statePhysics[i + 1].Frame :
                                         Animator.GetCurrentState().Duration;
-                if (Animator.Frame >= Animator.GetCurrentState().statePhysics[i].Frame && Animator.Frame < nextFrame)
+                if (Animator.CurrentStateFrame >= Animator.GetCurrentState().statePhysics[i].Frame && Animator.CurrentStateFrame < nextFrame)
                 {
                     if (Animator.GetCurrentState().statePhysics[i].UseLateralSpeed)
                     {
@@ -90,12 +92,11 @@ namespace SakugaEngine
         {
             for (int i = 0; i < Animator.GetCurrentState().hitboxStates.Length; ++i)
             {
-                if (Animator.Frame == Animator.GetCurrentState().hitboxStates[i].Frame &&
-                    Body.CurrentHitbox != Animator.GetCurrentState().hitboxStates[i].HitboxIndex)
-                {
-                    Body.SetHitbox(Animator.GetCurrentState().hitboxStates[i].HitboxIndex);
+                if (Animator.CurrentStateFrame != Animator.GetCurrentState().hitboxStates[i].Frame)  continue;
+
+                Body.SetHitbox(Animator.GetCurrentState().hitboxStates[i].HitboxIndex);
+                if (Animator.GetCurrentState().hitboxStates[i].ResetHits || Animator.CurrentStateFrame == 0)
                     Body.HitConfirmed = false;
-                }
             }
         }
 
@@ -106,7 +107,7 @@ namespace SakugaEngine
             
             for (int i = 0; i < Animator.GetCurrentState().stateProperties.Length; ++i)
             {
-                if (Animator.Frame == Animator.GetCurrentState().stateProperties[i].Frame)
+                if (Animator.CurrentStateFrame == Animator.GetCurrentState().stateProperties[i].Frame)
                 {
                     Body.FrameProperties = (byte)Animator.GetCurrentState().stateProperties[i].Properties;
                 }
@@ -134,7 +135,7 @@ namespace SakugaEngine
                 bool flag8 = (conditions & (byte)Global.TransitionCondition.ON_DISTANCE) != 0;
 
                 bool stateEnded = Animator.StateEnded();
-                bool isAtFrame = Animator.Frame == Animator.GetCurrentState().stateTransitions[i].AtFrame;
+                bool isAtFrame = Animator.CurrentStateFrame == Animator.GetCurrentState().stateTransitions[i].AtFrame;
                 bool isOnGround = Body.IsOnGround && Body.FixedVelocity.Y <= 0;
                 bool isOnWall = Body.IsOnWall;
                 bool isFalling = Body.IsFalling;
@@ -173,7 +174,7 @@ namespace SakugaEngine
 
             for (int i = 0; i < Animator.GetCurrentState().animationEvents.Length; i++)
             {
-                if (Animator.Frame != Animator.GetCurrentState().animationEvents[i].Frame) continue;
+                if (Animator.CurrentStateFrame != Animator.GetCurrentState().animationEvents[i].Frame) continue;
                 for (int j = 0; j < Animator.GetCurrentState().animationEvents[i].Events.Length; j++)
                 {
                     switch (Animator.GetCurrentState().animationEvents[i].Events[j])

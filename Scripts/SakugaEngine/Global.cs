@@ -5,7 +5,7 @@ namespace SakugaEngine
 {
     public static class Global
     {
-        public static MatchSetings Match;
+        //public static MatchSetings Match;
         //Global settings
         public const int TicksPerSecond = 60;
         public const int SubSteps = 4;
@@ -43,13 +43,15 @@ namespace SakugaEngine
         public const int INPUT_FACE_B = 1 << 5;
         public const int INPUT_FACE_C = 1 << 6;
         public const int INPUT_FACE_D = 1 << 7;
+        public const int INPUT_FACE_E = 1 << 8;
+        public const int INPUT_FACE_F = 1 << 9;
+        public const int INPUT_FACE_G = 1 << 10;
+        public const int INPUT_FACE_H = 1 << 11;
         //Free space
-        public const int INPUT_DASH = 1 << 12;
-        public const int INPUT_TAUNT = 1 << 13;
         public const int INPUT_MENU = 1 << 14;
         public const int INPUT_BACK = 1 << 15;
         public const int INPUT_ANY_DIRECTION = INPUT_UP | INPUT_DOWN | INPUT_LEFT | INPUT_RIGHT;
-        public const int INPUT_ANY_BUTTON = INPUT_FACE_A | INPUT_FACE_B | INPUT_FACE_C | INPUT_FACE_D;
+        public const int INPUT_ANY_BUTTON = INPUT_FACE_A | INPUT_FACE_B | INPUT_FACE_C | INPUT_FACE_D | INPUT_FACE_E | INPUT_FACE_F | INPUT_FACE_G | INPUT_FACE_H;
 
         //Global enumerators
         public enum AnimationStage { STARTUP, ACTIVE, RECOVERY }
@@ -70,7 +72,8 @@ namespace SakugaEngine
         public enum ObjectType { SPAWNABLE, VFX }
         public enum SpawnableHitCheck { OPPONENT, OWNER, BOTH }
         public enum PauseMode { PRESS, HOLD, LOCK }
-        public enum SelectedMode { ARCADE, VERSUS, ONLINE, TRAINING }
+        //public enum SelectedMode { ARCADE, VERSUS, ONLINE, TRAINING, REPLAY, OTHER, DEBUG  }
+        public enum NetcodeMode { LOCAL, ONLINE, REPLAY }
         public enum BotDifficulty { BEGINNER, EASY, MEDIUM, HARD, VERY_HARD, PRO }
         public enum BotMode { ANY = -1, AGGRESSIVE, DEFENSIVE }
         //...
@@ -126,9 +129,11 @@ namespace SakugaEngine
             FACE_B = 1 << 1,
             FACE_C = 1 << 2,
             FACE_D = 1 << 3,
-            DASH = 1 << 4,
-            TAUNT = 1 << 5,
-            ANY_BUTTON = FACE_A | FACE_B | FACE_C | FACE_D
+            FACE_E = 1 << 4,
+            FACE_F = 1 << 5,
+            FACE_G = 1 << 6,
+            FACE_H = 1 << 7,
+            ANY_BUTTON = FACE_A | FACE_B | FACE_C | FACE_D | FACE_E | FACE_F | FACE_G | FACE_H
         }
 
         [Flags]
@@ -137,7 +142,6 @@ namespace SakugaEngine
             DAMAGE_IMUNITY = 1 << 0,
             THROW_IMUNITY = 1 << 1,
             PROJECTILE_IMUNITY = 1 << 2,
-            FORCE_MOVE_CANCEL = 1 << 3,
             LOCK_MOVE = 1 << 4
         }
         [Flags]
@@ -168,6 +172,14 @@ namespace SakugaEngine
             CLOSE_ACTION = 1 << 10,
             FAR_ACTION = 1 << 11,
             INVULNERABLE = 1 << 12,
+        }
+        [Flags]
+        public enum CancelCondition : byte
+        {
+            WHIFF_CANCEL = 1 << 0,
+            HIT_CANCEL = 1 << 1,
+            BLOCK_CANCEL = 1 << 2,
+            KARA_CANCEL = 1 << 3
         }
 
         public static bool ShowHitboxes;
@@ -247,9 +259,27 @@ namespace SakugaEngine
 
             return dx * dx + dy * dy;
         }
+        public static string GetPlayerPrefix(int id)
+        {
+            switch (id)
+            {
+                case 0:
+                    return "k1";
+                case 1:
+                    return"k2";
+                case 2:
+                    return "j1";
+                case 3:
+                    return "j2";
+                default:
+                    return "general";
+            }
+        }
     }
 
-    public struct MatchSetings
+    
+
+    /*public struct MatchSetings
     {
         public MatchPlayerSettings Player1;
         public MatchPlayerSettings Player2;
@@ -265,5 +295,5 @@ namespace SakugaEngine
         public int selectedCharacter;
         public int selectedColor;
         public int selectedDevice;
-    }
+    }*/
 }

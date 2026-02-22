@@ -5,8 +5,8 @@ namespace SakugaEngine
 {
     public partial class GameMonitor : Node
     {
-        [Export] public int ClockLimit = 99;
-        [Export] public int RoundsToWin = 2;
+        public int ClockLimit = 99;
+        public int RoundsToWin = 2;
         public int Clock;
         public int CurrentRound;
         public int Winner;
@@ -22,12 +22,14 @@ namespace SakugaEngine
 
         private SakugaFighter[] _fighters;
 
-        public void Initialize(SakugaFighter[] fighters)
+        public void Initialize(SakugaFighter[] fighters, int clockLimit, int roundsToWin)
         {
             _fighters = fighters;
             Winner = -1;
             CurrentRound = 0;
+            ClockLimit = clockLimit;
             Clock = ClockLimit * Global.TicksPerSecond;
+            RoundsToWin = roundsToWin;
             GameIsRunning = true;
             RoundIsRunning = true; //<< This will be useful soon
             VictoryCounter = new int[_fighters.Length];

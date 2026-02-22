@@ -226,11 +226,11 @@
 [ext_resource type="Script" uid="uid://hg0vcp1gy2ny" path="res://Scripts/SakugaEngine/Collision/PhysicsBody.cs" id="225_oxjr4"]
 [ext_resource type="Script" uid="uid://dshbmw3q5jor2" path="res://Scripts/SakugaEngine/Components/InputManager.cs" id="227_ppa6i"]
 [ext_resource type="Script" uid="uid://v7id8u3160fg" path="res://Scripts/SakugaEngine/Components/FighterVariables.cs" id="228_8hrt3"]
-[ext_resource type="Script" uid="uid://c3t6wbsc2kmvs" path="res://Scripts/SakugaEngine/Components/StanceManager.cs" id="229_0b4ui"]
 [ext_resource type="Script" uid="uid://jxgdxccucllx" path="res://Scripts/SakugaEngine/Components/CombatTracker.cs" id="231_bxldr"]
 [ext_resource type="Script" uid="uid://cmq3cp1n0copp" path="res://Scripts/SakugaEngine/Components/FrameTimer.cs" id="232_811te"]
 [ext_resource type="Texture2D" uid="uid://rw4q7nvg0f1u" path="res://Fighters/Kaede/Sprites/180-0.png" id="284_7p1pn"]
 [ext_resource type="Script" uid="uid://3uu6r0mhj3p3" path="res://Scripts/SakugaEngine/Components/SoundQueue.cs" id="285_ltkr8"]
+[ext_resource type="Script" uid="uid://17dvgaypi8q0" path="res://Scripts/SakugaEngine/Components/SakugaStateMachine.cs" id="285_novy5"]
 [ext_resource type="Texture2D" uid="uid://c7uk676kowt2" path="res://Fighters/Kaede/Sprites/180-1.png" id="285_p81x1"]
 [ext_resource type="Texture2D" uid="uid://c4x2rsvnkh6hy" path="res://Fighters/Kaede/Sprites/180-2.png" id="286_n0lul"]
 [ext_resource type="Texture2D" uid="uid://bjiua12g0ct75" path="res://Fighters/Kaede/Sprites/180-3.png" id="287_gxj1q"]
@@ -2842,7 +2842,7 @@ _data = {
 &"j_5C": SubResource("47")
 }
 
-[node name="Kaede_Viewer" type="Node3D" node_paths=PackedStringArray("HitStun", "HitStop", "MoveBuffer", "PushForce", "HorizontalBounce", "VerticalBounce", "Brain", "Body", "Inputs", "Variables", "Animator", "Stance", "Tracker", "Sounds", "Graphics")]
+[node name="Kaede_Viewer" type="Node3D" node_paths=PackedStringArray("HitStun", "HitStop", "MoveBuffer", "PushForce", "HorizontalBounce", "VerticalBounce", "Brain", "Body", "Inputs", "Variables", "Animator", "StateMachine", "Tracker", "Sounds", "Graphics")]
 script = ExtResource("1_7dx2y")
 HitStun = NodePath("Timers/HitStun")
 HitStop = NodePath("Timers/HitStop")
@@ -2856,7 +2856,7 @@ Body = NodePath("PhysicsBody")
 Inputs = NodePath("InputManager")
 Variables = NodePath("Variables")
 Animator = NodePath("Graphics/Mesh")
-Stance = NodePath("Stances")
+StateMachine = NodePath("StateMachine")
 Tracker = NodePath("CombatTracker")
 Sounds = [NodePath("Sounds/SFX_0"), NodePath("Sounds/SFX_1"), NodePath("Sounds/SFX_2"), NodePath("Sounds/SFX_3"), NodePath("Sounds/SFX_4")]
 Graphics = [NodePath("Graphics/Mesh/KaedeGraphics")]
@@ -2865,9 +2865,8 @@ Graphics = [NodePath("Graphics/Mesh/KaedeGraphics")]
 script = ExtResource("2")
 intensity = 0.25
 
-[node name="Mesh" type="Node3D" parent="Graphics" node_paths=PackedStringArray("owner", "players", "OffsetNode")]
+[node name="Mesh" type="Node3D" parent="Graphics" node_paths=PackedStringArray("players", "OffsetNode")]
 script = ExtResource("3_nysqa")
-owner = NodePath("../..")
 players = [NodePath("KaedeGraphics/AnimationPlayer")]
 OffsetNode = NodePath("KaedeGraphics")
 
@@ -2907,17 +2906,15 @@ script = ExtResource("285_ltkr8")
 [node name="SFX_4" type="AudioStreamPlayer3D" parent="Sounds"]
 script = ExtResource("285_ltkr8")
 
-[node name="PhysicsBody" type="Node" parent="." node_paths=PackedStringArray("owner")]
+[node name="PhysicsBody" type="Node" parent="."]
 script = ExtResource("225_oxjr4")
-owner = NodePath("..")
 StayOnBounds = true
 
 [node name="InputManager" type="Node" parent="."]
 script = ExtResource("227_ppa6i")
 
-[node name="Stances" type="Node" parent="." node_paths=PackedStringArray("owner")]
-script = ExtResource("229_0b4ui")
-owner = NodePath("..")
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("285_novy5")
 
 [node name="CombatTracker" type="Node" parent="."]
 script = ExtResource("231_bxldr")

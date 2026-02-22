@@ -1,6 +1,5 @@
 using Godot;
 using SakugaEngine.Resources;
-using System;
 using System.IO;
 
 namespace SakugaEngine
@@ -8,21 +7,26 @@ namespace SakugaEngine
     [GlobalClass]
     public partial class FrameAnimator : Node
     {
-        [Export] private SakugaActor owner;
+        private SakugaActor _owner;
         [Export] private AnimationPlayer[] players;
         [Export] private string[] prefix;
         [Export] public Node3D OffsetNode;
 
         public int CurrentState;
-        public int Frame;
+        public int CurrentStateFrame;
+
         private int targetFrame = 0;
 
-        public void ViewAnimations()
+        public void Initialize(SakugaActor owner)
         {
-            if (GetCurrentState().animationSettings == null || GetCurrentState().animationSettings.Length == 0)
-                return;
+            _owner = owner;
+        }
 
-            AnimationSettings anim = GetCurrentAnimationSettings();
+        public void ViewAnimations(AnimationSettings anim, int Frame)
+        {
+            if (anim == null)
+                return;
+            
             if (anim == null) return;
             if (anim.SourceAnimation == "") return;
 
@@ -59,16 +63,19 @@ namespace SakugaEngine
             if (CurrentState != state)
             {
                 CurrentState = state;
-                Frame = 0;
+                CurrentStateFrame = 0;
 
             }
             else if (reset)
-                Frame = 0;
+                CurrentStateFrame = 0;
+            
+            _owner.CancelConditions = Global.CancelCondition.WHIFF_CANCEL | Global.CancelCondition.KARA_CANCEL;
         }
 
         public void RunState()
         {
-            Frame++;
+            CurrentStateFrame++;
+            if (CurrentStateFrame >= Global.KaraCancelWindow) _owner.CancelConditions &= ~Global.CancelCondition.KARA_CANCEL;
             LoopState();
         }
 
@@ -76,33 +83,22 @@ namespace SakugaEngine
         {
             bool canLoop = GetCurrentState().Loop && GetCurrentState().LoopFrames.X >= 0 && GetCurrentState().LoopFrames.Y > 0;
             int frameLimit = canLoop ? GetCurrentState().LoopFrames.Y : GetCurrentState().Duration - 1;
-            if (Frame > frameLimit)
+            if (CurrentStateFrame > frameLimit)
             {
                 if (canLoop)
-                    Frame = GetCurrentState().LoopFrames.X;
+                    CurrentStateFrame = GetCurrentState().LoopFrames.X;
                 else
-                    Frame = GetCurrentState().Duration;
+                    CurrentStateFrame = GetCurrentState().Duration;
             }
         }
 
-        public void Serialize(BinaryWriter bw)
-        {
-            bw.Write(Frame);
-            bw.Write(CurrentState);
-        }
-
-        public void Deserialize(BinaryReader br)
-        {
-            Frame = br.ReadInt32();
-            CurrentState = br.ReadInt32();
-        }
-
-        public FighterState GetCurrentState() => owner.Data.States[CurrentState];
-        public int StateType() => (int)GetCurrentState().Type;
-        public bool StateEnded() => Frame >= GetCurrentState().Duration;
+        public FighterState GetCurrentState() => _owner.Data.States[CurrentState];
+        public Global.StateType CurrentStateType() => GetCurrentState().Type;
+        public bool StateEnded() => CurrentStateFrame >= GetCurrentState().Duration;
 
         public AnimationSettings GetCurrentAnimationSettings()
         {
+            if (GetCurrentState().animationSettings == null || GetCurrentState().animationSettings.Length <= 0) return null;
             if (GetCurrentState().animationSettings.Length == 1)
                 return GetCurrentState().animationSettings[0];
 
@@ -114,11 +110,23 @@ namespace SakugaEngine
                                 GetCurrentState().Duration - 1 :
                                 GetCurrentState().animationSettings[i + 1].AtFrame - 1;
                 
-                if (Frame >= GetCurrentState().animationSettings[i].AtFrame && Frame <= nextFrame)
+                if (CurrentStateFrame >= GetCurrentState().animationSettings[i].AtFrame && CurrentStateFrame <= nextFrame)
                     anim = i;
             }
 
             return GetCurrentState().animationSettings[anim];
+        }
+
+        public void Serialize(BinaryWriter bw)
+        {
+            bw.Write(CurrentState);
+            bw.Write(CurrentStateFrame);
+        }
+
+        public void Deserialize(BinaryReader br)
+        {
+            CurrentState = br.ReadInt32();
+            CurrentStateFrame = br.ReadInt32();
         }
     }
 }

@@ -6,7 +6,7 @@ namespace SakugaEngine
     [GlobalClass]
     public partial class CombatTracker : Node
     {
-        private SakugaFighter TrackerOwner;
+        private SakugaFighter _owner;
         public int HitCombo;
         public uint LastDamage;
         public uint CurrentCombo;
@@ -21,7 +21,7 @@ namespace SakugaEngine
 
         public void Initialize(SakugaFighter onwer)
         {
-            TrackerOwner = onwer;
+            _owner = onwer;
             HitCombo = 0;
             LastDamage = 0;
             CurrentCombo = 0;
@@ -54,11 +54,11 @@ namespace SakugaEngine
 
         public void UpdateFrameData()
         {
-            int selectFrameOrigin = TrackerOwner.Animator.StateType() == 4 ?
-                                        (int)TrackerOwner.HitStun.TimeLeft :
-                                        (TrackerOwner.Animator.GetCurrentState().Duration - TrackerOwner.Animator.Frame);
+            int selectFrameOrigin = _owner.Animator.CurrentStateType() == Global.StateType.HIT_REACTION?
+                                        (int)_owner.HitStun.TimeLeft :
+                                        (_owner.Animator.GetCurrentState().Duration - _owner.Animator.CurrentStateFrame);
 
-            FrameData = TrackerOwner.Animator.StateType() <= 1 ? 0 : selectFrameOrigin;
+            FrameData = _owner.Animator.CurrentStateType() <= Global.StateType.MOVEMENT ? 0 : selectFrameOrigin;
             //FrameData = Mathf.Clamp(FrameData, 0, owner.Animator.GetCurrentState().Duration);
         }
 

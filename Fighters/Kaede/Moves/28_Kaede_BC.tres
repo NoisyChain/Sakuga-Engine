@@ -1,36 +1,48 @@
-[gd_resource type="Resource" script_class="MoveSettings" load_steps=7 format=3 uid="uid://dvtpcx44dk545"]
+[gd_resource type="Resource" script_class="MoveSettings" load_steps=8 format=3 uid="uid://dvtpcx44dk545"]
 
+[ext_resource type="Script" uid="uid://dpgs1fcn5u351" path="res://Scripts/SakugaEngine/Resources/MoveCancelSettings.cs" id="1_ly57l"]
 [ext_resource type="Resource" uid="uid://dovk6n76rc55h" path="res://Fighters/Shared/Inputs/22_Input_BC.tres" id="1_up8bs"]
-[ext_resource type="Script" uid="uid://d2o3c80crr42u" path="res://Scripts/SakugaEngine/Resources/ButtonChargeSequence.cs" id="2_ffvot"]
 [ext_resource type="Script" uid="uid://gk1rkw667o4n" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_k2d6q"]
 
-[sub_resource type="Resource" id="Resource_5ubco"]
-script = ExtResource("2_ffvot")
-Threshold = Vector2i(1, 30)
-SequenceMove = 29
+[sub_resource type="Resource" id="Resource_kd4e3"]
+script = ExtResource("1_ly57l")
+MoveIndex = 31
+Conditions = 1
+FrameThreshold = Vector2i(60, 89)
+metadata/_custom_type_script = "uid://dpgs1fcn5u351"
 
-[sub_resource type="Resource" id="Resource_51pp6"]
-script = ExtResource("2_ffvot")
-Threshold = Vector2i(31, 60)
-SequenceMove = 30
+[sub_resource type="Resource" id="Resource_dqspo"]
+script = ExtResource("1_ly57l")
+MoveIndex = 30
+Conditions = 1
+FrameThreshold = Vector2i(30, 59)
+metadata/_custom_type_script = "uid://dpgs1fcn5u351"
 
-[sub_resource type="Resource" id="Resource_rwkj0"]
-script = ExtResource("2_ffvot")
-Threshold = Vector2i(61, 90)
-SequenceMove = 31
+[sub_resource type="Resource" id="Resource_55sov"]
+script = ExtResource("1_ly57l")
+MoveIndex = 29
+Conditions = 1
+FrameThreshold = Vector2i(0, 29)
+metadata/_custom_type_script = "uid://dpgs1fcn5u351"
+
+[sub_resource type="Resource" id="Resource_brmun"]
+script = ExtResource("1_ly57l")
+MoveIndex = 38
+Conditions = 8
+metadata/_custom_type_script = "uid://dpgs1fcn5u351"
 
 [resource]
 script = ExtResource("2_k2d6q")
 MoveName = "BC_Charge"
 MoveState = 58
 Inputs = ExtResource("1_up8bs")
-KaraCancelsTo = PackedInt32Array(38)
-buttonChargeSequence = Array[Object]([SubResource("Resource_5ubco"), SubResource("Resource_51pp6"), SubResource("Resource_rwkj0")])
+CanCancelTo = Array[Object]([SubResource("Resource_kd4e3"), SubResource("Resource_dqspo"), SubResource("Resource_55sov"), SubResource("Resource_brmun")])
 ExtraVariablesRequirement = null
 ExtraVariablesChange = null
 MoveEnd = 2
-Priority = 6
+Priority = 5
 CanBeOverrided = true
 IgnoreSamePriority = false
-WaitForNullStates = false
+AcceptNullStates = true
+AcceptCombatStates = true
 UseOnGround = true

@@ -1,37 +1,70 @@
-[gd_resource type="Resource" script_class="MoveSettings" load_steps=3 format=3 uid="uid://dleyoipqsmi1b"]
+[gd_resource type="Resource" script_class="MoveSettings" load_steps=11 format=3 uid="uid://dleyoipqsmi1b"]
 
+[ext_resource type="Script" uid="uid://dpgs1fcn5u351" path="res://Scripts/SakugaEngine/Resources/MoveCancelSettings.cs" id="1_eatty"]
 [ext_resource type="Resource" uid="uid://d0wfxlb0qkmur" path="res://Fighters/Shared/Inputs/11_Input_5A.tres" id="1_el463"]
 [ext_resource type="Script" uid="uid://gk1rkw667o4n" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_fpbnc"]
+
+[sub_resource type="Resource" id="Resource_cpbnt"]
+script = ExtResource("1_eatty")
+MoveIndex = 4
+Conditions = 6
+FrameThreshold = Vector2i(0, 999)
+metadata/_custom_type_script = "uid://dpgs1fcn5u351"
+
+[sub_resource type="Resource" id="Resource_gac08"]
+script = ExtResource("1_eatty")
+MoveIndex = 5
+Conditions = 6
+FrameThreshold = Vector2i(0, 999)
+metadata/_custom_type_script = "uid://dpgs1fcn5u351"
+
+[sub_resource type="Resource" id="Resource_khioq"]
+script = ExtResource("1_eatty")
+MoveIndex = 6
+Conditions = 6
+FrameThreshold = Vector2i(0, 999)
+metadata/_custom_type_script = "uid://dpgs1fcn5u351"
+
+[sub_resource type="Resource" id="Resource_atndp"]
+script = ExtResource("1_eatty")
+MoveIndex = 19
+Conditions = 6
+FrameThreshold = Vector2i(0, 999)
+metadata/_custom_type_script = "uid://dpgs1fcn5u351"
+
+[sub_resource type="Resource" id="Resource_63y75"]
+script = ExtResource("1_eatty")
+MoveIndex = 21
+Conditions = 6
+FrameThreshold = Vector2i(0, 999)
+metadata/_custom_type_script = "uid://dpgs1fcn5u351"
+
+[sub_resource type="Resource" id="Resource_4hq8l"]
+script = ExtResource("1_eatty")
+MoveIndex = 33
+Conditions = 6
+FrameThreshold = Vector2i(0, 999)
+metadata/_custom_type_script = "uid://dpgs1fcn5u351"
+
+[sub_resource type="Resource" id="Resource_4skw2"]
+script = ExtResource("1_eatty")
+MoveIndex = 34
+Conditions = 6
+FrameThreshold = Vector2i(0, 999)
+metadata/_custom_type_script = "uid://dpgs1fcn5u351"
 
 [resource]
 script = ExtResource("2_fpbnc")
 MoveName = "5A"
 MoveState = 48
 Inputs = ExtResource("1_el463")
-SideChange = 0
-SuperGaugeRequired = 0
-BuildSuperGauge = 0
-HealthThreshold = Vector2i(0, 99999)
-SpendHealth = 0
-DistanceArea = Vector2i(0, 999999)
-IsSequenceFromStates = PackedInt32Array()
-IgnoreStates = PackedInt32Array()
-CancelsTo = PackedInt32Array(4, 5, 6, 19, 21, 33, 34)
-KaraCancelsTo = PackedInt32Array(32)
-buttonChargeSequence = null
-ExtraVariablesRequirement = null
-ExtraVariablesChange = null
+CanCancelTo = Array[Object]([SubResource("Resource_cpbnt"), SubResource("Resource_gac08"), SubResource("Resource_khioq"), SubResource("Resource_atndp"), SubResource("Resource_63y75"), SubResource("Resource_4hq8l"), SubResource("Resource_4skw2")])
+ExtraVariablesRequirement = Array[Object]([])
+ExtraVariablesChange = Array[Object]([])
 MoveEnd = 2
-MoveEndState = -1
-ChangeStance = -1
-FrameLimit = -1
-SuperFlash = 0
 Priority = 5
-CanBeOverrided = false
-CanOverrideToSelf = false
+CanBeOverrided = true
 IgnoreSamePriority = false
-InterruptCornerPushback = false
-PriorityBuffer = false
-WaitForNullStates = false
+AcceptNullStates = true
+AcceptCombatStates = true
 UseOnGround = true
-UseOnAir = false

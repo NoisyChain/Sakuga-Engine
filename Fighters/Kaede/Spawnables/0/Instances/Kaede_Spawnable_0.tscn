@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://domhsm5n4i2q1"]
+[gd_scene load_steps=24 format=3 uid="uid://domhsm5n4i2q1"]
 
 [ext_resource type="Script" uid="uid://ocvrnnvvf610" path="res://Scripts/SakugaEngine/Components/SakugaSpawnable.cs" id="1_dhydb"]
 [ext_resource type="Resource" uid="uid://blg5tsr3o8aai" path="res://Fighters/Kaede/Spawnables/0/Kaede_Spawnable1_Data.tres" id="2_0aw3w"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://bqn808dr1xgt5" path="res://Fighters/Kaede/Spawnables/0/Sprites/1210-7.png" id="14_c0qtb"]
 [ext_resource type="Texture2D" uid="uid://dlsfasp5w35ob" path="res://Fighters/Kaede/Spawnables/0/Sprites/1210-8.png" id="15_exb3l"]
 [ext_resource type="Texture2D" uid="uid://33q2at6e5oq7" path="res://Fighters/Kaede/Spawnables/0/Sprites/1211-0.png" id="16_g0add"]
+[ext_resource type="Script" uid="uid://17dvgaypi8q0" path="res://Scripts/SakugaEngine/Components/SakugaStateMachine.cs" id="17_wx82o"]
 [ext_resource type="Script" uid="uid://3uu6r0mhj3p3" path="res://Scripts/SakugaEngine/Components/SoundQueue.cs" id="18_d0kas"]
 [ext_resource type="PackedScene" uid="uid://dduf0jsq56ggk" path="res://Scenes/Instances/HitboxViewer.tscn" id="281_wh8kr"]
 [ext_resource type="Script" uid="uid://hg0vcp1gy2ny" path="res://Scripts/SakugaEngine/Collision/PhysicsBody.cs" id="282_or0ge"]
@@ -132,9 +133,8 @@ Graphics = [NodePath("Graphics/Mesh/ProjectileGraphics")]
 script = ExtResource("3_vniop")
 intensity = 0.25
 
-[node name="Mesh" type="Node3D" parent="Graphics" node_paths=PackedStringArray("owner", "players", "OffsetNode")]
+[node name="Mesh" type="Node3D" parent="Graphics" node_paths=PackedStringArray("players", "OffsetNode")]
 script = ExtResource("4_ao37v")
-owner = NodePath("../..")
 players = [NodePath("ProjectileGraphics/AnimationPlayer")]
 OffsetNode = NodePath("..")
 
@@ -162,9 +162,12 @@ body = NodePath("../PhysicsBody")
 [node name="SFX_0" type="AudioStreamPlayer3D" parent="Sounds"]
 script = ExtResource("18_d0kas")
 
-[node name="PhysicsBody" type="Node" parent="." node_paths=PackedStringArray("owner")]
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("17_wx82o")
+metadata/_custom_type_script = "uid://17dvgaypi8q0"
+
+[node name="PhysicsBody" type="Node" parent="."]
 script = ExtResource("282_or0ge")
-owner = NodePath("..")
 StayOnBounds = true
 HitboxesLimit = 3
 

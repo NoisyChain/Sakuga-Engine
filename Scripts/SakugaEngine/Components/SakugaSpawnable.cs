@@ -55,12 +55,13 @@ namespace SakugaEngine
             IsActive = false;
             CurrentHitCheck = (byte)HitCheck;
             SetFighterOwner(owner);
-            Body.Initialize(this);
+            Body.Initialize(this, this);
             Body.CurrentHitbox = -1;
             Body.IsLeftSide = GetFighterOwner().Body.IsLeftSide;
             Inputs = GetFighterOwner().Inputs;
+            Animator.Initialize(this);
             Animator.PlayState(InitialState);
-            Animator.Frame = -1;
+            Animator.CurrentStateFrame = -1;
         }
 
         public void Spawn(Vector2I origin)
@@ -69,7 +70,7 @@ namespace SakugaEngine
             Body.MoveTo(origin);
             Body.IsLeftSide = GetFighterOwner().Body.IsLeftSide;
             Animator.PlayState(InitialState);
-            Animator.Frame = -1;
+            Animator.CurrentStateFrame = -1;
             LifeTime.Start();
             if (!CountLifeTimeOnSpawn) LifeTime.Pause();
 
@@ -84,7 +85,7 @@ namespace SakugaEngine
             Body.FixedVelocity = Vector2I.Zero;
             Body.FixedPosition = Vector2I.Zero;
             Animator.PlayState(InitialState);
-            Animator.Frame = -1;
+            Animator.CurrentStateFrame = -1;
             Body.SetHitbox(-1);
         }
 
@@ -110,10 +111,10 @@ namespace SakugaEngine
             if (Variables != null) Variables.UpdateExtraVariables();
             CheckDeathConditions();
             
-            if (!LifeTime.IsRunning() && Animator.Frame >= Animator.GetCurrentState().Duration - 1)
+            if (!LifeTime.IsRunning() && Animator.CurrentStateFrame >= Animator.GetCurrentState().Duration - 1)
             {
                 IsActive = false;
-                Animator.Frame = -1;
+                Animator.CurrentStateFrame = -1;
                 Body.SetHitbox(-1);
             }
 
@@ -236,8 +237,8 @@ namespace SakugaEngine
             bw.Write(IsActive);
             bw.Write(CurrentHitCheck);
             Body.Serialize(bw);
-            if (Variables != null) Variables.Serialize(bw);
             Animator.Serialize(bw);
+            if (Variables != null) Variables.Serialize(bw);
             LifeTime.Serialize(bw);
             HitStop.Serialize(bw);
 
@@ -248,8 +249,8 @@ namespace SakugaEngine
             IsActive = br.ReadBoolean();
             CurrentHitCheck = br.ReadByte();
             Body.Deserialize(br);
-            if (Variables != null) Variables.Deserialize(br);
             Animator.Deserialize(br);
+            if (Variables != null) Variables.Deserialize(br);
             LifeTime.Deserialize(br);
             HitStop.Deserialize(br);
 

@@ -27,11 +27,11 @@ namespace SakugaEngine
 
         private AIData data => _owner.Data._aiData;
 
-        public void Initialize(SakugaFighter owner)
+        public void Initialize(SakugaFighter owner, Global.BotDifficulty difficulty)
         {
             _owner = owner;
 
-            switch (Global.Match.botDifficulty)
+            switch (difficulty)
             {
                 case Global.BotDifficulty.BEGINNER:
                     currentBehavior = data.BehaviorBeginner;
@@ -91,15 +91,15 @@ namespace SakugaEngine
             if (_owner.LifeEnded()) return;
             if (_owner.GetOpponent().LifeEnded()) return;
 
-            //if ((currentCommand > 0 || currentInputIndex > 0 && !canAdvance) && _owner.Stance.CurrentMove < 0)
+            //if ((currentCommand > 0 || currentInputIndex > 0 && !canAdvance) && _owner.StateMachine.CurrentMove < 0)
             //{ Reset(); }
             //bool MoveEnded = (currentCommand == 0 || currentCommand >= currentCommandList.Length) && currentInputIndex == 0;
             //if (!MoveEnded) { tick = 0; return; }
 
             //Reset the values if the character is busy
-            if (_owner.Animator.StateType() > 1)
+            if (_owner.Animator.CurrentStateType() > Global.StateType.MOVEMENT)
             {
-                if (_owner.Animator.StateType() == 4)
+                if (_owner.Animator.CurrentStateType() == Global.StateType.HIT_REACTION)
                 {
                     if (!teching)
                     {
@@ -144,7 +144,7 @@ namespace SakugaEngine
                         return;
                     }
                 }
-                if (_owner.Animator.StateType() > 2) Reset();
+                if (_owner.Animator.CurrentStateType() > Global.StateType.COMBAT) Reset();
 
                 tick = 0;
                 return;
@@ -157,8 +157,8 @@ namespace SakugaEngine
                     int rnd = Global.RNG.Next(0, 10);
                     if (rnd < currentBehavior.BlockingRate)
                     {
-                        int blockStance = proximityHit == Global.HitType.LOW ? data.LowBlockAction : data.HighBlockAction;
-                        currentCommandList = new int[] { blockStance };
+                        int blockStateMachine = proximityHit == Global.HitType.LOW ? data.LowBlockAction : data.HighBlockAction;
+                        currentCommandList = new int[] { blockStateMachine };
                     }
 
                     blocking = true;
@@ -172,7 +172,7 @@ namespace SakugaEngine
 
             //If a command is still running, let it do its thing
             if ((currentCommand >= currentCommandList.Length || (currentCommand >= 0 && inputFinished && !canAdvance
-                && !data.Actions[currentCommandList[currentCommand]].AutoAdvance)) && _owner.Stance.CurrentMove < 0)
+                && !data.Actions[currentCommandList[currentCommand]].AutoAdvance)) && _owner.StateMachine.CurrentMove < 0)
             { Reset(); }
             bool MoveEnded = (currentCommand == 0 || currentCommand >= currentCommandList.Length) && currentInputIndex == 0;
             //GD.Print($"{currentCommand == 0 || currentCommand >= currentCommandList.Length}, {currentInputIndex == 0}");
@@ -184,7 +184,7 @@ namespace SakugaEngine
             if (tick <= tickLimit) return;
             else
             {
-                if (_owner.Stance.CurrentMove < 0)
+                if (_owner.StateMachine.CurrentMove < 0)
                     tickLimit = UpdateDecisionRateFree();
                 else
                     tickLimit = UpdateDecisionRateBusy();

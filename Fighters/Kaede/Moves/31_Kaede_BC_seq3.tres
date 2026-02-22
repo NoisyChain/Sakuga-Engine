@@ -1,35 +1,20 @@
-[gd_resource type="Resource" script_class="MoveSettings" load_steps=2 format=3 uid="uid://bhj8sjd3ddmqc"]
+[gd_resource type="Resource" script_class="MoveSettings" load_steps=3 format=3 uid="uid://bhj8sjd3ddmqc"]
 
+[ext_resource type="Resource" uid="uid://6hpldrm0jeb5" path="res://Fighters/Shared/Inputs/26_Input_]BC[.tres" id="1_ldxl2"]
 [ext_resource type="Script" uid="uid://gk1rkw667o4n" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_sgxi1"]
 
 [resource]
 script = ExtResource("2_sgxi1")
 MoveName = "BC_seq3"
 MoveState = 50
-SideChange = 0
-SuperGaugeRequired = 0
-BuildSuperGauge = 0
-HealthThreshold = Vector2i(0, 99999)
-SpendHealth = 0
-DistanceArea = Vector2i(0, 999999)
-IsSequenceFromStates = PackedInt32Array()
-IgnoreStates = PackedInt32Array()
-CancelsTo = PackedInt32Array()
-KaraCancelsTo = PackedInt32Array()
-buttonChargeSequence = null
+SkipCheck = true
+Inputs = ExtResource("1_ldxl2")
+IsSequenceFromStates = PackedInt32Array(58)
+CanCancelTo = null
 ExtraVariablesRequirement = null
 ExtraVariablesChange = null
 MoveEnd = 2
-MoveEndState = -1
-ChangeStance = -1
-FrameLimit = -1
-SuperFlash = 0
 Priority = 5
-CanBeOverrided = false
-CanOverrideToSelf = false
-IgnoreSamePriority = false
-InterruptCornerPushback = false
-PriorityBuffer = false
-WaitForNullStates = false
+AcceptNullStates = true
+AcceptCombatStates = true
 UseOnGround = true
-UseOnAir = false

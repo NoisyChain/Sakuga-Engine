@@ -1,37 +1,49 @@
-[gd_resource type="Resource" script_class="MoveSettings" load_steps=3 format=3 uid="uid://dft62lsfytswm"]
+[gd_resource type="Resource" script_class="MoveSettings" load_steps=8 format=3 uid="uid://dft62lsfytswm"]
 
 [ext_resource type="Resource" uid="uid://bdy2tcfv6ov1v" path="res://Fighters/Shared/Inputs/12_Input_5B.tres" id="1_bnfh8"]
+[ext_resource type="Script" uid="uid://dpgs1fcn5u351" path="res://Scripts/SakugaEngine/Resources/MoveCancelSettings.cs" id="1_gip47"]
 [ext_resource type="Script" uid="uid://gk1rkw667o4n" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_wx5hw"]
+
+[sub_resource type="Resource" id="Resource_kco43"]
+script = ExtResource("1_gip47")
+MoveIndex = 11
+Conditions = 6
+FrameThreshold = Vector2i(0, 999)
+metadata/_custom_type_script = "uid://dpgs1fcn5u351"
+
+[sub_resource type="Resource" id="Resource_d8m54"]
+script = ExtResource("1_gip47")
+MoveIndex = 12
+Conditions = 6
+FrameThreshold = Vector2i(0, 999)
+metadata/_custom_type_script = "uid://dpgs1fcn5u351"
+
+[sub_resource type="Resource" id="Resource_7gore"]
+script = ExtResource("1_gip47")
+MoveIndex = 13
+Conditions = 6
+FrameThreshold = Vector2i(0, 999)
+metadata/_custom_type_script = "uid://dpgs1fcn5u351"
+
+[sub_resource type="Resource" id="Resource_5wkrh"]
+script = ExtResource("1_gip47")
+MoveIndex = 26
+Conditions = 6
+FrameThreshold = Vector2i(0, 999)
+metadata/_custom_type_script = "uid://dpgs1fcn5u351"
 
 [resource]
 script = ExtResource("2_wx5hw")
 MoveName = "j.5B"
 MoveState = 55
 Inputs = ExtResource("1_bnfh8")
-SideChange = 0
-SuperGaugeRequired = 0
-BuildSuperGauge = 0
-HealthThreshold = Vector2i(0, 99999)
-SpendHealth = 0
-DistanceArea = Vector2i(0, 999999)
-IsSequenceFromStates = PackedInt32Array()
-IgnoreStates = PackedInt32Array()
-CancelsTo = PackedInt32Array(11, 12, 13, 26)
-KaraCancelsTo = PackedInt32Array()
-buttonChargeSequence = null
+CanCancelTo = Array[Object]([SubResource("Resource_kco43"), SubResource("Resource_d8m54"), SubResource("Resource_7gore"), SubResource("Resource_5wkrh")])
 ExtraVariablesRequirement = null
 ExtraVariablesChange = null
 MoveEnd = 2
-MoveEndState = -1
-ChangeStance = -1
-FrameLimit = -1
-SuperFlash = 0
 Priority = 5
-CanBeOverrided = false
-CanOverrideToSelf = false
+CanBeOverrided = true
 IgnoreSamePriority = false
-InterruptCornerPushback = false
-PriorityBuffer = false
-WaitForNullStates = false
-UseOnGround = false
+AcceptNullStates = true
+AcceptCombatStates = true
 UseOnAir = true

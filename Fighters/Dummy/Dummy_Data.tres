@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="DataContainer" load_steps=19 format=3 uid="uid://cgfa1xwppjfy2"]
+
+[ext_resource type="Script" uid="uid://bsbjg1nuyall1" path="res://Scripts/SakugaEngine/Resources/DataContainer.cs" id="1_0jh8k"]
+[ext_resource type="Resource" uid="uid://b5x4otrs0q04d" path="res://Fighters/Dummy/Hitboxes/0_Hitbox_Basic.tres" id="1_j75aq"]
+[ext_resource type="Resource" uid="uid://dfma5gqaldi8g" path="res://Fighters/Dummy/Dummy_Profile.tres" id="2_shirj"]
+[ext_resource type="Resource" uid="uid://cjsr2weyqwopy" path="res://Fighters/Dummy/Stances/0_Dummy_Stance_Main.tres" id="3_m7b0c"]
+[ext_resource type="Resource" uid="uid://k31pv0ejfv2s" path="res://Fighters/Shared/Shared_SFXList.tres" id="3_prr05"]
+[ext_resource type="Resource" uid="uid://5w0ffcesv6ec" path="res://Fighters/Shared/Shared_SpawnablesList.tres" id="4_grrr8"]
+[ext_resource type="Resource" uid="uid://dmfn50x0ch85i" path="res://Fighters/Dummy/States/0_Dummy_Neutral.tres" id="4_sg45u"]
+[ext_resource type="Resource" uid="uid://dorfl234p1ked" path="res://Fighters/Dummy/States/1_Dummy_MoveF.tres" id="5_ehl5k"]
+[ext_resource type="Resource" uid="uid://m6lyvybvjhw" path="res://Fighters/Dummy/States/2_Dummy_MoveB.tres" id="6_prr05"]
+[ext_resource type="Resource" uid="uid://byct5p1ygoaxr" path="res://Fighters/Dummy/States/3_Dummy_Jump_Neutral.tres" id="7_grrr8"]
+[ext_resource type="Resource" uid="uid://d2145fjr604tq" path="res://Fighters/Dummy/States/4_Dummy_Jump_Forward.tres" id="8_unqug"]
+[ext_resource type="Resource" uid="uid://c5kxcyr8bh3f2" path="res://Fighters/Dummy/States/5_Dummy_Jump_Backwards.tres" id="9_8534m"]
+[ext_resource type="Resource" uid="uid://dt74qxxgtpisc" path="res://Fighters/Dummy/States/6_Dummy_Falling.tres" id="10_alavs"]
+[ext_resource type="Resource" uid="uid://cxmaourpexvxm" path="res://Fighters/Dummy/States/12_Dummy_AirDash_Forward.tres" id="11_uq8vd"]
+[ext_resource type="Resource" uid="uid://c2qjtpci8vusc" path="res://Fighters/Dummy/States/13_Dummy_AirDash_Backwards.tres" id="12_pjhnq"]
+[ext_resource type="Resource" uid="uid://b6a4cqdykhhg" path="res://Fighters/Shared/Shared_VFXList.tres" id="15_unqug"]
+[ext_resource type="Resource" uid="uid://c8h8jltu6u5pb" path="res://Fighters/Shared/Shared_VoiceLines.tres" id="16_8534m"]
+[ext_resource type="Resource" uid="uid://cjarssd2mjnuw" path="res://Fighters/Kaede/AI/Kaede_AIData.tres" id="17_alavs"]
+
+[resource]
+script = ExtResource("1_0jh8k")
+Profile = ExtResource("2_shirj")
+Hitboxes = Array[Object]([ExtResource("1_j75aq")])
+States = Array[Object]([ExtResource("4_sg45u"), ExtResource("5_ehl5k"), ExtResource("6_prr05"), ExtResource("7_grrr8"), ExtResource("8_unqug"), ExtResource("9_8534m"), ExtResource("10_alavs"), ExtResource("11_uq8vd"), ExtResource("12_pjhnq")])
+Stances = Array[Object]([ExtResource("3_m7b0c")])
+SpawnablesList = ExtResource("4_grrr8")
+VFXList = ExtResource("15_unqug")
+SFXList = ExtResource("3_prr05")
+VoiceLines = ExtResource("16_8534m")
+_aiData = ExtResource("17_alavs")
+metadata/_custom_type_script = "uid://bsbjg1nuyall1"

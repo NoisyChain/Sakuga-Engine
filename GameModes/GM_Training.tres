@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="GameModeSettings" load_steps=2 format=3 uid="uid://dtmnvy5026dqe"]
+
+[ext_resource type="Script" uid="uid://b0tk35wf5y1p8" path="res://Scripts/SakugaEngine/Resources/GameModeSettings.cs" id="1_sscc1"]
+
+[resource]
+script = ExtResource("1_sscc1")
+ModeName = "Training"
+AutoStart = true
+ShowTrainingInfo = true
+AllowShowHitboxes = true
+AllowShowInputs = true
+metadata/_custom_type_script = "uid://b0tk35wf5y1p8"
