@@ -266,10 +266,16 @@ namespace SakugaEngine.Game
             if (Input.IsActionPressed(prefix + "_face_d"))
                 input[0] |= Global.INPUT_FACE_D;
             
-            if (Input.IsActionPressed(prefix + "_dash"))
+            if (Input.IsActionPressed(prefix + "_face_e"))
+                input[1] |= Global.INPUT_FACE_E >> 8;
+
+            if (Input.IsActionPressed(prefix + "_face_f"))
+                input[1] |= Global.INPUT_FACE_F >> 8;
+            
+            if (Input.IsActionPressed(prefix + "_face_g"))
                 input[1] |= Global.INPUT_FACE_G >> 8;
 
-            if (Input.IsActionPressed(prefix + "_taunt"))
+            if (Input.IsActionPressed(prefix + "_face_h"))
                 input[1] |= Global.INPUT_FACE_H >> 8;
 
             /*if (Input.IsActionPressed(prefix + "_macro_ab"))
