@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="SpawnsList" load_steps=11 format=3 uid="uid://b6a4cqdykhhg"]
+[gd_resource type="Resource" script_class="SpawnsList" format=3 uid="uid://b6a4cqdykhhg"]
 
 [ext_resource type="PackedScene" uid="uid://bu1whcrm5k7wv" path="res://Fighters/Shared/VFX/VFX_00.tscn" id="1_2q3kk"]
 [ext_resource type="Script" uid="uid://k0lh4a8ntjdo" path="res://Scripts/SakugaEngine/Resources/SpawnsList.cs" id="1_r1fnx"]

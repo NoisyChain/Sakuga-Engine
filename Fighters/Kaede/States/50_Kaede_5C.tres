@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="FighterState" load_steps=19 format=3 uid="uid://c4h470mmhnes4"]
+[gd_resource type="Resource" script_class="FighterState" format=3 uid="uid://c4h470mmhnes4"]
 
 [ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="1"]
 [ext_resource type="Script" uid="uid://bx8e460frmhfd" path="res://Scripts/SakugaEngine/Resources/Animation Events/SuperArmorAnimationEvent.cs" id="1_myh1j"]

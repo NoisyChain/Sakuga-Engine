@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="FighterState" load_steps=18 format=3 uid="uid://cc4h1kdvigwri"]
+[gd_resource type="Resource" script_class="FighterState" format=3 uid="uid://cc4h1kdvigwri"]
 
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="1_7i2qg"]
 [ext_resource type="Script" uid="uid://dgkbcrlq5brjd" path="res://Scripts/SakugaEngine/Resources/Animation Events/TeleportAnimationEvent.cs" id="1_w2oei"]

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="FighterList" load_steps=9 format=3 uid="uid://c8s3ip7gkhwq6"]
+[gd_resource type="Resource" script_class="FighterList" format=3 uid="uid://c8s3ip7gkhwq6"]
 
 [ext_resource type="PackedScene" uid="uid://b1ggpw8ltpaid" path="res://Fighters/Kaede/Instances/Fighter_Kaede.tscn" id="1_r4w1x"]
 [ext_resource type="Script" uid="uid://c1vwroelg1kwb" path="res://Scripts/SakugaEngine/Resources/FighterList.cs" id="1_x0sfh"]

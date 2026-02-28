@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="StageList" load_steps=9 format=3 uid="uid://bl30fi0muatu1"]
+[gd_resource type="Resource" script_class="StageList" format=3 uid="uid://bl30fi0muatu1"]
 
 [ext_resource type="PackedScene" uid="uid://dk22qgaiwdb7k" path="res://Stages/Sakuga Default/sakuga_stage_basic.tscn" id="1_h8ykn"]
 [ext_resource type="PackedScene" uid="uid://ctu20phobjd06" path="res://Stages/AFF_Legacy/Meshes/aff_stage_legacy.tscn" id="2_h7n5v"]

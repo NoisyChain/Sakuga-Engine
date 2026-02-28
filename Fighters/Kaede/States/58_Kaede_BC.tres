@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="FighterState" load_steps=10 format=3 uid="uid://d1pionrhmvjjl"]
+[gd_resource type="Resource" script_class="FighterState" format=3 uid="uid://d1pionrhmvjjl"]
 
 [ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="1_0v5me"]
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="1_236vv"]

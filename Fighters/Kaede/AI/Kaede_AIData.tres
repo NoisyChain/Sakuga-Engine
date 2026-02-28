@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="AIData" load_steps=70 format=3 uid="uid://cjarssd2mjnuw"]
+[gd_resource type="Resource" script_class="AIData" format=3 uid="uid://cjarssd2mjnuw"]
 
 [ext_resource type="Resource" uid="uid://ctkuakk7dip6y" path="res://Fighters/Kaede/AI/Kaede_AI_Medium.tres" id="1_5yprj"]
 [ext_resource type="Script" uid="uid://qkcdnntram58" path="res://Scripts/SakugaEngine/Resources/AI/AIInput.cs" id="1_81itq"]

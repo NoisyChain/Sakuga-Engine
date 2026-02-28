@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="BGMList" load_steps=9 format=3 uid="uid://fxj4uvd0y37r"]
+[gd_resource type="Resource" script_class="BGMList" format=3 uid="uid://fxj4uvd0y37r"]
 
 [ext_resource type="Script" uid="uid://bldnphonm50nq" path="res://Scripts/SakugaEngine/Resources/BGMElement.cs" id="1_bkc4d"]
 [ext_resource type="Script" uid="uid://nup8upyemx4m" path="res://Scripts/SakugaEngine/Resources/BGMList.cs" id="1_g040y"]

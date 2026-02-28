@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="MotionInputs" load_steps=6 format=3 uid="uid://b7xl8m7kdvbg7"]
+[gd_resource type="Resource" script_class="MotionInputs" format=3 uid="uid://b7xl8m7kdvbg7"]
 
 [ext_resource type="Script" uid="uid://87xpa7lbksa8" path="res://Scripts/SakugaEngine/Resources/InputSequence.cs" id="1_sbdtd"]
 [ext_resource type="Script" uid="uid://ce6shsv0dij5v" path="res://Scripts/SakugaEngine/Resources/InputOption.cs" id="2_aj32b"]

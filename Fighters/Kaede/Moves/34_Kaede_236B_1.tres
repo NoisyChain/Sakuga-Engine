@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="MoveSettings" load_steps=6 format=3 uid="uid://cqd6owm5o4yay"]
+[gd_resource type="Resource" script_class="MoveSettings" format=3 uid="uid://cqd6owm5o4yay"]
 
 [ext_resource type="Script" uid="uid://dpgs1fcn5u351" path="res://Scripts/SakugaEngine/Resources/MoveCancelSettings.cs" id="1_6wqgw"]
 [ext_resource type="Resource" uid="uid://dnsaxvbcfkp5k" path="res://Fighters/Shared/Inputs/19_Input_236B.tres" id="1_yvj64"]

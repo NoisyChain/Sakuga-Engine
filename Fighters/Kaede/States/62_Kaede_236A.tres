@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="FighterState" load_steps=14 format=3 uid="uid://bl70vrda303oh"]
+[gd_resource type="Resource" script_class="FighterState" format=3 uid="uid://bl70vrda303oh"]
 
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="1_e311h"]
 [ext_resource type="Script" uid="uid://gkg7v04bkm2y" path="res://Scripts/SakugaEngine/Resources/Animation Events/SpawnObjectAnimationEvent.cs" id="1_p455q"]

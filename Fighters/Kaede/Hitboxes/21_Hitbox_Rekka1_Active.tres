@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="HitboxSettings" load_steps=6 format=3 uid="uid://d34q8mplj7sh"]
+[gd_resource type="Resource" script_class="HitboxSettings" format=3 uid="uid://d34q8mplj7sh"]
 
 [ext_resource type="Script" uid="uid://c0y740kryylcs" path="res://Scripts/SakugaEngine/Resources/HitboxElement.cs" id="1_vvae4"]
 [ext_resource type="Script" uid="uid://dxuwyhds75mce" path="res://Scripts/SakugaEngine/Resources/HitboxSettings.cs" id="2_qiqe3"]

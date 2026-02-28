@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="AIBehavior" load_steps=31 format=3 uid="uid://ctkuakk7dip6y"]
+[gd_resource type="Resource" script_class="AIBehavior" format=3 uid="uid://ctkuakk7dip6y"]
 
 [ext_resource type="Script" uid="uid://c6pe4r5xpq803" path="res://Scripts/SakugaEngine/Resources/AI/AIActionPack.cs" id="1_gk3oj"]
 [ext_resource type="Script" uid="uid://bogcblgipf4f7" path="res://Scripts/SakugaEngine/Resources/AI/AICondition.cs" id="4_03ch4"]
