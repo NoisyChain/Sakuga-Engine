@@ -1,4 +1,4 @@
-[gd_scene load_steps=353 format=3 uid="uid://b1ggpw8ltpaid"]
+[gd_scene format=3 uid="uid://b1ggpw8ltpaid"]
 
 [ext_resource type="Texture2D" uid="uid://bx0l7712opy5a" path="res://Fighters/Kaede/Sprites/0-12.png" id="1"]
 [ext_resource type="Script" uid="uid://bkhlpeqky2g1r" path="res://Scripts/SakugaEngine/Components/SakugaFighter.cs" id="1_7dx2y"]
@@ -236,6 +236,7 @@
 [ext_resource type="Texture2D" uid="uid://bjiua12g0ct75" path="res://Fighters/Kaede/Sprites/180-3.png" id="287_gxj1q"]
 [ext_resource type="Texture2D" uid="uid://dpkvsunk3qmml" path="res://Fighters/Kaede/Sprites/180-4.png" id="288_iua8e"]
 [ext_resource type="Texture2D" uid="uid://el0tv4va1k8y" path="res://Fighters/Kaede/Sprites/180-5.png" id="289_vwwoq"]
+[ext_resource type="Script" uid="uid://b4erq62og5quv" path="res://Scripts/SakugaEngine/Resources/ExtraVariableBehavior.cs" id="290_y15yt"]
 [ext_resource type="Texture2D" uid="uid://bywklmgtyvltl" path="res://Fighters/Kaede/Sprites/800-0.png" id="291_fjuot"]
 [ext_resource type="Texture2D" uid="uid://bg2hmae3fi18u" path="res://Fighters/Kaede/Sprites/800-1.png" id="292_7j8nm"]
 [ext_resource type="Texture2D" uid="uid://clj3rlkwps41r" path="res://Fighters/Kaede/Sprites/800-2.png" id="293_ftt01"]
@@ -2842,7 +2843,11 @@ _data = {
 &"j_5C": SubResource("47")
 }
 
-[node name="Kaede_Viewer" type="Node3D" node_paths=PackedStringArray("HitStun", "HitStop", "MoveBuffer", "PushForce", "HorizontalBounce", "VerticalBounce", "Brain", "Body", "Inputs", "Variables", "Animator", "StateMachine", "Tracker", "Sounds", "Graphics")]
+[sub_resource type="Resource" id="Resource_pokal"]
+script = ExtResource("290_y15yt")
+metadata/_custom_type_script = "uid://b4erq62og5quv"
+
+[node name="Kaede_Viewer" type="Node3D" unique_id=250614589 node_paths=PackedStringArray("HitStun", "HitStop", "MoveBuffer", "PushForce", "HorizontalBounce", "VerticalBounce", "Brain", "Body", "Inputs", "Variables", "Animator", "StateMachine", "Tracker", "Sounds", "Graphics")]
 script = ExtResource("1_7dx2y")
 HitStun = NodePath("Timers/HitStun")
 HitStop = NodePath("Timers/HitStop")
@@ -2861,18 +2866,18 @@ Tracker = NodePath("CombatTracker")
 Sounds = [NodePath("Sounds/SFX_0"), NodePath("Sounds/SFX_1"), NodePath("Sounds/SFX_2"), NodePath("Sounds/SFX_3"), NodePath("Sounds/SFX_4")]
 Graphics = [NodePath("Graphics/Mesh/KaedeGraphics")]
 
-[node name="Graphics" type="Node3D" parent="."]
+[node name="Graphics" type="Node3D" parent="." unique_id=2121971466]
 script = ExtResource("2")
 intensity = 0.25
 
-[node name="Mesh" type="Node3D" parent="Graphics" node_paths=PackedStringArray("players", "OffsetNode")]
+[node name="Mesh" type="Node3D" parent="Graphics" unique_id=550646772 node_paths=PackedStringArray("players", "OffsetNode")]
 script = ExtResource("3_nysqa")
 players = [NodePath("KaedeGraphics/AnimationPlayer")]
 OffsetNode = NodePath("KaedeGraphics")
 
-[node name="KaedeGraphics" type="Node3D" parent="Graphics/Mesh"]
+[node name="KaedeGraphics" type="Node3D" parent="Graphics/Mesh" unique_id=1109226699]
 
-[node name="Sprite3D" type="Sprite3D" parent="Graphics/Mesh/KaedeGraphics"]
+[node name="Sprite3D" type="Sprite3D" parent="Graphics/Mesh/KaedeGraphics" unique_id=321988452]
 layers = 2
 material_override = ExtResource("82_axt2r")
 centered = false
@@ -2881,85 +2886,83 @@ texture_filter = 0
 texture = ExtResource("5")
 region_rect = Rect2(711.25, 46.25, 2, 0)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Graphics/Mesh/KaedeGraphics"]
-libraries = {
-&"": SubResource("AnimationLibrary_n2gjo")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Graphics/Mesh/KaedeGraphics" unique_id=626351504]
+libraries/ = SubResource("AnimationLibrary_n2gjo")
 
-[node name="HitboxViewer" parent="." node_paths=PackedStringArray("body") instance=ExtResource("4")]
+[node name="HitboxViewer" parent="." unique_id=1423417446 node_paths=PackedStringArray("body") instance=ExtResource("4")]
 body = NodePath("../PhysicsBody")
 
-[node name="Sounds" type="Node3D" parent="."]
+[node name="Sounds" type="Node3D" parent="." unique_id=2052716654]
 
-[node name="SFX_0" type="AudioStreamPlayer3D" parent="Sounds"]
+[node name="SFX_0" type="AudioStreamPlayer3D" parent="Sounds" unique_id=1809715999]
 script = ExtResource("285_ltkr8")
 
-[node name="SFX_1" type="AudioStreamPlayer3D" parent="Sounds"]
+[node name="SFX_1" type="AudioStreamPlayer3D" parent="Sounds" unique_id=837233977]
 script = ExtResource("285_ltkr8")
 
-[node name="SFX_2" type="AudioStreamPlayer3D" parent="Sounds"]
+[node name="SFX_2" type="AudioStreamPlayer3D" parent="Sounds" unique_id=726543636]
 script = ExtResource("285_ltkr8")
 
-[node name="SFX_3" type="AudioStreamPlayer3D" parent="Sounds"]
+[node name="SFX_3" type="AudioStreamPlayer3D" parent="Sounds" unique_id=1987956981]
 script = ExtResource("285_ltkr8")
 
-[node name="SFX_4" type="AudioStreamPlayer3D" parent="Sounds"]
+[node name="SFX_4" type="AudioStreamPlayer3D" parent="Sounds" unique_id=496488613]
 script = ExtResource("285_ltkr8")
 
-[node name="PhysicsBody" type="Node" parent="."]
+[node name="PhysicsBody" type="Node" parent="." unique_id=169967777]
 script = ExtResource("225_oxjr4")
 StayOnBounds = true
 
-[node name="InputManager" type="Node" parent="."]
+[node name="InputManager" type="Node" parent="." unique_id=682132532]
 script = ExtResource("227_ppa6i")
 
-[node name="StateMachine" type="Node" parent="."]
+[node name="StateMachine" type="Node" parent="." unique_id=1928060156]
 script = ExtResource("285_novy5")
 
-[node name="CombatTracker" type="Node" parent="."]
+[node name="CombatTracker" type="Node" parent="." unique_id=1881894552]
 script = ExtResource("231_bxldr")
 
-[node name="AIBrain" type="Node" parent="."]
+[node name="AIBrain" type="Node" parent="." unique_id=1294439240]
 script = ExtResource("394_myc48")
 metadata/_custom_type_script = "uid://dvqrejewx20e3"
 
-[node name="Variables" type="Node" parent="." node_paths=PackedStringArray("owner", "ExtraVariables")]
+[node name="Variables" type="Node" parent="." unique_id=1910940140 node_paths=PackedStringArray("ExtraVariables")]
 script = ExtResource("228_8hrt3")
-owner = NodePath("..")
 ExtraVariables = [NodePath("AirJumpLimit"), NodePath("AirDashLimit"), NodePath("IsDashJump")]
 
-[node name="AirJumpLimit" type="Node" parent="Variables"]
+[node name="AirJumpLimit" type="Node" parent="Variables" unique_id=1361627873]
+script = ExtResource("294_608rl")
+MaxValue = 1
+BehaviorOnHit = SubResource("Resource_pokal")
+
+[node name="AirDashLimit" type="Node" parent="Variables" unique_id=798282824]
 script = ExtResource("294_608rl")
 MaxValue = 1
 
-[node name="AirDashLimit" type="Node" parent="Variables"]
+[node name="IsDashJump" type="Node" parent="Variables" unique_id=951861375]
 script = ExtResource("294_608rl")
 MaxValue = 1
 
-[node name="IsDashJump" type="Node" parent="Variables"]
-script = ExtResource("294_608rl")
-MaxValue = 1
+[node name="Timers" type="Node" parent="." unique_id=177912403]
 
-[node name="Timers" type="Node" parent="."]
-
-[node name="HitStun" type="Node" parent="Timers"]
+[node name="HitStun" type="Node" parent="Timers" unique_id=1503135026]
 script = ExtResource("232_811te")
 
-[node name="HitStop" type="Node" parent="Timers"]
+[node name="HitStop" type="Node" parent="Timers" unique_id=685946741]
 script = ExtResource("232_811te")
 
-[node name="MoveBuffer" type="Node" parent="Timers"]
+[node name="MoveBuffer" type="Node" parent="Timers" unique_id=861770088]
 script = ExtResource("232_811te")
 WaitTime = 10
 
-[node name="Pushback" type="Node" parent="Timers"]
+[node name="Pushback" type="Node" parent="Timers" unique_id=290866977]
 script = ExtResource("232_811te")
 WaitTime = 10
 
-[node name="HBounce" type="Node" parent="Timers"]
+[node name="HBounce" type="Node" parent="Timers" unique_id=1131414368]
 script = ExtResource("232_811te")
 WaitTime = 10
 
-[node name="VBounce" type="Node" parent="Timers"]
+[node name="VBounce" type="Node" parent="Timers" unique_id=1991502873]
 script = ExtResource("232_811te")
 WaitTime = 10
