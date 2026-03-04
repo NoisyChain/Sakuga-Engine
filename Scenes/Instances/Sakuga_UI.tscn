@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://blnwu2aaw8s60"]
+[gd_scene format=3 uid="uid://blnwu2aaw8s60"]
 
 [ext_resource type="Script" uid="uid://cfclgt0r2avr4" path="res://Scripts/SakugaEngine/UI/HealthHUD.cs" id="1_ulr1j"]
 [ext_resource type="Texture2D" uid="uid://6ctweo6uvot8" path="res://icon.svg" id="2_h5vba"]
@@ -15,9 +15,9 @@
 [ext_resource type="Script" uid="uid://hm7bsfnod2vb" path="res://Scripts/SakugaEngine/UI/FadeScreen.cs" id="12_uu21w"]
 [ext_resource type="PackedScene" uid="uid://dxj20xhmbkdbs" path="res://Scenes/PleaseResync_UI.tscn" id="14_16eh6"]
 
-[node name="CanvasLayer" type="CanvasLayer"]
+[node name="CanvasLayer" type="CanvasLayer" unique_id=1980808177]
 
-[node name="GameHUD_Background" type="Control" parent="." node_paths=PackedStringArray("P1Portrait", "P1Health", "P1LostHealth", "P1Rounds", "P1Combo", "P1Name", "P2Portrait", "P2Health", "P2LostHealth", "P2Rounds", "P2Combo", "P2Name", "Timer", "P1Debug", "P2Debug")]
+[node name="GameHUD_Background" type="Control" parent="." unique_id=81683706 node_paths=PackedStringArray("P1Portrait", "P1Health", "P1LostHealth", "P1Rounds", "P1Combo", "P1Name", "P2Portrait", "P2Health", "P2LostHealth", "P2Rounds", "P2Combo", "P2Name", "Timer", "P1Debug", "P2Debug")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -41,11 +41,11 @@ Timer = NodePath("HealthBars/Timer")
 P1Debug = NodePath("../Debug/P1Debug")
 P2Debug = NodePath("../Debug/P2Debug")
 
-[node name="HealthBars" type="Control" parent="GameHUD_Background"]
+[node name="HealthBars" type="Control" parent="GameHUD_Background" unique_id=1881957307]
 anchors_preset = 0
 anchor_right = 1.0
 
-[node name="P1Portrait" type="TextureRect" parent="GameHUD_Background/HealthBars"]
+[node name="P1Portrait" type="TextureRect" parent="GameHUD_Background/HealthBars" unique_id=312465799]
 layout_mode = 0
 anchor_left = 0.5
 anchor_right = 0.5
@@ -56,7 +56,7 @@ texture = ExtResource("2_h5vba")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="P2Portrait" type="TextureRect" parent="GameHUD_Background/HealthBars"]
+[node name="P2Portrait" type="TextureRect" parent="GameHUD_Background/HealthBars" unique_id=138532832]
 layout_mode = 0
 anchor_left = 0.5
 anchor_right = 0.5
@@ -67,7 +67,7 @@ texture = ExtResource("2_h5vba")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="P1LostHealth" type="TextureProgressBar" parent="GameHUD_Background/HealthBars"]
+[node name="P1LostHealth" type="TextureProgressBar" parent="GameHUD_Background/HealthBars" unique_id=472455335]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -87,7 +87,7 @@ texture_progress = ExtResource("3_quu14")
 tint_under = Color(0.509804, 0.509804, 0.509804, 1)
 tint_progress = Color(0.72882, 0, 0.08201, 1)
 
-[node name="P1Health" type="TextureProgressBar" parent="GameHUD_Background/HealthBars"]
+[node name="P1Health" type="TextureProgressBar" parent="GameHUD_Background/HealthBars" unique_id=954396631]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -106,7 +106,7 @@ texture_progress = ExtResource("3_quu14")
 tint_under = Color(0.509804, 0.509804, 0.509804, 1)
 tint_progress = Color(0.909804, 0.843137, 0.396078, 1)
 
-[node name="P2LostHealth" type="TextureProgressBar" parent="GameHUD_Background/HealthBars"]
+[node name="P2LostHealth" type="TextureProgressBar" parent="GameHUD_Background/HealthBars" unique_id=381631217]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -125,7 +125,7 @@ texture_progress = ExtResource("3_quu14")
 tint_under = Color(0.509804, 0.509804, 0.509804, 1)
 tint_progress = Color(0.72882, 0, 0.08201, 1)
 
-[node name="P2Health" type="TextureProgressBar" parent="GameHUD_Background/HealthBars"]
+[node name="P2Health" type="TextureProgressBar" parent="GameHUD_Background/HealthBars" unique_id=808483312]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -143,7 +143,7 @@ texture_progress = ExtResource("3_quu14")
 tint_under = Color(0.509804, 0.509804, 0.509804, 1)
 tint_progress = Color(0.909804, 0.843137, 0.396078, 1)
 
-[node name="P1Rounds" type="HBoxContainer" parent="GameHUD_Background/HealthBars"]
+[node name="P1Rounds" type="HBoxContainer" parent="GameHUD_Background/HealthBars" unique_id=1583970787]
 layout_mode = 0
 anchor_left = 0.5
 anchor_right = 0.5
@@ -156,27 +156,27 @@ alignment = 2
 script = ExtResource("4_588f4")
 RoundsLimit = 5
 
-[node name="Round5" type="TextureRect" parent="GameHUD_Background/HealthBars/P1Rounds"]
+[node name="Round5" type="TextureRect" parent="GameHUD_Background/HealthBars/P1Rounds" unique_id=1776007814]
 layout_mode = 2
 texture = ExtResource("2_h5vba")
 
-[node name="Round4" type="TextureRect" parent="GameHUD_Background/HealthBars/P1Rounds"]
+[node name="Round4" type="TextureRect" parent="GameHUD_Background/HealthBars/P1Rounds" unique_id=852376056]
 layout_mode = 2
 texture = ExtResource("2_h5vba")
 
-[node name="Round3" type="TextureRect" parent="GameHUD_Background/HealthBars/P1Rounds"]
+[node name="Round3" type="TextureRect" parent="GameHUD_Background/HealthBars/P1Rounds" unique_id=506668601]
 layout_mode = 2
 texture = ExtResource("2_h5vba")
 
-[node name="Round2" type="TextureRect" parent="GameHUD_Background/HealthBars/P1Rounds"]
+[node name="Round2" type="TextureRect" parent="GameHUD_Background/HealthBars/P1Rounds" unique_id=1955517034]
 layout_mode = 2
 texture = ExtResource("2_h5vba")
 
-[node name="Round1" type="TextureRect" parent="GameHUD_Background/HealthBars/P1Rounds"]
+[node name="Round1" type="TextureRect" parent="GameHUD_Background/HealthBars/P1Rounds" unique_id=1088801710]
 layout_mode = 2
 texture = ExtResource("2_h5vba")
 
-[node name="P2Rounds" type="HBoxContainer" parent="GameHUD_Background/HealthBars"]
+[node name="P2Rounds" type="HBoxContainer" parent="GameHUD_Background/HealthBars" unique_id=1089975261]
 layout_mode = 0
 anchor_left = 0.5
 anchor_right = 0.5
@@ -188,27 +188,27 @@ scale = Vector2(0.4, 0.4)
 script = ExtResource("4_588f4")
 RoundsLimit = 5
 
-[node name="Round1" type="TextureRect" parent="GameHUD_Background/HealthBars/P2Rounds"]
+[node name="Round1" type="TextureRect" parent="GameHUD_Background/HealthBars/P2Rounds" unique_id=1249381371]
 layout_mode = 2
 texture = ExtResource("2_h5vba")
 
-[node name="Round2" type="TextureRect" parent="GameHUD_Background/HealthBars/P2Rounds"]
+[node name="Round2" type="TextureRect" parent="GameHUD_Background/HealthBars/P2Rounds" unique_id=352086058]
 layout_mode = 2
 texture = ExtResource("2_h5vba")
 
-[node name="Round3" type="TextureRect" parent="GameHUD_Background/HealthBars/P2Rounds"]
+[node name="Round3" type="TextureRect" parent="GameHUD_Background/HealthBars/P2Rounds" unique_id=868283201]
 layout_mode = 2
 texture = ExtResource("2_h5vba")
 
-[node name="Round4" type="TextureRect" parent="GameHUD_Background/HealthBars/P2Rounds"]
+[node name="Round4" type="TextureRect" parent="GameHUD_Background/HealthBars/P2Rounds" unique_id=236159013]
 layout_mode = 2
 texture = ExtResource("2_h5vba")
 
-[node name="Round5" type="TextureRect" parent="GameHUD_Background/HealthBars/P2Rounds"]
+[node name="Round5" type="TextureRect" parent="GameHUD_Background/HealthBars/P2Rounds" unique_id=1247940955]
 layout_mode = 2
 texture = ExtResource("2_h5vba")
 
-[node name="P1Name" type="Label" parent="GameHUD_Background/HealthBars"]
+[node name="P1Name" type="Label" parent="GameHUD_Background/HealthBars" unique_id=132170662]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -221,7 +221,7 @@ grow_horizontal = 2
 scale = Vector2(2, 2)
 text = "Fighter 1"
 
-[node name="P2Name" type="Label" parent="GameHUD_Background/HealthBars"]
+[node name="P2Name" type="Label" parent="GameHUD_Background/HealthBars" unique_id=580962448]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -235,7 +235,7 @@ scale = Vector2(2, 2)
 text = "Fighter 2"
 horizontal_alignment = 2
 
-[node name="Timer" type="Label" parent="GameHUD_Background/HealthBars"]
+[node name="Timer" type="Label" parent="GameHUD_Background/HealthBars" unique_id=1052156927]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -249,7 +249,7 @@ scale = Vector2(5, 5)
 text = "99"
 horizontal_alignment = 1
 
-[node name="ComboCounters" type="Control" parent="GameHUD_Background"]
+[node name="ComboCounters" type="Control" parent="GameHUD_Background" unique_id=990874388]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -257,12 +257,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="P1ComboCounter" type="Control" parent="GameHUD_Background/ComboCounters"]
+[node name="P1ComboCounter" type="Control" parent="GameHUD_Background/ComboCounters" unique_id=2010496979]
 anchors_preset = 0
 anchor_bottom = 1.0
 script = ExtResource("5_f6x8r")
 
-[node name="StunBar" type="TextureProgressBar" parent="GameHUD_Background/ComboCounters/P1ComboCounter"]
+[node name="StunBar" type="TextureProgressBar" parent="GameHUD_Background/ComboCounters/P1ComboCounter" unique_id=66296055]
 layout_mode = 0
 anchor_top = 0.5
 anchor_bottom = 0.5
@@ -278,7 +278,7 @@ texture_progress = ExtResource("3_quu14")
 tint_under = Color(0.705882, 0.705882, 0.705882, 1)
 tint_progress = Color(0.909804, 0.843137, 0.396078, 1)
 
-[node name="ComboCount" type="Label" parent="GameHUD_Background/ComboCounters/P1ComboCounter"]
+[node name="ComboCount" type="Label" parent="GameHUD_Background/ComboCounters/P1ComboCounter" unique_id=568793189]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -291,7 +291,7 @@ grow_vertical = 2
 scale = Vector2(3, 3)
 text = "1"
 
-[node name="ComboText" type="Label" parent="GameHUD_Background/ComboCounters/P1ComboCounter"]
+[node name="ComboText" type="Label" parent="GameHUD_Background/ComboCounters/P1ComboCounter" unique_id=1148450337]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -304,14 +304,14 @@ grow_vertical = 2
 scale = Vector2(1.5, 1.5)
 text = "Hit Combo"
 
-[node name="P2ComboCounter" type="Control" parent="GameHUD_Background/ComboCounters"]
+[node name="P2ComboCounter" type="Control" parent="GameHUD_Background/ComboCounters" unique_id=378417841]
 anchors_preset = 0
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource("5_f6x8r")
 
-[node name="StunBar" type="TextureProgressBar" parent="GameHUD_Background/ComboCounters/P2ComboCounter"]
+[node name="StunBar" type="TextureProgressBar" parent="GameHUD_Background/ComboCounters/P2ComboCounter" unique_id=1454953824]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -332,7 +332,7 @@ texture_progress = ExtResource("3_quu14")
 tint_under = Color(0.705882, 0.705882, 0.705882, 1)
 tint_progress = Color(0.909804, 0.843137, 0.396078, 1)
 
-[node name="ComboCount" type="Label" parent="GameHUD_Background/ComboCounters/P2ComboCounter"]
+[node name="ComboCount" type="Label" parent="GameHUD_Background/ComboCounters/P2ComboCounter" unique_id=469566945]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -345,7 +345,7 @@ grow_vertical = 2
 scale = Vector2(3, 3)
 text = "1"
 
-[node name="ComboText" type="Label" parent="GameHUD_Background/ComboCounters/P2ComboCounter"]
+[node name="ComboText" type="Label" parent="GameHUD_Background/ComboCounters/P2ComboCounter" unique_id=1539866496]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -358,25 +358,25 @@ grow_vertical = 2
 scale = Vector2(1.5, 1.5)
 text = "Hit Combo"
 
-[node name="ViewportContainer" type="SubViewportContainer" parent="."]
+[node name="ViewportContainer" type="SubViewportContainer" parent="." unique_id=195910898]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 stretch = true
 
-[node name="Viewport_Foreground" type="SubViewport" parent="ViewportContainer"]
+[node name="Viewport_Foreground" type="SubViewport" parent="ViewportContainer" unique_id=523479327]
 transparent_bg = true
 handle_input_locally = false
 size = Vector2i(1280, 720)
 render_target_update_mode = 4
 
-[node name="CharacterCamera" type="Camera3D" parent="ViewportContainer/Viewport_Foreground"]
+[node name="CharacterCamera" type="Camera3D" parent="ViewportContainer/Viewport_Foreground" unique_id=2092285046]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 9)
 cull_mask = 18
 fov = 45.0
 near = 0.01
 
-[node name="GameHUD_Foreground" type="Control" parent="." node_paths=PackedStringArray("P1Meter", "P2Meter", "P1TrainingInfo", "P2TrainingInfo", "P1InputHistory", "P2InputHistory")]
+[node name="GameHUD_Foreground" type="Control" parent="." unique_id=1398103038 node_paths=PackedStringArray("P1Meter", "P2Meter", "P1TrainingInfo", "P2TrainingInfo", "P1InputHistory", "P2InputHistory")]
 process_priority = -1
 layout_mode = 3
 anchors_preset = 15
@@ -392,13 +392,13 @@ P2TrainingInfo = NodePath("TrainingInfo/P2Info/Information")
 P1InputHistory = NodePath("InputHistory/P1InputHistory")
 P2InputHistory = NodePath("InputHistory/P2InputHistory")
 
-[node name="Meters" type="Control" parent="GameHUD_Foreground"]
+[node name="Meters" type="Control" parent="GameHUD_Foreground" unique_id=1734637159]
 anchors_preset = 0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="P1Meter" type="TextureProgressBar" parent="GameHUD_Foreground/Meters"]
+[node name="P1Meter" type="TextureProgressBar" parent="GameHUD_Foreground/Meters" unique_id=1612129901]
 layout_mode = 0
 anchor_left = 0.5
 anchor_top = 1.0
@@ -418,7 +418,7 @@ texture_progress = ExtResource("8_vbhb2")
 tint_under = Color(0.509804, 0.509804, 0.509804, 1)
 tint_progress = Color(0.301961, 0.745098, 0.243137, 1)
 
-[node name="P2Meter" type="TextureProgressBar" parent="GameHUD_Foreground/Meters"]
+[node name="P2Meter" type="TextureProgressBar" parent="GameHUD_Foreground/Meters" unique_id=835886582]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -440,12 +440,12 @@ texture_progress = ExtResource("8_vbhb2")
 tint_under = Color(0.509804, 0.509804, 0.509804, 1)
 tint_progress = Color(0.301961, 0.745098, 0.243137, 1)
 
-[node name="TrainingInfo" type="Control" parent="GameHUD_Foreground"]
+[node name="TrainingInfo" type="Control" parent="GameHUD_Foreground" unique_id=1856443705]
 anchors_preset = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="P1Info" type="Control" parent="GameHUD_Foreground/TrainingInfo"]
+[node name="P1Info" type="Control" parent="GameHUD_Foreground/TrainingInfo" unique_id=2097672168]
 anchors_preset = 0
 anchor_left = 0.5
 anchor_right = 0.5
@@ -454,7 +454,7 @@ offset_top = 130.0
 offset_right = -290.0
 offset_bottom = 130.0
 
-[node name="Background" type="ColorRect" parent="GameHUD_Foreground/TrainingInfo/P1Info"]
+[node name="Background" type="ColorRect" parent="GameHUD_Foreground/TrainingInfo/P1Info" unique_id=756708162]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -467,7 +467,7 @@ grow_horizontal = 0
 grow_vertical = 2
 color = Color(0, 0, 0, 0.501961)
 
-[node name="Descriptions" type="Label" parent="GameHUD_Foreground/TrainingInfo/P1Info"]
+[node name="Descriptions" type="Label" parent="GameHUD_Foreground/TrainingInfo/P1Info" unique_id=993138045]
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
@@ -482,7 +482,7 @@ Hit type
 Damage Scl.
 Frame data"
 
-[node name="Information" type="Label" parent="GameHUD_Foreground/TrainingInfo/P1Info"]
+[node name="Information" type="Label" parent="GameHUD_Foreground/TrainingInfo/P1Info" unique_id=1068952097]
 layout_mode = 1
 anchors_preset = 11
 anchor_left = 1.0
@@ -500,7 +500,7 @@ HIGH
 100
 0(+0)"
 
-[node name="P2Info" type="Control" parent="GameHUD_Foreground/TrainingInfo"]
+[node name="P2Info" type="Control" parent="GameHUD_Foreground/TrainingInfo" unique_id=1802292819]
 anchors_preset = 0
 anchor_left = 0.5
 anchor_right = 0.5
@@ -509,7 +509,7 @@ offset_top = 130.0
 offset_right = 100.0
 offset_bottom = 130.0
 
-[node name="Background" type="ColorRect" parent="GameHUD_Foreground/TrainingInfo/P2Info"]
+[node name="Background" type="ColorRect" parent="GameHUD_Foreground/TrainingInfo/P2Info" unique_id=681599774]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -522,7 +522,7 @@ grow_horizontal = 0
 grow_vertical = 2
 color = Color(0, 0, 0, 0.501961)
 
-[node name="Descriptions" type="Label" parent="GameHUD_Foreground/TrainingInfo/P2Info"]
+[node name="Descriptions" type="Label" parent="GameHUD_Foreground/TrainingInfo/P2Info" unique_id=1522091741]
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
@@ -537,7 +537,7 @@ Hit type
 Damage Scl.
 Frame data"
 
-[node name="Information" type="Label" parent="GameHUD_Foreground/TrainingInfo/P2Info"]
+[node name="Information" type="Label" parent="GameHUD_Foreground/TrainingInfo/P2Info" unique_id=1015609201]
 layout_mode = 1
 anchors_preset = 11
 anchor_left = 1.0
@@ -555,7 +555,7 @@ HIGH
 100
 0(+0)"
 
-[node name="InputHistory" type="Control" parent="GameHUD_Foreground"]
+[node name="InputHistory" type="Control" parent="GameHUD_Foreground" unique_id=1996564776]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -563,7 +563,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="P1InputHistory" type="VBoxContainer" parent="GameHUD_Foreground/InputHistory" node_paths=PackedStringArray("elements")]
+[node name="P1InputHistory" type="VBoxContainer" parent="GameHUD_Foreground/InputHistory" unique_id=2042689762 node_paths=PackedStringArray("elements")]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -577,55 +577,55 @@ theme_override_constants/separation = 45
 script = ExtResource("9_vdd12")
 elements = [NodePath("InputHistory_Pref1"), NodePath("InputHistory_Pref2"), NodePath("InputHistory_Pref3"), NodePath("InputHistory_Pref4"), NodePath("InputHistory_Pref5"), NodePath("InputHistory_Pref6"), NodePath("InputHistory_Pref7"), NodePath("InputHistory_Pref8"), NodePath("InputHistory_Pref9"), NodePath("InputHistory_Pref10"), NodePath("InputHistory_Pref11"), NodePath("InputHistory_Pref12"), NodePath("InputHistory_Pref13"), NodePath("InputHistory_Pref14"), NodePath("InputHistory_Pref15"), NodePath("InputHistory_Pref16")]
 
-[node name="InputHistory_Pref1" parent="GameHUD_Foreground/InputHistory/P1InputHistory" instance=ExtResource("10_kbxok")]
+[node name="InputHistory_Pref1" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=2055302550 instance=ExtResource("10_kbxok")]
 layout_mode = 2
 
-[node name="InputHistory_Pref2" parent="GameHUD_Foreground/InputHistory/P1InputHistory" instance=ExtResource("10_kbxok")]
+[node name="InputHistory_Pref2" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=2042723647 instance=ExtResource("10_kbxok")]
 layout_mode = 2
 
-[node name="InputHistory_Pref3" parent="GameHUD_Foreground/InputHistory/P1InputHistory" instance=ExtResource("10_kbxok")]
+[node name="InputHistory_Pref3" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=1495551950 instance=ExtResource("10_kbxok")]
 layout_mode = 2
 
-[node name="InputHistory_Pref4" parent="GameHUD_Foreground/InputHistory/P1InputHistory" instance=ExtResource("10_kbxok")]
+[node name="InputHistory_Pref4" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=1867253864 instance=ExtResource("10_kbxok")]
 layout_mode = 2
 
-[node name="InputHistory_Pref5" parent="GameHUD_Foreground/InputHistory/P1InputHistory" instance=ExtResource("10_kbxok")]
+[node name="InputHistory_Pref5" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=1046523187 instance=ExtResource("10_kbxok")]
 layout_mode = 2
 
-[node name="InputHistory_Pref6" parent="GameHUD_Foreground/InputHistory/P1InputHistory" instance=ExtResource("10_kbxok")]
+[node name="InputHistory_Pref6" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=1520065653 instance=ExtResource("10_kbxok")]
 layout_mode = 2
 
-[node name="InputHistory_Pref7" parent="GameHUD_Foreground/InputHistory/P1InputHistory" instance=ExtResource("10_kbxok")]
+[node name="InputHistory_Pref7" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=1013883168 instance=ExtResource("10_kbxok")]
 layout_mode = 2
 
-[node name="InputHistory_Pref8" parent="GameHUD_Foreground/InputHistory/P1InputHistory" instance=ExtResource("10_kbxok")]
+[node name="InputHistory_Pref8" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=179891695 instance=ExtResource("10_kbxok")]
 layout_mode = 2
 
-[node name="InputHistory_Pref9" parent="GameHUD_Foreground/InputHistory/P1InputHistory" instance=ExtResource("10_kbxok")]
+[node name="InputHistory_Pref9" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=756275920 instance=ExtResource("10_kbxok")]
 layout_mode = 2
 
-[node name="InputHistory_Pref10" parent="GameHUD_Foreground/InputHistory/P1InputHistory" instance=ExtResource("10_kbxok")]
+[node name="InputHistory_Pref10" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=621136066 instance=ExtResource("10_kbxok")]
 layout_mode = 2
 
-[node name="InputHistory_Pref11" parent="GameHUD_Foreground/InputHistory/P1InputHistory" instance=ExtResource("10_kbxok")]
+[node name="InputHistory_Pref11" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=1933883273 instance=ExtResource("10_kbxok")]
 layout_mode = 2
 
-[node name="InputHistory_Pref12" parent="GameHUD_Foreground/InputHistory/P1InputHistory" instance=ExtResource("10_kbxok")]
+[node name="InputHistory_Pref12" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=1501225578 instance=ExtResource("10_kbxok")]
 layout_mode = 2
 
-[node name="InputHistory_Pref13" parent="GameHUD_Foreground/InputHistory/P1InputHistory" instance=ExtResource("10_kbxok")]
+[node name="InputHistory_Pref13" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=784114016 instance=ExtResource("10_kbxok")]
 layout_mode = 2
 
-[node name="InputHistory_Pref14" parent="GameHUD_Foreground/InputHistory/P1InputHistory" instance=ExtResource("10_kbxok")]
+[node name="InputHistory_Pref14" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=243916927 instance=ExtResource("10_kbxok")]
 layout_mode = 2
 
-[node name="InputHistory_Pref15" parent="GameHUD_Foreground/InputHistory/P1InputHistory" instance=ExtResource("10_kbxok")]
+[node name="InputHistory_Pref15" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=1534585119 instance=ExtResource("10_kbxok")]
 layout_mode = 2
 
-[node name="InputHistory_Pref16" parent="GameHUD_Foreground/InputHistory/P1InputHistory" instance=ExtResource("10_kbxok")]
+[node name="InputHistory_Pref16" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=1686117234 instance=ExtResource("10_kbxok")]
 layout_mode = 2
 
-[node name="P2InputHistory" type="VBoxContainer" parent="GameHUD_Foreground/InputHistory" node_paths=PackedStringArray("elements")]
+[node name="P2InputHistory" type="VBoxContainer" parent="GameHUD_Foreground/InputHistory" unique_id=617003043 node_paths=PackedStringArray("elements")]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -642,55 +642,55 @@ theme_override_constants/separation = 45
 script = ExtResource("9_vdd12")
 elements = [NodePath("InputHistory_Pref"), NodePath("InputHistory_Pref2"), NodePath("InputHistory_Pref3"), NodePath("InputHistory_Pref4"), NodePath("InputHistory_Pref5"), NodePath("InputHistory_Pref6"), NodePath("InputHistory_Pref7"), NodePath("InputHistory_Pref8"), NodePath("InputHistory_Pref9"), NodePath("InputHistory_Pref10"), NodePath("InputHistory_Pref11"), NodePath("InputHistory_Pref12"), NodePath("InputHistory_Pref13"), NodePath("InputHistory_Pref14"), NodePath("InputHistory_Pref15"), NodePath("InputHistory_Pref16")]
 
-[node name="InputHistory_Pref" parent="GameHUD_Foreground/InputHistory/P2InputHistory" instance=ExtResource("11_k2bmj")]
+[node name="InputHistory_Pref" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=1555814767 instance=ExtResource("11_k2bmj")]
 layout_mode = 2
 
-[node name="InputHistory_Pref2" parent="GameHUD_Foreground/InputHistory/P2InputHistory" instance=ExtResource("11_k2bmj")]
+[node name="InputHistory_Pref2" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=1612836132 instance=ExtResource("11_k2bmj")]
 layout_mode = 2
 
-[node name="InputHistory_Pref3" parent="GameHUD_Foreground/InputHistory/P2InputHistory" instance=ExtResource("11_k2bmj")]
+[node name="InputHistory_Pref3" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=872459597 instance=ExtResource("11_k2bmj")]
 layout_mode = 2
 
-[node name="InputHistory_Pref4" parent="GameHUD_Foreground/InputHistory/P2InputHistory" instance=ExtResource("11_k2bmj")]
+[node name="InputHistory_Pref4" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=687508480 instance=ExtResource("11_k2bmj")]
 layout_mode = 2
 
-[node name="InputHistory_Pref5" parent="GameHUD_Foreground/InputHistory/P2InputHistory" instance=ExtResource("11_k2bmj")]
+[node name="InputHistory_Pref5" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=1994678410 instance=ExtResource("11_k2bmj")]
 layout_mode = 2
 
-[node name="InputHistory_Pref6" parent="GameHUD_Foreground/InputHistory/P2InputHistory" instance=ExtResource("11_k2bmj")]
+[node name="InputHistory_Pref6" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=1663534914 instance=ExtResource("11_k2bmj")]
 layout_mode = 2
 
-[node name="InputHistory_Pref7" parent="GameHUD_Foreground/InputHistory/P2InputHistory" instance=ExtResource("11_k2bmj")]
+[node name="InputHistory_Pref7" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=973321406 instance=ExtResource("11_k2bmj")]
 layout_mode = 2
 
-[node name="InputHistory_Pref8" parent="GameHUD_Foreground/InputHistory/P2InputHistory" instance=ExtResource("11_k2bmj")]
+[node name="InputHistory_Pref8" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=1546574639 instance=ExtResource("11_k2bmj")]
 layout_mode = 2
 
-[node name="InputHistory_Pref9" parent="GameHUD_Foreground/InputHistory/P2InputHistory" instance=ExtResource("11_k2bmj")]
+[node name="InputHistory_Pref9" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=496654359 instance=ExtResource("11_k2bmj")]
 layout_mode = 2
 
-[node name="InputHistory_Pref10" parent="GameHUD_Foreground/InputHistory/P2InputHistory" instance=ExtResource("11_k2bmj")]
+[node name="InputHistory_Pref10" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=1156281378 instance=ExtResource("11_k2bmj")]
 layout_mode = 2
 
-[node name="InputHistory_Pref11" parent="GameHUD_Foreground/InputHistory/P2InputHistory" instance=ExtResource("11_k2bmj")]
+[node name="InputHistory_Pref11" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=1773402624 instance=ExtResource("11_k2bmj")]
 layout_mode = 2
 
-[node name="InputHistory_Pref12" parent="GameHUD_Foreground/InputHistory/P2InputHistory" instance=ExtResource("11_k2bmj")]
+[node name="InputHistory_Pref12" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=1773446335 instance=ExtResource("11_k2bmj")]
 layout_mode = 2
 
-[node name="InputHistory_Pref13" parent="GameHUD_Foreground/InputHistory/P2InputHistory" instance=ExtResource("11_k2bmj")]
+[node name="InputHistory_Pref13" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=1461442499 instance=ExtResource("11_k2bmj")]
 layout_mode = 2
 
-[node name="InputHistory_Pref14" parent="GameHUD_Foreground/InputHistory/P2InputHistory" instance=ExtResource("11_k2bmj")]
+[node name="InputHistory_Pref14" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=97001975 instance=ExtResource("11_k2bmj")]
 layout_mode = 2
 
-[node name="InputHistory_Pref15" parent="GameHUD_Foreground/InputHistory/P2InputHistory" instance=ExtResource("11_k2bmj")]
+[node name="InputHistory_Pref15" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=440375843 instance=ExtResource("11_k2bmj")]
 layout_mode = 2
 
-[node name="InputHistory_Pref16" parent="GameHUD_Foreground/InputHistory/P2InputHistory" instance=ExtResource("11_k2bmj")]
+[node name="InputHistory_Pref16" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=169254207 instance=ExtResource("11_k2bmj")]
 layout_mode = 2
 
-[node name="FadeScreen" type="ColorRect" parent="."]
+[node name="FadeScreen" type="ColorRect" parent="." unique_id=99593434]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -699,7 +699,7 @@ grow_vertical = 2
 color = Color(0, 0, 0, 0)
 script = ExtResource("12_uu21w")
 
-[node name="Debug" type="Control" parent="."]
+[node name="Debug" type="Control" parent="." unique_id=14641696]
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -708,13 +708,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ColorRect1" type="ColorRect" parent="Debug"]
+[node name="ColorRect1" type="ColorRect" parent="Debug" unique_id=1853365989]
 layout_mode = 0
 offset_right = 240.0
 offset_bottom = 426.0
 color = Color(0, 0, 0, 0.156863)
 
-[node name="ColorRect2" type="ColorRect" parent="Debug"]
+[node name="ColorRect2" type="ColorRect" parent="Debug" unique_id=988726373]
 layout_mode = 0
 anchor_left = 1.0
 anchor_right = 1.0
@@ -722,13 +722,13 @@ offset_left = -240.0
 offset_bottom = 426.0
 color = Color(0, 0, 0, 0.156863)
 
-[node name="P1Debug" type="Label" parent="Debug"]
+[node name="P1Debug" type="Label" parent="Debug" unique_id=706718652]
 layout_mode = 1
 offset_right = 97.0
 offset_bottom = 23.0
 text = "Lorem ipsun"
 
-[node name="P2Debug" type="Label" parent="Debug"]
+[node name="P2Debug" type="Label" parent="Debug" unique_id=121396149]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -740,7 +740,7 @@ grow_horizontal = 0
 text = "Lorem ipsun"
 horizontal_alignment = 2
 
-[node name="FPSDisplay" type="Control" parent="."]
+[node name="FPSDisplay" type="Control" parent="." unique_id=647755249]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -748,7 +748,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Background" type="ColorRect" parent="FPSDisplay"]
+[node name="Background" type="ColorRect" parent="FPSDisplay" unique_id=315744638]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -759,7 +759,7 @@ offset_bottom = 24.0
 grow_horizontal = 2
 color = Color(0, 0, 0, 1)
 
-[node name="FPS" type="Label" parent="FPSDisplay"]
+[node name="FPS" type="Label" parent="FPSDisplay" unique_id=1094360834]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -772,4 +772,4 @@ text = "999 fps"
 horizontal_alignment = 1
 script = ExtResource("11_a8ejj")
 
-[node name="PleaseResync_UI" parent="." instance=ExtResource("14_16eh6")]
+[node name="PleaseResync_UI" parent="." unique_id=1134362063 instance=ExtResource("14_16eh6")]
