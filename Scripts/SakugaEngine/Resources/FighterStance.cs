@@ -9,8 +9,6 @@ namespace SakugaEngine.Resources
         [ExportCategory("Settings")]
         [Export] public bool IsDamagePersistent;
         [Export] public bool IsRoundPersistent;
-        [Export] public int NeutralState = 0;
-        [Export] public int AirState = 0;
         [Export] public MoveSettings[] Moves;
         [Export] public int[] HitReactions;
 

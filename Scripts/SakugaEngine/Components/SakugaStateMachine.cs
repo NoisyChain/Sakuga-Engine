@@ -93,7 +93,7 @@ namespace SakugaEngine
         {
             BufferedMove = moveIndex;
             CancelBuffer = moveCancel;
-            _owner.MoveBuffer.Start();
+            _owner.MoveBuffer.Start(Global.MoveBufferLength);
         }
 
         public void ExecuteMove(int moveIndex)

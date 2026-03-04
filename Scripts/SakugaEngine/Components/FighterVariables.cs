@@ -17,13 +17,13 @@ namespace SakugaEngine
         
         public int LostHealth;
 
-        public override void Initialize()
+        public override void Initialize(SakugaActor owner)
         {
-            base.Initialize();
+            base.Initialize(owner);
             LostHealth = CurrentHealth;
 
-            CurrentAttack = owner.Data.BaseAttack;
-            CurrentDefense = owner.Data.BaseDefense;
+            CurrentAttack = _owner.Data.BaseAttack;
+            CurrentDefense = _owner.Data.BaseDefense;
 
             CurrentBaseDamageScaling = Global.BaseMaxDamageScaling;
             CurrentCornerDamageScaling = Global.CornerMaxDamageScaling;
@@ -63,7 +63,7 @@ namespace SakugaEngine
         public void UpdateLostHealth()
         {
             if (LostHealth > CurrentHealth)
-                LostHealth -= owner.Data.MaxHealth / 200;
+                LostHealth -= _owner.Data.MaxHealth / 200;
             else if (LostHealth < CurrentHealth)
                 LostHealth = CurrentHealth;
         }

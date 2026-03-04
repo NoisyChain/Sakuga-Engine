@@ -93,13 +93,10 @@ namespace SakugaEngine
             StateMachine.Initialize(this);
             Animator.Initialize(this);
             Tracker.Initialize(this);
-            Variables.Initialize();
-            
-
+            Variables.Initialize(this);
             BlockStun = false;
-            
             Body.FixedPosition.X = Global.StartingPosition * (-1 + (index * 2));
-            Animator.PlayState(StateMachine.GetCurrentStance().NeutralState);
+            Animator.PlayState(0);
             Animator.CurrentStateFrame = -1;
         }
 
@@ -117,8 +114,8 @@ namespace SakugaEngine
             Body.FixedPosition.Y = 0;
             if (!StateMachine.GetCurrentStance().IsRoundPersistent)
                 StateMachine.CurrentStance = 0;
-            Animator.PlayState(StateMachine.GetCurrentStance().NeutralState);
-            Variables.Initialize();
+            Animator.PlayState(0);
+            Variables.Initialize(this);
             Animator.CurrentStateFrame = -1;
             HitStun.Stop();
             HitStop.Stop();

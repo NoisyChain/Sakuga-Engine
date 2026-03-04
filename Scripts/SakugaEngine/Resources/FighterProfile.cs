@@ -10,6 +10,7 @@ namespace SakugaEngine.Resources
         [Export] public string ShortName;
         [Export] public Texture2D Render;
         [Export] public Texture2D Portrait;
+        [Export(PropertyHint.MultilineText)] public string Bio;
         [Export] public int AutoStage = 0;
         [Export] public int AutoBGM = 0;
     }

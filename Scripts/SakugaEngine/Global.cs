@@ -33,6 +33,7 @@ namespace SakugaEngine
         public const ushort BaseMaxDamageScaling = 100;
         public const ushort CornerMinDamageScaling = 45;
         public const ushort CornerMaxDamageScaling = 120;
+        public const uint MoveBufferLength = 10;
 
         //Global inputs
         public const int INPUT_UP = 1 << 0;

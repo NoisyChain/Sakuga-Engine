@@ -6,11 +6,19 @@ namespace SakugaEngine.Resources
     [Icon("res://Sprites/Icons/Icon_Motion.png")]
     public partial class MoveSettings : Resource
     {
+        [ExportCategory("Move Parameters")]
         [Export] public string MoveName;
         [Export] public int MoveState;
         [Export] public bool SkipCheck;
         [Export] public MotionInputs Inputs;
         [Export] public Global.SideChangeMode SideChange;
+        [Export] public int ChangeStance = -1;
+        [Export] public int FrameLimit = -1;
+        [Export] public int SuperFlash = 0;
+        [Export] public int Priority = 0;
+        [ExportCategory("Move Conditions")]
+        [Export] public Global.MoveEndCondition MoveEnd;
+        [Export] public int MoveEndState = -1;
         [Export] public int SuperGaugeRequired = 0;
         [Export] public int BuildSuperGauge = 0;
         [Export] public Vector2I HealthThreshold = new Vector2I(0, 99999);
@@ -20,22 +28,15 @@ namespace SakugaEngine.Resources
         [Export] public int[] IsSequenceFromStates;
         [Export] public int[] IgnoreStates;
         [Export] public MoveCancelSettings[] CanCancelTo;
-        //[Export] public int[] CancelsTo;
-        //[Export] public int[] KaraCancelsTo;
-        //[Export] public ButtonChargeSequence[] buttonChargeSequence;
         [Export] public ExtraVariableCondition[] ExtraVariablesRequirement;
         [Export] public ExtraVariableChange[] ExtraVariablesChange;
-        [Export] public Global.MoveEndCondition MoveEnd;
-        [Export] public int MoveEndState = -1;
-        [Export] public int ChangeStance = -1;
-        [Export] public int FrameLimit = -1;
-        [Export] public int SuperFlash = 0;
-        [Export] public int Priority = 0;
+        
+        [ExportCategory("Move Flags")]
         [Export] public bool CanBeOverrided;
         [Export] public bool CanOverrideToSelf;
+        [Export] public bool PriorityBuffer;
         [Export] public bool IgnoreSamePriority = true;
         [Export] public bool InterruptCornerPushback = false;
-        [Export] public bool PriorityBuffer;
         [Export] public bool AcceptNullStates = false;
         [Export] public bool AcceptCombatStates = false;
         [Export] public bool AcceptBlockingStates = false;
