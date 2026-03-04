@@ -19,6 +19,12 @@ Instance = ExtResource("2_vid08")
 Profile = ExtResource("5_mamio")
 metadata/_custom_type_script = "uid://dclkxgxahdy5l"
 
+[sub_resource type="Resource" id="Resource_fbv1d"]
+script = ExtResource("3_m8lbm")
+Instance = ExtResource("2_vid08")
+Profile = ExtResource("5_mamio")
+metadata/_custom_type_script = "uid://dclkxgxahdy5l"
+
 [resource]
 script = ExtResource("1_x0sfh")
-elements = Array[Resource]([SubResource("Resource_hd0eg"), SubResource("Resource_w00mg")])
+elements = Array[Resource]([SubResource("Resource_hd0eg"), SubResource("Resource_w00mg"), SubResource("Resource_fbv1d")])
