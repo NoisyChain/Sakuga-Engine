@@ -43,5 +43,8 @@ My main goal is to have the core functionality in a good state and add features 
 You can fork this repository and add features if you want. If I consider your pull request valuable I'll include it into the engine eventually.
 ### Unity version when?
 There _is_ a repository for Unity but it's outdated at the moment. Gonna update it in the near future when I find the time and patience.
+### How do I make a character?
+You can check the Wiki to find a starting guide and some extra material about the engine in the link below.
 
+[Wiki](https://github.com/NoisyChain/Sakuga-Engine/wiki)
 [Join the Discord server!](https://discord.gg/2denEKZFeX)
