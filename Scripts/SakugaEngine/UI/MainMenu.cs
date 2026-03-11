@@ -39,7 +39,61 @@ namespace SakugaEngine.UI
         public override void _Process(double delta)
         {
             base._Process(delta);
+            
+            InputSelectionScreen();
+        }
 
+
+        public void _OnOnlineButtonPressed()
+        {
+            matchSettings.SelectedMode = 2;
+            matchSettings.P1SelectedDevice = 10;
+            matchSettings.P2SelectedDevice = -1;
+            matchSettings.TimeLimit = 99;
+            LoadingScreenManager.Instance.LoadScene("res://Scenes/Lobby.tscn");
+        }
+
+        public void _OnArcadeButtonPressed()
+        {
+            matchSettings.SelectedMode = 0;
+            matchSettings.P1SelectedDevice = 10;
+            matchSettings.P2SelectedDevice = -1;
+            matchSettings.TimeLimit = 99;
+            LoadingScreenManager.Instance.LoadScene("res://Scenes/SelectScreen.tscn");
+        }
+
+        public void _OnVersusButtonPressed()
+        {
+            matchSettings.SelectedMode = 1;
+            matchSettings.TimeLimit = 99;
+            InputSelectMenu.Visible = true;
+            //GetTree().ChangeSceneToFile("res://Scenes/SelectScreen.tscn");
+        }
+
+        public void _OnTrainingButtonPressed()
+        {
+            matchSettings.SelectedMode = 3;
+            matchSettings.P1SelectedDevice = 10;
+            matchSettings.P2SelectedDevice = -1;
+            matchSettings.TimeLimit = -1;
+            LoadingScreenManager.Instance.LoadScene("res://Scenes/SelectScreen.tscn");
+        }
+
+        public void _OnReplayButtonPressed()
+        {
+            matchSettings.SelectedMode = 4;
+            matchSettings.P1SelectedDevice = -1;
+            matchSettings.P2SelectedDevice = -1;
+            matchSettings.TimeLimit = 99;
+        }
+
+        public void _OnQuitButtonPressed()
+        {
+            GetTree().Quit();
+        }
+
+        private void InputSelectionScreen()
+        {
             if (!InputSelectMenu.Visible) return;
 
             if (Input.IsActionJustPressed("k1_left"))
@@ -93,52 +147,9 @@ namespace SakugaEngine.UI
 
             if (Input.IsActionJustPressed("general_return")) InputSelectMenu.Visible = false;
 
-            if (key1Confirm || key2Confirm || joy1Confirm || joy2Confirm) GetTree().ChangeSceneToFile("res://Scenes/SelectScreen.tscn");
-
-        }
-
-
-        public void _OnOnlineButtonPressed()
-        {
-            matchSettings.SelectedMode = 2;
-            matchSettings.P1SelectedDevice = 10;
-            matchSettings.P2SelectedDevice = -1;
-            GetTree().ChangeSceneToFile("res://Scenes/Lobby.tscn");
-        }
-
-        public void _OnArcadeButtonPressed()
-        {
-            matchSettings.SelectedMode = 0;
-            matchSettings.P1SelectedDevice = 10;
-            matchSettings.P2SelectedDevice = -1;
-            GetTree().ChangeSceneToFile("res://Scenes/SelectScreen.tscn");
-        }
-
-        public void _OnVersusButtonPressed()
-        {
-            matchSettings.SelectedMode = 1;
-            InputSelectMenu.Visible = true;
-            //GetTree().ChangeSceneToFile("res://Scenes/SelectScreen.tscn");
-        }
-
-        public void _OnTrainingButtonPressed()
-        {
-            matchSettings.SelectedMode = 3;
-            matchSettings.P1SelectedDevice = 10;
-            matchSettings.P2SelectedDevice = -1;
-            GetTree().ChangeSceneToFile("res://Scenes/SelectScreen.tscn");
-        }
-
-        public void _OnReplayButtonPressed()
-        {
-            matchSettings.SelectedMode = 4;
-            matchSettings.P1SelectedDevice = -1;
-            matchSettings.P2SelectedDevice = -1;
-        }
-
-        public void _OnQuitButtonPressed()
-        {
-            GetTree().Quit();
+            if (key1Confirm || key2Confirm || joy1Confirm || joy2Confirm) 
+                LoadingScreenManager.Instance.LoadScene("res://Scenes/SelectScreen.tscn");
+                //GetTree().ChangeSceneToFile("res://Scenes/SelectScreen.tscn");
         }
     }
 }

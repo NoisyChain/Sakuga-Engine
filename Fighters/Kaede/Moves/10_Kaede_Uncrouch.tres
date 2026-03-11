@@ -50,6 +50,6 @@ ExtraVariablesRequirement = null
 ExtraVariablesChange = null
 CanBeOverrided = true
 CanOverrideToSelf = true
-IgnoreSamePriority = false
 PriorityBuffer = true
+IgnoreSamePriority = false
 UseOnGround = true

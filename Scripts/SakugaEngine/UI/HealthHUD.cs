@@ -75,6 +75,11 @@ namespace SakugaEngine.UI
 
         public void UpdateTimer(GameMonitor monitor)
         {
+            if (monitor.ClockLimit < 0)
+            {
+                Timer.Text = "--";
+                return;
+            }
             int time = (monitor.Clock / Global.TicksPerSecond) + 1;
             time = Mathf.Clamp(time, 0, monitor.ClockLimit);
             Timer.Text = time.ToString();

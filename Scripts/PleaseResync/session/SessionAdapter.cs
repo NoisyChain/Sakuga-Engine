@@ -28,5 +28,7 @@ namespace PleaseResync
         /// <param name="deviceId">The remote device id</param>
         /// <param name="remoteConfiguration">The configuration used to establish a connection with the given remote device</param>
         void AddRemote(uint deviceId, object remoteConfiguration);
+
+        void Close();
     }
 }

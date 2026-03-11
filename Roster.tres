@@ -1,30 +1,65 @@
 [gd_resource type="Resource" script_class="FighterList" format=3 uid="uid://c8s3ip7gkhwq6"]
 
-[ext_resource type="PackedScene" uid="uid://b1ggpw8ltpaid" path="res://Fighters/Kaede/Instances/Fighter_Kaede.tscn" id="1_r4w1x"]
 [ext_resource type="Script" uid="uid://c1vwroelg1kwb" path="res://Scripts/SakugaEngine/Resources/FighterList.cs" id="1_x0sfh"]
-[ext_resource type="Resource" uid="uid://dti25wauqaxwy" path="res://Fighters/Kaede/Kaede_Profile.tres" id="2_mo2nk"]
-[ext_resource type="PackedScene" uid="uid://3reeyb4tcc1i" path="res://Fighters/Dummy/Instances/Dummy_Fighter.tscn" id="2_vid08"]
+[ext_resource type="Script" uid="uid://dg21wno6w513c" path="res://Scripts/SakugaEngine/Resources/ColorPaletteElement.cs" id="2_w00mg"]
 [ext_resource type="Script" uid="uid://dclkxgxahdy5l" path="res://Scripts/SakugaEngine/Resources/FighterElement.cs" id="3_m8lbm"]
 [ext_resource type="Resource" uid="uid://dfma5gqaldi8g" path="res://Fighters/Dummy/Dummy_Profile.tres" id="5_mamio"]
+[ext_resource type="PackedScene" uid="uid://b1ggpw8ltpaid" path="res://Fighters/Kaede/Instances/Fighter_Kaede.tscn" id="6_hd0eg"]
+[ext_resource type="PackedScene" uid="uid://dt6dqmcq5rept" path="res://Fighters/Dummy/Instances/Dummy_Fighter_Alt1.tscn" id="7_51ydv"]
+[ext_resource type="Resource" uid="uid://dti25wauqaxwy" path="res://Fighters/Kaede/Kaede_Profile.tres" id="7_w00mg"]
+[ext_resource type="PackedScene" uid="uid://clhsbniudqcvl" path="res://Fighters/Dummy/Instances/Dummy_Fighter_Alt2.tscn" id="8_hd0eg"]
+[ext_resource type="PackedScene" uid="uid://mn2wng8jaovw" path="res://Fighters/Kaede/Instances/Fighter_Kaede_Alt.tscn" id="8_yn7sm"]
+[ext_resource type="PackedScene" uid="uid://bloh87idirh84" path="res://Fighters/Dummy/Instances/Dummy_Fighter_Alt3.tscn" id="9_w00mg"]
+[ext_resource type="PackedScene" uid="uid://3reeyb4tcc1i" path="res://Fighters/Dummy/Instances/Dummy_Fighter_Default.tscn" id="12_f2d14"]
 
-[sub_resource type="Resource" id="Resource_hd0eg"]
+[sub_resource type="Resource" id="Resource_q6gag"]
+script = ExtResource("2_w00mg")
+PaletteName = "Default"
+Instance = ExtResource("6_hd0eg")
+metadata/_custom_type_script = "uid://dg21wno6w513c"
+
+[sub_resource type="Resource" id="Resource_yn7sm"]
+script = ExtResource("2_w00mg")
+PaletteName = "Alternative"
+Instance = ExtResource("8_yn7sm")
+metadata/_custom_type_script = "uid://dg21wno6w513c"
+
+[sub_resource type="Resource" id="Resource_ug4c5"]
 script = ExtResource("3_m8lbm")
-Instance = ExtResource("1_r4w1x")
-Profile = ExtResource("2_mo2nk")
+Profile = ExtResource("7_w00mg")
+ColorPalettes = Array[Object]([SubResource("Resource_q6gag"), SubResource("Resource_yn7sm")])
 metadata/_custom_type_script = "uid://dclkxgxahdy5l"
 
-[sub_resource type="Resource" id="Resource_w00mg"]
-script = ExtResource("3_m8lbm")
-Instance = ExtResource("2_vid08")
-Profile = ExtResource("5_mamio")
-metadata/_custom_type_script = "uid://dclkxgxahdy5l"
+[sub_resource type="Resource" id="Resource_f2d14"]
+script = ExtResource("2_w00mg")
+PaletteName = "Default"
+Instance = ExtResource("12_f2d14")
+metadata/_custom_type_script = "uid://dg21wno6w513c"
 
-[sub_resource type="Resource" id="Resource_fbv1d"]
+[sub_resource type="Resource" id="Resource_df8sf"]
+script = ExtResource("2_w00mg")
+PaletteName = "Alternative 1"
+Instance = ExtResource("7_51ydv")
+metadata/_custom_type_script = "uid://dg21wno6w513c"
+
+[sub_resource type="Resource" id="Resource_hc8t8"]
+script = ExtResource("2_w00mg")
+PaletteName = "Alternative 2"
+Instance = ExtResource("8_hd0eg")
+metadata/_custom_type_script = "uid://dg21wno6w513c"
+
+[sub_resource type="Resource" id="Resource_fbx8u"]
+script = ExtResource("2_w00mg")
+PaletteName = "Alternative 3"
+Instance = ExtResource("9_w00mg")
+metadata/_custom_type_script = "uid://dg21wno6w513c"
+
+[sub_resource type="Resource" id="Resource_r4w1x"]
 script = ExtResource("3_m8lbm")
-Instance = ExtResource("2_vid08")
 Profile = ExtResource("5_mamio")
+ColorPalettes = Array[Object]([SubResource("Resource_f2d14"), SubResource("Resource_df8sf"), SubResource("Resource_hc8t8"), SubResource("Resource_fbx8u")])
 metadata/_custom_type_script = "uid://dclkxgxahdy5l"
 
 [resource]
 script = ExtResource("1_x0sfh")
-elements = Array[Resource]([SubResource("Resource_hd0eg"), SubResource("Resource_w00mg"), SubResource("Resource_fbv1d")])
+elements = Array[Object]([SubResource("Resource_ug4c5"), SubResource("Resource_r4w1x")])

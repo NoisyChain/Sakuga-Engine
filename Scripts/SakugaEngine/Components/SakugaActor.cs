@@ -18,6 +18,11 @@ namespace SakugaEngine
 
 		[ExportCategory("Visuals")]
         [Export] protected Node3D[] Graphics;
+        [ExportCategory("Resources")]
+        [Export] public SpawnsList SpawnablesList;
+        [Export] public SpawnsList VFXList;
+        [Export] public SoundsList SFXList;
+        [Export] public SoundsList VoiceLines;
 
         protected bool EventExecuted;
 
@@ -227,6 +232,12 @@ namespace SakugaEngine
                         case PlaySoundAnimationEvent soundEvent: //Set super armor
                             SoundEvents(soundEvent);
                             break;
+                        case CameraShakeEvent camShake:
+                            //Global.SineWaveFunction(camShake.Amplitude, camShake.WaveLength, camShake.Duration, camShake.Direction.X);
+                            break;
+                        case CharacterShakeEvent charShake:
+                            //Global.SineWaveFunction(charShake.Amplitude, charShake.WaveLength, charShake.Duration, charShake.Direction.X);
+                            break;
                     }
                 }
             }
@@ -274,8 +285,8 @@ namespace SakugaEngine
 
         public void SoundEvents(PlaySoundAnimationEvent soundEvent)
         {
-            if (Data.SFXList == null) return;
-            if (Data.VoiceLines == null) return;
+            if (SFXList == null) return;
+            if (VoiceLines == null) return;
             
             int ind = soundEvent.IsRandom ? Global.RNG.Next(soundEvent.Index, soundEvent.Range) : soundEvent.Index;
             if (soundEvent.FromExtraVariable >= 0)
@@ -284,10 +295,10 @@ namespace SakugaEngine
             switch ((int)soundEvent.SoundType)
             {
                 case 0:
-                    selectedSound = Data.SFXList.Sounds[ind];
+                    selectedSound = SFXList.Sounds[ind];
                     break;
                 case 1:
-                    selectedSound = Data.VoiceLines.Sounds[ind];
+                    selectedSound = VoiceLines.Sounds[ind];
                     break;
             }
             Sounds[soundEvent.Source].QueueSound(selectedSound);
@@ -358,6 +369,88 @@ namespace SakugaEngine
 
             Vector2I finalPosition = new Vector2I(Target.X + relativePosX, Target.Y + relativePosY);
             return finalPosition;
+        }
+
+        public void PlayIntro(string opponentName)
+        {
+            if (Data.Intros == null || Data.Intros.Length == 0) return;
+
+            if (Data.Intros.Length == 1)
+            {
+                Animator.PlayState(Data.Intros[0].StateIndex);
+                return;
+            }
+
+            FighterIntro introToPlay = null;
+
+            for (int i = 0; i < Data.VictoryPoses.Length; i++)
+            {
+                if (Data.VictoryPoses[i].ForOpponent == opponentName)
+                {
+                    introToPlay = Data.VictoryPoses[i];
+                    break;
+                }
+                else if (Data.VictoryPoses[i].ForOpponent == "") introToPlay = Data.VictoryPoses[i];
+            }
+
+            Animator.PlayState(introToPlay.StateIndex);
+        }
+        public void PlayOutro(string opponentName, out string VictoryMessage)
+        {
+            VictoryMessage = $"{Data.Profile.ShortName} is winner!";
+            if (Data.Outros == null || Data.Outros.Length == 0) return;
+
+            if (Data.Outros.Length == 1)
+            {
+                Animator.PlayState(Data.Outros[0].StateIndex);
+                VictoryMessage = Data.Outros[0].FinalMessage;
+                return;
+            }
+
+            FighterOutro outroToPlay = null;
+
+            for (int i = 0; i < Data.Outros.Length; i++)
+            {
+                if (Data.Outros[i].ForOpponent == opponentName)
+                {
+                    outroToPlay = Data.Outros[i];
+                    break;
+                }
+                else if (Data.Outros[i].ForOpponent == "") outroToPlay = Data.Outros[i];
+            }
+
+            Animator.PlayState(outroToPlay.StateIndex);
+            VictoryMessage = outroToPlay.FinalMessage;
+        }
+
+        public void PlayVictoryPose(string opponentName)
+        {
+            if (Data.VictoryPoses == null || Data.VictoryPoses.Length == 0) return;
+
+            if (Data.VictoryPoses.Length == 1)
+            {
+                Animator.PlayState(Data.VictoryPoses[0].StateIndex);
+                return;
+            }
+
+            FighterIntro introToPlay = null;
+
+            for (int i = 0; i < Data.VictoryPoses.Length; i++)
+            {
+                if (Data.VictoryPoses[i].ForOpponent == opponentName)
+                {
+                    introToPlay = Data.VictoryPoses[i];
+                    break;
+                }
+                else if (Data.VictoryPoses[i].ForOpponent == "") introToPlay = Data.VictoryPoses[i];
+            }
+
+            Animator.PlayState(introToPlay.StateIndex);
+        }
+
+        public void PlayDefeatPose()
+        {
+            Animator.PlayState(Data.DefeatPose);
         }
 	}
 }

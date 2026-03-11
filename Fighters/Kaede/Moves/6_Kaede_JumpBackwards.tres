@@ -25,5 +25,5 @@ ExtraVariablesRequirement = null
 ExtraVariablesChange = Array[Object]([SubResource("Resource_e20mk"), SubResource("Resource_mf2wc"), SubResource("Resource_vprgh")])
 CanBeOverrided = true
 InterruptCornerPushback = true
-PriorityBuffer = true
+AcceptCombatStates = true
 UseOnGround = true

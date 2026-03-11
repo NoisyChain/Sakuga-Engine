@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Threading;
+//using Epic.OnlineServices;
 
 namespace PleaseResync
 {
@@ -17,6 +18,7 @@ namespace PleaseResync
         private bool Started;
         private bool Replay;
 
+        public bool UseLAN = false;
         [Export] protected bool UseSeparateThread = false;
         [Export] protected ushort FrameDelay = 2;
         [Export] protected ushort SimulatedFrameDelay = 0;
@@ -29,12 +31,13 @@ namespace PleaseResync
 
         string[] PlayerAddresses = { "127.0.0.1", "127.0.0.1" };
         string[] SpectatorAddresses = { "127.0.0.1", "127.0.0.1" };
+
         int[] PlayerPorts = { 7001, 7002 };
         int[] SpectatorPorts = { 8001, 8002 };
 
         public IGameState sessionState;
 
-        LiteNetLibSessionAdapter adapter;
+        SessionAdapter adapter;
         Session session;
         byte[] LastInput;
         List<SessionAction> sessionActions;
@@ -55,8 +58,8 @@ namespace PleaseResync
         public override void _Ready()
         {
             SimulationInfo = GetTree().Root.GetNode<Label>("Root/CanvasLayer/PleaseResync_UI/Connection_Status/Simulation_Info");
-            RollbackInfo = GetTree().Root.GetNode<Label>("Root/CanvasLayer/PleaseResync_UI/Connection_Status/Rollback_Info");
-            PingInfo = GetTree().Root.GetNode<Label>("Root/CanvasLayer/PleaseResync_UI/Connection_Status/Ping_Info");
+            RollbackInfo = GetTree().Root.GetNode<Label>("Root/CanvasLayer/GameHUD_Foreground/ConnectionStatus/RollbackInfo");
+            PingInfo = GetTree().Root.GetNode<Label>("Root/CanvasLayer/GameHUD_Foreground/ConnectionStatus/PingInfo");
             RecordedInputs.Add(new ReplayInputs());
 
             if (SimulationInfo != null) SimulationInfo.Text = "";
@@ -108,9 +111,13 @@ namespace PleaseResync
             sessionState.Setup();
             LastInput = new byte[InputSize];
 
+            if (UseLAN)
+                adapter = new LiteNetLibSessionAdapter(PlayerAddresses[DEVICE_ID], (ushort)PlayerPorts[DEVICE_ID]);
+            else
+                //adapter = new EOSSessionAdapter();
+
             if (!spectate)
             {
-                adapter = new LiteNetLibSessionAdapter(PlayerAddresses[DEVICE_ID], (ushort)PlayerPorts[DEVICE_ID]);
                 session = new Peer2PeerSession(InputSize, playerCount, MaxPlayers, false, adapter);
                 session.SetLocalDevice(DEVICE_ID, 1, FrameDelay);
 
@@ -118,7 +125,10 @@ namespace PleaseResync
                 {
                     if (i != DEVICE_ID)
                     {
-                        session.AddRemoteDevice(i, 1, LiteNetLibSessionAdapter.CreateRemoteConfig(PlayerAddresses[i], (ushort)PlayerPorts[i]));
+                        if (UseLAN)
+                            session.AddRemoteDevice(i, 1, LiteNetLibSessionAdapter.CreateRemoteConfig(PlayerAddresses[i], (ushort)PlayerPorts[i]));
+                        else
+                            //session.AddRemoteDevice(i, 1, EOSManager.Instance.PlayerIds[i]);
                         PingId = i;
 
                         GD.Print($"Device {i} created");
@@ -129,20 +139,29 @@ namespace PleaseResync
                 {
                     for (uint i = 0; i < spectatorCount; i++)
                     {
-                        if (i % playerCount != DEVICE_ID) continue;
-                        session.AddSpectatorDevice(LiteNetLibSessionAdapter.CreateRemoteConfig(SpectatorAddresses[i], (ushort)SpectatorPorts[i]));
+                        if (UseLAN)
+                        {
+                            if (i % playerCount != DEVICE_ID) continue;
+                            session.AddSpectatorDevice(LiteNetLibSessionAdapter.CreateRemoteConfig(SpectatorAddresses[i], (ushort)SpectatorPorts[i]));
+                        }
+                        else
+                        {
+                            //if (EOSManager.Instance.SpectatorIds[i] == null) continue;
+                            //session.AddSpectatorDevice(EOSManager.Instance.SpectatorIds[i]);
+                        }
                     }
                 }
             }
             else
             {
                 // Let's spectate!
-                adapter = new LiteNetLibSessionAdapter(SpectatorAddresses[DEVICE_ID], (ushort)SpectatorPorts[DEVICE_ID]);
                 session = new SpectatorSession(InputSize, playerCount, adapter, SpectatorDelay);
-                // Let's just make the first active player the broadcaster for now.
                 // be sure to pass ALL the players as in player count
                 uint targetDevice = DEVICE_ID % playerCount;
-                session.AddRemoteDevice(targetDevice, playerCount, LiteNetLibSessionAdapter.CreateRemoteConfig(PlayerAddresses[targetDevice], (ushort)PlayerPorts[targetDevice]));
+                if (UseLAN)
+                    session.AddRemoteDevice(targetDevice, playerCount, LiteNetLibSessionAdapter.CreateRemoteConfig(PlayerAddresses[targetDevice], (ushort)PlayerPorts[targetDevice]));
+                else
+                    //session.AddRemoteDevice(targetDevice, playerCount, EOSManager.Instance.PlayerIds[targetDevice]);
                 GD.Print($"Spectator device id {DEVICE_ID} connected to player ID {targetDevice}");
             }
 
@@ -191,12 +210,19 @@ namespace PleaseResync
 
         private void GameThreadLoop()
         {
+            long threadStartTime;
+            long threadEndTime;
             while (Started)
             {
+                threadStartTime = Platform.GetCurrentTimeMS();
                 mutex.WaitOne();
-                GameLoop();  
+                GameLoop();
                 mutex.ReleaseMutex();
-                Thread.Sleep((int)((1 / 60f) * 1000));
+                threadEndTime = Platform.GetCurrentTimeMS();
+                int sleepTime = (int)((1 / 60f) * 1000);
+                int threadTime = (int)(threadEndTime - threadStartTime);
+                //GD.Print(threadEndTime - threadStartTime);
+                Thread.Sleep(Math.Max(sleepTime - threadTime, 0));
             }
         }
 

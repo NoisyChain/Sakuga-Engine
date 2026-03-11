@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="DataContainer" load_steps=112 format=3 uid="uid://ce1bjf3tpyngv"]
+[gd_resource type="Resource" script_class="DataContainer" format=3 uid="uid://ce1bjf3tpyngv"]
 
 [ext_resource type="Resource" uid="uid://t64afo7e4u1o" path="res://Fighters/Kaede/Hitboxes/0_Hitbox_Basic.tres" id="1_bt0vk"]
 [ext_resource type="Resource" uid="uid://b6kiyox8tjef2" path="res://Fighters/Kaede/Hitboxes/1_Hitbox_Crouch.tres" id="2_gk4go"]
@@ -30,9 +30,9 @@
 [ext_resource type="Resource" uid="uid://dwnyu400p8vdj" path="res://Fighters/Kaede/Hitboxes/27_Hitbox_236BC_Active.tres" id="28_jb7dv"]
 [ext_resource type="Resource" uid="uid://du8n0gtee4iwi" path="res://Fighters/Kaede/Hitboxes/-1_Hitbox_CollisionOnly.tres" id="29_xoj0y"]
 [ext_resource type="Resource" uid="uid://blwsq22i0tggk" path="res://Fighters/Kaede/Hitboxes/-2_Hitbox_CollisionOnly_Low.tres" id="30_k30i4"]
+[ext_resource type="Script" uid="uid://dfimvn5rd5jts" path="res://Scripts/SakugaEngine/Resources/FighterIntro.cs" id="31_186y0"]
 [ext_resource type="Resource" uid="uid://dti25wauqaxwy" path="res://Fighters/Kaede/Kaede_Profile.tres" id="31_e31u1"]
-[ext_resource type="Resource" uid="uid://k31pv0ejfv2s" path="res://Fighters/Shared/Shared_SFXList.tres" id="32_qlgbu"]
-[ext_resource type="Resource" uid="uid://5w0ffcesv6ec" path="res://Fighters/Shared/Shared_SpawnablesList.tres" id="33_notn6"]
+[ext_resource type="Script" uid="uid://bne635raru5sj" path="res://Scripts/SakugaEngine/Resources/FighterOutro.cs" id="32_1j1r0"]
 [ext_resource type="Resource" uid="uid://bpi3dgk313noc" path="res://Fighters/Kaede/Stances/Kaede_Stance_Main.tres" id="34_jhtjx"]
 [ext_resource type="Resource" uid="uid://d4ceodxb0wubc" path="res://Fighters/Kaede/States/0_Kaede_IdleState.tres" id="35_e31u1"]
 [ext_resource type="Resource" uid="uid://poi0qgahi6mb" path="res://Fighters/Kaede/States/1_Kaede_MoveForwardState.tres" id="36_notn6"]
@@ -60,10 +60,8 @@
 [ext_resource type="Resource" uid="uid://ns7hy7ll0agq" path="res://Fighters/Kaede/States/23_Kaede_Hit_Spin_V.tres" id="58_f4slg"]
 [ext_resource type="Resource" uid="uid://bc5ceicvb2xug" path="res://Fighters/Kaede/States/24_Kaede_Hit_Falling.tres" id="59_peqnd"]
 [ext_resource type="Resource" uid="uid://cs5taj1h7ne1g" path="res://Fighters/Kaede/States/25_Kaede_Hit_OnGround.tres" id="60_o7xo5"]
-[ext_resource type="Resource" uid="uid://b6a4cqdykhhg" path="res://Fighters/Shared/Shared_VFXList.tres" id="61_0m2vt"]
 [ext_resource type="Resource" uid="uid://8rrpty04u3yc" path="res://Fighters/Kaede/States/26_Kaede_Hit_Down.tres" id="61_1ohrk"]
 [ext_resource type="Resource" uid="uid://bfv01m42n1xo" path="res://Fighters/Kaede/States/27_Kaede_Hit_GetUp_1.tres" id="62_ljsqr"]
-[ext_resource type="Resource" uid="uid://c8h8jltu6u5pb" path="res://Fighters/Shared/Shared_VoiceLines.tres" id="62_m0kj8"]
 [ext_resource type="Script" uid="uid://bsbjg1nuyall1" path="res://Scripts/SakugaEngine/Resources/DataContainer.cs" id="63_f0ivt"]
 [ext_resource type="Resource" uid="uid://dlgxfcj320njw" path="res://Fighters/Kaede/States/28_Kaede_Hit_Sweep_1.tres" id="63_w3ckd"]
 [ext_resource type="Resource" uid="uid://bwoarywlnubtd" path="res://Fighters/Kaede/States/29_Kaede_Hit_Sweep_2.tres" id="64_186y0"]
@@ -110,17 +108,36 @@
 [ext_resource type="Resource" uid="uid://bgqcyt7ecr63o" path="res://Fighters/Kaede/States/70_Kaede_AirThrowEscape.tres" id="105_neobf"]
 [ext_resource type="Resource" uid="uid://dukqdmlhoxwna" path="res://Fighters/Kaede/States/71_Kaede_GroundRecoveryForward.tres" id="106_a7es8"]
 [ext_resource type="Resource" uid="uid://bk6kr345ggqfg" path="res://Fighters/Kaede/States/72_Kaede_AirRecoveryForward.tres" id="107_maki0"]
+[ext_resource type="Resource" uid="uid://cl4lgnncqol6h" path="res://Fighters/Kaede/States/100_Kaede_Intro.tres" id="108_2k17w"]
+[ext_resource type="Resource" uid="uid://sa7du75a2s1q" path="res://Fighters/Kaede/States/101_Kaede_Victory.tres" id="109_b22y0"]
+[ext_resource type="Resource" uid="uid://cod2qq8sw6usp" path="res://Fighters/Kaede/States/102_Kaede_Defeat.tres" id="110_ll7iv"]
 [ext_resource type="Resource" uid="uid://cjarssd2mjnuw" path="res://Fighters/Kaede/AI/Kaede_AIData.tres" id="110_w3ckd"]
+
+[sub_resource type="Resource" id="Resource_3b733"]
+script = ExtResource("31_186y0")
+StateIndex = 73
+metadata/_custom_type_script = "uid://dfimvn5rd5jts"
+
+[sub_resource type="Resource" id="Resource_cenu2"]
+script = ExtResource("32_1j1r0")
+StateIndex = 74
+FinalMessage = "Victory is mine!"
+metadata/_custom_type_script = "uid://bne635raru5sj"
+
+[sub_resource type="Resource" id="Resource_186y0"]
+script = ExtResource("31_186y0")
+StateIndex = 74
+metadata/_custom_type_script = "uid://dfimvn5rd5jts"
 
 [resource]
 script = ExtResource("63_f0ivt")
 Profile = ExtResource("31_e31u1")
 Hitboxes = Array[Object]([ExtResource("1_bt0vk"), ExtResource("2_gk4go"), ExtResource("3_gg4bq"), ExtResource("4_ux1ya"), ExtResource("5_mo3xb"), ExtResource("6_4g74m"), ExtResource("7_k0ont"), ExtResource("8_csybr"), ExtResource("9_ipw0w"), ExtResource("10_7iheu"), ExtResource("11_c06qf"), ExtResource("12_2qn7t"), ExtResource("13_vjmwh"), ExtResource("14_vkddw"), ExtResource("15_nxqci"), ExtResource("16_rf5hw"), ExtResource("17_fqldk"), ExtResource("18_rvr7x"), ExtResource("19_5mkwl"), ExtResource("20_510qg"), ExtResource("21_my3wf"), ExtResource("22_xto43"), ExtResource("23_r5xfd"), ExtResource("24_vcjt1"), ExtResource("25_6uh6v"), ExtResource("26_kg2lb"), ExtResource("27_27ah8"), ExtResource("28_jb7dv"), ExtResource("29_xoj0y"), ExtResource("30_k30i4")])
-States = Array[Object]([ExtResource("35_e31u1"), ExtResource("36_notn6"), ExtResource("37_jhtjx"), ExtResource("38_0u3im"), ExtResource("39_8yfk4"), ExtResource("40_mf0w7"), ExtResource("41_1dcv1"), ExtResource("42_pip0c"), ExtResource("43_ppjg6"), ExtResource("44_cnpsu"), ExtResource("45_f0127"), ExtResource("46_r0t4c"), ExtResource("47_5fc18"), ExtResource("48_n18hf"), ExtResource("49_iehcs"), ExtResource("50_r6u0a"), ExtResource("51_0d7fl"), ExtResource("52_ebggd"), ExtResource("53_2hitn"), ExtResource("54_tuiia"), ExtResource("55_ka00a"), ExtResource("56_1ek3x"), ExtResource("57_tslnk"), ExtResource("58_f4slg"), ExtResource("59_peqnd"), ExtResource("60_o7xo5"), ExtResource("61_1ohrk"), ExtResource("62_ljsqr"), ExtResource("63_w3ckd"), ExtResource("64_186y0"), ExtResource("65_1j1r0"), ExtResource("66_2k17w"), ExtResource("67_b22y0"), ExtResource("68_ll7iv"), ExtResource("69_3b733"), ExtResource("70_cenu2"), ExtResource("71_otaxc"), ExtResource("72_41yw1"), ExtResource("73_8o7ds"), ExtResource("74_lxh0k"), ExtResource("75_q0qjk"), ExtResource("76_uce3c"), ExtResource("77_dj5wh"), ExtResource("78_cy5v5"), ExtResource("79_2dete"), ExtResource("80_xl020"), ExtResource("81_ihy58"), ExtResource("82_u0aaa"), ExtResource("83_nkupn"), ExtResource("84_afxx4"), ExtResource("85_dgs6i"), ExtResource("86_i5ds5"), ExtResource("87_td1dm"), ExtResource("88_si85t"), ExtResource("89_gyt4y"), ExtResource("90_ycgl7"), ExtResource("91_tbkmq"), ExtResource("92_bio4s"), ExtResource("93_ai4bs"), ExtResource("94_nprii"), ExtResource("95_bq8sx"), ExtResource("96_mgr3x"), ExtResource("97_8nise"), ExtResource("98_b4ema"), ExtResource("99_f0sx0"), ExtResource("100_p7pky"), ExtResource("101_1ks1o"), ExtResource("102_xejdl"), ExtResource("103_veksj"), ExtResource("104_lyqmh"), ExtResource("105_neobf"), ExtResource("106_a7es8"), ExtResource("107_maki0")])
+States = Array[Object]([ExtResource("35_e31u1"), ExtResource("36_notn6"), ExtResource("37_jhtjx"), ExtResource("38_0u3im"), ExtResource("39_8yfk4"), ExtResource("40_mf0w7"), ExtResource("41_1dcv1"), ExtResource("42_pip0c"), ExtResource("43_ppjg6"), ExtResource("44_cnpsu"), ExtResource("45_f0127"), ExtResource("46_r0t4c"), ExtResource("47_5fc18"), ExtResource("48_n18hf"), ExtResource("49_iehcs"), ExtResource("50_r6u0a"), ExtResource("51_0d7fl"), ExtResource("52_ebggd"), ExtResource("53_2hitn"), ExtResource("54_tuiia"), ExtResource("55_ka00a"), ExtResource("56_1ek3x"), ExtResource("57_tslnk"), ExtResource("58_f4slg"), ExtResource("59_peqnd"), ExtResource("60_o7xo5"), ExtResource("61_1ohrk"), ExtResource("62_ljsqr"), ExtResource("63_w3ckd"), ExtResource("64_186y0"), ExtResource("65_1j1r0"), ExtResource("66_2k17w"), ExtResource("67_b22y0"), ExtResource("68_ll7iv"), ExtResource("69_3b733"), ExtResource("70_cenu2"), ExtResource("71_otaxc"), ExtResource("72_41yw1"), ExtResource("73_8o7ds"), ExtResource("74_lxh0k"), ExtResource("75_q0qjk"), ExtResource("76_uce3c"), ExtResource("77_dj5wh"), ExtResource("78_cy5v5"), ExtResource("79_2dete"), ExtResource("80_xl020"), ExtResource("81_ihy58"), ExtResource("82_u0aaa"), ExtResource("83_nkupn"), ExtResource("84_afxx4"), ExtResource("85_dgs6i"), ExtResource("86_i5ds5"), ExtResource("87_td1dm"), ExtResource("88_si85t"), ExtResource("89_gyt4y"), ExtResource("90_ycgl7"), ExtResource("91_tbkmq"), ExtResource("92_bio4s"), ExtResource("93_ai4bs"), ExtResource("94_nprii"), ExtResource("95_bq8sx"), ExtResource("96_mgr3x"), ExtResource("97_8nise"), ExtResource("98_b4ema"), ExtResource("99_f0sx0"), ExtResource("100_p7pky"), ExtResource("101_1ks1o"), ExtResource("102_xejdl"), ExtResource("103_veksj"), ExtResource("104_lyqmh"), ExtResource("105_neobf"), ExtResource("106_a7es8"), ExtResource("107_maki0"), ExtResource("108_2k17w"), ExtResource("109_b22y0"), ExtResource("110_ll7iv")])
 Stances = Array[Object]([ExtResource("34_jhtjx")])
-SpawnablesList = ExtResource("33_notn6")
-VFXList = ExtResource("61_0m2vt")
-SFXList = ExtResource("32_qlgbu")
-VoiceLines = ExtResource("62_m0kj8")
 _aiData = ExtResource("110_w3ckd")
+Intros = Array[Object]([SubResource("Resource_3b733")])
+Outros = Array[Object]([SubResource("Resource_cenu2")])
+VictoryPoses = Array[Object]([SubResource("Resource_186y0")])
+DefeatPose = 75
 metadata/_custom_type_script = "uid://bsbjg1nuyall1"

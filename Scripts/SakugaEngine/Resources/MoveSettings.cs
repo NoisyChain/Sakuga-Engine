@@ -38,6 +38,7 @@ namespace SakugaEngine.Resources
         [Export] public bool IgnoreSamePriority = true;
         [Export] public bool InterruptCornerPushback = false;
         [Export] public bool AcceptNullStates = false;
+        [Export] public bool AcceptMovementStates = true;
         [Export] public bool AcceptCombatStates = false;
         [Export] public bool AcceptBlockingStates = false;
         [Export] public bool AcceptHitReactionStates = false;

@@ -4,10 +4,14 @@
 [ext_resource type="Script" uid="uid://bkhlpeqky2g1r" path="res://Scripts/SakugaEngine/Components/SakugaFighter.cs" id="1_7dx2y"]
 [ext_resource type="Script" uid="uid://cqd8ai3a40alf" path="res://Scripts/SakugaEngine/Utils/FOV_Correction.cs" id="2"]
 [ext_resource type="Resource" uid="uid://ce1bjf3tpyngv" path="res://Fighters/Kaede/Kaede_Data.tres" id="2_m6j4n"]
+[ext_resource type="Resource" uid="uid://5w0ffcesv6ec" path="res://Fighters/Shared/Shared_SpawnablesList.tres" id="3_ny8n5"]
 [ext_resource type="Script" uid="uid://bx452hpssiy38" path="res://Scripts/SakugaEngine/Components/FrameAnimator.cs" id="3_nysqa"]
 [ext_resource type="PackedScene" uid="uid://dduf0jsq56ggk" path="res://Scenes/Instances/HitboxViewer.tscn" id="4"]
+[ext_resource type="Resource" uid="uid://b6a4cqdykhhg" path="res://Fighters/Shared/Shared_VFXList.tres" id="4_0jinc"]
 [ext_resource type="Texture2D" uid="uid://bh1ks1pfblfex" path="res://Fighters/Kaede/Sprites/0-2.png" id="5"]
+[ext_resource type="Resource" uid="uid://k31pv0ejfv2s" path="res://Fighters/Shared/Shared_SFXList.tres" id="5_5sqo5"]
 [ext_resource type="Texture2D" uid="uid://b5eiwmu1ipvem" path="res://Fighters/Kaede/Sprites/0-1.png" id="6"]
+[ext_resource type="Resource" uid="uid://c8h8jltu6u5pb" path="res://Fighters/Shared/Shared_VoiceLines.tres" id="6_m774i"]
 [ext_resource type="Texture2D" uid="uid://chtjhgwtt3dx6" path="res://Fighters/Kaede/Sprites/0-10.png" id="7"]
 [ext_resource type="Texture2D" uid="uid://dsbunfwtp1akq" path="res://Fighters/Kaede/Sprites/0-3.png" id="8"]
 [ext_resource type="Texture2D" uid="uid://b8gqv6pwexj3v" path="res://Fighters/Kaede/Sprites/0-11.png" id="9"]
@@ -17,27 +21,27 @@
 [ext_resource type="Texture2D" uid="uid://ca05sni86mpia" path="res://Fighters/Kaede/Sprites/0-5.png" id="13"]
 [ext_resource type="Texture2D" uid="uid://dffurejss6jux" path="res://Fighters/Kaede/Sprites/0-8.png" id="14"]
 [ext_resource type="Texture2D" uid="uid://b2bqdxy4u4wqu" path="res://Fighters/Kaede/Sprites/0-9.png" id="15"]
-[ext_resource type="Texture2D" uid="uid://cliiv2jebnr1n" path="res://Fighters/Kaede/Sprites/20-1.png" id="16"]
-[ext_resource type="Texture2D" uid="uid://bsj071a3b14dq" path="res://Fighters/Kaede/Sprites/20-3.png" id="17"]
-[ext_resource type="Texture2D" uid="uid://dsonyn1vvukpa" path="res://Fighters/Kaede/Sprites/20-0.png" id="18"]
-[ext_resource type="Texture2D" uid="uid://dg02it3g50xdo" path="res://Fighters/Kaede/Sprites/20-2.png" id="19"]
-[ext_resource type="Texture2D" uid="uid://dyp3dt7123pfw" path="res://Fighters/Kaede/Sprites/20-4.png" id="20"]
-[ext_resource type="Texture2D" uid="uid://cgwgc7xhqnd4i" path="res://Fighters/Kaede/Sprites/20-7.png" id="21"]
-[ext_resource type="Texture2D" uid="uid://6xg3j4730rpg" path="res://Fighters/Kaede/Sprites/20-6.png" id="22"]
-[ext_resource type="Texture2D" uid="uid://1p1hwlja2vgh" path="res://Fighters/Kaede/Sprites/20-9.png" id="23"]
-[ext_resource type="Texture2D" uid="uid://bt6h1p302e1q5" path="res://Fighters/Kaede/Sprites/20-8.png" id="24"]
-[ext_resource type="Texture2D" uid="uid://ba04ggj5xh351" path="res://Fighters/Kaede/Sprites/20-5.png" id="25"]
-[ext_resource type="Texture2D" uid="uid://cm2te57dmyig3" path="res://Fighters/Kaede/Sprites/21-8.png" id="26"]
-[ext_resource type="Texture2D" uid="uid://gj1lvd6qp0mo" path="res://Fighters/Kaede/Sprites/21-4.png" id="27"]
-[ext_resource type="Texture2D" uid="uid://l8hamh8yrn0v" path="res://Fighters/Kaede/Sprites/21-9.png" id="28"]
-[ext_resource type="Texture2D" uid="uid://mxlghwhio4iv" path="res://Fighters/Kaede/Sprites/21-10.png" id="29"]
-[ext_resource type="Texture2D" uid="uid://dcfaytqt5j03g" path="res://Fighters/Kaede/Sprites/21-7.png" id="30"]
-[ext_resource type="Texture2D" uid="uid://dcsxl71ub55kn" path="res://Fighters/Kaede/Sprites/21-2.png" id="31"]
-[ext_resource type="Texture2D" uid="uid://crhdihee7qpx3" path="res://Fighters/Kaede/Sprites/21-6.png" id="32"]
-[ext_resource type="Texture2D" uid="uid://dd0oh1n8qukew" path="res://Fighters/Kaede/Sprites/21-5.png" id="33"]
-[ext_resource type="Texture2D" uid="uid://cc1c7u561cgg4" path="res://Fighters/Kaede/Sprites/21-1.png" id="34"]
-[ext_resource type="Texture2D" uid="uid://cr6ssxgjwhynj" path="res://Fighters/Kaede/Sprites/21-0.png" id="35"]
-[ext_resource type="Texture2D" uid="uid://c2o868f3emfpv" path="res://Fighters/Kaede/Sprites/21-3.png" id="36"]
+[ext_resource type="Texture2D" uid="uid://bqaacsr1foxkb" path="res://Fighters/Kaede/Sprites/20-1.png" id="16"]
+[ext_resource type="Texture2D" uid="uid://cnsbcll73j5eb" path="res://Fighters/Kaede/Sprites/20-3.png" id="17"]
+[ext_resource type="Texture2D" uid="uid://1hbd35j7g4vb" path="res://Fighters/Kaede/Sprites/20-0.png" id="18"]
+[ext_resource type="Texture2D" uid="uid://4asjtlljc8l2" path="res://Fighters/Kaede/Sprites/20-2.png" id="19"]
+[ext_resource type="Texture2D" uid="uid://drqy60vnk1nhm" path="res://Fighters/Kaede/Sprites/20-4.png" id="20"]
+[ext_resource type="Texture2D" uid="uid://dn7gcxyxbt1ho" path="res://Fighters/Kaede/Sprites/20-7.png" id="21"]
+[ext_resource type="Texture2D" uid="uid://c2m1wrffjqcm" path="res://Fighters/Kaede/Sprites/20-6.png" id="22"]
+[ext_resource type="Texture2D" uid="uid://dr4a8853t8q8q" path="res://Fighters/Kaede/Sprites/20-9.png" id="23"]
+[ext_resource type="Texture2D" uid="uid://d3u3i7r0j2s4p" path="res://Fighters/Kaede/Sprites/20-8.png" id="24"]
+[ext_resource type="Texture2D" uid="uid://dmppqd3eirl1y" path="res://Fighters/Kaede/Sprites/20-5.png" id="25"]
+[ext_resource type="Texture2D" uid="uid://cj3toyxmfghso" path="res://Fighters/Kaede/Sprites/21-8.png" id="26"]
+[ext_resource type="Texture2D" uid="uid://ndo4t68416lh" path="res://Fighters/Kaede/Sprites/21-4.png" id="27"]
+[ext_resource type="Texture2D" uid="uid://o26eh4xb2w5j" path="res://Fighters/Kaede/Sprites/21-9.png" id="28"]
+[ext_resource type="Texture2D" uid="uid://ckk4yiw6fen6v" path="res://Fighters/Kaede/Sprites/21-10.png" id="29"]
+[ext_resource type="Texture2D" uid="uid://beb1e1drfi61r" path="res://Fighters/Kaede/Sprites/21-7.png" id="30"]
+[ext_resource type="Texture2D" uid="uid://wvog3oy7ychu" path="res://Fighters/Kaede/Sprites/21-2.png" id="31"]
+[ext_resource type="Texture2D" uid="uid://cx5pmbn063aan" path="res://Fighters/Kaede/Sprites/21-6.png" id="32"]
+[ext_resource type="Texture2D" uid="uid://cy1lno3sijxpk" path="res://Fighters/Kaede/Sprites/21-5.png" id="33"]
+[ext_resource type="Texture2D" uid="uid://bb10lpu5pm74h" path="res://Fighters/Kaede/Sprites/21-1.png" id="34"]
+[ext_resource type="Texture2D" uid="uid://h037yr5duwdm" path="res://Fighters/Kaede/Sprites/21-0.png" id="35"]
+[ext_resource type="Texture2D" uid="uid://l3ghfiltcgwk" path="res://Fighters/Kaede/Sprites/21-3.png" id="36"]
 [ext_resource type="Texture2D" uid="uid://de8jtuv57sir4" path="res://Fighters/Kaede/Sprites/10-2.png" id="37"]
 [ext_resource type="Texture2D" uid="uid://m3s1gblwmmfw" path="res://Fighters/Kaede/Sprites/10-1.png" id="38"]
 [ext_resource type="Texture2D" uid="uid://dantvykxhgc53" path="res://Fighters/Kaede/Sprites/10-0.png" id="39"]
@@ -72,184 +76,183 @@
 [ext_resource type="Texture2D" uid="uid://d4eo78pa6fb5v" path="res://Fighters/Kaede/Sprites/105-7.png" id="68"]
 [ext_resource type="Texture2D" uid="uid://b102jnskqlqg7" path="res://Fighters/Kaede/Sprites/105-4.png" id="69"]
 [ext_resource type="Texture2D" uid="uid://p8lb6dfy61aw" path="res://Fighters/Kaede/Sprites/105-5.png" id="70"]
-[ext_resource type="Texture2D" uid="uid://i4o0fcra1qoh" path="res://Fighters/Kaede/Sprites/41-8.png" id="71"]
-[ext_resource type="Texture2D" uid="uid://bq10ilt5ai0lm" path="res://Fighters/Kaede/Sprites/41-7.png" id="72"]
-[ext_resource type="Texture2D" uid="uid://b3i01uipwmuom" path="res://Fighters/Kaede/Sprites/40-0.png" id="73"]
-[ext_resource type="Texture2D" uid="uid://svrvdu1wm2ln" path="res://Fighters/Kaede/Sprites/41-0.png" id="74"]
-[ext_resource type="Texture2D" uid="uid://b3wp2c1b0tfdy" path="res://Fighters/Kaede/Sprites/41-5.png" id="75"]
-[ext_resource type="Texture2D" uid="uid://bwnh4skjhbmtm" path="res://Fighters/Kaede/Sprites/41-2.png" id="76"]
-[ext_resource type="Texture2D" uid="uid://bhrswarwdsl76" path="res://Fighters/Kaede/Sprites/41-4.png" id="77"]
-[ext_resource type="Texture2D" uid="uid://cfnysnspna5gq" path="res://Fighters/Kaede/Sprites/41-6.png" id="78"]
-[ext_resource type="Texture2D" uid="uid://cw0nd14unnomo" path="res://Fighters/Kaede/Sprites/41-3.png" id="79"]
-[ext_resource type="Texture2D" uid="uid://baijhthkut183" path="res://Fighters/Kaede/Sprites/41-1.png" id="80"]
-[ext_resource type="Texture2D" uid="uid://c40a00uojv0gk" path="res://Fighters/Kaede/Sprites/42-0.png" id="81"]
-[ext_resource type="Texture2D" uid="uid://cf7hfrc32cits" path="res://Fighters/Kaede/Sprites/42-3.png" id="82"]
-[ext_resource type="Material" uid="uid://bq6qbm2ymofxw" path="res://pallete_test.tres" id="82_axt2r"]
-[ext_resource type="Texture2D" uid="uid://cqvjudjiiskph" path="res://Fighters/Kaede/Sprites/42-4.png" id="83"]
-[ext_resource type="Texture2D" uid="uid://bopqoovmr0hsq" path="res://Fighters/Kaede/Sprites/42-1.png" id="84"]
-[ext_resource type="Texture2D" uid="uid://bailyyjgqaekl" path="res://Fighters/Kaede/Sprites/42-2.png" id="85"]
-[ext_resource type="Texture2D" uid="uid://cl5ru7jr7y0ag" path="res://Fighters/Kaede/Sprites/13-0.png" id="86"]
-[ext_resource type="Texture2D" uid="uid://bpvo4c4noqhvo" path="res://Fighters/Kaede/Sprites/200-0.png" id="87"]
-[ext_resource type="Texture2D" uid="uid://cpqrhu7johdlk" path="res://Fighters/Kaede/Sprites/200-3.png" id="88"]
-[ext_resource type="Texture2D" uid="uid://4356irtku310" path="res://Fighters/Kaede/Sprites/200-2.png" id="89"]
-[ext_resource type="Texture2D" uid="uid://s1tys31yt14" path="res://Fighters/Kaede/Sprites/200-1.png" id="90"]
-[ext_resource type="Texture2D" uid="uid://dpq4dp2ylifnd" path="res://Fighters/Kaede/Sprites/210-5.png" id="91"]
-[ext_resource type="Texture2D" uid="uid://btqfk2fvm5ab5" path="res://Fighters/Kaede/Sprites/210-7.png" id="92"]
-[ext_resource type="Texture2D" uid="uid://1t3pbhn2a24c" path="res://Fighters/Kaede/Sprites/210-3.png" id="93"]
-[ext_resource type="Texture2D" uid="uid://cuu7k3quy772j" path="res://Fighters/Kaede/Sprites/210-0.png" id="94"]
-[ext_resource type="Texture2D" uid="uid://c8ax4sxiscnk0" path="res://Fighters/Kaede/Sprites/210-2.png" id="95"]
-[ext_resource type="Texture2D" uid="uid://gh5rnhsoo1pe" path="res://Fighters/Kaede/Sprites/210-6.png" id="96"]
-[ext_resource type="Texture2D" uid="uid://chdqqtxffs6pa" path="res://Fighters/Kaede/Sprites/210-4.png" id="97"]
-[ext_resource type="Texture2D" uid="uid://114hsa5eqfvx" path="res://Fighters/Kaede/Sprites/210-1.png" id="98"]
-[ext_resource type="Texture2D" uid="uid://bp5qekr5bvntv" path="res://Fighters/Kaede/Sprites/220-3.png" id="99"]
-[ext_resource type="Texture2D" uid="uid://cbjqo16qwvuaj" path="res://Fighters/Kaede/Sprites/220-5.png" id="100"]
-[ext_resource type="Texture2D" uid="uid://b30d3d4pog6k5" path="res://Fighters/Kaede/Sprites/220-6.png" id="101"]
-[ext_resource type="Texture2D" uid="uid://dficl3sb2s8c7" path="res://Fighters/Kaede/Sprites/220-8.png" id="102"]
-[ext_resource type="Texture2D" uid="uid://cenuaoi1yy4x" path="res://Fighters/Kaede/Sprites/220-10.png" id="103"]
-[ext_resource type="Texture2D" uid="uid://b7thtdk3vt36w" path="res://Fighters/Kaede/Sprites/220-11.png" id="104"]
-[ext_resource type="Texture2D" uid="uid://mewb63npmau5" path="res://Fighters/Kaede/Sprites/220-12.png" id="105"]
-[ext_resource type="Texture2D" uid="uid://bcwegsllqt4or" path="res://Fighters/Kaede/Sprites/220-4.png" id="106"]
-[ext_resource type="Texture2D" uid="uid://3nxdhke7ob64" path="res://Fighters/Kaede/Sprites/220-13.png" id="107"]
-[ext_resource type="Texture2D" uid="uid://cm57688n3cb05" path="res://Fighters/Kaede/Sprites/220-15.png" id="108"]
-[ext_resource type="Texture2D" uid="uid://cngkbj0lgpyen" path="res://Fighters/Kaede/Sprites/220-9.png" id="109"]
-[ext_resource type="Texture2D" uid="uid://s1g0dmrl704n" path="res://Fighters/Kaede/Sprites/220-7.png" id="110"]
-[ext_resource type="Texture2D" uid="uid://dcia3insxyp0l" path="res://Fighters/Kaede/Sprites/220-14.png" id="111"]
-[ext_resource type="Texture2D" uid="uid://dm23pjw6sn26" path="res://Fighters/Kaede/Sprites/220-0.png" id="112"]
-[ext_resource type="Texture2D" uid="uid://bp71o4qr13512" path="res://Fighters/Kaede/Sprites/220-1.png" id="113"]
-[ext_resource type="Texture2D" uid="uid://bt7kixvh24yxi" path="res://Fighters/Kaede/Sprites/220-2.png" id="114"]
-[ext_resource type="Texture2D" uid="uid://bu0wp3s44hdud" path="res://Fighters/Kaede/Sprites/5000-21.png" id="115"]
-[ext_resource type="Texture2D" uid="uid://dls412lnblu5u" path="res://Fighters/Kaede/Sprites/5000-22.png" id="116"]
-[ext_resource type="Texture2D" uid="uid://b2t1yw5glfeic" path="res://Fighters/Kaede/Sprites/5000-10.png" id="117"]
-[ext_resource type="Texture2D" uid="uid://3hwxbbctyyy3" path="res://Fighters/Kaede/Sprites/5000-20.png" id="118"]
-[ext_resource type="Texture2D" uid="uid://cingnvjl7kwtd" path="res://Fighters/Kaede/Sprites/5010-10.png" id="121"]
-[ext_resource type="Texture2D" uid="uid://lbglmy8h36bw" path="res://Fighters/Kaede/Sprites/5010-20.png" id="122"]
-[ext_resource type="Texture2D" uid="uid://cjrsmd1xhjo1x" path="res://Fighters/Kaede/Sprites/5010-21.png" id="123"]
-[ext_resource type="Texture2D" uid="uid://bud25ejrhvht7" path="res://Fighters/Kaede/Sprites/5020-20.png" id="124"]
-[ext_resource type="Texture2D" uid="uid://v5hgql6sgmbh" path="res://Fighters/Kaede/Sprites/5020-21.png" id="125"]
-[ext_resource type="Texture2D" uid="uid://hpb7jaoakv66" path="res://Fighters/Kaede/Sprites/5020-22.png" id="126"]
-[ext_resource type="Texture2D" uid="uid://c4kr0gv702mlg" path="res://Fighters/Kaede/Sprites/5020-23.png" id="129"]
-[ext_resource type="Texture2D" uid="uid://dk0oln601qfty" path="res://Fighters/Kaede/Sprites/5030-30.png" id="130"]
-[ext_resource type="Texture2D" uid="uid://bvncpkssracmn" path="res://Fighters/Kaede/Sprites/5030-40.png" id="131"]
-[ext_resource type="Texture2D" uid="uid://bu1uwu766stvx" path="res://Fighters/Kaede/Sprites/5030-50.png" id="132"]
-[ext_resource type="Texture2D" uid="uid://c47yra16b2xou" path="res://Fighters/Kaede/Sprites/5030-10.png" id="133"]
-[ext_resource type="Texture2D" uid="uid://c2vfijm0nvgmc" path="res://Fighters/Kaede/Sprites/5030-51.png" id="134"]
-[ext_resource type="Texture2D" uid="uid://dpexkrqyvt8li" path="res://Fighters/Kaede/Sprites/5030-0.png" id="135"]
-[ext_resource type="Texture2D" uid="uid://cvst7c8c3p6ui" path="res://Fighters/Kaede/Sprites/5030-20.png" id="136"]
-[ext_resource type="Texture2D" uid="uid://c5ouanhggqoen" path="res://Fighters/Kaede/Sprites/5030-52.png" id="137"]
-[ext_resource type="Texture2D" uid="uid://mo2h2ojesyo7" path="res://Fighters/Kaede/Sprites/5040-10.png" id="138"]
-[ext_resource type="Texture2D" uid="uid://cmdwtxsmixlog" path="res://Fighters/Kaede/Sprites/5040-1.png" id="139"]
-[ext_resource type="Texture2D" uid="uid://d1h0mc10uygyh" path="res://Fighters/Kaede/Sprites/5040-2.png" id="140"]
-[ext_resource type="Texture2D" uid="uid://c3ndtf4owjwf1" path="res://Fighters/Kaede/Sprites/5040-0.png" id="141"]
-[ext_resource type="Texture2D" uid="uid://ddc78nji2xo5e" path="res://Fighters/Kaede/Sprites/5040-3.png" id="142"]
-[ext_resource type="Texture2D" uid="uid://ckiluee62fwoi" path="res://Fighters/Kaede/Sprites/5040-20.png" id="143"]
-[ext_resource type="Texture2D" uid="uid://cpiang6mxv6lg" path="res://Fighters/Kaede/Sprites/5120-1.png" id="144"]
-[ext_resource type="Texture2D" uid="uid://dqkhhljg5w1en" path="res://Fighters/Kaede/Sprites/5120-2.png" id="145"]
-[ext_resource type="Texture2D" uid="uid://ds5m4rbpkr6ku" path="res://Fighters/Kaede/Sprites/5120-0.png" id="146"]
-[ext_resource type="Texture2D" uid="uid://bxoo6u7oserg0" path="res://Fighters/Kaede/Sprites/5300-0.png" id="147"]
-[ext_resource type="Texture2D" uid="uid://hs0huvdfecwr" path="res://Fighters/Kaede/Sprites/5400-4.png" id="148"]
-[ext_resource type="Texture2D" uid="uid://cv31iedn4xqpv" path="res://Fighters/Kaede/Sprites/5400-3.png" id="149"]
-[ext_resource type="Texture2D" uid="uid://dujjgtoeyou41" path="res://Fighters/Kaede/Sprites/5400-2.png" id="150"]
-[ext_resource type="Texture2D" uid="uid://bjwixqwqujouj" path="res://Fighters/Kaede/Sprites/5400-0.png" id="151"]
-[ext_resource type="Texture2D" uid="uid://11w4ota1skwk" path="res://Fighters/Kaede/Sprites/5400-1.png" id="152"]
-[ext_resource type="Texture2D" uid="uid://cbn1bgqe5kgn4" path="res://Fighters/Kaede/Sprites/5412-1.png" id="153"]
-[ext_resource type="Texture2D" uid="uid://dnywi03b0qfk6" path="res://Fighters/Kaede/Sprites/5412-2.png" id="154"]
-[ext_resource type="Texture2D" uid="uid://bs3saqb10xxe" path="res://Fighters/Kaede/Sprites/5412-3.png" id="155"]
-[ext_resource type="Texture2D" uid="uid://ci47nskjor878" path="res://Fighters/Kaede/Sprites/5412-5.png" id="156"]
-[ext_resource type="Texture2D" uid="uid://cqrqt4ujtixpx" path="res://Fighters/Kaede/Sprites/5412-4.png" id="157"]
-[ext_resource type="Texture2D" uid="uid://4fkumbaihvmg" path="res://Fighters/Kaede/Sprites/5412-6.png" id="158"]
-[ext_resource type="Texture2D" uid="uid://crai7gtlblhmv" path="res://Fighters/Kaede/Sprites/5070-0.png" id="159"]
-[ext_resource type="Texture2D" uid="uid://diljeo56dagga" path="res://Fighters/Kaede/Sprites/5070-10.png" id="160"]
-[ext_resource type="Texture2D" uid="uid://dk0elauvq5dkq" path="res://Fighters/Kaede/Sprites/5300-4.png" id="161"]
-[ext_resource type="Texture2D" uid="uid://d4cyw8rtmmra7" path="res://Fighters/Kaede/Sprites/5300-3.png" id="162"]
-[ext_resource type="Texture2D" uid="uid://cghi61l0j6eyp" path="res://Fighters/Kaede/Sprites/5300-5.png" id="163"]
-[ext_resource type="Texture2D" uid="uid://70n17g80chi7" path="res://Fighters/Kaede/Sprites/5300-1.png" id="164"]
-[ext_resource type="Texture2D" uid="uid://daofwte3qe47h" path="res://Fighters/Kaede/Sprites/5300-2.png" id="165"]
+[ext_resource type="Texture2D" uid="uid://d31h0bxvhjl2x" path="res://Fighters/Kaede/Sprites/41-8.png" id="71"]
+[ext_resource type="Texture2D" uid="uid://cxlumiotebk45" path="res://Fighters/Kaede/Sprites/41-7.png" id="72"]
+[ext_resource type="Texture2D" uid="uid://bapro6pl68rro" path="res://Fighters/Kaede/Sprites/40-0.png" id="73"]
+[ext_resource type="Texture2D" uid="uid://clyb7m2xtv55v" path="res://Fighters/Kaede/Sprites/41-0.png" id="74"]
+[ext_resource type="Texture2D" uid="uid://b8ys0mxlwwc8x" path="res://Fighters/Kaede/Sprites/41-5.png" id="75"]
+[ext_resource type="Texture2D" uid="uid://chtap3eypuxwe" path="res://Fighters/Kaede/Sprites/41-2.png" id="76"]
+[ext_resource type="Texture2D" uid="uid://b6gargdhy8s5b" path="res://Fighters/Kaede/Sprites/41-4.png" id="77"]
+[ext_resource type="Texture2D" uid="uid://1jinf1hl8lw8" path="res://Fighters/Kaede/Sprites/41-6.png" id="78"]
+[ext_resource type="Texture2D" uid="uid://lwuwb35x18n8" path="res://Fighters/Kaede/Sprites/41-3.png" id="79"]
+[ext_resource type="Texture2D" uid="uid://q7njlim0pvub" path="res://Fighters/Kaede/Sprites/41-1.png" id="80"]
+[ext_resource type="Texture2D" uid="uid://80xxor4go2u5" path="res://Fighters/Kaede/Sprites/42-0.png" id="81"]
+[ext_resource type="Texture2D" uid="uid://km4byfrhag38" path="res://Fighters/Kaede/Sprites/42-3.png" id="82"]
+[ext_resource type="Texture2D" uid="uid://cu8tbt4jgnbjf" path="res://Fighters/Kaede/Sprites/42-4.png" id="83"]
+[ext_resource type="Texture2D" uid="uid://cl1ummjelx8pu" path="res://Fighters/Kaede/Sprites/42-1.png" id="84"]
+[ext_resource type="Texture2D" uid="uid://djf5fc24vdufr" path="res://Fighters/Kaede/Sprites/42-2.png" id="85"]
+[ext_resource type="Texture2D" uid="uid://d3avlog7ehkw4" path="res://Fighters/Kaede/Sprites/13-0.png" id="86"]
+[ext_resource type="Texture2D" uid="uid://dhk2jvgtuhi8b" path="res://Fighters/Kaede/Sprites/200-0.png" id="87"]
+[ext_resource type="Texture2D" uid="uid://1j8esc121ubw" path="res://Fighters/Kaede/Sprites/200-3.png" id="88"]
+[ext_resource type="Texture2D" uid="uid://ckmbqsf20hi6v" path="res://Fighters/Kaede/Sprites/200-2.png" id="89"]
+[ext_resource type="Texture2D" uid="uid://dkujjxltn8lc8" path="res://Fighters/Kaede/Sprites/200-1.png" id="90"]
+[ext_resource type="Texture2D" uid="uid://bov4cj2el20p7" path="res://Fighters/Kaede/Sprites/210-5.png" id="91"]
+[ext_resource type="Texture2D" uid="uid://bcgy272jfgva4" path="res://Fighters/Kaede/Sprites/210-7.png" id="92"]
+[ext_resource type="Texture2D" uid="uid://l0wm3qw3oa3r" path="res://Fighters/Kaede/Sprites/210-3.png" id="93"]
+[ext_resource type="Texture2D" uid="uid://q4pqvpkkcgtr" path="res://Fighters/Kaede/Sprites/210-0.png" id="94"]
+[ext_resource type="Texture2D" uid="uid://bf0i00s4y4yve" path="res://Fighters/Kaede/Sprites/210-2.png" id="95"]
+[ext_resource type="Texture2D" uid="uid://dfamqp6knic8i" path="res://Fighters/Kaede/Sprites/210-6.png" id="96"]
+[ext_resource type="Texture2D" uid="uid://dvppwmqmvcopn" path="res://Fighters/Kaede/Sprites/210-4.png" id="97"]
+[ext_resource type="Texture2D" uid="uid://2akpoy5qnu4n" path="res://Fighters/Kaede/Sprites/210-1.png" id="98"]
+[ext_resource type="Texture2D" uid="uid://cewo1eifvm7d6" path="res://Fighters/Kaede/Sprites/220-3.png" id="99"]
+[ext_resource type="Texture2D" uid="uid://qpdavis4nkok" path="res://Fighters/Kaede/Sprites/220-5.png" id="100"]
+[ext_resource type="Texture2D" uid="uid://quhcihmbnxuf" path="res://Fighters/Kaede/Sprites/220-6.png" id="101"]
+[ext_resource type="Texture2D" uid="uid://dflprc3jarp7w" path="res://Fighters/Kaede/Sprites/220-8.png" id="102"]
+[ext_resource type="Texture2D" uid="uid://dl2a4r4gh5fll" path="res://Fighters/Kaede/Sprites/220-10.png" id="103"]
+[ext_resource type="Texture2D" uid="uid://ddio8nipjhwho" path="res://Fighters/Kaede/Sprites/220-11.png" id="104"]
+[ext_resource type="Texture2D" uid="uid://1ww8m0wwha7m" path="res://Fighters/Kaede/Sprites/220-12.png" id="105"]
+[ext_resource type="Texture2D" uid="uid://tk6bcovcs1mm" path="res://Fighters/Kaede/Sprites/220-4.png" id="106"]
+[ext_resource type="Texture2D" uid="uid://vkup25hfc5vr" path="res://Fighters/Kaede/Sprites/220-13.png" id="107"]
+[ext_resource type="Texture2D" uid="uid://cvpy2s0ns7g8t" path="res://Fighters/Kaede/Sprites/220-15.png" id="108"]
+[ext_resource type="Texture2D" uid="uid://c3koolrkayka0" path="res://Fighters/Kaede/Sprites/220-9.png" id="109"]
+[ext_resource type="Texture2D" uid="uid://jf0yioi7utv6" path="res://Fighters/Kaede/Sprites/220-7.png" id="110"]
+[ext_resource type="Texture2D" uid="uid://c0nl4oitxfp70" path="res://Fighters/Kaede/Sprites/220-14.png" id="111"]
+[ext_resource type="Texture2D" uid="uid://de2x5bxl7x08w" path="res://Fighters/Kaede/Sprites/220-0.png" id="112"]
+[ext_resource type="Texture2D" uid="uid://ddslnunrxtn03" path="res://Fighters/Kaede/Sprites/220-1.png" id="113"]
+[ext_resource type="Texture2D" uid="uid://cjcrl8io3bpb6" path="res://Fighters/Kaede/Sprites/220-2.png" id="114"]
+[ext_resource type="Texture2D" uid="uid://ygosxej4cs6f" path="res://Fighters/Kaede/Sprites/5000-21.png" id="115"]
+[ext_resource type="Texture2D" uid="uid://binbv6k2ip42x" path="res://Fighters/Kaede/Sprites/5000-22.png" id="116"]
+[ext_resource type="Texture2D" uid="uid://um6mc3mwu4cq" path="res://Fighters/Kaede/Sprites/5000-10.png" id="117"]
+[ext_resource type="Texture2D" uid="uid://d2gpoi50sxk0k" path="res://Fighters/Kaede/Sprites/5000-20.png" id="118"]
+[ext_resource type="Texture2D" uid="uid://dgh1xstvffdmb" path="res://Fighters/Kaede/Sprites/5010-10.png" id="121"]
+[ext_resource type="Texture2D" uid="uid://cjqbwerjpvr48" path="res://Fighters/Kaede/Sprites/5010-20.png" id="122"]
+[ext_resource type="Texture2D" uid="uid://da4xmp4t8ob7x" path="res://Fighters/Kaede/Sprites/5010-21.png" id="123"]
+[ext_resource type="Texture2D" uid="uid://c8ptdhtg26dd7" path="res://Fighters/Kaede/Sprites/5020-20.png" id="124"]
+[ext_resource type="Texture2D" uid="uid://c85m8yn0s8a7m" path="res://Fighters/Kaede/Sprites/5020-21.png" id="125"]
+[ext_resource type="Texture2D" uid="uid://cpv7r6fyj4071" path="res://Fighters/Kaede/Sprites/5020-22.png" id="126"]
+[ext_resource type="Texture2D" uid="uid://c4apeyrfanki3" path="res://Fighters/Kaede/Sprites/5020-23.png" id="129"]
+[ext_resource type="Texture2D" uid="uid://diir4qvlw0x72" path="res://Fighters/Kaede/Sprites/5030-30.png" id="130"]
+[ext_resource type="Texture2D" uid="uid://g50gw4cofadc" path="res://Fighters/Kaede/Sprites/5030-40.png" id="131"]
+[ext_resource type="Texture2D" uid="uid://dqy1op8r8b51i" path="res://Fighters/Kaede/Sprites/5030-50.png" id="132"]
+[ext_resource type="Texture2D" uid="uid://bx01203r1eufc" path="res://Fighters/Kaede/Sprites/5030-10.png" id="133"]
+[ext_resource type="Texture2D" uid="uid://c4drrc78v5xn2" path="res://Fighters/Kaede/Sprites/5030-51.png" id="134"]
+[ext_resource type="Texture2D" uid="uid://bl848ga8qdjwg" path="res://Fighters/Kaede/Sprites/5030-0.png" id="135"]
+[ext_resource type="Texture2D" uid="uid://c2qlcf378xgk1" path="res://Fighters/Kaede/Sprites/5030-20.png" id="136"]
+[ext_resource type="Texture2D" uid="uid://d1xlkfpgwvr4m" path="res://Fighters/Kaede/Sprites/5030-52.png" id="137"]
+[ext_resource type="Texture2D" uid="uid://boy0ofvn4naef" path="res://Fighters/Kaede/Sprites/5040-10.png" id="138"]
+[ext_resource type="Texture2D" uid="uid://chln5d3rpj7je" path="res://Fighters/Kaede/Sprites/5040-1.png" id="139"]
+[ext_resource type="Texture2D" uid="uid://bm4c83i7715d6" path="res://Fighters/Kaede/Sprites/5040-2.png" id="140"]
+[ext_resource type="Texture2D" uid="uid://cp25wln0b48ar" path="res://Fighters/Kaede/Sprites/5040-0.png" id="141"]
+[ext_resource type="Texture2D" uid="uid://bpt463njr288u" path="res://Fighters/Kaede/Sprites/5040-3.png" id="142"]
+[ext_resource type="Texture2D" uid="uid://dukwswvicfqdm" path="res://Fighters/Kaede/Sprites/5040-20.png" id="143"]
+[ext_resource type="Texture2D" uid="uid://dy45pg4fj32i4" path="res://Fighters/Kaede/Sprites/5120-1.png" id="144"]
+[ext_resource type="Texture2D" uid="uid://um8yskcxisxw" path="res://Fighters/Kaede/Sprites/5120-2.png" id="145"]
+[ext_resource type="Texture2D" uid="uid://dgcc5dvrl13s" path="res://Fighters/Kaede/Sprites/5120-0.png" id="146"]
+[ext_resource type="Texture2D" uid="uid://clbl61vec8e6g" path="res://Fighters/Kaede/Sprites/5300-0.png" id="147"]
+[ext_resource type="Texture2D" uid="uid://ckuandievr5yq" path="res://Fighters/Kaede/Sprites/5400-4.png" id="148"]
+[ext_resource type="Texture2D" uid="uid://bflesrg3xh1iq" path="res://Fighters/Kaede/Sprites/5400-3.png" id="149"]
+[ext_resource type="Texture2D" uid="uid://bwp81tt3rej6v" path="res://Fighters/Kaede/Sprites/5400-2.png" id="150"]
+[ext_resource type="Texture2D" uid="uid://x8xx0nvltl6o" path="res://Fighters/Kaede/Sprites/5400-0.png" id="151"]
+[ext_resource type="Texture2D" uid="uid://cit16ewac47wb" path="res://Fighters/Kaede/Sprites/5400-1.png" id="152"]
+[ext_resource type="Texture2D" uid="uid://ba5l8laumh4pf" path="res://Fighters/Kaede/Sprites/5412-1.png" id="153"]
+[ext_resource type="Texture2D" uid="uid://rnae63roxgx1" path="res://Fighters/Kaede/Sprites/5412-2.png" id="154"]
+[ext_resource type="Texture2D" uid="uid://bt6ftkir0clku" path="res://Fighters/Kaede/Sprites/5412-3.png" id="155"]
+[ext_resource type="Texture2D" uid="uid://fohsummtm7ab" path="res://Fighters/Kaede/Sprites/5412-5.png" id="156"]
+[ext_resource type="Texture2D" uid="uid://clgbj2r64w2s1" path="res://Fighters/Kaede/Sprites/5412-4.png" id="157"]
+[ext_resource type="Texture2D" uid="uid://cpodux4n8gkia" path="res://Fighters/Kaede/Sprites/5412-6.png" id="158"]
+[ext_resource type="Texture2D" uid="uid://ch82hbto7kklf" path="res://Fighters/Kaede/Sprites/5070-0.png" id="159"]
+[ext_resource type="Texture2D" uid="uid://ot4a3iuxubo3" path="res://Fighters/Kaede/Sprites/5070-10.png" id="160"]
+[ext_resource type="Texture2D" uid="uid://cx64hqxn4txan" path="res://Fighters/Kaede/Sprites/5300-4.png" id="161"]
+[ext_resource type="Texture2D" uid="uid://dusa8ylqhg47t" path="res://Fighters/Kaede/Sprites/5300-3.png" id="162"]
+[ext_resource type="Texture2D" uid="uid://ds572eobmvigf" path="res://Fighters/Kaede/Sprites/5300-5.png" id="163"]
+[ext_resource type="Texture2D" uid="uid://smhn54w1eg30" path="res://Fighters/Kaede/Sprites/5300-1.png" id="164"]
+[ext_resource type="Texture2D" uid="uid://c1l1em1nwqo7s" path="res://Fighters/Kaede/Sprites/5300-2.png" id="165"]
 [ext_resource type="Texture2D" uid="uid://dtq4oa07hw8ie" path="res://Fighters/Kaede/Sprites/120-0.png" id="166"]
 [ext_resource type="Texture2D" uid="uid://cn8f3lesvnhr3" path="res://Fighters/Kaede/Sprites/120-2.png" id="167"]
 [ext_resource type="Texture2D" uid="uid://buu5v80h7x2do" path="res://Fighters/Kaede/Sprites/120-1.png" id="168"]
 [ext_resource type="Texture2D" uid="uid://edygtw0xijvw" path="res://Fighters/Kaede/Sprites/121-2.png" id="169"]
 [ext_resource type="Texture2D" uid="uid://c1pc8b458mkst" path="res://Fighters/Kaede/Sprites/121-0.png" id="170"]
 [ext_resource type="Texture2D" uid="uid://bhdp001a6bf0h" path="res://Fighters/Kaede/Sprites/121-1.png" id="171"]
-[ext_resource type="Texture2D" uid="uid://dpdtoxvrbk4tr" path="res://Fighters/Kaede/Sprites/122-1.png" id="172"]
-[ext_resource type="Texture2D" uid="uid://b0bpvy2nerpfp" path="res://Fighters/Kaede/Sprites/122-0.png" id="173"]
-[ext_resource type="Texture2D" uid="uid://cfe028kcjdkin" path="res://Fighters/Kaede/Sprites/400-3.png" id="174"]
-[ext_resource type="Texture2D" uid="uid://bo6dpcw5yvv3m" path="res://Fighters/Kaede/Sprites/400-0.png" id="175"]
-[ext_resource type="Texture2D" uid="uid://d2enoamgadj10" path="res://Fighters/Kaede/Sprites/400-1.png" id="176"]
-[ext_resource type="Texture2D" uid="uid://rd1jdga13mxw" path="res://Fighters/Kaede/Sprites/400-2.png" id="177"]
-[ext_resource type="Texture2D" uid="uid://dqqiwj4lg68l3" path="res://Fighters/Kaede/Sprites/410-8.png" id="178"]
-[ext_resource type="Texture2D" uid="uid://uodfismer2f" path="res://Fighters/Kaede/Sprites/410-9.png" id="179"]
-[ext_resource type="Texture2D" uid="uid://cjuxnclg4rrj0" path="res://Fighters/Kaede/Sprites/410-1.png" id="180"]
-[ext_resource type="Texture2D" uid="uid://dkjtdt0gkaa7n" path="res://Fighters/Kaede/Sprites/410-3.png" id="181"]
-[ext_resource type="Texture2D" uid="uid://csaogn027qt41" path="res://Fighters/Kaede/Sprites/410-6.png" id="182"]
-[ext_resource type="Texture2D" uid="uid://7bgld43xiuxx" path="res://Fighters/Kaede/Sprites/410-0.png" id="183"]
-[ext_resource type="Texture2D" uid="uid://f88yn2ts3drf" path="res://Fighters/Kaede/Sprites/410-2.png" id="184"]
-[ext_resource type="Texture2D" uid="uid://dd2h3y24w86ra" path="res://Fighters/Kaede/Sprites/410-4.png" id="185"]
-[ext_resource type="Texture2D" uid="uid://coajf157mele0" path="res://Fighters/Kaede/Sprites/410-5.png" id="186"]
-[ext_resource type="Texture2D" uid="uid://02yug32sd6vf" path="res://Fighters/Kaede/Sprites/410-7.png" id="187"]
-[ext_resource type="Texture2D" uid="uid://cxenims0rpcr" path="res://Fighters/Kaede/Sprites/420-2.png" id="188"]
-[ext_resource type="Texture2D" uid="uid://cc3qhfd4qgd7a" path="res://Fighters/Kaede/Sprites/420-6.png" id="189"]
-[ext_resource type="Texture2D" uid="uid://dqpyw6eloykse" path="res://Fighters/Kaede/Sprites/420-1.png" id="190"]
-[ext_resource type="Texture2D" uid="uid://c2t6vv216jmwe" path="res://Fighters/Kaede/Sprites/420-11.png" id="191"]
-[ext_resource type="Texture2D" uid="uid://bir0x1loi83nc" path="res://Fighters/Kaede/Sprites/420-4.png" id="192"]
-[ext_resource type="Texture2D" uid="uid://b2jj7288s2315" path="res://Fighters/Kaede/Sprites/420-3.png" id="193"]
-[ext_resource type="Texture2D" uid="uid://emcu0elremyd" path="res://Fighters/Kaede/Sprites/420-8.png" id="194"]
-[ext_resource type="Texture2D" uid="uid://crrjbw6b22lw8" path="res://Fighters/Kaede/Sprites/420-0.png" id="195"]
-[ext_resource type="Texture2D" uid="uid://dbkuhiwrecfp2" path="res://Fighters/Kaede/Sprites/420-10.png" id="196"]
-[ext_resource type="Texture2D" uid="uid://cx5x4i4kr6wcl" path="res://Fighters/Kaede/Sprites/420-7.png" id="197"]
-[ext_resource type="Texture2D" uid="uid://bssnkqro18sbj" path="res://Fighters/Kaede/Sprites/420-5.png" id="198"]
-[ext_resource type="Texture2D" uid="uid://bbiinc4rkn46k" path="res://Fighters/Kaede/Sprites/420-9.png" id="199"]
-[ext_resource type="Texture2D" uid="uid://dsel014nhxhpv" path="res://Fighters/Kaede/Sprites/600-0.png" id="200"]
-[ext_resource type="Texture2D" uid="uid://jb8wl4cqucp3" path="res://Fighters/Kaede/Sprites/600-1.png" id="201"]
-[ext_resource type="Texture2D" uid="uid://b64xagpnjdc53" path="res://Fighters/Kaede/Sprites/600-2.png" id="202"]
-[ext_resource type="Texture2D" uid="uid://21grfk36me4v" path="res://Fighters/Kaede/Sprites/600-4.png" id="203"]
-[ext_resource type="Texture2D" uid="uid://cys3l7acvitik" path="res://Fighters/Kaede/Sprites/600-3.png" id="204"]
-[ext_resource type="Texture2D" uid="uid://dltvgw5ntktjb" path="res://Fighters/Kaede/Sprites/610-0.png" id="205"]
-[ext_resource type="Texture2D" uid="uid://btqvvdvewbv8t" path="res://Fighters/Kaede/Sprites/610-2.png" id="206"]
-[ext_resource type="Texture2D" uid="uid://rcad37d44dmk" path="res://Fighters/Kaede/Sprites/610-1.png" id="207"]
-[ext_resource type="Texture2D" uid="uid://dukfm50egywyf" path="res://Fighters/Kaede/Sprites/610-5.png" id="208"]
-[ext_resource type="Texture2D" uid="uid://dq3emwygurhqe" path="res://Fighters/Kaede/Sprites/610-3.png" id="209"]
-[ext_resource type="Texture2D" uid="uid://86rvcnptn7wh" path="res://Fighters/Kaede/Sprites/610-4.png" id="210"]
-[ext_resource type="Texture2D" uid="uid://d1gw2gr0fneba" path="res://Fighters/Kaede/Sprites/620-3.png" id="211"]
-[ext_resource type="Texture2D" uid="uid://gvhrlbwrcafl" path="res://Fighters/Kaede/Sprites/620-2.png" id="212"]
-[ext_resource type="Texture2D" uid="uid://cqhphyyonshqe" path="res://Fighters/Kaede/Sprites/620-5.png" id="213"]
-[ext_resource type="Texture2D" uid="uid://bexslr30q4pip" path="res://Fighters/Kaede/Sprites/620-0.png" id="214"]
-[ext_resource type="Texture2D" uid="uid://bcr5tsxssksnx" path="res://Fighters/Kaede/Sprites/620-4.png" id="215"]
-[ext_resource type="Texture2D" uid="uid://dy0yajv2crrm4" path="res://Fighters/Kaede/Sprites/620-1.png" id="216"]
-[ext_resource type="Texture2D" uid="uid://ut2s5tlaacjm" path="res://Fighters/Kaede/Sprites/300-0.png" id="217"]
-[ext_resource type="Texture2D" uid="uid://dq7j0ms0316wv" path="res://Fighters/Kaede/Sprites/300-2.png" id="218"]
-[ext_resource type="Texture2D" uid="uid://dbup5emxajd75" path="res://Fighters/Kaede/Sprites/300-3.png" id="219"]
-[ext_resource type="Texture2D" uid="uid://dii0n02ldwx1p" path="res://Fighters/Kaede/Sprites/300-1.png" id="220"]
-[ext_resource type="Texture2D" uid="uid://do5f0gifdgsjr" path="res://Fighters/Kaede/Sprites/300-6.png" id="221"]
-[ext_resource type="Texture2D" uid="uid://c7o651o26ebe8" path="res://Fighters/Kaede/Sprites/300-7.png" id="222"]
-[ext_resource type="Texture2D" uid="uid://ccwb1inl6trgg" path="res://Fighters/Kaede/Sprites/300-4.png" id="223"]
-[ext_resource type="Texture2D" uid="uid://cm5pk5bmny4w7" path="res://Fighters/Kaede/Sprites/300-5.png" id="224"]
+[ext_resource type="Texture2D" uid="uid://cdomhnh57r8cx" path="res://Fighters/Kaede/Sprites/122-1.png" id="172"]
+[ext_resource type="Texture2D" uid="uid://dei0ypgfenph8" path="res://Fighters/Kaede/Sprites/122-0.png" id="173"]
+[ext_resource type="Texture2D" uid="uid://xgdbhps3ld4u" path="res://Fighters/Kaede/Sprites/400-3.png" id="174"]
+[ext_resource type="Texture2D" uid="uid://wxhs8l5i7bi0" path="res://Fighters/Kaede/Sprites/400-0.png" id="175"]
+[ext_resource type="Texture2D" uid="uid://cp7jrqs0rcob1" path="res://Fighters/Kaede/Sprites/400-1.png" id="176"]
+[ext_resource type="Texture2D" uid="uid://brbnovfynbij6" path="res://Fighters/Kaede/Sprites/400-2.png" id="177"]
+[ext_resource type="Texture2D" uid="uid://filwhclb1rgn" path="res://Fighters/Kaede/Sprites/410-8.png" id="178"]
+[ext_resource type="Texture2D" uid="uid://l758vyi6rcng" path="res://Fighters/Kaede/Sprites/410-9.png" id="179"]
+[ext_resource type="Texture2D" uid="uid://8g12y11b4d78" path="res://Fighters/Kaede/Sprites/410-1.png" id="180"]
+[ext_resource type="Texture2D" uid="uid://bqxcro2xvefo3" path="res://Fighters/Kaede/Sprites/410-3.png" id="181"]
+[ext_resource type="Texture2D" uid="uid://d0rwwkkbouh66" path="res://Fighters/Kaede/Sprites/410-6.png" id="182"]
+[ext_resource type="Texture2D" uid="uid://c1oonhgdcok0" path="res://Fighters/Kaede/Sprites/410-0.png" id="183"]
+[ext_resource type="Texture2D" uid="uid://xbjsduoijolf" path="res://Fighters/Kaede/Sprites/410-2.png" id="184"]
+[ext_resource type="Texture2D" uid="uid://bnurknwpbdjrk" path="res://Fighters/Kaede/Sprites/410-4.png" id="185"]
+[ext_resource type="Texture2D" uid="uid://fyejapk8eh6t" path="res://Fighters/Kaede/Sprites/410-5.png" id="186"]
+[ext_resource type="Texture2D" uid="uid://1sopmd4gxsu0" path="res://Fighters/Kaede/Sprites/410-7.png" id="187"]
+[ext_resource type="Texture2D" uid="uid://cv3qjoonck4eo" path="res://Fighters/Kaede/Sprites/420-2.png" id="188"]
+[ext_resource type="Texture2D" uid="uid://cityqfsbsxtdw" path="res://Fighters/Kaede/Sprites/420-6.png" id="189"]
+[ext_resource type="Texture2D" uid="uid://b2loqwvebynoo" path="res://Fighters/Kaede/Sprites/420-1.png" id="190"]
+[ext_resource type="Texture2D" uid="uid://deyx7i4gjewqg" path="res://Fighters/Kaede/Sprites/420-11.png" id="191"]
+[ext_resource type="Texture2D" uid="uid://dwehwbqdmlgpm" path="res://Fighters/Kaede/Sprites/420-4.png" id="192"]
+[ext_resource type="Texture2D" uid="uid://by2gjvo6j008g" path="res://Fighters/Kaede/Sprites/420-3.png" id="193"]
+[ext_resource type="Texture2D" uid="uid://dj2f5575uy7u3" path="res://Fighters/Kaede/Sprites/420-8.png" id="194"]
+[ext_resource type="Texture2D" uid="uid://drk5lm47tv3be" path="res://Fighters/Kaede/Sprites/420-0.png" id="195"]
+[ext_resource type="Texture2D" uid="uid://m12hurhbhumr" path="res://Fighters/Kaede/Sprites/420-10.png" id="196"]
+[ext_resource type="Texture2D" uid="uid://dydp8roerqpfh" path="res://Fighters/Kaede/Sprites/420-7.png" id="197"]
+[ext_resource type="Texture2D" uid="uid://byasdemsar3tr" path="res://Fighters/Kaede/Sprites/420-5.png" id="198"]
+[ext_resource type="Texture2D" uid="uid://csjhojrqmwj1j" path="res://Fighters/Kaede/Sprites/420-9.png" id="199"]
+[ext_resource type="Texture2D" uid="uid://cliw1dpykswco" path="res://Fighters/Kaede/Sprites/600-0.png" id="200"]
+[ext_resource type="Texture2D" uid="uid://cg1q6m56rirvu" path="res://Fighters/Kaede/Sprites/600-1.png" id="201"]
+[ext_resource type="Texture2D" uid="uid://ckicda6vdy44k" path="res://Fighters/Kaede/Sprites/600-2.png" id="202"]
+[ext_resource type="Texture2D" uid="uid://c073syrt5amaa" path="res://Fighters/Kaede/Sprites/600-4.png" id="203"]
+[ext_resource type="Texture2D" uid="uid://co7j58o62akqx" path="res://Fighters/Kaede/Sprites/600-3.png" id="204"]
+[ext_resource type="Texture2D" uid="uid://diipeacconhjq" path="res://Fighters/Kaede/Sprites/610-0.png" id="205"]
+[ext_resource type="Texture2D" uid="uid://dy5lrym6gab62" path="res://Fighters/Kaede/Sprites/610-2.png" id="206"]
+[ext_resource type="Texture2D" uid="uid://bjrdo06icherl" path="res://Fighters/Kaede/Sprites/610-1.png" id="207"]
+[ext_resource type="Texture2D" uid="uid://be5cmhor4hiwy" path="res://Fighters/Kaede/Sprites/610-5.png" id="208"]
+[ext_resource type="Texture2D" uid="uid://bdvev313au0nd" path="res://Fighters/Kaede/Sprites/610-3.png" id="209"]
+[ext_resource type="Texture2D" uid="uid://dv2v3e3ynmuo5" path="res://Fighters/Kaede/Sprites/610-4.png" id="210"]
+[ext_resource type="Texture2D" uid="uid://bx4x5pnt25ne8" path="res://Fighters/Kaede/Sprites/620-3.png" id="211"]
+[ext_resource type="Texture2D" uid="uid://d1md2551wl0oo" path="res://Fighters/Kaede/Sprites/620-2.png" id="212"]
+[ext_resource type="Texture2D" uid="uid://bvndtkpr4u00p" path="res://Fighters/Kaede/Sprites/620-5.png" id="213"]
+[ext_resource type="Texture2D" uid="uid://ebv612wrymyd" path="res://Fighters/Kaede/Sprites/620-0.png" id="214"]
+[ext_resource type="Texture2D" uid="uid://dmcridfyw6qc5" path="res://Fighters/Kaede/Sprites/620-4.png" id="215"]
+[ext_resource type="Texture2D" uid="uid://1ubqxaah6m3v" path="res://Fighters/Kaede/Sprites/620-1.png" id="216"]
+[ext_resource type="Texture2D" uid="uid://de007y4t6cio3" path="res://Fighters/Kaede/Sprites/300-0.png" id="217"]
+[ext_resource type="Texture2D" uid="uid://bnuooxcic0ssh" path="res://Fighters/Kaede/Sprites/300-2.png" id="218"]
+[ext_resource type="Texture2D" uid="uid://duwl5f2v32gtq" path="res://Fighters/Kaede/Sprites/300-3.png" id="219"]
+[ext_resource type="Texture2D" uid="uid://c0vekfgm7qydj" path="res://Fighters/Kaede/Sprites/300-1.png" id="220"]
+[ext_resource type="Texture2D" uid="uid://cdh0yj7lecghn" path="res://Fighters/Kaede/Sprites/300-6.png" id="221"]
+[ext_resource type="Texture2D" uid="uid://bqpa3fji2q78f" path="res://Fighters/Kaede/Sprites/300-7.png" id="222"]
+[ext_resource type="Texture2D" uid="uid://b1ubesqgej5l4" path="res://Fighters/Kaede/Sprites/300-4.png" id="223"]
+[ext_resource type="Texture2D" uid="uid://yafexk6ppnyh" path="res://Fighters/Kaede/Sprites/300-5.png" id="224"]
 [ext_resource type="Script" uid="uid://hg0vcp1gy2ny" path="res://Scripts/SakugaEngine/Collision/PhysicsBody.cs" id="225_oxjr4"]
 [ext_resource type="Script" uid="uid://dshbmw3q5jor2" path="res://Scripts/SakugaEngine/Components/InputManager.cs" id="227_ppa6i"]
 [ext_resource type="Script" uid="uid://v7id8u3160fg" path="res://Scripts/SakugaEngine/Components/FighterVariables.cs" id="228_8hrt3"]
 [ext_resource type="Script" uid="uid://jxgdxccucllx" path="res://Scripts/SakugaEngine/Components/CombatTracker.cs" id="231_bxldr"]
 [ext_resource type="Script" uid="uid://cmq3cp1n0copp" path="res://Scripts/SakugaEngine/Components/FrameTimer.cs" id="232_811te"]
-[ext_resource type="Texture2D" uid="uid://rw4q7nvg0f1u" path="res://Fighters/Kaede/Sprites/180-0.png" id="284_7p1pn"]
+[ext_resource type="Texture2D" uid="uid://fg31rf0uue6u" path="res://Fighters/Kaede/Sprites/180-0.png" id="284_7p1pn"]
 [ext_resource type="Script" uid="uid://3uu6r0mhj3p3" path="res://Scripts/SakugaEngine/Components/SoundQueue.cs" id="285_ltkr8"]
 [ext_resource type="Script" uid="uid://17dvgaypi8q0" path="res://Scripts/SakugaEngine/Components/SakugaStateMachine.cs" id="285_novy5"]
-[ext_resource type="Texture2D" uid="uid://c7uk676kowt2" path="res://Fighters/Kaede/Sprites/180-1.png" id="285_p81x1"]
-[ext_resource type="Texture2D" uid="uid://c4x2rsvnkh6hy" path="res://Fighters/Kaede/Sprites/180-2.png" id="286_n0lul"]
-[ext_resource type="Texture2D" uid="uid://bjiua12g0ct75" path="res://Fighters/Kaede/Sprites/180-3.png" id="287_gxj1q"]
-[ext_resource type="Texture2D" uid="uid://dpkvsunk3qmml" path="res://Fighters/Kaede/Sprites/180-4.png" id="288_iua8e"]
-[ext_resource type="Texture2D" uid="uid://el0tv4va1k8y" path="res://Fighters/Kaede/Sprites/180-5.png" id="289_vwwoq"]
-[ext_resource type="Texture2D" uid="uid://bywklmgtyvltl" path="res://Fighters/Kaede/Sprites/800-0.png" id="291_fjuot"]
-[ext_resource type="Texture2D" uid="uid://bg2hmae3fi18u" path="res://Fighters/Kaede/Sprites/800-1.png" id="292_7j8nm"]
-[ext_resource type="Texture2D" uid="uid://clj3rlkwps41r" path="res://Fighters/Kaede/Sprites/800-2.png" id="293_ftt01"]
+[ext_resource type="Texture2D" uid="uid://dpbfosshjan8a" path="res://Fighters/Kaede/Sprites/180-1.png" id="285_p81x1"]
+[ext_resource type="Texture2D" uid="uid://c5vndg8y682ik" path="res://Fighters/Kaede/Sprites/180-2.png" id="286_n0lul"]
+[ext_resource type="Texture2D" uid="uid://bnms05ws7bpq0" path="res://Fighters/Kaede/Sprites/180-3.png" id="287_gxj1q"]
+[ext_resource type="Texture2D" uid="uid://mhn8m1cy4fgk" path="res://Fighters/Kaede/Sprites/180-4.png" id="288_iua8e"]
+[ext_resource type="Texture2D" uid="uid://dr3j6i3cd166q" path="res://Fighters/Kaede/Sprites/180-5.png" id="289_vwwoq"]
+[ext_resource type="Texture2D" uid="uid://qhdc3v5lmegt" path="res://Fighters/Kaede/Sprites/800-0.png" id="291_fjuot"]
+[ext_resource type="Texture2D" uid="uid://c3b237c0j7ul1" path="res://Fighters/Kaede/Sprites/800-1.png" id="292_7j8nm"]
+[ext_resource type="Texture2D" uid="uid://t1oaw6uluweb" path="res://Fighters/Kaede/Sprites/800-2.png" id="293_ftt01"]
 [ext_resource type="Script" uid="uid://be15qkgbfwwhd" path="res://Scripts/SakugaEngine/Components/ExtraVariable.cs" id="294_608rl"]
-[ext_resource type="Texture2D" uid="uid://0mjwsxjoim0t" path="res://Fighters/Kaede/Sprites/800-3.png" id="294_nq2ts"]
-[ext_resource type="Texture2D" uid="uid://ch8hfeum2iy5b" path="res://Fighters/Kaede/Sprites/800-4.png" id="295_0uqno"]
-[ext_resource type="Texture2D" uid="uid://bfkyvpjnv285u" path="res://Fighters/Kaede/Sprites/801-0.png" id="296_f7ky3"]
-[ext_resource type="Texture2D" uid="uid://dl2scau6mugpn" path="res://Fighters/Kaede/Sprites/801-1.png" id="297_ybkmr"]
-[ext_resource type="Texture2D" uid="uid://ddjtaoyvns3yr" path="res://Fighters/Kaede/Sprites/801-2.png" id="298_1qddw"]
-[ext_resource type="Texture2D" uid="uid://tl72my6tucff" path="res://Fighters/Kaede/Sprites/801-4.png" id="300_6xb7l"]
-[ext_resource type="Texture2D" uid="uid://1iuirgdy48iw" path="res://Fighters/Kaede/Sprites/801-5.png" id="301_j4lax"]
-[ext_resource type="Texture2D" uid="uid://ijegvxxxwwmw" path="res://Fighters/Kaede/Sprites/801-6.png" id="302_tku0h"]
-[ext_resource type="Texture2D" uid="uid://byjpf161u3uo8" path="res://Fighters/Kaede/Sprites/801-7.png" id="303_w1usg"]
-[ext_resource type="Texture2D" uid="uid://cycerwa5igcjt" path="res://Fighters/Kaede/Sprites/801-8.png" id="304_toqgh"]
+[ext_resource type="Texture2D" uid="uid://dqggf6agsucii" path="res://Fighters/Kaede/Sprites/800-3.png" id="294_nq2ts"]
+[ext_resource type="Texture2D" uid="uid://dpmbk7xnfjmg6" path="res://Fighters/Kaede/Sprites/800-4.png" id="295_0uqno"]
+[ext_resource type="Texture2D" uid="uid://dadyrj4blbd4m" path="res://Fighters/Kaede/Sprites/801-0.png" id="296_f7ky3"]
+[ext_resource type="Texture2D" uid="uid://dw5t5ql75xou8" path="res://Fighters/Kaede/Sprites/801-1.png" id="297_ybkmr"]
+[ext_resource type="Texture2D" uid="uid://d2avx3e3r24ud" path="res://Fighters/Kaede/Sprites/801-2.png" id="298_1qddw"]
+[ext_resource type="Texture2D" uid="uid://b7m1exkxvnhyk" path="res://Fighters/Kaede/Sprites/801-4.png" id="300_6xb7l"]
+[ext_resource type="Texture2D" uid="uid://b1x3gj3gope4o" path="res://Fighters/Kaede/Sprites/801-5.png" id="301_j4lax"]
+[ext_resource type="Texture2D" uid="uid://mqv07djtd02x" path="res://Fighters/Kaede/Sprites/801-6.png" id="302_tku0h"]
+[ext_resource type="Texture2D" uid="uid://c0ynd6bdxxnbt" path="res://Fighters/Kaede/Sprites/801-7.png" id="303_w1usg"]
+[ext_resource type="Texture2D" uid="uid://1ujsh3q1cymy" path="res://Fighters/Kaede/Sprites/801-8.png" id="304_toqgh"]
 [ext_resource type="Texture2D" uid="uid://ya6mpkllaws4" path="res://Fighters/Kaede/Sprites/1050-0.png" id="307_gfwjh"]
 [ext_resource type="Texture2D" uid="uid://ctwo2wmvtmi7p" path="res://Fighters/Kaede/Sprites/1050-1.png" id="308_kipgx"]
 [ext_resource type="Texture2D" uid="uid://bw870ndpno1s2" path="res://Fighters/Kaede/Sprites/1050-2.png" id="309_kayp1"]
@@ -272,23 +275,23 @@
 [ext_resource type="Texture2D" uid="uid://cqvupaem3y5qp" path="res://Fighters/Kaede/Sprites/1200-4.png" id="326_scrd0"]
 [ext_resource type="Texture2D" uid="uid://pdm5tuupvg4l" path="res://Fighters/Kaede/Sprites/1200-5.png" id="327_v4qvf"]
 [ext_resource type="Texture2D" uid="uid://c8tex7fturtch" path="res://Fighters/Kaede/Sprites/1200-6.png" id="328_egd1q"]
-[ext_resource type="Texture2D" uid="uid://dvsfe1yaag1ge" path="res://Fighters/Kaede/Sprites/1250-0.png" id="329_0msbe"]
-[ext_resource type="Texture2D" uid="uid://b5kcplbp418d3" path="res://Fighters/Kaede/Sprites/1250-1.png" id="330_f7d15"]
-[ext_resource type="Texture2D" uid="uid://cjlmkqvhu5x6p" path="res://Fighters/Kaede/Sprites/1250-2.png" id="331_fofsb"]
-[ext_resource type="Texture2D" uid="uid://c3okkglk4c8hd" path="res://Fighters/Kaede/Sprites/1250-3.png" id="332_j53hj"]
-[ext_resource type="Texture2D" uid="uid://cybnocxt52k07" path="res://Fighters/Kaede/Sprites/1250-4.png" id="333_6r1kw"]
-[ext_resource type="Texture2D" uid="uid://2c67upcbgjch" path="res://Fighters/Kaede/Sprites/1250-5.png" id="334_2b4fq"]
-[ext_resource type="Texture2D" uid="uid://m2semuhbq8l7" path="res://Fighters/Kaede/Sprites/1250-6.png" id="335_8vwab"]
-[ext_resource type="Texture2D" uid="uid://bxut7h4b5dpit" path="res://Fighters/Kaede/Sprites/1250-7.png" id="336_gvxir"]
-[ext_resource type="Texture2D" uid="uid://bm3c16p8qh1ow" path="res://Fighters/Kaede/Sprites/1250-8.png" id="337_gow78"]
-[ext_resource type="Texture2D" uid="uid://bqldys0ghpa6x" path="res://Fighters/Kaede/Sprites/1250-9.png" id="338_23igm"]
+[ext_resource type="Texture2D" uid="uid://dvj27e2ijycn7" path="res://Fighters/Kaede/Sprites/1250-0.png" id="329_0msbe"]
+[ext_resource type="Texture2D" uid="uid://egqvx2sgaa5m" path="res://Fighters/Kaede/Sprites/1250-1.png" id="330_f7d15"]
+[ext_resource type="Texture2D" uid="uid://b1sralanavtne" path="res://Fighters/Kaede/Sprites/1250-2.png" id="331_fofsb"]
+[ext_resource type="Texture2D" uid="uid://cdoh2251402sd" path="res://Fighters/Kaede/Sprites/1250-3.png" id="332_j53hj"]
+[ext_resource type="Texture2D" uid="uid://b4y5vsc5g6cme" path="res://Fighters/Kaede/Sprites/1250-4.png" id="333_6r1kw"]
+[ext_resource type="Texture2D" uid="uid://dnlthneql6kdf" path="res://Fighters/Kaede/Sprites/1250-5.png" id="334_2b4fq"]
+[ext_resource type="Texture2D" uid="uid://dk5tlk3fyicof" path="res://Fighters/Kaede/Sprites/1250-6.png" id="335_8vwab"]
+[ext_resource type="Texture2D" uid="uid://1fwl1xsv431r" path="res://Fighters/Kaede/Sprites/1250-7.png" id="336_gvxir"]
+[ext_resource type="Texture2D" uid="uid://deqa8mpo24huu" path="res://Fighters/Kaede/Sprites/1250-8.png" id="337_gow78"]
+[ext_resource type="Texture2D" uid="uid://bjly7nmmw61u7" path="res://Fighters/Kaede/Sprites/1250-9.png" id="338_23igm"]
 [ext_resource type="Texture2D" uid="uid://ciimero4wdeg3" path="res://Fighters/Kaede/Sprites/1000-0.png" id="339_q1uyu"]
 [ext_resource type="Texture2D" uid="uid://cf0wsqqya1d3b" path="res://Fighters/Kaede/Sprites/1000-1.png" id="340_l736p"]
 [ext_resource type="Texture2D" uid="uid://dp8q3csd4sbj3" path="res://Fighters/Kaede/Sprites/1010-0.png" id="341_hpnmr"]
 [ext_resource type="Texture2D" uid="uid://b3kempbq6g7q4" path="res://Fighters/Kaede/Sprites/1010-1.png" id="342_m18jb"]
 [ext_resource type="Texture2D" uid="uid://mfjslr7j7g7k" path="res://Fighters/Kaede/Sprites/1010-2.png" id="343_cmaq0"]
 [ext_resource type="Texture2D" uid="uid://b3jd2ees3s7xt" path="res://Fighters/Kaede/Sprites/1010-3.png" id="344_7nde0"]
-[ext_resource type="Texture2D" uid="uid://iwns1usq2mc5" path="res://Fighters/Kaede/Sprites/5000-0.png" id="345_v47oh"]
+[ext_resource type="Texture2D" uid="uid://bbyuniinsr8r2" path="res://Fighters/Kaede/Sprites/5000-0.png" id="345_v47oh"]
 [ext_resource type="Script" uid="uid://dvqrejewx20e3" path="res://Scripts/SakugaEngine/Components/AIBrain.cs" id="394_myc48"]
 
 [sub_resource type="Animation" id="Animation_l2unq"]
@@ -2217,6 +2220,47 @@ tracks/2/keys = {
 "values": [ExtResource("6"), ExtResource("5"), ExtResource("8"), ExtResource("10"), ExtResource("13"), ExtResource("11"), ExtResource("12"), ExtResource("14"), ExtResource("15"), ExtResource("7"), ExtResource("9"), ExtResource("1"), ExtResource("6")]
 }
 
+[sub_resource type="Animation" id="Animation_m6j4n"]
+resource_name = "Intro"
+length = 2.0000055
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite3D:texture")
+tracks/0/interp = 0
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0.00047153234, 0.06713855, 0.13380453, 0.20047154, 0.26713857, 0.33380458, 0.40047154, 0.4671385, 0.53380454, 0.6004716, 0.6671386, 0.7338046, 0.80047154, 0.8671415, 0.9338014, 1.0004715, 1.0671414, 1.1338015, 1.2004714, 1.2671415, 1.5999999, 1.65, 1.6999999, 1.75, 1.8, 1.8499999, 1.9000001, 1.95, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("287_gxj1q"), ExtResource("288_iua8e"), ExtResource("289_vwwoq"), ExtResource("287_gxj1q"), ExtResource("288_iua8e"), ExtResource("289_vwwoq"), ExtResource("287_gxj1q"), ExtResource("288_iua8e"), ExtResource("289_vwwoq"), ExtResource("287_gxj1q"), ExtResource("288_iua8e"), ExtResource("289_vwwoq"), ExtResource("287_gxj1q"), ExtResource("288_iua8e"), ExtResource("289_vwwoq"), ExtResource("287_gxj1q"), ExtResource("288_iua8e"), ExtResource("289_vwwoq"), ExtResource("285_p81x1"), ExtResource("284_7p1pn"), ExtResource("112"), ExtResource("113"), ExtResource("114"), ExtResource("99"), ExtResource("106"), ExtResource("100"), ExtResource("111"), ExtResource("108"), ExtResource("6")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite3D:offset")
+tracks/1/interp = 0
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0.00047153234, 0.06713855, 0.13380453, 0.20047154, 0.26713857, 0.33380458, 0.40047154, 0.4671385, 0.53380454, 0.6004716, 0.6671386, 0.7338046, 0.80047154, 0.8671415, 0.9338014, 1.0004715, 1.0671414, 1.1338015, 1.2004714, 1.2671415, 1.5999999, 1.65, 1.6999999, 1.75, 1.8, 1.8505125, 1.9000001, 1.95, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(-63, -8), Vector2(-61, -8), Vector2(-60, -8), Vector2(-63, -8), Vector2(-61, -8), Vector2(-60, -8), Vector2(-63, -8), Vector2(-61, -8), Vector2(-60, -8), Vector2(-63, -8), Vector2(-61, -8), Vector2(-60, -8), Vector2(-63, -8), Vector2(-61, -8), Vector2(-60, -8), Vector2(-63, -8), Vector2(-61, -8), Vector2(-60, -8), Vector2(-59, -11), Vector2(-58, -11), Vector2(-51, -4), Vector2(-98, -4), Vector2(-106, -5), Vector2(-67, -4), Vector2(-39, -4), Vector2(-47, -4), Vector2(-44, -4), Vector2(-55, -8), Vector2(-61, -11)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:material_override:shader_parameter/albedo_texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.00047153234, 0.06713855, 0.13380453, 0.20047154, 0.26713857, 0.33380458, 0.40047154, 0.4671385, 0.53380454, 0.6004716, 0.6671386, 0.7338046, 0.80047154, 0.8671415, 0.9338014, 1.0004715, 1.0671414, 1.1338015, 1.2004714, 1.2671415, 1.5999999, 1.65, 1.6999999, 1.75, 1.8, 1.8505125, 1.9000001, 1.95, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("287_gxj1q"), ExtResource("288_iua8e"), ExtResource("289_vwwoq"), ExtResource("287_gxj1q"), ExtResource("288_iua8e"), ExtResource("289_vwwoq"), ExtResource("287_gxj1q"), ExtResource("288_iua8e"), ExtResource("289_vwwoq"), ExtResource("287_gxj1q"), ExtResource("288_iua8e"), ExtResource("289_vwwoq"), ExtResource("287_gxj1q"), ExtResource("288_iua8e"), ExtResource("289_vwwoq"), ExtResource("287_gxj1q"), ExtResource("288_iua8e"), ExtResource("289_vwwoq"), ExtResource("285_p81x1"), ExtResource("284_7p1pn"), ExtResource("112"), ExtResource("113"), ExtResource("114"), ExtResource("99"), ExtResource("106"), ExtResource("100"), ExtResource("111"), ExtResource("108"), ExtResource("6")]
+}
+
 [sub_resource type="Animation" id="13"]
 resource_name = "Jump_Backwards"
 length = 0.366667
@@ -2826,6 +2870,7 @@ _data = {
 &"Hit_Sweep_2": SubResource("27"),
 &"Hit_Weak": SubResource("18"),
 &"Idle": SubResource("1"),
+&"Intro": SubResource("Animation_m6j4n"),
 &"Jump_Backwards": SubResource("13"),
 &"Jump_Forward": SubResource("12"),
 &"Jump_Neutral": SubResource("11"),
@@ -2842,7 +2887,7 @@ _data = {
 &"j_5C": SubResource("47")
 }
 
-[node name="Kaede_Viewer" type="Node3D" unique_id=250614589 node_paths=PackedStringArray("HitStun", "HitStop", "MoveBuffer", "PushForce", "HorizontalBounce", "VerticalBounce", "Brain", "Body", "Inputs", "Variables", "Animator", "StateMachine", "Tracker", "Sounds", "Graphics")]
+[node name="Kaede_Viewer" type="Node3D" unique_id=704857862 node_paths=PackedStringArray("HitStun", "HitStop", "MoveBuffer", "PushForce", "HorizontalBounce", "VerticalBounce", "Brain", "Body", "Inputs", "Variables", "Animator", "StateMachine", "Tracker", "Sounds", "Graphics")]
 script = ExtResource("1_7dx2y")
 HitStun = NodePath("Timers/HitStun")
 HitStop = NodePath("Timers/HitStop")
@@ -2860,103 +2905,106 @@ StateMachine = NodePath("StateMachine")
 Tracker = NodePath("CombatTracker")
 Sounds = [NodePath("Sounds/SFX_0"), NodePath("Sounds/SFX_1"), NodePath("Sounds/SFX_2"), NodePath("Sounds/SFX_3"), NodePath("Sounds/SFX_4")]
 Graphics = [NodePath("Graphics/Mesh/KaedeGraphics")]
+SpawnablesList = ExtResource("3_ny8n5")
+VFXList = ExtResource("4_0jinc")
+SFXList = ExtResource("5_5sqo5")
+VoiceLines = ExtResource("6_m774i")
 
-[node name="Graphics" type="Node3D" parent="." unique_id=2121971466]
+[node name="Graphics" type="Node3D" parent="." unique_id=1785253019]
 script = ExtResource("2")
 intensity = 0.25
 
-[node name="Mesh" type="Node3D" parent="Graphics" unique_id=550646772 node_paths=PackedStringArray("players", "OffsetNode")]
+[node name="Mesh" type="Node3D" parent="Graphics" unique_id=1695269247 node_paths=PackedStringArray("players", "OffsetNode")]
 script = ExtResource("3_nysqa")
 players = [NodePath("KaedeGraphics/AnimationPlayer")]
 OffsetNode = NodePath("KaedeGraphics")
 
-[node name="KaedeGraphics" type="Node3D" parent="Graphics/Mesh" unique_id=1109226699]
+[node name="KaedeGraphics" type="Node3D" parent="Graphics/Mesh" unique_id=677423849]
 
-[node name="Sprite3D" type="Sprite3D" parent="Graphics/Mesh/KaedeGraphics" unique_id=321988452]
+[node name="Sprite3D" type="Sprite3D" parent="Graphics/Mesh/KaedeGraphics" unique_id=1998144436]
 layers = 2
-material_override = ExtResource("82_axt2r")
 centered = false
 pixel_size = 0.006
 texture_filter = 0
 texture = ExtResource("5")
 region_rect = Rect2(711.25, 46.25, 2, 0)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Graphics/Mesh/KaedeGraphics" unique_id=626351504]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Graphics/Mesh/KaedeGraphics" unique_id=2069111782]
 libraries/ = SubResource("AnimationLibrary_n2gjo")
 
-[node name="HitboxViewer" parent="." unique_id=1423417446 node_paths=PackedStringArray("body") instance=ExtResource("4")]
+[node name="HitboxViewer" parent="." unique_id=648540791 node_paths=PackedStringArray("body") instance=ExtResource("4")]
 body = NodePath("../PhysicsBody")
 
-[node name="Sounds" type="Node3D" parent="." unique_id=2052716654]
+[node name="Sounds" type="Node3D" parent="." unique_id=1869837634]
 
-[node name="SFX_0" type="AudioStreamPlayer3D" parent="Sounds" unique_id=1809715999]
+[node name="SFX_0" type="AudioStreamPlayer3D" parent="Sounds" unique_id=1474946629]
 script = ExtResource("285_ltkr8")
 
-[node name="SFX_1" type="AudioStreamPlayer3D" parent="Sounds" unique_id=837233977]
+[node name="SFX_1" type="AudioStreamPlayer3D" parent="Sounds" unique_id=1380543775]
 script = ExtResource("285_ltkr8")
 
-[node name="SFX_2" type="AudioStreamPlayer3D" parent="Sounds" unique_id=726543636]
+[node name="SFX_2" type="AudioStreamPlayer3D" parent="Sounds" unique_id=276843560]
 script = ExtResource("285_ltkr8")
 
-[node name="SFX_3" type="AudioStreamPlayer3D" parent="Sounds" unique_id=1987956981]
+[node name="SFX_3" type="AudioStreamPlayer3D" parent="Sounds" unique_id=691516727]
 script = ExtResource("285_ltkr8")
 
-[node name="SFX_4" type="AudioStreamPlayer3D" parent="Sounds" unique_id=496488613]
+[node name="SFX_4" type="AudioStreamPlayer3D" parent="Sounds" unique_id=364957293]
 script = ExtResource("285_ltkr8")
 
-[node name="PhysicsBody" type="Node" parent="." unique_id=169967777]
+[node name="PhysicsBody" type="Node" parent="." unique_id=1649937678]
 script = ExtResource("225_oxjr4")
 StayOnBounds = true
 
-[node name="InputManager" type="Node" parent="." unique_id=682132532]
+[node name="InputManager" type="Node" parent="." unique_id=226915908]
 script = ExtResource("227_ppa6i")
 
-[node name="StateMachine" type="Node" parent="." unique_id=1928060156]
+[node name="StateMachine" type="Node" parent="." unique_id=1368758457]
 script = ExtResource("285_novy5")
 
-[node name="CombatTracker" type="Node" parent="." unique_id=1881894552]
+[node name="CombatTracker" type="Node" parent="." unique_id=1061147868]
 script = ExtResource("231_bxldr")
 
-[node name="AIBrain" type="Node" parent="." unique_id=1294439240]
+[node name="AIBrain" type="Node" parent="." unique_id=1454306328]
 script = ExtResource("394_myc48")
 metadata/_custom_type_script = "uid://dvqrejewx20e3"
 
-[node name="Variables" type="Node" parent="." unique_id=1910940140 node_paths=PackedStringArray("ExtraVariables")]
+[node name="Variables" type="Node" parent="." unique_id=1057331048 node_paths=PackedStringArray("ExtraVariables")]
 script = ExtResource("228_8hrt3")
 ExtraVariables = [NodePath("AirJumpLimit"), NodePath("AirDashLimit"), NodePath("IsDashJump")]
 
-[node name="AirJumpLimit" type="Node" parent="Variables" unique_id=1361627873]
+[node name="AirJumpLimit" type="Node" parent="Variables" unique_id=894000032]
 script = ExtResource("294_608rl")
 MaxValue = 1
 
-[node name="AirDashLimit" type="Node" parent="Variables" unique_id=798282824]
+[node name="AirDashLimit" type="Node" parent="Variables" unique_id=493534727]
 script = ExtResource("294_608rl")
 MaxValue = 1
 
-[node name="IsDashJump" type="Node" parent="Variables" unique_id=951861375]
+[node name="IsDashJump" type="Node" parent="Variables" unique_id=1085956616]
 script = ExtResource("294_608rl")
 MaxValue = 1
 
-[node name="Timers" type="Node" parent="." unique_id=177912403]
+[node name="Timers" type="Node" parent="." unique_id=1886312484]
 
-[node name="HitStun" type="Node" parent="Timers" unique_id=1503135026]
+[node name="HitStun" type="Node" parent="Timers" unique_id=678548641]
 script = ExtResource("232_811te")
 
-[node name="HitStop" type="Node" parent="Timers" unique_id=685946741]
+[node name="HitStop" type="Node" parent="Timers" unique_id=940769911]
 script = ExtResource("232_811te")
 
-[node name="MoveBuffer" type="Node" parent="Timers" unique_id=861770088]
-script = ExtResource("232_811te")
-WaitTime = 10
-
-[node name="Pushback" type="Node" parent="Timers" unique_id=290866977]
+[node name="MoveBuffer" type="Node" parent="Timers" unique_id=218621002]
 script = ExtResource("232_811te")
 WaitTime = 10
 
-[node name="HBounce" type="Node" parent="Timers" unique_id=1131414368]
+[node name="Pushback" type="Node" parent="Timers" unique_id=1273295046]
 script = ExtResource("232_811te")
 WaitTime = 10
 
-[node name="VBounce" type="Node" parent="Timers" unique_id=1991502873]
+[node name="HBounce" type="Node" parent="Timers" unique_id=485421058]
+script = ExtResource("232_811te")
+WaitTime = 10
+
+[node name="VBounce" type="Node" parent="Timers" unique_id=1747633475]
 script = ExtResource("232_811te")
 WaitTime = 10

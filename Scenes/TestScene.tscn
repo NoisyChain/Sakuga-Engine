@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://xmbdtaq2pt7v" path="res://Scripts/SakugaEngine/Game/GameManager.cs" id="1_ocl0l"]
 [ext_resource type="PackedScene" uid="uid://blnwu2aaw8s60" path="res://Scenes/Instances/Sakuga_UI.tscn" id="1_wexcy"]
 [ext_resource type="Script" uid="uid://vkei5fxedpo3" path="res://Scripts/SakugaEngine/Components/FighterCamera.cs" id="2_dh05b"]
+[ext_resource type="Script" uid="uid://cmq3cp1n0copp" path="res://Scripts/SakugaEngine/Components/FrameTimer.cs" id="3_201fe"]
 [ext_resource type="Resource" uid="uid://c320twmibeytx" path="res://MatchSettings.tres" id="5_5rbs6"]
 [ext_resource type="Resource" uid="uid://c8s3ip7gkhwq6" path="res://Roster.tres" id="5_pp7s2"]
 [ext_resource type="Resource" uid="uid://bl30fi0muatu1" path="res://StageSelect.tres" id="6_c264a"]
@@ -10,42 +11,19 @@
 [ext_resource type="Script" uid="uid://j5t0o28p2u6u" path="res://Scripts/SakugaEngine/Game/SakugaRollbackManager.cs" id="6_jke5l"]
 [ext_resource type="Resource" uid="uid://fxj4uvd0y37r" path="res://Soundtrack.tres" id="7_6xh1p"]
 
-[node name="Root" type="Node3D" unique_id=250227398]
+[node name="Root" type="Node3D" unique_id=830545614]
 
-[node name="CanvasLayer" parent="." unique_id=2013054773 instance=ExtResource("1_wexcy")]
+[node name="CanvasLayer" parent="." unique_id=496379931 instance=ExtResource("1_wexcy")]
 
-[node name="OnlineHUD" type="Control" parent="." unique_id=1067725920]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Seed" type="Label" parent="OnlineHUD" unique_id=408284113]
-visible = false
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -34.0
-offset_top = -37.0
-offset_right = 33.0
-grow_horizontal = 2
-grow_vertical = 0
-size_flags_vertical = 8
-text = "Seed"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="GameMonitor" type="Node" parent="." unique_id=794046448]
+[node name="GameMonitor" type="Node" parent="." unique_id=705812554 node_paths=PackedStringArray("DelayTimer")]
 script = ExtResource("6_d185x")
+DelayTimer = NodePath("RoundDelay")
 
-[node name="GameManager" type="Node" parent="." unique_id=22119343 node_paths=PackedStringArray("Monitor", "FighterUI", "Camera", "BGMSource", "SeedViewer")]
+[node name="RoundDelay" type="Node" parent="GameMonitor" unique_id=1307511705]
+script = ExtResource("3_201fe")
+metadata/_custom_type_script = "uid://cmq3cp1n0copp"
+
+[node name="GameManager" type="Node" parent="." unique_id=2009171254 node_paths=PackedStringArray("Monitor", "FighterUI", "Camera", "BGMSource")]
 process_priority = 1
 script = ExtResource("1_ocl0l")
 Match = ExtResource("5_5rbs6")
@@ -56,15 +34,15 @@ songsList = ExtResource("7_6xh1p")
 FighterUI = NodePath("../CanvasLayer")
 Camera = NodePath("../Camera3D")
 BGMSource = NodePath("../BGM")
-SeedViewer = NodePath("../OnlineHUD/Seed")
 
-[node name="RollbackManager" type="Node" parent="." unique_id=1662848655 node_paths=PackedStringArray("GameManager")]
+[node name="RollbackManager" type="Node" parent="." unique_id=1298643102 node_paths=PackedStringArray("GameManager")]
 script = ExtResource("6_jke5l")
 GameManager = NodePath("../GameManager")
-SpectatorDelay = 20
+UseSeparateThread = true
+SpectatorDelay = 10
 InputSize = 2
 
-[node name="Camera3D" type="Camera3D" parent="." unique_id=69212271]
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1747435269]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, -7)
 cull_mask = 1048557
 fov = 27.0
@@ -72,10 +50,10 @@ script = ExtResource("2_dh05b")
 minBounds = Vector2(-7, 1.25)
 maxBounds = Vector2(7, 10)
 minOffset = Vector2(-6.5, 1.2)
-maxOffset = Vector2(-15.5, 3.2)
+maxOffset = Vector2(-15.5, 3.16)
 maxDistance = 14.5
-boundsAdditionalNear = 1.9
-boundsAdditionalFar = 1.95
+boundsAdditionalNear = 1.86
+boundsAdditionalFar = 5.68
 
-[node name="BGM" type="AudioStreamPlayer" parent="." unique_id=753433333]
+[node name="BGM" type="AudioStreamPlayer" parent="." unique_id=1790037158]
 volume_db = -7.5

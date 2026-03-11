@@ -14,10 +14,11 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-expand_mode = 1
+expand_mode = 4
 stretch_mode = 4
 
 [node name="Frame" type="TextureRect" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="GameModeSettings" load_steps=2 format=3 uid="uid://cowlfyoj6rfoj"]
+[gd_resource type="Resource" script_class="GameModeSettings" format=3 uid="uid://cowlfyoj6rfoj"]
 
 [ext_resource type="Script" uid="uid://b0tk35wf5y1p8" path="res://Scripts/SakugaEngine/Resources/GameModeSettings.cs" id="1_scs1g"]
 
@@ -7,8 +7,12 @@ script = ExtResource("1_scs1g")
 ModeName = "Debug"
 UseLAN = true
 CanKO = true
+ShowMatchIntro = true
+ShowMatchCards = true
 AllowShowHitboxes = true
 AllowShowInputs = true
 AllowShowDebugElements = true
 AllowUseDebugCommands = true
+NoAI = true
+ReturnToScene = "res://Scenes/TestScene.tscn"
 metadata/_custom_type_script = "uid://b0tk35wf5y1p8"

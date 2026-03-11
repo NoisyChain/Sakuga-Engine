@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="FighterState" format=3 uid="uid://sa7du75a2s1q"]
+
+[ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_1m3pd"]
+[ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="1_4qc47"]
+[ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Resources/StatePhysics.cs" id="3_ike7d"]
+
+[sub_resource type="Resource" id="Resource_nom5e"]
+script = ExtResource("1_1m3pd")
+SourceAnimation = "Taunt"
+metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
+
+[sub_resource type="Resource" id="Resource_scuwi"]
+script = ExtResource("3_ike7d")
+UseLateralSpeed = true
+UseVerticalSpeed = true
+metadata/_custom_type_script = "uid://5you05l2efnd"
+
+[resource]
+script = ExtResource("1_4qc47")
+StateName = "Victory"
+Type = 5
+Duration = 80
+Loop = true
+LoopFrames = Vector2i(12, 79)
+stateProperties = null
+statePhysics = Array[Object]([SubResource("Resource_scuwi")])
+hitboxStates = null
+animationEvents = null
+throwPivot = null
+stateTransitions = null
+animationSettings = Array[Object]([SubResource("Resource_nom5e")])
+metadata/_custom_type_script = "uid://bf60srwkccsm8"

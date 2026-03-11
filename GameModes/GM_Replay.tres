@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="GameModeSettings" load_steps=2 format=3 uid="uid://bfdtyaj07885k"]
+[gd_resource type="Resource" script_class="GameModeSettings" format=3 uid="uid://bfdtyaj07885k"]
 
 [ext_resource type="Script" uid="uid://b0tk35wf5y1p8" path="res://Scripts/SakugaEngine/Resources/GameModeSettings.cs" id="1_mx3oa"]
 
@@ -12,4 +12,6 @@ ShowMatchCards = true
 ShowOnlineInfo = true
 AllowShowHitboxes = true
 AllowShowInputs = true
+NoAI = true
+ReturnToScene = "res://Scenes/MainMenu.tscn"
 metadata/_custom_type_script = "uid://b0tk35wf5y1p8"

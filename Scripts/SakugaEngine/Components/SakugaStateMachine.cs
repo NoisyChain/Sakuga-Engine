@@ -8,7 +8,8 @@ namespace SakugaEngine
     public partial class SakugaStateMachine : Node
     {
         private SakugaFighter _owner;
-        [Export] public int DefaultStance = 0;
+
+        public bool CanRun;
 
         public int CurrentStance;
         public int BufferedMove = -1;
@@ -18,7 +19,7 @@ namespace SakugaEngine
         public void Initialize(SakugaFighter owner)
         {
             _owner = owner;
-            CurrentStance = DefaultStance;
+            CurrentStance = 0;
         }
 
         public bool CheckMoveConditions(int index)
@@ -68,7 +69,7 @@ namespace SakugaEngine
 
         public void CheckMoves()
         {
-            
+            if (!CanRun) return;
 
             for (int i = GetMoveListLength() - 1; i >= 0; i--)
             {
@@ -156,19 +157,19 @@ namespace SakugaEngine
             }
             else
             {
-                bool CanOverride = CurrentMove < 0 || (GetCurrentMove().CanBeOverrided && 
+                bool CanOverride = CurrentMove < 0 || CancelBuffer || (GetCurrentMove().CanBeOverrided && 
                                     (GetCurrentMove().IgnoreSamePriority ? 
                                     GetBufferedMove().Priority > GetCurrentMove().Priority : 
                                     GetBufferedMove().Priority >= GetCurrentMove().Priority));
 
+                bool checkMovementState = GetBufferedMove().AcceptMovementStates && _owner.Animator.GetCurrentState().Type == Global.StateType.MOVEMENT;
                 bool checkNullState = GetBufferedMove().AcceptNullStates && _owner.Animator.GetCurrentState().Type == Global.StateType.NULL;
                 bool checkCombatState = GetBufferedMove().AcceptCombatStates && _owner.Animator.GetCurrentState().Type == Global.StateType.COMBAT;
                 bool checkBlockingState = GetBufferedMove().AcceptBlockingStates && _owner.Animator.GetCurrentState().Type == Global.StateType.BLOCKING;
                 bool checkHitReactionState = GetBufferedMove().AcceptHitReactionStates && _owner.Animator.GetCurrentState().Type == Global.StateType.HIT_REACTION;
                                     
                 bool isValidStateType =  _owner.Animator.GetCurrentState().Type != Global.StateType.LOCKED && 
-                                        (_owner.Animator.GetCurrentState().Type == Global.StateType.MOVEMENT || 
-                                        checkNullState || checkCombatState || checkBlockingState || checkHitReactionState);
+                                        (checkMovementState || checkNullState || checkCombatState || checkBlockingState || checkHitReactionState);
                 
                 if (isValidStateType && CanOverride)
                 {

@@ -60,6 +60,8 @@ namespace SakugaEngine
 
         public void PlayState(int state, bool reset = false)
         {
+            if (state < 0) return;
+            
             if (CurrentState != state)
             {
                 CurrentState = state;

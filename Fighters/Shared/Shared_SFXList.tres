@@ -1,7 +1,22 @@
-[gd_resource type="Resource" script_class="SoundsList" load_steps=2 format=3 uid="uid://k31pv0ejfv2s"]
+[gd_resource type="Resource" script_class="SoundsList" load_steps=17 format=3 uid="uid://k31pv0ejfv2s"]
 
+[ext_resource type="AudioStream" uid="uid://cuyk8rwy80fsn" path="res://Fighters/Shared/SFX/Footstep_Walk1.wav" id="1_66nul"]
 [ext_resource type="Script" uid="uid://dxsqcefr6c62n" path="res://Scripts/SakugaEngine/Resources/SoundsList.cs" id="1_yu0fx"]
+[ext_resource type="AudioStream" uid="uid://cyuyshtlmpufq" path="res://Fighters/Shared/SFX/Footstep_Walk2.wav" id="2_wo5i5"]
+[ext_resource type="AudioStream" uid="uid://b2n7b8a6nkta7" path="res://Fighters/Shared/SFX/Footstep_Walk3.wav" id="3_d6tug"]
+[ext_resource type="AudioStream" uid="uid://dywfwy6w0nd5w" path="res://Fighters/Shared/SFX/Footstep_Run1.wav" id="4_sq17a"]
+[ext_resource type="AudioStream" uid="uid://bjfjgewjtcidr" path="res://Fighters/Shared/SFX/Footstep_Run2.wav" id="5_bk64x"]
+[ext_resource type="AudioStream" uid="uid://b0reios2jd3bf" path="res://Fighters/Shared/SFX/Footstep_Landing1.wav" id="6_d6tug"]
+[ext_resource type="AudioStream" uid="uid://c2dqwnlkcwm31" path="res://Fighters/Shared/SFX/Footstep_Landing2.wav" id="7_sq17a"]
+[ext_resource type="AudioStream" uid="uid://cpsxtw8etnhvn" path="res://Fighters/Shared/SFX/Footstep_Dash1.wav" id="8_bk64x"]
+[ext_resource type="AudioStream" uid="uid://d3eq82i76annn" path="res://Fighters/Shared/SFX/Footstep_DashStop.wav" id="9_sq17a"]
+[ext_resource type="AudioStream" uid="uid://dobdvdb8fakvh" path="res://Fighters/Shared/SFX/Jump1.wav" id="10_e2sb4"]
+[ext_resource type="AudioStream" uid="uid://1vh5pyxyekfe" path="res://Fighters/Shared/SFX/Jump2.wav" id="11_ne6j3"]
+[ext_resource type="AudioStream" uid="uid://b3khrxi2evpnf" path="res://Fighters/Shared/SFX/Crouch1.wav" id="12_hktnt"]
+[ext_resource type="AudioStream" uid="uid://24sl28hhfopc" path="res://Fighters/Shared/SFX/Crouch2.wav" id="13_8q11k"]
+[ext_resource type="AudioStream" uid="uid://b5sp347daww1l" path="res://Fighters/Shared/SFX/Jump3.wav" id="14_8q11k"]
+[ext_resource type="AudioStream" uid="uid://drb4gpq1fqljd" path="res://Fighters/Shared/SFX/Slash1.wav" id="15_mucob"]
 
 [resource]
 script = ExtResource("1_yu0fx")
-Sounds = Array[AudioStream]([])
+Sounds = Array[AudioStream]([ExtResource("1_66nul"), ExtResource("2_wo5i5"), ExtResource("3_d6tug"), ExtResource("4_sq17a"), ExtResource("5_bk64x"), ExtResource("6_d6tug"), ExtResource("7_sq17a"), ExtResource("8_bk64x"), ExtResource("9_sq17a"), ExtResource("10_e2sb4"), ExtResource("11_ne6j3"), ExtResource("12_hktnt"), ExtResource("13_8q11k"), ExtResource("14_8q11k"), ExtResource("15_mucob")])

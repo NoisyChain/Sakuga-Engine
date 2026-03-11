@@ -12,7 +12,7 @@ namespace SakugaEngine.Game
         {
             base._Ready();
             GameManager.InputSize = InputSize;
-            //UseLAN = GameManager.Match.SelectedModeSettings.UseLAN;
+            UseLAN = GameManager.Match.SelectedModeSettings.UseLAN;
 
             GD.Print($"Starting {GameManager.Match.SelectedModeSettings.ModeName} mode.");
 

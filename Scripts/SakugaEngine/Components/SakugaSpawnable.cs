@@ -243,6 +243,7 @@ namespace SakugaEngine
             HitStop.Serialize(bw);
 
             bw.Write(EventExecuted);
+            bw.Write((byte)CancelConditions);
         }
 		public override void Deserialize(BinaryReader br)
         {
@@ -255,6 +256,7 @@ namespace SakugaEngine
             HitStop.Deserialize(br);
 
             EventExecuted = br.ReadBoolean();
+            CancelConditions = (Global.CancelCondition)br.ReadByte();
 
             Body.UpdateColliders();
         }

@@ -53,15 +53,15 @@ namespace SakugaEngine
 
         public void SpawnablesSetup(GameManager game)
         {
-            if (Data.SpawnablesList == null) { Spawnables = new SakugaSpawnable[0][]; return; }
+            if (SpawnablesList == null) { Spawnables = new SakugaSpawnable[0][]; return; }
 
-            Spawnables = new SakugaSpawnable[Data.SpawnablesList.SpawnObjects.Length][];
+            Spawnables = new SakugaSpawnable[SpawnablesList.SpawnObjects.Length][];
             for (int i = 0; i < Spawnables.Length; ++i)
             {
-                Spawnables[i] = new SakugaSpawnable[Data.SpawnablesList.SpawnObjects[i].Amount];
+                Spawnables[i] = new SakugaSpawnable[SpawnablesList.SpawnObjects[i].Amount];
                 for (int j = 0; j < Spawnables[i].Length; ++j)
                 {
-                    Node temp = Data.SpawnablesList.SpawnObjects[i].SpawnScene.Instantiate();
+                    Node temp = SpawnablesList.SpawnObjects[i].SpawnScene.Instantiate();
                     Spawnables[i][j] = temp as SakugaSpawnable;
                     game.AddActor(Spawnables[i][j]);
                     Spawnables[i][j].Initialize(this);
@@ -71,15 +71,15 @@ namespace SakugaEngine
 
         public void VFXSetup(GameManager game)
         {
-            if (Data.VFXList == null)  { VFX = new SakugaVFX[0][]; return; }
+            if (VFXList == null)  { VFX = new SakugaVFX[0][]; return; }
 
-            VFX = new SakugaVFX[Data.VFXList.SpawnObjects.Length][];
+            VFX = new SakugaVFX[VFXList.SpawnObjects.Length][];
             for (int i = 0; i < VFX.Length; ++i)
             {
-                VFX[i] = new SakugaVFX[Data.VFXList.SpawnObjects[i].Amount];
+                VFX[i] = new SakugaVFX[VFXList.SpawnObjects[i].Amount];
                 for (int j = 0; j < VFX[i].Length; ++j)
                 {
-                    Node temp = Data.VFXList.SpawnObjects[i].SpawnScene.Instantiate();
+                    Node temp = VFXList.SpawnObjects[i].SpawnScene.Instantiate();
                     VFX[i][j] = temp as SakugaVFX;
                     game.AddActor(VFX[i][j], false);
                     VFX[i][j].Initialize();
@@ -96,6 +96,7 @@ namespace SakugaEngine
             Variables.Initialize(this);
             BlockStun = false;
             Body.FixedPosition.X = Global.StartingPosition * (-1 + (index * 2));
+            ForcePlayerSide(Mathf.Sign(Body.FixedPosition.X) < 0);
             Animator.PlayState(0);
             Animator.CurrentStateFrame = -1;
         }
@@ -112,9 +113,10 @@ namespace SakugaEngine
             Body.FixedVelocity = Vector2I.Zero;
             Body.FixedPosition.X = Global.StartingPosition * (-1 + (index * 2));
             Body.FixedPosition.Y = 0;
+            ForcePlayerSide(Mathf.Sign(Body.FixedPosition.X) < 0);
             if (!StateMachine.GetCurrentStance().IsRoundPersistent)
                 StateMachine.CurrentStance = 0;
-            Animator.PlayState(0);
+            Animator.PlayState(StateMachine.GetCurrentStance().DefaultState);
             Variables.Initialize(this);
             Animator.CurrentStateFrame = -1;
             HitStun.Stop();
@@ -123,7 +125,6 @@ namespace SakugaEngine
             PushForce.Stop();
             HorizontalBounce.Stop();
             VerticalBounce.Stop();
-
             BlockStun = false;
         }
 
@@ -748,8 +749,8 @@ namespace SakugaEngine
             if (!isHitAllowed) return;
 
             bool HitPosition = box.HitType == Global.HitType.UNBLOCKABLE || 
-                                box.HitType == Global.HitType.HIGH && GetOpponent().Body.IsOnGround && !GetOpponent().IsGroundState() || 
-                                box.HitType == Global.HitType.LOW && GetOpponent().Body.IsOnGround && !GetOpponent().IsCrouchState();
+                                box.HitType == Global.HitType.HIGH && GetOpponent().Body.IsOnGround && GetOpponent().IsCrouchState() || 
+                                box.HitType == Global.HitType.LOW && GetOpponent().Body.IsOnGround && GetOpponent().IsGroundState();
 
             CancelConditions &= ~Global.CancelCondition.WHIFF_CANCEL;
             CancelConditions &= ~Global.CancelCondition.KARA_CANCEL;
@@ -893,6 +894,7 @@ namespace SakugaEngine
             bw.Write(HitstunType);
             bw.Write(GravityDecayFactor);
             bw.Write(HitstunDecayFactor);
+            bw.Write((byte)CancelConditions);
         }
 
         public override void Deserialize(BinaryReader br)
@@ -926,6 +928,7 @@ namespace SakugaEngine
             HitstunType = br.ReadByte();
             GravityDecayFactor = br.ReadByte();
             HitstunDecayFactor = br.ReadByte();
+            CancelConditions = (Global.CancelCondition)br.ReadByte();
 
             Body.UpdateColliders();
         }

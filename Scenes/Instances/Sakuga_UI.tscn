@@ -4,7 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://6ctweo6uvot8" path="res://icon.svg" id="2_h5vba"]
 [ext_resource type="Texture2D" uid="uid://c6kfch34hg5x4" path="res://Sprites/healthbar_sprite.png" id="3_quu14"]
 [ext_resource type="Script" uid="uid://drp1aulrijkrn" path="res://Scripts/SakugaEngine/UI/RoundsCounter.cs" id="4_588f4"]
+[ext_resource type="Script" uid="uid://g6vbpbaj5xi6" path="res://Scripts/SakugaEngine/UI/OnlineInfo.cs" id="5_1n2tl"]
 [ext_resource type="Script" uid="uid://bu3dc4gatmgm1" path="res://Scripts/SakugaEngine/UI/ComboCounter.cs" id="5_f6x8r"]
+[ext_resource type="Texture2D" uid="uid://df50nf7a0i58" path="res://Sprites/LobbyIcons/lobbyicons_platform_pc.png" id="5_j3lw1"]
 [ext_resource type="Script" uid="uid://bxtx4t4kufbsq" path="res://Scripts/SakugaEngine/UI/MetersHUD.cs" id="6_m7ri4"]
 [ext_resource type="Texture2D" uid="uid://0vthev3fa841" path="res://Sprites/meter_sprite.png" id="7_6huh3"]
 [ext_resource type="Texture2D" uid="uid://cirlpf1j23vao" path="res://Sprites/meter_sprite_fill.png" id="8_vbhb2"]
@@ -14,10 +16,583 @@
 [ext_resource type="PackedScene" uid="uid://cljylybqkoasi" path="res://Scenes/Instances/InputHistory_Pref_P2.tscn" id="11_k2bmj"]
 [ext_resource type="Script" uid="uid://hm7bsfnod2vb" path="res://Scripts/SakugaEngine/UI/FadeScreen.cs" id="12_uu21w"]
 [ext_resource type="PackedScene" uid="uid://dxj20xhmbkdbs" path="res://Scenes/PleaseResync_UI.tscn" id="14_16eh6"]
+[ext_resource type="Script" uid="uid://tduqq7pxgphg" path="res://Scripts/SakugaEngine/UI/MatchCardsController.cs" id="14_c0xn6"]
+[ext_resource type="Script" uid="uid://c74ackq5g2cbw" path="res://Scripts/SakugaEngine/Resources/MatchAnimation.cs" id="15_ysn3l"]
+[ext_resource type="Script" uid="uid://3uu6r0mhj3p3" path="res://Scripts/SakugaEngine/Components/SoundQueue.cs" id="17_fweai"]
 
-[node name="CanvasLayer" type="CanvasLayer" unique_id=1980808177]
+[sub_resource type="Resource" id="Resource_4120v"]
+script = ExtResource("15_ysn3l")
+Name = "CatchPhrase"
+Duration = 90
+metadata/_custom_type_script = "uid://c74ackq5g2cbw"
 
-[node name="GameHUD_Background" type="Control" parent="." unique_id=81683706 node_paths=PackedStringArray("P1Portrait", "P1Health", "P1LostHealth", "P1Rounds", "P1Combo", "P1Name", "P2Portrait", "P2Health", "P2LostHealth", "P2Rounds", "P2Combo", "P2Name", "Timer", "P1Debug", "P2Debug")]
+[sub_resource type="Resource" id="Resource_hctok"]
+script = ExtResource("15_ysn3l")
+Name = "RoundStart"
+Duration = 140
+DelaySubtract = 10
+metadata/_custom_type_script = "uid://c74ackq5g2cbw"
+
+[sub_resource type="Resource" id="Resource_t2vuu"]
+script = ExtResource("15_ysn3l")
+Name = "KO_Left"
+Duration = 100
+metadata/_custom_type_script = "uid://c74ackq5g2cbw"
+
+[sub_resource type="Resource" id="Resource_lp1f3"]
+script = ExtResource("15_ysn3l")
+Name = "KO_Right"
+Duration = 100
+metadata/_custom_type_script = "uid://c74ackq5g2cbw"
+
+[sub_resource type="Resource" id="Resource_p30di"]
+script = ExtResource("15_ysn3l")
+Name = "P1_Win"
+Duration = 60
+metadata/_custom_type_script = "uid://c74ackq5g2cbw"
+
+[sub_resource type="Resource" id="Resource_8c81w"]
+script = ExtResource("15_ysn3l")
+Name = "P2_Win"
+Duration = 60
+metadata/_custom_type_script = "uid://c74ackq5g2cbw"
+
+[sub_resource type="Resource" id="Resource_fi7j4"]
+script = ExtResource("15_ysn3l")
+Name = "Draw"
+Duration = 60
+metadata/_custom_type_script = "uid://c74ackq5g2cbw"
+
+[sub_resource type="Animation" id="Animation_4120v"]
+resource_name = "CatchPhrase"
+length = 1.5333351
+step = 0.016666668
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RoundCard:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FIGHT!:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("KO:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Draw:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("P1Win:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("P2Win:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CatchPhrase:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.11666667, 1.4000001, 1.5333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-660, 250), Vector2(315, 250), Vector2(315, 250), Vector2(1300, 250)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("CatchPhrase:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 1.5158978, 1.5333333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
+
+[sub_resource type="Animation" id="Animation_p30di"]
+resource_name = "Draw"
+step = 0.016666668
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Draw:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Draw:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.33333334),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Draw:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.33333334),
+"transitions": PackedFloat32Array(0.61557275, 1),
+"update": 0,
+"values": [Vector2(450, 100), Vector2(450, 300)]
+}
+
+[sub_resource type="Animation" id="Animation_ytmxh"]
+resource_name = "KO_Left"
+length = 1.6666684
+step = 0.016666668
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("KO:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.116666675, 1.5000001, 1.5500001, 1.6666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-320, 300), Vector2(450, 300), Vector2(450, 300), Vector2(400, 300), Vector2(1200, 300)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("KO:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.6500001, 1.6666684),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
+
+[sub_resource type="Animation" id="Animation_hctok"]
+resource_name = "KO_Right"
+length = 1.6666684
+step = 0.016666668
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("KO:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.116666675, 1.5000001, 1.5500001, 1.6666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1200, 300), Vector2(450, 300), Vector2(450, 300), Vector2(500, 300), Vector2(-320, 300)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("KO:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.6500001, 1.6666684),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
+
+[sub_resource type="Animation" id="Animation_t2vuu"]
+resource_name = "P1_Win"
+step = 0.016666668
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("P1Win:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("P1Win:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.116666675),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-230, 300), Vector2(0, 300)]
+}
+
+[sub_resource type="Animation" id="Animation_lp1f3"]
+resource_name = "P2_Win"
+step = 0.016666668
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("P2Win:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("P2Win:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.116666675),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1090, 300), Vector2(860, 300)]
+}
+
+[sub_resource type="Animation" id="Animation_201fe"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RoundCard:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FIGHT!:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("FIGHT!:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("FIGHT!:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("KO:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("P1Win:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("P2Win:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Draw:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Draw:modulate")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("CatchPhrase:position")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(398.5, 213)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("CatchPhrase:visible")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_xjl2p"]
+resource_name = "RoundStart"
+length = 2.3333352
+step = 0.016666668
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RoundCard:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.6500001, 1.6666684),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FIGHT!:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.6500001, 1.6666667, 2.3166668, 2.3333352),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [false, false, true, true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("RoundCard:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.116706595, 1.4000244, 1.5166911),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-500, 300), Vector2(450, 300), Vector2(450, 300), Vector2(1300, 300)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("FIGHT!:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(1.6666667, 1.7327822, 2.1666667, 2.2, 2.3166668),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.8, 0.8), Vector2(1.5, 1.5), Vector2(1.5, 1.5), Vector2(1, 1), Vector2(3, 3)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("FIGHT!:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(2.2500002, 2.3333335),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("KO:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Draw:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("P1Win:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("P2Win:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("CatchPhrase:visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4120v"]
+_data = {
+&"CatchPhrase": SubResource("Animation_4120v"),
+&"Draw": SubResource("Animation_p30di"),
+&"KO_Left": SubResource("Animation_ytmxh"),
+&"KO_Right": SubResource("Animation_hctok"),
+&"P1_Win": SubResource("Animation_t2vuu"),
+&"P2_Win": SubResource("Animation_lp1f3"),
+&"RESET": SubResource("Animation_201fe"),
+&"RoundStart": SubResource("Animation_xjl2p")
+}
+
+[node name="CanvasLayer" type="CanvasLayer" unique_id=1639285127]
+
+[node name="GameHUD_Background" type="Control" parent="." unique_id=1728610067 node_paths=PackedStringArray("P1Portrait", "P1Health", "P1LostHealth", "P1Rounds", "P1Combo", "P1Name", "P2Portrait", "P2Health", "P2LostHealth", "P2Rounds", "P2Combo", "P2Name", "Timer", "P1Debug", "P2Debug")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -41,11 +616,11 @@ Timer = NodePath("HealthBars/Timer")
 P1Debug = NodePath("../Debug/P1Debug")
 P2Debug = NodePath("../Debug/P2Debug")
 
-[node name="HealthBars" type="Control" parent="GameHUD_Background" unique_id=1881957307]
+[node name="HealthBars" type="Control" parent="GameHUD_Background" unique_id=1101058686]
 anchors_preset = 0
 anchor_right = 1.0
 
-[node name="P1Portrait" type="TextureRect" parent="GameHUD_Background/HealthBars" unique_id=312465799]
+[node name="P1Portrait" type="TextureRect" parent="GameHUD_Background/HealthBars" unique_id=685425323]
 layout_mode = 0
 anchor_left = 0.5
 anchor_right = 0.5
@@ -56,7 +631,7 @@ texture = ExtResource("2_h5vba")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="P2Portrait" type="TextureRect" parent="GameHUD_Background/HealthBars" unique_id=138532832]
+[node name="P2Portrait" type="TextureRect" parent="GameHUD_Background/HealthBars" unique_id=89658278]
 layout_mode = 0
 anchor_left = 0.5
 anchor_right = 0.5
@@ -67,7 +642,7 @@ texture = ExtResource("2_h5vba")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="P1LostHealth" type="TextureProgressBar" parent="GameHUD_Background/HealthBars" unique_id=472455335]
+[node name="P1LostHealth" type="TextureProgressBar" parent="GameHUD_Background/HealthBars" unique_id=997365537]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -87,7 +662,7 @@ texture_progress = ExtResource("3_quu14")
 tint_under = Color(0.509804, 0.509804, 0.509804, 1)
 tint_progress = Color(0.72882, 0, 0.08201, 1)
 
-[node name="P1Health" type="TextureProgressBar" parent="GameHUD_Background/HealthBars" unique_id=954396631]
+[node name="P1Health" type="TextureProgressBar" parent="GameHUD_Background/HealthBars" unique_id=799365614]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -106,14 +681,14 @@ texture_progress = ExtResource("3_quu14")
 tint_under = Color(0.509804, 0.509804, 0.509804, 1)
 tint_progress = Color(0.909804, 0.843137, 0.396078, 1)
 
-[node name="P2LostHealth" type="TextureProgressBar" parent="GameHUD_Background/HealthBars" unique_id=381631217]
+[node name="P2LostHealth" type="TextureProgressBar" parent="GameHUD_Background/HealthBars" unique_id=1499953177]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 60.0
+offset_left = 46.0
 offset_top = 90.0
-offset_right = 2060.0
+offset_right = 2046.0
 offset_bottom = 225.0
 grow_horizontal = 2
 scale = Vector2(0.27, 0.27)
@@ -125,14 +700,14 @@ texture_progress = ExtResource("3_quu14")
 tint_under = Color(0.509804, 0.509804, 0.509804, 1)
 tint_progress = Color(0.72882, 0, 0.08201, 1)
 
-[node name="P2Health" type="TextureProgressBar" parent="GameHUD_Background/HealthBars" unique_id=808483312]
+[node name="P2Health" type="TextureProgressBar" parent="GameHUD_Background/HealthBars" unique_id=907058496]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 60.0
+offset_left = 46.0
 offset_top = 90.0
-offset_right = 2060.0
+offset_right = 2046.0
 offset_bottom = 225.0
 grow_horizontal = 2
 scale = Vector2(0.27, 0.27)
@@ -143,7 +718,7 @@ texture_progress = ExtResource("3_quu14")
 tint_under = Color(0.509804, 0.509804, 0.509804, 1)
 tint_progress = Color(0.909804, 0.843137, 0.396078, 1)
 
-[node name="P1Rounds" type="HBoxContainer" parent="GameHUD_Background/HealthBars" unique_id=1583970787]
+[node name="P1Rounds" type="HBoxContainer" parent="GameHUD_Background/HealthBars" unique_id=1236664845]
 layout_mode = 0
 anchor_left = 0.5
 anchor_right = 0.5
@@ -156,59 +731,61 @@ alignment = 2
 script = ExtResource("4_588f4")
 RoundsLimit = 5
 
-[node name="Round5" type="TextureRect" parent="GameHUD_Background/HealthBars/P1Rounds" unique_id=1776007814]
+[node name="Round5" type="TextureRect" parent="GameHUD_Background/HealthBars/P1Rounds" unique_id=481281020]
 layout_mode = 2
 texture = ExtResource("2_h5vba")
 
-[node name="Round4" type="TextureRect" parent="GameHUD_Background/HealthBars/P1Rounds" unique_id=852376056]
+[node name="Round4" type="TextureRect" parent="GameHUD_Background/HealthBars/P1Rounds" unique_id=1270703837]
 layout_mode = 2
 texture = ExtResource("2_h5vba")
 
-[node name="Round3" type="TextureRect" parent="GameHUD_Background/HealthBars/P1Rounds" unique_id=506668601]
+[node name="Round3" type="TextureRect" parent="GameHUD_Background/HealthBars/P1Rounds" unique_id=96866374]
 layout_mode = 2
 texture = ExtResource("2_h5vba")
 
-[node name="Round2" type="TextureRect" parent="GameHUD_Background/HealthBars/P1Rounds" unique_id=1955517034]
+[node name="Round2" type="TextureRect" parent="GameHUD_Background/HealthBars/P1Rounds" unique_id=1989885292]
 layout_mode = 2
 texture = ExtResource("2_h5vba")
 
-[node name="Round1" type="TextureRect" parent="GameHUD_Background/HealthBars/P1Rounds" unique_id=1088801710]
+[node name="Round1" type="TextureRect" parent="GameHUD_Background/HealthBars/P1Rounds" unique_id=590624714]
 layout_mode = 2
 texture = ExtResource("2_h5vba")
 
-[node name="P2Rounds" type="HBoxContainer" parent="GameHUD_Background/HealthBars" unique_id=1089975261]
-layout_mode = 0
+[node name="P2Rounds" type="HBoxContainer" parent="GameHUD_Background/HealthBars" unique_id=413745748]
+layout_mode = 1
+anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 70.0
+offset_left = 57.0
 offset_top = 35.0
-offset_right = 726.0
+offset_right = 713.0
 offset_bottom = 163.0
+grow_horizontal = 2
 scale = Vector2(0.4, 0.4)
 script = ExtResource("4_588f4")
 RoundsLimit = 5
 
-[node name="Round1" type="TextureRect" parent="GameHUD_Background/HealthBars/P2Rounds" unique_id=1249381371]
+[node name="Round1" type="TextureRect" parent="GameHUD_Background/HealthBars/P2Rounds" unique_id=250745876]
 layout_mode = 2
 texture = ExtResource("2_h5vba")
 
-[node name="Round2" type="TextureRect" parent="GameHUD_Background/HealthBars/P2Rounds" unique_id=352086058]
+[node name="Round2" type="TextureRect" parent="GameHUD_Background/HealthBars/P2Rounds" unique_id=635449683]
 layout_mode = 2
 texture = ExtResource("2_h5vba")
 
-[node name="Round3" type="TextureRect" parent="GameHUD_Background/HealthBars/P2Rounds" unique_id=868283201]
+[node name="Round3" type="TextureRect" parent="GameHUD_Background/HealthBars/P2Rounds" unique_id=511460096]
 layout_mode = 2
 texture = ExtResource("2_h5vba")
 
-[node name="Round4" type="TextureRect" parent="GameHUD_Background/HealthBars/P2Rounds" unique_id=236159013]
+[node name="Round4" type="TextureRect" parent="GameHUD_Background/HealthBars/P2Rounds" unique_id=1019859122]
 layout_mode = 2
 texture = ExtResource("2_h5vba")
 
-[node name="Round5" type="TextureRect" parent="GameHUD_Background/HealthBars/P2Rounds" unique_id=1247940955]
+[node name="Round5" type="TextureRect" parent="GameHUD_Background/HealthBars/P2Rounds" unique_id=102428643]
 layout_mode = 2
 texture = ExtResource("2_h5vba")
 
-[node name="P1Name" type="Label" parent="GameHUD_Background/HealthBars" unique_id=132170662]
+[node name="P1Name" type="Label" parent="GameHUD_Background/HealthBars" unique_id=1019002984]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -221,7 +798,7 @@ grow_horizontal = 2
 scale = Vector2(2, 2)
 text = "Fighter 1"
 
-[node name="P2Name" type="Label" parent="GameHUD_Background/HealthBars" unique_id=580962448]
+[node name="P2Name" type="Label" parent="GameHUD_Background/HealthBars" unique_id=1485341128]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -235,34 +812,111 @@ scale = Vector2(2, 2)
 text = "Fighter 2"
 horizontal_alignment = 2
 
-[node name="Timer" type="Label" parent="GameHUD_Background/HealthBars" unique_id=1052156927]
+[node name="Timer" type="Label" parent="GameHUD_Background/HealthBars" unique_id=205550416]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -42.0
-offset_top = 30.0
-offset_right = -23.0
-offset_bottom = 53.0
+offset_left = -46.0
+offset_top = 24.0
+offset_right = 46.0
+offset_bottom = 134.0
 grow_horizontal = 2
-scale = Vector2(5, 5)
+pivot_offset = Vector2(46, 55)
+theme_override_font_sizes/font_size = 80
 text = "99"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="ComboCounters" type="Control" parent="GameHUD_Background" unique_id=990874388]
+[node name="OnlineInfo" type="Control" parent="GameHUD_Background" unique_id=1490443186 node_paths=PackedStringArray("P1Name", "P2Name", "P1Platform", "P2Platform")]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = 10
 anchor_right = 1.0
-anchor_bottom = 1.0
+grow_horizontal = 2
+script = ExtResource("5_1n2tl")
+P1Name = NodePath("P1OnlineInfoContainer/P1OnlineName")
+P2Name = NodePath("P2OnlineInfoContainer/P2OnlineName")
+P1Platform = NodePath("P1OnlineInfoContainer/P1OnlinePlatform")
+P2Platform = NodePath("P2OnlineInfoContainer/P2OnlinePlatform")
+
+[node name="P1OnlineInfoContainer" type="ColorRect" parent="GameHUD_Background/OnlineInfo" unique_id=1570429287]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -590.0
+offset_top = 130.0
+offset_right = -307.0
+offset_bottom = 157.0
+grow_horizontal = 2
+color = Color(0, 0, 0, 0.62352943)
+
+[node name="P1OnlinePlatform" type="TextureRect" parent="GameHUD_Background/OnlineInfo/P1OnlineInfoContainer" unique_id=1236602341]
+layout_mode = 0
+offset_right = 27.0
+offset_bottom = 27.0
+texture = ExtResource("5_j3lw1")
+expand_mode = 2
+
+[node name="P1OnlineName" type="Label" parent="GameHUD_Background/OnlineInfo/P1OnlineInfoContainer" unique_id=225587910]
+layout_mode = 0
+offset_left = 32.0
+offset_right = 281.0
+offset_bottom = 27.0
+text = "Space reserved for online player"
+vertical_alignment = 1
+
+[node name="P2OnlineInfoContainer" type="ColorRect" parent="GameHUD_Background/OnlineInfo" unique_id=1946343934]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 318.0
+offset_top = 130.0
+offset_right = 599.0
+offset_bottom = 157.0
+grow_horizontal = 2
+color = Color(0, 0, 0, 0.62352943)
+
+[node name="P2OnlinePlatform" type="TextureRect" parent="GameHUD_Background/OnlineInfo/P2OnlineInfoContainer" unique_id=1677514822]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -27.0
+offset_bottom = 27.0
+grow_horizontal = 0
+texture = ExtResource("5_j3lw1")
+expand_mode = 2
+
+[node name="P2OnlineName" type="Label" parent="GameHUD_Background/OnlineInfo/P2OnlineInfoContainer" unique_id=196373825]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -281.0
+offset_right = -32.0
+offset_bottom = 27.0
+grow_horizontal = 0
+text = "Space reserved for online player"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="ComboCounters" type="Control" parent="GameHUD_Background" unique_id=604988746]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="P1ComboCounter" type="Control" parent="GameHUD_Background/ComboCounters" unique_id=2010496979]
+[node name="P1ComboCounter" type="Control" parent="GameHUD_Background/ComboCounters" unique_id=491802711]
 anchors_preset = 0
 anchor_bottom = 1.0
 script = ExtResource("5_f6x8r")
 
-[node name="StunBar" type="TextureProgressBar" parent="GameHUD_Background/ComboCounters/P1ComboCounter" unique_id=66296055]
+[node name="StunBar" type="TextureProgressBar" parent="GameHUD_Background/ComboCounters/P1ComboCounter" unique_id=2053226157]
 layout_mode = 0
 anchor_top = 0.5
 anchor_bottom = 0.5
@@ -278,7 +932,7 @@ texture_progress = ExtResource("3_quu14")
 tint_under = Color(0.705882, 0.705882, 0.705882, 1)
 tint_progress = Color(0.909804, 0.843137, 0.396078, 1)
 
-[node name="ComboCount" type="Label" parent="GameHUD_Background/ComboCounters/P1ComboCounter" unique_id=568793189]
+[node name="ComboCount" type="Label" parent="GameHUD_Background/ComboCounters/P1ComboCounter" unique_id=680650778]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -291,7 +945,7 @@ grow_vertical = 2
 scale = Vector2(3, 3)
 text = "1"
 
-[node name="ComboText" type="Label" parent="GameHUD_Background/ComboCounters/P1ComboCounter" unique_id=1148450337]
+[node name="ComboText" type="Label" parent="GameHUD_Background/ComboCounters/P1ComboCounter" unique_id=1490831895]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -304,14 +958,14 @@ grow_vertical = 2
 scale = Vector2(1.5, 1.5)
 text = "Hit Combo"
 
-[node name="P2ComboCounter" type="Control" parent="GameHUD_Background/ComboCounters" unique_id=378417841]
+[node name="P2ComboCounter" type="Control" parent="GameHUD_Background/ComboCounters" unique_id=6327371]
 anchors_preset = 0
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource("5_f6x8r")
 
-[node name="StunBar" type="TextureProgressBar" parent="GameHUD_Background/ComboCounters/P2ComboCounter" unique_id=1454953824]
+[node name="StunBar" type="TextureProgressBar" parent="GameHUD_Background/ComboCounters/P2ComboCounter" unique_id=508411029]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -332,7 +986,7 @@ texture_progress = ExtResource("3_quu14")
 tint_under = Color(0.705882, 0.705882, 0.705882, 1)
 tint_progress = Color(0.909804, 0.843137, 0.396078, 1)
 
-[node name="ComboCount" type="Label" parent="GameHUD_Background/ComboCounters/P2ComboCounter" unique_id=469566945]
+[node name="ComboCount" type="Label" parent="GameHUD_Background/ComboCounters/P2ComboCounter" unique_id=549373883]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -345,7 +999,7 @@ grow_vertical = 2
 scale = Vector2(3, 3)
 text = "1"
 
-[node name="ComboText" type="Label" parent="GameHUD_Background/ComboCounters/P2ComboCounter" unique_id=1539866496]
+[node name="ComboText" type="Label" parent="GameHUD_Background/ComboCounters/P2ComboCounter" unique_id=2008897623]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -358,25 +1012,30 @@ grow_vertical = 2
 scale = Vector2(1.5, 1.5)
 text = "Hit Combo"
 
-[node name="ViewportContainer" type="SubViewportContainer" parent="." unique_id=195910898]
+[node name="ViewportContainer" type="SubViewportContainer" parent="." unique_id=616342288]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 stretch = true
 
-[node name="Viewport_Foreground" type="SubViewport" parent="ViewportContainer" unique_id=523479327]
+[node name="Viewport_Foreground" type="SubViewport" parent="ViewportContainer" unique_id=1652349718]
 transparent_bg = true
 handle_input_locally = false
+oversampling_override = 2.0
 size = Vector2i(1280, 720)
+size_2d_override = Vector2i(1920, 1080)
+size_2d_override_stretch = true
 render_target_update_mode = 4
 
-[node name="CharacterCamera" type="Camera3D" parent="ViewportContainer/Viewport_Foreground" unique_id=2092285046]
+[node name="CharacterCamera" type="Camera3D" parent="ViewportContainer/Viewport_Foreground" unique_id=1195241898]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 9)
 cull_mask = 18
 fov = 45.0
 near = 0.01
 
-[node name="GameHUD_Foreground" type="Control" parent="." unique_id=1398103038 node_paths=PackedStringArray("P1Meter", "P2Meter", "P1TrainingInfo", "P2TrainingInfo", "P1InputHistory", "P2InputHistory")]
+[node name="GameHUD_Foreground" type="Control" parent="." unique_id=595347272 node_paths=PackedStringArray("P1Meter", "P2Meter", "P1TrainingInfo", "P2TrainingInfo", "P1InputHistory", "P2InputHistory")]
 process_priority = -1
 layout_mode = 3
 anchors_preset = 15
@@ -392,13 +1051,13 @@ P2TrainingInfo = NodePath("TrainingInfo/P2Info/Information")
 P1InputHistory = NodePath("InputHistory/P1InputHistory")
 P2InputHistory = NodePath("InputHistory/P2InputHistory")
 
-[node name="Meters" type="Control" parent="GameHUD_Foreground" unique_id=1734637159]
+[node name="Meters" type="Control" parent="GameHUD_Foreground" unique_id=1096578342]
 anchors_preset = 0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="P1Meter" type="TextureProgressBar" parent="GameHUD_Foreground/Meters" unique_id=1612129901]
+[node name="P1Meter" type="TextureProgressBar" parent="GameHUD_Foreground/Meters" unique_id=1041470327]
 layout_mode = 0
 anchor_left = 0.5
 anchor_top = 1.0
@@ -418,7 +1077,7 @@ texture_progress = ExtResource("8_vbhb2")
 tint_under = Color(0.509804, 0.509804, 0.509804, 1)
 tint_progress = Color(0.301961, 0.745098, 0.243137, 1)
 
-[node name="P2Meter" type="TextureProgressBar" parent="GameHUD_Foreground/Meters" unique_id=835886582]
+[node name="P2Meter" type="TextureProgressBar" parent="GameHUD_Foreground/Meters" unique_id=1631360117]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -440,12 +1099,55 @@ texture_progress = ExtResource("8_vbhb2")
 tint_under = Color(0.509804, 0.509804, 0.509804, 1)
 tint_progress = Color(0.301961, 0.745098, 0.243137, 1)
 
-[node name="TrainingInfo" type="Control" parent="GameHUD_Foreground" unique_id=1856443705]
+[node name="ConnectionStatus" type="Control" parent="GameHUD_Foreground" unique_id=1209200009]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="RollbackInfo" type="Label" parent="GameHUD_Foreground/ConnectionStatus" unique_id=1431988643]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -167.0
+offset_top = -56.0
+offset_right = -119.0
+offset_bottom = -33.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "RB: 8F"
+vertical_alignment = 1
+
+[node name="PingInfo" type="Label" parent="GameHUD_Foreground/ConnectionStatus" unique_id=1485408509]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 100.0
+offset_top = -56.0
+offset_right = 193.0
+offset_bottom = -33.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Ping: 999ms"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="TrainingInfo" type="Control" parent="GameHUD_Foreground" unique_id=108050585]
+visible = false
 anchors_preset = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="P1Info" type="Control" parent="GameHUD_Foreground/TrainingInfo" unique_id=2097672168]
+[node name="P1Info" type="Control" parent="GameHUD_Foreground/TrainingInfo" unique_id=1092314173]
 anchors_preset = 0
 anchor_left = 0.5
 anchor_right = 0.5
@@ -454,7 +1156,7 @@ offset_top = 130.0
 offset_right = -290.0
 offset_bottom = 130.0
 
-[node name="Background" type="ColorRect" parent="GameHUD_Foreground/TrainingInfo/P1Info" unique_id=756708162]
+[node name="Background" type="ColorRect" parent="GameHUD_Foreground/TrainingInfo/P1Info" unique_id=812274031]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -467,7 +1169,7 @@ grow_horizontal = 0
 grow_vertical = 2
 color = Color(0, 0, 0, 0.501961)
 
-[node name="Descriptions" type="Label" parent="GameHUD_Foreground/TrainingInfo/P1Info" unique_id=993138045]
+[node name="Descriptions" type="Label" parent="GameHUD_Foreground/TrainingInfo/P1Info" unique_id=1100564771]
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
@@ -482,7 +1184,7 @@ Hit type
 Damage Scl.
 Frame data"
 
-[node name="Information" type="Label" parent="GameHUD_Foreground/TrainingInfo/P1Info" unique_id=1068952097]
+[node name="Information" type="Label" parent="GameHUD_Foreground/TrainingInfo/P1Info" unique_id=1033807718]
 layout_mode = 1
 anchors_preset = 11
 anchor_left = 1.0
@@ -500,7 +1202,7 @@ HIGH
 100
 0(+0)"
 
-[node name="P2Info" type="Control" parent="GameHUD_Foreground/TrainingInfo" unique_id=1802292819]
+[node name="P2Info" type="Control" parent="GameHUD_Foreground/TrainingInfo" unique_id=1297068344]
 anchors_preset = 0
 anchor_left = 0.5
 anchor_right = 0.5
@@ -509,7 +1211,7 @@ offset_top = 130.0
 offset_right = 100.0
 offset_bottom = 130.0
 
-[node name="Background" type="ColorRect" parent="GameHUD_Foreground/TrainingInfo/P2Info" unique_id=681599774]
+[node name="Background" type="ColorRect" parent="GameHUD_Foreground/TrainingInfo/P2Info" unique_id=1521455846]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -522,7 +1224,7 @@ grow_horizontal = 0
 grow_vertical = 2
 color = Color(0, 0, 0, 0.501961)
 
-[node name="Descriptions" type="Label" parent="GameHUD_Foreground/TrainingInfo/P2Info" unique_id=1522091741]
+[node name="Descriptions" type="Label" parent="GameHUD_Foreground/TrainingInfo/P2Info" unique_id=333085343]
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
@@ -537,7 +1239,7 @@ Hit type
 Damage Scl.
 Frame data"
 
-[node name="Information" type="Label" parent="GameHUD_Foreground/TrainingInfo/P2Info" unique_id=1015609201]
+[node name="Information" type="Label" parent="GameHUD_Foreground/TrainingInfo/P2Info" unique_id=1961395200]
 layout_mode = 1
 anchors_preset = 11
 anchor_left = 1.0
@@ -555,7 +1257,8 @@ HIGH
 100
 0(+0)"
 
-[node name="InputHistory" type="Control" parent="GameHUD_Foreground" unique_id=1996564776]
+[node name="InputHistory" type="Control" parent="GameHUD_Foreground" unique_id=1672551536]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -563,7 +1266,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="P1InputHistory" type="VBoxContainer" parent="GameHUD_Foreground/InputHistory" unique_id=2042689762 node_paths=PackedStringArray("elements")]
+[node name="P1InputHistory" type="VBoxContainer" parent="GameHUD_Foreground/InputHistory" unique_id=724805458 node_paths=PackedStringArray("elements")]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -577,55 +1280,55 @@ theme_override_constants/separation = 45
 script = ExtResource("9_vdd12")
 elements = [NodePath("InputHistory_Pref1"), NodePath("InputHistory_Pref2"), NodePath("InputHistory_Pref3"), NodePath("InputHistory_Pref4"), NodePath("InputHistory_Pref5"), NodePath("InputHistory_Pref6"), NodePath("InputHistory_Pref7"), NodePath("InputHistory_Pref8"), NodePath("InputHistory_Pref9"), NodePath("InputHistory_Pref10"), NodePath("InputHistory_Pref11"), NodePath("InputHistory_Pref12"), NodePath("InputHistory_Pref13"), NodePath("InputHistory_Pref14"), NodePath("InputHistory_Pref15"), NodePath("InputHistory_Pref16")]
 
-[node name="InputHistory_Pref1" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=2055302550 instance=ExtResource("10_kbxok")]
+[node name="InputHistory_Pref1" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=1091900169 instance=ExtResource("10_kbxok")]
 layout_mode = 2
 
-[node name="InputHistory_Pref2" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=2042723647 instance=ExtResource("10_kbxok")]
+[node name="InputHistory_Pref2" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=583928846 instance=ExtResource("10_kbxok")]
 layout_mode = 2
 
-[node name="InputHistory_Pref3" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=1495551950 instance=ExtResource("10_kbxok")]
+[node name="InputHistory_Pref3" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=778200703 instance=ExtResource("10_kbxok")]
 layout_mode = 2
 
-[node name="InputHistory_Pref4" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=1867253864 instance=ExtResource("10_kbxok")]
+[node name="InputHistory_Pref4" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=678128048 instance=ExtResource("10_kbxok")]
 layout_mode = 2
 
-[node name="InputHistory_Pref5" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=1046523187 instance=ExtResource("10_kbxok")]
+[node name="InputHistory_Pref5" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=1335290717 instance=ExtResource("10_kbxok")]
 layout_mode = 2
 
-[node name="InputHistory_Pref6" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=1520065653 instance=ExtResource("10_kbxok")]
+[node name="InputHistory_Pref6" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=1809108745 instance=ExtResource("10_kbxok")]
 layout_mode = 2
 
-[node name="InputHistory_Pref7" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=1013883168 instance=ExtResource("10_kbxok")]
+[node name="InputHistory_Pref7" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=2061008270 instance=ExtResource("10_kbxok")]
 layout_mode = 2
 
-[node name="InputHistory_Pref8" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=179891695 instance=ExtResource("10_kbxok")]
+[node name="InputHistory_Pref8" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=149608436 instance=ExtResource("10_kbxok")]
 layout_mode = 2
 
-[node name="InputHistory_Pref9" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=756275920 instance=ExtResource("10_kbxok")]
+[node name="InputHistory_Pref9" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=1106825608 instance=ExtResource("10_kbxok")]
 layout_mode = 2
 
-[node name="InputHistory_Pref10" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=621136066 instance=ExtResource("10_kbxok")]
+[node name="InputHistory_Pref10" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=1680718884 instance=ExtResource("10_kbxok")]
 layout_mode = 2
 
-[node name="InputHistory_Pref11" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=1933883273 instance=ExtResource("10_kbxok")]
+[node name="InputHistory_Pref11" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=9332039 instance=ExtResource("10_kbxok")]
 layout_mode = 2
 
-[node name="InputHistory_Pref12" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=1501225578 instance=ExtResource("10_kbxok")]
+[node name="InputHistory_Pref12" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=938672882 instance=ExtResource("10_kbxok")]
 layout_mode = 2
 
-[node name="InputHistory_Pref13" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=784114016 instance=ExtResource("10_kbxok")]
+[node name="InputHistory_Pref13" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=937148573 instance=ExtResource("10_kbxok")]
 layout_mode = 2
 
-[node name="InputHistory_Pref14" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=243916927 instance=ExtResource("10_kbxok")]
+[node name="InputHistory_Pref14" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=844756490 instance=ExtResource("10_kbxok")]
 layout_mode = 2
 
-[node name="InputHistory_Pref15" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=1534585119 instance=ExtResource("10_kbxok")]
+[node name="InputHistory_Pref15" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=1035907082 instance=ExtResource("10_kbxok")]
 layout_mode = 2
 
-[node name="InputHistory_Pref16" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=1686117234 instance=ExtResource("10_kbxok")]
+[node name="InputHistory_Pref16" parent="GameHUD_Foreground/InputHistory/P1InputHistory" unique_id=1692589733 instance=ExtResource("10_kbxok")]
 layout_mode = 2
 
-[node name="P2InputHistory" type="VBoxContainer" parent="GameHUD_Foreground/InputHistory" unique_id=617003043 node_paths=PackedStringArray("elements")]
+[node name="P2InputHistory" type="VBoxContainer" parent="GameHUD_Foreground/InputHistory" unique_id=1189791505 node_paths=PackedStringArray("elements")]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -642,65 +1345,220 @@ theme_override_constants/separation = 45
 script = ExtResource("9_vdd12")
 elements = [NodePath("InputHistory_Pref"), NodePath("InputHistory_Pref2"), NodePath("InputHistory_Pref3"), NodePath("InputHistory_Pref4"), NodePath("InputHistory_Pref5"), NodePath("InputHistory_Pref6"), NodePath("InputHistory_Pref7"), NodePath("InputHistory_Pref8"), NodePath("InputHistory_Pref9"), NodePath("InputHistory_Pref10"), NodePath("InputHistory_Pref11"), NodePath("InputHistory_Pref12"), NodePath("InputHistory_Pref13"), NodePath("InputHistory_Pref14"), NodePath("InputHistory_Pref15"), NodePath("InputHistory_Pref16")]
 
-[node name="InputHistory_Pref" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=1555814767 instance=ExtResource("11_k2bmj")]
+[node name="InputHistory_Pref" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=1967977251 instance=ExtResource("11_k2bmj")]
 layout_mode = 2
 
-[node name="InputHistory_Pref2" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=1612836132 instance=ExtResource("11_k2bmj")]
+[node name="InputHistory_Pref2" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=1037225960 instance=ExtResource("11_k2bmj")]
 layout_mode = 2
 
-[node name="InputHistory_Pref3" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=872459597 instance=ExtResource("11_k2bmj")]
+[node name="InputHistory_Pref3" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=1272700081 instance=ExtResource("11_k2bmj")]
 layout_mode = 2
 
-[node name="InputHistory_Pref4" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=687508480 instance=ExtResource("11_k2bmj")]
+[node name="InputHistory_Pref4" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=1216754971 instance=ExtResource("11_k2bmj")]
 layout_mode = 2
 
-[node name="InputHistory_Pref5" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=1994678410 instance=ExtResource("11_k2bmj")]
+[node name="InputHistory_Pref5" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=208335303 instance=ExtResource("11_k2bmj")]
 layout_mode = 2
 
-[node name="InputHistory_Pref6" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=1663534914 instance=ExtResource("11_k2bmj")]
+[node name="InputHistory_Pref6" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=327847503 instance=ExtResource("11_k2bmj")]
 layout_mode = 2
 
-[node name="InputHistory_Pref7" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=973321406 instance=ExtResource("11_k2bmj")]
+[node name="InputHistory_Pref7" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=1219955713 instance=ExtResource("11_k2bmj")]
 layout_mode = 2
 
-[node name="InputHistory_Pref8" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=1546574639 instance=ExtResource("11_k2bmj")]
+[node name="InputHistory_Pref8" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=677636742 instance=ExtResource("11_k2bmj")]
 layout_mode = 2
 
-[node name="InputHistory_Pref9" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=496654359 instance=ExtResource("11_k2bmj")]
+[node name="InputHistory_Pref9" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=1967262787 instance=ExtResource("11_k2bmj")]
 layout_mode = 2
 
-[node name="InputHistory_Pref10" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=1156281378 instance=ExtResource("11_k2bmj")]
+[node name="InputHistory_Pref10" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=233699371 instance=ExtResource("11_k2bmj")]
 layout_mode = 2
 
-[node name="InputHistory_Pref11" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=1773402624 instance=ExtResource("11_k2bmj")]
+[node name="InputHistory_Pref11" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=207765877 instance=ExtResource("11_k2bmj")]
 layout_mode = 2
 
-[node name="InputHistory_Pref12" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=1773446335 instance=ExtResource("11_k2bmj")]
+[node name="InputHistory_Pref12" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=2000349901 instance=ExtResource("11_k2bmj")]
 layout_mode = 2
 
-[node name="InputHistory_Pref13" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=1461442499 instance=ExtResource("11_k2bmj")]
+[node name="InputHistory_Pref13" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=1104319291 instance=ExtResource("11_k2bmj")]
 layout_mode = 2
 
-[node name="InputHistory_Pref14" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=97001975 instance=ExtResource("11_k2bmj")]
+[node name="InputHistory_Pref14" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=429238891 instance=ExtResource("11_k2bmj")]
 layout_mode = 2
 
-[node name="InputHistory_Pref15" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=440375843 instance=ExtResource("11_k2bmj")]
+[node name="InputHistory_Pref15" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=2114572054 instance=ExtResource("11_k2bmj")]
 layout_mode = 2
 
-[node name="InputHistory_Pref16" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=169254207 instance=ExtResource("11_k2bmj")]
+[node name="InputHistory_Pref16" parent="GameHUD_Foreground/InputHistory/P2InputHistory" unique_id=459642963 instance=ExtResource("11_k2bmj")]
 layout_mode = 2
 
-[node name="FadeScreen" type="ColorRect" parent="." unique_id=99593434]
+[node name="MatchCards" type="Control" parent="." unique_id=411599120 node_paths=PackedStringArray("animator", "RoundLabel", "KO_Label")]
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0)
-script = ExtResource("12_uu21w")
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("14_c0xn6")
+animator = NodePath("AnimationPlayer")
+RoundLabel = NodePath("RoundCard")
+KO_Label = NodePath("KO")
+Animations = Array[Object]([SubResource("Resource_4120v"), SubResource("Resource_hctok"), SubResource("Resource_t2vuu"), SubResource("Resource_lp1f3"), SubResource("Resource_p30di"), SubResource("Resource_8c81w"), SubResource("Resource_fi7j4")])
+metadata/_edit_use_anchors_ = true
 
-[node name="Debug" type="Control" parent="." unique_id=14641696]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MatchCards" unique_id=840061698]
+libraries/ = SubResource("AnimationLibrary_4120v")
+
+[node name="CatchPhrase" type="Label" parent="MatchCards" unique_id=513353691]
 visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -241.5
+offset_top = -147.0
+offset_right = 414.5
+offset_bottom = 147.00024
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(328, 147)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 70
+text = "Insert some
+cool and poetic line
+here!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RoundCard" type="Label" parent="MatchCards" unique_id=1745501468]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 660.0
+offset_top = -60.0
+offset_right = 1077.9999
+offset_bottom = 77.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(209, 68.5)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 80
+text = "Round N"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FIGHT!" type="Label" parent="MatchCards" unique_id=1073739411]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -209.0
+offset_top = -68.5
+offset_right = 209.0
+offset_bottom = 68.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(209, 68.5)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 100
+text = "FIGHT!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="KO" type="Label" parent="MatchCards" unique_id=228166061]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -60.0
+offset_right = -542.00037
+offset_bottom = 77.00012
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(209, 68.5)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 100
+text = "K.O."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Draw" type="Label" parent="MatchCards" unique_id=821729647]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -190.0
+offset_top = -60.0
+offset_right = 228.00098
+offset_bottom = 77.00055
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(209, 68.5)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 80
+text = "Draw..."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="P1Win" type="Label" parent="MatchCards" unique_id=1995650479]
+visible = false
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -60.0
+offset_right = 418.0
+offset_bottom = 77.0
+grow_vertical = 2
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 60
+text = "P1 Win!"
+
+[node name="P2Win" type="Label" parent="MatchCards" unique_id=981754637]
+visible = false
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -190.0
+offset_top = -60.0
+offset_right = 227.99963
+offset_bottom = 76.99994
+grow_horizontal = 0
+grow_vertical = 2
+pivot_offset = Vector2(418, 0)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 60
+text = "P2 Win!"
+horizontal_alignment = 2
+
+[node name="SoundQueue" type="AudioStreamPlayer3D" parent="MatchCards" unique_id=537292548]
+bus = &"Announcer"
+script = ExtResource("17_fweai")
+metadata/_custom_type_script = "uid://3uu6r0mhj3p3"
+
+[node name="ResultsScreen" type="Control" parent="." unique_id=661745059]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -708,13 +1566,116 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ColorRect1" type="ColorRect" parent="Debug" unique_id=1853365989]
+[node name="ColorRect" type="ColorRect" parent="ResultsScreen" unique_id=813076439]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.20392157)
+
+[node name="Title" type="Label" parent="ResultsScreen" unique_id=1032263509]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -105.0
+offset_right = 105.0
+offset_bottom = 89.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 60
+text = "Results"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="VictoryMessage" type="Label" parent="ResultsScreen" unique_id=419266798]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -162.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 24
+text = "Victory is mine hehe!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WinBannerP1" type="Control" parent="ResultsScreen" unique_id=1910856377]
+layout_mode = 1
+anchors_preset = 0
+
+[node name="Winner" type="Label" parent="ResultsScreen/WinBannerP1" unique_id=1715785789]
+layout_mode = 0
+offset_right = 214.0
+offset_bottom = 69.0
+theme_override_font_sizes/font_size = 50
+text = "PLAYER 1 WIN!"
+vertical_alignment = 2
+
+[node name="NamePlayer1" type="Label" parent="ResultsScreen/WinBannerP1" unique_id=386612944]
+layout_mode = 0
+offset_top = 58.0
+offset_right = 640.0
+offset_bottom = 113.0
+theme_override_font_sizes/font_size = 40
+text = "Player 1 name"
+
+[node name="WinBannerP2" type="Control" parent="ResultsScreen" unique_id=682353987]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+grow_horizontal = 0
+
+[node name="Winner" type="Label" parent="ResultsScreen/WinBannerP2" unique_id=2016089178]
+layout_mode = 0
+offset_left = -352.0
+offset_bottom = 69.0
+pivot_offset = Vector2(352, 0)
+theme_override_font_sizes/font_size = 50
+text = "PLAYER 2 WIN!"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="NamePlayer2" type="Label" parent="ResultsScreen/WinBannerP2" unique_id=1614180938]
+layout_mode = 0
+offset_left = -640.0
+offset_top = 58.0
+offset_right = 1.0
+offset_bottom = 113.0
+pivot_offset = Vector2(641, 0)
+theme_override_font_sizes/font_size = 40
+text = "Player 2 name"
+horizontal_alignment = 2
+
+[node name="FadeScreen" type="ColorRect" parent="." unique_id=1110242483]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+script = ExtResource("12_uu21w")
+FadeIntensity = 100
+
+[node name="Debug" type="Control" parent="." unique_id=682411219]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect1" type="ColorRect" parent="Debug" unique_id=527098255]
 layout_mode = 0
 offset_right = 240.0
 offset_bottom = 426.0
 color = Color(0, 0, 0, 0.156863)
 
-[node name="ColorRect2" type="ColorRect" parent="Debug" unique_id=988726373]
+[node name="ColorRect2" type="ColorRect" parent="Debug" unique_id=1740915217]
 layout_mode = 0
 anchor_left = 1.0
 anchor_right = 1.0
@@ -722,13 +1683,13 @@ offset_left = -240.0
 offset_bottom = 426.0
 color = Color(0, 0, 0, 0.156863)
 
-[node name="P1Debug" type="Label" parent="Debug" unique_id=706718652]
+[node name="P1Debug" type="Label" parent="Debug" unique_id=1662448426]
 layout_mode = 1
 offset_right = 97.0
 offset_bottom = 23.0
 text = "Lorem ipsun"
 
-[node name="P2Debug" type="Label" parent="Debug" unique_id=121396149]
+[node name="P2Debug" type="Label" parent="Debug" unique_id=1460702931]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -740,15 +1701,14 @@ grow_horizontal = 0
 text = "Lorem ipsun"
 horizontal_alignment = 2
 
-[node name="FPSDisplay" type="Control" parent="." unique_id=647755249]
+[node name="FPSDisplay" type="Control" parent="." unique_id=1091833598]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
 grow_horizontal = 2
-grow_vertical = 2
 
-[node name="Background" type="ColorRect" parent="FPSDisplay" unique_id=315744638]
+[node name="Background" type="ColorRect" parent="FPSDisplay" unique_id=999708256]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -759,7 +1719,7 @@ offset_bottom = 24.0
 grow_horizontal = 2
 color = Color(0, 0, 0, 1)
 
-[node name="FPS" type="Label" parent="FPSDisplay" unique_id=1094360834]
+[node name="FPS" type="Label" parent="FPSDisplay" unique_id=319862601]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -772,4 +1732,20 @@ text = "999 fps"
 horizontal_alignment = 1
 script = ExtResource("11_a8ejj")
 
-[node name="PleaseResync_UI" parent="." unique_id=1134362063 instance=ExtResource("14_16eh6")]
+[node name="PleaseResync_UI" parent="." unique_id=1086814857 instance=ExtResource("14_16eh6")]
+
+[node name="Seed" type="Label" parent="." unique_id=737444796]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -34.0
+offset_top = -37.0
+offset_right = 33.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 8
+text = "Seed"
+horizontal_alignment = 1
+vertical_alignment = 1

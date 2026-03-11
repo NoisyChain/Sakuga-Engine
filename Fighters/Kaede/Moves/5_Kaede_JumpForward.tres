@@ -25,5 +25,5 @@ ExtraVariablesRequirement = null
 ExtraVariablesChange = Array[Object]([SubResource("Resource_7a8kx"), SubResource("Resource_h8656"), SubResource("Resource_snvw5")])
 CanBeOverrided = true
 InterruptCornerPushback = true
-PriorityBuffer = true
+AcceptCombatStates = true
 UseOnGround = true

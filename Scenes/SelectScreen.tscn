@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://du8qdk1pkkc5e"]
+[gd_scene format=3 uid="uid://du8qdk1pkkc5e"]
 
 [ext_resource type="Script" uid="uid://cei16d41occwt" path="res://Scripts/SakugaEngine/UI/SelectScreen.cs" id="1_c6n7t"]
 [ext_resource type="Resource" uid="uid://c8s3ip7gkhwq6" path="res://Roster.tres" id="2_d1pnq"]
@@ -18,9 +18,11 @@
 [ext_resource type="Texture2D" uid="uid://btffyblli32iy" path="res://Sprites/P2_CSS.png" id="10_vt3nd"]
 [ext_resource type="Texture2D" uid="uid://crn7f11jusxo0" path="res://Sprites/Song_Icon.png" id="11_83tgi"]
 [ext_resource type="Texture2D" uid="uid://c3cyqacvyusmv" path="res://Fighters/Dummy/capsule_render.png" id="12_7p58r"]
+[ext_resource type="PackedScene" uid="uid://54usvtxxigmk" path="res://Scenes/Instances/ColorSelectionElement.tscn" id="17_8r0cl"]
+[ext_resource type="Script" uid="uid://bvwd6emkqafdy" path="res://Scripts/SakugaEngine/UI/ColorSelectMenu.cs" id="17_u1s66"]
 [ext_resource type="Texture2D" uid="uid://cw7llwhkqnheo" path="res://Sprites/Arrow.png" id="18_7p58r"]
 
-[node name="Control" type="Control" node_paths=PackedStringArray("CharacterSelectMode", "StageSelectMode", "P1SelectedRender", "P2SelectedRender", "P1SelectedName", "P2SelectedName", "P1Cursor", "P2Cursor", "charactersContainer", "StageSelectedRender", "StageSelectedName", "SongSelectedName", "P1SelectingStage", "P2SelectingStage", "StageCursor", "stagesContainer")]
+[node name="Control" type="Control" unique_id=464996932 node_paths=PackedStringArray("CharacterSelectMode", "StageSelectMode", "P1SelectedRender", "P2SelectedRender", "P1SelectedName", "P2SelectedName", "P1Cursor", "P2Cursor", "charactersContainer", "P1ColorSelect", "P2ColorSelect", "StageSelectedRender", "StageSelectedName", "SongSelectedName", "P1SelectingStage", "P2SelectingStage", "StageCursor", "stagesContainer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -44,7 +46,9 @@ charactersButtonElement = ExtResource("6_5y3p4")
 charactersContainer = NodePath("CharacterSelect/GridContainer")
 randomCharPortrait = ExtResource("6_pej5c")
 randomCharRender = ExtResource("7_7p58r")
-StageSelectedRender = NodePath("StagePortrait")
+P1ColorSelect = NodePath("CharacterSelect/ColorSelectP1")
+P2ColorSelect = NodePath("CharacterSelect/ColorSelectP2")
+StageSelectedRender = NodePath("StageSelect/StagePortrait")
 StageSelectedName = NodePath("StageSelect/StageName")
 SongSelectedName = NodePath("StageSelect/SongName")
 P1SelectingStage = NodePath("StageSelect/P1Selecting")
@@ -55,22 +59,7 @@ stagesContainer = NodePath("StageSelect/HBoxContainer")
 randomStageThumbnail = ExtResource("9_ly1kb")
 autoStageThumbnail = ExtResource("10_8r0cl")
 
-[node name="StagePortrait" type="TextureRect" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -319.0
-offset_top = -286.0
-offset_right = 320.0
-offset_bottom = 140.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("6_vt3nd")
-
-[node name="P1SelectedRender" type="TextureRect" parent="."]
+[node name="P1SelectedRender" type="TextureRect" parent="." unique_id=178251963]
 layout_mode = 0
 offset_right = 596.0
 offset_bottom = 980.0
@@ -78,7 +67,7 @@ texture = ExtResource("12_7p58r")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="P2SelectedRender" type="TextureRect" parent="."]
+[node name="P2SelectedRender" type="TextureRect" parent="." unique_id=2111583739]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -90,7 +79,7 @@ texture = ExtResource("5_v0euj")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="CharacterSelect" type="Control" parent="."]
+[node name="CharacterSelect" type="Control" parent="." unique_id=323621705]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -98,7 +87,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="GridContainer" type="GridContainer" parent="CharacterSelect"]
+[node name="GridContainer" type="GridContainer" parent="CharacterSelect" unique_id=1148491986]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -114,7 +103,7 @@ grow_vertical = 2
 columns = 2
 metadata/_edit_group_ = true
 
-[node name="P1_Cursor" parent="CharacterSelect" instance=ExtResource("6_5y3p4")]
+[node name="P1_Cursor" parent="CharacterSelect" unique_id=434925893 instance=ExtResource("6_5y3p4")]
 layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.0
@@ -129,7 +118,7 @@ grow_horizontal = 1
 grow_vertical = 1
 texture = ExtResource("9_d1pnq")
 
-[node name="P2_Cursor" parent="CharacterSelect" instance=ExtResource("6_5y3p4")]
+[node name="P2_Cursor" parent="CharacterSelect" unique_id=628268800 instance=ExtResource("6_5y3p4")]
 layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.0
@@ -144,7 +133,7 @@ grow_horizontal = 1
 grow_vertical = 1
 texture = ExtResource("10_vt3nd")
 
-[node name="Title" type="Label" parent="CharacterSelect"]
+[node name="Title" type="Label" parent="CharacterSelect" unique_id=387495747]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -157,7 +146,7 @@ theme_override_font_sizes/font_size = 50
 text = "Character Select"
 horizontal_alignment = 1
 
-[node name="P1SelectedName" type="Label" parent="CharacterSelect"]
+[node name="P1SelectedName" type="Label" parent="CharacterSelect" unique_id=754449147]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -170,7 +159,7 @@ grow_vertical = 0
 theme_override_font_sizes/font_size = 50
 text = "Character Select"
 
-[node name="P2SelectedName" type="Label" parent="CharacterSelect"]
+[node name="P2SelectedName" type="Label" parent="CharacterSelect" unique_id=1110573675]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -187,7 +176,56 @@ theme_override_font_sizes/font_size = 50
 text = "Character Select"
 horizontal_alignment = 2
 
-[node name="StageSelect" type="Control" parent="."]
+[node name="ColorSelectP1" type="Control" parent="CharacterSelect" unique_id=1053468782 node_paths=PackedStringArray("scroll", "contents")]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+grow_vertical = 2
+script = ExtResource("17_u1s66")
+menuElement = ExtResource("17_8r0cl")
+scroll = NodePath("ScrollContainer")
+contents = NodePath("ScrollContainer/Contents")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CharacterSelect/ColorSelectP1" unique_id=2039465473]
+layout_mode = 0
+offset_top = -110.0
+offset_right = 308.0
+offset_bottom = 99.0
+pivot_offset = Vector2(0, 110)
+follow_focus = true
+horizontal_scroll_mode = 0
+
+[node name="Contents" type="VBoxContainer" parent="CharacterSelect/ColorSelectP1/ScrollContainer" unique_id=1876807094]
+layout_mode = 2
+
+[node name="ColorSelectP2" type="Control" parent="CharacterSelect" unique_id=848942710 node_paths=PackedStringArray("scroll", "contents")]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 0
+grow_vertical = 2
+script = ExtResource("17_u1s66")
+menuElement = ExtResource("17_8r0cl")
+scroll = NodePath("ScrollContainer")
+contents = NodePath("ScrollContainer/Contents")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CharacterSelect/ColorSelectP2" unique_id=1621342159]
+layout_mode = 0
+offset_left = -300.0
+offset_top = -110.0
+offset_bottom = 99.0
+pivot_offset = Vector2(300, 110)
+follow_focus = true
+horizontal_scroll_mode = 0
+
+[node name="Contents" type="VBoxContainer" parent="CharacterSelect/ColorSelectP2/ScrollContainer" unique_id=1840068908]
+layout_mode = 2
+
+[node name="StageSelect" type="Control" parent="." unique_id=928303259]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -196,7 +234,22 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Title" type="Label" parent="StageSelect"]
+[node name="StagePortrait" type="TextureRect" parent="StageSelect" unique_id=595796175]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -319.0
+offset_top = -286.0
+offset_right = 320.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_vt3nd")
+
+[node name="Title" type="Label" parent="StageSelect" unique_id=2077981170]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -209,7 +262,7 @@ theme_override_font_sizes/font_size = 50
 text = "Stage Select"
 horizontal_alignment = 1
 
-[node name="StageName" type="Label" parent="StageSelect"]
+[node name="StageName" type="Label" parent="StageSelect" unique_id=1332648551]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -223,7 +276,7 @@ theme_override_font_sizes/font_size = 50
 text = "AFF Legacy Stage"
 horizontal_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="StageSelect"]
+[node name="HBoxContainer" type="HBoxContainer" parent="StageSelect" unique_id=1559982997]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -237,7 +290,7 @@ offset_bottom = -1.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="SongBackground" type="ColorRect" parent="StageSelect"]
+[node name="SongBackground" type="ColorRect" parent="StageSelect" unique_id=307428401]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -252,7 +305,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.65098)
 
-[node name="SongName" type="Label" parent="StageSelect"]
+[node name="SongName" type="Label" parent="StageSelect" unique_id=1408302114]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -267,7 +320,7 @@ text = "AFF Legacy Stage"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SongIcon" type="TextureRect" parent="StageSelect"]
+[node name="SongIcon" type="TextureRect" parent="StageSelect" unique_id=1241799022]
 layout_mode = 0
 offset_left = 937.0
 offset_top = 385.0
@@ -276,7 +329,7 @@ offset_bottom = 488.0
 texture = ExtResource("11_83tgi")
 expand_mode = 1
 
-[node name="StageSelectCursor" type="Control" parent="StageSelect"]
+[node name="StageSelectCursor" type="Control" parent="StageSelect" unique_id=155375960]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -289,7 +342,7 @@ offset_right = 20.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="TextureRect" type="TextureRect" parent="StageSelect/StageSelectCursor"]
+[node name="TextureRect" type="TextureRect" parent="StageSelect/StageSelectCursor" unique_id=1362044742]
 layout_mode = 1
 offset_left = -8.0
 offset_top = -8.0
@@ -298,13 +351,13 @@ offset_bottom = 120.0
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("10_d1pnq")
 
-[node name="P1Selecting" type="Control" parent="StageSelect"]
+[node name="P1Selecting" type="Control" parent="StageSelect" unique_id=1019343094]
 layout_mode = 1
 anchors_preset = 0
 offset_right = 194.0
 offset_bottom = 75.0
 
-[node name="ColorRect" type="ColorRect" parent="StageSelect/P1Selecting"]
+[node name="ColorRect" type="ColorRect" parent="StageSelect/P1Selecting" unique_id=1338069321]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -313,7 +366,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.265614, 0.478296, 1, 1)
 
-[node name="Label" type="Label" parent="StageSelect/P1Selecting"]
+[node name="Label" type="Label" parent="StageSelect/P1Selecting" unique_id=1372026459]
 layout_mode = 0
 offset_left = 8.0
 offset_top = 12.0
@@ -322,7 +375,7 @@ offset_bottom = 61.0
 theme_override_font_sizes/font_size = 35
 text = "Player 1"
 
-[node name="P2Selecting" type="Control" parent="StageSelect"]
+[node name="P2Selecting" type="Control" parent="StageSelect" unique_id=2095538256]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -331,7 +384,7 @@ offset_left = -194.0
 offset_bottom = 75.0
 grow_horizontal = 0
 
-[node name="ColorRect" type="ColorRect" parent="StageSelect/P2Selecting"]
+[node name="ColorRect" type="ColorRect" parent="StageSelect/P2Selecting" unique_id=1932067239]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -340,7 +393,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.806418, 0.171456, 0.231435, 1)
 
-[node name="Label" type="Label" parent="StageSelect/P2Selecting"]
+[node name="Label" type="Label" parent="StageSelect/P2Selecting" unique_id=1001025340]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -354,7 +407,7 @@ theme_override_font_sizes/font_size = 35
 text = "Player 2"
 horizontal_alignment = 2
 
-[node name="Arrow_Up" type="TextureRect" parent="StageSelect"]
+[node name="Arrow_Up" type="TextureRect" parent="StageSelect" unique_id=1884141705]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -370,7 +423,7 @@ grow_vertical = 2
 texture = ExtResource("18_7p58r")
 expand_mode = 1
 
-[node name="Arrow_Down" type="TextureRect" parent="StageSelect"]
+[node name="Arrow_Down" type="TextureRect" parent="StageSelect" unique_id=1799064812]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -387,7 +440,7 @@ rotation = 3.14159
 texture = ExtResource("18_7p58r")
 expand_mode = 1
 
-[node name="Arrow_Right" type="TextureRect" parent="StageSelect"]
+[node name="Arrow_Right" type="TextureRect" parent="StageSelect" unique_id=902284123]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -403,7 +456,7 @@ rotation = 1.5708
 texture = ExtResource("18_7p58r")
 expand_mode = 1
 
-[node name="Arrow_Left" type="TextureRect" parent="StageSelect"]
+[node name="Arrow_Left" type="TextureRect" parent="StageSelect" unique_id=1673207316]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0

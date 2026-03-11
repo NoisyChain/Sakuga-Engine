@@ -41,4 +41,5 @@ ExtraVariablesChange = Array[Object]([SubResource("Resource_gr5d3"), SubResource
 CanBeOverrided = true
 CanOverrideToSelf = true
 IgnoreSamePriority = false
+AcceptCombatStates = true
 UseOnAir = true

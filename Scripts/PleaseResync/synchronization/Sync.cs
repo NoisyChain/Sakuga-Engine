@@ -300,7 +300,7 @@ namespace PleaseResync
                         {
                             device.State = Device.DeviceState.Disconnected;
                             _syncState = SyncState.DESYNCED;
-                            Platform.Log($"State mismatch found.({health.Item2} : {_stateStorage.GetChecksum(health.Item1)})", Platform.DebugType.Error);
+                            Platform.Log($"State mismatch found at frame {health.Item1}.({health.Item2} : {_stateStorage.GetChecksum(health.Item1)})", Platform.DebugType.Error);
                             break;
                         }
                     }

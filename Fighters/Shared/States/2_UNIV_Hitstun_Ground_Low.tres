@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="FighterState" format=3 uid="uid://kj7fmwkn1npi"]
+
+[ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_aeg2p"]
+[ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2_dsema"]
+[ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="3_lokg2"]
+[ext_resource type="Script" uid="uid://bia88bspuvxd" path="res://Scripts/SakugaEngine/Resources/StateTransitionSettings.cs" id="4_1rxai"]
+
+[sub_resource type="Resource" id="Resource_8ikyx"]
+script = ExtResource("1_aeg2p")
+SourceAnimation = "Hitstun_Low"
+LimitRange = true
+metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
+
+[sub_resource type="Resource" id="2"]
+script = ExtResource("2_dsema")
+
+[sub_resource type="Resource" id="Resource_mywsi"]
+script = ExtResource("4_1rxai")
+StateIndex = 0
+Condition = 1
+DistanceArea = Vector2i(0, 99999)
+
+[resource]
+script = ExtResource("3_lokg2")
+StateName = "UNIV_Hitstun_Ground_Low"
+Type = 4
+Duration = 12
+HitStunFrameLimit = 7
+stateProperties = null
+statePhysics = null
+hitboxStates = [SubResource("2")]
+animationEvents = null
+throwPivot = Array[Object]([])
+stateTransitions = Array[Object]([SubResource("Resource_mywsi")])
+animationSettings = Array[Object]([SubResource("Resource_8ikyx")])
+AIFlags = 34

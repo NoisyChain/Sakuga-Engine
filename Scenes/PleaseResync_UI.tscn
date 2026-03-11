@@ -40,6 +40,7 @@ offset_bottom = -7.0
 text = "9999(-1)"
 
 [node name="Ping_Info" type="Label" parent="Connection_Status"]
+visible = false
 layout_mode = 0
 anchor_left = 1.0
 anchor_top = 1.0
@@ -52,6 +53,7 @@ offset_bottom = -7.0
 text = "Ping: 999ms"
 
 [node name="Rollback_Info" type="Label" parent="Connection_Status"]
+visible = false
 layout_mode = 0
 anchor_left = 1.0
 anchor_top = 1.0

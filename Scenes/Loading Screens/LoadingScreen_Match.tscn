@@ -1,0 +1,119 @@
+[gd_scene format=3 uid="uid://b1pcm06y24etn"]
+
+[ext_resource type="Texture2D" uid="uid://ckornbcskvw5n" path="res://Fighters/Kaede/Sprites/Kaede_Render.png" id="2_snl5s"]
+
+[node name="LoadingScreenMatch" type="Control" unique_id=481125358]
+z_index = 100
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="." unique_id=1501532196]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.26657522, 0.2665752, 0.2665752, 1)
+
+[node name="Title" type="Label" parent="." unique_id=1721065962]
+modulate = Color(1, 1, 1, 0.28235295)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -70.5
+offset_right = 70.5
+offset_bottom = 165.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 75
+text = "GET READY FOR THE NEXT BATTLE!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VS" type="Label" parent="." unique_id=895954777]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -70.5
+offset_top = -82.5
+offset_right = 70.5
+offset_bottom = 82.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 120
+text = "VS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="P1SelectedRender" type="TextureRect" parent="." unique_id=1367881083]
+layout_mode = 0
+offset_right = 596.0
+offset_bottom = 980.0
+texture = ExtResource("2_snl5s")
+expand_mode = 4
+stretch_mode = 5
+
+[node name="P2SelectedRender" type="TextureRect" parent="." unique_id=888363081]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -596.0
+offset_bottom = 980.0
+grow_horizontal = 0
+texture = ExtResource("2_snl5s")
+expand_mode = 4
+stretch_mode = 5
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1424673234]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -665.0
+offset_top = -95.0
+offset_right = 665.0
+offset_bottom = -31.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0, 0, 0, 0.4862745)
+
+[node name="P1SelectedName" type="Label" parent="." unique_id=408272155]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -100.0
+offset_right = 414.0
+offset_bottom = -31.0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 50
+text = "Character Select"
+
+[node name="P2SelectedName" type="Label" parent="." unique_id=421599211]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -414.0
+offset_top = -100.0
+offset_right = -20.0
+offset_bottom = -31.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 50
+text = "Character Select"
+horizontal_alignment = 2

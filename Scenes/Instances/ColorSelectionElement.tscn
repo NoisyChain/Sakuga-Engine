@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://54usvtxxigmk"]
+
+[ext_resource type="Script" uid="uid://bubva23df2k1e" path="res://Scripts/SakugaEngine/UI/ColorSelectionElement.cs" id="1_rmou7"]
+
+[node name="ColorSelectionElement" type="ColorRect" node_paths=PackedStringArray("ColorName")]
+custom_minimum_size = Vector2(300, 45)
+color = Color(0.8164552, 0.6157364, 0, 1)
+script = ExtResource("1_rmou7")
+ColorName = NodePath("Label")
+DefaultColor = Color(0, 0, 0, 0.5803922)
+SelectedColor = Color(0.8156863, 0.6156863, 0, 1)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 20.0
+offset_right = 287.0
+offset_bottom = 45.0
+theme_override_font_sizes/font_size = 24
+text = "0: Default"
+vertical_alignment = 1

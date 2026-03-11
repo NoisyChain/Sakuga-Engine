@@ -6,10 +6,9 @@ namespace SakugaEngine
     public partial class FighterCamera : Camera3D
     {
         //private Listener audioListener;
-
+        [Export] public Global.CameraFocus CurrentFocus = Global.CameraFocus.SELF;
         [Export] public bool isCinematic;
         [Export] public Vector2 minBounds = new Vector2(-5.5f, 1.25f), maxBounds = new Vector2(5.50f, 10f);
-        //public int limitPlayersDistance = 600;
         [Export] public Vector2 minOffset = new Vector2(-4f, 1.2f), maxOffset = new Vector2(-5f, 1.55f);
         [Export] public float minSmoothDistance = 4;
         [Export] public float minDistance = 4f, maxDistance = 5.5f;

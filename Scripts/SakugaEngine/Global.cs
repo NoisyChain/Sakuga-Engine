@@ -5,7 +5,6 @@ namespace SakugaEngine
 {
     public static class Global
     {
-        //public static MatchSetings Match;
         //Global settings
         public const int TicksPerSecond = 60;
         public const int SubSteps = 4;
@@ -33,7 +32,7 @@ namespace SakugaEngine
         public const ushort BaseMaxDamageScaling = 100;
         public const ushort CornerMinDamageScaling = 45;
         public const ushort CornerMaxDamageScaling = 120;
-        public const uint MoveBufferLength = 10;
+        public const int MoveBufferLength = 10;
 
         //Global inputs
         public const int INPUT_UP = 1 << 0;
@@ -77,37 +76,12 @@ namespace SakugaEngine
         public enum NetcodeMode { LOCAL, ONLINE, REPLAY }
         public enum BotDifficulty { BEGINNER, EASY, MEDIUM, HARD, VERY_HARD, PRO }
         public enum BotMode { ANY = -1, AGGRESSIVE, DEFENSIVE }
-        //...
-        /*public enum DirectionalInputs
-        {
-            DOWN_LEFT = 1,
-            DOWN = 2,
-            DOWN_RIGHT = 3,
-            LEFT = 4,
-            NEUTRAL = 5,
-            RIGHT = 6,
-            UP_LEFT = 7,
-            UP = 8,
-            UP_RIGHT = 9,
-        }
-
-        public enum ButtonInputs
-        {
-            NULL = 0,
-            FACE_A = 1,
-            FACE_B = 2,
-            FACE_C = 3,
-            FACE_D = 4,
-            FACE_AB = 5,
-            FACE_AC = 6,
-            FACE_BC = 7,
-            FACE_ABC = 8,
-            FACE_ABCD = 9,
-            FACE_ANY = 10,
-            TAUNT = 11,
-            DASH = 12
-        }*/
-
+        // Character Select enums
+        public enum CharacterSelectStyle : byte { VERSUS, PLAYER1, PLAYER2 }
+        public enum CharacterSelectMode : byte { CHARACTER_SELECT, STAGE_SELECT }
+        public enum CharacterSelectState : byte { SELECTING_CHARACTER, SELECTING_COLOR, DONE }
+        public enum CameraFocus : byte { SELF, PLAYER1, PLAYER2, ANIMATION }
+        public enum MatchState { INTRO, CATCHPHRASE, ROUND_START, ROUND_RUNNING, ROUND_END, ROUND_WINNER, ROUND_INTERLUDE, NEXT_ROUND_TRANSITION, MATCH_OUTRO, RESULTS }
         //Global bit flags
         [Flags]
         public enum DirectionalInputs : ushort
@@ -260,6 +234,12 @@ namespace SakugaEngine
 
             return dx * dx + dy * dy;
         }
+
+        public static float SineWaveFunction(float amp, float len, int time, float phase)
+        {
+            return amp * Mathf.Sin(len * ((float)time / TicksPerSecond) + phase);
+        }
+
         public static string GetPlayerPrefix(int id)
         {
             switch (id)
@@ -277,24 +257,4 @@ namespace SakugaEngine
             }
         }
     }
-
-    
-
-    /*public struct MatchSetings
-    {
-        public MatchPlayerSettings Player1;
-        public MatchPlayerSettings Player2;
-        public int selectedStage;
-        public int selectedBGM;
-        public int roundsToWin;
-        public int roundTime;
-        public Global.BotDifficulty botDifficulty;
-        public Global.SelectedMode selectedMode;
-    }
-    public struct MatchPlayerSettings
-    {
-        public int selectedCharacter;
-        public int selectedColor;
-        public int selectedDevice;
-    }*/
 }

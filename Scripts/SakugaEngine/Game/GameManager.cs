@@ -17,14 +17,11 @@ namespace SakugaEngine.Game
         [Export] public FighterList fightersList;
         [Export] public StageList stagesList;
         [Export] public BGMList songsList;
-        //[Export] public int player1Character;
-        //[Export] public int player2Character;
-        //[Export] public int selectedStage;
-        //[Export] public int selectedBGM;
         [Export] private CanvasLayer FighterUI;
         [Export] private FighterCamera Camera;
         [Export] private AudioStreamPlayer BGMSource;
-        [Export] Label SeedViewer;
+        private Label SeedViewer;
+        private FadeScreen Curtain;
         public uint InputSize;
 
         private List<SakugaNode> Nodes = new List<SakugaNode>();
@@ -44,16 +41,30 @@ namespace SakugaEngine.Game
         {
             healthHUD = (HealthHUD)FighterUI.GetNode("GameHUD_Background");
             metersHUD = (MetersHUD)FighterUI.GetNode("GameHUD_Foreground");
+            SeedViewer = (Label)FighterUI.GetNode("Seed");
+            Control OnlinePlayersInfo = (Control)healthHUD.GetNode("OnlineInfo");
             Control TrainingInfo = (Control)metersHUD.GetNode("TrainingInfo");
             Control InputHistory = (Control)metersHUD.GetNode("InputHistory");
             Control DebugWindow = (Control)FighterUI.GetNode("Debug");
             Control NetcodeHUD = (Control)FighterUI.GetNode("PleaseResync_UI");
+            if (Monitor != null)
+            {
+                Monitor.Cards = (MatchCardsController)FighterUI.GetNode("MatchCards");
+                Monitor.ResultsScreen = (Control)FighterUI.GetNode("ResultsScreen");
+                Monitor.ResultsScreen.Visible = false;
+            }
+            Curtain = (FadeScreen)FighterUI.GetNode("FadeScreen");
+            OnlinePlayersInfo.Visible = Match.SelectedModeSettings.ShowOnlineInfo;
             TrainingInfo.Visible = Match.SelectedModeSettings.ShowTrainingInfo;
             InputHistory.Visible = Match.SelectedModeSettings.AllowShowInputs;
             DebugWindow.Visible = Match.SelectedModeSettings.AllowShowDebugElements;
             NetcodeHUD.Visible = Match.SelectedModeSettings.AllowShowDebugElements;
             SeedViewer.Visible = Match.SelectedModeSettings.AllowShowDebugElements;
-            //Nodes = new List<SakugaNode>();
+
+            if (Match.SelectedModeSettings.ShowOnlineInfo && OnlinePlayersInfo != null)
+            {
+                ((OnlineInfo)OnlinePlayersInfo).Set(Match);
+            }
         }
 
         public override void _Process(double delta)
@@ -63,10 +74,9 @@ namespace SakugaEngine.Game
             if (Monitor == null) return;
 
             if (!BGMSource.Playing) BGMSource.Play();
-            SeedViewer.Text = finalSeed.ToString();
+            if (SeedViewer.Visible) SeedViewer.Text = finalSeed.ToString();
 
-            if (Input.IsActionJustPressed("toggle_hitboxes") && Match.SelectedModeSettings.AllowShowHitboxes)
-                Global.ShowHitboxes = !Global.ShowHitboxes;
+            DebugCommands();
         }
 
         public void SetBGM()
@@ -81,6 +91,8 @@ namespace SakugaEngine.Game
             Camera.UpdateCamera(Fighters[0], Fighters[1]);
             healthHUD.UpdateHealthBars(Fighters, Monitor);
             metersHUD.UpdateMeters(Fighters);
+            Curtain.FadeIntensity = Monitor.FadeScreenIntensity;
+            Monitor.Render();
         }
 
         void RenderNodes()
@@ -141,7 +153,7 @@ namespace SakugaEngine.Game
             Fighters[1].SetOpponent(Fighters[0]);
 
             GenerateBaseSeed();
-            Monitor.Initialize(Fighters, Match.TimeLimit, Match.RoundsToWin);
+            Monitor.Initialize(Fighters, Match);
 
             healthHUD.Setup(Fighters);
             metersHUD.Setup(Fighters);
@@ -150,10 +162,24 @@ namespace SakugaEngine.Game
         public void CreateFighter(int characterIndex, int playerIndex)
         {
             bool AIcontrolled = false;
-            if (playerIndex == 0 && Match.P1SelectedDevice == -1) AIcontrolled = true;
-            if (playerIndex == 1 && Match.P2SelectedDevice == -1) AIcontrolled = true;
+            int selectedColor = 0;
+            switch (playerIndex)
+            {
+                case 0:
+                    AIcontrolled = !Match.SelectedModeSettings.NoAI && Match.P1SelectedDevice == -1;
+                    selectedColor = Match.P1SelectedColor;
+                    break;
+                case 1:
+                    AIcontrolled = !Match.SelectedModeSettings.NoAI && Match.P2SelectedDevice == -1;
+                    selectedColor = Match.P2SelectedColor;
+                    if (characterIndex == Match.P1SelectedCharacter && Match.P1SelectedColor == Match.P2SelectedColor)
+                        selectedColor++;
+                    if (selectedColor >= fightersList.elements[characterIndex].ColorPalettes.Length)
+                        selectedColor = 0;
+                    break;
+            }
             
-            Node temp = fightersList.elements[characterIndex].Instance.Instantiate();
+            Node temp = fightersList.elements[characterIndex].ColorPalettes[selectedColor].Instance.Instantiate();
             Fighters[playerIndex] = temp as SakugaFighter;
             AddActor(Fighters[playerIndex]);
             Fighters[playerIndex].Initialize(playerIndex);
@@ -227,10 +253,74 @@ namespace SakugaEngine.Game
                     center + Global.MaxPlayersDistance / 2
                 );
                 Fighters[i].Body.UpdateColliders();
+                if (!Match.SelectedModeSettings.CanKO)
+                {
+                    if (Fighters[i].Variables.CurrentHealth <= 0)
+                        Fighters[i].Variables.CurrentHealth = 1;
+                    if (!Fighters[i].HitStun.IsRunning())
+                        Fighters[i].Variables.CurrentHealth = Fighters[i].Data.MaxHealth;
+                }
             }
             
             for (int i = 0; i < Nodes.Count; i++)
                 Nodes[i].LateTick();
+        }
+
+        private void DebugCommands()
+        {
+            if (Input.IsActionJustPressed("toggle_hitboxes") && Match.SelectedModeSettings.AllowShowHitboxes)
+                Global.ShowHitboxes = !Global.ShowHitboxes;
+            
+            if (!Match.SelectedModeSettings.AllowUseDebugCommands) return;
+
+            if (Input.IsActionJustPressed("debug_f1"))
+            {
+                if (Input.IsActionPressed("debug_shift"))
+                    Fighters[0].Variables.CurrentHealth = 0;
+                else
+                    Fighters[0].Variables.CurrentHealth -= 100;
+            }
+            if (Input.IsActionJustPressed("debug_f2"))
+            {
+                if (Input.IsActionPressed("debug_shift"))
+                    Fighters[1].Variables.CurrentHealth = 0;
+                else
+                    Fighters[1].Variables.CurrentHealth -= 100;
+            }
+            if (Input.IsActionJustPressed("debug_f3"))
+            {
+                if (Input.IsActionPressed("debug_shift"))
+                    Fighters[0].Variables.CurrentHealth = Fighters[0].Data.MaxHealth;
+                else
+                    Fighters[0].Variables.CurrentHealth += 100;
+            }
+            if (Input.IsActionJustPressed("debug_f4"))
+            {
+                if (Input.IsActionPressed("debug_shift"))
+                    Fighters[1].Variables.CurrentHealth = Fighters[1].Data.MaxHealth;
+                else
+                    Fighters[1].Variables.CurrentHealth += 100;
+            }
+            if (Input.IsActionJustPressed("debug_f5"))
+            {
+                Fighters[0].Variables.CurrentSuperGauge = Fighters[0].Data.MaxSuperGauge;
+            }
+            if (Input.IsActionJustPressed("debug_f6"))
+            {
+                Fighters[1].Variables.CurrentSuperGauge = Fighters[1].Data.MaxSuperGauge;
+            }
+            if (Input.IsActionJustPressed("debug_timer"))
+            {
+                if (Input.IsActionPressed("debug_shift"))
+                    Monitor.ResetTimer();
+                else
+                    Monitor.Clock = 0;
+            }
+            if (Input.IsActionJustPressed("debug_reset"))
+            {
+                Fighters[0].Reset(0);
+                Fighters[1].Reset(1);
+            }
         }
 
         // Generate inputs for your game

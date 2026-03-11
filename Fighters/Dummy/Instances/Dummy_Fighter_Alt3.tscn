@@ -1,0 +1,146 @@
+[gd_scene format=3 uid="uid://bloh87idirh84"]
+
+[ext_resource type="Script" uid="uid://bkhlpeqky2g1r" path="res://Scripts/SakugaEngine/Components/SakugaFighter.cs" id="1_d8jce"]
+[ext_resource type="Resource" uid="uid://cgfa1xwppjfy2" path="res://Fighters/Dummy/Dummy_Data.tres" id="2_rv7k4"]
+[ext_resource type="Resource" uid="uid://b6a4cqdykhhg" path="res://Fighters/Shared/Shared_VFXList.tres" id="3_1lr7r"]
+[ext_resource type="Resource" uid="uid://k31pv0ejfv2s" path="res://Fighters/Shared/Shared_SFXList.tres" id="4_3ha6i"]
+[ext_resource type="Resource" uid="uid://c8h8jltu6u5pb" path="res://Fighters/Shared/Shared_VoiceLines.tres" id="5_38gr8"]
+[ext_resource type="Script" uid="uid://bx452hpssiy38" path="res://Scripts/SakugaEngine/Components/FrameAnimator.cs" id="6_2f775"]
+[ext_resource type="PackedScene" uid="uid://dduf0jsq56ggk" path="res://Scenes/Instances/HitboxViewer.tscn" id="8_b5psn"]
+[ext_resource type="Script" uid="uid://3uu6r0mhj3p3" path="res://Scripts/SakugaEngine/Components/SoundQueue.cs" id="9_83n8r"]
+[ext_resource type="Script" uid="uid://hg0vcp1gy2ny" path="res://Scripts/SakugaEngine/Collision/PhysicsBody.cs" id="10_j7dhg"]
+[ext_resource type="Script" uid="uid://dshbmw3q5jor2" path="res://Scripts/SakugaEngine/Components/InputManager.cs" id="11_nd4bf"]
+[ext_resource type="Script" uid="uid://v7id8u3160fg" path="res://Scripts/SakugaEngine/Components/FighterVariables.cs" id="12_t7jot"]
+[ext_resource type="Script" uid="uid://17dvgaypi8q0" path="res://Scripts/SakugaEngine/Components/SakugaStateMachine.cs" id="13_8ghbb"]
+[ext_resource type="Script" uid="uid://jxgdxccucllx" path="res://Scripts/SakugaEngine/Components/CombatTracker.cs" id="14_6yew0"]
+[ext_resource type="Script" uid="uid://dvqrejewx20e3" path="res://Scripts/SakugaEngine/Components/AIBrain.cs" id="15_ue5lt"]
+[ext_resource type="Script" uid="uid://cmq3cp1n0copp" path="res://Scripts/SakugaEngine/Components/FrameTimer.cs" id="16_vj3jp"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eb1r8"]
+albedo_color = Color(0.21217826, 0.7543016, 0, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_a468o"]
+radius = 0.3
+height = 1.2
+radial_segments = 12
+rings = 3
+
+[sub_resource type="SphereMesh" id="SphereMesh_8pohn"]
+radius = 0.25
+height = 0.5
+radial_segments = 12
+rings = 8
+
+[node name="Dummy_Fighter" type="Node3D" unique_id=1427691045 node_paths=PackedStringArray("HitStun", "HitStop", "MoveBuffer", "PushForce", "HorizontalBounce", "VerticalBounce", "Brain", "Body", "Inputs", "Variables", "Animator", "StateMachine", "Tracker", "Sounds", "Graphics")]
+script = ExtResource("1_d8jce")
+HitStun = NodePath("Timers/HitStun")
+HitStop = NodePath("Timers/HitStop")
+MoveBuffer = NodePath("Timers/MoveBuffer")
+PushForce = NodePath("Timers/Pushback")
+HorizontalBounce = NodePath("Timers/HBounce")
+VerticalBounce = NodePath("Timers/VBounce")
+Brain = NodePath("AIBrain")
+Data = ExtResource("2_rv7k4")
+Body = NodePath("PhysicsBody")
+Inputs = NodePath("InputManager")
+Variables = NodePath("Variables")
+Animator = NodePath("Graphics/Mesh")
+StateMachine = NodePath("StateMachine")
+Tracker = NodePath("CombatTracker")
+Sounds = [NodePath("Sounds/SFX_0"), NodePath("Sounds/SFX_1"), NodePath("Sounds/SFX_2"), NodePath("Sounds/SFX_3"), NodePath("Sounds/SFX_4")]
+Graphics = [NodePath("Graphics/Mesh/Pivot")]
+VFXList = ExtResource("3_1lr7r")
+SFXList = ExtResource("4_3ha6i")
+VoiceLines = ExtResource("5_38gr8")
+
+[node name="Graphics" type="Node3D" parent="." unique_id=2107227101]
+
+[node name="Mesh" type="Node3D" parent="Graphics" unique_id=82135032 node_paths=PackedStringArray("players", "OffsetNode")]
+script = ExtResource("6_2f775")
+players = [NodePath("Pivot/AnimationPlayer")]
+prefix = PackedStringArray("")
+OffsetNode = NodePath("Pivot")
+
+[node name="Pivot" type="Node3D" parent="Graphics/Mesh" unique_id=682174034]
+
+[node name="Body" type="MeshInstance3D" parent="Graphics/Mesh/Pivot" unique_id=531998915]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+layers = 3
+material_override = SubResource("StandardMaterial3D_eb1r8")
+mesh = SubResource("CapsuleMesh_a468o")
+skeleton = NodePath("../..")
+
+[node name="Head" type="MeshInstance3D" parent="Graphics/Mesh/Pivot" unique_id=827404076]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35, 0)
+layers = 3
+material_override = SubResource("StandardMaterial3D_eb1r8")
+mesh = SubResource("SphereMesh_8pohn")
+skeleton = NodePath("../..")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Graphics/Mesh/Pivot" unique_id=787142942]
+root_node = NodePath("../..")
+
+[node name="HitboxViewer" parent="." unique_id=765429890 node_paths=PackedStringArray("body") instance=ExtResource("8_b5psn")]
+body = NodePath("../PhysicsBody")
+
+[node name="Sounds" type="Node3D" parent="." unique_id=1132501199]
+
+[node name="SFX_0" type="AudioStreamPlayer3D" parent="Sounds" unique_id=2105811498]
+script = ExtResource("9_83n8r")
+
+[node name="SFX_1" type="AudioStreamPlayer3D" parent="Sounds" unique_id=1859013116]
+script = ExtResource("9_83n8r")
+
+[node name="SFX_2" type="AudioStreamPlayer3D" parent="Sounds" unique_id=744307998]
+script = ExtResource("9_83n8r")
+
+[node name="SFX_3" type="AudioStreamPlayer3D" parent="Sounds" unique_id=1146992762]
+script = ExtResource("9_83n8r")
+
+[node name="SFX_4" type="AudioStreamPlayer3D" parent="Sounds" unique_id=1389266622]
+script = ExtResource("9_83n8r")
+
+[node name="PhysicsBody" type="Node" parent="." unique_id=369731818]
+script = ExtResource("10_j7dhg")
+StayOnBounds = true
+
+[node name="InputManager" type="Node" parent="." unique_id=1284619749]
+script = ExtResource("11_nd4bf")
+
+[node name="Variables" type="Node" parent="." unique_id=755444217 node_paths=PackedStringArray("ExtraVariables")]
+script = ExtResource("12_t7jot")
+ExtraVariables = []
+
+[node name="StateMachine" type="Node" parent="." unique_id=1852133540]
+script = ExtResource("13_8ghbb")
+
+[node name="CombatTracker" type="Node" parent="." unique_id=1166182917]
+script = ExtResource("14_6yew0")
+
+[node name="AIBrain" type="Node" parent="." unique_id=717140419]
+script = ExtResource("15_ue5lt")
+metadata/_custom_type_script = "uid://dvqrejewx20e3"
+
+[node name="Timers" type="Node" parent="." unique_id=555984178]
+
+[node name="HitStun" type="Node" parent="Timers" unique_id=855804984]
+script = ExtResource("16_vj3jp")
+
+[node name="HitStop" type="Node" parent="Timers" unique_id=1450207488]
+script = ExtResource("16_vj3jp")
+
+[node name="MoveBuffer" type="Node" parent="Timers" unique_id=1433910549]
+script = ExtResource("16_vj3jp")
+WaitTime = 10
+
+[node name="Pushback" type="Node" parent="Timers" unique_id=1031798823]
+script = ExtResource("16_vj3jp")
+WaitTime = 10
+
+[node name="HBounce" type="Node" parent="Timers" unique_id=1231126290]
+script = ExtResource("16_vj3jp")
+WaitTime = 10
+
+[node name="VBounce" type="Node" parent="Timers" unique_id=441085254]
+script = ExtResource("16_vj3jp")
+WaitTime = 10

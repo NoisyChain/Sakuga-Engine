@@ -1,17 +1,21 @@
-[gd_scene load_steps=15 format=3 uid="uid://3reeyb4tcc1i"]
+[gd_scene format=3 uid="uid://dt6dqmcq5rept"]
 
-[ext_resource type="Script" uid="uid://cmq3cp1n0copp" path="res://Scripts/SakugaEngine/Components/FrameTimer.cs" id="1_5hpi4"]
-[ext_resource type="Script" uid="uid://bkhlpeqky2g1r" path="res://Scripts/SakugaEngine/Components/SakugaFighter.cs" id="1_pv6li"]
-[ext_resource type="Resource" uid="uid://cgfa1xwppjfy2" path="res://Fighters/Dummy/Dummy_Data.tres" id="2_nokef"]
-[ext_resource type="Script" uid="uid://dshbmw3q5jor2" path="res://Scripts/SakugaEngine/Components/InputManager.cs" id="2_ujbvg"]
-[ext_resource type="Script" uid="uid://3uu6r0mhj3p3" path="res://Scripts/SakugaEngine/Components/SoundQueue.cs" id="5_e7hqf"]
-[ext_resource type="Script" uid="uid://bx452hpssiy38" path="res://Scripts/SakugaEngine/Components/FrameAnimator.cs" id="5_nddkw"]
-[ext_resource type="Script" uid="uid://v7id8u3160fg" path="res://Scripts/SakugaEngine/Components/FighterVariables.cs" id="7_08r4i"]
-[ext_resource type="Script" uid="uid://17dvgaypi8q0" path="res://Scripts/SakugaEngine/Components/SakugaStateMachine.cs" id="9_e7hqf"]
-[ext_resource type="Script" uid="uid://hg0vcp1gy2ny" path="res://Scripts/SakugaEngine/Collision/PhysicsBody.cs" id="12_bham4"]
-[ext_resource type="PackedScene" uid="uid://dduf0jsq56ggk" path="res://Scenes/Instances/HitboxViewer.tscn" id="14_1fhq1"]
-[ext_resource type="Script" uid="uid://jxgdxccucllx" path="res://Scripts/SakugaEngine/Components/CombatTracker.cs" id="18_2fc62"]
-[ext_resource type="Script" uid="uid://dvqrejewx20e3" path="res://Scripts/SakugaEngine/Components/AIBrain.cs" id="21_ljaat"]
+[ext_resource type="Script" uid="uid://bkhlpeqky2g1r" path="res://Scripts/SakugaEngine/Components/SakugaFighter.cs" id="1_s6523"]
+[ext_resource type="Resource" uid="uid://cgfa1xwppjfy2" path="res://Fighters/Dummy/Dummy_Data.tres" id="2_d37cb"]
+[ext_resource type="Resource" uid="uid://b6a4cqdykhhg" path="res://Fighters/Shared/Shared_VFXList.tres" id="3_lucu4"]
+[ext_resource type="Resource" uid="uid://k31pv0ejfv2s" path="res://Fighters/Shared/Shared_SFXList.tres" id="4_v0d7b"]
+[ext_resource type="Resource" uid="uid://c8h8jltu6u5pb" path="res://Fighters/Shared/Shared_VoiceLines.tres" id="5_ixed2"]
+[ext_resource type="Script" uid="uid://bx452hpssiy38" path="res://Scripts/SakugaEngine/Components/FrameAnimator.cs" id="6_dji5d"]
+[ext_resource type="PackedScene" uid="uid://dduf0jsq56ggk" path="res://Scenes/Instances/HitboxViewer.tscn" id="7_6j1bb"]
+[ext_resource type="Material" uid="uid://su6qxjl5o6ge" path="res://Fighters/Dummy/Assets/Materials/Dummy_AltSkin.tres" id="7_d37cb"]
+[ext_resource type="Script" uid="uid://3uu6r0mhj3p3" path="res://Scripts/SakugaEngine/Components/SoundQueue.cs" id="8_xqilk"]
+[ext_resource type="Script" uid="uid://hg0vcp1gy2ny" path="res://Scripts/SakugaEngine/Collision/PhysicsBody.cs" id="9_pxu7v"]
+[ext_resource type="Script" uid="uid://dshbmw3q5jor2" path="res://Scripts/SakugaEngine/Components/InputManager.cs" id="10_n1y07"]
+[ext_resource type="Script" uid="uid://v7id8u3160fg" path="res://Scripts/SakugaEngine/Components/FighterVariables.cs" id="11_4tbbk"]
+[ext_resource type="Script" uid="uid://17dvgaypi8q0" path="res://Scripts/SakugaEngine/Components/SakugaStateMachine.cs" id="12_pnhhl"]
+[ext_resource type="Script" uid="uid://jxgdxccucllx" path="res://Scripts/SakugaEngine/Components/CombatTracker.cs" id="13_qrqtu"]
+[ext_resource type="Script" uid="uid://dvqrejewx20e3" path="res://Scripts/SakugaEngine/Components/AIBrain.cs" id="14_sr7j1"]
+[ext_resource type="Script" uid="uid://cmq3cp1n0copp" path="res://Scripts/SakugaEngine/Components/FrameTimer.cs" id="15_0mk82"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_a468o"]
 radius = 0.3
@@ -26,7 +30,7 @@ radial_segments = 12
 rings = 8
 
 [node name="Dummy_Fighter" type="Node3D" node_paths=PackedStringArray("HitStun", "HitStop", "MoveBuffer", "PushForce", "HorizontalBounce", "VerticalBounce", "Brain", "Body", "Inputs", "Variables", "Animator", "StateMachine", "Tracker", "Sounds", "Graphics")]
-script = ExtResource("1_pv6li")
+script = ExtResource("1_s6523")
 HitStun = NodePath("Timers/HitStun")
 HitStop = NodePath("Timers/HitStop")
 MoveBuffer = NodePath("Timers/MoveBuffer")
@@ -34,7 +38,7 @@ PushForce = NodePath("Timers/Pushback")
 HorizontalBounce = NodePath("Timers/HBounce")
 VerticalBounce = NodePath("Timers/VBounce")
 Brain = NodePath("AIBrain")
-Data = ExtResource("2_nokef")
+Data = ExtResource("2_d37cb")
 Body = NodePath("PhysicsBody")
 Inputs = NodePath("InputManager")
 Variables = NodePath("Variables")
@@ -43,11 +47,14 @@ StateMachine = NodePath("StateMachine")
 Tracker = NodePath("CombatTracker")
 Sounds = [NodePath("Sounds/SFX_0"), NodePath("Sounds/SFX_1"), NodePath("Sounds/SFX_2"), NodePath("Sounds/SFX_3"), NodePath("Sounds/SFX_4")]
 Graphics = [NodePath("Graphics/Mesh/Pivot")]
+VFXList = ExtResource("3_lucu4")
+SFXList = ExtResource("4_v0d7b")
+VoiceLines = ExtResource("5_ixed2")
 
 [node name="Graphics" type="Node3D" parent="."]
 
 [node name="Mesh" type="Node3D" parent="Graphics" node_paths=PackedStringArray("players", "OffsetNode")]
-script = ExtResource("5_nddkw")
+script = ExtResource("6_dji5d")
 players = [NodePath("Pivot/AnimationPlayer")]
 prefix = PackedStringArray("")
 OffsetNode = NodePath("Pivot")
@@ -57,80 +64,82 @@ OffsetNode = NodePath("Pivot")
 [node name="Body" type="MeshInstance3D" parent="Graphics/Mesh/Pivot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 layers = 3
+material_override = ExtResource("7_d37cb")
 mesh = SubResource("CapsuleMesh_a468o")
 skeleton = NodePath("../..")
 
 [node name="Head" type="MeshInstance3D" parent="Graphics/Mesh/Pivot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35, 0)
 layers = 3
+material_override = ExtResource("7_d37cb")
 mesh = SubResource("SphereMesh_8pohn")
 skeleton = NodePath("../..")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Graphics/Mesh/Pivot"]
 root_node = NodePath("../..")
 
-[node name="HitboxViewer" parent="." node_paths=PackedStringArray("body") instance=ExtResource("14_1fhq1")]
+[node name="HitboxViewer" parent="." node_paths=PackedStringArray("body") instance=ExtResource("7_6j1bb")]
 body = NodePath("../PhysicsBody")
 
 [node name="Sounds" type="Node3D" parent="."]
 
 [node name="SFX_0" type="AudioStreamPlayer3D" parent="Sounds"]
-script = ExtResource("5_e7hqf")
+script = ExtResource("8_xqilk")
 
 [node name="SFX_1" type="AudioStreamPlayer3D" parent="Sounds"]
-script = ExtResource("5_e7hqf")
+script = ExtResource("8_xqilk")
 
 [node name="SFX_2" type="AudioStreamPlayer3D" parent="Sounds"]
-script = ExtResource("5_e7hqf")
+script = ExtResource("8_xqilk")
 
 [node name="SFX_3" type="AudioStreamPlayer3D" parent="Sounds"]
-script = ExtResource("5_e7hqf")
+script = ExtResource("8_xqilk")
 
 [node name="SFX_4" type="AudioStreamPlayer3D" parent="Sounds"]
-script = ExtResource("5_e7hqf")
+script = ExtResource("8_xqilk")
 
 [node name="PhysicsBody" type="Node" parent="."]
-script = ExtResource("12_bham4")
+script = ExtResource("9_pxu7v")
 StayOnBounds = true
 
 [node name="InputManager" type="Node" parent="."]
-script = ExtResource("2_ujbvg")
+script = ExtResource("10_n1y07")
 
 [node name="Variables" type="Node" parent="." node_paths=PackedStringArray("owner", "ExtraVariables")]
-script = ExtResource("7_08r4i")
+script = ExtResource("11_4tbbk")
 owner = NodePath("..")
 ExtraVariables = []
 
 [node name="StateMachine" type="Node" parent="."]
-script = ExtResource("9_e7hqf")
+script = ExtResource("12_pnhhl")
 
 [node name="CombatTracker" type="Node" parent="."]
-script = ExtResource("18_2fc62")
+script = ExtResource("13_qrqtu")
 
 [node name="AIBrain" type="Node" parent="."]
-script = ExtResource("21_ljaat")
+script = ExtResource("14_sr7j1")
 metadata/_custom_type_script = "uid://dvqrejewx20e3"
 
 [node name="Timers" type="Node" parent="."]
 
 [node name="HitStun" type="Node" parent="Timers"]
-script = ExtResource("1_5hpi4")
+script = ExtResource("15_0mk82")
 
 [node name="HitStop" type="Node" parent="Timers"]
-script = ExtResource("1_5hpi4")
+script = ExtResource("15_0mk82")
 
 [node name="MoveBuffer" type="Node" parent="Timers"]
-script = ExtResource("1_5hpi4")
+script = ExtResource("15_0mk82")
 WaitTime = 10
 
 [node name="Pushback" type="Node" parent="Timers"]
-script = ExtResource("1_5hpi4")
+script = ExtResource("15_0mk82")
 WaitTime = 10
 
 [node name="HBounce" type="Node" parent="Timers"]
-script = ExtResource("1_5hpi4")
+script = ExtResource("15_0mk82")
 WaitTime = 10
 
 [node name="VBounce" type="Node" parent="Timers"]
-script = ExtResource("1_5hpi4")
+script = ExtResource("15_0mk82")
 WaitTime = 10

@@ -10,10 +10,6 @@ namespace SakugaEngine.Resources
         [Export] public HitboxSettings[] Hitboxes;
         [Export] public FighterState[] States;
         [Export] public FighterStance[] Stances;
-        [Export] public SpawnsList SpawnablesList;
-        [Export] public SpawnsList VFXList;
-        [Export] public SoundsList SFXList;
-        [Export] public SoundsList VoiceLines;
 
         [Export] public int MaxHealth = 10000;
         [Export] public int MaxSuperGauge = 10000;
@@ -21,5 +17,10 @@ namespace SakugaEngine.Resources
         [Export] public ushort BaseDefense = 100;
 
         [Export] public AIData _aiData;
+
+        [Export] public FighterIntro[] Intros;
+        [Export] public FighterOutro[] Outros;
+        [Export] public FighterIntro[] VictoryPoses;
+        [Export] public int DefeatPose;
     }
 }

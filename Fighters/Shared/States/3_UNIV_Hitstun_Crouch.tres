@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="FighterState" format=3 uid="uid://ceavn24f4ud76"]
+
+[ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_5cp5b"]
+[ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2_km0my"]
+[ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="3_c60ov"]
+[ext_resource type="Script" uid="uid://bia88bspuvxd" path="res://Scripts/SakugaEngine/Resources/StateTransitionSettings.cs" id="4_1vtfx"]
+
+[sub_resource type="Resource" id="Resource_em2e8"]
+script = ExtResource("1_5cp5b")
+SourceAnimation = "Hitstun_Crouch"
+FrameStepping = 4
+metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
+
+[sub_resource type="Resource" id="1"]
+script = ExtResource("2_km0my")
+HitboxIndex = 1
+
+[sub_resource type="Resource" id="Resource_gt84v"]
+script = ExtResource("4_1vtfx")
+StateIndex = 15
+Condition = 1
+
+[resource]
+script = ExtResource("3_c60ov")
+StateName = "UNIV_Hitstun_Crouch"
+Type = 4
+Duration = 12
+HitStunFrameLimit = 7
+stateProperties = null
+statePhysics = null
+hitboxStates = [SubResource("1")]
+animationEvents = null
+throwPivot = null
+stateTransitions = Array[Object]([SubResource("Resource_gt84v")])
+animationSettings = Array[Object]([SubResource("Resource_em2e8")])
+AIFlags = 34

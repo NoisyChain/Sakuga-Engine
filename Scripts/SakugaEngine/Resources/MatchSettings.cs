@@ -23,6 +23,10 @@ namespace SakugaEngine.Resources
         [Export] public int P2SelectedColor = 0;
         [Export] public int P2SelectedDevice = -1; // -1 = CPU player
         [ExportCategory("Online Settings")]
+        [Export] public string OnlineP1Name;
+        [Export] public Texture2D OnlineP1PlatformIcon;
+        [Export] public string OnlineP2Name;
+        [Export] public Texture2D OnlineP2PlatformIcon;
         [Export] public bool IsSpectator;
         [Export] public int PlayerID;
         [Export] public int SpectatorCount;

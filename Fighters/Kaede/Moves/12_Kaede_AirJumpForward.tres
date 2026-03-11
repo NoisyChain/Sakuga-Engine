@@ -42,4 +42,5 @@ ExtraVariablesChange = Array[Object]([SubResource("Resource_m2dhn"), SubResource
 CanBeOverrided = true
 CanOverrideToSelf = true
 IgnoreSamePriority = false
+AcceptCombatStates = true
 UseOnAir = true

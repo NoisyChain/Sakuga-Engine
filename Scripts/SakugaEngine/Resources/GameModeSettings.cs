@@ -14,11 +14,14 @@ namespace SakugaEngine.Resources
         [Export] public bool ShowMatchIntro; // doesn't exist
         [Export] public bool ShowMatchCards; // doesn't exist
         [Export] public bool ShowTrainingInfo;
-        [Export] public bool ShowOnlineInfo; // doesn't exist
+        [Export] public bool ShowOnlineInfo;
+        //[Export] public bool ShowTimeline; // For replay mode (doesn't exist)
+        //[Export] public bool ShowComboList; // For combo challenge mode (doesn't exist)
         [Export] public bool AllowShowHitboxes;
         [Export] public bool AllowShowInputs;
-        [Export] public bool AllowShowComboList; // doesn't exist
         [Export] public bool AllowShowDebugElements;
-        [Export] public bool AllowUseDebugCommands; // doesn't exist
+        [Export] public bool AllowUseDebugCommands;
+        [Export] public bool NoAI;
+        [Export] public string ReturnToScene;
     }
 }
