@@ -1,7 +1,7 @@
 [gd_resource type="ShaderMaterial" format=3 uid="uid://bq6qbm2ymofxw"]
 
 [ext_resource type="Shader" uid="uid://2yb14h7j2sli" path="res://Shaders/color_palette.gdshader" id="1_q4mu0"]
-[ext_resource type="Texture2D" uid="uid://bnms05ws7bpq0" path="res://Fighters/Kaede/Sprites/180-3.png" id="2_v0vxt"]
+[ext_resource type="Texture2D" uid="uid://dkujjxltn8lc8" path="res://Fighters/Kaede/Sprites/200-1.png" id="2_v0vxt"]
 [ext_resource type="Texture2D" uid="uid://cp6jhmktqdrc5" path="res://Fighters/Kaede/Palettes/kaede_palette_1.png" id="3_o4c7q"]
 [ext_resource type="Texture2D" uid="uid://bohwmc7und3m0" path="res://Fighters/Kaede/Palettes/kaede_palette_2.png" id="3_vckvm"]
 
