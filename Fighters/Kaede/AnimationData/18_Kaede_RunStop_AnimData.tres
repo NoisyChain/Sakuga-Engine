@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="AnimationData" format=3 uid="uid://caarwrjtjewyj"]
+
+[ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_0qlak"]
+[ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2_7t0er"]
+[ext_resource type="Script" uid="uid://ddkya5wrb53ly" path="res://Scripts/SakugaEngine/Resources/AnimationData.cs" id="3_1px17"]
+
+[sub_resource type="Resource" id="Resource_e5et1"]
+script = ExtResource("1_0qlak")
+SourceAnimation = "RunStop"
+FrameStepping = 4
+metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
+
+[sub_resource type="Resource" id="Resource_sv2n2"]
+script = ExtResource("2_7t0er")
+
+[resource]
+script = ExtResource("3_1px17")
+Duration = 16
+Animations = [SubResource("Resource_e5et1")]
+Hitboxes = [SubResource("Resource_sv2n2")]
+metadata/_custom_type_script = "uid://ddkya5wrb53ly"

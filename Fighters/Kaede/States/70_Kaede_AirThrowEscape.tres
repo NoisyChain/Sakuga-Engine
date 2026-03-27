@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="1_ggqvs"]
 [ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_gmu35"]
 [ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="2_qh4pd"]
-[ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Resources/StatePhysics.cs" id="3_dgmp6"]
-[ext_resource type="Script" uid="uid://bia88bspuvxd" path="res://Scripts/SakugaEngine/Resources/StateTransitionSettings.cs" id="4_gyt53"]
+[ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Deprecated/StatePhysics.cs" id="3_dgmp6"]
+[ext_resource type="Script" uid="uid://bia88bspuvxd" path="res://Scripts/SakugaEngine/Deprecated/StateTransitionSettings.cs" id="4_gyt53"]
 
 [sub_resource type="Resource" id="Resource_u5px2"]
 script = ExtResource("1_gmu35")
@@ -30,6 +30,12 @@ script = ExtResource("2_qh4pd")
 StateName = "Falling"
 BaseStance = 2
 Type = 5
+TransitionEvents = null
+OnEnterEvents = null
+OnTickEvents = null
+OnExitEvents = null
+OnHitConfirmEvents = null
+OnHitReactionEvents = null
 Duration = 20
 stateProperties = null
 statePhysics = Array[Object]([SubResource("Resource_3l6il")])

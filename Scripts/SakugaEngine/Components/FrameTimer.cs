@@ -1,14 +1,14 @@
 using Godot;
-using System.IO;
 
 namespace SakugaEngine
 {
     [GlobalClass]
     public partial class FrameTimer : Node
     {
+        [Export] public bool Manual;
         [Export] public uint WaitTime = 0;
         public uint TimeLeft = 0;
-        private bool Paused;
+        public bool Paused;
 
         public void Start(uint startingTime = 0)
         {
@@ -24,19 +24,5 @@ namespace SakugaEngine
         public bool IsRunning() => TimeLeft > 0;
         public bool IsCounting() => TimeLeft > 0 && !Paused;
         public bool IsPaused() => Paused;
-
-        public void Serialize(BinaryWriter bw)
-        {
-            bw.Write(WaitTime);
-            bw.Write(TimeLeft);
-            bw.Write(Paused);
-        }
-
-        public void Deserialize(BinaryReader br)
-        {
-            WaitTime = br.ReadUInt32();
-            TimeLeft = br.ReadUInt32();
-            Paused = br.ReadBoolean();
-        }
     }
 }

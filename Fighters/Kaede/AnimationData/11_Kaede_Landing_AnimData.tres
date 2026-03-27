@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="AnimationData" format=3 uid="uid://bdkgtqjake1n5"]
+
+[ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_m0ykd"]
+[ext_resource type="Resource" uid="uid://b6kiyox8tjef2" path="res://Fighters/Kaede/Hitboxes/1_Hitbox_Crouch.tres" id="2_6kt7f"]
+[ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2_jtrg2"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/AnimationData.cs" id="3_aeppb"]
+
+[sub_resource type="Resource" id="Resource_y1hbm"]
+script = ExtResource("1_m0ykd")
+SourceAnimation = "Crouch_Exit"
+metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
+
+[sub_resource type="Resource" id="Resource_sv2n2"]
+script = ExtResource("2_jtrg2")
+HitboxData = ExtResource("2_6kt7f")
+
+[resource]
+script = ExtResource("3_aeppb")
+Duration = 12
+Animations = [SubResource("Resource_y1hbm")]
+Hitboxes = [SubResource("Resource_sv2n2")]
+metadata/_custom_type_script = "uid://ddkya5wrb53ly"

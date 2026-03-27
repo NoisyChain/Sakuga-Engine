@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="AnimationData" format=3 uid="uid://bqrxtdb7hov0"]
+
+[ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_m8y3r"]
+[ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2_5pksj"]
+[ext_resource type="Resource" uid="uid://t64afo7e4u1o" path="res://Fighters/Kaede/Hitboxes/0_Hitbox_Basic.tres" id="2_eaa6n"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/AnimationData.cs" id="3_ldgl0"]
+
+[sub_resource type="Resource" id="Resource_gm6mq"]
+script = ExtResource("1_m8y3r")
+SourceAnimation = "Falling"
+metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
+
+[sub_resource type="Resource" id="Resource_sv2n2"]
+script = ExtResource("2_5pksj")
+HitboxData = ExtResource("2_eaa6n")
+
+[resource]
+script = ExtResource("3_ldgl0")
+Duration = 6
+Animations = [SubResource("Resource_gm6mq")]
+Hitboxes = [SubResource("Resource_sv2n2")]
+metadata/_custom_type_script = "uid://ddkya5wrb53ly"

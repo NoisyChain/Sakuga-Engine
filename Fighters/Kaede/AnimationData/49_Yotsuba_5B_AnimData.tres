@@ -1,0 +1,49 @@
+[gd_resource type="Resource" script_class="AnimationData" format=3 uid="uid://dsxbdpvbr61bb"]
+
+[ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_nyjq5"]
+[ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2_dnrhe"]
+[ext_resource type="Script" uid="uid://ddkya5wrb53ly" path="res://Scripts/SakugaEngine/Resources/AnimationData.cs" id="3_1bhhu"]
+
+[sub_resource type="Resource" id="Resource_g3upw"]
+script = ExtResource("1_nyjq5")
+SourceAnimation = "Combat_5B"
+FrameStepping = 4
+metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
+
+[sub_resource type="Resource" id="Resource_8v5tw"]
+script = ExtResource("1_nyjq5")
+AtFrame = 3
+SourceAnimation = "Combat_5B"
+FrameStepping = 4
+LimitRange = true
+AnimationRange = Vector2i(4, 8)
+metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
+
+[sub_resource type="Resource" id="Resource_co0y4"]
+script = ExtResource("1_nyjq5")
+AtFrame = 5
+SourceAnimation = "Combat_5B"
+FrameStepping = 4
+LimitRange = true
+AnimationRange = Vector2i(8, 27)
+metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
+
+[sub_resource type="Resource" id="2"]
+script = ExtResource("2_dnrhe")
+
+[sub_resource type="Resource" id="3"]
+script = ExtResource("2_dnrhe")
+AtFrame = 8
+animationStage = 1
+
+[sub_resource type="Resource" id="4"]
+script = ExtResource("2_dnrhe")
+AtFrame = 12
+animationStage = 2
+
+[resource]
+script = ExtResource("3_1bhhu")
+Duration = 26
+Animations = [SubResource("Resource_g3upw"), SubResource("Resource_8v5tw"), SubResource("Resource_co0y4")]
+Hitboxes = [SubResource("2"), SubResource("3"), SubResource("4")]
+metadata/_custom_type_script = "uid://ddkya5wrb53ly"

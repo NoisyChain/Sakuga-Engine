@@ -1,10 +1,10 @@
 using System;
 using System.Net;
-using System.IO;
 using LiteNetLib;
 using System.Net.Sockets;
 using System.Collections.Generic;
 using System.Linq;
+using MessagePack;
 
 namespace PleaseResync
 {
@@ -34,10 +34,7 @@ namespace PleaseResync
 
         public uint SendTo(uint deviceId, DeviceMessage message)
         {
-            MemoryStream writerStream = new MemoryStream();
-            BinaryWriter writer = new BinaryWriter(writerStream);
-            message.Serialize(writer);
-            var packet = writerStream.ToArray();
+            var packet = MessagePackSerializer.Serialize(message);
             foreach (var peer in _netManager.ConnectedPeerList)
             {
                 if (peer.Port == _remoteEndpoints[deviceId].Port)
@@ -99,9 +96,7 @@ namespace PleaseResync
         public void OnNetworkReceive(NetPeer peer, NetPacketReader NetReader, byte channel, DeliveryMethod deliveryMethod)
         {
             var packet = NetReader.GetRemainingBytes();
-            MemoryStream readerStream = new MemoryStream(packet);
-            BinaryReader reader = new BinaryReader(readerStream);
-            var message = GetMessageType(reader);
+            var message = MessagePackSerializer.Deserialize<DeviceMessage>(packet);
             _messages.Add(((uint)packet.Length, FindDeviceIdFromEndpoint(peer), message));
         }
 
@@ -138,35 +133,5 @@ namespace PleaseResync
         }
 
         #endregion
-
-        //Get message type for the new serialization method
-        public DeviceMessage GetMessageType(BinaryReader br)
-        {
-            DeviceMessage finalMessage = null;
-            uint ID = br.ReadUInt32();
-            switch(ID)
-            {
-                case 1:
-                    finalMessage = new DeviceSyncMessage(br);
-                    break;
-                case 2:
-                    finalMessage = new DeviceSyncConfirmMessage(br);
-                    break;
-                case 3:
-                    finalMessage = new DeviceInputMessage(br);
-                    break;
-                case 4:
-                    finalMessage = new DeviceInputAckMessage(br);
-                    break;
-                case 5:
-                    finalMessage = new HealthCheckMessage(br);
-                    break;
-                case 6:
-                    finalMessage = new PingMessage(br);
-                    break;
-            }
-
-            return finalMessage;
-        }
     }
 }

@@ -3,9 +3,9 @@
 [ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_cmw0w"]
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="1_i8ccd"]
 [ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="2_6lmbh"]
-[ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Resources/StatePhysics.cs" id="3_iybha"]
-[ext_resource type="Script" uid="uid://bia88bspuvxd" path="res://Scripts/SakugaEngine/Resources/StateTransitionSettings.cs" id="4_cenjs"]
-[ext_resource type="Script" uid="uid://5pyrbnu5lbp1" path="res://Scripts/SakugaEngine/Resources/FrameProperties.cs" id="4_mcnls"]
+[ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Deprecated/StatePhysics.cs" id="3_iybha"]
+[ext_resource type="Script" uid="uid://bia88bspuvxd" path="res://Scripts/SakugaEngine/Deprecated/StateTransitionSettings.cs" id="4_cenjs"]
+[ext_resource type="Script" uid="uid://5pyrbnu5lbp1" path="res://Scripts/SakugaEngine/Deprecated/FramePropertiesState.cs" id="4_mcnls"]
 
 [sub_resource type="Resource" id="Resource_6sel8"]
 script = ExtResource("1_cmw0w")
@@ -14,19 +14,14 @@ metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
 
 [sub_resource type="Resource" id="Resource_i1dcw"]
 script = ExtResource("1_i8ccd")
-HitboxIndex = 20
 
 [sub_resource type="Resource" id="Resource_ocw0y"]
 script = ExtResource("1_i8ccd")
 animationStage = 1
-Frame = 10
-HitboxIndex = 21
 
 [sub_resource type="Resource" id="Resource_kwuew"]
 script = ExtResource("1_i8ccd")
 animationStage = 2
-Frame = 15
-HitboxIndex = 3
 
 [sub_resource type="Resource" id="Resource_mpd63"]
 script = ExtResource("3_iybha")
@@ -58,6 +53,12 @@ Condition = 1
 script = ExtResource("2_6lmbh")
 StateName = "236C_1"
 Type = 2
+TransitionEvents = null
+OnEnterEvents = null
+OnTickEvents = null
+OnExitEvents = null
+OnHitConfirmEvents = null
+OnHitReactionEvents = null
 Duration = 29
 stateProperties = Array[Object]([SubResource("Resource_vikdw"), SubResource("Resource_3tcab")])
 statePhysics = Array[Object]([SubResource("Resource_mpd63"), SubResource("Resource_ijji8")])

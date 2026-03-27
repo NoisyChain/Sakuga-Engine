@@ -1,10 +1,58 @@
 [gd_resource type="Resource" script_class="FighterState" format=3 uid="uid://ds4iga01tk4iw"]
 
 [ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="1"]
+[ext_resource type="Resource" uid="uid://bqrxtdb7hov0" path="res://Fighters/Kaede/AnimationData/10_Kaede_Falling_AnimData.tres" id="1_cup6h"]
 [ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_qgnsc"]
+[ext_resource type="Script" uid="uid://dcnb575mw2hwp" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Actions/AddGravityAction.cs" id="1_x5h21"]
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="1_y3586"]
-[ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Resources/StatePhysics.cs" id="2"]
-[ext_resource type="Script" uid="uid://bia88bspuvxd" path="res://Scripts/SakugaEngine/Resources/StateTransitionSettings.cs" id="3_6f2ya"]
+[ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Deprecated/StatePhysics.cs" id="2"]
+[ext_resource type="Script" uid="uid://c076jc3huncn2" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/FrameDataEvent.cs" id="2_cup6h"]
+[ext_resource type="Script" uid="uid://bia88bspuvxd" path="res://Scripts/SakugaEngine/Deprecated/StateTransitionSettings.cs" id="3_6f2ya"]
+[ext_resource type="Script" uid="uid://da4kqpf635oin" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Actions/PlayStateAction.cs" id="3_fsjhj"]
+[ext_resource type="Script" uid="uid://baguhnol5ww4w" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Conditions/OnGroundCondition.cs" id="4_tq54u"]
+[ext_resource type="Script" uid="uid://b1wnmgsdqaa50" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Actions/GoToFrameActions.cs" id="6_tq54u"]
+[ext_resource type="Script" uid="uid://bho4h38y7suxk" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Conditions/StateEndedCondition.cs" id="7_r1cw7"]
+
+[sub_resource type="Resource" id="Resource_r1cw7"]
+script = ExtResource("1_x5h21")
+SetValue = true
+UseDefault = true
+metadata/_custom_type_script = "uid://dcnb575mw2hwp"
+
+[sub_resource type="Resource" id="Resource_pyge6"]
+script = ExtResource("2_cup6h")
+Conditions = null
+Actions = Array[Object]([SubResource("Resource_r1cw7")])
+metadata/_custom_type_script = "uid://c076jc3huncn2"
+
+[sub_resource type="Resource" id="Resource_wdn27"]
+script = ExtResource("3_fsjhj")
+StateIndex = 8
+metadata/_custom_type_script = "uid://da4kqpf635oin"
+
+[sub_resource type="Resource" id="Resource_7g20u"]
+script = ExtResource("4_tq54u")
+metadata/_custom_type_script = "uid://baguhnol5ww4w"
+
+[sub_resource type="Resource" id="Resource_pb5pa"]
+script = ExtResource("2_cup6h")
+Conditions = Array[Object]([SubResource("Resource_7g20u")])
+Actions = Array[Object]([SubResource("Resource_wdn27")])
+metadata/_custom_type_script = "uid://c076jc3huncn2"
+
+[sub_resource type="Resource" id="Resource_n7k0a"]
+script = ExtResource("6_tq54u")
+metadata/_custom_type_script = "uid://b1wnmgsdqaa50"
+
+[sub_resource type="Resource" id="Resource_akopk"]
+script = ExtResource("7_r1cw7")
+metadata/_custom_type_script = "uid://bho4h38y7suxk"
+
+[sub_resource type="Resource" id="Resource_yolwr"]
+script = ExtResource("2_cup6h")
+Conditions = Array[Object]([SubResource("Resource_akopk")])
+Actions = Array[Object]([SubResource("Resource_n7k0a")])
+metadata/_custom_type_script = "uid://c076jc3huncn2"
 
 [sub_resource type="Resource" id="Resource_gm6mq"]
 script = ExtResource("1_qgnsc")
@@ -28,8 +76,14 @@ DistanceArea = Vector2i(0, 99999)
 [resource]
 script = ExtResource("1")
 StateName = "Falling"
-BaseStance = 2
 Type = 1
+AnimationData = ExtResource("1_cup6h")
+TransitionEvents = Array[Object]([SubResource("Resource_pb5pa"), SubResource("Resource_yolwr")])
+OnEnterEvents = null
+OnTickEvents = Array[Object]([SubResource("Resource_pyge6")])
+OnExitEvents = null
+OnHitConfirmEvents = null
+OnHitReactionEvents = null
 Duration = 6
 Loop = true
 LoopFrames = Vector2i(0, 5)

@@ -1,8 +1,75 @@
 [gd_resource type="Resource" script_class="FighterState" format=3 uid="uid://c2qjtpci8vusc"]
 
+[ext_resource type="Resource" uid="uid://fdt1chpc3fdy" path="res://Fighters/Dummy/AnimationData/12_Dummy_AirDash_AnimationData.tres" id="1_1io1o"]
 [ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="1_7cbcb"]
-[ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Resources/StatePhysics.cs" id="2_rjcdr"]
-[ext_resource type="Script" uid="uid://bia88bspuvxd" path="res://Scripts/SakugaEngine/Resources/StateTransitionSettings.cs" id="3_jjnih"]
+[ext_resource type="Script" uid="uid://da4kqpf635oin" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Actions/PlayStateAction.cs" id="2_aki7g"]
+[ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Deprecated/StatePhysics.cs" id="2_rjcdr"]
+[ext_resource type="Script" uid="uid://bgwrlqrhqb2a4" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Actions/MoveXAction.cs" id="2_vwyii"]
+[ext_resource type="Script" uid="uid://bw1835rb2hj7y" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Actions/MoveYAction.cs" id="3_45bm0"]
+[ext_resource type="Script" uid="uid://bia88bspuvxd" path="res://Scripts/SakugaEngine/Deprecated/StateTransitionSettings.cs" id="3_jjnih"]
+[ext_resource type="Script" uid="uid://c076jc3huncn2" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/FrameDataEvent.cs" id="4_udm7d"]
+[ext_resource type="Script" uid="uid://50grsd2r3wl8" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Conditions/AtFrameCondition.cs" id="5_fx28w"]
+
+[sub_resource type="Resource" id="Resource_xdn74"]
+script = ExtResource("2_vwyii")
+metadata/_custom_type_script = "uid://bgwrlqrhqb2a4"
+
+[sub_resource type="Resource" id="Resource_vqir6"]
+script = ExtResource("3_45bm0")
+metadata/_custom_type_script = "uid://bw1835rb2hj7y"
+
+[sub_resource type="Resource" id="Resource_f42dp"]
+script = ExtResource("4_udm7d")
+Conditions = null
+Actions = Array[Object]([SubResource("Resource_xdn74"), SubResource("Resource_vqir6")])
+metadata/_custom_type_script = "uid://c076jc3huncn2"
+
+[sub_resource type="Resource" id="Resource_0ytpv"]
+script = ExtResource("2_vwyii")
+Velocity = -30000
+metadata/_custom_type_script = "uid://bgwrlqrhqb2a4"
+
+[sub_resource type="Resource" id="Resource_4o18n"]
+script = ExtResource("5_fx28w")
+Frame = 4
+metadata/_custom_type_script = "uid://50grsd2r3wl8"
+
+[sub_resource type="Resource" id="Resource_4ghh1"]
+script = ExtResource("4_udm7d")
+Conditions = Array[Object]([SubResource("Resource_4o18n")])
+Actions = Array[Object]([SubResource("Resource_0ytpv")])
+metadata/_custom_type_script = "uid://c076jc3huncn2"
+
+[sub_resource type="Resource" id="Resource_e3hql"]
+script = ExtResource("2_vwyii")
+metadata/_custom_type_script = "uid://bgwrlqrhqb2a4"
+
+[sub_resource type="Resource" id="Resource_udm7d"]
+script = ExtResource("5_fx28w")
+Frame = 14
+metadata/_custom_type_script = "uid://50grsd2r3wl8"
+
+[sub_resource type="Resource" id="Resource_y8bf1"]
+script = ExtResource("4_udm7d")
+Conditions = Array[Object]([SubResource("Resource_udm7d")])
+Actions = Array[Object]([SubResource("Resource_e3hql")])
+metadata/_custom_type_script = "uid://c076jc3huncn2"
+
+[sub_resource type="Resource" id="Resource_8y0fj"]
+script = ExtResource("2_aki7g")
+StateIndex = 6
+metadata/_custom_type_script = "uid://da4kqpf635oin"
+
+[sub_resource type="Resource" id="Resource_vwyii"]
+script = ExtResource("5_fx28w")
+Frame = 18
+metadata/_custom_type_script = "uid://50grsd2r3wl8"
+
+[sub_resource type="Resource" id="Resource_j0mjb"]
+script = ExtResource("4_udm7d")
+Conditions = Array[Object]([SubResource("Resource_vwyii")])
+Actions = Array[Object]([SubResource("Resource_8y0fj")])
+metadata/_custom_type_script = "uid://c076jc3huncn2"
 
 [sub_resource type="Resource" id="Resource_aim2h"]
 script = ExtResource("2_rjcdr")
@@ -31,7 +98,15 @@ Condition = 1
 
 [resource]
 script = ExtResource("1_7cbcb")
+StateName = "Dummy Air Dash Back"
 Type = 1
+AnimationData = ExtResource("1_1io1o")
+TransitionEvents = Array[Object]([SubResource("Resource_j0mjb")])
+OnEnterEvents = Array[Object]([SubResource("Resource_f42dp")])
+OnTickEvents = Array[Object]([SubResource("Resource_4ghh1"), SubResource("Resource_y8bf1")])
+OnExitEvents = null
+OnHitConfirmEvents = null
+OnHitReactionEvents = null
 Duration = 18
 TurnState = 0
 stateProperties = null

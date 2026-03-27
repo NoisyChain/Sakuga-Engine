@@ -2,8 +2,42 @@
 
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="1"]
 [ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_kcag2"]
+[ext_resource type="Resource" uid="uid://bd0sl6j6k8l" path="res://Fighters/Kaede/AnimationData/15_Kaede_Crouching_AnimData.tres" id="1_yqrgc"]
 [ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="2"]
-[ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Resources/StatePhysics.cs" id="3"]
+[ext_resource type="Script" uid="uid://bgwrlqrhqb2a4" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Actions/MoveXAction.cs" id="2_07brp"]
+[ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Deprecated/StatePhysics.cs" id="3"]
+[ext_resource type="Script" uid="uid://bw1835rb2hj7y" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Actions/MoveYAction.cs" id="3_k2n3s"]
+[ext_resource type="Script" uid="uid://c076jc3huncn2" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/FrameDataEvent.cs" id="4_6d2tx"]
+[ext_resource type="Script" uid="uid://b1wnmgsdqaa50" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Actions/GoToFrameActions.cs" id="5_6d2tx"]
+[ext_resource type="Script" uid="uid://bho4h38y7suxk" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Conditions/StateEndedCondition.cs" id="6_qyi6i"]
+
+[sub_resource type="Resource" id="Resource_35cc3"]
+script = ExtResource("2_07brp")
+metadata/_custom_type_script = "uid://bgwrlqrhqb2a4"
+
+[sub_resource type="Resource" id="Resource_8m5r5"]
+script = ExtResource("3_k2n3s")
+metadata/_custom_type_script = "uid://bw1835rb2hj7y"
+
+[sub_resource type="Resource" id="Resource_idqlt"]
+script = ExtResource("4_6d2tx")
+Conditions = null
+Actions = Array[Object]([SubResource("Resource_35cc3"), SubResource("Resource_8m5r5")])
+metadata/_custom_type_script = "uid://c076jc3huncn2"
+
+[sub_resource type="Resource" id="Resource_x4kqg"]
+script = ExtResource("5_6d2tx")
+metadata/_custom_type_script = "uid://b1wnmgsdqaa50"
+
+[sub_resource type="Resource" id="Resource_y3nlb"]
+script = ExtResource("6_qyi6i")
+metadata/_custom_type_script = "uid://bho4h38y7suxk"
+
+[sub_resource type="Resource" id="Resource_o8vxy"]
+script = ExtResource("4_6d2tx")
+Conditions = Array[Object]([SubResource("Resource_y3nlb")])
+Actions = Array[Object]([SubResource("Resource_x4kqg")])
+metadata/_custom_type_script = "uid://c076jc3huncn2"
 
 [sub_resource type="Resource" id="Resource_yqrgc"]
 script = ExtResource("1_kcag2")
@@ -12,7 +46,6 @@ metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
 
 [sub_resource type="Resource" id="2"]
 script = ExtResource("1")
-HitboxIndex = 1
 
 [sub_resource type="Resource" id="1"]
 script = ExtResource("3")
@@ -24,6 +57,13 @@ script = ExtResource("2")
 StateName = "Crouching"
 BaseStance = 1
 Type = 1
+AnimationData = ExtResource("1_yqrgc")
+TransitionEvents = Array[Object]([SubResource("Resource_o8vxy")])
+OnEnterEvents = Array[Object]([SubResource("Resource_idqlt")])
+OnTickEvents = null
+OnExitEvents = null
+OnHitConfirmEvents = null
+OnHitReactionEvents = null
 Duration = 32
 Loop = true
 LoopFrames = Vector2i(0, 31)

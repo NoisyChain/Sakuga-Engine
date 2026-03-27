@@ -1,6 +1,7 @@
 using Godot;
-using System.IO;
 using SakugaEngine.Resources;
+using System.Collections.Generic;
+using SakugaEngine.Global;
 
 namespace SakugaEngine.Collision
 {
@@ -23,18 +24,17 @@ namespace SakugaEngine.Collision
         public bool IsLeftSide;
         public int PlayerSide;
         public bool IsMovable = true;
-        public bool HitConfirmed;
+        public List<uint> HitBodies = new List<uint>();
         public bool ProximityBlocked;
-        public int CurrentHitbox = -1;
-        public byte FrameProperties = 0;
+        public HitboxState CurrentHitbox = null;
+        public int CurrentGravity = GlobalVariables.DefaultGravity;
         
         public bool IsOnGround => FixedPosition.Y <= 0;
-        public bool IsOnLeftWall => FixedPosition.X <= -Global.WallLimit;
-        public bool IsOnRightWall => FixedPosition.X >= Global.WallLimit;
+        public bool IsOnLeftWall => FixedPosition.X <= -GlobalVariables.WallLimit;
+        public bool IsOnRightWall => FixedPosition.X >= GlobalVariables.WallLimit;
         public bool IsFalling => !IsOnGround && FixedVelocity.Y <= 0;
         public bool JustLanded => IsOnGround && FixedVelocity.Y < 0;
         public bool IsOnWall => IsOnLeftWall || IsOnRightWall;
-        
 
         public void Initialize(SakugaActor newOwner, IDamage newParent)
         {
@@ -47,6 +47,16 @@ namespace SakugaEngine.Collision
         public void SetID(uint newID)
         {
             ID = newID;
+        }
+
+        public void UpdateSide(bool leftSide)
+        {
+            IsLeftSide = leftSide;
+        }
+
+        public void FlipSide()
+        {
+            PlayerSide = IsLeftSide ? 1 : -1;
         }
         public void SetVelocity(Vector2I newVelocity)
         {
@@ -66,20 +76,20 @@ namespace SakugaEngine.Collision
             if (newVelocity != 0 && Mathf.Sign(newVelocity) > 0)
             {
                 if (FixedVelocity.X < 0)
-                    FixedVelocity.X += Global.DefaultFriction / Global.TicksPerSecond;
+                    FixedVelocity.X += GlobalVariables.DefaultFriction / GlobalVariables.TicksPerSecond;
                 else if (FixedVelocity.X < absVelocity)
-                    FixedVelocity.X += Global.DefaultAcceleration / Global.TicksPerSecond;
+                    FixedVelocity.X += GlobalVariables.DefaultAcceleration / GlobalVariables.TicksPerSecond;
                     
             }
             else if (newVelocity != 0 && Mathf.Sign(newVelocity) < 0)
             {
                 if (FixedVelocity.X > 0)
-                    FixedVelocity.X -= Global.DefaultFriction / Global.TicksPerSecond;
+                    FixedVelocity.X -= GlobalVariables.DefaultFriction / GlobalVariables.TicksPerSecond;
                 else if (FixedVelocity.X > -absVelocity)
-                    FixedVelocity.X -= Global.DefaultAcceleration / Global.TicksPerSecond;
+                    FixedVelocity.X -= GlobalVariables.DefaultAcceleration / GlobalVariables.TicksPerSecond;
             }
             else
-                FixedVelocity.X -= Mathf.Min(Mathf.Abs(FixedVelocity.X), Global.DefaultDeceleration / Global.TicksPerSecond) * Mathf.Sign(FixedVelocity.X);
+                FixedVelocity.X -= Mathf.Min(Mathf.Abs(FixedVelocity.X), GlobalVariables.DefaultDeceleration / GlobalVariables.TicksPerSecond) * Mathf.Sign(FixedVelocity.X);
         }
         public void AddVerticalAcceleration(int newVelocity)
         {
@@ -87,29 +97,28 @@ namespace SakugaEngine.Collision
             if (newVelocity != 0 && Mathf.Sign(newVelocity) > 0)
             {
                 if (FixedVelocity.Y < 0)
-                    FixedVelocity.Y += Global.DefaultFriction / Global.TicksPerSecond;
+                    FixedVelocity.Y += GlobalVariables.DefaultFriction / GlobalVariables.TicksPerSecond;
                 else if (FixedVelocity.Y < absVelocity)
-                    FixedVelocity.Y += Global.DefaultAcceleration / Global.TicksPerSecond;
+                    FixedVelocity.Y += GlobalVariables.DefaultAcceleration / GlobalVariables.TicksPerSecond;
                     
             }
             else if (newVelocity != 0 && Mathf.Sign(newVelocity) < 0)
             {
                 if (FixedVelocity.Y > 0)
-                    FixedVelocity.Y -= Global.DefaultFriction / Global.TicksPerSecond;
+                    FixedVelocity.Y -= GlobalVariables.DefaultFriction / GlobalVariables.TicksPerSecond;
                 else if (FixedVelocity.Y > -absVelocity)
-                    FixedVelocity.Y -= Global.DefaultAcceleration / Global.TicksPerSecond;
+                    FixedVelocity.Y -= GlobalVariables.DefaultAcceleration / GlobalVariables.TicksPerSecond;
             }
             else
-                FixedVelocity.Y -= Mathf.Min(Mathf.Abs(FixedVelocity.Y), Global.DefaultDeceleration / Global.TicksPerSecond) * Mathf.Sign(FixedVelocity.Y);
+                FixedVelocity.Y -= Mathf.Min(Mathf.Abs(FixedVelocity.Y), GlobalVariables.DefaultDeceleration / GlobalVariables.TicksPerSecond) * Mathf.Sign(FixedVelocity.Y);
         }
-        public void AddGravity(int gravity)
+        public void AddGravity()
         {
-            FixedVelocity.Y -= gravity / Global.TicksPerSecond;
+            FixedVelocity.Y -= CurrentGravity / GlobalVariables.TicksPerSecond;
         }
         public void MoveTo(Vector2I destination)
         {
             if (IsStatic) return;
-            //if (!IsMovable) return;
             
             FixedPosition = destination;
             UpdateColliders();
@@ -124,32 +133,49 @@ namespace SakugaEngine.Collision
             if (IsStatic) return;
             if (!IsMovable) return;
 
-            FixedPosition += FixedVelocity / Global.Delta;
+            FixedPosition += FixedVelocity / GlobalVariables.Delta;
             UpdateColliders();
         }
 
-        public void SetHitbox(int index)
+        public void AddHitBody(PhysicsBody body)
         {
-            CurrentHitbox = index;
-            UpdateColliders();
+            HitBodies.Add(body.ID);
         }
 
-        public bool ContainsFrameProperty(byte CompareTo)
+        public void ResetHits()
         {
-            return (FrameProperties & CompareTo) != 0;
+            HitBodies.Clear();
+        }
+
+        public bool CanHitBody(PhysicsBody body)
+        {
+            return !HitBodies.Contains(body.ID);
+        }
+
+        public void BounceX(int intensity)
+        {
+            FixedVelocity.X *= -intensity;
+            FixedVelocity.X /= 100;
+        }
+
+        public void BounceY(int intensity)
+        {
+            FixedVelocity.Y *= -intensity;
+            FixedVelocity.Y /= 100;
         }
 
         public void UpdateColliders()
         {
+            CurrentHitbox = GetCurrentHitboxSettings();
             //Lock collider on bounds
             if (StayOnBounds)
             {
                 if (!IgnoreWalls)
-                    FixedPosition.X = Mathf.Clamp(FixedPosition.X, -Global.WallLimit, Global.WallLimit);
-                FixedPosition.Y = Mathf.Clamp(FixedPosition.Y, 0, Global.CeilingLimit);
+                    FixedPosition.X = Mathf.Clamp(FixedPosition.X, -GlobalVariables.WallLimit, GlobalVariables.WallLimit);
+                FixedPosition.Y = Mathf.Clamp(FixedPosition.Y, 0, GlobalVariables.CeilingLimit);
             }
 
-            if (CurrentHitbox < 0) //If there's no hitbox active, remove all boxes
+            if (CurrentHitbox == null || CurrentHitbox.HitboxData == null) //If there's no hitbox active, remove all boxes
             {
                 Pushbox.UpdateCollider(FixedPosition, Vector2I.Zero);
 
@@ -160,46 +186,37 @@ namespace SakugaEngine.Collision
             {
                 Vector2I Side = new Vector2I(PlayerSide, 1);
 
-                Pushbox.UpdateCollider(FixedPosition + (GetCurrentHitbox().PushboxCenter * Side), GetCurrentHitbox().PushboxSize);
+                Pushbox.UpdateCollider(FixedPosition + (CurrentHitbox.HitboxData.PushboxCenter * Side), CurrentHitbox.HitboxData.PushboxSize);
                 
                 for(int i = 0; i < Hitboxes.Length; i++)
-                    if (i < GetCurrentHitbox().Hitboxes.Length)
-                        Hitboxes[i].UpdateCollider(FixedPosition + (GetCurrentHitbox().Hitboxes[i].Center * Side), GetCurrentHitbox().Hitboxes[i].Size);
+                    if (i < CurrentHitbox.HitboxData.Hitboxes.Length)
+                        Hitboxes[i].UpdateCollider(FixedPosition + (CurrentHitbox.HitboxData.Hitboxes[i].Center * Side), CurrentHitbox.HitboxData.Hitboxes[i].Size);
                     else
                         Hitboxes[i].UpdateCollider(FixedPosition, Vector2I.Zero);
             }
         }
 
-        public HitboxSettings GetCurrentHitbox() => _owner.Data.Hitboxes[CurrentHitbox];
-
-        public void Serialize(BinaryWriter bw)
+        public HitboxState GetCurrentHitboxSettings()
         {
-            bw.Write(FixedPosition.X);
-            bw.Write(FixedPosition.Y);
-            bw.Write(FixedVelocity.X);
-            bw.Write(FixedVelocity.Y);
-            bw.Write(IsLeftSide);
-            bw.Write(PlayerSide);
-            bw.Write(IsMovable);
-            bw.Write(HitConfirmed);
-            bw.Write(ProximityBlocked);
-            bw.Write(CurrentHitbox);
-            bw.Write(FrameProperties);
-        }
+            var State = _owner.StateManager.GetCurrentState();
+            if (State.AnimationData == null) return null;
+            if (State.AnimationData.Hitboxes == null || State.AnimationData.Hitboxes.Length <= 0) return null;
+            if (State.AnimationData.Hitboxes.Length == 1)
+                return State.AnimationData.Hitboxes[0];
 
-        public void Deserialize(BinaryReader br)
-        {
-            FixedPosition.X = br.ReadInt32();
-            FixedPosition.Y = br.ReadInt32();
-            FixedVelocity.X = br.ReadInt32();
-            FixedVelocity.Y = br.ReadInt32();
-            IsLeftSide = br.ReadBoolean();
-            PlayerSide = br.ReadInt32();
-            IsMovable = br.ReadBoolean();
-            HitConfirmed = br.ReadBoolean();
-            ProximityBlocked = br.ReadBoolean();
-            CurrentHitbox = br.ReadInt32();
-            FrameProperties = br.ReadByte();
+            int anim = 0;
+
+            for (int i = 0; i < State.AnimationData.Hitboxes.Length; i++)
+            {
+                int nextFrame = (i == State.AnimationData.Hitboxes.Length - 1) ?
+                                int.MaxValue :
+                                State.AnimationData.Hitboxes[i + 1].AtFrame - 1;
+                
+                if (_owner.StateManager.CurrentStateFrame >= State.AnimationData.Hitboxes[i].AtFrame && _owner.StateManager.CurrentStateFrame <= nextFrame)
+                    anim = i;
+            }
+
+            return State.AnimationData.Hitboxes[anim];
         }
     }
 }

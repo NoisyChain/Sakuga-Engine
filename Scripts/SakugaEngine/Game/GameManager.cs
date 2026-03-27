@@ -1,19 +1,23 @@
 using Godot;
-using System.IO;
 using PleaseResync;
 using SakugaEngine.Resources;
 using SakugaEngine.Collision;
 using SakugaEngine.UI;
 using System.Text;
 using System.Collections.Generic;
-using System.Diagnostics;
+using SakugaEngine.Global;
+using MessagePack;
+using SakugaEngine.GameState;
+using System;
 
 namespace SakugaEngine.Game
 {
     public partial class GameManager : Node, IGameState
     {
+        public static GameManager Instance;
+        public InputManager[] Inputs = [];
         [Export] public MatchSettings Match;
-        [Export] private GameMonitor Monitor;
+        [Export] public GameMonitor Monitor;
         [Export] public FighterList fightersList;
         [Export] public StageList stagesList;
         [Export] public BGMList songsList;
@@ -24,21 +28,27 @@ namespace SakugaEngine.Game
         private FadeScreen Curtain;
         public uint InputSize;
 
-        private List<SakugaNode> Nodes = new List<SakugaNode>();
-        private SakugaFighter[] Fighters;
+        public List<SakugaNode> Nodes = new List<SakugaNode>();
+        private SakugaActor[] Fighters;
         private PhysicsWorld World;
         
         private HealthHUD healthHUD;
         private MetersHUD metersHUD;
 
-        private int Frame = 0;
+        public int Frame = 0;
+
+        //Random Number Generator
         private int generatedSeed = 0;
         private int finalSeed = 0;
+        public bool ShowHitboxes;
 
-        Vector3I randomTest = new Vector3I();
+        public Vector3I randomTest = new Vector3I();
+
+        private GameManagerState State;
         
         public override void _Ready()
         {
+            Instance = this;
             healthHUD = (HealthHUD)FighterUI.GetNode("GameHUD_Background");
             metersHUD = (MetersHUD)FighterUI.GetNode("GameHUD_Foreground");
             SeedViewer = (Label)FighterUI.GetNode("Seed");
@@ -109,7 +119,7 @@ namespace SakugaEngine.Game
         /// </summary>
         private void GenerateBaseSeed()
         {
-            string seedText = Global.baseSeed + Fighters[0].Data.Profile.FighterName + Fighters[1].Data.Profile.FighterName;
+            string seedText = RNG.baseSeed + Fighters[0].Data.Profile.FighterName + Fighters[1].Data.Profile.FighterName;
             byte[] seedArray = Encoding.ASCII.GetBytes(seedText);
             generatedSeed = (int)Platform.GetChecksum(seedArray);
         }
@@ -123,9 +133,9 @@ namespace SakugaEngine.Game
         {
             int posX = Fighters[0].Body.FixedPosition.X + Fighters[1].Body.FixedPosition.X;
             int posY = Fighters[0].Body.FixedPosition.Y + Fighters[1].Body.FixedPosition.Y;
-            int stateFrame = Fighters[0].Animator.CurrentStateFrame + Fighters[0].Animator.CurrentState;
-            stateFrame += Fighters[1].Animator.CurrentStateFrame + Fighters[1].Animator.CurrentState;
-            return generatedSeed + posX + posY + stateFrame + (Frame * Global.SimulationScale) + Monitor.Clock;
+            int stateFrame = Fighters[0].StateManager.CurrentStateFrame + Fighters[0].StateManager.CurrentState;
+            stateFrame += Fighters[1].StateManager.CurrentStateFrame + Fighters[1].StateManager.CurrentState;
+            return generatedSeed + posX + posY + stateFrame + (Frame * GlobalVariables.SimulationScale) + Monitor.Clock;
         }
 
         public void Setup()
@@ -138,19 +148,25 @@ namespace SakugaEngine.Game
                 }
             }
 
+            Inputs = new InputManager[2];
+            Inputs[0] = new InputManager();
+            Inputs[1] = new InputManager();
+
             Frame = 0;
 
             CreateStage(Match.SelectedStage);
 
             World = new PhysicsWorld();
             Nodes.Clear();
-            Fighters = new SakugaFighter[2];
+            Fighters = new SakugaActor[2];
 
             CreateFighter(Match.P1SelectedCharacter, 0);
             CreateFighter(Match.P2SelectedCharacter, 1);
 
-            Fighters[0].SetOpponent(Fighters[1]);
-            Fighters[1].SetOpponent(Fighters[0]);
+            Fighters[0].SetAllies([Fighters[0]]);
+            Fighters[1].SetAllies([Fighters[1]]);
+            Fighters[0].SetOpponents([Fighters[1]]);
+            Fighters[1].SetOpponents([Fighters[0]]);
 
             GenerateBaseSeed();
             Monitor.Initialize(Fighters, Match);
@@ -180,12 +196,12 @@ namespace SakugaEngine.Game
             }
             
             Node temp = fightersList.elements[characterIndex].ColorPalettes[selectedColor].Instance.Instantiate();
-            Fighters[playerIndex] = temp as SakugaFighter;
+            Fighters[playerIndex] = temp as SakugaActor;
             AddActor(Fighters[playerIndex]);
-            Fighters[playerIndex].Initialize(playerIndex);
-            Fighters[playerIndex].InitializeAI(AIcontrolled, Match.Difficulty);
-            Fighters[playerIndex].SpawnablesSetup(this);
-            Fighters[playerIndex].VFXSetup(this);
+            Fighters[playerIndex].playerID = (uint)playerIndex;
+            Fighters[playerIndex].Inputs = Inputs[playerIndex];
+            Fighters[playerIndex].Initialize();
+            Fighters[playerIndex].InitializeBrain(AIcontrolled, Match.Difficulty);
         }
 
         public void CreateStage(int stageIndex)
@@ -204,32 +220,36 @@ namespace SakugaEngine.Game
         public void GameLoop(byte[] playerInput)
         {
             finalSeed = CalculateSeed();
-            Global.UpdateRNG(finalSeed);
+            RNG.Set(finalSeed);
             Frame++;
             Monitor.Tick();
 
             randomTest = new Vector3I(
-                Global.RNG.Next(),
-                Global.RNG.Next(),
-                Global.RNG.Next()
+                RNG.Next(),
+                RNG.Next(),
+                RNG.Next()
             );
 
             int center = (Fighters[0].Body.FixedPosition.X + Fighters[1].Body.FixedPosition.X) / 2;
 
             for (int i = 0; i < Fighters.Length; i++)
             {
+                if (Monitor.MatchState == MatchState.ROUND_END)
+                {
+                    Inputs[i].InsertToHistory(0);
+                    continue;
+                }
                 if (Fighters[i].UseAI)
                 {
                     Fighters[i].Brain.SelectCommand();
                     Fighters[i].Brain.UpdateCommand();
+                    continue;
                 }
-                else
-                {
-                    ushort combinedInput = 0;
-                    combinedInput |= playerInput[i * InputSize];
-                    combinedInput |= (ushort)(playerInput[(i * InputSize) + 1] << 8);
-                    Fighters[i].ParseInputs(combinedInput);
-                }
+
+                PlayerInputs combinedInput = 0;
+                combinedInput |= (PlayerInputs)playerInput[i * InputSize];
+                combinedInput |= (PlayerInputs)(playerInput[(i * InputSize) + 1] << 8);
+                Inputs[i].InsertToHistory(combinedInput);
             }
 
             for (int i = 0; i < Nodes.Count; i++)
@@ -241,24 +261,24 @@ namespace SakugaEngine.Game
             World.Simulate();
 
             if (Fighters[0].Body.FixedPosition.X < Fighters[1].Body.FixedPosition.X)
-            { Fighters[0].UpdateSide(true); Fighters[1].UpdateSide(false); }
+            { Fighters[0].Body.UpdateSide(true); Fighters[1].Body.UpdateSide(false); }
             else if (Fighters[0].Body.FixedPosition.X > Fighters[1].Body.FixedPosition.X)
-            { Fighters[0].UpdateSide(false); Fighters[1].UpdateSide(true); }
+            { Fighters[0].Body.UpdateSide(false); Fighters[1].Body.UpdateSide(true); }
 
             for (int i = 0; i < Fighters.Length; i++)
             {
                 Fighters[i].Body.FixedPosition.X = Mathf.Clamp(
                     Fighters[i].Body.FixedPosition.X,
-                    center - Global.MaxPlayersDistance / 2,
-                    center + Global.MaxPlayersDistance / 2
+                    center - GlobalVariables.MaxPlayersDistance / 2,
+                    center + GlobalVariables.MaxPlayersDistance / 2
                 );
                 Fighters[i].Body.UpdateColliders();
                 if (!Match.SelectedModeSettings.CanKO)
                 {
-                    if (Fighters[i].Variables.CurrentHealth <= 0)
-                        Fighters[i].Variables.CurrentHealth = 1;
-                    if (!Fighters[i].HitStun.IsRunning())
-                        Fighters[i].Variables.CurrentHealth = Fighters[i].Data.MaxHealth;
+                    if (Fighters[i].Parameters.Health.CurrentValue <= 0)
+                        Fighters[i].Parameters.Health.CurrentValue = 1;
+                    if (!Fighters[i].Hitstun.IsRunning())
+                        Fighters[i].Parameters.Health.CurrentValue = Fighters[i].Data.MaxHealth;
                 }
             }
             
@@ -269,45 +289,45 @@ namespace SakugaEngine.Game
         private void DebugCommands()
         {
             if (Input.IsActionJustPressed("toggle_hitboxes") && Match.SelectedModeSettings.AllowShowHitboxes)
-                Global.ShowHitboxes = !Global.ShowHitboxes;
+                ShowHitboxes = !ShowHitboxes;
             
             if (!Match.SelectedModeSettings.AllowUseDebugCommands) return;
 
             if (Input.IsActionJustPressed("debug_f1"))
             {
                 if (Input.IsActionPressed("debug_shift"))
-                    Fighters[0].Variables.CurrentHealth = 0;
+                    Fighters[0].Parameters.Health.SetHealth(0);
                 else
-                    Fighters[0].Variables.CurrentHealth -= 100;
+                    Fighters[0].Parameters.Health.RemoveHealth(100);
             }
             if (Input.IsActionJustPressed("debug_f2"))
             {
                 if (Input.IsActionPressed("debug_shift"))
-                    Fighters[1].Variables.CurrentHealth = 0;
+                    Fighters[1].Parameters.Health.SetHealth(0);
                 else
-                    Fighters[1].Variables.CurrentHealth -= 100;
+                    Fighters[1].Parameters.Health.RemoveHealth(100);
             }
             if (Input.IsActionJustPressed("debug_f3"))
             {
                 if (Input.IsActionPressed("debug_shift"))
-                    Fighters[0].Variables.CurrentHealth = Fighters[0].Data.MaxHealth;
+                    Fighters[0].Parameters.Health.SetHealth(Fighters[0].Data.MaxHealth);
                 else
-                    Fighters[0].Variables.CurrentHealth += 100;
+                    Fighters[0].Parameters.Health.AddHealth(100);
             }
             if (Input.IsActionJustPressed("debug_f4"))
             {
                 if (Input.IsActionPressed("debug_shift"))
-                    Fighters[1].Variables.CurrentHealth = Fighters[1].Data.MaxHealth;
+                    Fighters[1].Parameters.Health.SetHealth(Fighters[1].Data.MaxHealth);
                 else
-                    Fighters[1].Variables.CurrentHealth += 100;
+                    Fighters[1].Parameters.Health.AddHealth(100);
             }
             if (Input.IsActionJustPressed("debug_f5"))
             {
-                Fighters[0].Variables.CurrentSuperGauge = Fighters[0].Data.MaxSuperGauge;
+                Fighters[0].Parameters.SuperGauge.SetSuperGauge(Fighters[0].Data.MaxSuperGauge);
             }
             if (Input.IsActionJustPressed("debug_f6"))
             {
-                Fighters[1].Variables.CurrentSuperGauge = Fighters[1].Data.MaxSuperGauge;
+                Fighters[1].Parameters.SuperGauge.SetSuperGauge(Fighters[1].Data.MaxSuperGauge);
             }
             if (Input.IsActionJustPressed("debug_timer"))
             {
@@ -318,8 +338,8 @@ namespace SakugaEngine.Game
             }
             if (Input.IsActionJustPressed("debug_reset"))
             {
-                Fighters[0].Reset(0);
-                Fighters[1].Reset(1);
+                Fighters[0].Reset();
+                Fighters[1].Reset();
             }
         }
 
@@ -327,46 +347,47 @@ namespace SakugaEngine.Game
         //NOTICE: for every 8 inputs you need to change the index
         public byte[] ReadInputs(int id, int inputSize)
         {
-            byte[] input = new byte[inputSize];
-            if (id < 0) return input;
+            if (id < 0) return new byte[inputSize];
 
-            string prefix = Global.GetPlayerPrefix(id);
+            PlayerInputs input = 0;
+
+            string prefix = GlobalFunctions.GetPlayerPrefix(id);
 
             if (Input.IsActionPressed(prefix + "_up") && !Input.IsActionPressed(prefix + "_down"))
-                input[0] |= Global.INPUT_UP;
+                input |= PlayerInputs.UP;
 
             if (!Input.IsActionPressed(prefix + "_up") && Input.IsActionPressed(prefix + "_down"))
-                input[0] |= Global.INPUT_DOWN;
+                input |= PlayerInputs.DOWN;
 
             if (Input.IsActionPressed(prefix + "_left") && !Input.IsActionPressed(prefix + "_right"))
-                input[0] |= Global.INPUT_LEFT;
+                input |= PlayerInputs.LEFT;
 
             if (!Input.IsActionPressed(prefix + "_left") && Input.IsActionPressed(prefix + "_right"))
-                input[0] |= Global.INPUT_RIGHT;
+                input |= PlayerInputs.RIGHT;
 
             if (Input.IsActionPressed(prefix + "_face_a"))
-                input[0] |= Global.INPUT_FACE_A;
+                input |= PlayerInputs.FACE_A;
 
             if (Input.IsActionPressed(prefix + "_face_b"))
-                input[0] |= Global.INPUT_FACE_B;
+                input |= PlayerInputs.FACE_B;
 
             if (Input.IsActionPressed(prefix + "_face_c"))
-                input[0] |= Global.INPUT_FACE_C;
+                input |= PlayerInputs.FACE_C;
 
             if (Input.IsActionPressed(prefix + "_face_d"))
-                input[0] |= Global.INPUT_FACE_D;
+                input |= PlayerInputs.FACE_D;
             
             if (Input.IsActionPressed(prefix + "_face_e"))
-                input[1] |= Global.INPUT_FACE_E >> 8;
+                input |= PlayerInputs.FACE_E;
 
             if (Input.IsActionPressed(prefix + "_face_f"))
-                input[1] |= Global.INPUT_FACE_F >> 8;
-            
+                input |= PlayerInputs.FACE_F;
+
             if (Input.IsActionPressed(prefix + "_face_g"))
-                input[1] |= Global.INPUT_FACE_G >> 8;
+                input |= PlayerInputs.FACE_G;
 
             if (Input.IsActionPressed(prefix + "_face_h"))
-                input[1] |= Global.INPUT_FACE_H >> 8;
+                input |= PlayerInputs.FACE_H;
 
             /*if (Input.IsActionPressed(prefix + "_macro_ab"))
                 input |= Global.INPUT_FACE_A | Global.INPUT_FACE_B;
@@ -383,31 +404,19 @@ namespace SakugaEngine.Game
             if (Input.IsActionPressed(prefix + "_macro_abcd"))
                 input |= Global.INPUT_FACE_A | Global.INPUT_FACE_B | Global.INPUT_FACE_C | Global.INPUT_FACE_D;*/
         
-            return input;
+            return BitConverter.GetBytes((ushort)input);
         }
 
-        public void SaveState(BinaryWriter bw)
+        public byte[] SaveState()
         {
-            bw.Write(Frame);
-            Monitor.Serialize(bw);
-            for (int i = 0; i < Nodes.Count; i++)
-                Nodes[i].Serialize(bw);
-            
-            bw.Write(randomTest.X);
-            bw.Write(randomTest.Y);
-            bw.Write(randomTest.Z);
+            State.GetStateData(ref Instance);
+            return MessagePackSerializer.Serialize(State);
         }
 
-        public void LoadState(BinaryReader br)
+        public void LoadState(byte[] stateBuffer)
         {
-            Frame = br.ReadInt32();
-            Monitor.Deserialize(br);
-            for (int i = 0; i < Nodes.Count; i++)
-                Nodes[i].Deserialize(br);
-            
-            randomTest.X = br.ReadInt32();
-            randomTest.Y = br.ReadInt32();
-            randomTest.Z = br.ReadInt32();
+            State = MessagePackSerializer.Deserialize<GameManagerState>(stateBuffer);
+            State.SetStateData(ref Instance);
         }
 
         public byte[] GetLocalInput(int PlayerID, int InputSize)

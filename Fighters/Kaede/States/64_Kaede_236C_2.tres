@@ -3,9 +3,9 @@
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="1_8n1oa"]
 [ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_xybcm"]
 [ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="2_0eue0"]
-[ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Resources/StatePhysics.cs" id="3_uwahi"]
-[ext_resource type="Script" uid="uid://5pyrbnu5lbp1" path="res://Scripts/SakugaEngine/Resources/FrameProperties.cs" id="4_3pfnm"]
-[ext_resource type="Script" uid="uid://bia88bspuvxd" path="res://Scripts/SakugaEngine/Resources/StateTransitionSettings.cs" id="4_e3rpw"]
+[ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Deprecated/StatePhysics.cs" id="3_uwahi"]
+[ext_resource type="Script" uid="uid://5pyrbnu5lbp1" path="res://Scripts/SakugaEngine/Deprecated/FramePropertiesState.cs" id="4_3pfnm"]
+[ext_resource type="Script" uid="uid://bia88bspuvxd" path="res://Scripts/SakugaEngine/Deprecated/StateTransitionSettings.cs" id="4_e3rpw"]
 
 [sub_resource type="Resource" id="Resource_5pb2k"]
 script = ExtResource("1_xybcm")
@@ -14,18 +14,14 @@ metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
 
 [sub_resource type="Resource" id="Resource_5e2ap"]
 script = ExtResource("1_8n1oa")
-HitboxIndex = 5
 
 [sub_resource type="Resource" id="Resource_t4vo6"]
 script = ExtResource("1_8n1oa")
 animationStage = 1
-Frame = 10
-HitboxIndex = 22
 
 [sub_resource type="Resource" id="Resource_4f70k"]
 script = ExtResource("1_8n1oa")
 animationStage = 2
-Frame = 15
 
 [sub_resource type="Resource" id="Resource_mpd63"]
 script = ExtResource("3_uwahi")
@@ -57,6 +53,12 @@ Condition = 1
 script = ExtResource("2_0eue0")
 StateName = "236C_2"
 Type = 2
+TransitionEvents = null
+OnEnterEvents = null
+OnTickEvents = null
+OnExitEvents = null
+OnHitConfirmEvents = null
+OnHitReactionEvents = null
 Duration = 29
 stateProperties = Array[Object]([SubResource("Resource_6skxt"), SubResource("Resource_6vuad")])
 statePhysics = Array[Object]([SubResource("Resource_mpd63"), SubResource("Resource_ijji8")])

@@ -1,5 +1,6 @@
 using Godot;
 using SakugaEngine;
+using SakugaEngine.Global;
 using SakugaEngine.Resources;
 
 namespace SakugaEngine.UI
@@ -11,9 +12,9 @@ namespace SakugaEngine.UI
         [Export] private FighterList fightersList;
         [Export] private StageList stagesList;
         [Export] private BGMList songsList;
-        [Export] private Global.CharacterSelectStyle PlayerSelection;
-        [Export] private Global.CharacterSelectMode SelectionMode;
-        [Export] private Control CharacterSelectMode;
+        [Export] private CharacterSelectStyle PlayerSelection;
+        [Export] private CharacterSelectMode SelectionMode;
+        [Export] private Control CharSelectMode;
         [Export] private Control StageSelectMode;
         [Export] private int P1Selected = 0;
         [Export] private int P2Selected = 1;
@@ -54,10 +55,10 @@ namespace SakugaEngine.UI
         [Export] private Texture2D autoStageThumbnail;
 
         //Hidden variables
-        private Global.CharacterSelectState P1State;
-        private Global.CharacterSelectState P2State;
-        private bool P1Finished => P1State == Global.CharacterSelectState.DONE;
-        private bool P2Finished => P2State == Global.CharacterSelectState.DONE;
+        private CharacterSelectState P1State;
+        private CharacterSelectState P2State;
+        private bool P1Finished => P1State == CharacterSelectState.DONE;
+        private bool P2Finished => P2State == CharacterSelectState.DONE;
         private bool isPlayer1SelectingStage = true;
         private bool AllSet = false;
         private TextureRect[] characterButtons;
@@ -77,12 +78,12 @@ namespace SakugaEngine.UI
 
             randomSelection = new System.Random();
 
-            if (Match.P1SelectedDevice > -1 && Match.P2SelectedDevice > -1) PlayerSelection = Global.CharacterSelectStyle.VERSUS;
-            else if (Match.P2SelectedDevice == -1) PlayerSelection = Global.CharacterSelectStyle.PLAYER1;
-            else if (Match.P1SelectedDevice == -1) PlayerSelection = Global.CharacterSelectStyle.PLAYER2;
+            if (Match.P1SelectedDevice > -1 && Match.P2SelectedDevice > -1) PlayerSelection = CharacterSelectStyle.VERSUS;
+            else if (Match.P2SelectedDevice == -1) PlayerSelection = CharacterSelectStyle.PLAYER1;
+            else if (Match.P1SelectedDevice == -1) PlayerSelection = CharacterSelectStyle.PLAYER2;
 
-            p1Prefix = Global.GetPlayerPrefix(Match.P1SelectedDevice);
-            p2Prefix = Global.GetPlayerPrefix(Match.P2SelectedDevice);
+            p1Prefix = GlobalFunctions.GetPlayerPrefix(Match.P1SelectedDevice);
+            p2Prefix = GlobalFunctions.GetPlayerPrefix(Match.P2SelectedDevice);
 
             characterButtons = new TextureRect[fightersList.elements.Length + 1];
             for (int i = 0; i <= fightersList.elements.Length; i++)
@@ -132,8 +133,8 @@ namespace SakugaEngine.UI
             if (AllSet) return;
             base._PhysicsProcess(delta);
 
-            string p1SelectPrefix = PlayerSelection != Global.CharacterSelectStyle.PLAYER2 ? p1Prefix : p2Prefix;
-            string p2SelectPrefix = PlayerSelection != Global.CharacterSelectStyle.PLAYER1 ? p2Prefix : p1Prefix;
+            string p1SelectPrefix = PlayerSelection != CharacterSelectStyle.PLAYER2 ? p1Prefix : p2Prefix;
+            string p2SelectPrefix = PlayerSelection != CharacterSelectStyle.PLAYER1 ? p2Prefix : p1Prefix;
             
             //Player 1 inputs
             P1Up = Input.IsActionJustPressed(p1SelectPrefix + "_up");
@@ -152,44 +153,44 @@ namespace SakugaEngine.UI
 
             switch (SelectionMode)
             {
-                case Global.CharacterSelectMode.CHARACTER_SELECT:
+                case CharacterSelectMode.CHARACTER_SELECT:
                     //Player 2 character selection
                     switch (P2State)
                     {
-                        case Global.CharacterSelectState.SELECTING_CHARACTER:
+                        case CharacterSelectState.SELECTING_CHARACTER:
                             SelectCharacterP2();
                             break;
-                        case Global.CharacterSelectState.SELECTING_COLOR:
+                        case CharacterSelectState.SELECTING_COLOR:
                             SelectColorP2();
                             break;
-                        case Global.CharacterSelectState.DONE:
+                        case CharacterSelectState.DONE:
                             if (P2Return)
-                                P2State = Global.CharacterSelectState.SELECTING_CHARACTER;
+                                P2State = CharacterSelectState.SELECTING_CHARACTER;
                             break;
                     }
                     //Player 1 character selection
                     switch (P1State)
                     {
-                        case Global.CharacterSelectState.SELECTING_CHARACTER:
+                        case CharacterSelectState.SELECTING_CHARACTER:
                             SelectCharacterP1();
                             break;
-                        case Global.CharacterSelectState.SELECTING_COLOR:
+                        case CharacterSelectState.SELECTING_COLOR:
                             SelectColorP1();
                             break;
-                        case Global.CharacterSelectState.DONE:
+                        case CharacterSelectState.DONE:
                             if (P1Return)
-                                P1State = Global.CharacterSelectState.SELECTING_CHARACTER;
+                                P1State = CharacterSelectState.SELECTING_CHARACTER;
                             break;
                     }
                     break;
-                case Global.CharacterSelectMode.STAGE_SELECT:
+                case CharacterSelectMode.STAGE_SELECT:
                     SelectStage();
                     break;
             }
 
-            SelectionMode = P1Finished && P2Finished ? Global.CharacterSelectMode.STAGE_SELECT : Global.CharacterSelectMode.CHARACTER_SELECT;
-            CharacterSelectMode.Visible = !AllowSelectStage || SelectionMode == Global.CharacterSelectMode.CHARACTER_SELECT;
-            StageSelectMode.Visible = AllowSelectStage && SelectionMode == Global.CharacterSelectMode.STAGE_SELECT;
+            SelectionMode = P1Finished && P2Finished ? CharacterSelectMode.STAGE_SELECT : CharacterSelectMode.CHARACTER_SELECT;
+            CharSelectMode.Visible = !AllowSelectStage || SelectionMode == CharacterSelectMode.CHARACTER_SELECT;
+            StageSelectMode.Visible = AllowSelectStage && SelectionMode == CharacterSelectMode.STAGE_SELECT;
 
             P1Cursor.GlobalPosition = characterButtons[P1Selected].GlobalPosition;
             P2Cursor.GlobalPosition = characterButtons[P2Selected].GlobalPosition;
@@ -226,7 +227,7 @@ namespace SakugaEngine.UI
                 if (P1Selected >= fightersList.elements.Length)
                     P1Selected = randomSelection.Next(0, fightersList.elements.Length);
                 
-                P1State = Global.CharacterSelectState.SELECTING_COLOR;
+                P1State = CharacterSelectState.SELECTING_COLOR;
                 CallColorSelectP1();
             }
             if (P1Return)
@@ -239,8 +240,8 @@ namespace SakugaEngine.UI
         {
             if (P1ColorSelect == null || fightersList.elements[P1Selected].ColorPalettes == null || fightersList.elements[P1Selected].ColorPalettes.Length <= 1)
             {
-                P1State = Global.CharacterSelectState.DONE;
-                if (SinglePlayerSelection) P2State = Global.CharacterSelectState.DONE;
+                P1State = CharacterSelectState.DONE;
+                if (SinglePlayerSelection) P2State = CharacterSelectState.DONE;
                 return;
             }
 
@@ -266,14 +267,14 @@ namespace SakugaEngine.UI
             {
 
                 if (!P2Finished) isPlayer1SelectingStage = true;
-                P1State = Global.CharacterSelectState.DONE;
-                if (SinglePlayerSelection) P2State = Global.CharacterSelectState.DONE;
+                P1State = CharacterSelectState.DONE;
+                if (SinglePlayerSelection) P2State = CharacterSelectState.DONE;
                 P1ColorSelect.Deactivate();
             }
             if (P1Return)
             {
 
-                P1State = Global.CharacterSelectState.SELECTING_CHARACTER;
+                P1State = CharacterSelectState.SELECTING_CHARACTER;
                 P1ColorSelect.Deactivate();
             }
         }
@@ -307,7 +308,7 @@ namespace SakugaEngine.UI
                 if (P2Selected >= fightersList.elements.Length)
                     P2Selected = randomSelection.Next(0, fightersList.elements.Length);
 
-                P2State = Global.CharacterSelectState.SELECTING_COLOR;
+                P2State = CharacterSelectState.SELECTING_COLOR;
                 CallColorSelectP2();
             }
             if (P2Return)
@@ -320,7 +321,7 @@ namespace SakugaEngine.UI
         {
             if (P2ColorSelect == null || fightersList.elements[P2Selected].ColorPalettes == null || fightersList.elements[P2Selected].ColorPalettes.Length <= 1)
             {
-                P2State = Global.CharacterSelectState.DONE;
+                P2State = CharacterSelectState.DONE;
                 return;
             }
 
@@ -346,13 +347,13 @@ namespace SakugaEngine.UI
             {
 
                 if (!P1Finished) isPlayer1SelectingStage = false;
-                P2State = Global.CharacterSelectState.DONE;
+                P2State = CharacterSelectState.DONE;
                 P2ColorSelect.Deactivate();
             }
             if (P2Return)
             {
 
-                P2State = Global.CharacterSelectState.SELECTING_CHARACTER;
+                P2State = CharacterSelectState.SELECTING_CHARACTER;
                 P2ColorSelect.Deactivate();
             }
         }
@@ -361,8 +362,8 @@ namespace SakugaEngine.UI
         {
             if (PlayerSelection > 0 && P1Finished)
             {
-                P1State = Global.CharacterSelectState.SELECTING_CHARACTER;
-                P2State = Global.CharacterSelectState.SELECTING_CHARACTER;
+                P1State = CharacterSelectState.SELECTING_CHARACTER;
+                P2State = CharacterSelectState.SELECTING_CHARACTER;
                 return;
             }
             if (returnTo == "")
@@ -436,8 +437,8 @@ namespace SakugaEngine.UI
             }
             if (Return)
             {
-                P1State = Global.CharacterSelectState.SELECTING_CHARACTER;
-                P2State = Global.CharacterSelectState.SELECTING_CHARACTER;
+                P1State = CharacterSelectState.SELECTING_CHARACTER;
+                P2State = CharacterSelectState.SELECTING_CHARACTER;
             }
         }
 
@@ -474,7 +475,7 @@ namespace SakugaEngine.UI
 
             StageCursor.GlobalPosition = stageButtons[StageSelected + 2].GlobalPosition;
 
-            if (SelectionMode == Global.CharacterSelectMode.STAGE_SELECT)
+            if (SelectionMode == CharacterSelectMode.STAGE_SELECT)
             {
                 if (StageSelected == -2)//Auto
                 {

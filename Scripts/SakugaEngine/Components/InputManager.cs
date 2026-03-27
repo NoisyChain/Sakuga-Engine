@@ -1,19 +1,25 @@
 using Godot;
-using System.IO;
 using SakugaEngine.Resources;
+using SakugaEngine.Global;
 
 namespace SakugaEngine
 {
-    [GlobalClass]
-    public partial class InputManager : Node
+    public class InputManager
     {
-        public InputRegistry[] InputHistory = new InputRegistry[Global.InputHistorySize];
+        public InputRegistry[] InputHistory;
         public short hCharge;
         public short vCharge;
-        public int CurrentHistory = 0;
-        public int InputSide;
+        public int CurrentHistory;
 
-        public bool CheckMotionInputs(MotionInputs motion)
+        public InputManager()
+        {
+            InputHistory = new InputRegistry[GlobalVariables.InputHistorySize];
+            hCharge = 0;
+            vCharge = 0;
+            CurrentHistory = 0;
+        }
+
+        public bool CheckMotionInputs(MotionInputs motion, int side)
         {
             if (motion == null) return false;
             if (motion.ValidInputs == null) return false;
@@ -25,17 +31,17 @@ namespace SakugaEngine
                 //Define the first input to check
                 //If the result is less than 0, cycle it to the end
                 int startingInput = (CurrentHistory - motion.ValidInputs[i].Inputs.Length) + 1;
-                if (startingInput < 0) startingInput += Global.InputHistorySize;
+                if (startingInput < 0) startingInput += GlobalVariables.InputHistorySize;
 
                 for (int j = 0; j < motion.ValidInputs[i].Inputs.Length; j++)
                 {
-                    int HistoryIndex = (startingInput + j) % Global.InputHistorySize;
+                    int HistoryIndex = (startingInput + j) % GlobalVariables.InputHistorySize;
 
-                    Global.DirectionalInputs directionals = motion.ValidInputs[i].Inputs[j].Directional;
-                    Global.ButtonInputs buttons = motion.ValidInputs[i].Inputs[j].Buttons;
+                    DirectionalInputs directionals = motion.ValidInputs[i].Inputs[j].Directional;
+                    ButtonInputs buttons = motion.ValidInputs[i].Inputs[j].Buttons;
 
-                    Global.ButtonMode dirMode = motion.ValidInputs[i].Inputs[j].DirectionalMode;
-                    Global.ButtonMode butMode = motion.ValidInputs[i].Inputs[j].ButtonMode;
+                    ButtonMode dirMode = motion.ValidInputs[i].Inputs[j].DirectionalMode;
+                    ButtonMode butMode = motion.ValidInputs[i].Inputs[j].ButtonMode;
 
                     bool validBuffer = motion.InputBuffer == 0 ||
                         InputHistory[HistoryIndex].duration <= motion.InputBuffer;
@@ -43,14 +49,14 @@ namespace SakugaEngine
                     bool validInput;
 
                     if (directionals > 0 && buttons == 0)
-                        validInput = CheckDirectionalInputs(HistoryIndex, directionals, dirMode, motion.AbsoluteDirection);
+                        validInput = CheckDirectionalInputs(HistoryIndex, side, directionals, dirMode, motion.AbsoluteDirection);
                     else if (directionals == 0 && buttons > 0)
                         validInput = CheckButtonInputs(HistoryIndex, buttons, butMode);
                     else
-                        validInput = CheckDirectionalInputs(HistoryIndex, directionals, dirMode, motion.AbsoluteDirection) &&
+                        validInput = CheckDirectionalInputs(HistoryIndex, side, directionals, dirMode, motion.AbsoluteDirection) &&
                         CheckButtonInputs(HistoryIndex, buttons, butMode);
                         
-                    bool chargedInput = CheckChargeInputs(HistoryIndex, directionals, motion.DirectionalChargeLimit);
+                    bool chargedInput = CheckChargeInputs(HistoryIndex, side, directionals, motion.DirectionalChargeLimit);
                     
                     inputFound = (validBuffer && validInput) || chargedInput;
                     if (!inputFound) break;
@@ -61,20 +67,20 @@ namespace SakugaEngine
             return inputFound;
         }
 
-        public bool CheckInputEnd(MotionInputs motion)
+        public bool CheckInputEnd(MotionInputs motion, int side)
         {
-            Global.DirectionalInputs directionals = motion.ValidInputs[0].Inputs[motion.ValidInputs[0].Inputs.Length - 1].Directional;
-            Global.ButtonInputs buttons = motion.ValidInputs[0].Inputs[motion.ValidInputs[0].Inputs.Length - 1].Buttons;
+            DirectionalInputs directionals = motion.ValidInputs[0].Inputs[motion.ValidInputs[0].Inputs.Length - 1].Directional;
+            ButtonInputs buttons = motion.ValidInputs[0].Inputs[motion.ValidInputs[0].Inputs.Length - 1].Buttons;
 
             bool validInput;
 
             if (directionals > 0 && buttons == 0)
-                validInput = !CheckDirectionalInputs(CurrentHistory, directionals, Global.ButtonMode.HOLD, motion.AbsoluteDirection);
+                validInput = !CheckDirectionalInputs(CurrentHistory, side, directionals, ButtonMode.HOLD, motion.AbsoluteDirection);
             else if (directionals == 0 && buttons > 0)
-                validInput = !CheckButtonInputs(CurrentHistory, buttons, Global.ButtonMode.HOLD);
+                validInput = !CheckButtonInputs(CurrentHistory, buttons, ButtonMode.HOLD);
             else
-                validInput = !CheckDirectionalInputs(CurrentHistory, directionals, Global.ButtonMode.HOLD, motion.AbsoluteDirection) &&
-                !CheckButtonInputs(CurrentHistory, buttons, Global.ButtonMode.HOLD);
+                validInput = !CheckDirectionalInputs(CurrentHistory, side, directionals, ButtonMode.HOLD, motion.AbsoluteDirection) &&
+                !CheckButtonInputs(CurrentHistory, buttons, ButtonMode.HOLD);
 
             if (!validInput)
                 return false;
@@ -82,156 +88,148 @@ namespace SakugaEngine
             return true;
         }
 
-        public bool CheckDirectionalInputs(int index, Global.DirectionalInputs buttonNumber, Global.ButtonMode buttonMode, bool absDirection)
+        public bool CheckDirectionalInputs(int index, int side, DirectionalInputs buttonNumber, ButtonMode buttonMode, bool absDirection)
         {
-            int _left = Global.INPUT_LEFT;
-            if (InputSide < 0) _left = Global.INPUT_RIGHT;
+            PlayerInputs _left = PlayerInputs.LEFT;
+            if (side < 0) _left = PlayerInputs.RIGHT;
 
-            int _right = Global.INPUT_RIGHT;
-            if (InputSide < 0) _right = Global.INPUT_LEFT;
+            PlayerInputs _right = PlayerInputs.RIGHT;
+            if (side < 0) _right = PlayerInputs.LEFT;
 
             bool left = GetButtonState(_left, index, buttonMode);
             bool right = GetButtonState(_right, index, buttonMode);
-            bool up = GetButtonState(Global.INPUT_UP, index, buttonMode);
-            bool down = GetButtonState(Global.INPUT_DOWN, index, buttonMode);
+            bool up = GetButtonState(PlayerInputs.UP, index, buttonMode);
+            bool down = GetButtonState(PlayerInputs.DOWN, index, buttonMode);
 
             bool absV = absDirection ? !up && !down : true;
             bool absH = absDirection ? !left && !right : true;
 
-            bool notP = buttonMode == Global.ButtonMode.NOT_PRESSED;
+            bool notP = buttonMode == ButtonMode.NOT_PRESSED;
             bool canAbsH = notP || absH;
             bool canAbsV = notP || absV;
             bool neutralDirection = notP ? (down && up && left && right) : (!down && !up && !left && !right);
             
-            return (buttonNumber == Global.DirectionalInputs.DOWN && down && canAbsH) ||
-                (buttonNumber == Global.DirectionalInputs.LEFT && left && canAbsV) ||
-                (buttonNumber == Global.DirectionalInputs.RIGHT && right && canAbsV) ||
-                (buttonNumber == Global.DirectionalInputs.UP && up && canAbsH) ||
-                (buttonNumber == Global.DirectionalInputs.DOWN_LEFT && down && left) ||
-                (buttonNumber == Global.DirectionalInputs.DOWN_RIGHT && down && right) ||
-                (buttonNumber == Global.DirectionalInputs.UP_LEFT && up && left) ||
-                (buttonNumber == Global.DirectionalInputs.UP_RIGHT && up && right) ||
+            return (buttonNumber == DirectionalInputs.DOWN && down && canAbsH) ||
+                (buttonNumber == DirectionalInputs.LEFT && left && canAbsV) ||
+                (buttonNumber == DirectionalInputs.RIGHT && right && canAbsV) ||
+                (buttonNumber == DirectionalInputs.UP && up && canAbsH) ||
+                (buttonNumber == DirectionalInputs.DOWN_LEFT && down && left) ||
+                (buttonNumber == DirectionalInputs.DOWN_RIGHT && down && right) ||
+                (buttonNumber == DirectionalInputs.UP_LEFT && up && left) ||
+                (buttonNumber == DirectionalInputs.UP_RIGHT && up && right) ||
                 (buttonNumber == 0 && neutralDirection);
         }
 
-        public bool CheckButtonInputs(int index, Global.ButtonInputs buttonNumber, Global.ButtonMode buttonMode)
+        public bool CheckButtonInputs(int index, ButtonInputs buttonNumber, ButtonMode buttonMode)
         {
-            bool action_ba = GetButtonState(Global.INPUT_FACE_A, index, buttonMode);
-            bool action_bb = GetButtonState(Global.INPUT_FACE_B, index, buttonMode);
-            bool action_bc = GetButtonState(Global.INPUT_FACE_C, index, buttonMode);
-            bool action_bd = GetButtonState(Global.INPUT_FACE_D, index, buttonMode);
-            bool action_be = GetButtonState(Global.INPUT_FACE_E, index, buttonMode);
-            bool action_bf = GetButtonState(Global.INPUT_FACE_F, index, buttonMode);
-            bool action_bg = GetButtonState(Global.INPUT_FACE_G, index, buttonMode);
-            bool action_bh = GetButtonState(Global.INPUT_FACE_H, index, buttonMode);
+            bool action_ba = GetButtonState(PlayerInputs.FACE_A, index, buttonMode);
+            bool action_bb = GetButtonState(PlayerInputs.FACE_B, index, buttonMode);
+            bool action_bc = GetButtonState(PlayerInputs.FACE_C, index, buttonMode);
+            bool action_bd = GetButtonState(PlayerInputs.FACE_D, index, buttonMode);
+            bool action_be = GetButtonState(PlayerInputs.FACE_E, index, buttonMode);
+            bool action_bf = GetButtonState(PlayerInputs.FACE_F, index, buttonMode);
+            bool action_bg = GetButtonState(PlayerInputs.FACE_G, index, buttonMode);
+            bool action_bh = GetButtonState(PlayerInputs.FACE_H, index, buttonMode);
 
-            bool canA = (buttonNumber & Global.ButtonInputs.FACE_A) > 0;
-            bool canB = (buttonNumber & Global.ButtonInputs.FACE_B) > 0;
-            bool canC = (buttonNumber & Global.ButtonInputs.FACE_C) > 0;
-            bool canD = (buttonNumber & Global.ButtonInputs.FACE_D) > 0;
-            bool canE = (buttonNumber & Global.ButtonInputs.FACE_E) > 0;
-            bool canF = (buttonNumber & Global.ButtonInputs.FACE_F) > 0;
-            bool canG = (buttonNumber & Global.ButtonInputs.FACE_G) > 0;
-            bool canH = (buttonNumber & Global.ButtonInputs.FACE_H) > 0;
+            bool canA = (buttonNumber & ButtonInputs.FACE_A) > 0;
+            bool canB = (buttonNumber & ButtonInputs.FACE_B) > 0;
+            bool canC = (buttonNumber & ButtonInputs.FACE_C) > 0;
+            bool canD = (buttonNumber & ButtonInputs.FACE_D) > 0;
+            bool canE = (buttonNumber & ButtonInputs.FACE_E) > 0;
+            bool canF = (buttonNumber & ButtonInputs.FACE_F) > 0;
+            bool canG = (buttonNumber & ButtonInputs.FACE_G) > 0;
+            bool canH = (buttonNumber & ButtonInputs.FACE_H) > 0;
 
             return (buttonNumber == 0 && !action_ba && !action_bb && !action_bc && !action_bd && !action_be && !action_bf && !action_bg && !action_bh) ||
                 (!canA || canA == action_ba) && (!canB || canB == action_bb) && (!canC || canC == action_bc) && (!canD || canD == action_bd) && 
                 (!canE || canE == action_be) && (!canF || canF == action_bf) && (!canG || canG == action_bg) && (!canH || canH == action_bh);
         }
 
-        public bool CheckChargeInputs(int index, Global.DirectionalInputs buttonNumber, int dirCharge)
+        public bool CheckChargeInputs(int index, int side, DirectionalInputs buttonNumber, int dirCharge)
         {
             if (dirCharge == 0) return false;
 
-            bool _left = IsBeingPressed(index, Global.INPUT_LEFT);
-            bool _right = IsBeingPressed(index, Global.INPUT_RIGHT);
+            bool _left = IsBeingPressed(index, PlayerInputs.LEFT);
+            bool _right = IsBeingPressed(index, PlayerInputs.RIGHT);
             
             bool left = _left;
-            if (InputSide < 0) left = _right;
+            if (side < 0) left = _right;
 
             bool right = _right;
-            if (InputSide < 0) right = _left;
+            if (side < 0) right = _left;
             
-            bool up = IsBeingPressed(index, Global.INPUT_UP);
-            bool down = IsBeingPressed(index, Global.INPUT_DOWN);
+            bool up = IsBeingPressed(index, PlayerInputs.UP);
+            bool down = IsBeingPressed(index, PlayerInputs.DOWN);
 
-            bool checkInputs = (buttonNumber == Global.DirectionalInputs.LEFT && left && Mathf.Abs(hCharge) >= dirCharge) ||
-                (buttonNumber == Global.DirectionalInputs.DOWN && down && Mathf.Abs(vCharge) >= dirCharge) ||
-                (buttonNumber == Global.DirectionalInputs.DOWN_LEFT && left && Mathf.Abs(hCharge) >= dirCharge && down && vCharge <= -dirCharge) ||
-                (buttonNumber == Global.DirectionalInputs.UP_LEFT && left && Mathf.Abs(hCharge) >= dirCharge && up && vCharge >= dirCharge);
+            bool checkInputs = (buttonNumber == DirectionalInputs.LEFT && left && Mathf.Abs(hCharge) >= dirCharge) ||
+                (buttonNumber == DirectionalInputs.DOWN && down && Mathf.Abs(vCharge) >= dirCharge) ||
+                (buttonNumber == DirectionalInputs.DOWN_LEFT && left && Mathf.Abs(hCharge) >= dirCharge && down && vCharge <= -dirCharge) ||
+                (buttonNumber == DirectionalInputs.UP_LEFT && left && Mathf.Abs(hCharge) >= dirCharge && up && vCharge >= dirCharge);
 
             return checkInputs;
         }
 
-        public void InsertToHistory(ushort input)
+        public void InsertToHistory(PlayerInputs input)
         {
             if (InputHistory[CurrentHistory].rawInput != input)
             {
                 CurrentHistory++;
-                if (CurrentHistory >= Global.InputHistorySize) CurrentHistory = 0;
+                if (CurrentHistory >= GlobalVariables.InputHistorySize) CurrentHistory = 0;
 
                 InputHistory[CurrentHistory].rawInput = input;
                 InputHistory[CurrentHistory].duration = 0;
-
-                //Get the charge values from the previous input
-                //int previousInput = CurrentHistory - 1;
-                //if (previousInput < 0) previousInput += Global.InputHistorySize;
-
-                //InputHistory[CurrentHistory].hCharge = InputHistory[previousInput].hCharge;
-                //InputHistory[CurrentHistory].vCharge = InputHistory[previousInput].vCharge;
-                //InputHistory[CurrentHistory].bCharge = InputHistory[previousInput].bCharge;
             }
 
             InputHistory[CurrentHistory].duration++;
             ChargeBuffer();
         }
         
-        public bool IsBeingPressed(int index, int input)
+        public bool IsBeingPressed(int index, PlayerInputs input)
         {
             return (InputHistory[index].rawInput & input) != 0;
         }
-        public bool WasBeingPressed(int index, int input)
+        public bool WasBeingPressed(int index, PlayerInputs input)
         {
             int previousInput = index - 1;
-            if (previousInput < 0) previousInput += Global.InputHistorySize;
+            if (previousInput < 0) previousInput += GlobalVariables.InputHistorySize;
 
             return (InputHistory[index].rawInput & input) == 0 &&
-                (InputHistory[previousInput % Global.InputHistorySize].rawInput & input) != 0;
+                (InputHistory[previousInput % GlobalVariables.InputHistorySize].rawInput & input) != 0;
         }
-        public bool WasPressed(int index, int input)
+        public bool WasPressed(int index, PlayerInputs input)
         {
             int previousInput = index - 1;
-            if (previousInput < 0) previousInput += Global.InputHistorySize;
+            if (previousInput < 0) previousInput += GlobalVariables.InputHistorySize;
 
             return (InputHistory[index].rawInput & input) != 0 &&
-                (InputHistory[previousInput % Global.InputHistorySize].rawInput & input) == 0 &&
+                (InputHistory[previousInput % GlobalVariables.InputHistorySize].rawInput & input) == 0 &&
                 InputHistory[index].duration == 1;
         }
-        public bool WasReleased(int index, int input)
+        public bool WasReleased(int index, PlayerInputs input)
         {
             int previousInput = index - 1;
-            if (previousInput < 0) previousInput += Global.InputHistorySize;
+            if (previousInput < 0) previousInput += GlobalVariables.InputHistorySize;
 
             return (InputHistory[index].rawInput & input) == 0 &&
-                (InputHistory[previousInput % Global.InputHistorySize].rawInput & input) != 0 &&
+                (InputHistory[previousInput % GlobalVariables.InputHistorySize].rawInput & input) != 0 &&
                 InputHistory[index].duration == 1;
         }
 
         public bool IsDifferentInputs(int index)
         {
             int previousInput = index - 1;
-            if (previousInput < 0) previousInput += Global.InputHistorySize;
+            if (previousInput < 0) previousInput += GlobalVariables.InputHistorySize;
 
-            return InputHistory[index].rawInput != InputHistory[previousInput % Global.InputHistorySize].rawInput;
+            return InputHistory[index].rawInput != InputHistory[previousInput % GlobalVariables.InputHistorySize].rawInput;
         }
 
-        public bool InputChanged(int index, int input, bool changedThisFrame = true)
+        public bool InputChanged(int index, PlayerInputs input, bool changedThisFrame = true)
         {
             int previousInput = index - 1;
-            if (previousInput < 0) previousInput += Global.InputHistorySize;
+            if (previousInput < 0) previousInput += GlobalVariables.InputHistorySize;
 
             bool currentInputCkech = (InputHistory[index].rawInput & input) != 0;
-            bool previousInputCkech = (InputHistory[previousInput % Global.InputHistorySize].rawInput & input) != 0;
+            bool previousInputCkech = (InputHistory[previousInput % GlobalVariables.InputHistorySize].rawInput & input) != 0;
             bool isRecent = changedThisFrame && InputHistory[index].duration <= 1;
             return currentInputCkech == previousInputCkech && isRecent;
         }
@@ -239,31 +237,40 @@ namespace SakugaEngine
         public bool FaceButtonsChanged(int index)
         {
             int previousInput = index - 1;
-            if (previousInput < 0) previousInput += Global.InputHistorySize;
+            if (previousInput < 0) previousInput += GlobalVariables.InputHistorySize;
 
-            bool CurA = (InputHistory[index].rawInput & Global.INPUT_FACE_A) != 0;
-            bool CurB = (InputHistory[index].rawInput & Global.INPUT_FACE_B) != 0;
-            bool CurC = (InputHistory[index].rawInput & Global.INPUT_FACE_C) != 0;
-            bool CurD = (InputHistory[index].rawInput & Global.INPUT_FACE_D) != 0;
+            bool CurA = (InputHistory[index].rawInput & PlayerInputs.FACE_A) != 0;
+            bool CurB = (InputHistory[index].rawInput & PlayerInputs.FACE_B) != 0;
+            bool CurC = (InputHistory[index].rawInput & PlayerInputs.FACE_C) != 0;
+            bool CurD = (InputHistory[index].rawInput & PlayerInputs.FACE_D) != 0;
+            bool CurE = (InputHistory[index].rawInput & PlayerInputs.FACE_E) != 0;
+            bool CurF = (InputHistory[index].rawInput & PlayerInputs.FACE_F) != 0;
+            bool CurG = (InputHistory[index].rawInput & PlayerInputs.FACE_G) != 0;
+            bool CurH = (InputHistory[index].rawInput & PlayerInputs.FACE_H) != 0;
 
-            bool PrevA = (InputHistory[previousInput % Global.InputHistorySize].rawInput & Global.INPUT_FACE_A) != 0;
-            bool PrevB = (InputHistory[previousInput % Global.InputHistorySize].rawInput & Global.INPUT_FACE_B) != 0;
-            bool PrevC = (InputHistory[previousInput % Global.InputHistorySize].rawInput & Global.INPUT_FACE_C) != 0;
-            bool PrevD = (InputHistory[previousInput % Global.InputHistorySize].rawInput & Global.INPUT_FACE_D) != 0;
+            bool PrevA = (InputHistory[previousInput % GlobalVariables.InputHistorySize].rawInput & PlayerInputs.FACE_A) != 0;
+            bool PrevB = (InputHistory[previousInput % GlobalVariables.InputHistorySize].rawInput & PlayerInputs.FACE_B) != 0;
+            bool PrevC = (InputHistory[previousInput % GlobalVariables.InputHistorySize].rawInput & PlayerInputs.FACE_C) != 0;
+            bool PrevD = (InputHistory[previousInput % GlobalVariables.InputHistorySize].rawInput & PlayerInputs.FACE_D) != 0;
+            bool PrevE = (InputHistory[previousInput % GlobalVariables.InputHistorySize].rawInput & PlayerInputs.FACE_E) != 0;
+            bool PrevF = (InputHistory[previousInput % GlobalVariables.InputHistorySize].rawInput & PlayerInputs.FACE_F) != 0;
+            bool PrevG = (InputHistory[previousInput % GlobalVariables.InputHistorySize].rawInput & PlayerInputs.FACE_G) != 0;
+            bool PrevH = (InputHistory[previousInput % GlobalVariables.InputHistorySize].rawInput & PlayerInputs.FACE_H) != 0;
 
             bool isThisFrame = InputHistory[index].duration <= 1;
 
-            return (CurA != PrevA || CurB != PrevB || CurC != PrevC || CurD != PrevD) && isThisFrame;
+            return (CurA != PrevA || CurB != PrevB || CurC != PrevC || CurD != PrevD || 
+                    CurE != PrevE || CurF != PrevF || CurG != PrevG || CurH != PrevH) && isThisFrame;
         }
 
         private void ChargeBuffer()
         {
-            if (IsBeingPressed(CurrentHistory, Global.INPUT_LEFT))
+            if (IsBeingPressed(CurrentHistory, PlayerInputs.LEFT))
             {
                 if (hCharge > 0) hCharge = 0;
                 hCharge--;
             }
-            else if (IsBeingPressed(CurrentHistory, Global.INPUT_RIGHT))
+            else if (IsBeingPressed(CurrentHistory, PlayerInputs.RIGHT))
             {
                 if (hCharge < 0) hCharge = 0;
                 hCharge++;
@@ -273,12 +280,12 @@ namespace SakugaEngine
                 if (hCharge != 0) hCharge = 0;
             }
 
-            if (IsBeingPressed(CurrentHistory, Global.INPUT_UP))
+            if (IsBeingPressed(CurrentHistory, PlayerInputs.UP))
             {
                 if (vCharge < 0) vCharge = 0;
                 vCharge++;
             }
-            else if (IsBeingPressed(CurrentHistory, Global.INPUT_DOWN))
+            else if (IsBeingPressed(CurrentHistory, PlayerInputs.DOWN))
             {
                 if (vCharge > 0) vCharge = 0;
                 vCharge--;
@@ -289,19 +296,19 @@ namespace SakugaEngine
             }
         }
 
-        private bool GetButtonState(int buttonFlag, int index, Global.ButtonMode mode)
+        private bool GetButtonState(PlayerInputs buttonFlag, int index, ButtonMode mode)
         {
             switch (mode)
             {
-                case Global.ButtonMode.PRESS:
+                case ButtonMode.PRESS:
                     return WasPressed(index, buttonFlag);
-                case Global.ButtonMode.HOLD:
+                case ButtonMode.HOLD:
                     return IsBeingPressed(index, buttonFlag);
-                case Global.ButtonMode.RELEASE:
+                case ButtonMode.RELEASE:
                     return WasReleased(index, buttonFlag);
-                case Global.ButtonMode.WAS_PRESSED:
+                case ButtonMode.WAS_PRESSED:
                     return WasBeingPressed(index, buttonFlag);
-                case Global.ButtonMode.NOT_PRESSED:
+                case ButtonMode.NOT_PRESSED:
                     return !IsBeingPressed(index, buttonFlag);
                 default:
                     return false;
@@ -309,62 +316,15 @@ namespace SakugaEngine
         }
 
         public InputRegistry CurrentInput() => InputHistory[CurrentHistory];
-        //public ushort InputBufferDuration() => CurrentInput().bCharge;
         public bool IsNeutral() => CurrentInput().IsNull;
-
-        public void Serialize(BinaryWriter bw)
-        {
-            for (int i = 0; i < Global.InputHistorySize; i++)
-                InputHistory[i].Serialize(bw);
-            
-            bw.Write(CurrentHistory);
-            bw.Write(InputSide);
-            bw.Write(hCharge);
-            bw.Write(vCharge);
-        }
-
-        public void Deserialize(BinaryReader br)
-        {
-            for (int i = 0; i < Global.InputHistorySize; i++)
-                InputHistory[i].Deserialize(br);
-            
-            CurrentHistory = br.ReadInt32();
-            InputSide = br.ReadInt32();
-            hCharge = br.ReadInt16();
-            vCharge = br.ReadInt16();
-        }
-
-        
     }
 
-    [System.Serializable]
     public struct InputRegistry
     {
-        public ushort rawInput;
+        public PlayerInputs rawInput;
         public ushort duration;
-        //public short hCharge;
-        //public short vCharge;
-        //public ushort bCharge;
 
         public bool IsNull => rawInput == 0;
-
-        public void Serialize(BinaryWriter bw)
-        {
-            bw.Write(rawInput);
-            bw.Write(duration);
-            //bw.Write(hCharge);
-            //bw.Write(vCharge);
-            //bw.Write(bCharge);
-        }
-
-        public void Deserialize(BinaryReader br)
-        {
-            rawInput = br.ReadUInt16();
-            duration = br.ReadUInt16();
-            //hCharge = br.ReadInt16();
-            //vCharge = br.ReadInt16();
-            //bCharge = br.ReadUInt16();
-        }
         
         public override string ToString()
         {

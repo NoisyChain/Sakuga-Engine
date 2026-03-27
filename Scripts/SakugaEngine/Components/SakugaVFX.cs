@@ -1,56 +1,66 @@
 using Godot;
-using SakugaEngine.Collision;
-using System.IO;
+using SakugaEngine.GameState;
+using SakugaEngine.Global;
+using MessagePack;
 
 namespace SakugaEngine
 {
+    [GlobalClass]
     public partial class SakugaVFX : SakugaNode
     {
+        private SakugaActor _master;
         [ExportCategory("Settings")]
         [Export] private int Duration;
         [Export] private AnimationPlayer Player;
         [Export] private Node3D Graphics;
         [Export] private string AnimationName;
         [Export] private SoundQueue Sound;
-        public bool IsActive;
-        public PhysicsBody ParentBody;
-        public Vector2I PreviousPosition;
+        public bool AttachedToOwner;
         public Vector2I FixedPosition;
         public int Frame;
         public int Side;
 
+        SakugaVFX actor;
+        private SakugaVFXState State;
+
+        public void SetMaster(SakugaActor newMaster) => _master = newMaster;
+        public SakugaActor GetMaster() => _master;
+
         public override void Render()
         {
-            GlobalPosition = Global.ToScaledVector3(FixedPosition);
-            Graphics.Scale = new Vector3(Side, 1, 1);
             Graphics.Visible = IsActive;
+            Vector2I pos = FixedPosition;
+            if (AttachedToOwner) pos = _master.Body.FixedPosition + new Vector2I(FixedPosition.X, FixedPosition.Y);
+            Graphics.GlobalPosition = GlobalFunctions.ToScaledVector3(pos);
+            Graphics.GlobalRotation = Vector3.Zero;
+            Graphics.Scale = new Vector3(Side, 1, 1);
+            
             Player.Play(AnimationName);
-            Player.Seek(Frame / (float)Global.TicksPerSecond, true);
+            Player.Seek(Frame / (float)GlobalVariables.TicksPerSecond, true);
         }
 
-        public void Initialize()
+        public override void Initialize()
         {
+            base.Initialize();
+            actor = this;
             FixedPosition = Vector2I.Zero;
             Side = 0;
             Frame = -1;
-            IsActive = false;
         }
-        public void Spawn(Vector2I origin, int side, PhysicsBody setParent)
+        public void Spawn(Vector2I origin, int side, bool attached)
         {
-            ParentBody = setParent;
-            if (setParent != null)
-            {
-                FixedPosition = origin;
-                PreviousPosition = ParentBody.FixedPosition;
-            }
-            else
-            {
-                FixedPosition = origin;
-            }
+            AttachedToOwner = attached;
+            FixedPosition = origin;
             Side = side;
             Frame = Duration;
-            //Sound.Stop();
-            Sound.SimpleQueueSound();
+            if (AttachedToOwner)
+            {
+                FixedPosition -= new Vector2I(_master.Body.FixedPosition.X, _master.Body.FixedPosition.Y);
+            } 
+            if (Sound != null)
+            {
+                Sound.SimpleQueueSound();
+            }
             IsActive = true;
         }
 
@@ -60,34 +70,17 @@ namespace SakugaEngine
 
             Frame--;
             if (Frame < 0) { IsActive = false;  return; }
-            if (ParentBody != null)
-            {
-                Vector2I additional = ParentBody.FixedPosition - PreviousPosition;
-                FixedPosition += additional;
-                PreviousPosition = ParentBody.FixedPosition;
-            }
         }
 
-        public override void Serialize(BinaryWriter bw)
+        public override byte[] GetStateData()
         {
-            bw.Write(FixedPosition.X);
-            bw.Write(FixedPosition.Y);
-            bw.Write(PreviousPosition.X);
-            bw.Write(PreviousPosition.Y);
-            bw.Write(IsActive);
-            bw.Write(Frame);
-            bw.Write(Side);
+            State.GetStateData(ref actor);
+            return MessagePackSerializer.Serialize(State);
         }
-
-        public override void Deserialize(BinaryReader br)
+		public override void SetStateData(byte[] stateBuffer)
         {
-            FixedPosition.X = br.ReadInt32();
-            FixedPosition.Y = br.ReadInt32();
-            PreviousPosition.X = br.ReadInt32();
-            PreviousPosition.Y = br.ReadInt32();
-            IsActive = br.ReadBoolean();
-            Frame = br.ReadInt32();
-            Side = br.ReadInt32();
+            State = MessagePackSerializer.Deserialize<SakugaVFXState>(stateBuffer);
+            State.SetStateData(ref actor);
         }
     }
 }

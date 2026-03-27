@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="AnimationData" format=3 uid="uid://d1tcyr51rbmtu"]
+
+[ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_wyd5q"]
+[ext_resource type="Resource" uid="uid://wsc17lx57phl" path="res://Fighters/Kaede/Hitboxes/3_Hitbox_FDash.tres" id="2_nyy7l"]
+[ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="3_x4a7l"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/AnimationData.cs" id="4_jbfab"]
+
+[sub_resource type="Resource" id="Resource_2b4ba"]
+script = ExtResource("1_wyd5q")
+SourceAnimation = "Dash_Forward"
+metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
+
+[sub_resource type="Resource" id="Resource_sv2n2"]
+script = ExtResource("3_x4a7l")
+HitboxData = ExtResource("2_nyy7l")
+
+[resource]
+script = ExtResource("4_jbfab")
+Duration = 36
+Animations = [SubResource("Resource_2b4ba")]
+Hitboxes = [SubResource("Resource_sv2n2")]
+metadata/_custom_type_script = "uid://ddkya5wrb53ly"

@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dt6dqmcq5rept" path="res://Fighters/Dummy/Instances/Dummy_Fighter_Alt1.tscn" id="7_51ydv"]
 [ext_resource type="Resource" uid="uid://dti25wauqaxwy" path="res://Fighters/Kaede/Kaede_Profile.tres" id="7_w00mg"]
 [ext_resource type="PackedScene" uid="uid://clhsbniudqcvl" path="res://Fighters/Dummy/Instances/Dummy_Fighter_Alt2.tscn" id="8_hd0eg"]
-[ext_resource type="PackedScene" uid="uid://mn2wng8jaovw" path="res://Fighters/Kaede/Instances/Fighter_Kaede_Alt.tscn" id="8_yn7sm"]
+[ext_resource type="PackedScene" uid="uid://ccpxqtpspsog5" path="res://Fighters/Kaede/Instances/Fighter_Kaede_Alt.tscn" id="8_yn7sm"]
 [ext_resource type="PackedScene" uid="uid://bloh87idirh84" path="res://Fighters/Dummy/Instances/Dummy_Fighter_Alt3.tscn" id="9_w00mg"]
 [ext_resource type="PackedScene" uid="uid://3reeyb4tcc1i" path="res://Fighters/Dummy/Instances/Dummy_Fighter_Default.tscn" id="12_f2d14"]
 

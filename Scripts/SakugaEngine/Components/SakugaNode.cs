@@ -1,10 +1,15 @@
 using Godot;
-using System.IO;
 
 namespace SakugaEngine
 {
-    public partial class SakugaNode : Node3D
+    public partial class SakugaNode : Node
 	{
+        [Export] protected bool StartActive;
+        public bool IsActive;
+        public virtual void Initialize()
+        {
+            IsActive = StartActive;
+        }
         /// <summary>
         /// Executed before everything in the loop.
         /// </summary>
@@ -21,12 +26,12 @@ namespace SakugaEngine
         /// Use this to save data in the game state.
         /// </summary>
         /// <param name="bw"></param>
-		public virtual void Serialize(BinaryWriter bw){}
+		public virtual byte[] GetStateData(){ return []; }
         /// <summary>
         /// Use this to load data from the game state.
         /// </summary>
         /// <param name="br"></param>
-		public virtual void Deserialize(BinaryReader br){}
+		public virtual void SetStateData(byte[] stateBuffer){}
         /// <summary>
         /// Shows the simulation's final result in the view stage.
         /// </summary>

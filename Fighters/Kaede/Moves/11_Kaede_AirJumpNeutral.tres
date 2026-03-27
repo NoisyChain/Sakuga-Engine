@@ -1,32 +1,32 @@
 [gd_resource type="Resource" script_class="MoveSettings" format=3 uid="uid://8cv3fxgdm0td"]
 
-[ext_resource type="Script" uid="uid://dh03r2nvy3pmu" path="res://Scripts/SakugaEngine/Resources/ExtraVariableChange.cs" id="1_a0xfh"]
 [ext_resource type="Resource" uid="uid://brssiq77ils1q" path="res://Fighters/Shared/Inputs/5_Input_tap8.tres" id="1_ji7lf"]
 [ext_resource type="Script" uid="uid://gk1rkw667o4n" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_0v82b"]
-[ext_resource type="Script" uid="uid://cuch5yr7c7dag" path="res://Scripts/SakugaEngine/Resources/ExtraVariableCondition.cs" id="2_fkcae"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/CustomVariableChange.cs" id="2_jjsyd"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/CustomVariableCondition.cs" id="3_op3mk"]
 
-[sub_resource type="Resource" id="Resource_gr5d3"]
-script = ExtResource("1_a0xfh")
-ChangeMode = 1
-ChangeValue = 1
+[sub_resource type="Resource" id="Resource_opnpq"]
+script = ExtResource("2_jjsyd")
+Value = 1
+metadata/_custom_type_script = "uid://dh03r2nvy3pmu"
 
-[sub_resource type="Resource" id="Resource_lbvbg"]
-script = ExtResource("1_a0xfh")
-ChangeMode = 1
-ChangeValue = 1
+[sub_resource type="Resource" id="Resource_jjsyd"]
+script = ExtResource("2_jjsyd")
+ByIndex = 1
+Value = 1
+metadata/_custom_type_script = "uid://dh03r2nvy3pmu"
 
-[sub_resource type="Resource" id="Resource_5pv8u"]
-script = ExtResource("1_a0xfh")
+[sub_resource type="Resource" id="Resource_op3mk"]
+script = ExtResource("2_jjsyd")
+ByIndex = 2
+Value = 1
+metadata/_custom_type_script = "uid://dh03r2nvy3pmu"
 
-[sub_resource type="Resource" id="Resource_tv5qw"]
-script = ExtResource("2_fkcae")
+[sub_resource type="Resource" id="Resource_tmkpr"]
+script = ExtResource("3_op3mk")
 Value = 1
 CompareMode = 3
-
-[sub_resource type="Resource" id="Resource_ppjr4"]
-script = ExtResource("2_fkcae")
-Value = 1
-CompareMode = 3
+metadata/_custom_type_script = "uid://cuch5yr7c7dag"
 
 [resource]
 script = ExtResource("2_0v82b")
@@ -36,8 +36,8 @@ Inputs = ExtResource("1_ji7lf")
 Priority = 4
 DistanceArea = Vector2i(0, 99999)
 CanCancelTo = null
-ExtraVariablesRequirement = Array[Object]([SubResource("Resource_tv5qw"), SubResource("Resource_ppjr4")])
-ExtraVariablesChange = Array[Object]([SubResource("Resource_gr5d3"), SubResource("Resource_lbvbg"), SubResource("Resource_5pv8u")])
+VariablesRequirement = Array[Object]([SubResource("Resource_tmkpr")])
+VariablesChange = Array[Object]([SubResource("Resource_opnpq"), SubResource("Resource_jjsyd"), SubResource("Resource_op3mk")])
 CanBeOverrided = true
 CanOverrideToSelf = true
 IgnoreSamePriority = false

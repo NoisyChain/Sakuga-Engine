@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using SakugaEngine.Global;
 
 namespace SakugaEngine.UI
 {
@@ -26,7 +27,7 @@ namespace SakugaEngine.UI
         [Export] private Label P1Debug;
         [Export] private Label P2Debug;
 
-        public void Setup(SakugaFighter[] fighters)
+        public void Setup(SakugaActor[] fighters)
         {
             P1Health.MaxValue = fighters[0].Data.MaxHealth;
             P2Health.MaxValue = fighters[1].Data.MaxHealth;
@@ -47,27 +48,27 @@ namespace SakugaEngine.UI
             P2Rounds.Setup();
         }
 
-        public void UpdateHealthBars(SakugaFighter[] fighters, GameMonitor monitor)
+        public void UpdateHealthBars(SakugaActor[] fighters, GameMonitor monitor)
         {
-            P1Health.Value = fighters[0].Variables.CurrentHealth;
-            P2Health.Value = fighters[1].Variables.CurrentHealth;
-            P1LostHealth.Value = fighters[0].FighterVars.LostHealth;
-            P2LostHealth.Value = fighters[1].FighterVars.LostHealth;
+            P1Health.Value = fighters[0].Parameters.Health.CurrentValue;
+            P2Health.Value = fighters[1].Parameters.Health.CurrentValue;
+            P1LostHealth.Value = fighters[0].Parameters.Health.LostValue;
+            P2LostHealth.Value = fighters[1].Parameters.Health.LostValue;
 
             UpdateTimer(monitor);
 
             P1Rounds.ShowRounds(monitor.VictoryCounter[0]);
             P2Rounds.ShowRounds(monitor.VictoryCounter[1]);
 
-            P1Combo.Visible = fighters[1].Tracker.HitCombo > 0;
-            P2Combo.Visible = fighters[0].Tracker.HitCombo > 0;
+            P1Combo.Visible = fighters[1].Parameters.Tracker.HitCombo > 0;
+            P2Combo.Visible = fighters[0].Parameters.Tracker.HitCombo > 0;
 
-            P1Combo.UpdateCounter((int)fighters[1].HitStun.TimeLeft, fighters[1].Tracker);
-            P2Combo.UpdateCounter((int)fighters[0].HitStun.TimeLeft, fighters[0].Tracker);
+            P1Combo.UpdateCounter((int)fighters[1].Hitstun.TimeLeft, fighters[1].Parameters.Tracker);
+            P2Combo.UpdateCounter((int)fighters[0].Hitstun.TimeLeft, fighters[0].Parameters.Tracker);
             UpdateDebug(fighters);
         }
 
-        public void UpdateDebug(SakugaFighter[] fighters)
+        public void UpdateDebug(SakugaActor[] fighters)
         {
             P1Debug.Text = fighters[0].DebugInfo();
             P2Debug.Text = fighters[1].DebugInfo();
@@ -80,7 +81,7 @@ namespace SakugaEngine.UI
                 Timer.Text = "--";
                 return;
             }
-            int time = (monitor.Clock / Global.TicksPerSecond) + 1;
+            int time = monitor.Clock / GlobalVariables.TicksPerSecond;
             time = Mathf.Clamp(time, 0, monitor.ClockLimit);
             Timer.Text = time.ToString();
         }

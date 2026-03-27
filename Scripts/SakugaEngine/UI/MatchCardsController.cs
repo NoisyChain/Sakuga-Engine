@@ -1,4 +1,5 @@
 using Godot;
+using SakugaEngine.Global;
 using SakugaEngine.Resources;
 
 namespace SakugaEngine.UI
@@ -38,7 +39,7 @@ namespace SakugaEngine.UI
             }
 
             animator.Play(GetCurrentAnimation().Name);
-            animator.Seek(Frame / (float)Global.TicksPerSecond, true);
+            animator.Seek(Frame / (float)GlobalVariables.TicksPerSecond, true);
         }
 
         public void Run()

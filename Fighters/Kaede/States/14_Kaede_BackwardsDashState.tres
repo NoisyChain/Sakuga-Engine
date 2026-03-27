@@ -1,11 +1,80 @@
 [gd_resource type="Resource" script_class="FighterState" format=3 uid="uid://u2bqvxcp02oh"]
 
-[ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Resources/StatePhysics.cs" id="1"]
+[ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Deprecated/StatePhysics.cs" id="1"]
+[ext_resource type="Resource" uid="uid://dgeatownb1efo" path="res://Fighters/Kaede/AnimationData/19_Kaede_DashBw_AnimData.tres" id="1_18ist"]
 [ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_uq60h"]
 [ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="2"]
+[ext_resource type="Script" uid="uid://bgwrlqrhqb2a4" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Actions/MoveXAction.cs" id="2_lgcpv"]
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="3"]
-[ext_resource type="Script" uid="uid://bia88bspuvxd" path="res://Scripts/SakugaEngine/Resources/StateTransitionSettings.cs" id="4_7j3ie"]
-[ext_resource type="Script" uid="uid://5pyrbnu5lbp1" path="res://Scripts/SakugaEngine/Resources/FrameProperties.cs" id="4_t4271"]
+[ext_resource type="Resource" uid="uid://d1h77q6l816dg" path="res://Fighters/Kaede/Hitboxes/4_Hitbox_BDash.tres" id="3_37g14"]
+[ext_resource type="Script" uid="uid://bw1835rb2hj7y" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Actions/MoveYAction.cs" id="3_ngjgg"]
+[ext_resource type="Script" uid="uid://bia88bspuvxd" path="res://Scripts/SakugaEngine/Deprecated/StateTransitionSettings.cs" id="4_7j3ie"]
+[ext_resource type="Script" uid="uid://c076jc3huncn2" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/FrameDataEvent.cs" id="4_e15ck"]
+[ext_resource type="Script" uid="uid://c42r1mjvviuhg" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Conditions/AtFrameRangeCondition.cs" id="5_e15ck"]
+[ext_resource type="Resource" uid="uid://t64afo7e4u1o" path="res://Fighters/Kaede/Hitboxes/0_Hitbox_Basic.tres" id="5_h843o"]
+[ext_resource type="Script" uid="uid://da4kqpf635oin" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Actions/PlayStateAction.cs" id="5_x8hsi"]
+[ext_resource type="Script" uid="uid://bho4h38y7suxk" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Conditions/StateEndedCondition.cs" id="6_wckax"]
+[ext_resource type="Script" uid="uid://50grsd2r3wl8" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Conditions/AtFrameCondition.cs" id="6_x8hsi"]
+
+[sub_resource type="Resource" id="Resource_ulye1"]
+script = ExtResource("2_lgcpv")
+metadata/_custom_type_script = "uid://bgwrlqrhqb2a4"
+
+[sub_resource type="Resource" id="Resource_hqu7y"]
+script = ExtResource("3_ngjgg")
+metadata/_custom_type_script = "uid://bw1835rb2hj7y"
+
+[sub_resource type="Resource" id="Resource_po6by"]
+script = ExtResource("4_e15ck")
+Conditions = null
+Actions = Array[Object]([SubResource("Resource_ulye1"), SubResource("Resource_hqu7y")])
+metadata/_custom_type_script = "uid://c076jc3huncn2"
+
+[sub_resource type="Resource" id="Resource_wckax"]
+script = ExtResource("2_lgcpv")
+Velocity = -25000
+metadata/_custom_type_script = "uid://bgwrlqrhqb2a4"
+
+[sub_resource type="Resource" id="Resource_qrbba"]
+script = ExtResource("5_e15ck")
+MinFrame = 4
+MaxFrame = 29
+metadata/_custom_type_script = "uid://c42r1mjvviuhg"
+
+[sub_resource type="Resource" id="Resource_i6eg1"]
+script = ExtResource("4_e15ck")
+Conditions = Array[Object]([SubResource("Resource_qrbba")])
+Actions = Array[Object]([SubResource("Resource_wckax")])
+metadata/_custom_type_script = "uid://c076jc3huncn2"
+
+[sub_resource type="Resource" id="Resource_211uq"]
+script = ExtResource("2_lgcpv")
+metadata/_custom_type_script = "uid://bgwrlqrhqb2a4"
+
+[sub_resource type="Resource" id="Resource_qyh0r"]
+script = ExtResource("6_x8hsi")
+Frame = 30
+metadata/_custom_type_script = "uid://50grsd2r3wl8"
+
+[sub_resource type="Resource" id="Resource_ctwvl"]
+script = ExtResource("4_e15ck")
+Conditions = Array[Object]([SubResource("Resource_qyh0r")])
+Actions = Array[Object]([SubResource("Resource_211uq")])
+metadata/_custom_type_script = "uid://c076jc3huncn2"
+
+[sub_resource type="Resource" id="Resource_ol54p"]
+script = ExtResource("5_x8hsi")
+metadata/_custom_type_script = "uid://da4kqpf635oin"
+
+[sub_resource type="Resource" id="Resource_bqcnw"]
+script = ExtResource("6_wckax")
+metadata/_custom_type_script = "uid://bho4h38y7suxk"
+
+[sub_resource type="Resource" id="Resource_0oaoh"]
+script = ExtResource("4_e15ck")
+Conditions = Array[Object]([SubResource("Resource_bqcnw")])
+Actions = Array[Object]([SubResource("Resource_ol54p")])
+metadata/_custom_type_script = "uid://c076jc3huncn2"
 
 [sub_resource type="Resource" id="Resource_1wvpj"]
 script = ExtResource("1_uq60h")
@@ -14,11 +83,12 @@ metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
 
 [sub_resource type="Resource" id="5"]
 script = ExtResource("3")
+HitboxData = ExtResource("3_37g14")
 
 [sub_resource type="Resource" id="6"]
 script = ExtResource("3")
-Frame = 4
-HitboxIndex = 4
+AtFrame = 28
+HitboxData = ExtResource("5_h843o")
 
 [sub_resource type="Resource" id="3"]
 script = ExtResource("1")
@@ -39,14 +109,6 @@ Frame = 30
 UseLateralSpeed = true
 UseVerticalSpeed = true
 
-[sub_resource type="Resource" id="Resource_anmr3"]
-script = ExtResource("4_t4271")
-Properties = 3
-
-[sub_resource type="Resource" id="Resource_dmry4"]
-script = ExtResource("4_t4271")
-Frame = 4
-
 [sub_resource type="Resource" id="Resource_liohb"]
 script = ExtResource("4_7j3ie")
 StateIndex = 0
@@ -57,8 +119,15 @@ DistanceArea = Vector2i(0, 99999)
 script = ExtResource("2")
 StateName = "Dash_Backwards"
 Type = 1
+AnimationData = ExtResource("1_18ist")
+TransitionEvents = Array[Object]([SubResource("Resource_0oaoh")])
+OnEnterEvents = Array[Object]([SubResource("Resource_po6by")])
+OnTickEvents = Array[Object]([SubResource("Resource_i6eg1"), SubResource("Resource_ctwvl")])
+OnExitEvents = null
+OnHitConfirmEvents = null
+OnHitReactionEvents = null
 Duration = 34
-stateProperties = Array[Object]([SubResource("Resource_anmr3"), SubResource("Resource_dmry4")])
+stateProperties = null
 statePhysics = [SubResource("3"), SubResource("2"), SubResource("4")]
 hitboxStates = [SubResource("5"), SubResource("6")]
 animationEvents = null

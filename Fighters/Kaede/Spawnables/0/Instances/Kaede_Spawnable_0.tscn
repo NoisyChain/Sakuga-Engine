@@ -1,9 +1,10 @@
-[gd_scene load_steps=24 format=3 uid="uid://domhsm5n4i2q1"]
+[gd_scene format=3 uid="uid://domhsm5n4i2q1"]
 
-[ext_resource type="Script" uid="uid://ocvrnnvvf610" path="res://Scripts/SakugaEngine/Components/SakugaSpawnable.cs" id="1_dhydb"]
+[ext_resource type="Script" uid="uid://4gcoao7bwdlg" path="res://Scripts/SakugaEngine/Components/SakugaActor.cs" id="1_c822t"]
 [ext_resource type="Resource" uid="uid://blg5tsr3o8aai" path="res://Fighters/Kaede/Spawnables/0/Kaede_Spawnable1_Data.tres" id="2_0aw3w"]
-[ext_resource type="Script" uid="uid://cqd8ai3a40alf" path="res://Scripts/SakugaEngine/Utils/FOV_Correction.cs" id="3_vniop"]
-[ext_resource type="Script" uid="uid://bx452hpssiy38" path="res://Scripts/SakugaEngine/Components/FrameAnimator.cs" id="4_ao37v"]
+[ext_resource type="Resource" uid="uid://k31pv0ejfv2s" path="res://Fighters/Shared/Shared_SFXList.tres" id="3_2jt4l"]
+[ext_resource type="Script" uid="uid://bx452hpssiy38" path="res://Scripts/SakugaEngine/Components/AnimationViewer.cs" id="4_ao37v"]
+[ext_resource type="Resource" uid="uid://c8h8jltu6u5pb" path="res://Fighters/Shared/Shared_VoiceLines.tres" id="4_yl1mr"]
 [ext_resource type="Texture2D" uid="uid://dho2rxfy6hkug" path="res://Fighters/Kaede/Spawnables/0/Sprites/1210-5.png" id="7_1jm7p"]
 [ext_resource type="Texture2D" uid="uid://buaxs0u1qu3bu" path="res://Fighters/Kaede/Spawnables/0/Sprites/1210-0.png" id="8_20w5q"]
 [ext_resource type="Texture2D" uid="uid://ceu1vxkao34tk" path="res://Fighters/Kaede/Spawnables/0/Sprites/1210-1.png" id="9_qyvgt"]
@@ -14,8 +15,9 @@
 [ext_resource type="Texture2D" uid="uid://bqn808dr1xgt5" path="res://Fighters/Kaede/Spawnables/0/Sprites/1210-7.png" id="14_c0qtb"]
 [ext_resource type="Texture2D" uid="uid://dlsfasp5w35ob" path="res://Fighters/Kaede/Spawnables/0/Sprites/1210-8.png" id="15_exb3l"]
 [ext_resource type="Texture2D" uid="uid://33q2at6e5oq7" path="res://Fighters/Kaede/Spawnables/0/Sprites/1211-0.png" id="16_g0add"]
-[ext_resource type="Script" uid="uid://17dvgaypi8q0" path="res://Scripts/SakugaEngine/Components/SakugaStateMachine.cs" id="17_wx82o"]
 [ext_resource type="Script" uid="uid://3uu6r0mhj3p3" path="res://Scripts/SakugaEngine/Components/SoundQueue.cs" id="18_d0kas"]
+[ext_resource type="Script" uid="uid://cs4qq3wx8q0pc" path="res://Scripts/SakugaEngine/Components/StateManager.cs" id="19_c822t"]
+[ext_resource type="Script" uid="uid://7t4e8g74liln" path="res://Scripts/SakugaEngine/Components/SakugaParameters.cs" id="20_vg2va"]
 [ext_resource type="PackedScene" uid="uid://dduf0jsq56ggk" path="res://Scenes/Instances/HitboxViewer.tscn" id="281_wh8kr"]
 [ext_resource type="Script" uid="uid://hg0vcp1gy2ny" path="res://Scripts/SakugaEngine/Collision/PhysicsBody.cs" id="282_or0ge"]
 [ext_resource type="Script" uid="uid://cmq3cp1n0copp" path="res://Scripts/SakugaEngine/Components/FrameTimer.cs" id="302_0eu8l"]
@@ -114,33 +116,40 @@ _data = {
 &"Travel": SubResource("Animation_4g5j5")
 }
 
-[node name="Kaede_Spawnable" type="Node3D" node_paths=PackedStringArray("LifeTime", "HitStop", "Body", "Animator", "Sounds", "Graphics")]
-script = ExtResource("1_dhydb")
-LifeTime = NodePath("Timers/LifeTime")
-HitStop = NodePath("Timers/HitStop")
-DeathState = 2
-DieOnGround = true
-DieOnWalls = true
-DieOnHit = true
-Deflectable = true
-Data = ExtResource("2_0aw3w")
-Body = NodePath("PhysicsBody")
+[node name="Kaede_Spawnable" type="Node" unique_id=1240002008 node_paths=PackedStringArray("Body", "Parameters", "StateManager", "Animator", "Graphics", "Hitstop")]
+process_mode = 4
+script = ExtResource("1_c822t")
+Body = NodePath("Body")
+Parameters = NodePath("SakugaParameters")
+StateManager = NodePath("StateManager")
+AllowHit = 4
 Animator = NodePath("Graphics/Mesh")
-Sounds = [NodePath("Sounds/SFX_0")]
-Graphics = [NodePath("Graphics/Mesh/ProjectileGraphics")]
+Graphics = [NodePath("Graphics")]
+Data = ExtResource("2_0aw3w")
+SFXList = ExtResource("3_2jt4l")
+VoiceLines = ExtResource("4_yl1mr")
+Hitstop = NodePath("SakugaParameters/Timers/Hitstop")
+metadata/_custom_type_script = "uid://4gcoao7bwdlg"
 
-[node name="Graphics" type="Node3D" parent="."]
-script = ExtResource("3_vniop")
-intensity = 0.25
+[node name="Graphics" type="Node3D" parent="." unique_id=1933864196]
+process_mode = 3
 
-[node name="Mesh" type="Node3D" parent="Graphics" node_paths=PackedStringArray("players", "OffsetNode")]
+[node name="HitboxViewer" parent="Graphics" unique_id=404125478 node_paths=PackedStringArray("body") instance=ExtResource("281_wh8kr")]
+body = NodePath("../../Body")
+
+[node name="Sounds" type="Node3D" parent="Graphics" unique_id=54842337]
+
+[node name="SFX_0" type="AudioStreamPlayer3D" parent="Graphics/Sounds" unique_id=1525628516]
+script = ExtResource("18_d0kas")
+
+[node name="Mesh" type="Node3D" parent="Graphics" unique_id=336302335 node_paths=PackedStringArray("players", "OffsetNode")]
 script = ExtResource("4_ao37v")
 players = [NodePath("ProjectileGraphics/AnimationPlayer")]
-OffsetNode = NodePath("..")
+OffsetNode = NodePath("ProjectileGraphics")
 
-[node name="ProjectileGraphics" type="Node3D" parent="Graphics/Mesh"]
+[node name="ProjectileGraphics" type="Node3D" parent="Graphics/Mesh" unique_id=368521492]
 
-[node name="Sprite3D" type="Sprite3D" parent="Graphics/Mesh/ProjectileGraphics"]
+[node name="Sprite3D" type="Sprite3D" parent="Graphics/Mesh/ProjectileGraphics" unique_id=1157456817]
 layers = 2
 centered = false
 offset = Vector2(-250, -120)
@@ -149,33 +158,34 @@ texture_filter = 0
 texture = ExtResource("13_wcm7f")
 region_rect = Rect2(711.25, 46.25, 2, 0)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Graphics/Mesh/ProjectileGraphics"]
-libraries = {
-&"": SubResource("AnimationLibrary_efsgm")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Graphics/Mesh/ProjectileGraphics" unique_id=1192341850]
+libraries/ = SubResource("AnimationLibrary_efsgm")
 
-[node name="HitboxViewer" parent="." node_paths=PackedStringArray("body") instance=ExtResource("281_wh8kr")]
-body = NodePath("../PhysicsBody")
-
-[node name="Sounds" type="Node3D" parent="."]
-
-[node name="SFX_0" type="AudioStreamPlayer3D" parent="Sounds"]
-script = ExtResource("18_d0kas")
-
-[node name="StateMachine" type="Node" parent="."]
-script = ExtResource("17_wx82o")
-metadata/_custom_type_script = "uid://17dvgaypi8q0"
-
-[node name="PhysicsBody" type="Node" parent="."]
+[node name="Body" type="Node" parent="." unique_id=50196351]
 script = ExtResource("282_or0ge")
 StayOnBounds = true
 HitboxesLimit = 3
+metadata/_custom_type_script = "uid://hg0vcp1gy2ny"
 
-[node name="Timers" type="Node" parent="."]
+[node name="StateManager" type="Node" parent="." unique_id=720905185]
+script = ExtResource("19_c822t")
+metadata/_custom_type_script = "uid://cs4qq3wx8q0pc"
 
-[node name="LifeTime" type="Node" parent="Timers"]
+[node name="SakugaParameters" type="Node" parent="." unique_id=1829380548 node_paths=PackedStringArray("Timers", "Variables", "SoundSources")]
+script = ExtResource("20_vg2va")
+Timers = [NodePath("Timers/Hitstop"), NodePath("Timers/Lifetime")]
+Variables = []
+SoundSources = [NodePath("../Graphics/Sounds/SFX_0")]
+metadata/_custom_type_script = "uid://7t4e8g74liln"
+
+[node name="Timers" type="Node" parent="SakugaParameters" unique_id=1871679684]
+
+[node name="Hitstop" type="Node" parent="SakugaParameters/Timers" unique_id=1125785230]
+script = ExtResource("302_0eu8l")
+Manual = true
+metadata/_custom_type_script = "uid://cmq3cp1n0copp"
+
+[node name="Lifetime" type="Node" parent="SakugaParameters/Timers" unique_id=791642853]
 script = ExtResource("302_0eu8l")
 WaitTime = 40
-
-[node name="HitStop" type="Node" parent="Timers"]
-script = ExtResource("302_0eu8l")
+metadata/_custom_type_script = "uid://cmq3cp1n0copp"

@@ -1,18 +1,14 @@
 [gd_resource type="Resource" script_class="MoveSettings" format=3 uid="uid://1ji2x5eipcmv"]
 
-[ext_resource type="Script" uid="uid://dh03r2nvy3pmu" path="res://Scripts/SakugaEngine/Resources/ExtraVariableChange.cs" id="1_22eis"]
 [ext_resource type="Resource" uid="uid://diuo4je084p3s" path="res://Fighters/Shared/Inputs/4_Input_9.tres" id="1_hdl2k"]
 [ext_resource type="Script" uid="uid://gk1rkw667o4n" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_d667q"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/CustomVariableChange.cs" id="2_fuxbl"]
 
-[sub_resource type="Resource" id="Resource_ftr5y"]
-script = ExtResource("1_22eis")
-
-[sub_resource type="Resource" id="Resource_7mou8"]
-script = ExtResource("1_22eis")
-
-[sub_resource type="Resource" id="Resource_gr7r5"]
-script = ExtResource("1_22eis")
-ChangeValue = 1
+[sub_resource type="Resource" id="Resource_jb00o"]
+script = ExtResource("2_fuxbl")
+ByIndex = 2
+Value = 1
+metadata/_custom_type_script = "uid://dh03r2nvy3pmu"
 
 [resource]
 script = ExtResource("2_d667q")
@@ -20,12 +16,11 @@ MoveName = "Dash Jump"
 MoveState = 6
 Inputs = ExtResource("1_hdl2k")
 Priority = 3
-BuildSuperGauge = 6
 DistanceArea = Vector2i(0, 99999)
 IsSequenceFromStates = PackedInt32Array(13)
 CanCancelTo = null
-ExtraVariablesRequirement = Array[Object]([])
-ExtraVariablesChange = Array[Object]([SubResource("Resource_ftr5y"), SubResource("Resource_7mou8"), SubResource("Resource_gr7r5")])
+VariablesRequirement = null
+VariablesChange = Array[Object]([SubResource("Resource_jb00o")])
 CanBeOverrided = true
 PriorityBuffer = true
 AcceptNullStates = true

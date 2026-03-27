@@ -1,13 +1,12 @@
-[gd_scene format=3 uid="uid://mn2wng8jaovw"]
+[gd_scene format=3 uid="uid://ccpxqtpspsog5"]
 
-[ext_resource type="Script" uid="uid://bkhlpeqky2g1r" path="res://Scripts/SakugaEngine/Components/SakugaFighter.cs" id="1_sp6gj"]
+[ext_resource type="Script" uid="uid://4gcoao7bwdlg" path="res://Scripts/SakugaEngine/Components/SakugaActor.cs" id="1_ggwxl"]
 [ext_resource type="Resource" uid="uid://ce1bjf3tpyngv" path="res://Fighters/Kaede/Kaede_Data.tres" id="2_5cpxi"]
 [ext_resource type="Resource" uid="uid://5w0ffcesv6ec" path="res://Fighters/Shared/Shared_SpawnablesList.tres" id="3_ag4st"]
 [ext_resource type="Resource" uid="uid://b6a4cqdykhhg" path="res://Fighters/Shared/Shared_VFXList.tres" id="4_72cxa"]
 [ext_resource type="Resource" uid="uid://k31pv0ejfv2s" path="res://Fighters/Shared/Shared_SFXList.tres" id="5_ggwxl"]
 [ext_resource type="Resource" uid="uid://c8h8jltu6u5pb" path="res://Fighters/Shared/Shared_VoiceLines.tres" id="6_4xr8m"]
-[ext_resource type="Script" uid="uid://cqd8ai3a40alf" path="res://Scripts/SakugaEngine/Utils/FOV_Correction.cs" id="7_7xd5d"]
-[ext_resource type="Script" uid="uid://bx452hpssiy38" path="res://Scripts/SakugaEngine/Components/FrameAnimator.cs" id="8_mal7g"]
+[ext_resource type="Script" uid="uid://bx452hpssiy38" path="res://Scripts/SakugaEngine/Components/AnimationViewer.cs" id="8_mal7g"]
 [ext_resource type="Material" uid="uid://bq6qbm2ymofxw" path="res://Fighters/Kaede/Palettes/Color2/MAT_kaede_pallete_2.tres" id="9_4f5rk"]
 [ext_resource type="Texture2D" uid="uid://bh1ks1pfblfex" path="res://Fighters/Kaede/Sprites/0-2.png" id="10_cee1p"]
 [ext_resource type="Texture2D" uid="uid://dvj27e2ijycn7" path="res://Fighters/Kaede/Sprites/1250-0.png" id="11_8k5yx"]
@@ -285,15 +284,21 @@
 [ext_resource type="Texture2D" uid="uid://dmcridfyw6qc5" path="res://Fighters/Kaede/Sprites/620-4.png" id="283_2uh7j"]
 [ext_resource type="Texture2D" uid="uid://bvndtkpr4u00p" path="res://Fighters/Kaede/Sprites/620-5.png" id="284_bscws"]
 [ext_resource type="PackedScene" uid="uid://dduf0jsq56ggk" path="res://Scenes/Instances/HitboxViewer.tscn" id="285_fngr4"]
+[ext_resource type="Script" uid="uid://cs4qq3wx8q0pc" path="res://Scripts/SakugaEngine/Components/StateManager.cs" id="286_4xr8m"]
 [ext_resource type="Script" uid="uid://3uu6r0mhj3p3" path="res://Scripts/SakugaEngine/Components/SoundQueue.cs" id="286_x2a0n"]
 [ext_resource type="Script" uid="uid://hg0vcp1gy2ny" path="res://Scripts/SakugaEngine/Collision/PhysicsBody.cs" id="287_i0ibg"]
-[ext_resource type="Script" uid="uid://dshbmw3q5jor2" path="res://Scripts/SakugaEngine/Components/InputManager.cs" id="288_3a57v"]
-[ext_resource type="Script" uid="uid://17dvgaypi8q0" path="res://Scripts/SakugaEngine/Components/SakugaStateMachine.cs" id="289_0csys"]
+[ext_resource type="Script" uid="uid://c4xvc7cu6we4e" path="res://Scripts/SakugaEngine/Components/ObjectPool.cs" id="288_7xd5d"]
+[ext_resource type="Script" uid="uid://17dvgaypi8q0" path="res://Scripts/SakugaEngine/Components/StanceManager.cs" id="289_0csys"]
 [ext_resource type="Script" uid="uid://jxgdxccucllx" path="res://Scripts/SakugaEngine/Components/CombatTracker.cs" id="290_7bu61"]
+[ext_resource type="Script" uid="uid://7t4e8g74liln" path="res://Scripts/SakugaEngine/Components/SakugaParameters.cs" id="290_mal7g"]
+[ext_resource type="Script" uid="uid://c46mwhea4j37w" path="res://Scripts/SakugaEngine/Components/SakugaHealth.cs" id="291_4f5rk"]
 [ext_resource type="Script" uid="uid://dvqrejewx20e3" path="res://Scripts/SakugaEngine/Components/AIBrain.cs" id="291_ymesv"]
-[ext_resource type="Script" uid="uid://v7id8u3160fg" path="res://Scripts/SakugaEngine/Components/FighterVariables.cs" id="292_nctfb"]
-[ext_resource type="Script" uid="uid://be15qkgbfwwhd" path="res://Scripts/SakugaEngine/Components/ExtraVariable.cs" id="293_i2qcb"]
+[ext_resource type="Script" uid="uid://d2q1lo1hfn7ry" path="res://Scripts/SakugaEngine/Components/SakugaSuperGauge.cs" id="292_cee1p"]
+[ext_resource type="Script" uid="uid://baq33nsqdvp4m" path="res://Scripts/SakugaEngine/Components/SakugaSuperArmor.cs" id="293_8k5yx"]
+[ext_resource type="Script" uid="uid://dqqr3jnsmcig6" path="res://Scripts/SakugaEngine/Components/CustomVariable.cs" id="293_i2qcb"]
+[ext_resource type="Script" uid="uid://bfptd6jyxtdng" path="res://Scripts/SakugaEngine/Components/SakugaProrations.cs" id="294_hivem"]
 [ext_resource type="Script" uid="uid://cmq3cp1n0copp" path="res://Scripts/SakugaEngine/Components/FrameTimer.cs" id="294_l680x"]
+[ext_resource type="Script" uid="uid://bfqlc41fact0d" path="res://Scripts/SakugaEngine/Resources/CustomVariableBehavior.cs" id="298_8dpvl"]
 
 [sub_resource type="Animation" id="Animation_l2unq"]
 resource_name = "236236A"
@@ -2822,7 +2827,7 @@ tracks/2/keys = {
 "values": [ExtResource("279_vhffu"), ExtResource("280_j60ti"), ExtResource("281_y2jqe"), ExtResource("282_rj7jm"), ExtResource("283_2uh7j"), ExtResource("284_bscws"), ExtResource("109_r08o1"), ExtResource("110_ctv3r")]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_sp6gj"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_n2gjo"]
 _data = {
 &"236236A": SubResource("Animation_l2unq"),
 &"236C_1": SubResource("Animation_50qne"),
@@ -2888,41 +2893,51 @@ _data = {
 &"j_5C": SubResource("47")
 }
 
-[node name="Kaede_Viewer" type="Node3D" unique_id=231667895 node_paths=PackedStringArray("HitStun", "HitStop", "MoveBuffer", "PushForce", "HorizontalBounce", "VerticalBounce", "Brain", "Body", "Inputs", "Variables", "Animator", "StateMachine", "Tracker", "Sounds", "Graphics")]
-script = ExtResource("1_sp6gj")
-HitStun = NodePath("Timers/HitStun")
-HitStop = NodePath("Timers/HitStop")
-MoveBuffer = NodePath("Timers/MoveBuffer")
-PushForce = NodePath("Timers/Pushback")
-HorizontalBounce = NodePath("Timers/HBounce")
-VerticalBounce = NodePath("Timers/VBounce")
+[sub_resource type="Resource" id="Resource_xnl15"]
+script = ExtResource("298_8dpvl")
+Target = 1
+metadata/_custom_type_script = "uid://bfqlc41fact0d"
+
+[sub_resource type="Resource" id="Resource_ww37y"]
+script = ExtResource("298_8dpvl")
+Target = 1
+metadata/_custom_type_script = "uid://bfqlc41fact0d"
+
+[node name="Kaede_Viewer" type="Node" unique_id=1893578554 node_paths=PackedStringArray("Body", "Parameters", "StateManager", "StanceManager", "Pool", "Brain", "Animator", "Graphics", "Hitstop", "Hitstun", "Knockback", "Bounce")]
+process_mode = 4
+script = ExtResource("1_ggwxl")
+Body = NodePath("Body")
+Parameters = NodePath("Parameters")
+StateManager = NodePath("StateManager")
+StanceManager = NodePath("StanceManager")
+Pool = NodePath("Pool")
 Brain = NodePath("AIBrain")
-Data = ExtResource("2_5cpxi")
-Body = NodePath("PhysicsBody")
-Inputs = NodePath("InputManager")
-Variables = NodePath("Variables")
+AllowHit = 4
 Animator = NodePath("Graphics/Mesh")
-StateMachine = NodePath("StateMachine")
-Tracker = NodePath("CombatTracker")
-Sounds = [NodePath("Sounds/SFX_0"), NodePath("Sounds/SFX_1"), NodePath("Sounds/SFX_2"), NodePath("Sounds/SFX_3"), NodePath("Sounds/SFX_4")]
-Graphics = [NodePath("Graphics/Mesh/KaedeGraphics")]
+Graphics = [NodePath("Graphics")]
+Data = ExtResource("2_5cpxi")
 SpawnablesList = ExtResource("3_ag4st")
 VFXList = ExtResource("4_72cxa")
 SFXList = ExtResource("5_ggwxl")
 VoiceLines = ExtResource("6_4xr8m")
+Hitstop = NodePath("Parameters/Timers/Hitstop")
+Hitstun = NodePath("Parameters/Timers/Hitstun")
+Knockback = NodePath("Parameters/Timers/Knockback")
+Bounce = NodePath("Parameters/Timers/Bounce")
+StartActive = true
+metadata/_custom_type_script = "uid://4gcoao7bwdlg"
 
-[node name="Graphics" type="Node3D" parent="." unique_id=525246610]
-script = ExtResource("7_7xd5d")
-intensity = 0.25
+[node name="Graphics" type="Node3D" parent="." unique_id=1785253019]
+process_mode = 3
 
-[node name="Mesh" type="Node3D" parent="Graphics" unique_id=1487275240 node_paths=PackedStringArray("players", "OffsetNode")]
+[node name="Mesh" type="Node3D" parent="Graphics" unique_id=1695269247 node_paths=PackedStringArray("players", "OffsetNode")]
 script = ExtResource("8_mal7g")
 players = [NodePath("KaedeGraphics/AnimationPlayer")]
 OffsetNode = NodePath("KaedeGraphics")
 
-[node name="KaedeGraphics" type="Node3D" parent="Graphics/Mesh" unique_id=353624679]
+[node name="KaedeGraphics" type="Node3D" parent="Graphics/Mesh" unique_id=677423849]
 
-[node name="Sprite3D" type="Sprite3D" parent="Graphics/Mesh/KaedeGraphics" unique_id=1345315683]
+[node name="Sprite3D" type="Sprite3D" parent="Graphics/Mesh/KaedeGraphics" unique_id=1998144436]
 layers = 2
 material_override = ExtResource("9_4f5rk")
 centered = false
@@ -2931,82 +2946,126 @@ texture_filter = 0
 texture = ExtResource("10_cee1p")
 region_rect = Rect2(711.25, 46.25, 2, 0)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Graphics/Mesh/KaedeGraphics" unique_id=2002168555]
-libraries/ = SubResource("AnimationLibrary_sp6gj")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Graphics/Mesh/KaedeGraphics" unique_id=2069111782]
+libraries/ = SubResource("AnimationLibrary_n2gjo")
 
-[node name="HitboxViewer" parent="." unique_id=1297270176 node_paths=PackedStringArray("body") instance=ExtResource("285_fngr4")]
-body = NodePath("../PhysicsBody")
+[node name="Sounds" type="Node3D" parent="Graphics" unique_id=1869837634]
 
-[node name="Sounds" type="Node3D" parent="." unique_id=272806171]
-
-[node name="SFX_0" type="AudioStreamPlayer3D" parent="Sounds" unique_id=374010880]
+[node name="SFX_0" type="AudioStreamPlayer3D" parent="Graphics/Sounds" unique_id=1474946629]
 script = ExtResource("286_x2a0n")
 
-[node name="SFX_1" type="AudioStreamPlayer3D" parent="Sounds" unique_id=137523949]
+[node name="SFX_1" type="AudioStreamPlayer3D" parent="Graphics/Sounds" unique_id=1380543775]
 script = ExtResource("286_x2a0n")
 
-[node name="SFX_2" type="AudioStreamPlayer3D" parent="Sounds" unique_id=1359781971]
+[node name="SFX_2" type="AudioStreamPlayer3D" parent="Graphics/Sounds" unique_id=276843560]
 script = ExtResource("286_x2a0n")
 
-[node name="SFX_3" type="AudioStreamPlayer3D" parent="Sounds" unique_id=1711186754]
+[node name="SFX_3" type="AudioStreamPlayer3D" parent="Graphics/Sounds" unique_id=691516727]
 script = ExtResource("286_x2a0n")
 
-[node name="SFX_4" type="AudioStreamPlayer3D" parent="Sounds" unique_id=1655530058]
+[node name="SFX_4" type="AudioStreamPlayer3D" parent="Graphics/Sounds" unique_id=364957293]
 script = ExtResource("286_x2a0n")
 
-[node name="PhysicsBody" type="Node" parent="." unique_id=1824627479]
+[node name="HitboxViewer" parent="." unique_id=648540791 node_paths=PackedStringArray("body") instance=ExtResource("285_fngr4")]
+process_mode = 3
+body = NodePath("../Body")
+
+[node name="Body" type="Node" parent="." unique_id=935777149]
 script = ExtResource("287_i0ibg")
 StayOnBounds = true
+metadata/_custom_type_script = "uid://hg0vcp1gy2ny"
 
-[node name="InputManager" type="Node" parent="." unique_id=594220737]
-script = ExtResource("288_3a57v")
+[node name="StateManager" type="Node" parent="." unique_id=263802413]
+script = ExtResource("286_4xr8m")
+metadata/_custom_type_script = "uid://cs4qq3wx8q0pc"
 
-[node name="StateMachine" type="Node" parent="." unique_id=1228856838]
+[node name="StanceManager" type="Node" parent="." unique_id=841457667 node_paths=PackedStringArray("MoveBuffer")]
 script = ExtResource("289_0csys")
+MoveBuffer = NodePath("../Parameters/Timers/MoveBuffer")
+metadata/_custom_type_script = "uid://17dvgaypi8q0"
 
-[node name="CombatTracker" type="Node" parent="." unique_id=485880086]
-script = ExtResource("290_7bu61")
+[node name="Pool" type="Node" parent="." unique_id=349660055]
+script = ExtResource("288_7xd5d")
+metadata/_custom_type_script = "uid://c4xvc7cu6we4e"
 
-[node name="AIBrain" type="Node" parent="." unique_id=959521999]
+[node name="AIBrain" type="Node" parent="." unique_id=1454306328]
 script = ExtResource("291_ymesv")
 metadata/_custom_type_script = "uid://dvqrejewx20e3"
 
-[node name="Variables" type="Node" parent="." unique_id=89796892 node_paths=PackedStringArray("ExtraVariables")]
-script = ExtResource("292_nctfb")
-ExtraVariables = [NodePath("AirJumpLimit"), NodePath("AirDashLimit"), NodePath("IsDashJump")]
+[node name="Parameters" type="Node" parent="." unique_id=1440383066 node_paths=PackedStringArray("Health", "SuperGauge", "SuperArmor", "Prorations", "Tracker", "Timers", "Variables", "SoundSources")]
+script = ExtResource("290_mal7g")
+Health = NodePath("Health")
+SuperGauge = NodePath("SuperGauge")
+SuperArmor = NodePath("SuperArmor")
+Prorations = NodePath("Prorations")
+Tracker = NodePath("CombatTracker")
+Timers = [NodePath("Timers/Hitstop"), NodePath("Timers/Hitstun"), NodePath("Timers/MoveBuffer"), NodePath("Timers/Knockback"), NodePath("Timers/Bounce")]
+Variables = [NodePath("Variables/AirJumpLimit"), NodePath("Variables/AirDashLimit"), NodePath("Variables/IsDashJump")]
+SoundSources = [NodePath("../Graphics/Sounds/SFX_0"), NodePath("../Graphics/Sounds/SFX_1"), NodePath("../Graphics/Sounds/SFX_2"), NodePath("../Graphics/Sounds/SFX_3"), NodePath("../Graphics/Sounds/SFX_4")]
+metadata/_custom_type_script = "uid://7t4e8g74liln"
 
-[node name="AirJumpLimit" type="Node" parent="Variables" unique_id=1766771107]
+[node name="Health" type="Node" parent="Parameters" unique_id=1818332785]
+script = ExtResource("291_4f5rk")
+UseDataContainer = true
+metadata/_custom_type_script = "uid://c46mwhea4j37w"
+
+[node name="SuperGauge" type="Node" parent="Parameters" unique_id=686296804]
+script = ExtResource("292_cee1p")
+UseDataContainer = true
+metadata/_custom_type_script = "uid://d2q1lo1hfn7ry"
+
+[node name="SuperArmor" type="Node" parent="Parameters" unique_id=2110248997]
+script = ExtResource("293_8k5yx")
+metadata/_custom_type_script = "uid://baq33nsqdvp4m"
+
+[node name="Prorations" type="Node" parent="Parameters" unique_id=311075627]
+script = ExtResource("294_hivem")
+metadata/_custom_type_script = "uid://bfptd6jyxtdng"
+
+[node name="CombatTracker" type="Node" parent="Parameters" unique_id=1787804369]
+script = ExtResource("290_7bu61")
+metadata/_custom_type_script = "uid://jxgdxccucllx"
+
+[node name="Timers" type="Node" parent="Parameters" unique_id=1333150088]
+
+[node name="Hitstop" type="Node" parent="Parameters/Timers" unique_id=492381407]
+script = ExtResource("294_l680x")
+Manual = true
+metadata/_custom_type_script = "uid://cmq3cp1n0copp"
+
+[node name="Hitstun" type="Node" parent="Parameters/Timers" unique_id=1285745952]
+script = ExtResource("294_l680x")
+Manual = true
+metadata/_custom_type_script = "uid://cmq3cp1n0copp"
+
+[node name="MoveBuffer" type="Node" parent="Parameters/Timers" unique_id=248827608]
+script = ExtResource("294_l680x")
+metadata/_custom_type_script = "uid://cmq3cp1n0copp"
+
+[node name="Knockback" type="Node" parent="Parameters/Timers" unique_id=83643959]
+script = ExtResource("294_l680x")
+metadata/_custom_type_script = "uid://cmq3cp1n0copp"
+
+[node name="Bounce" type="Node" parent="Parameters/Timers" unique_id=246422345]
+script = ExtResource("294_l680x")
+metadata/_custom_type_script = "uid://cmq3cp1n0copp"
+
+[node name="Variables" type="Node" parent="Parameters" unique_id=1306610537]
+
+[node name="AirJumpLimit" type="Node" parent="Parameters/Variables" unique_id=1093714439]
 script = ExtResource("293_i2qcb")
 MaxValue = 1
+Behaviors = Array[Object]([SubResource("Resource_xnl15")])
+metadata/_custom_type_script = "uid://dqqr3jnsmcig6"
 
-[node name="AirDashLimit" type="Node" parent="Variables" unique_id=1972812640]
+[node name="AirDashLimit" type="Node" parent="Parameters/Variables" unique_id=995380379]
 script = ExtResource("293_i2qcb")
 MaxValue = 1
+Behaviors = Array[Object]([SubResource("Resource_xnl15")])
+metadata/_custom_type_script = "uid://dqqr3jnsmcig6"
 
-[node name="IsDashJump" type="Node" parent="Variables" unique_id=2017893478]
+[node name="IsDashJump" type="Node" parent="Parameters/Variables" unique_id=1473193310]
 script = ExtResource("293_i2qcb")
 MaxValue = 1
-
-[node name="Timers" type="Node" parent="." unique_id=690093052]
-
-[node name="HitStun" type="Node" parent="Timers" unique_id=1904782586]
-script = ExtResource("294_l680x")
-
-[node name="HitStop" type="Node" parent="Timers" unique_id=719524196]
-script = ExtResource("294_l680x")
-
-[node name="MoveBuffer" type="Node" parent="Timers" unique_id=1018724268]
-script = ExtResource("294_l680x")
-WaitTime = 10
-
-[node name="Pushback" type="Node" parent="Timers" unique_id=1585391640]
-script = ExtResource("294_l680x")
-WaitTime = 10
-
-[node name="HBounce" type="Node" parent="Timers" unique_id=1530843952]
-script = ExtResource("294_l680x")
-WaitTime = 10
-
-[node name="VBounce" type="Node" parent="Timers" unique_id=1199208247]
-script = ExtResource("294_l680x")
-WaitTime = 10
+Behaviors = Array[Object]([SubResource("Resource_ww37y")])
+metadata/_custom_type_script = "uid://dqqr3jnsmcig6"

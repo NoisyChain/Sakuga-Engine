@@ -1,9 +1,7 @@
 using Godot;
 using System;
-using System.IO;
 using System.Collections.Generic;
 using System.Threading;
-//using Epic.OnlineServices;
 
 namespace PleaseResync
 {
@@ -111,9 +109,9 @@ namespace PleaseResync
             sessionState.Setup();
             LastInput = new byte[InputSize];
 
-            if (UseLAN)
-                adapter = new LiteNetLibSessionAdapter(PlayerAddresses[DEVICE_ID], (ushort)PlayerPorts[DEVICE_ID]);
-            else
+            //if (UseLAN)
+            adapter = new LiteNetLibSessionAdapter(PlayerAddresses[DEVICE_ID], (ushort)PlayerPorts[DEVICE_ID]);
+            //else
                 //adapter = new EOSSessionAdapter();
 
             if (!spectate)
@@ -125,9 +123,9 @@ namespace PleaseResync
                 {
                     if (i != DEVICE_ID)
                     {
-                        if (UseLAN)
-                            session.AddRemoteDevice(i, 1, LiteNetLibSessionAdapter.CreateRemoteConfig(PlayerAddresses[i], (ushort)PlayerPorts[i]));
-                        else
+                        //if (UseLAN)
+                        session.AddRemoteDevice(i, 1, LiteNetLibSessionAdapter.CreateRemoteConfig(PlayerAddresses[i], (ushort)PlayerPorts[i]));
+                        //else
                             //session.AddRemoteDevice(i, 1, EOSManager.Instance.PlayerIds[i]);
                         PingId = i;
 
@@ -139,16 +137,16 @@ namespace PleaseResync
                 {
                     for (uint i = 0; i < spectatorCount; i++)
                     {
-                        if (UseLAN)
-                        {
-                            if (i % playerCount != DEVICE_ID) continue;
-                            session.AddSpectatorDevice(LiteNetLibSessionAdapter.CreateRemoteConfig(SpectatorAddresses[i], (ushort)SpectatorPorts[i]));
-                        }
-                        else
-                        {
+                        //if (UseLAN)
+                        //{
+                        if (i % playerCount != DEVICE_ID) continue;
+                        session.AddSpectatorDevice(LiteNetLibSessionAdapter.CreateRemoteConfig(SpectatorAddresses[i], (ushort)SpectatorPorts[i]));
+                        //}
+                        //else
+                        //{
                             //if (EOSManager.Instance.SpectatorIds[i] == null) continue;
                             //session.AddSpectatorDevice(EOSManager.Instance.SpectatorIds[i]);
-                        }
+                        //}
                     }
                 }
             }
@@ -158,9 +156,9 @@ namespace PleaseResync
                 session = new SpectatorSession(InputSize, playerCount, adapter, SpectatorDelay);
                 // be sure to pass ALL the players as in player count
                 uint targetDevice = DEVICE_ID % playerCount;
-                if (UseLAN)
-                    session.AddRemoteDevice(targetDevice, playerCount, LiteNetLibSessionAdapter.CreateRemoteConfig(PlayerAddresses[targetDevice], (ushort)PlayerPorts[targetDevice]));
-                else
+                //if (UseLAN)
+                session.AddRemoteDevice(targetDevice, playerCount, LiteNetLibSessionAdapter.CreateRemoteConfig(PlayerAddresses[targetDevice], (ushort)PlayerPorts[targetDevice]));
+                //else
                     //session.AddRemoteDevice(targetDevice, playerCount, EOSManager.Instance.PlayerIds[targetDevice]);
                 GD.Print($"Spectator device id {DEVICE_ID} connected to player ID {targetDevice}");
             }
@@ -253,15 +251,10 @@ namespace PleaseResync
                             if (!Replay) RecordInput(AFAction.Frame, AFAction.Inputs);
                             break;
                         case SessionLoadGameAction LGAction:
-                            MemoryStream readerStream = new MemoryStream(LGAction.Load());
-                            BinaryReader reader = new BinaryReader(readerStream);
-                            sessionState.LoadState(reader);
+                            sessionState.LoadState(LGAction.Load());
                             break;
                         case SessionSaveGameAction SGAction:
-                            MemoryStream writerStream = new MemoryStream();
-                            BinaryWriter writer = new BinaryWriter(writerStream);
-                            sessionState.SaveState(writer);
-                            byte[] state = writerStream.ToArray();
+                            byte[] state = sessionState.SaveState();
                             SGAction.Save(state, Platform.GetChecksum(state));
                             break;
                     }

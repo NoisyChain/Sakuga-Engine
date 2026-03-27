@@ -1,0 +1,64 @@
+[gd_resource type="Resource" script_class="AnimationData" format=3 uid="uid://cixk0mdi5e4c8"]
+
+[ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_a14tm"]
+[ext_resource type="Resource" uid="uid://dy23ho6aepysm" path="res://Fighters/Kaede/Hitboxes/5_Hitbox_5A_StUp.tres" id="2_lthhx"]
+[ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="3_7dskm"]
+[ext_resource type="Resource" uid="uid://ccal4fra1gc3t" path="res://Fighters/Kaede/Hitboxes/6_Hitbox_5A_Active.tres" id="4_00hp6"]
+[ext_resource type="Resource" uid="uid://t64afo7e4u1o" path="res://Fighters/Kaede/Hitboxes/0_Hitbox_Basic.tres" id="5_xa7wj"]
+[ext_resource type="Script" uid="uid://ddkya5wrb53ly" path="res://Scripts/SakugaEngine/Resources/AnimationData.cs" id="6_8a4hw"]
+
+[sub_resource type="Resource" id="Resource_gbbpf"]
+script = ExtResource("1_a14tm")
+SourceAnimation = "Combat_5A"
+FrameStepping = 4
+metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
+
+[sub_resource type="Resource" id="Resource_1bm1i"]
+script = ExtResource("1_a14tm")
+AtFrame = 3
+SourceAnimation = "Combat_5A"
+FrameStepping = 4
+LimitRange = true
+AnimationRange = Vector2i(4, 15)
+metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
+
+[sub_resource type="Resource" id="Resource_ighj8"]
+script = ExtResource("1_a14tm")
+AtFrame = 15
+SourceAnimation = "Combat_5A"
+FrameStepping = 4
+LimitRange = true
+AnimationRange = Vector2i(16, 19)
+metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
+
+[sub_resource type="Resource" id="Resource_bwnru"]
+script = ExtResource("1_a14tm")
+AtFrame = 19
+SourceAnimation = "Combat_5A"
+FrameStepping = 4
+LimitRange = true
+AnimationRange = Vector2i(20, 23)
+metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
+
+[sub_resource type="Resource" id="2"]
+script = ExtResource("3_7dskm")
+HitboxData = ExtResource("2_lthhx")
+
+[sub_resource type="Resource" id="3"]
+script = ExtResource("3_7dskm")
+AtFrame = 7
+animationStage = 1
+HitboxData = ExtResource("4_00hp6")
+
+[sub_resource type="Resource" id="4"]
+script = ExtResource("3_7dskm")
+AtFrame = 11
+animationStage = 2
+HitboxData = ExtResource("5_xa7wj")
+
+[resource]
+script = ExtResource("6_8a4hw")
+Duration = 21
+Animations = [SubResource("Resource_gbbpf"), SubResource("Resource_1bm1i"), SubResource("Resource_ighj8"), SubResource("Resource_bwnru")]
+Hitboxes = [SubResource("2"), SubResource("3"), SubResource("4")]
+metadata/_custom_type_script = "uid://ddkya5wrb53ly"

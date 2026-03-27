@@ -2,12 +2,11 @@ using Godot;
 
 namespace SakugaEngine.Resources
 {
-    [GlobalClass]
+    [GlobalClass] [Tool]
     public partial class HitboxState : Resource
     {
+        [Export] public int AtFrame;
         [Export] public Global.AnimationStage animationStage;
-        [Export] public int Frame;
-        [Export] public int HitboxIndex;
-        [Export] public bool ResetHits;
+        [Export] public HitboxSettings HitboxData;
     }
 }

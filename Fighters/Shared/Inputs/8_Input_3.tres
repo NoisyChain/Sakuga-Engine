@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="MotionInputs" format=3 uid="uid://3yh0pky7gxrc"]
+
+[ext_resource type="Script" uid="uid://87xpa7lbksa8" path="res://Scripts/SakugaEngine/Resources/InputSequence.cs" id="1_xafi1"]
+[ext_resource type="Script" uid="uid://ce6shsv0dij5v" path="res://Scripts/SakugaEngine/Resources/InputOption.cs" id="2_njo4f"]
+[ext_resource type="Script" uid="uid://di4jwsd3y2x8w" path="res://Scripts/SakugaEngine/Resources/MotionInputs.cs" id="3_tuo7e"]
+
+[sub_resource type="Resource" id="Resource_xafi1"]
+script = ExtResource("1_xafi1")
+Directional = 5
+DirectionalMode = 1
+
+[sub_resource type="Resource" id="Resource_njo4f"]
+script = ExtResource("2_njo4f")
+Inputs = Array[Object]([SubResource("Resource_xafi1")])
+
+[resource]
+script = ExtResource("3_tuo7e")
+ValidInputs = Array[Object]([SubResource("Resource_njo4f")])
+AbsoluteDirection = true
+InputBuffer = 0

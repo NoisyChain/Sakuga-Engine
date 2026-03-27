@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_gamch"]
 [ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="2_vxddt"]
-[ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Resources/StatePhysics.cs" id="3_bux6k"]
+[ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Deprecated/StatePhysics.cs" id="3_bux6k"]
 
 [sub_resource type="Resource" id="Resource_gamch"]
 script = ExtResource("1_gamch")
@@ -19,6 +19,12 @@ metadata/_custom_type_script = "uid://5you05l2efnd"
 script = ExtResource("2_vxddt")
 StateName = "Defeat"
 Type = 5
+TransitionEvents = null
+OnEnterEvents = null
+OnTickEvents = null
+OnExitEvents = null
+OnHitConfirmEvents = null
+OnHitReactionEvents = null
 Duration = 24
 stateProperties = null
 statePhysics = Array[Object]([SubResource("Resource_scuwi")])

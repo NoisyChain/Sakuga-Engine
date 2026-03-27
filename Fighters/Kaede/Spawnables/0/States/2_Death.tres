@@ -1,9 +1,43 @@
 [gd_resource type="Resource" script_class="FighterState" format=3 uid="uid://bgjd35gpl3n3l"]
 
 [ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="1"]
+[ext_resource type="Resource" uid="uid://df40l1uf82nfw" path="res://Fighters/Kaede/Spawnables/0/AnimationData/2_Spawnable_Death_AnimationData.tres" id="1_31sw0"]
+[ext_resource type="Script" uid="uid://bgwrlqrhqb2a4" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Actions/MoveXAction.cs" id="1_lwplu"]
 [ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_q80vs"]
+[ext_resource type="Script" uid="uid://d2vhk55lqtwt2" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Actions/SetActiveAction.cs" id="1_vdmq4"]
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2"]
-[ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Resources/StatePhysics.cs" id="3"]
+[ext_resource type="Script" uid="uid://bho4h38y7suxk" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Conditions/StateEndedCondition.cs" id="2_14nsw"]
+[ext_resource type="Script" uid="uid://bw1835rb2hj7y" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Actions/MoveYAction.cs" id="2_31sw0"]
+[ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Deprecated/StatePhysics.cs" id="3"]
+[ext_resource type="Script" uid="uid://c076jc3huncn2" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/FrameDataEvent.cs" id="3_0kful"]
+
+[sub_resource type="Resource" id="Resource_1156u"]
+script = ExtResource("1_lwplu")
+metadata/_custom_type_script = "uid://bgwrlqrhqb2a4"
+
+[sub_resource type="Resource" id="Resource_b2kw7"]
+script = ExtResource("2_31sw0")
+metadata/_custom_type_script = "uid://bw1835rb2hj7y"
+
+[sub_resource type="Resource" id="Resource_0fhtb"]
+script = ExtResource("3_0kful")
+Conditions = null
+Actions = Array[Object]([SubResource("Resource_1156u"), SubResource("Resource_b2kw7")])
+metadata/_custom_type_script = "uid://c076jc3huncn2"
+
+[sub_resource type="Resource" id="Resource_lwplu"]
+script = ExtResource("1_vdmq4")
+metadata/_custom_type_script = "uid://d2vhk55lqtwt2"
+
+[sub_resource type="Resource" id="Resource_31sw0"]
+script = ExtResource("2_14nsw")
+metadata/_custom_type_script = "uid://bho4h38y7suxk"
+
+[sub_resource type="Resource" id="Resource_3bmk6"]
+script = ExtResource("3_0kful")
+Conditions = Array[Object]([SubResource("Resource_31sw0")])
+Actions = Array[Object]([SubResource("Resource_lwplu")])
+metadata/_custom_type_script = "uid://c076jc3huncn2"
 
 [sub_resource type="Resource" id="Resource_w716p"]
 script = ExtResource("1_q80vs")
@@ -12,7 +46,6 @@ metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
 
 [sub_resource type="Resource" id="1"]
 script = ExtResource("2")
-HitboxIndex = -1
 
 [sub_resource type="Resource" id="2"]
 script = ExtResource("3")
@@ -22,6 +55,13 @@ UseVerticalSpeed = true
 [resource]
 script = ExtResource("1")
 StateName = "Death"
+AnimationData = ExtResource("1_31sw0")
+TransitionEvents = Array[Object]([SubResource("Resource_3bmk6")])
+OnEnterEvents = Array[Object]([SubResource("Resource_0fhtb")])
+OnTickEvents = null
+OnExitEvents = null
+OnHitConfirmEvents = null
+OnHitReactionEvents = null
 Duration = 12
 stateProperties = null
 statePhysics = [SubResource("2")]

@@ -36,7 +36,7 @@ namespace SakugaEngine.Resources
         [Export] public int HitEffectIndex = 0;
         [Export] public int BlockEffectIndex = 1;
         [Export] public int ClashEffectIndex = 2;
-        [Export] public int ArmorHitEffectIndex = 3;
+        [Export] public int ArmorEffectIndex = 3;
         [Export] public int GuardCrushEffectIndex = 0;
 
         //Ground Hitstun settings
@@ -81,15 +81,10 @@ namespace SakugaEngine.Resources
         [Export] public int SelfPushbackForce = -30000;
         [Export] public int SelfPushbackDuration = 8;
 
-        //Extra settings
-        [ExportGroup("Extra Settings")]
-        [Export] public int HitConfirmState = -1;
-        [Export] public bool AllowInertia = true;
-        [Export] public int BounceXTime = 0;
+        //Bounce settings
+        [ExportGroup("Bounce Settings")]
+        [Export] public int BounceTime = 0;
         [Export] public int BounceXIntensity = 100;
-        [Export] public int BounceXState = -1;
-        [Export] public int BounceYTime = 0;
         [Export] public int BounceYIntensity = 100;
-        [Export] public int BounceYState = -1;
     }
 }

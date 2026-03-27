@@ -1,5 +1,6 @@
 using Godot;
 using SakugaEngine;
+using SakugaEngine.Global;
 
 namespace SakugaEngine.UI
 {
@@ -39,16 +40,16 @@ namespace SakugaEngine.UI
             int v;
             int dir = 0;
 
-            if ((reg.rawInput & Global.INPUT_RIGHT) != 0)
+            if ((reg.rawInput & PlayerInputs.RIGHT) != 0)
                 h = 1;
-            else if ((reg.rawInput & Global.INPUT_LEFT) != 0)
+            else if ((reg.rawInput & PlayerInputs.LEFT) != 0)
                 h = -1;
             else
                 h = 0;
 
-            if ((reg.rawInput & Global.INPUT_DOWN) != 0)
+            if ((reg.rawInput & PlayerInputs.DOWN) != 0)
                 v = -1;
-            else if ((reg.rawInput & Global.INPUT_UP) != 0)
+            else if ((reg.rawInput & PlayerInputs.UP) != 0)
                 v = 1;
             else
                 v = 0;
@@ -63,17 +64,22 @@ namespace SakugaEngine.UI
             else if (h == 0 && v > 0) dir = 7;
             else if (h > 0 && v > 0) dir = 8;
                 
-            bool a = (reg.rawInput & Global.INPUT_FACE_A) != 0;
-            bool b = (reg.rawInput & Global.INPUT_FACE_B) != 0;
-            bool c = (reg.rawInput & Global.INPUT_FACE_C) != 0;
-            bool d = (reg.rawInput & Global.INPUT_FACE_D) != 0;
+            bool b_a = (reg.rawInput & PlayerInputs.FACE_A) != 0;
+            bool b_b = (reg.rawInput & PlayerInputs.FACE_B) != 0;
+            bool b_c = (reg.rawInput & PlayerInputs.FACE_C) != 0;
+            bool b_d = (reg.rawInput & PlayerInputs.FACE_D) != 0;
+
+            bool b_e = (reg.rawInput & PlayerInputs.FACE_E) != 0;
+            bool b_f = (reg.rawInput & PlayerInputs.FACE_F) != 0;
+            bool b_g = (reg.rawInput & PlayerInputs.FACE_G) != 0;
+            bool b_h = (reg.rawInput & PlayerInputs.FACE_H) != 0;
 
             directional.Frame = dir;
                 
-            button_A.Frame = a ? A_Standard + 2 : A_Standard;
-            button_B.Frame = b ? B_Standard + 2 : B_Standard;
-            button_C.Frame = c ? C_Standard + 2 : C_Standard;
-            button_D.Frame = d ? D_Standard + 2 : D_Standard;
+            button_A.Frame = b_a ? A_Standard + 2 : A_Standard;
+            button_B.Frame = b_b ? B_Standard + 2 : B_Standard;
+            button_C.Frame = b_c ? C_Standard + 2 : C_Standard;
+            button_D.Frame = b_d ? D_Standard + 2 : D_Standard;
 
             frames.Text = reg.duration.ToString();
         }

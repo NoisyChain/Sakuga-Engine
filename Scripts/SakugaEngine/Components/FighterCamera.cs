@@ -1,12 +1,12 @@
 using Godot;
-using System;
+using SakugaEngine.Global;
 
 namespace SakugaEngine
 {
     public partial class FighterCamera : Camera3D
     {
-        //private Listener audioListener;
-        [Export] public Global.CameraFocus CurrentFocus = Global.CameraFocus.SELF;
+        private AudioListener3D Listener;
+        [Export] public CameraFocus CurrentFocus = CameraFocus.SELF;
         [Export] public bool isCinematic;
         [Export] public Vector2 minBounds = new Vector2(-5.5f, 1.25f), maxBounds = new Vector2(5.50f, 10f);
         [Export] public Vector2 minOffset = new Vector2(-4f, 1.2f), maxOffset = new Vector2(-5f, 1.55f);
@@ -16,7 +16,7 @@ namespace SakugaEngine
 
         private Camera3D charCam;
 
-        const float DELTA = 10f / Global.TicksPerSecond;
+        const float DELTA = 10f / GlobalVariables.TicksPerSecond;
 
         public override void _Ready()
         {
@@ -24,12 +24,12 @@ namespace SakugaEngine
             //audioListener = GetNode<Listener>("Listener");
         }
 
-        public void UpdateCamera(SakugaFighter player1, SakugaFighter player2)
+        public void UpdateCamera(SakugaActor player1, SakugaActor player2)
         {
             if (player1 == null || player2 == null) return;
 
-            Vector3 _p1Position = Global.ToScaledVector3(player1.Body.FixedPosition);
-            Vector3 _p2Position = Global.ToScaledVector3(player2.Body.FixedPosition);
+            Vector3 _p1Position = GlobalFunctions.ToScaledVector3(player1.Body.FixedPosition);
+            Vector3 _p2Position = GlobalFunctions.ToScaledVector3(player2.Body.FixedPosition);
 
             bool canSmooth = Mathf.Abs(_p2Position.X - _p1Position.X) > minSmoothDistance;
 
@@ -58,9 +58,25 @@ namespace SakugaEngine
                 -FinalZOffset);
             
             charCam.GlobalTransform = GlobalTransform;
-            charCam.Fov = Fov;
+            var clampedCamPosition = new Vector3(
+                Mathf.Clamp(newCamPosition.X, minBounds.X + BoundsAdd, maxBounds.X - BoundsAdd),
+                Mathf.Clamp(newCamPosition.Y, minBounds.Y, maxBounds.Y),
+                0
+            );
+            var dist = GlobalPosition.DistanceTo(clampedCamPosition);
+            switch (charCam.Projection)
+            {
+                case ProjectionType.Perspective:
+                    charCam.Fov = Fov;
+                    break;
+                default:
+                    //charCam.Position -= new Vector3(0, -0.23f, 0);
+                    //charCam.RotationDegrees = new Vector3(-3.5f, 0, 0);
+                    charCam.Size = dist * Mathf.Tan(Mathf.DegToRad(Fov * 2) / 2) - Mathf.Lerp(0.2f, 0.4f, pl);
+                    break;
+            }
 
-            //audioListener.GlobalTranslation = new Vector3(Position.X, Position.Y, 0);
+            if (Listener != null) Listener.GlobalPosition = new Vector3(Position.X, Position.Y, 0);
         }
     }
 }

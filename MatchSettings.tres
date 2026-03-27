@@ -14,4 +14,6 @@ GameModes = Array[Object]([ExtResource("1_nhb7f"), ExtResource("2_xs2pd"), ExtRe
 SelectedMode = 5
 TimeLimit = 99
 P1SelectedDevice = 0
+P2SelectedColor = 1
+P2SelectedDevice = 1
 metadata/_custom_type_script = "uid://uuxc0vny3l5x"

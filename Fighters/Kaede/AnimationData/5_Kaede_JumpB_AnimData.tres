@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="AnimationData" format=3 uid="uid://b5vgnfs2kw5fy"]
+
+[ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_d7nn5"]
+[ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2_7oop1"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/AnimationData.cs" id="3_nrebj"]
+
+[sub_resource type="Resource" id="Resource_op4o3"]
+script = ExtResource("1_d7nn5")
+SourceAnimation = "Jump_Backwards"
+metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
+
+[sub_resource type="Resource" id="2"]
+script = ExtResource("2_7oop1")
+
+[sub_resource type="Resource" id="5"]
+script = ExtResource("2_7oop1")
+
+[sub_resource type="Resource" id="6"]
+script = ExtResource("2_7oop1")
+
+[resource]
+script = ExtResource("3_nrebj")
+Duration = 22
+Animations = [SubResource("Resource_op4o3")]
+Hitboxes = [SubResource("2"), SubResource("5"), SubResource("6")]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b6q10l0c6oxdp"]
+[gd_scene format=3 uid="uid://b6q10l0c6oxdp"]
 
 [ext_resource type="Script" uid="uid://d4e1sv1gy8i8a" path="res://Scripts/SakugaEngine/Components/SakugaVFX.cs" id="1_swfpx"]
 [ext_resource type="Texture2D" uid="uid://dy8t34bg73laq" path="res://Sprites/VFX/6005-0.png" id="2_5ae4s"]
@@ -7,8 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://cpri747mmmnfp" path="res://Sprites/VFX/6000-2.png" id="4_oyxh8"]
 [ext_resource type="Texture2D" uid="uid://bfnd6dyiurbmn" path="res://Sprites/VFX/6000-3.png" id="5_6rcgy"]
 [ext_resource type="Texture2D" uid="uid://bfna8b1aaf18f" path="res://Sprites/VFX/6000-5.png" id="6_aq670"]
-[ext_resource type="Script" uid="uid://3uu6r0mhj3p3" path="res://Scripts/SakugaEngine/Components/SoundQueue.cs" id="7_deevn"]
-[ext_resource type="AudioStream" uid="uid://0fv0qogxarkr" path="res://Fighters/Shared/Sounds/SFX/SFX_Block.wav" id="8_j2l3e"]
+[ext_resource type="AudioStream" uid="uid://0fv0qogxarkr" path="res://Fighters/Shared/Sounds/SFX/SFX_Block.wav" id="8_1ferb"]
+[ext_resource type="Script" uid="uid://3uu6r0mhj3p3" path="res://Scripts/SakugaEngine/Components/SoundQueue.cs" id="9_0d1mv"]
 
 [sub_resource type="Animation" id="Animation_b6bqa"]
 resource_name = "GFX"
@@ -72,31 +72,31 @@ _data = {
 &"RESET": SubResource("Animation_nv8md")
 }
 
-[node name="VFX" type="Node3D" node_paths=PackedStringArray("Player", "Graphics", "Sound")]
+[node name="VFX" type="Node" unique_id=642489040 node_paths=PackedStringArray("Player", "Graphics", "Sound")]
 script = ExtResource("1_swfpx")
 Duration = 16
 Player = NodePath("Graphics/Visuals/AnimationPlayer")
 Graphics = NodePath("Graphics")
 AnimationName = "GFX"
-Sound = NodePath("HitSound")
+Sound = NodePath("SFX")
+metadata/_custom_type_script = "uid://d4e1sv1gy8i8a"
 
-[node name="Graphics" type="Node3D" parent="."]
+[node name="Graphics" type="Node3D" parent="." unique_id=1995999709]
 
-[node name="Visuals" type="Node3D" parent="Graphics"]
+[node name="Visuals" type="Node3D" parent="Graphics" unique_id=1266880700]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Graphics/Visuals"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Graphics/Visuals" unique_id=602679704]
 root_node = NodePath("../../..")
-libraries = {
-"": SubResource("AnimationLibrary_bmuae")
-}
+libraries/ = SubResource("AnimationLibrary_bmuae")
 
-[node name="Sprite3D" type="Sprite3D" parent="Graphics/Visuals"]
+[node name="Sprite3D" type="Sprite3D" parent="Graphics/Visuals" unique_id=53838990]
 layers = 2
 sorting_offset = 10.0
 centered = false
 offset = Vector2(-250, -200)
 texture = ExtResource("2_5ae4s")
 
-[node name="HitSound" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource("8_j2l3e")
-script = ExtResource("7_deevn")
+[node name="SFX" type="AudioStreamPlayer3D" parent="." unique_id=632447695]
+script = ExtResource("9_0d1mv")
+DefaultSound = ExtResource("8_1ferb")
+metadata/_custom_type_script = "uid://3uu6r0mhj3p3"

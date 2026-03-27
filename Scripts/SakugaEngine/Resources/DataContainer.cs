@@ -7,7 +7,6 @@ namespace SakugaEngine.Resources
     public partial class DataContainer : Resource
     {
         [Export] public FighterProfile Profile;
-        [Export] public HitboxSettings[] Hitboxes;
         [Export] public FighterState[] States;
         [Export] public FighterStance[] Stances;
 

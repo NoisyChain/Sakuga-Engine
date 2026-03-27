@@ -1,0 +1,890 @@
+using Godot;
+using System.IO;
+using SakugaEngine.Resources;
+using SakugaEngine.Game;
+using SakugaEngine.Collision;
+
+namespace SakugaEngine
+{
+    [GlobalClass]
+    [Icon("res://Sprites/Icons/Icon_Fighter.png")]
+    public partial class SakugaFighter : SakugaActor, IDamage
+    {
+        /*[ExportCategory("Timers")]
+        [Export] public FrameTimer HitStun;
+        [Export] public FrameTimer HitStop;
+        [Export] public FrameTimer  MoveBuffer;
+        [Export] public FrameTimer  PushForce;
+        [Export] public FrameTimer  HorizontalBounce;
+        [Export] public FrameTimer  VerticalBounce;
+
+        public bool SuperFlash;
+        //public bool CinematicState;
+        private bool PushAllowInertia;
+        private bool IsBeingPushed = false;
+        ///private bool BlockStun;
+        private int PushGravity;
+        private int HBounceIntensity;
+        private int HBounceState;
+        private int VBounceIntensity;
+        private int VBounceState;
+        //private byte HitstunType = 0;
+        //private byte GravityDecayFactor = 0;
+        //private byte HitstunDecayFactor = 0;
+        //private SakugaSpawnable[][] Spawnables;
+        //private SakugaVFX[][] VFX;
+        
+        private SakugaFighter _opponent;
+
+        public SakugaFighter GetOpponent() => _opponent;
+        public void SetOpponent(SakugaFighter opponent) { if (opponent != _opponent) _opponent = opponent; }
+        //public FighterVariables FighterVars => Variables as FighterVariables;
+
+        public void ParseInputs(ushort rawInputs)
+        {
+            Inputs.InsertToHistory(rawInputs);
+        }
+
+        public void SpawnablesSetup(GameManager game)
+        {
+            if (SpawnablesList == null) { Spawnables = new SakugaSpawnable[0][]; return; }
+
+            Spawnables = new SakugaSpawnable[SpawnablesList.SpawnObjects.Length][];
+            for (int i = 0; i < Spawnables.Length; ++i)
+            {
+                Spawnables[i] = new SakugaSpawnable[SpawnablesList.SpawnObjects[i].Amount];
+                for (int j = 0; j < Spawnables[i].Length; ++j)
+                {
+                    Node temp = SpawnablesList.SpawnObjects[i].SpawnScene.Instantiate();
+                    Spawnables[i][j] = temp as SakugaSpawnable;
+                    game.AddActor(Spawnables[i][j]);
+                    //Spawnables[i][j].Initialize(this);
+                }
+            }
+        }
+
+        public void VFXSetup(GameManager game)
+        {
+            if (VFXList == null)  { VFX = new SakugaVFX[0][]; return; }
+
+            VFX = new SakugaVFX[VFXList.SpawnObjects.Length][];
+            for (int i = 0; i < VFX.Length; ++i)
+            {
+                VFX[i] = new SakugaVFX[VFXList.SpawnObjects[i].Amount];
+                for (int j = 0; j < VFX[i].Length; ++j)
+                {
+                    Node temp = VFXList.SpawnObjects[i].SpawnScene.Instantiate();
+                    VFX[i][j] = temp as SakugaVFX;
+                    game.AddActor(VFX[i][j], false);
+                    VFX[i][j].Initialize();
+                }
+            }
+        }
+
+        public void Initialize(int index)
+        {
+            Body.Initialize(this, this);
+            StateMachine.Initialize(this);
+            Animator.Initialize(this);
+            //Tracker.Initialize(this);
+            Parameters.Initialize(this);
+            BlockStun = false;
+            Body.FixedPosition.X = Global.StartingPosition * (-1 + (index * 2));
+            ForcePlayerSide(Mathf.Sign(Body.FixedPosition.X) < 0);
+            Animator.PlayState(0);
+            Animator.CurrentStateFrame = -1;
+        }
+
+        public void InitializeAI(bool active, Global.BotDifficulty diff)
+        {
+            if (Brain == null) return;
+            UseAI = active;
+            Brain.Initialize(this, diff);
+        }
+
+        public void Reset(int index)
+        {
+            Body.FixedVelocity = Vector2I.Zero;
+            Body.FixedPosition.X = Global.StartingPosition * (-1 + (index * 2));
+            Body.FixedPosition.Y = 0;
+            ForcePlayerSide(Mathf.Sign(Body.FixedPosition.X) < 0);
+            if (!StateMachine.GetCurrentStance().IsRoundPersistent)
+                StateMachine.CurrentStance = 0;
+            Animator.PlayState(StateMachine.GetCurrentStance().DefaultState);
+            Parameters.Initialize(this);
+            Animator.CurrentStateFrame = -1;
+            HitStun.Stop();
+            HitStop.Stop();
+            MoveBuffer.Stop();
+            PushForce.Stop();
+            HorizontalBounce.Stop();
+            VerticalBounce.Stop();
+            BlockStun = false;
+        }
+
+        public void UpdateSide(bool leftSide)
+        {
+            if (Body.IsLeftSide == leftSide) return;
+
+            Body.IsLeftSide = leftSide;
+        }
+
+        public void ForcePlayerSide(bool side)
+        {
+            Body.IsLeftSide = side;
+            Body.PlayerSide = Body.IsLeftSide ? 1 : -1;
+        }
+
+        public override void PreTick()
+        {
+            HitStop.Run();
+            //EventExecuted = false;
+            Body.IsMovable = !HitStop.IsRunning();
+
+            if (!HitStop.IsRunning())
+            {
+                if (SuperFlash) SuperFlash = false;
+                //if (HitstunType != (int)Global.HitstunType.HARD_KNOCKDOWN)
+                    //HitStun.Run();
+                PushForce.Run();
+                HorizontalBounce.Run();
+                VerticalBounce.Run();
+                MoveBuffer.Run();
+                if (Animator.GetCurrentState().HitStunFrameLimit < 0 || !IsStunLocked())
+                    Animator.RunState();
+            }
+        }
+
+        public override void Tick()
+        {
+            //ThrowEscape();
+            //HitstunRecover();
+            BounceLogic();
+            //StateTransitions();
+            //ChangePlayerSide();
+            StateMachine.CheckMoves();
+
+            //if (HitstunType > (int)Global.HitstunType.STAGGER)
+                //ThrowPivoting();
+            //else
+                //if (IsBeingPushed)
+                    //CharacterPushing();
+                //else
+                    //UpdateFighterPhysics();
+        }
+
+        public override void LateTick()
+        {
+            //Variables.UpdateExtraVariables();
+            //FighterVars.CalculateDamageScaling(Body.IsOnWall);
+            //Tracker.UpdateFrameData();
+
+            //UpdateFrameProperties();
+            //AnimationEvents();
+            //UpdateHitboxes();
+            //ResetDamageStatus();
+        }
+
+        private void ResetDamageStatus()
+        {
+            if (HitstunType < (int)Global.HitstunType.STAGGER && 
+                Animator.CurrentStateType() != Global.StateType.BLOCKING &&
+                Animator.CurrentStateType() != Global.StateType.HIT_REACTION)
+            {
+                HitStun.Stop(); 
+                //FighterVars.ResetDamageStatus();
+                //Tracker.Reset();
+                //HitstunDecayFactor = 0;
+                //GravityDecayFactor = 0;
+                HitstunType = 0;
+                BlockStun = false;
+            }
+        }
+#region Push Force
+        public void PushCharacter(int pushDuration, int VelocityX, int VelocityY, int gravity, bool xInertia)
+        {
+            Body.FixedVelocity.X = VelocityX;
+            Body.FixedVelocity.Y = VelocityY;
+            PushGravity = gravity;
+            PushAllowInertia = xInertia;
+            PushForce.Start((uint)pushDuration);
+            IsBeingPushed = true;
+        }
+
+        public void HitPushback(int duration, int velX)
+        {
+            int pushbackSide = Body.FixedPosition.X > 0 ? 1 : -1;
+            if (Body.IsOnGround)
+                if (GetOpponent().Body.IsOnWall)
+                    PushCharacter(duration, velX * pushbackSide, 0, 0, false);
+        }
+
+        public void CharacterPushing()
+        {
+            if (PushGravity != 0 && IsAirState() && !HitStop.IsRunning())
+            {
+                Body.AddGravity();
+            }
+
+            if (!PushForce.IsRunning())
+            {
+                if(PushGravity != 0) PushGravity = 0;
+                if (!PushAllowInertia || Body.IsOnGround) Body.FixedVelocity.X = 0;
+                IsBeingPushed = false;
+            }
+        }
+
+        public void StopPushing()
+        {
+            if (!IsBeingPushed) return;
+
+            if(PushGravity != 0) PushGravity = 0;
+            if (!PushAllowInertia || Body.IsOnGround) Body.FixedVelocity.X = 0;
+            IsBeingPushed = false;
+            PushForce.Stop();
+        }
+
+        public void BounceLogic()
+        {
+            bool canBounceX = HorizontalBounce.IsRunning() && HBounceState >= 0;
+            bool canBounceY = VerticalBounce.IsRunning() && VBounceState >= 0;
+
+            if (Body.IsOnWall && canBounceX)
+            {
+                Animator.PlayState(HBounceState, true);
+                Body.FixedVelocity.X *= HBounceIntensity * -1;
+                Body.FixedVelocity.X /= 100;
+                HorizontalBounce.Stop();
+                //Debug.LogWarning("Bounced on wall!");
+
+            }
+            if (Body.IsOnGround && Body.IsFalling && canBounceY)
+            {
+                Animator.PlayState(VBounceState, true);
+                Body.FixedVelocity.Y *= VBounceIntensity * -1;
+                Body.FixedVelocity.Y /= 100;
+                VerticalBounce.Stop();
+                //Debug.LogWarning("Bounced on ground!");
+            }
+
+            //Clear horizontal bounce buffer
+            if (!HorizontalBounce.IsRunning() && (HBounceIntensity > 0 || HBounceState >= 0))
+            {
+                HBounceState = -1;
+                HBounceIntensity = 0;
+            }
+
+            //Clear vertical bounce buffer
+            if (!VerticalBounce.IsRunning() && (VBounceIntensity > 0 || VBounceState >= 0))
+            {
+                VBounceState = -1;
+                VBounceIntensity = 0;
+            }
+        }
+
+        public void ThrowPivoting()
+        {
+            FighterState currState = GetOpponent().Animator.GetCurrentState();
+            if (currState.throwPivot.Length == 0) return;
+            for(int i = 0; i < currState.throwPivot.Length; i++)
+            {
+                int nextFrame = i + 1 < currState.throwPivot.Length ?
+                                    currState.throwPivot[i + 1].Frame :
+                                    currState.Duration;
+
+                ThrowPivot currentPivot = currState.throwPivot[i];
+                if (Animator.CurrentStateFrame >= currentPivot.Frame && Animator.CurrentStateFrame < nextFrame)
+                {
+                    int side = GetOpponent().Body.PlayerSide;
+                    int hitReaction = currentPivot.ThrowState;
+                    if (hitReaction >=  0)
+                        Animator.PlayState(StateMachine.GetCurrentStance().HitReactions[hitReaction], true);
+                    if (currentPivot.ThrowDetach == null)
+                    {
+                        Body.FixedVelocity = Vector2I.Zero;
+                        Body.FixedPosition.X = GetOpponent().Body.FixedPosition.X + currentPivot.PivotPosition.X * side;
+                        Body.FixedPosition.Y = GetOpponent().Body.FixedPosition.Y + currentPivot.PivotPosition.Y;
+                    }
+                    else
+                    {
+                        Body.PlayerSide = currentPivot.ThrowDetach.InvertSide ? -side : side;
+                        //HitstunType = (byte)currentPivot.ThrowDetach.HitstunType;
+                        HitStun.Start((uint)currentPivot.ThrowDetach.Hitstun);
+                        HBounceIntensity = currentPivot.ThrowDetach.HorizontalBounceIntensity;
+                        VBounceIntensity = currentPivot.ThrowDetach.VerticalBounceIntensity;
+                        if (currentPivot.ThrowDetach.HorizontalBounce > 0)
+                            HorizontalBounce.Start((uint)currentPivot.ThrowDetach.HorizontalBounce);
+                        if (currentPivot.ThrowDetach.VerticalBounce > 0)
+                            VerticalBounce.Start((uint)currentPivot.ThrowDetach.VerticalBounce);
+                        PushCharacter(
+                            currentPivot.ThrowDetach.HitKnockbackTime,
+                            currentPivot.ThrowDetach.HitKnockback.X * side,
+                            currentPivot.ThrowDetach.HitKnockback.Y,
+                            currentPivot.ThrowDetach.HitKnockbackGravity,
+                            currentPivot.ThrowDetach.HitKnockbackInertia
+                        );
+                    }
+                }
+            }
+
+            //Push opponent away from the wall if both characters are too near from each other
+            int pushbackSide = Body.FixedPosition.X > 0 ? 1 : -1;
+            if (Mathf.Abs(Body.FixedPosition.X - GetOpponent().Body.FixedPosition.X) <= 5)
+                GetOpponent().Body.FixedPosition.X -= 5 * pushbackSide;
+        }
+
+        public void HitstunRecover()
+        {
+            //if (LifeEnded()) return;
+            if (HitStun.IsRunning()) return;
+            if (Animator.CurrentStateType() != Global.StateType.HIT_REACTION) return;
+            if (HitstunType >= (int)Global.HitstunType.HARD_KNOCKDOWN) return;
+
+            int selectedRecovery = -1;
+            int recoveryDirection;
+            if (Inputs.WasPressed(Inputs.CurrentHistory, Global.INPUT_ANY_BUTTON))
+            {
+                if (Inputs.IsBeingPressed(Inputs.CurrentHistory, Global.INPUT_LEFT))
+                    recoveryDirection = -1;
+                else if (Inputs.IsBeingPressed(Inputs.CurrentHistory, Global.INPUT_RIGHT))
+                    recoveryDirection = 1;
+                else 
+                    recoveryDirection = Mathf.Sign(Body.FixedVelocity.X);
+                
+                if (Body.IsOnGround)
+                {
+                    if (!IsAirState())
+                    {
+                        if (recoveryDirection == 0) recoveryDirection = Body.PlayerSide; 
+                        selectedRecovery = recoveryDirection * Body.PlayerSide >= 0 ? 
+                                    StateMachine.GetCurrentStance().GroundForwardRecoveryState :
+                                    StateMachine.GetCurrentStance().GroundBackwardsRecoveryState;
+                        PushCharacter(20, Global.RecoveryHorizontalSpeed * recoveryDirection, 0, 0, false);
+                    }
+                    else if (HitstunType < (int)Global.HitstunType.KNOCKDOWN)
+                    {
+                        selectedRecovery = StateMachine.GetCurrentStance().OffTheGroundRecoveryState;
+                        PushCharacter(20, 0, Global.RecoveryJumpVelocity, Global.RecoveryGravity, true);
+                    }
+                    
+                }
+                else if (HitstunType < (int)Global.HitstunType.KNOCKDOWN)
+                {
+                    selectedRecovery = recoveryDirection * Body.PlayerSide >= 0 ? 
+                                    StateMachine.GetCurrentStance().AirForwardRecoveryState :
+                                    StateMachine.GetCurrentStance().AirBackwardsRecoveryState;
+                    PushCharacter(20, Mathf.Abs(Body.FixedVelocity.X) * recoveryDirection, Global.RecoveryJumpVelocity, Global.RecoveryGravity, true);
+                }
+                
+                if (selectedRecovery >= 0) 
+                {
+                    HitstunType = 0;
+                    Animator.PlayState(selectedRecovery, true); 
+                }
+                GD.Print("Recovered!");
+            }
+        }
+#endregion
+        /// <summary>
+        /// Calls block states. 
+        /// The block type moves the state index to the designed block type: 
+        /// 0 = Enter blocking state;
+        /// 1 = Blocking state;
+        /// 2 = Exiting block state;
+        /// 3 = Guard Break.
+        /// </summary>
+        public void CallBlockState(int blockType)
+        {
+            if (Body.IsOnGround)
+            {
+                if (IsGroundState())
+                {
+                    if (StateMachine.GetCurrentStance().GroundBlockInitialState >= 0)
+                    {
+                        Animator.PlayState(StateMachine.GetCurrentStance().GroundBlockInitialState + blockType, true);
+                        //GD.Print(Data.States[StateMachine.GetCurrentStance().GroundBlockInitialState + blockType].StateName);
+                    }
+                }
+                else if (IsCrouchState())
+                {
+                    if (StateMachine.GetCurrentStance().CrouchBlockInitialState >= 0)
+                    {
+                        Animator.PlayState(StateMachine.GetCurrentStance().CrouchBlockInitialState + blockType, true);
+                        //GD.Print(Data.States[StateMachine.GetCurrentStance().CrouchBlockInitialState + blockType].StateName);
+                    }
+                }
+            }
+            else
+            {
+                if (StateMachine.GetCurrentStance().AirBlockInitialState >= 0)
+                {
+                    Animator.PlayState(StateMachine.GetCurrentStance().AirBlockInitialState + blockType, true);
+                    //GD.Print(Data.States[StateMachine.GetCurrentStance().AirBlockInitialState + blockType].StateName);
+                }
+            }
+        }
+
+        public void SpawnSpawnable(int index, Vector2I pos)
+        {
+            if (Spawnables[index].Length == 1)
+                Spawnables[index][0].Spawn(pos);
+            else
+            {
+                for (int i = 0; i < Spawnables[index].Length; ++i)
+                {
+                    if (Spawnables[index][i].IsActive)
+                    {
+                        if (i == Spawnables[index].Length - 1)
+                        {
+                            Spawnables[index][0].Spawn(pos);
+                            break;
+                        }
+                        else continue;
+                    }
+                    else
+                    {
+                        Spawnables[index][i].Spawn(pos);
+                        break;
+                    }
+                }
+            }
+        }
+
+        public SakugaSpawnable GetActiveSpawnable(int index)
+        {
+            if (Spawnables[index].Length == 1)
+                if (Spawnables[index][0].IsActive)
+                    return Spawnables[index][0];
+            else
+            {
+                for (int i = 0; i < Spawnables[index].Length; ++i)
+                {
+                    if (Spawnables[index][i].IsActive)
+                    {
+                        return Spawnables[index][i];
+                    }
+                    else continue;
+                }
+            }
+
+            return null;
+        }
+
+        public void SpawnVFX(int index, Vector2I pos, PhysicsBody parentBody)
+        {
+            if (VFX[index].Length == 1)
+                VFX[index][0].Spawn(pos, Body.PlayerSide, parentBody);
+            else
+            {
+                for (int i = 0; i < VFX[index].Length; ++i)
+                {
+                    if (VFX[index][i].IsActive)
+                    {
+                        if (i == VFX[index].Length - 1)
+                        {
+                            VFX[index][0].Spawn(pos, Body.PlayerSide, parentBody);
+                            break;
+                        }
+                        else continue;
+                    }
+                    else
+                    {
+                        VFX[index][i].Spawn(pos, Body.PlayerSide, parentBody);
+                        break;
+                    }
+                }
+            }
+        }
+
+#region Damage functions
+        public void HitDamage(HitboxElement box, bool isTrade)
+        {
+            LayerSorting = -1;
+            bool isGroundHit = !LifeEnded() && Body.IsOnGround && !IsAirState();
+            var finalHitstun = isGroundHit ? box.GroundHitstun : box.AirHitstun;
+            var finalKnockbackTime = isGroundHit ? box.GroundHitKnockbackTime : box.AirHitKnockbackTime;
+            var finalDamageKnockback = isGroundHit ? box.GroundHitKnockback : box.AirHitKnockback;
+            var finalKnockbackGravity = isGroundHit ? box.GroundHitKnockbackGravity : box.AirHitKnockbackGravity;
+            var finalHitReaction = isGroundHit ? (IsCrouchState() ? box.CrouchHitReaction : box.GroundHitReaction) : box.AirHitReaction;
+            //var damageFactor = GetOpponent().FighterVars.CurrentAttack - (FighterVars.CurrentDefense - 100);
+            //var scaledDamage = box.BaseDamage * FighterVars.CurrentDamageScaling / 100;
+            var finalDamage = FighterVars.CalculateCompleteDamage(box.BaseDamage, GetOpponent().FighterVars.CurrentAttack);
+            bool CanTech = Animator.CurrentStateType() == Global.StateType.HIT_REACTION && !HitStun.IsRunning();
+            ForcePlayerSide(!GetOpponent().Body.IsLeftSide);
+            Body.IsMovable = false;
+            HitstunType = isGroundHit ? (byte)box.GroundHitstunType : (byte)box.AirHitstunType;
+            if (!isTrade)
+                HitStop.Start((uint)box.OpponentHitStopDuration);
+            else HitStop.Stop();
+            uint finalHitstunForReal = (uint)Mathf.Max(finalHitstun - HitstunDecayFactor, Global.MinHitstun);
+            HitStun.Start(finalHitstunForReal);
+            if (box.BounceXTime > 0)
+            {
+                HBounceState = StateMachine.GetCurrentStance().HitReactions[box.BounceXState];
+                HBounceIntensity = box.BounceXIntensity;
+                HorizontalBounce.Start((uint)box.BounceXTime);
+            }
+            else
+            {
+                HBounceState = -1;
+                HBounceIntensity = 0;
+                HorizontalBounce.Stop();
+            }
+
+            if (box.BounceYTime > 0)
+            {
+                VBounceState = StateMachine.GetCurrentStance().HitReactions[box.BounceYState];
+                VBounceIntensity = box.BounceYIntensity;
+                VerticalBounce.Start((uint)box.BounceYTime);
+            }
+            else
+            {
+                VBounceState = -1;
+                VBounceIntensity = 0;
+                VerticalBounce.Stop();
+            }
+            
+            StateMachine.Clear();
+            if (StateMachine.GetCurrentStance().HitReactions != null && StateMachine.GetCurrentStance().HitReactions.Length >= 0)
+            {
+                Animator.PlayState(StateMachine.GetCurrentStance().HitReactions[finalHitReaction], true);
+                Variables.ExtraVariablesOnDamage();
+            }
+            int decayingKnockback = Global.GravityDecay * GravityDecayFactor;
+            PushCharacter(
+                finalKnockbackTime, 
+                finalDamageKnockback.X * (GetOpponent().Body.IsLeftSide ? -1 : 1),
+                finalDamageKnockback.Y - decayingKnockback, 
+                finalKnockbackGravity, box.AllowInertia);
+            Variables.TakeDamage(
+                finalDamage,
+                box.OpponentSuperGaugeGain,
+                box.KillingBlow);
+            if (finalDamage > 0)
+            {
+                FighterVars.RemoveDamageScaling((ushort)box.DamageScalingSubtract);
+            }
+            int stunFrame = GetOpponent().Animator.GetCurrentState().Duration - GetOpponent().Animator.CurrentStateFrame;
+            Tracker.UpdateTrackers((uint)finalDamage, stunFrame, finalHitstunForReal, (int)box.HitType, CanTech);
+            //GetOpponent().Tracker.HitFrame = stunFrame;
+            //GetOpponent().Tracker.StunAtHit = finalHitstunForReal;
+            GetOpponent().Tracker.FrameAdvantage = -(stunFrame - (int)finalHitstunForReal);
+
+            if (Tracker.HitCombo >= Global.HitstunDecayMinCombo)
+                HitstunDecayFactor++;
+            if (IsAirState())
+                GravityDecayFactor++;
+        }
+
+        public void BlockHit(HitboxElement box) 
+        {
+            LayerSorting = -1;
+            var finalHitstun = Body.IsOnGround ? box.GroundBlockstun : box.AirBlockstun;
+            var finalKnockbackTime = Body.IsOnGround ? box.GroundBlockKnockbackTime : box.AirBlockKnockbackTime;
+            var finalDamageKnockback = Body.IsOnGround ? box.GroundBlockKnockback : box.AirBlockKnockback;
+            var finalKnockbackGravity = Body.IsOnGround ? box.GroundBlockKnockbackGravity : box.AirBlockKnockbackGravity;
+            //var damageFactor = GetOpponent().FighterVars.CurrentAttack - (FighterVars.CurrentDefense - 100);
+            //var scaledDamage = box.ChipDamage * FighterVars.CurrentDamageScaling / 100;
+            var finalDamage = FighterVars.CalculateCompleteDamage(box.ChipDamage, GetOpponent().FighterVars.CurrentAttack);
+            //var finalHitReaction = IsAnyGroundState() ? (IsCrouching() ? box.CrouchHitReaction : box.GroundHitReaction)  : box.AirHitReaction;
+            //bool CanTech = Animator.StateType() == 4 && !HitStun.IsRunning();
+            BlockStun = true;
+            ForcePlayerSide(!GetOpponent().Body.IsLeftSide);
+            Body.IsMovable = false;
+            StateMachine.Clear();
+            HitStun.Start((uint)finalHitstun);
+            HitStop.Start((uint)box.BlockStopDuration);
+            CallBlockState(1);
+            PushCharacter(
+                finalKnockbackTime,
+                finalDamageKnockback.X * (GetOpponent().Body.IsLeftSide ? -1 : 1),
+                finalDamageKnockback.X,
+                finalKnockbackGravity, box.AllowInertia);
+            Variables.TakeDamage(
+                finalDamage,
+                box.OpponentSuperGaugeGain,
+                box.ChipDeath);
+        }
+        public void GuardCrush(HitboxElement box)
+        {
+            //var damageFactor = GetOpponent().FighterVars.CurrentAttack - (FighterVars.CurrentDefense - 100);
+            //var scaledDamage = box.GuardCrushDamage * FighterVars.CurrentDamageScaling / 100;
+            var finalDamage = FighterVars.CalculateCompleteDamage(box.GuardCrushDamage, GetOpponent().FighterVars.CurrentAttack);
+            ForcePlayerSide(!GetOpponent().Body.IsLeftSide);
+            StateMachine.Clear();
+            HitStun.Start(Global.GuardCrushHitstun);
+            HitStop.Start((uint)box.BlockStopDuration);
+            CallBlockState(3);
+            Variables.TakeDamage(
+                finalDamage,
+                box.OpponentSuperGaugeGain,
+                box.KillingBlow);
+        }
+        public void ArmorHit(HitboxElement box)
+        {
+            //Armor hit
+            var finalDamage = FighterVars.CalculateCompleteDamage(box.BaseDamage, GetOpponent().FighterVars.CurrentAttack);
+            HitConfirm(box.OpponentSuperGaugeGain, (uint)box.ClashHitStopDuration, -1, -1, Vector2I.Zero);
+            LayerSorting = -1;
+            Variables.ArmorDamage((sbyte)box.ArmorDamage, finalDamage / 2);
+        }
+        public void ThrowHit(HitboxElement box, uint finalHitStop)
+        {
+            LayerSorting = -1;
+            Variables.SuperArmor = 0;
+            ForcePlayerSide(!GetOpponent().Body.IsLeftSide);
+            Body.IsMovable = false;
+            HitstunType = (int)Global.HitstunType.STAGGER + 1; //Always make sure the value is out of the enumerator
+            HitStop.Start(finalHitStop);
+            StateMachine.Clear();
+            if (StateMachine.GetCurrentStance().HitReactions != null && StateMachine.GetCurrentStance().HitReactions.Length >= 0)
+            {
+                Animator.PlayState(StateMachine.GetCurrentStance().HitReactions[box.ThrowHitReaction], true);
+                Variables.ExtraVariablesOnDamage();
+            }
+        }
+        public void ThrowEscape()
+        {
+            if (!HitStop.IsRunning()) return;
+            if (HitstunType <= (int)Global.HitstunType.STAGGER) return;
+            if (Inputs.IsBeingPressed(Inputs.CurrentHistory, Global.INPUT_ANY_BUTTON))
+            {
+                HitstunType = 0;
+                ThrowEscapeAction();
+                GetOpponent().ThrowEscapeAction();
+            }
+        }
+        public void ThrowEscapeAction()
+        {
+            int selfSelectThrowEscape = Body.IsOnGround ? 
+                                        StateMachine.GetCurrentStance().GroundThrowEscapeState : 
+                                        StateMachine.GetCurrentStance().AirThrowEscapeState;
+            HitStop.Stop();
+            Animator.PlayState(selfSelectThrowEscape);
+            PushCharacter(10, -40000 * Body.PlayerSide, 0, 0, true);
+        }
+        public void HitConfirm(int superGaugeGain, uint hitStopDuration, int hitConfirmAnimation, int hitEffect, Vector2I VFXSpawn)
+        {
+            LayerSorting = 1;
+            Body.HitConfirmed = true;
+            Body.IsMovable = false;
+            Variables.AddSuperGauge(superGaugeGain);
+            HitStop.Start(hitStopDuration);
+            if (hitEffect >= 0 && VFXSpawn != Vector2I.Zero)
+            {
+                SpawnVFX(hitEffect, VFXSpawn, null);
+            }
+
+            if (hitConfirmAnimation >= 0)
+                Animator.PlayState(hitConfirmAnimation, false);
+
+            Variables.ExtraVariablesOnHit();
+        }
+#endregion
+
+#region Return functions
+        public bool IsBlockableState() => Animator.CurrentStateType() <= Global.StateType.MOVEMENT || Animator.CurrentStateType() == Global.StateType.BLOCKING;
+        //public bool IsCrouching() => CrouchState();
+        //public bool IsBlocking() => IsBlockableState() && Inputs.IsBeingPressed(Inputs.CurrentHistory, Body.IsLeftSide ? Global.INPUT_LEFT : Global.INPUT_RIGHT);
+        //public bool IsGrabbed() => HitstunType == (int)Global.HitstunType.STAGGER + 1;
+        //public bool IsGroundHit() => !LifeEnded() && Body.IsOnGround && !IsAirState();
+        //public bool IsStunLocked() => HitStun.TimeLeft >= Animator.GetCurrentState().Duration - Animator.GetCurrentState().HitStunFrameLimit + 1 && Animator.CurrentStateFrame >= Animator.GetCurrentState().HitStunFrameLimit;
+        //public override bool LifeEnded() { return IsKO(); }
+        //public override SakugaFighter FighterReference() { return this; }
+#endregion
+
+#region Interface functions
+        public void BaseDamage(SakugaActor target, HitboxElement box, Vector2I contact)
+        {
+            SetOpponent(target.FighterReference());
+
+            bool isHitAllowed = !GetOpponent().Body.ContainsFrameProperty((byte)Global.FrameProperties.DAMAGE_IMUNITY);
+            if (!isHitAllowed) return;
+
+            bool HitPosition = box.HitType == Global.HitType.UNBLOCKABLE || 
+                                box.HitType == Global.HitType.HIGH && GetOpponent().Body.IsOnGround && GetOpponent().IsCrouchState() || 
+                                box.HitType == Global.HitType.LOW && GetOpponent().Body.IsOnGround && GetOpponent().IsGroundState();
+
+            CancelConditions &= ~Global.CancelCondition.WHIFF_CANCEL;
+            CancelConditions &= ~Global.CancelCondition.KARA_CANCEL;
+
+            if (GetOpponent().Variables.SuperArmor > 0)
+            {
+                GetOpponent().ArmorHit(box);
+                HitConfirm(box.SelfSuperGaugeGain, (uint)box.ClashHitStopDuration, -1, box.ArmorHitEffectIndex, contact);
+                CancelConditions |= Global.CancelCondition.HIT_CANCEL;
+                GD.Print("Fighter: Armor Hit");
+            }
+            else
+            {
+                int hitFX;
+                if (GetOpponent().IsBlocking() && !HitPosition)
+                {
+                    if (box.GuardCrush)
+                    {
+                        hitFX = box.GuardCrushEffectIndex;
+                        GetOpponent().GuardCrush(box);
+                        GD.Print("Fighter: Guard Crushed!");
+                        CancelConditions |= Global.CancelCondition.HIT_CANCEL;
+                    }
+                    else
+                    {
+                        hitFX = box.BlockEffectIndex;
+                        GetOpponent().BlockHit(box);
+                        if (box.AllowSelfPushback)
+                            HitPushback(box.SelfPushbackDuration, box.SelfPushbackForce);
+                        GD.Print("Fighter: Blocked!");
+                    }
+                    CancelConditions |= Global.CancelCondition.BLOCK_CANCEL;
+                }
+                else
+                {
+                    hitFX = box.HitEffectIndex;
+                    GetOpponent().HitDamage(box, false);
+                    if (box.AllowSelfPushback)
+                        HitPushback(box.SelfPushbackDuration, box.SelfPushbackForce);
+                    CancelConditions |= Global.CancelCondition.HIT_CANCEL;
+                    GD.Print("Fighter: Hit!");
+                }
+                Brain.canAdvance = true;
+                GetOpponent().Brain.Reset();
+                HitConfirm(box.SelfSuperGaugeGain, (uint)box.SelfHitStopDuration, box.HitConfirmState, hitFX, contact);
+            }
+        }
+        public void HitTrade(HitboxElement box, Vector2I contact)
+        {
+            HitDamage(box, true);
+            if (box.HitEffectIndex >= 0 && contact != Vector2I.Zero)
+            {
+                SpawnVFX(box.HitEffectIndex, contact, null);
+            }
+            GD.Print("Fighter: Traded!");
+        }
+        public void ThrowDamage(SakugaActor target, HitboxElement box, Vector2I contact)
+        {
+            SetOpponent(target.FighterReference());
+
+            bool isThrowAllowed = !GetOpponent().Body.ContainsFrameProperty((byte)Global.FrameProperties.THROW_IMUNITY) && 
+                                    ((GetOpponent().Body.IsOnGround && box.GroundThrow) || 
+                                    (GetOpponent().IsAirState() && box.AirThrow) ||
+                                    (box.GroundThrow && box.AirThrow));
+            if (!isThrowAllowed) return;
+
+            uint finalHitstop = (uint)box.ThrowHitstop;
+            if (GetOpponent().Animator.CurrentStateType() == Global.StateType.HIT_REACTION) finalHitstop = (uint)box.ThrowHitstopAfterHit;
+            
+            GetOpponent().ThrowHit(box, finalHitstop);
+            HitConfirm(0, finalHitstop, box.HitConfirmState, -1, Vector2I.Zero);
+            Brain.canAdvance = true;
+            GD.Print("Fighter: Throw!");
+        }
+        public void ThrowTrade()
+        {
+            ThrowEscapeAction();
+        }
+        public void HitboxClash(HitboxElement box, Vector2I contact)
+        {
+            HitConfirm(0, (uint)box.ClashHitStopDuration, -1, box.ClashEffectIndex, contact);
+            Brain.canAdvance = true;
+        }
+        public void ProjectileClash(HitboxElement box, Vector2I contact){}
+        public void ProjectileDeflect(SakugaActor target, HitboxElement box, Vector2I contact){}
+        public void CounterHit(SakugaActor target, HitboxElement box, Vector2I contact)
+        {
+            SetOpponent(target.FighterReference());
+            HitConfirm(box.SelfSuperGaugeGain, (uint)box.SelfHitStopDuration, box.HitConfirmState, box.HitEffectIndex, contact);
+            GetOpponent().HitConfirm(box.OpponentSuperGaugeGain, (uint)box.OpponentHitStopDuration, -1, -1, Vector2I.Zero);
+            Brain.canAdvance = true;
+        }
+        public void ProximityBlock(HitboxElement box)
+        {
+            Brain.proximityHit = box.HitType;
+            Body.ProximityBlocked = true;
+            if (IsBlocking() && Animator.CurrentStateType() != Global.StateType.BLOCKING)
+            {
+                CallBlockState(0);
+                StateMachine.Clear();
+            }
+        }
+        public void OnHitboxExit()
+        {
+            if (!BlockStun && Animator.CurrentStateType() == Global.StateType.BLOCKING)
+            {
+                CallBlockState(2);
+            }
+        }
+        #endregion
+
+        #region Game State
+        public override void Serialize(BinaryWriter bw)
+        {
+            //Components
+            Body.Serialize(bw);
+            Animator.Serialize(bw);
+            Inputs.Serialize(bw);
+            Parameters.Serialize(bw);
+            StateMachine.Serialize(bw);
+            //Tracker.Serialize(bw);
+            //Timers
+            HitStun.Serialize(bw);
+            HitStop.Serialize(bw);
+            MoveBuffer.Serialize(bw);
+            PushForce.Serialize(bw);
+            HorizontalBounce.Serialize(bw);
+            VerticalBounce.Serialize(bw);
+            //Variables
+            //bw.Write(EventExecuted);
+            bw.Write(SuperFlash);
+            bw.Write(CinematicState);
+            bw.Write(IsBeingPushed);
+            bw.Write(PushAllowInertia);
+            bw.Write(BlockStun);
+            bw.Write(PushGravity);
+            bw.Write(HBounceIntensity);
+            bw.Write(HBounceState);
+            bw.Write(VBounceIntensity);
+            bw.Write(VBounceState);
+            //bw.Write(HitstunType);
+            //bw.Write(GravityDecayFactor);
+            //bw.Write(HitstunDecayFactor);
+            bw.Write((byte)CancelConditions);
+        }
+
+        public override void Deserialize(BinaryReader br)
+        {
+            //Components
+            Body.Deserialize(br);
+            Animator.Deserialize(br);
+            Inputs.Deserialize(br);
+            Parameters.Deserialize(br);
+            StateMachine.Deserialize(br);
+            //Tracker.Deserialize(br);
+            //Timers
+            HitStun.Deserialize(br);
+            HitStop.Deserialize(br);
+            MoveBuffer.Deserialize(br);
+            PushForce.Deserialize(br);
+            HorizontalBounce.Deserialize(br);
+            VerticalBounce.Deserialize(br);
+            //Variables
+            //EventExecuted = br.ReadBoolean();
+            SuperFlash = br.ReadBoolean();
+            CinematicState = br.ReadBoolean();
+            IsBeingPushed = br.ReadBoolean();
+            PushAllowInertia = br.ReadBoolean();
+            BlockStun = br.ReadBoolean();
+            PushGravity = br.ReadInt32();
+            HBounceIntensity = br.ReadInt32();
+            HBounceState = br.ReadInt32();
+            VBounceIntensity = br.ReadInt32();
+            VBounceState = br.ReadInt32();
+            //HitstunType = br.ReadByte();
+            //GravityDecayFactor = br.ReadByte();
+            //HitstunDecayFactor = br.ReadByte();
+            CancelConditions = (Global.CancelCondition)br.ReadByte();
+
+            Body.UpdateColliders();
+        }
+#endregion*/
+    }
+}

@@ -12,15 +12,12 @@ OpponentSuperGaugeGain = 10
 HitEffectIndex = 1
 BlockEffectIndex = 2
 ClashEffectIndex = 3
-ArmorHitEffectIndex = 4
 AirHitKnockbackGravity = 300000
 AirBlockKnockbackGravity = 30
 SelfPushbackForce = 0
 SelfPushbackDuration = 0
 BounceXIntensity = 0
-BounceXState = 0
 BounceYIntensity = 0
-BounceYState = 0
 
 [sub_resource type="Resource" id="Resource_24boc"]
 script = ExtResource("1_1ev0h")
@@ -31,15 +28,12 @@ OpponentSuperGaugeGain = 10
 HitEffectIndex = 1
 BlockEffectIndex = 2
 ClashEffectIndex = 3
-ArmorHitEffectIndex = 4
 AirHitKnockbackGravity = 300000
 AirBlockKnockbackGravity = 30
 SelfPushbackForce = 0
 SelfPushbackDuration = 0
 BounceXIntensity = 0
-BounceXState = 0
 BounceYIntensity = 0
-BounceYState = 0
 
 [sub_resource type="Resource" id="Resource_igg1m"]
 script = ExtResource("1_1ev0h")
@@ -51,15 +45,12 @@ OpponentSuperGaugeGain = 10
 HitEffectIndex = 1
 BlockEffectIndex = 2
 ClashEffectIndex = 3
-ArmorHitEffectIndex = 4
 AirHitKnockbackGravity = 300000
 AirBlockKnockbackGravity = 30
 SelfPushbackForce = 0
 SelfPushbackDuration = 0
 BounceXIntensity = 0
-BounceXState = 0
 BounceYIntensity = 0
-BounceYState = 0
 
 [sub_resource type="Resource" id="Resource_aqr4w"]
 script = ExtResource("1_1ev0h")

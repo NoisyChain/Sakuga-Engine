@@ -21,16 +21,16 @@ namespace SakugaEngine.UI
             P2TrainingInfo = GetNode<Label>("TrainingInfo/P2Info/Information");
         }*/
 
-        public void Setup(SakugaFighter[] fighters)
+        public void Setup(SakugaActor[] fighters)
         {
             P1Meter.MaxValue = fighters[0].Data.MaxSuperGauge;
             P2Meter.MaxValue = fighters[1].Data.MaxSuperGauge;
         }
 
-        public void UpdateMeters(SakugaFighter[] fighters)
+        public void UpdateMeters(SakugaActor[] fighters)
         {
-            P1Meter.Value = fighters[0].Variables.CurrentSuperGauge;
-            P2Meter.Value = fighters[1].Variables.CurrentSuperGauge;
+            P1Meter.Value = fighters[0].Parameters.SuperGauge.CurrentValue;
+            P2Meter.Value = fighters[1].Parameters.SuperGauge.CurrentValue;
 
             GetFrameAdvantage(fighters);
 
@@ -41,20 +41,20 @@ namespace SakugaEngine.UI
             P2TrainingInfo.Text = TrainingInfoText(fighters[1], fighters[0]);
         }
 
-        void GetFrameAdvantage(SakugaFighter[] fighters)
+        void GetFrameAdvantage(SakugaActor[] fighters)
         {
             for (int i = 0; i < fighters.Length; i++)
             {
-                if (fighters[i].Tracker.FrameAdvantage != 0)
-                    CurrentFrameAdvantage = fighters[i].Tracker.FrameAdvantage;
+                if (fighters[i].Parameters.Tracker.FrameAdvantage != 0)
+                    CurrentFrameAdvantage = fighters[i].Parameters.Tracker.FrameAdvantage;
             }
         }
 
-        private string TrainingInfoText(SakugaFighter owner, SakugaFighter reference)
+        private string TrainingInfoText(SakugaActor owner, SakugaActor reference)
         {
             string hitTypeText = "";
 
-            switch (reference.Tracker.LastHitType)
+            switch (reference.Parameters.Tracker.LastHitType)
             {
                 case 0:
                     hitTypeText = "HIGH";
@@ -70,21 +70,19 @@ namespace SakugaEngine.UI
                     break;
             }
 
-            int finalFrameAdv = owner.Tracker.FrameAdvantage;// != 0 ? CurrentFrameAdvantage : CurrentFrameAdvantage;
+            int finalFrameAdv = owner.Parameters.Tracker.FrameAdvantage;// != 0 ? CurrentFrameAdvantage : CurrentFrameAdvantage;
 
             string frameAdvantageInfo = finalFrameAdv >= 0 ?
                     ("+" + finalFrameAdv) : "" + finalFrameAdv;
 
             string frameAdvText = "(" + frameAdvantageInfo + ")";
 
-            FighterVariables vars = reference.Variables as FighterVariables;
-
-            return reference.Tracker.LastDamage + "\n" +
-                    reference.Tracker.CurrentCombo + "\n" +
-                    reference.Tracker.HighestCombo + "\n" +
+            return reference.Parameters.Tracker.LastDamage + "\n" +
+                    reference.Parameters.Tracker.CurrentCombo + "\n" +
+                    reference.Parameters.Tracker.HighestCombo + "\n" +
                     hitTypeText + "\n" +
-                    vars.CurrentDamageScaling + "%\n" +
-                    owner.Tracker.FrameData + frameAdvText;
+                    reference.Parameters.Prorations.CurrentDamageScaling + "%\n" +
+                    owner.Parameters.Tracker.FrameData + frameAdvText;
         }
     }
 }

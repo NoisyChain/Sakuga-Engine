@@ -1,9 +1,27 @@
 [gd_resource type="Resource" script_class="FighterState" format=3 uid="uid://cl4lgnncqol6h"]
 
 [ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_1gg1l"]
+[ext_resource type="Resource" uid="uid://uhblv0wqrilr" path="res://Fighters/Kaede/AnimationData/100_Kaede_Intro_AnimData.tres" id="1_ydsw0"]
+[ext_resource type="Script" uid="uid://da4kqpf635oin" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Actions/PlayStateAction.cs" id="2_kienr"]
 [ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="2_nph1g"]
-[ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Resources/StatePhysics.cs" id="3_arxlv"]
-[ext_resource type="Script" uid="uid://bia88bspuvxd" path="res://Scripts/SakugaEngine/Resources/StateTransitionSettings.cs" id="4_nph1g"]
+[ext_resource type="Script" uid="uid://bho4h38y7suxk" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Conditions/StateEndedCondition.cs" id="3_08wjj"]
+[ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Deprecated/StatePhysics.cs" id="3_arxlv"]
+[ext_resource type="Script" uid="uid://c076jc3huncn2" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/FrameDataEvent.cs" id="4_12we0"]
+[ext_resource type="Script" uid="uid://bia88bspuvxd" path="res://Scripts/SakugaEngine/Deprecated/StateTransitionSettings.cs" id="4_nph1g"]
+
+[sub_resource type="Resource" id="Resource_d1jd2"]
+script = ExtResource("2_kienr")
+metadata/_custom_type_script = "uid://da4kqpf635oin"
+
+[sub_resource type="Resource" id="Resource_4u4n6"]
+script = ExtResource("3_08wjj")
+metadata/_custom_type_script = "uid://bho4h38y7suxk"
+
+[sub_resource type="Resource" id="Resource_wesx1"]
+script = ExtResource("4_12we0")
+Conditions = Array[Object]([SubResource("Resource_4u4n6")])
+Actions = Array[Object]([SubResource("Resource_d1jd2")])
+metadata/_custom_type_script = "uid://c076jc3huncn2"
 
 [sub_resource type="Resource" id="Resource_1gg1l"]
 script = ExtResource("1_1gg1l")
@@ -26,6 +44,13 @@ metadata/_custom_type_script = "uid://bia88bspuvxd"
 script = ExtResource("2_nph1g")
 StateName = "Intro"
 Type = 5
+AnimationData = ExtResource("1_ydsw0")
+TransitionEvents = Array[Object]([SubResource("Resource_wesx1")])
+OnEnterEvents = null
+OnTickEvents = null
+OnExitEvents = null
+OnHitConfirmEvents = null
+OnHitReactionEvents = null
 Duration = 120
 stateProperties = null
 statePhysics = Array[Object]([SubResource("Resource_scuwi")])

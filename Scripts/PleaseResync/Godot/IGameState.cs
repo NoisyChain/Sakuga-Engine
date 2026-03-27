@@ -1,12 +1,11 @@
-using System.IO;
 namespace PleaseResync
 {
     public interface IGameState
     {
         void Setup();
         void GameLoop(byte[] playerInput);
-        void SaveState(BinaryWriter bw);
-        void LoadState(BinaryReader br);
+        byte[] SaveState();
+        void LoadState(byte[] stateBuffer);
         void Render();
         byte[] GetLocalInput(int PlayerID, int InputSize);
     }

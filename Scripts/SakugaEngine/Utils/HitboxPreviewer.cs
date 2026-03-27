@@ -1,65 +1,80 @@
 using Godot;
+using SakugaEngine.Global;
 using SakugaEngine.Resources;
 
 namespace SakugaEngine.Utils
 {
-    [Tool]
+    [Tool] [GlobalClass]
     public partial class HitboxPreviewer : Node3D
     {
         [Export] private Sprite3D[] hitboxGraphics;
-        [Export] public HitboxSettings previewSettings;
+        [Export] public AnimationViewer Animator;
+        [Export] public AnimationData Data;
+        [Export] public bool AutoRun;
+        [Export(PropertyHint.Range, "0, 99999")] public int Frame;
         
         public override void _Process(double delta)
         {
             if (!Engine.IsEditorHint()) return;
-            if (previewSettings == null)
+            if (Animator == null || Data == null)
             {
                 for(int j = 0; j < hitboxGraphics.Length; j++)
                     hitboxGraphics[j].Visible = false;
                 return;
             }
 
-            PreviewHitboxes();
-            PreviewPushbox();
+            if (AutoRun)
+            {
+                Frame++;
+                if (Frame >= Data.Duration) Frame = 0;
+            }
+
+            var hitboxData = GetCurrentHitboxSettings();
+
+            Animator.ViewAnimations(GetCurrentAnimationSettings(), Frame);
+
+            PreviewHitboxes(hitboxData);
+            PreviewPushbox(hitboxData);
         }
 
-        public void PreviewHitboxes()
+        public void PreviewHitboxes(HitboxState previewData)
         {
             for(int j = 0; j < hitboxGraphics.Length; j++)
             {
-                if (j >= previewSettings.Hitboxes.Length)
+                if (previewData == null || previewData.HitboxData == null || previewData.HitboxData.Hitboxes == null || 
+                    j >= previewData.HitboxData.Hitboxes.Length || previewData.HitboxData.Hitboxes[j] == null)
                     hitboxGraphics[j].Hide();
                 else
                 {
-                    hitboxGraphics[j].Visible = previewSettings.Hitboxes[j].Size != Vector2I.Zero;
+                    hitboxGraphics[j].Visible = previewData.HitboxData.Hitboxes[j].Size != Vector2I.Zero;
 
-                    switch (previewSettings.Hitboxes[j].HitboxType)
+                    switch (previewData.HitboxData.Hitboxes[j].HitboxType)
                     {
-                        case Global.HitboxType.HURTBOX:
+                        case HitboxType.HURTBOX:
                             hitboxGraphics[j].SortingOffset = 1;
                             hitboxGraphics[j].Modulate = new Color(0.0f, 1.0f, 0.0f);
                             break;
-                        case Global.HitboxType.HITBOX:
+                        case HitboxType.HITBOX:
                             hitboxGraphics[j].SortingOffset = 2;
                             hitboxGraphics[j].Modulate = new Color(1.0f, 0.0f, 0.0f);
                             break;
-                        case Global.HitboxType.PROXIMITY_BLOCK:
+                        case HitboxType.PROXIMITY_BLOCK:
                             hitboxGraphics[j].SortingOffset = 4;
                             hitboxGraphics[j].Modulate = new Color(1.0f, 0.0f, 1.0f);
                             break;
-                        case Global.HitboxType.PROJECTILE:
+                        case HitboxType.PROJECTILE:
                             hitboxGraphics[j].SortingOffset = 2;
                             hitboxGraphics[j].Modulate = new Color(1.0f, 0.64f, 0.0f);
                             break;
-                        case Global.HitboxType.THROW:
+                        case HitboxType.THROW:
                             hitboxGraphics[j].SortingOffset = 2;
                             hitboxGraphics[j].Modulate = new Color(0.0f, 0.0f, 1.0f);
                             break;
-                        case Global.HitboxType.COUNTER:
+                        case HitboxType.COUNTER:
                             hitboxGraphics[j].SortingOffset = 2;
                             hitboxGraphics[j].Modulate = new Color(0.5f, 0.5f, 0.5f);
                             break;
-                        case Global.HitboxType.DEFLECT:
+                        case HitboxType.DEFLECT:
                             hitboxGraphics[j].SortingOffset = 2;
                             hitboxGraphics[j].Modulate = new Color(1.0f, 0.0f, 0.5f);
                             break;
@@ -68,20 +83,70 @@ namespace SakugaEngine.Utils
                             hitboxGraphics[j].Modulate = new Color(0.5f, 0.5f, 0.5f);
                             break;*/
                     }
-                    hitboxGraphics[j].GlobalPosition = Global.ToScaledVector3(previewSettings.Hitboxes[j].Center);
-                    hitboxGraphics[j].Scale = Global.ToScaledVector3(previewSettings.Hitboxes[j].Size, 1f);
+                    hitboxGraphics[j].GlobalPosition = GlobalFunctions.ToScaledVector3(previewData.HitboxData.Hitboxes[j].Center);
+                    hitboxGraphics[j].Scale = GlobalFunctions.ToScaledVector3(previewData.HitboxData.Hitboxes[j].Size, 1f);
                 }
             }
         }
 
-        public void PreviewPushbox()
+        public void PreviewPushbox(HitboxState previewData)
         {
             int collisionViewer = hitboxGraphics.Length - 1;
-            hitboxGraphics[collisionViewer].Visible = previewSettings.PushboxSize != Vector2I.Zero;
+            if (previewData == null || previewData.HitboxData == null)
+            {
+                hitboxGraphics[collisionViewer].Visible = false;
+                return;
+            }
+            
+            hitboxGraphics[collisionViewer].Visible = previewData.HitboxData.PushboxSize != Vector2I.Zero;
             hitboxGraphics[collisionViewer].SortingOffset = 3;
             hitboxGraphics[collisionViewer].Modulate = new Color(1.0f, 1.0f, 0.0f);
-            hitboxGraphics[collisionViewer].GlobalPosition = Global.ToScaledVector3(previewSettings.PushboxCenter);
-            hitboxGraphics[collisionViewer].Scale = Global.ToScaledVector3(previewSettings.PushboxSize, 1f);
+            hitboxGraphics[collisionViewer].GlobalPosition = GlobalFunctions.ToScaledVector3(previewData.HitboxData.PushboxCenter);
+            hitboxGraphics[collisionViewer].Scale = GlobalFunctions.ToScaledVector3(previewData.HitboxData.PushboxSize, 1f);
+        }
+
+        public AnimationSettings GetCurrentAnimationSettings()
+        {
+            if (Data == null) return null;
+            if (Data.Animations == null || Data.Animations.Length <= 0) return null;
+            if (Data.Animations.Length == 1)
+                return Data.Animations[0];
+
+            int anim = 0;
+
+            for (int i = 0; i < Data.Animations.Length; i++)
+            {
+                int nextFrame = (i >= Data.Animations.Length - 1) ?
+                                Data.Duration - 1 :
+                                Data.Animations[i + 1].AtFrame - 1;
+                
+                if (Frame >= Data.Animations[i].AtFrame && Frame <= nextFrame)
+                    anim = i;
+            }
+
+            return Data.Animations[anim];
+        }
+
+        public HitboxState GetCurrentHitboxSettings()
+        {
+            if (Data == null) return null;
+            if (Data.Hitboxes == null || Data.Hitboxes.Length <= 0) return null;
+            if (Data.Hitboxes.Length == 1)
+                return Data.Hitboxes[0];
+
+            int anim = 0;
+
+            for (int i = 0; i < Data.Hitboxes.Length; i++)
+            {
+                int nextFrame = (i >= Data.Hitboxes.Length - 1) ?
+                                int.MaxValue :
+                                Data.Hitboxes[i + 1].AtFrame - 1;
+                
+                if (Frame >= Data.Hitboxes[i].AtFrame && Frame <= nextFrame)
+                    anim = i;
+            }
+
+            return Data.Hitboxes[anim];
         }
     }
 }

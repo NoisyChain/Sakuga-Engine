@@ -1,9 +1,38 @@
 [gd_resource type="Resource" script_class="FighterState" format=3 uid="uid://0837lnrt11xd"]
 
+[ext_resource type="Resource" uid="uid://lgq6pbbvvd6g" path="res://Fighters/Shared/AnimationData/0_UNIV_GroundHitstun-HIGH_AnimData.tres" id="1_dwvc2"]
+[ext_resource type="Script" uid="uid://bgwrlqrhqb2a4" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Actions/MoveXAction.cs" id="1_j5vuy"]
 [ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_skc6c"]
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2_3ojky"]
+[ext_resource type="Script" uid="uid://c076jc3huncn2" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/FrameDataEvent.cs" id="2_tfc65"]
 [ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="3_j5vuy"]
-[ext_resource type="Script" uid="uid://bia88bspuvxd" path="res://Scripts/SakugaEngine/Resources/StateTransitionSettings.cs" id="4_tfc65"]
+[ext_resource type="Script" uid="uid://da4kqpf635oin" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Actions/PlayStateAction.cs" id="3_tfc65"]
+[ext_resource type="Script" uid="uid://bho4h38y7suxk" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Conditions/StateEndedCondition.cs" id="4_fh1mn"]
+[ext_resource type="Script" uid="uid://bia88bspuvxd" path="res://Scripts/SakugaEngine/Deprecated/StateTransitionSettings.cs" id="4_tfc65"]
+
+[sub_resource type="Resource" id="Resource_fh1mn"]
+script = ExtResource("1_j5vuy")
+metadata/_custom_type_script = "uid://bgwrlqrhqb2a4"
+
+[sub_resource type="Resource" id="Resource_dwvc2"]
+script = ExtResource("2_tfc65")
+Conditions = null
+Actions = Array[Object]([SubResource("Resource_fh1mn")])
+metadata/_custom_type_script = "uid://c076jc3huncn2"
+
+[sub_resource type="Resource" id="Resource_we46w"]
+script = ExtResource("3_tfc65")
+metadata/_custom_type_script = "uid://da4kqpf635oin"
+
+[sub_resource type="Resource" id="Resource_er713"]
+script = ExtResource("4_fh1mn")
+metadata/_custom_type_script = "uid://bho4h38y7suxk"
+
+[sub_resource type="Resource" id="Resource_0srxu"]
+script = ExtResource("2_tfc65")
+Conditions = Array[Object]([SubResource("Resource_er713")])
+Actions = Array[Object]([SubResource("Resource_we46w")])
+metadata/_custom_type_script = "uid://c076jc3huncn2"
 
 [sub_resource type="Resource" id="Resource_w0le8"]
 script = ExtResource("1_skc6c")
@@ -23,6 +52,13 @@ Condition = 1
 script = ExtResource("3_j5vuy")
 StateName = "UNIV_Hitstun_Ground_High"
 Type = 4
+AnimationData = ExtResource("1_dwvc2")
+TransitionEvents = Array[Object]([SubResource("Resource_0srxu")])
+OnEnterEvents = null
+OnTickEvents = Array[Object]([SubResource("Resource_dwvc2")])
+OnExitEvents = null
+OnHitConfirmEvents = null
+OnHitReactionEvents = null
 Duration = 12
 HitStunFrameLimit = 7
 stateProperties = null

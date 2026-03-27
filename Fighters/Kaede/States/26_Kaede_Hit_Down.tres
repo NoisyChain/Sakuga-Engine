@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="1"]
 [ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_06qtc"]
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="1_711nk"]
-[ext_resource type="Script" uid="uid://bia88bspuvxd" path="res://Scripts/SakugaEngine/Resources/StateTransitionSettings.cs" id="2_7vssx"]
-[ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Resources/StatePhysics.cs" id="3_h8irb"]
+[ext_resource type="Script" uid="uid://bia88bspuvxd" path="res://Scripts/SakugaEngine/Deprecated/StateTransitionSettings.cs" id="2_7vssx"]
+[ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Deprecated/StatePhysics.cs" id="3_h8irb"]
 
 [sub_resource type="Resource" id="Resource_57vhf"]
 script = ExtResource("1_06qtc")
@@ -13,7 +13,6 @@ metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
 
 [sub_resource type="Resource" id="Resource_f34wn"]
 script = ExtResource("1_711nk")
-HitboxIndex = 29
 
 [sub_resource type="Resource" id="Resource_gn5fu"]
 script = ExtResource("3_h8irb")
@@ -35,6 +34,12 @@ Condition = 32
 script = ExtResource("1")
 StateName = "Hit_Down"
 Type = 4
+TransitionEvents = null
+OnEnterEvents = null
+OnTickEvents = null
+OnExitEvents = null
+OnHitConfirmEvents = null
+OnHitReactionEvents = null
 Duration = 16
 stateProperties = null
 statePhysics = Array[Object]([SubResource("Resource_gn5fu")])

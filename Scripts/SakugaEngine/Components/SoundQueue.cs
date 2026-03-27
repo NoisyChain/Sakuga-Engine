@@ -6,9 +6,10 @@ namespace SakugaEngine
     public partial class SoundQueue : AudioStreamPlayer3D
     {
         [Export] private ushort QueueDelay = 12;
+        [Export] private AudioStream DefaultSound;
         private bool Queued;
         public ushort QueueTimer = 0;
-        private AudioStream bufferedSound;
+        private AudioStream BufferedSound;
 
         public override void _PhysicsProcess(double delta)
         {
@@ -18,7 +19,7 @@ namespace SakugaEngine
 
         public void SimpleQueueSound()
         {
-            bufferedSound = Stream;
+            BufferedSound = DefaultSound;
             Queued = true;
         }
 
@@ -26,24 +27,23 @@ namespace SakugaEngine
         {
             if (Queued && Stream == sound) return;
 
-            bufferedSound = sound;
+            BufferedSound = sound;
             QueueTimer = 0;
             Queued = true;
-            GD.Print("Sound queued");
         }
 
         public void PlayQueue()
         {
             if (!Queued) return;
-            if (bufferedSound == null) return;
+            if (BufferedSound == null) return;
             if (QueueTimer > 0) return;
 
-            Stream = bufferedSound;
+            Stream = BufferedSound;
             
             Play();
             QueueTimer = QueueDelay;
             Queued = false;
-            bufferedSound = null;
+            BufferedSound = null;
         }
 
         private void TickQueueTimer()

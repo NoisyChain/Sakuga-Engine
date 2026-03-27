@@ -1,32 +1,33 @@
 [gd_resource type="Resource" script_class="MoveSettings" format=3 uid="uid://bjy4bx4dv4qd6"]
 
 [ext_resource type="Resource" uid="uid://cgu3jrjka1a8d" path="res://Fighters/Shared/Inputs/9_Input_66.tres" id="1_82tvm"]
-[ext_resource type="Script" uid="uid://dh03r2nvy3pmu" path="res://Scripts/SakugaEngine/Resources/ExtraVariableChange.cs" id="1_brm3y"]
-[ext_resource type="Script" uid="uid://cuch5yr7c7dag" path="res://Scripts/SakugaEngine/Resources/ExtraVariableCondition.cs" id="2_gvude"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/CustomVariableCondition.cs" id="2_hyn8t"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/CustomVariableChange.cs" id="2_snbjd"]
 [ext_resource type="Script" uid="uid://gk1rkw667o4n" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_t35im"]
 
-[sub_resource type="Resource" id="Resource_q3ycg"]
-script = ExtResource("1_brm3y")
-ChangeMode = 1
-ChangeValue = 1
+[sub_resource type="Resource" id="Resource_opnpq"]
+script = ExtResource("2_snbjd")
+Value = 1
+metadata/_custom_type_script = "uid://dh03r2nvy3pmu"
 
-[sub_resource type="Resource" id="Resource_5yot0"]
-script = ExtResource("1_brm3y")
-ChangeMode = 1
-ChangeValue = 1
+[sub_resource type="Resource" id="Resource_jjsyd"]
+script = ExtResource("2_snbjd")
+ByIndex = 1
+Value = 1
+metadata/_custom_type_script = "uid://dh03r2nvy3pmu"
 
-[sub_resource type="Resource" id="Resource_4o5yg"]
-script = ExtResource("1_brm3y")
+[sub_resource type="Resource" id="Resource_op3mk"]
+script = ExtResource("2_snbjd")
+ByIndex = 2
+Value = 1
+metadata/_custom_type_script = "uid://dh03r2nvy3pmu"
 
-[sub_resource type="Resource" id="Resource_xhdh4"]
-script = ExtResource("2_gvude")
+[sub_resource type="Resource" id="Resource_snbjd"]
+script = ExtResource("2_hyn8t")
+ByIndex = 1
 Value = 1
 CompareMode = 3
-
-[sub_resource type="Resource" id="Resource_q3i0w"]
-script = ExtResource("2_gvude")
-Value = 1
-CompareMode = 3
+metadata/_custom_type_script = "uid://cuch5yr7c7dag"
 
 [resource]
 script = ExtResource("2_t35im")
@@ -34,9 +35,8 @@ MoveName = "Forward Air Dash"
 MoveState = 15
 Inputs = ExtResource("1_82tvm")
 Priority = 4
-BuildSuperGauge = 5
 DistanceArea = Vector2i(0, 99999)
 CanCancelTo = null
-ExtraVariablesRequirement = Array[Object]([SubResource("Resource_xhdh4"), SubResource("Resource_q3i0w")])
-ExtraVariablesChange = Array[Object]([SubResource("Resource_q3ycg"), SubResource("Resource_5yot0"), SubResource("Resource_4o5yg")])
+VariablesRequirement = Array[Object]([SubResource("Resource_snbjd")])
+VariablesChange = Array[Object]([SubResource("Resource_opnpq"), SubResource("Resource_jjsyd"), SubResource("Resource_op3mk")])
 UseOnAir = true

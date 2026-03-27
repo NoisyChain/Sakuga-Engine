@@ -1,10 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://bkam4nekv1yw2"]
+[gd_scene format=3 uid="uid://bkam4nekv1yw2"]
 
 [ext_resource type="Script" uid="uid://d4e1sv1gy8i8a" path="res://Scripts/SakugaEngine/Components/SakugaVFX.cs" id="1_raani"]
 [ext_resource type="Texture2D" uid="uid://ds3x63xxk4p1j" path="res://Sprites/VFX/6675-0.png" id="2_js6t8"]
 [ext_resource type="Texture2D" uid="uid://dy8t34bg73laq" path="res://Sprites/VFX/6005-0.png" id="3_ujw38"]
-[ext_resource type="AudioStream" uid="uid://blquf3egqgcma" path="res://Fighters/Shared/Sounds/SFX/SFX_Armor.wav" id="4_dgmfq"]
-[ext_resource type="Script" uid="uid://3uu6r0mhj3p3" path="res://Scripts/SakugaEngine/Components/SoundQueue.cs" id="5_qvch5"]
+[ext_resource type="AudioStream" uid="uid://blquf3egqgcma" path="res://Fighters/Shared/Sounds/SFX/SFX_Armor.wav" id="4_sxh6g"]
+[ext_resource type="Script" uid="uid://3uu6r0mhj3p3" path="res://Scripts/SakugaEngine/Components/SoundQueue.cs" id="5_gmcju"]
 
 [sub_resource type="Animation" id="Animation_b6bqa"]
 resource_name = "GFX"
@@ -92,25 +92,24 @@ _data = {
 &"RESET": SubResource("Animation_nv8md")
 }
 
-[node name="VFX" type="Node3D" node_paths=PackedStringArray("Player", "Graphics", "Sound")]
+[node name="VFX" type="Node" unique_id=1269773548 node_paths=PackedStringArray("Player", "Graphics", "Sound")]
 script = ExtResource("1_raani")
 Duration = 16
 Player = NodePath("Graphics/Visuals/AnimationPlayer")
 Graphics = NodePath("Graphics")
 AnimationName = "GFX"
-Sound = NodePath("HitSound")
+Sound = NodePath("SFX")
+metadata/_custom_type_script = "uid://d4e1sv1gy8i8a"
 
-[node name="Graphics" type="Node3D" parent="."]
+[node name="Graphics" type="Node3D" parent="." unique_id=1795020045]
 
-[node name="Visuals" type="Node3D" parent="Graphics"]
+[node name="Visuals" type="Node3D" parent="Graphics" unique_id=389985840]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Graphics/Visuals"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Graphics/Visuals" unique_id=1897009256]
 root_node = NodePath("../../..")
-libraries = {
-"": SubResource("AnimationLibrary_bmuae")
-}
+libraries/ = SubResource("AnimationLibrary_bmuae")
 
-[node name="Sprite3D" type="Sprite3D" parent="Graphics/Visuals"]
+[node name="Sprite3D" type="Sprite3D" parent="Graphics/Visuals" unique_id=756038145]
 layers = 2
 sorting_offset = 10.0
 centered = false
@@ -119,6 +118,7 @@ modulate = Color(1, 1, 1, 0)
 pixel_size = 0.004
 texture = ExtResource("3_ujw38")
 
-[node name="HitSound" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource("4_dgmfq")
-script = ExtResource("5_qvch5")
+[node name="SFX" type="AudioStreamPlayer3D" parent="." unique_id=812060221]
+script = ExtResource("5_gmcju")
+DefaultSound = ExtResource("4_sxh6g")
+metadata/_custom_type_script = "uid://3uu6r0mhj3p3"

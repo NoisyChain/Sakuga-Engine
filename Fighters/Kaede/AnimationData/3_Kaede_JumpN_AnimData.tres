@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="AnimationData" format=3 uid="uid://cr30twn15adk4"]
+
+[ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_mi81a"]
+[ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2_gkh8l"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/AnimationData.cs" id="3_jehbl"]
+
+[sub_resource type="Resource" id="Resource_abic5"]
+script = ExtResource("1_mi81a")
+SourceAnimation = "Jump_Neutral"
+metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
+
+[sub_resource type="Resource" id="Resource_6brnl"]
+script = ExtResource("2_gkh8l")
+
+[resource]
+script = ExtResource("3_jehbl")
+Duration = 25
+Animations = [SubResource("Resource_abic5")]
+Hitboxes = [SubResource("Resource_6brnl")]

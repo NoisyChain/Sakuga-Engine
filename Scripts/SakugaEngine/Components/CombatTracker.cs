@@ -1,25 +1,24 @@
 using Godot;
-using System.IO;
 
 namespace SakugaEngine
 {
     [GlobalClass]
     public partial class CombatTracker : Node
     {
-        private SakugaFighter _owner;
+        private SakugaActor _owner;
         public int HitCombo;
-        public uint LastDamage;
-        public uint CurrentCombo;
-        public uint HighestCombo;
+        public int LastDamage;
+        public int CurrentCombo;
+        public int HighestCombo;
         public int TotalFrames;
         public int FrameData;
         public int FrameAdvantage;
         public int HitFrame;
-        public uint StunAtHit;
+        public int StunAtHit;
         public int LastHitType;
         public bool invalidHit;
 
-        public void Initialize(SakugaFighter onwer)
+        public void Initialize(SakugaActor onwer)
         {
             _owner = onwer;
             HitCombo = 0;
@@ -34,7 +33,7 @@ namespace SakugaEngine
             LastHitType = 0;
             invalidHit = false;
         }
-        public void UpdateTrackers(uint damage, int hitFrame, uint hitStun, int hitType, bool isInvalid)
+        public void UpdateTrackers(int damage, int hitFrame, int hitStun, int hitType, bool isInvalid)
         {
             if (isInvalid)
                 invalidHit = true;
@@ -49,17 +48,17 @@ namespace SakugaEngine
             HitFrame = hitFrame;
             StunAtHit = hitStun;
             LastHitType = hitType;
-            FrameAdvantage = HitFrame - (int)StunAtHit;
+            FrameAdvantage = HitFrame - StunAtHit;
         }
 
         public void UpdateFrameData()
         {
-            int selectFrameOrigin = _owner.Animator.CurrentStateType() == Global.StateType.HIT_REACTION?
-                                        (int)_owner.HitStun.TimeLeft :
-                                        (_owner.Animator.GetCurrentState().Duration - _owner.Animator.CurrentStateFrame);
+            int selectFrameOrigin = _owner.StateManager.CurrentStateType() == Global.StateType.HIT_REACTION?
+                                        (int)_owner.Hitstun.TimeLeft :
+                                        (_owner.StateManager.GetCurrentState().Duration - _owner.StateManager.CurrentStateFrame);
 
-            FrameData = _owner.Animator.CurrentStateType() <= Global.StateType.MOVEMENT ? 0 : selectFrameOrigin;
-            //FrameData = Mathf.Clamp(FrameData, 0, owner.Animator.GetCurrentState().Duration);
+            FrameData = _owner.StateManager.CurrentStateType() <= Global.StateType.MOVEMENT ? 0 : selectFrameOrigin;
+            //FrameData = Mathf.Clamp(FrameData, 0, owner.StateManager.GetCurrentState().Duration);
         }
 
         public void Reset()
@@ -68,38 +67,6 @@ namespace SakugaEngine
             //LastDamage = 0;
             //CurrentCombo = 0;
             invalidHit = false;
-        }
-
-        public void Serialize(BinaryWriter bw)
-        {
-            bw.Write(HitCombo);
-            bw.Write(LastDamage);
-            bw.Write(CurrentCombo);
-            bw.Write(HighestCombo);
-            bw.Write(TotalFrames);
-            bw.Write(FrameData);
-            bw.Write(FrameAdvantage);
-			bw.Write(HitFrame);
-            bw.Write(StunAtHit);
-			bw.Write(LastHitType);
-
-			bw.Write(invalidHit);
-        }
-
-        public void Deserialize(BinaryReader br)
-        {
-            HitCombo = br.ReadInt32();
-            LastDamage = br.ReadUInt32();
-            CurrentCombo = br.ReadUInt32();
-            HighestCombo = br.ReadUInt32();
-			TotalFrames = br.ReadInt32();
-			FrameData = br.ReadInt32();
-            FrameAdvantage = br.ReadInt32();
-            HitFrame = br.ReadInt32();
-            StunAtHit = br.ReadUInt32();
-            LastHitType = br.ReadInt32();
-
-			invalidHit = br.ReadBoolean();
         }
     }
 }

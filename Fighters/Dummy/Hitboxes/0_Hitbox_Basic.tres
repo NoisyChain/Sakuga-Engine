@@ -11,9 +11,7 @@ AirBlockKnockbackGravity = 300000
 SelfPushbackForce = 0
 SelfPushbackDuration = 0
 BounceXIntensity = 0
-BounceXState = 0
 BounceYIntensity = 0
-BounceYState = 0
 
 [resource]
 script = ExtResource("1_7s4vp")

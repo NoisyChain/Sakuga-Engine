@@ -1,5 +1,7 @@
 using Godot;
+using SakugaEngine.Game;
 using SakugaEngine.Resources;
+using SakugaEngine.Global;
 using System;
 
 namespace SakugaEngine
@@ -7,9 +9,9 @@ namespace SakugaEngine
     [GlobalClass]
     public partial class AIBrain : Node
     {
-        private SakugaFighter _owner;
+        private SakugaActor _owner;
 
-        private Global.BotMode mode = Global.BotMode.AGGRESSIVE;
+        private BotMode mode = BotMode.AGGRESSIVE;
         private AIBehavior currentBehavior;
         private int tick = 0;
         private int tickLimit = 1;
@@ -23,32 +25,32 @@ namespace SakugaEngine
         public bool inputFinished = true;
         public bool blocking;
         public bool teching;
-        public Global.HitType proximityHit;
+        public HitType proximityHit;
 
         private AIData data => _owner.Data._aiData;
 
-        public void Initialize(SakugaFighter owner, Global.BotDifficulty difficulty)
+        public void Initialize(SakugaActor owner, BotDifficulty difficulty)
         {
             _owner = owner;
 
             switch (difficulty)
             {
-                case Global.BotDifficulty.BEGINNER:
+                case BotDifficulty.BEGINNER:
                     currentBehavior = data.BehaviorBeginner;
                     break;
-                case Global.BotDifficulty.EASY:
+                case BotDifficulty.EASY:
                     currentBehavior = data.BehaviorEasy;
                     break;
-                case Global.BotDifficulty.MEDIUM:
+                case BotDifficulty.MEDIUM:
                     currentBehavior = data.BehaviorMedium;
                     break;
-                case Global.BotDifficulty.HARD:
+                case BotDifficulty.HARD:
                     currentBehavior = data.BehaviorHard;
                     break;
-                case Global.BotDifficulty.VERY_HARD:
+                case BotDifficulty.VERY_HARD:
                     currentBehavior = data.BehaviorVeryHard;
                     break;
-                case Global.BotDifficulty.PRO:
+                case BotDifficulty.PRO:
                     currentBehavior = data.BehaviorPro;
                     break;
             }
@@ -58,17 +60,17 @@ namespace SakugaEngine
 
         private int UpdateDecisionRateFree()
         {
-            return Global.RNG.Next(currentBehavior.DecisionRateFree.X, currentBehavior.DecisionRateFree.Y + 1);
+            return RNG.Next(currentBehavior.DecisionRateFree.X, currentBehavior.DecisionRateFree.Y + 1);
         }
 
         private int UpdateDecisionRateBusy()
         {
-            return Global.RNG.Next(currentBehavior.DecisionRateBusy.X, currentBehavior.DecisionRateBusy.Y + 1);
+            return RNG.Next(currentBehavior.DecisionRateBusy.X, currentBehavior.DecisionRateBusy.Y + 1);
         }
 
         private int SetInputRandomWaitTime()
         {
-            return Global.RNG.Next(currentBehavior.InputRandomness.X, currentBehavior.InputRandomness.Y + 1);
+            return RNG.Next(currentBehavior.InputRandomness.X, currentBehavior.InputRandomness.Y + 1);
         }
 
         public void Reset()
@@ -88,8 +90,8 @@ namespace SakugaEngine
         public void SelectCommand()
         {
             //Ignore AI behavior if the round ended
-            if (_owner.LifeEnded()) return;
-            if (_owner.GetOpponent().LifeEnded()) return;
+            if (_owner.IsKO()) return;
+            if (_owner.GetOpponent(0).IsKO()) return;
 
             //if ((currentCommand > 0 || currentInputIndex > 0 && !canAdvance) && _owner.StateMachine.CurrentMove < 0)
             //{ Reset(); }
@@ -97,38 +99,38 @@ namespace SakugaEngine
             //if (!MoveEnded) { tick = 0; return; }
 
             //Reset the values if the character is busy
-            if (_owner.Animator.CurrentStateType() > Global.StateType.MOVEMENT)
+            if (_owner.StateManager.CurrentStateType() > StateType.MOVEMENT)
             {
-                if (_owner.Animator.CurrentStateType() == Global.StateType.HIT_REACTION)
+                if (_owner.StateManager.CurrentStateType() == StateType.HIT_REACTION)
                 {
                     if (!teching)
                     {
-                        if (_owner.IsGrabbed() && _owner.HitStop.IsRunning())
+                        if (_owner.IsGrabbed() && _owner.Hitstop.IsRunning())
                         {
-                            int rnd = Global.RNG.Next(0, 10);
+                            int rnd = RNG.Next(0, 10);
                             if (rnd < currentBehavior.TechingRate)
                                 currentCommandList = new int[] { data.ThrowEscapeAction };
 
                             teching = true;
                         }
-                        else if (_owner.HitStun.IsRunning())
+                        else if (_owner.Hitstun.IsRunning())
                         {
-                            int rnd = Global.RNG.Next(0, 10);
+                            int rnd = RNG.Next(0, 10);
                             if (rnd < currentBehavior.TechingRate)
                             {
-                                rnd = Global.RNG.Next(0, 10);
+                                rnd = RNG.Next(0, 10);
                                 currentCommandList = new int[1];
                                 switch (mode)
                                 {
                                     default:
                                         break;
-                                    case Global.BotMode.AGGRESSIVE:
+                                    case BotMode.AGGRESSIVE:
                                         if (rnd < currentBehavior.TechingRate)
                                             currentCommandList[0] = data.ForwardRecoveryAction;
                                         else
                                             currentCommandList[0] = data.BackRecoveryAction;
                                         break;
-                                    case Global.BotMode.DEFENSIVE:
+                                    case BotMode.DEFENSIVE:
                                         if (rnd < currentBehavior.TechingRate)
                                             currentCommandList[0] = data.BackRecoveryAction;
                                         else
@@ -144,7 +146,7 @@ namespace SakugaEngine
                         return;
                     }
                 }
-                if (_owner.Animator.CurrentStateType() > Global.StateType.COMBAT) Reset();
+                if (_owner.StateManager.CurrentStateType() > StateType.COMBAT) Reset();
 
                 tick = 0;
                 return;
@@ -154,10 +156,10 @@ namespace SakugaEngine
                 if (!blocking)
                 {
                     Reset();
-                    int rnd = Global.RNG.Next(0, 10);
+                    int rnd = RNG.Next(0, 10);
                     if (rnd < currentBehavior.BlockingRate)
                     {
-                        int blockStateMachine = proximityHit == Global.HitType.LOW ? data.LowBlockAction : data.HighBlockAction;
+                        int blockStateMachine = proximityHit == HitType.LOW ? data.LowBlockAction : data.HighBlockAction;
                         currentCommandList = new int[] { blockStateMachine };
                     }
 
@@ -172,7 +174,7 @@ namespace SakugaEngine
 
             //If a command is still running, let it do its thing
             if ((currentCommand >= currentCommandList.Length || (currentCommand >= 0 && inputFinished && !canAdvance
-                && !data.Actions[currentCommandList[currentCommand]].AutoAdvance)) && _owner.StateMachine.CurrentMove < 0)
+                && !data.Actions[currentCommandList[currentCommand]].AutoAdvance)) && _owner.StanceManager.CurrentMove < 0)
             { Reset(); }
             bool MoveEnded = (currentCommand == 0 || currentCommand >= currentCommandList.Length) && currentInputIndex == 0;
             //GD.Print($"{currentCommand == 0 || currentCommand >= currentCommandList.Length}, {currentInputIndex == 0}");
@@ -184,7 +186,7 @@ namespace SakugaEngine
             if (tick <= tickLimit) return;
             else
             {
-                if (_owner.StateMachine.CurrentMove < 0)
+                if (_owner.StanceManager.CurrentMove < 0)
                     tickLimit = UpdateDecisionRateFree();
                 else
                     tickLimit = UpdateDecisionRateBusy();
@@ -199,7 +201,7 @@ namespace SakugaEngine
 
             Reset();
 
-            Vector2I distance = Global.Distance(_owner.Body.FixedPosition, _owner.GetOpponent().Body.FixedPosition);
+            Vector2I distance = GlobalFunctions.Distance(_owner.Body.FixedPosition, _owner.GetOpponent(0).Body.FixedPosition);
 
             //Select command pack based on distance
             AIActionPack selectedList = currentBehavior.NearActions;
@@ -212,7 +214,7 @@ namespace SakugaEngine
             else if (distance.X > currentBehavior.FarActions.HorizontalDistance)
                 selectedList = currentBehavior.DistantActions;
 
-            mode = _owner.Variables.CurrentHealth < currentBehavior.LowHealth ? Global.BotMode.DEFENSIVE : Global.BotMode.AGGRESSIVE;
+            mode = _owner.Parameters.Health.CurrentValue < currentBehavior.LowHealth ? BotMode.DEFENSIVE : BotMode.AGGRESSIVE;
 
             //Select a move right after
             if (selectedList.Conditions.Length == 1)
@@ -233,7 +235,7 @@ namespace SakugaEngine
                     if (!correctSurface) continue;
 
                     //Check super gauge
-                    bool enoughSuperGauge = selectedList.Conditions[i].SuperGaugeRequired <= _owner.Variables.CurrentSuperGauge;
+                    bool enoughSuperGauge = selectedList.Conditions[i].SuperGaugeRequired <= _owner.Parameters.SuperGauge.CurrentValue;
                     if (!enoughSuperGauge) continue;
 
                     //Check distance for each command
@@ -247,9 +249,9 @@ namespace SakugaEngine
                     //Allow the CPU to react according to the flags
                     if (currentBehavior.PredictionQuality > 0)
                     {
-                        if ((selectedList.Conditions[i].CounterFlags & _owner.Animator.GetCurrentState().AIFlags) != 0)
+                        if ((selectedList.Conditions[i].CounterFlags & _owner.StateManager.GetCurrentState().AIFlags) != 0)
                         {
-                            int rnd = Global.RNG.Next(0, 10);
+                            int rnd = RNG.Next(0, 10);
                             if (rnd <= currentBehavior.PredictionQuality - 1)
                             {
                                 currentCommandList = selectedList.Conditions[i].ActionsList;
@@ -265,7 +267,7 @@ namespace SakugaEngine
                         if (selectedList.Conditions[i].Probability == 0) continue;
 
                         int probability = VariableProbability(selectedList.Conditions[i]);
-                        int rnd = Global.RNG.Next(0, 10);
+                        int rnd = RNG.Next(0, 10);
                         if (rnd > probability - 1) continue;
                     }
 
@@ -289,17 +291,17 @@ namespace SakugaEngine
         public void UpdateCommand()
         {
             if (currentCommandList == null || currentCommandList.Length <= 0)
-            { _owner.ParseInputs(0); return; }
+            { _owner.Inputs.InsertToHistory(0); return; }
 
             if (currentCommand >= currentCommandList.Length)
-            { _owner.ParseInputs(0); return; }
+            { _owner.Inputs.InsertToHistory(0); return; }
 
             int curr = currentCommandList[currentCommand];
-            if (curr < 0) { _owner.ParseInputs(0); return; }
+            if (curr < 0) { _owner.Inputs.InsertToHistory(0); return; }
 
             inputTick++;
             inputFinished = currentInputIndex >= data.Actions[curr].Inputs.Length - 1;
-            _owner.ParseInputs(GenerateInput(data.Actions[curr].Inputs[currentInputIndex]));
+            _owner.Inputs.InsertToHistory(GenerateInput(data.Actions[curr].Inputs[currentInputIndex]));
 
             if (inputTick <= inputTickLimit) return;
             else
@@ -325,28 +327,28 @@ namespace SakugaEngine
             {
                 default:
                     break;
-                case Global.BotMode.AGGRESSIVE:
+                case BotMode.AGGRESSIVE:
                     switch (condition.ActionMode)
                     {
                         default:
                             break;
-                        case Global.BotMode.AGGRESSIVE:
+                        case BotMode.AGGRESSIVE:
                             prob += 1;
                             break;
-                        case Global.BotMode.DEFENSIVE:
+                        case BotMode.DEFENSIVE:
                             prob -= 2;
                             break;
                     }
                     break;
-                case Global.BotMode.DEFENSIVE:
+                case BotMode.DEFENSIVE:
                     switch (condition.ActionMode)
                     {
                         default:
                             break;
-                        case Global.BotMode.AGGRESSIVE:
+                        case BotMode.AGGRESSIVE:
                             prob -= 2;
                             break;
-                        case Global.BotMode.DEFENSIVE:
+                        case BotMode.DEFENSIVE:
                             prob += 1;
                             break;
                     }
@@ -374,36 +376,36 @@ namespace SakugaEngine
             return true;
         }
 
-        private ushort GenerateInput(AIInput input)
+        private PlayerInputs GenerateInput(AIInput input)
         {
-            int result = 0;
+            PlayerInputs result = 0;
 
             bool side = _owner.Body.IsLeftSide;
 
-            int left = side ? Global.INPUT_LEFT : Global.INPUT_RIGHT;
-            int right = side ? Global.INPUT_RIGHT : Global.INPUT_LEFT;
+            PlayerInputs left = side ? PlayerInputs.LEFT : PlayerInputs.RIGHT;
+            PlayerInputs right = side ? PlayerInputs.RIGHT : PlayerInputs.LEFT;
 
             // Directional inputs
-            if ((input.Direction & Global.DirectionalInputs.UP) > 0)
-                result |= Global.INPUT_UP;
-            if ((input.Direction & Global.DirectionalInputs.DOWN) > 0)
-                result |= Global.INPUT_DOWN;
-            if ((input.Direction & Global.DirectionalInputs.LEFT) > 0)
+            if ((input.Direction & DirectionalInputs.UP) > 0)
+                result |= PlayerInputs.UP;
+            if ((input.Direction & DirectionalInputs.DOWN) > 0)
+                result |= PlayerInputs.DOWN;
+            if ((input.Direction & DirectionalInputs.LEFT) > 0)
                 result |= left;
-            if ((input.Direction & Global.DirectionalInputs.RIGHT) > 0)
+            if ((input.Direction & DirectionalInputs.RIGHT) > 0)
                 result |= right;
             
             // Face button inputs
-            if ((input.Buttons & Global.ButtonInputs.FACE_A) > 0)
-                result |= Global.INPUT_FACE_A;
-            if ((input.Buttons & Global.ButtonInputs.FACE_B) > 0)
-                result |= Global.INPUT_FACE_B;
-            if ((input.Buttons & Global.ButtonInputs.FACE_C) > 0)
-                result |= Global.INPUT_FACE_C;
-            if ((input.Buttons & Global.ButtonInputs.FACE_D) > 0)
-                result |= Global.INPUT_FACE_D;
+            if ((input.Buttons & ButtonInputs.FACE_A) > 0)
+                result |= PlayerInputs.FACE_A;
+            if ((input.Buttons & ButtonInputs.FACE_B) > 0)
+                result |= PlayerInputs.FACE_B;
+            if ((input.Buttons & ButtonInputs.FACE_C) > 0)
+                result |= PlayerInputs.FACE_C;
+            if ((input.Buttons & ButtonInputs.FACE_D) > 0)
+                result |= PlayerInputs.FACE_D;
 
-            return (ushort)result;
+            return result;
         }
     }
 }

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="AnimationData" format=3 uid="uid://ciankdhfjjqt0"]
+
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/AnimationData.cs" id="1_38sty"]
+[ext_resource type="Resource" uid="uid://b5x4otrs0q04d" path="res://Fighters/Dummy/Hitboxes/0_Hitbox_Basic.tres" id="1_kpyr8"]
+[ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2_u0ey6"]
+
+[sub_resource type="Resource" id="Resource_27dnl"]
+script = ExtResource("2_u0ey6")
+HitboxData = ExtResource("1_kpyr8")
+metadata/_custom_type_script = "uid://5qrsoteskjym"
+
+[resource]
+script = ExtResource("1_38sty")
+Duration = 60
+Animations = []
+Hitboxes = [SubResource("Resource_27dnl")]

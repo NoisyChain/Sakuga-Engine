@@ -1,12 +1,12 @@
 [gd_resource type="Resource" script_class="FighterState" format=3 uid="uid://cc4h1kdvigwri"]
 
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="1_7i2qg"]
-[ext_resource type="Script" uid="uid://dgkbcrlq5brjd" path="res://Scripts/SakugaEngine/Resources/Animation Events/TeleportAnimationEvent.cs" id="1_w2oei"]
+[ext_resource type="Script" uid="uid://dgkbcrlq5brjd" path="res://Scripts/SakugaEngine/Deprecated/Animation Events/TeleportAnimationEvent.cs" id="1_w2oei"]
 [ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="2_8w8vb"]
-[ext_resource type="Script" uid="uid://bwm15ys7iwmfc" path="res://Scripts/SakugaEngine/Resources/AnimationEventsList.cs" id="2_d3rbs"]
-[ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Resources/StatePhysics.cs" id="3_c2hbl"]
+[ext_resource type="Script" uid="uid://bwm15ys7iwmfc" path="res://Scripts/SakugaEngine/Deprecated/AnimationEventsList.cs" id="2_d3rbs"]
+[ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Deprecated/StatePhysics.cs" id="3_c2hbl"]
 [ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="3_rmcib"]
-[ext_resource type="Script" uid="uid://bia88bspuvxd" path="res://Scripts/SakugaEngine/Resources/StateTransitionSettings.cs" id="4_lxuxy"]
+[ext_resource type="Script" uid="uid://bia88bspuvxd" path="res://Scripts/SakugaEngine/Deprecated/StateTransitionSettings.cs" id="4_lxuxy"]
 
 [sub_resource type="Resource" id="Resource_shu43"]
 script = ExtResource("1_w2oei")
@@ -25,18 +25,14 @@ metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
 
 [sub_resource type="Resource" id="Resource_qlmxr"]
 script = ExtResource("1_7i2qg")
-HitboxIndex = -1
 
 [sub_resource type="Resource" id="Resource_p8vrw"]
 script = ExtResource("1_7i2qg")
 animationStage = 1
-Frame = 9
-HitboxIndex = 26
 
 [sub_resource type="Resource" id="Resource_c3nis"]
 script = ExtResource("1_7i2qg")
 animationStage = 2
-Frame = 22
 
 [sub_resource type="Resource" id="Resource_mpd63"]
 script = ExtResource("3_c2hbl")
@@ -69,6 +65,12 @@ script = ExtResource("2_8w8vb")
 StateName = "623B_2"
 BaseStance = 2
 Type = 2
+TransitionEvents = null
+OnEnterEvents = null
+OnTickEvents = null
+OnExitEvents = null
+OnHitConfirmEvents = null
+OnHitReactionEvents = null
 Duration = 30
 stateProperties = null
 statePhysics = Array[Object]([SubResource("Resource_mpd63"), SubResource("Resource_ijji8"), SubResource("Resource_l6hjm")])

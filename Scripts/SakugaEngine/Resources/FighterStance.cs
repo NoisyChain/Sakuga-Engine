@@ -12,6 +12,7 @@ namespace SakugaEngine.Resources
         [Export] public int DefaultState = 0;
         [Export] public MoveSettings[] Moves;
         [Export] public int[] HitReactions;
+        [Export] public BlockSettings[] BlockReactions;
 
         [ExportCategory("Blocking")]
         [Export] public int GroundBlockInitialState = -1;

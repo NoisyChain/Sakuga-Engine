@@ -1,32 +1,33 @@
 [gd_resource type="Resource" script_class="MoveSettings" format=3 uid="uid://v1wx455mfvn2"]
 
 [ext_resource type="Resource" uid="uid://bcyy6q5j33eyu" path="res://Fighters/Shared/Inputs/10_Input_44.tres" id="1_ey81c"]
-[ext_resource type="Script" uid="uid://dh03r2nvy3pmu" path="res://Scripts/SakugaEngine/Resources/ExtraVariableChange.cs" id="1_gaawt"]
-[ext_resource type="Script" uid="uid://cuch5yr7c7dag" path="res://Scripts/SakugaEngine/Resources/ExtraVariableCondition.cs" id="2_5nlih"]
 [ext_resource type="Script" uid="uid://gk1rkw667o4n" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_45xj8"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/CustomVariableChange.cs" id="2_uuu4g"]
+[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/CustomVariableCondition.cs" id="2_xanao"]
 
-[sub_resource type="Resource" id="Resource_y8ecd"]
-script = ExtResource("1_gaawt")
-ChangeMode = 1
-ChangeValue = 1
+[sub_resource type="Resource" id="Resource_opnpq"]
+script = ExtResource("2_uuu4g")
+Value = 1
+metadata/_custom_type_script = "uid://dh03r2nvy3pmu"
 
-[sub_resource type="Resource" id="Resource_kkj64"]
-script = ExtResource("1_gaawt")
-ChangeMode = 1
-ChangeValue = 1
+[sub_resource type="Resource" id="Resource_jjsyd"]
+script = ExtResource("2_uuu4g")
+ByIndex = 1
+Value = 1
+metadata/_custom_type_script = "uid://dh03r2nvy3pmu"
 
-[sub_resource type="Resource" id="Resource_uvtq5"]
-script = ExtResource("1_gaawt")
+[sub_resource type="Resource" id="Resource_op3mk"]
+script = ExtResource("2_uuu4g")
+ByIndex = 2
+Value = 1
+metadata/_custom_type_script = "uid://dh03r2nvy3pmu"
 
-[sub_resource type="Resource" id="Resource_jdrmi"]
-script = ExtResource("2_5nlih")
+[sub_resource type="Resource" id="Resource_uuu4g"]
+script = ExtResource("2_xanao")
+ByIndex = 1
 Value = 1
 CompareMode = 3
-
-[sub_resource type="Resource" id="Resource_nknrw"]
-script = ExtResource("2_5nlih")
-Value = 1
-CompareMode = 3
+metadata/_custom_type_script = "uid://cuch5yr7c7dag"
 
 [resource]
 script = ExtResource("2_45xj8")
@@ -36,6 +37,6 @@ Inputs = ExtResource("1_ey81c")
 Priority = 4
 DistanceArea = Vector2i(0, 99999)
 CanCancelTo = null
-ExtraVariablesRequirement = Array[Object]([SubResource("Resource_jdrmi"), SubResource("Resource_nknrw")])
-ExtraVariablesChange = Array[Object]([SubResource("Resource_y8ecd"), SubResource("Resource_kkj64"), SubResource("Resource_uvtq5")])
+VariablesRequirement = Array[Object]([SubResource("Resource_uuu4g")])
+VariablesChange = Array[Object]([SubResource("Resource_opnpq"), SubResource("Resource_jjsyd"), SubResource("Resource_op3mk")])
 UseOnAir = true
