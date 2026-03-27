@@ -3,7 +3,7 @@
 [ext_resource type="Resource" uid="uid://b1uqbm5bepxhv" path="res://Fighters/Kaede/Moves/0_Kaede_MoveForward.tres" id="1_8fbso"]
 [ext_resource type="Resource" uid="uid://biqgn48x4ggwh" path="res://Fighters/Shared/Inputs/1_Input_4.tres" id="1_dksb3"]
 [ext_resource type="Resource" uid="uid://dhmyuy5f4qm0x" path="res://Fighters/Kaede/Moves/1_Kaede_MoveBackwards.tres" id="2_2lsvi"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/BlockSettings.cs" id="2_d5xpn"]
+[ext_resource type="Script" uid="uid://d0re6r8d145i6" path="res://Scripts/SakugaEngine/Resources/BlockSettings.cs" id="2_d5xpn"]
 [ext_resource type="Resource" uid="uid://cx1la61ueydpw" path="res://Fighters/Kaede/Moves/2_Kaede_DashForward.tres" id="3_6kbo2"]
 [ext_resource type="Resource" uid="uid://j1w64hweu08j" path="res://Fighters/Shared/Inputs/8_Input_1.tres" id="3_d5xpn"]
 [ext_resource type="Resource" uid="uid://cjp024emsbxa4" path="res://Fighters/Kaede/Moves/3_Kaede_DashBackwards.tres" id="4_tbqt5"]

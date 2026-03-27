@@ -5,7 +5,7 @@
 [ext_resource type="Resource" uid="uid://c320twmibeytx" path="res://MatchSettings.tres" id="2_ly1kb"]
 [ext_resource type="Resource" uid="uid://bl30fi0muatu1" path="res://StageSelect.tres" id="3_qnnlv"]
 [ext_resource type="Resource" uid="uid://fxj4uvd0y37r" path="res://Soundtrack.tres" id="4_i5d7u"]
-[ext_resource type="Texture2D" uid="uid://ccj7yra2c1xbp" path="res://Fighters/Kaede/Sprites/Kaede_Render.png" id="5_v0euj"]
+[ext_resource type="Texture2D" uid="uid://ckornbcskvw5n" path="res://Fighters/Kaede/Sprites/Kaede_Render.png" id="5_v0euj"]
 [ext_resource type="PackedScene" uid="uid://dw8jr0o1wc7hl" path="res://Scenes/Instances/CharSelectPortrait.tscn" id="6_5y3p4"]
 [ext_resource type="Texture2D" uid="uid://dovvnevt722ck" path="res://Sprites/Char_Random.png" id="6_pej5c"]
 [ext_resource type="Texture2D" uid="uid://76j3dxo635sm" path="res://Stages/Sakuga Default/Sakuga_Default_Thumbnail.png" id="6_vt3nd"]
@@ -22,7 +22,7 @@
 [ext_resource type="Script" uid="uid://bvwd6emkqafdy" path="res://Scripts/SakugaEngine/UI/ColorSelectMenu.cs" id="17_u1s66"]
 [ext_resource type="Texture2D" uid="uid://cw7llwhkqnheo" path="res://Sprites/Arrow.png" id="18_7p58r"]
 
-[node name="Control" type="Control" unique_id=464996932 node_paths=PackedStringArray("CharacterSelectMode", "StageSelectMode", "P1SelectedRender", "P2SelectedRender", "P1SelectedName", "P2SelectedName", "P1Cursor", "P2Cursor", "charactersContainer", "P1ColorSelect", "P2ColorSelect", "StageSelectedRender", "StageSelectedName", "SongSelectedName", "P1SelectingStage", "P2SelectingStage", "StageCursor", "stagesContainer")]
+[node name="Control" type="Control" unique_id=464996932 node_paths=PackedStringArray("CharSelectMode", "StageSelectMode", "P1SelectedRender", "P2SelectedRender", "P1SelectedName", "P2SelectedName", "P1Cursor", "P2Cursor", "charactersContainer", "P1ColorSelect", "P2ColorSelect", "StageSelectedRender", "StageSelectedName", "SongSelectedName", "P1SelectingStage", "P2SelectingStage", "StageCursor", "stagesContainer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -34,7 +34,7 @@ Match = ExtResource("2_ly1kb")
 fightersList = ExtResource("2_d1pnq")
 stagesList = ExtResource("3_qnnlv")
 songsList = ExtResource("4_i5d7u")
-CharacterSelectMode = NodePath("CharacterSelect")
+CharSelectMode = NodePath("CharacterSelect")
 StageSelectMode = NodePath("StageSelect")
 P1SelectedRender = NodePath("P1SelectedRender")
 P2SelectedRender = NodePath("P2SelectedRender")

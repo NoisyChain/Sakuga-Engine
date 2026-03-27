@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_mnfj6"]
 [ext_resource type="Resource" uid="uid://t64afo7e4u1o" path="res://Fighters/Kaede/Hitboxes/0_Hitbox_Basic.tres" id="2_pt4yf"]
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="3_51gjx"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/AnimationData.cs" id="4_lwljm"]
+[ext_resource type="Script" uid="uid://ddkya5wrb53ly" path="res://Scripts/SakugaEngine/Resources/AnimationData.cs" id="4_lwljm"]
 
 [sub_resource type="Resource" id="Resource_dqgeq"]
 script = ExtResource("1_mnfj6")

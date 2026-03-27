@@ -2,8 +2,8 @@
 
 [ext_resource type="Resource" uid="uid://brssiq77ils1q" path="res://Fighters/Shared/Inputs/5_Input_tap8.tres" id="1_ji7lf"]
 [ext_resource type="Script" uid="uid://gk1rkw667o4n" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="2_0v82b"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/CustomVariableChange.cs" id="2_jjsyd"]
-[ext_resource type="Script" path="res://Scripts/SakugaEngine/Resources/CustomVariableCondition.cs" id="3_op3mk"]
+[ext_resource type="Script" uid="uid://dh03r2nvy3pmu" path="res://Scripts/SakugaEngine/Resources/CustomVariableChange.cs" id="2_jjsyd"]
+[ext_resource type="Script" uid="uid://cuch5yr7c7dag" path="res://Scripts/SakugaEngine/Resources/CustomVariableCondition.cs" id="3_op3mk"]
 
 [sub_resource type="Resource" id="Resource_opnpq"]
 script = ExtResource("2_jjsyd")
