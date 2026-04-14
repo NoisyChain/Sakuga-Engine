@@ -27,6 +27,8 @@ namespace SakugaEngine
         {
             if (_owner.ContainsFrameProperty(Global.FrameProperties.LOCK_MOVE)) return false;
 
+            if (!CheckAllowedStateType(index)) return false;
+
             if (CurrentMove >= 0)
             {
                 if (CurrentMove == index)
@@ -162,20 +164,23 @@ namespace SakugaEngine
                                 GetBufferedMove().Priority > GetCurrentMove().Priority : 
                                 GetBufferedMove().Priority >= GetCurrentMove().Priority));
 
-            bool checkMovementState = GetBufferedMove().AcceptMovementStates && _owner.StateManager.GetCurrentState().Type == StateType.MOVEMENT;
-            bool checkNullState = GetBufferedMove().AcceptNullStates && _owner.StateManager.GetCurrentState().Type == StateType.NULL;
-            bool checkCombatState = GetBufferedMove().AcceptCombatStates && _owner.StateManager.GetCurrentState().Type == StateType.COMBAT;
-            bool checkBlockingState = GetBufferedMove().AcceptBlockingStates && _owner.StateManager.GetCurrentState().Type == StateType.BLOCKING;
-            bool checkHitReactionState = GetBufferedMove().AcceptHitReactionStates && _owner.StateManager.GetCurrentState().Type == StateType.HIT_REACTION;
-                                
-            bool isValidStateType =  _owner.StateManager.GetCurrentState().Type != StateType.LOCKED && 
-                                    (checkMovementState || checkNullState || checkCombatState || checkBlockingState || checkHitReactionState);
-            
-            if (isValidStateType && CanOverride)
+            if (CanOverride)
             {
                 ExecuteMove(BufferedMove);
             }
             else GD.Print("Move " + GetBufferedMove().MoveName + " Buffered!");
+        }
+
+        public bool CheckAllowedStateType(int moveIndex)
+        {
+            bool notLockedState =  _owner.StateManager.GetCurrentState().Type != StateType.LOCKED;
+            bool checkNullState = GetMove(moveIndex).AcceptNullStates && _owner.StateManager.GetCurrentState().Type == StateType.NULL;
+            bool checkMovementState = GetMove(moveIndex).AcceptMovementStates && _owner.StateManager.GetCurrentState().Type == StateType.MOVEMENT;
+            bool checkCombatState = GetMove(moveIndex).AcceptCombatStates && _owner.StateManager.GetCurrentState().Type == StateType.COMBAT;
+            bool checkBlockingState = GetMove(moveIndex).AcceptBlockingStates && _owner.StateManager.GetCurrentState().Type == StateType.BLOCKING;
+            bool checkHitReactionState = GetMove(moveIndex).AcceptHitReactionStates && _owner.StateManager.GetCurrentState().Type == StateType.HIT_REACTION;
+
+            return notLockedState && (checkNullState || checkMovementState || checkCombatState || checkBlockingState || checkHitReactionState);
         }
 
         private void CheckMoveEndCondition()

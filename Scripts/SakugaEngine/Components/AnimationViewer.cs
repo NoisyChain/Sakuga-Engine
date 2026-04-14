@@ -13,6 +13,11 @@ namespace SakugaEngine
 
         private int targetFrame = 0;
 
+        public void SetDepth(int LayerSorting)
+        {
+            // TODO
+        }
+
         public void ViewAnimations(AnimationSettings anim, int Frame)
         {
             if (anim == null)

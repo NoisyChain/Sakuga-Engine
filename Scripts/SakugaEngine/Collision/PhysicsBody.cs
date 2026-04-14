@@ -79,6 +79,8 @@ namespace SakugaEngine.Collision
                     FixedVelocity.X += GlobalVariables.DefaultFriction / GlobalVariables.TicksPerSecond;
                 else if (FixedVelocity.X < absVelocity)
                     FixedVelocity.X += GlobalVariables.DefaultAcceleration / GlobalVariables.TicksPerSecond;
+                else
+                    FixedVelocity.X = absVelocity;
                     
             }
             else if (newVelocity != 0 && Mathf.Sign(newVelocity) < 0)
@@ -87,6 +89,8 @@ namespace SakugaEngine.Collision
                     FixedVelocity.X -= GlobalVariables.DefaultFriction / GlobalVariables.TicksPerSecond;
                 else if (FixedVelocity.X > -absVelocity)
                     FixedVelocity.X -= GlobalVariables.DefaultAcceleration / GlobalVariables.TicksPerSecond;
+                else
+                    FixedVelocity.X = -absVelocity;
             }
             else
                 FixedVelocity.X -= Mathf.Min(Mathf.Abs(FixedVelocity.X), GlobalVariables.DefaultDeceleration / GlobalVariables.TicksPerSecond) * Mathf.Sign(FixedVelocity.X);
@@ -100,6 +104,8 @@ namespace SakugaEngine.Collision
                     FixedVelocity.Y += GlobalVariables.DefaultFriction / GlobalVariables.TicksPerSecond;
                 else if (FixedVelocity.Y < absVelocity)
                     FixedVelocity.Y += GlobalVariables.DefaultAcceleration / GlobalVariables.TicksPerSecond;
+                else
+                    FixedVelocity.Y = absVelocity;
                     
             }
             else if (newVelocity != 0 && Mathf.Sign(newVelocity) < 0)
@@ -108,6 +114,8 @@ namespace SakugaEngine.Collision
                     FixedVelocity.Y -= GlobalVariables.DefaultFriction / GlobalVariables.TicksPerSecond;
                 else if (FixedVelocity.Y > -absVelocity)
                     FixedVelocity.Y -= GlobalVariables.DefaultAcceleration / GlobalVariables.TicksPerSecond;
+                else
+                    FixedVelocity.Y = -absVelocity;
             }
             else
                 FixedVelocity.Y -= Mathf.Min(Mathf.Abs(FixedVelocity.Y), GlobalVariables.DefaultDeceleration / GlobalVariables.TicksPerSecond) * Mathf.Sign(FixedVelocity.Y);

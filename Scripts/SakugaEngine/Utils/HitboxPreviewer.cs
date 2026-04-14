@@ -29,10 +29,9 @@ namespace SakugaEngine.Utils
                 if (Frame >= Data.Duration) Frame = 0;
             }
 
-            var hitboxData = GetCurrentHitboxSettings();
-
             Animator.ViewAnimations(GetCurrentAnimationSettings(), Frame);
 
+            var hitboxData = GetCurrentHitboxSettings();
             PreviewHitboxes(hitboxData);
             PreviewPushbox(hitboxData);
         }
@@ -41,51 +40,53 @@ namespace SakugaEngine.Utils
         {
             for(int j = 0; j < hitboxGraphics.Length; j++)
             {
-                if (previewData == null || previewData.HitboxData == null || previewData.HitboxData.Hitboxes == null || 
+                if (previewData == null || previewData.HitboxData == null || 
+                    previewData.HitboxData.Hitboxes == null || previewData.HitboxData.Hitboxes.Length == 0 || 
                     j >= previewData.HitboxData.Hitboxes.Length || previewData.HitboxData.Hitboxes[j] == null)
-                    hitboxGraphics[j].Hide();
-                else
-                {
-                    hitboxGraphics[j].Visible = previewData.HitboxData.Hitboxes[j].Size != Vector2I.Zero;
-
-                    switch (previewData.HitboxData.Hitboxes[j].HitboxType)
                     {
-                        case HitboxType.HURTBOX:
-                            hitboxGraphics[j].SortingOffset = 1;
-                            hitboxGraphics[j].Modulate = new Color(0.0f, 1.0f, 0.0f);
-                            break;
-                        case HitboxType.HITBOX:
-                            hitboxGraphics[j].SortingOffset = 2;
-                            hitboxGraphics[j].Modulate = new Color(1.0f, 0.0f, 0.0f);
-                            break;
-                        case HitboxType.PROXIMITY_BLOCK:
-                            hitboxGraphics[j].SortingOffset = 4;
-                            hitboxGraphics[j].Modulate = new Color(1.0f, 0.0f, 1.0f);
-                            break;
-                        case HitboxType.PROJECTILE:
-                            hitboxGraphics[j].SortingOffset = 2;
-                            hitboxGraphics[j].Modulate = new Color(1.0f, 0.64f, 0.0f);
-                            break;
-                        case HitboxType.THROW:
-                            hitboxGraphics[j].SortingOffset = 2;
-                            hitboxGraphics[j].Modulate = new Color(0.0f, 0.0f, 1.0f);
-                            break;
-                        case HitboxType.COUNTER:
-                            hitboxGraphics[j].SortingOffset = 2;
-                            hitboxGraphics[j].Modulate = new Color(0.5f, 0.5f, 0.5f);
-                            break;
-                        case HitboxType.DEFLECT:
-                            hitboxGraphics[j].SortingOffset = 2;
-                            hitboxGraphics[j].Modulate = new Color(1.0f, 0.0f, 0.5f);
-                            break;
-                        /*case Global.HitboxType.PARRY:
-                            hitboxGraphics[j].SortingOffset = 2;
-                            hitboxGraphics[j].Modulate = new Color(0.5f, 0.5f, 0.5f);
-                            break;*/
+                        hitboxGraphics[j].Hide();
+                        continue;
                     }
-                    hitboxGraphics[j].GlobalPosition = GlobalFunctions.ToScaledVector3(previewData.HitboxData.Hitboxes[j].Center);
-                    hitboxGraphics[j].Scale = GlobalFunctions.ToScaledVector3(previewData.HitboxData.Hitboxes[j].Size, 1f);
+
+                hitboxGraphics[j].Visible = previewData.HitboxData.Hitboxes[j].Size != Vector2I.Zero;
+
+                switch (previewData.HitboxData.Hitboxes[j].HitboxType)
+                {
+                    case HitboxType.HURTBOX:
+                        hitboxGraphics[j].SortingOffset = 1;
+                        hitboxGraphics[j].Modulate = new Color(0.0f, 1.0f, 0.0f);
+                        break;
+                    case HitboxType.HITBOX:
+                        hitboxGraphics[j].SortingOffset = 2;
+                        hitboxGraphics[j].Modulate = new Color(1.0f, 0.0f, 0.0f);
+                        break;
+                    case HitboxType.PROXIMITY_BLOCK:
+                        hitboxGraphics[j].SortingOffset = 4;
+                        hitboxGraphics[j].Modulate = new Color(1.0f, 0.0f, 1.0f);
+                        break;
+                    case HitboxType.PROJECTILE:
+                        hitboxGraphics[j].SortingOffset = 2;
+                        hitboxGraphics[j].Modulate = new Color(1.0f, 0.64f, 0.0f);
+                        break;
+                    case HitboxType.THROW:
+                        hitboxGraphics[j].SortingOffset = 2;
+                        hitboxGraphics[j].Modulate = new Color(0.0f, 0.0f, 1.0f);
+                        break;
+                    case HitboxType.COUNTER:
+                        hitboxGraphics[j].SortingOffset = 2;
+                        hitboxGraphics[j].Modulate = new Color(0.5f, 0.5f, 0.5f);
+                        break;
+                    case HitboxType.DEFLECT:
+                        hitboxGraphics[j].SortingOffset = 2;
+                        hitboxGraphics[j].Modulate = new Color(1.0f, 0.0f, 0.5f);
+                        break;
+                    /*case Global.HitboxType.PARRY:
+                        hitboxGraphics[j].SortingOffset = 2;
+                        hitboxGraphics[j].Modulate = new Color(0.5f, 0.5f, 0.5f);
+                        break;*/
                 }
+                hitboxGraphics[j].GlobalPosition = GlobalFunctions.ToScaledVector3(previewData.HitboxData.Hitboxes[j].Center);
+                hitboxGraphics[j].Scale = GlobalFunctions.ToScaledVector3(previewData.HitboxData.Hitboxes[j].Size, 1f);
             }
         }
 
@@ -116,7 +117,8 @@ namespace SakugaEngine.Utils
 
             for (int i = 0; i < Data.Animations.Length; i++)
             {
-                int nextFrame = (i >= Data.Animations.Length - 1) ?
+                if (Data.Animations[i] == null) continue;
+                int nextFrame = (i >= Data.Animations.Length - 1 || Data.Animations[i + 1] == null) ?
                                 Data.Duration - 1 :
                                 Data.Animations[i + 1].AtFrame - 1;
                 

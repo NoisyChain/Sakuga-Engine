@@ -47,6 +47,15 @@ namespace SakugaEngine
             Side = 0;
             Frame = -1;
         }
+
+        public void Reset()
+        {
+            IsActive = StartActive;
+            FixedPosition = Vector2I.Zero;
+            Side = 0;
+            Frame = -1;
+        }
+
         public void Spawn(Vector2I origin, int side, bool attached)
         {
             AttachedToOwner = attached;

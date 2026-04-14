@@ -16,6 +16,8 @@ namespace SakugaEngine.Resources
             {
                 case Global.CompareMode.EQUAL:
                     return Actor.Parameters.Health.CurrentValue == Value;
+                case Global.CompareMode.DIFFERENT:
+                    return Actor.Parameters.Health.CurrentValue != Value;
                 case Global.CompareMode.GREATER:
                     return Actor.Parameters.Health.CurrentValue > Value;
                 case Global.CompareMode.GREATER_EQUAL:

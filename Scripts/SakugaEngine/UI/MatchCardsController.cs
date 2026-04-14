@@ -10,6 +10,7 @@ namespace SakugaEngine.UI
         [Export] private Label RoundLabel;
         [Export] private Label KO_Label;
         [Export] private string RoundName = "Round";
+        [Export] private RoundNamingOrder RoundNaming;
         [Export] private string[] KO_Names = ["K.O.", "PERFECT!", "Double K.O.", "Time Up!"];
 
         /*[ExportGroup("Announcer")]
@@ -68,7 +69,33 @@ namespace SakugaEngine.UI
             if (final)
                 SetRoundLabel($"Final {RoundName}");
             else
-                SetRoundLabel($"{RoundName} {currentRound + 1}");
+            {
+                switch (RoundNaming)
+                {
+                    case RoundNamingOrder.N:
+                        SetRoundLabel($"{RoundName} {currentRound + 1}");
+                        break;
+                    case RoundNamingOrder.Nth:
+                        string placing = "";
+                        switch (currentRound)
+                        {
+                            case 0:
+                                placing = "st";
+                                break;
+                            case 1:
+                                placing = "nd";
+                                break;
+                            case 2:
+                                placing = "rd";
+                                break;
+                            default:
+                                placing = "th";
+                                break;
+                        }
+                        SetRoundLabel($"{currentRound + 1}{placing} {RoundName}");
+                        break;
+                }
+            }
             
             CurrentAnimation = RoundStartAnimation;
             Frame = 0;

@@ -30,27 +30,6 @@ namespace SakugaEngine.Global
         public const ushort CornerMinDamageScaling = 45;
         public const ushort CornerMaxDamageScaling = 120;
         public const int MoveBufferLength = 10;
-        public const int DefaultVFXSoundChannel = 0;
-
-        /*//Global inputs
-        public const int INPUT_UP = 1 << 0;
-        public const int INPUT_DOWN = 1 << 1;
-        public const int INPUT_LEFT = 1 << 2;
-        public const int INPUT_RIGHT = 1 << 3;
-        public const int INPUT_FACE_A = 1 << 4;
-        public const int INPUT_FACE_B = 1 << 5;
-        public const int INPUT_FACE_C = 1 << 6;
-        public const int INPUT_FACE_D = 1 << 7;
-        public const int INPUT_FACE_E = 1 << 8;
-        public const int INPUT_FACE_F = 1 << 9;
-        public const int INPUT_FACE_G = 1 << 10;
-        public const int INPUT_FACE_H = 1 << 11;
-        //Free space
-        public const int INPUT_MENU = 1 << 14;
-        public const int INPUT_BACK = 1 << 15;
-        public const int INPUT_ANY_DIRECTION = INPUT_UP | INPUT_DOWN | INPUT_LEFT | INPUT_RIGHT;
-        public const int INPUT_ANY_BUTTON = INPUT_FACE_A | INPUT_FACE_B | INPUT_FACE_C | INPUT_FACE_D | INPUT_FACE_E | INPUT_FACE_F | INPUT_FACE_G | INPUT_FACE_H;*/
-
-        
+        public const int DefaultVFXSoundChannel = 0;  
     }
 }

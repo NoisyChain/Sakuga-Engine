@@ -61,6 +61,8 @@ namespace SakugaEngine
             {
                 case CompareMode.EQUAL:
                     return CurrentValue == CompareTo;
+                case CompareMode.DIFFERENT:
+                    return CurrentValue != CompareTo;
                 case CompareMode.GREATER:
                     return CurrentValue > CompareTo;
                 case CompareMode.GREATER_EQUAL:

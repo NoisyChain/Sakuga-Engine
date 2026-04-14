@@ -13,7 +13,7 @@ namespace SakugaEngine.Global
     public enum CustomVariableMode { IDLE, INCREASE, DECREASE }
     public enum CustomVariableBehaviorTarget { ON_HIT, ON_DAMAGE, ON_MOVE_ENTER, ON_MOVE_EXIT, ON_FULL, ON_EMPTY, ON_USE }
     public enum ParameterChange { SET, ADD, SUBTRACT }
-    public enum CompareMode { EQUAL, GREATER, GREATER_EQUAL, LESS, LESS_EQUAL }
+    public enum CompareMode { EQUAL, DIFFERENT, GREATER, GREATER_EQUAL, LESS, LESS_EQUAL }
     public enum FadeScreenMode { NONE, FADE_IN, FADE_OUT }
     public enum RelativeTo { WORLD, SELF, OPPONENT, FIGHTER, SPAWNABLE }
     public enum SoundType { SFX, VOICE }
@@ -22,6 +22,7 @@ namespace SakugaEngine.Global
     public enum NetcodeMode { LOCAL, ONLINE, REPLAY }
     public enum BotDifficulty { BEGINNER, EASY, MEDIUM, HARD, VERY_HARD, PRO }
     public enum BotMode { ANY = -1, AGGRESSIVE, DEFENSIVE }
+    public enum RoundNamingOrder { N, Nth }
     // Character Select enums
     public enum CharacterSelectStyle : byte { VERSUS, PLAYER1, PLAYER2 }
     public enum CharacterSelectMode : byte { CHARACTER_SELECT, STAGE_SELECT }

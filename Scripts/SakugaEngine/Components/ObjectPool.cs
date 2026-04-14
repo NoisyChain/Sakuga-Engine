@@ -44,9 +44,6 @@ namespace SakugaEngine
                     SpawnReferences[i].Objects[j].SetAllies(owner.GetAllies());
                     SpawnReferences[i].Objects[j].SetOpponents(owner.GetOpponents());
                     GameManager.Instance.AddActor(SpawnReferences[i].Objects[j]);
-                    SpawnReferences[i].Objects[j].IsActive = false;
-                    
-                    //GD.Print("Element " + References[i].Objects[j].Name + " created");
                 }
             }
         }
@@ -71,9 +68,25 @@ namespace SakugaEngine
                     VFXReferences[i].Objects[j].Initialize();
                     VFXReferences[i].Objects[j].SetMaster(owner);
                     GameManager.Instance.AddActor(VFXReferences[i].Objects[j], false);
-                    VFXReferences[i].Objects[j].IsActive = false;
-                    
-                    //GD.Print("VFX Element " + VFXReferences[i].Objects[j].Name + " created");
+                }
+            }
+        }
+
+        public void Reset()
+        {
+            foreach (PoolReference pool in SpawnReferences)
+            {
+                foreach (SakugaActor obj in pool.Objects)
+                {
+                    obj.Reset();
+                }
+            }
+
+            foreach (VFXPoolReference pool in VFXReferences)
+            {
+                foreach (SakugaVFX obj in pool.Objects)
+                {
+                    obj.Reset();
                 }
             }
         }

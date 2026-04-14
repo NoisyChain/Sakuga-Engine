@@ -191,9 +191,12 @@ namespace SakugaEngine
 
         public void Reset()
         {
+            IsActive = StartActive;
             if (Body != null)
             {
                 Body.FixedPosition.X = GlobalVariables.StartingPosition * (-1 + ((int)playerID * 2));
+                Body.FixedPosition.Y = 0;
+                Body.SetVelocity(Vector2I.Zero);
                 Body.UpdateSide(Mathf.Sign(Body.FixedPosition.X) < 0);
                 Body.FlipSide();
             }
@@ -201,7 +204,7 @@ namespace SakugaEngine
             if (StanceManager != null) StanceManager.CallStance(0);
             if (StateManager != null) StateManager.Reset();
             if (Parameters != null) Parameters.Reset();
-            //if (Pool != null) Pool.Initialize(this);
+            if (Pool != null) Pool.Reset();
 
             FrameProperties = InitialProperties;
             HitCheck = AllowHit;
@@ -256,7 +259,11 @@ namespace SakugaEngine
                 g.GlobalRotation = Vector3.Zero;
                 g.Scale = new Vector3(Body.PlayerSide, 1, 1);
             }
-            if (Animator != null) Animator.ViewAnimations(StateManager.GetCurrentAnimationSettings(), StateManager.CurrentStateFrame);
+            if (Animator != null)
+            {
+                Animator.SetDepth(LayerSorting);
+                Animator.ViewAnimations(StateManager.GetCurrentAnimationSettings(), StateManager.CurrentStateFrame);
+            }
         }
 #region Knockback physics (not sure if it's gonna stay here)
         public void PushActor(int pushDuration, int VelocityX, int VelocityY, int gravity)
@@ -565,6 +572,7 @@ namespace SakugaEngine
             CancelConditions &= ~CancelCondition.KARA_CANCEL;
 
             int blockState = target.StanceManager.GetBlockState(target.SelectBlockStance(), box.HitType, (byte)(box.GuardCrush ? 2 : 1));
+            GD.Print(blockState);
 
             if (target.Parameters.SuperArmor != null && target.Parameters.SuperArmor.CurrentValue > 0)
             {
@@ -576,7 +584,7 @@ namespace SakugaEngine
             else
             {
                 int hitFX;
-                if (target.CanBlock() && !HitPosition && blockState < 0)
+                if (target.CanBlock() && !HitPosition && blockState >= 0)
                 {
                     if (box.GuardCrush)
                     {
