@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="FighterState" format=3 uid="uid://cywyov8k7d28t"]
 
 [ext_resource type="Script" uid="uid://by2qprudfmxwx" path="res://Scripts/SakugaEngine/Deprecated/Animation Events/ApplyDamageAnimationEvent.cs" id="1_1inkj"]
+[ext_resource type="Resource" uid="uid://v1yg2t5o7s87" path="res://Fighters/Kaede/AnimationData/65_Kaede_Throw_Seq_AnimData.tres" id="1_ko6u0"]
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="1_qo4pe"]
 [ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="2_264bk"]
 [ext_resource type="Script" uid="uid://bwm15ys7iwmfc" path="res://Scripts/SakugaEngine/Deprecated/AnimationEventsList.cs" id="2_x2ffj"]
@@ -82,6 +83,7 @@ ThrowDetach = SubResource("Resource_ko6u0")
 script = ExtResource("2_264bk")
 StateName = "Throw_Sequence"
 Type = 2
+AnimationData = ExtResource("1_ko6u0")
 TransitionEvents = null
 OnEnterEvents = null
 OnTickEvents = null

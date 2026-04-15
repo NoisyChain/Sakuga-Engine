@@ -9,35 +9,7 @@
 
 [sub_resource type="Resource" id="Resource_gbbpf"]
 script = ExtResource("1_a14tm")
-SourceAnimation = "Combat_5A"
-FrameStepping = 4
-metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
-
-[sub_resource type="Resource" id="Resource_1bm1i"]
-script = ExtResource("1_a14tm")
-AtFrame = 3
-SourceAnimation = "Combat_5A"
-FrameStepping = 4
-LimitRange = true
-AnimationRange = Vector2i(4, 15)
-metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
-
-[sub_resource type="Resource" id="Resource_ighj8"]
-script = ExtResource("1_a14tm")
-AtFrame = 15
-SourceAnimation = "Combat_5A"
-FrameStepping = 4
-LimitRange = true
-AnimationRange = Vector2i(16, 19)
-metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
-
-[sub_resource type="Resource" id="Resource_bwnru"]
-script = ExtResource("1_a14tm")
-AtFrame = 19
-SourceAnimation = "Combat_5A"
-FrameStepping = 4
-LimitRange = true
-AnimationRange = Vector2i(20, 23)
+SourceAnimation = "5A"
 metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
 
 [sub_resource type="Resource" id="2"]
@@ -58,7 +30,7 @@ HitboxData = ExtResource("5_xa7wj")
 
 [resource]
 script = ExtResource("6_8a4hw")
-Duration = 21
-Animations = [SubResource("Resource_gbbpf"), SubResource("Resource_1bm1i"), SubResource("Resource_ighj8"), SubResource("Resource_bwnru")]
+Duration = 100
+Animations = [SubResource("Resource_gbbpf")]
 Hitboxes = [SubResource("2"), SubResource("3"), SubResource("4")]
 metadata/_custom_type_script = "uid://ddkya5wrb53ly"

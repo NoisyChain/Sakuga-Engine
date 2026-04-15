@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="FighterState" format=3 uid="uid://bk10df3h23sqs"]
 
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="1_6duet"]
+[ext_resource type="Resource" uid="uid://b5krk7bg6spju" path="res://Fighters/Kaede/AnimationData/65_Kaede_Throw_AnimData.tres" id="1_ojn4h"]
 [ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_xsgjr"]
 [ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="2_s0rim"]
 [ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Deprecated/StatePhysics.cs" id="3_2g7k5"]
@@ -36,6 +37,7 @@ Condition = 1
 script = ExtResource("2_s0rim")
 StateName = "Throw_Enter"
 Type = 2
+AnimationData = ExtResource("1_ojn4h")
 TransitionEvents = null
 OnEnterEvents = null
 OnTickEvents = null

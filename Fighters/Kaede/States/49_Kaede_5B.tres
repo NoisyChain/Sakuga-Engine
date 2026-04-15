@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="1"]
 [ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_f1cv5"]
+[ext_resource type="Resource" uid="uid://dsxbdpvbr61bb" path="res://Fighters/Kaede/AnimationData/49_Kaede_5B_AnimData.tres" id="1_g3upw"]
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2"]
 [ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Deprecated/StatePhysics.cs" id="3"]
 [ext_resource type="Script" uid="uid://bia88bspuvxd" path="res://Scripts/SakugaEngine/Deprecated/StateTransitionSettings.cs" id="4_sya64"]
@@ -61,6 +62,7 @@ DistanceArea = Vector2i(0, 99999)
 script = ExtResource("1")
 StateName = "5B"
 Type = 2
+AnimationData = ExtResource("1_g3upw")
 TransitionEvents = null
 OnEnterEvents = null
 OnTickEvents = null

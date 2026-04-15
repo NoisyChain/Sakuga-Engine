@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="FighterState" format=3 uid="uid://blkopjy72slty"]
 
 [ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="1"]
+[ext_resource type="Resource" uid="uid://de7500uennp8t" path="res://Fighters/Kaede/AnimationData/51_Kaede_2A_AnimData.tres" id="1_ibkb2"]
 [ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_luvxg"]
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2"]
 [ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Deprecated/StatePhysics.cs" id="3"]
@@ -39,6 +40,7 @@ script = ExtResource("1")
 StateName = "2A"
 BaseStance = 1
 Type = 2
+AnimationData = ExtResource("1_ibkb2")
 TransitionEvents = null
 OnEnterEvents = null
 OnTickEvents = null

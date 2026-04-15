@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="1_0v5me"]
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="1_236vv"]
+[ext_resource type="Resource" uid="uid://dh5rtsrrh7tbh" path="res://Fighters/Kaede/AnimationData/64_Kaede_BC_AnimData.tres" id="1_r2883"]
 [ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_xjnw5"]
 [ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Deprecated/StatePhysics.cs" id="3_qb2lk"]
 [ext_resource type="Script" uid="uid://bia88bspuvxd" path="res://Scripts/SakugaEngine/Deprecated/StateTransitionSettings.cs" id="5_5rp4v"]
@@ -29,6 +30,7 @@ metadata/_custom_type_script = "uid://bia88bspuvxd"
 script = ExtResource("1_0v5me")
 StateName = "Taunt"
 Type = 2
+AnimationData = ExtResource("1_r2883")
 TransitionEvents = null
 OnEnterEvents = null
 OnTickEvents = null

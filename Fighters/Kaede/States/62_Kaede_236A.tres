@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="FighterState" format=3 uid="uid://bl70vrda303oh"]
 
+[ext_resource type="Resource" uid="uid://cj0xkomthsmec" path="res://Fighters/Kaede/AnimationData/58_Kaede_236A_AnimData.tres" id="1_d340o"]
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="1_e311h"]
 [ext_resource type="Script" uid="uid://gkg7v04bkm2y" path="res://Scripts/SakugaEngine/Deprecated/Animation Events/SpawnObjectAnimationEvent.cs" id="1_p455q"]
 [ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="2_h2j8i"]
@@ -41,6 +42,7 @@ Condition = 1
 script = ExtResource("2_h2j8i")
 StateName = "236C_3"
 Type = 2
+AnimationData = ExtResource("1_d340o")
 TransitionEvents = null
 OnEnterEvents = null
 OnTickEvents = null

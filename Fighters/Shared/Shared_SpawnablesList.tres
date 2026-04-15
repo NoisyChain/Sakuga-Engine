@@ -1,10 +1,14 @@
 [gd_resource type="Resource" script_class="SpawnsList" format=3 uid="uid://5w0ffcesv6ec"]
 
 [ext_resource type="Script" uid="uid://k0lh4a8ntjdo" path="res://Scripts/SakugaEngine/Resources/SpawnsList.cs" id="1_6x7q1"]
+[ext_resource type="PackedScene" uid="uid://domhsm5n4i2q1" path="res://Fighters/Kaede/Spawnables/0/Instances/Kaede_Spawnable_0.tscn" id="1_71jmk"]
 [ext_resource type="Script" uid="uid://fshoagbsdqd4" path="res://Scripts/SakugaEngine/Resources/SpawnObject.cs" id="1_r4gar"]
 
 [sub_resource type="Resource" id="Resource_42ym4"]
 script = ExtResource("1_r4gar")
+Key = "Spawnable"
+Instance = ExtResource("1_71jmk")
+PoolSize = 3
 
 [resource]
 script = ExtResource("1_6x7q1")
