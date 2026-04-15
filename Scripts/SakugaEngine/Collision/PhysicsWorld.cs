@@ -143,47 +143,48 @@ namespace SakugaEngine.Collision
 				{
 					Collider hitboxB = bodyB.Hitboxes[j];
 
-                    if (!bodyA.CanHitBody(bodyB)) return;
-			        if (!bodyB.CanHitBody(bodyA)) return;
-
 					if (hitboxA.IsOverlapping(hitboxB))
 					{
                         //Get current hitbox settings to reference the correct hitbox element
 						HitboxElement boxSettingsA = bodyA.CurrentHitbox.HitboxData.Hitboxes[i];
 						HitboxElement boxSettingsB = bodyB.CurrentHitbox.HitboxData.Hitboxes[j];
 
-						int myType = (int)boxSettingsA.HitboxType;
-						int otType = (int)boxSettingsB.HitboxType;
+						HitboxType myType = boxSettingsA.HitboxType;
+						HitboxType otType = boxSettingsB.HitboxType;
 
                         if (myType == 0 && otType == 0) continue;
-
-                        //SakugaActor body1 = bodyA.Parent as SakugaActor;
-                        //SakugaActor body2 = bodyB.Parent as SakugaActor;
 
                         Vector2I ContactPoint = GetContactPoint(hitboxA, hitboxB);
 
                         //Basic damage
-						if (myType == 1 /*Hitbox*/  && otType == 0  /*Hurtbox*/ ) {
+						if (myType == HitboxType.HITBOX && otType == HitboxType.HURTBOX)
+                        {
+                            if (!bodyA.CanHitBody(bodyB)) return;
+                            
                             if (currentHit.p1HitType < 0)
                             {
                                 currentHit.p1HitType = 0;
                                 currentHit.p1Hitbox = boxSettingsA;
                                 currentHit.p1ContactPoint = ContactPoint;
                             }
-                            //bodyA.AddHitBody(bodyB);
 						}
-                        else if (otType == 1 /*Hitbox*/  && myType == 0  /*Hurtbox*/ ) {
+                        else if (otType == HitboxType.HITBOX && myType == HitboxType.HURTBOX)
+                        {
+                            if (!bodyB.CanHitBody(bodyA)) return;
+
                             if (currentHit.p2HitType < 0)
                             {
                                 currentHit.p2HitType = 0;
                                 currentHit.p2Hitbox = boxSettingsB;
                                 currentHit.p2ContactPoint = ContactPoint;
                             }
-                            //bodyB.AddHitBody(bodyA);
                         }
                         
                         //Hitboxes clash
-						if (myType == 1 /*Hitbox*/ && otType == 1 /*Hitbox*/ ) {
+						if (myType == HitboxType.HITBOX && otType == HitboxType.HITBOX)
+                        {
+                            if (!bodyA.CanHitBody(bodyB) || !bodyB.CanHitBody(bodyA)) return;
+
 							if (boxSettingsA.Priority != boxSettingsB.Priority) return;
 
                             if (currentHit.p1HitType < 0)
@@ -198,32 +199,37 @@ namespace SakugaEngine.Collision
                                 currentHit.p2Hitbox = boxSettingsB;
                                 currentHit.p2ContactPoint = ContactPoint;
                             }
-                            //bodyA.AddHitBody(bodyB);
-                            //bodyB.AddHitBody(bodyA);
 						}
 
                         //Projectile damage
-                        if (myType == 3 /*Projectile*/ && otType == 0 /*Hurtbox*/ ) {
+                        if (myType == HitboxType.PROJECTILE && otType == HitboxType.HURTBOX)
+                        {
+                            if (!bodyA.CanHitBody(bodyB)) return;
+
                             if (currentHit.p1HitType < 0)
                             {
-                                currentHit.p1HitType = 0; //<<< 0 for testing, maybe switch it back to 1
+                                currentHit.p1HitType = 0;
                                 currentHit.p1Hitbox = boxSettingsA;
                                 currentHit.p1ContactPoint = ContactPoint;
                             }
-                            //bodyA.AddHitBody(bodyB);
                         }
-                        else if (otType == 3 /*Projectile*/ && myType == 0 /*Hurtbox*/ ) {
+                        else if (otType == HitboxType.PROJECTILE && myType == HitboxType.HURTBOX)
+                        {
+                            if (!bodyB.CanHitBody(bodyA)) return;
+                            
                             if (currentHit.p2HitType < 0)
                             {
-                                currentHit.p2HitType = 0; //<<< 0 for testing, maybe switch it back to 1
+                                currentHit.p2HitType = 0;
                                 currentHit.p2Hitbox = boxSettingsB;
                                 currentHit.p2ContactPoint = ContactPoint;
                             }
-                            //bodyB.AddHitBody(bodyA);
                         }
 
                         //Projectile clash
-                        if (myType == 3 /*Projectile*/ && otType == 3 /*Projectile*/ ) {
+                        if (myType == HitboxType.PROJECTILE && otType == HitboxType.PROJECTILE)
+                        {
+                            if (!bodyA.CanHitBody(bodyB) || !bodyB.CanHitBody(bodyA)) return;
+
                             if (currentHit.p1HitType < 0)
                             {
                                 currentHit.p1HitType = 12;
@@ -236,83 +242,96 @@ namespace SakugaEngine.Collision
                                 currentHit.p2Hitbox = boxSettingsB;
                                 currentHit.p2ContactPoint = ContactPoint;
                             }
-                            //bodyA.AddHitBody(bodyB);
-                            //bodyB.AddHitBody(bodyA);
                         }
 
                         //Deflect projectiles
-                        if (myType == 3 /*Projectile*/ && otType == 6 /*Deflect*/ ) {
+                        if (myType == HitboxType.PROJECTILE && otType == HitboxType.DEFLECT)
+                        {
+                            if (!bodyA.CanHitBody(bodyB)) return;
+
                             if (currentHit.p1HitType < 0)
                             {
                                 currentHit.p1HitType = 10;
                                 currentHit.p1Hitbox = boxSettingsA;
                                 currentHit.p1ContactPoint = ContactPoint;
                             }
-                            //bodyA.AddHitBody(bodyB);
                         }
-                        else if (otType == 3 /*Projectile*/ && myType == 6 /*Deflect*/ ) {
+                        else if (otType == HitboxType.PROJECTILE && myType == HitboxType.DEFLECT)
+                        {
+                            if (!bodyB.CanHitBody(bodyA)) return;
+                            
                             if (currentHit.p2HitType < 0)
                             {
                                 currentHit.p2HitType = 10;
                                 currentHit.p2Hitbox = boxSettingsB;
                                 currentHit.p2ContactPoint = ContactPoint;
                             }
-                            //bodyB.AddHitBody(bodyA);
                         }
                         
                         //Proximity block
-                        if (myType == 2 /*Proximity Block*/ && otType == 0 /*Hurtbox*/ ) {
+                        if (myType == HitboxType.PROXIMITY_BLOCK && otType == HitboxType.HURTBOX)
+                        {
+                            if (!bodyA.CanHitBody(bodyB)) return;
+
                             bodyB.Parent.ProximityBlock(boxSettingsA);
                         }
-                        else if (otType == 2 /*Proximity Block*/ && myType == 0 /*Hurtbox*/ ) {
+                        else if (otType == HitboxType.PROXIMITY_BLOCK && myType == HitboxType.HURTBOX)
+                        {
+                            if (!bodyB.CanHitBody(bodyA)) return;
+
                             bodyA.Parent.ProximityBlock(boxSettingsB);
                         }
 
 						//Throws
-                        if (myType == 4 /*Throw*/ && otType == 0 /*Hurtbox*/ ) {
+                        if (myType == HitboxType.THROW && otType == HitboxType.HURTBOX)
+                        {
+                            if (!bodyA.CanHitBody(bodyB)) return;
+
                             if (currentHit.p1HitType < 0)
                             {
                                 currentHit.p1HitType = 2;
                                 currentHit.p1Hitbox = boxSettingsA;
                                 currentHit.p1ContactPoint = ContactPoint;
                             }
-                            //bodyA.AddHitBody(bodyB);
                         }
-                        else if (otType == 4 /*Throw*/ && myType == 0 /*Hurtbox*/ ) {
+                        else if (otType == HitboxType.THROW && myType == HitboxType.HURTBOX)
+                        {
+                            if (!bodyB.CanHitBody(bodyA)) return;
+
                             if (currentHit.p2HitType < 0)
                             {
                                 currentHit.p2HitType = 2;
                                 currentHit.p2Hitbox = boxSettingsB;
                                 currentHit.p2ContactPoint = ContactPoint;
                             }
-                            //bodyB.AddHitBody(bodyA);
                         }
 
                         //Counterattack (Needs some testing)
-                        if (myType == 5 /*Counter*/ && otType == 1 /*Hitbox*/) {
+                        if (myType == HitboxType.COUNTER && otType == HitboxType.HITBOX)
+                        {
+                            if (!bodyA.CanHitBody(bodyB)) return;
+
                             if (currentHit.p1HitType < 0)
                             {
                                 currentHit.p1HitType = 3;
                                 currentHit.p1Hitbox = boxSettingsA;
                                 currentHit.p1ContactPoint = ContactPoint;
                             }
-                            //bodyA.AddHitBody(bodyB);
-                            //bodyB.AddHitBody(bodyA);
                         }
-                        else if (otType == 5 /*Counter*/ && myType == 1 /*Hitbox*/) {
+                        else if (otType == HitboxType.COUNTER && myType == HitboxType.HITBOX)
+                        {
+                            if (!bodyB.CanHitBody(bodyA)) return;
+
                             if (currentHit.p2HitType < 0)
                             {
                                 currentHit.p2HitType = 3;
                                 currentHit.p2Hitbox = boxSettingsB;
                                 currentHit.p2ContactPoint = ContactPoint;
                             }
-                            //bodyA.AddHitBody(bodyB);
-                            //bodyB.AddHitBody(bodyA);
                         }
 					}
 				}
 			}
-            //GD.Print($"{currentHit.p1HitType}, {currentHit.p2HitType}");
             hitQueries.Add(currentHit);
 		}
 
