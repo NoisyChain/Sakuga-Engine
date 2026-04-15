@@ -218,18 +218,22 @@ namespace SakugaEngine.Game
 
             for (int i = 0; i < Fighters.Length; i++)
             {
+                if (Monitor.MatchState == Global.MatchState.ROUND_END)
+                {
+                    Fighters[i].ParseInputs(0);
+                    continue;
+                }
                 if (Fighters[i].UseAI)
                 {
                     Fighters[i].Brain.SelectCommand();
                     Fighters[i].Brain.UpdateCommand();
+                    continue;
                 }
-                else
-                {
-                    ushort combinedInput = 0;
-                    combinedInput |= playerInput[i * InputSize];
-                    combinedInput |= (ushort)(playerInput[(i * InputSize) + 1] << 8);
-                    Fighters[i].ParseInputs(combinedInput);
-                }
+
+                ushort combinedInput = 0;
+                combinedInput |= playerInput[i * InputSize];
+                combinedInput |= (ushort)(playerInput[(i * InputSize) + 1] << 8);
+                Fighters[i].ParseInputs(combinedInput);
             }
 
             for (int i = 0; i < Nodes.Count; i++)

@@ -332,8 +332,8 @@ namespace SakugaEngine
             if (RoundWinner == -1) return true;
             if (RoundWinner == 2) return _fighters[0].Animator.CurrentState == 0 && _fighters[1].Animator.CurrentState == 0;
 
-            return _fighters[RoundWinner].Animator.CurrentState == 0 && _fighters[RoundLoser].IsKO() && _fighters[RoundLoser].Body.IsOnGround && 
-                (_fighters[RoundLoser].Animator.CurrentState == 0 || _fighters[RoundLoser].Animator.StateEnded());
+            return _fighters[RoundWinner].Animator.CurrentState == 0 && ((_fighters[RoundLoser].IsKO() && _fighters[RoundLoser].Body.IsOnGround && 
+                    _fighters[RoundLoser].Animator.StateEnded()) || _fighters[RoundLoser].Animator.CurrentState == 0);
         }
 
         private void SelectWinnerToAnimate()

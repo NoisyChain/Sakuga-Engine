@@ -69,14 +69,14 @@ namespace SakugaEngine
 
         public void CheckMoves()
         {
-            if (!CanRun) return;
-
             for (int i = GetMoveListLength() - 1; i >= 0; i--)
             {
                 if (GetMove(i).SkipCheck) continue;
                 if (!CheckMoveConditions(i)) continue;
                 if (_owner.Inputs.CheckMotionInputs(GetMove(i).Inputs))
                 {
+                    if (!CanRun) continue;
+
                     BufferMove(i, false);
                     break;
                 }
@@ -137,6 +137,8 @@ namespace SakugaEngine
                 if (!CheckMoveConditions(cancel.MoveIndex)) continue;
                 if (_owner.Inputs.CheckMotionInputs(GetMove(cancel.MoveIndex).Inputs))
                 {
+                    if (!CanRun) continue;
+
                     BufferMove(cancel.MoveIndex, true);
                     break;
                 }
