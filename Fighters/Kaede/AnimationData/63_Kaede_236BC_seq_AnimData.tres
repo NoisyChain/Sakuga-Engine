@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="AnimationData" format=3 uid="uid://dowi6t8qdgwum"]
+
+[ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_v0v0q"]
+[ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2_3ab0h"]
+[ext_resource type="Script" uid="uid://ddkya5wrb53ly" path="res://Scripts/SakugaEngine/Resources/AnimationData.cs" id="3_m3flo"]
+
+[sub_resource type="Resource" id="Resource_5grr6"]
+script = ExtResource("1_v0v0q")
+SourceAnimation = "623B_2"
+metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
+
+[sub_resource type="Resource" id="2"]
+script = ExtResource("2_3ab0h")
+
+[sub_resource type="Resource" id="Resource_rwvet"]
+script = ExtResource("2_3ab0h")
+AtFrame = 16
+animationStage = 1
+
+[sub_resource type="Resource" id="Resource_nnqmo"]
+script = ExtResource("2_3ab0h")
+AtFrame = 22
+animationStage = 2
+
+[resource]
+script = ExtResource("3_m3flo")
+Duration = 34
+Animations = [SubResource("Resource_5grr6")]
+Hitboxes = [SubResource("2"), SubResource("Resource_rwvet"), SubResource("Resource_nnqmo")]
+metadata/_custom_type_script = "uid://ddkya5wrb53ly"

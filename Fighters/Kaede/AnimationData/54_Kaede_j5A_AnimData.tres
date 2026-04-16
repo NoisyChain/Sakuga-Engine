@@ -4,119 +4,9 @@
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2_gn842"]
 [ext_resource type="Script" uid="uid://ddkya5wrb53ly" path="res://Scripts/SakugaEngine/Resources/AnimationData.cs" id="3_6ue3w"]
 
-[sub_resource type="Resource" id="Resource_m80x5"]
+[sub_resource type="Resource" id="Resource_6d5rq"]
 script = ExtResource("1_wnovd")
-SourceAnimation = "Combat_2C"
-FrameStepping = 4
-LimitRange = true
-metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
-
-[sub_resource type="Resource" id="Resource_swhns"]
-script = ExtResource("1_wnovd")
-AtFrame = 3
-SourceAnimation = "Combat_2C"
-FrameStepping = 4
-LimitRange = true
-AnimationRange = Vector2i(4, 4)
-metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
-
-[sub_resource type="Resource" id="Resource_6gs50"]
-script = ExtResource("1_wnovd")
-AtFrame = 6
-SourceAnimation = "Combat_2C"
-FrameStepping = 4
-LimitRange = true
-AnimationRange = Vector2i(8, 8)
-metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
-
-[sub_resource type="Resource" id="Resource_jrnvu"]
-script = ExtResource("1_wnovd")
-AtFrame = 9
-SourceAnimation = "Combat_2C"
-FrameStepping = 4
-LimitRange = true
-AnimationRange = Vector2i(12, 12)
-metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
-
-[sub_resource type="Resource" id="Resource_tjjrj"]
-script = ExtResource("1_wnovd")
-AtFrame = 12
-SourceAnimation = "Combat_2C"
-FrameStepping = 4
-LimitRange = true
-AnimationRange = Vector2i(16, 16)
-metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
-
-[sub_resource type="Resource" id="Resource_6i26l"]
-script = ExtResource("1_wnovd")
-AtFrame = 16
-SourceAnimation = "Combat_2C"
-FrameStepping = 4
-LimitRange = true
-AnimationRange = Vector2i(20, 20)
-metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
-
-[sub_resource type="Resource" id="Resource_te8qx"]
-script = ExtResource("1_wnovd")
-AtFrame = 20
-SourceAnimation = "Combat_2C"
-FrameStepping = 4
-LimitRange = true
-AnimationRange = Vector2i(24, 24)
-metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
-
-[sub_resource type="Resource" id="Resource_pit8h"]
-script = ExtResource("1_wnovd")
-AtFrame = 23
-SourceAnimation = "Combat_2C"
-FrameStepping = 4
-LimitRange = true
-AnimationRange = Vector2i(28, 28)
-metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
-
-[sub_resource type="Resource" id="Resource_7xwe1"]
-script = ExtResource("1_wnovd")
-AtFrame = 26
-SourceAnimation = "Combat_2C"
-FrameStepping = 4
-LimitRange = true
-AnimationRange = Vector2i(32, 32)
-metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
-
-[sub_resource type="Resource" id="Resource_igimj"]
-script = ExtResource("1_wnovd")
-AtFrame = 29
-SourceAnimation = "Combat_2C"
-FrameStepping = 4
-LimitRange = true
-AnimationRange = Vector2i(36, 36)
-metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
-
-[sub_resource type="Resource" id="Resource_dton5"]
-script = ExtResource("1_wnovd")
-AtFrame = 32
-SourceAnimation = "Combat_2C"
-FrameStepping = 4
-LimitRange = true
-AnimationRange = Vector2i(40, 40)
-metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
-
-[sub_resource type="Resource" id="Resource_tlsqd"]
-script = ExtResource("1_wnovd")
-AtFrame = 35
-SourceAnimation = "Combat_2C"
-FrameStepping = 4
-LimitRange = true
-AnimationRange = Vector2i(44, 44)
-metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
-
-[sub_resource type="Resource" id="Resource_r2d6w"]
-script = ExtResource("1_wnovd")
-AtFrame = 39
-SourceAnimation = "Combat_2C"
-FrameStepping = 4
-LimitRange = true
-AnimationRange = Vector2i(48, 48)
+SourceAnimation = "j_5A"
 metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
 
 [sub_resource type="Resource" id="2"]
@@ -133,6 +23,6 @@ animationStage = 2
 [resource]
 script = ExtResource("3_6ue3w")
 Duration = 42
-Animations = [SubResource("Resource_m80x5"), SubResource("Resource_swhns"), SubResource("Resource_6gs50"), SubResource("Resource_jrnvu"), SubResource("Resource_tjjrj"), SubResource("Resource_6i26l"), SubResource("Resource_te8qx"), SubResource("Resource_pit8h"), SubResource("Resource_7xwe1"), SubResource("Resource_igimj"), SubResource("Resource_dton5"), SubResource("Resource_tlsqd"), SubResource("Resource_r2d6w")]
+Animations = [SubResource("Resource_6d5rq")]
 Hitboxes = [SubResource("2"), SubResource("3"), SubResource("4")]
 metadata/_custom_type_script = "uid://ddkya5wrb53ly"

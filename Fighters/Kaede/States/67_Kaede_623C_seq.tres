@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="1_7i2qg"]
 [ext_resource type="Script" uid="uid://dgkbcrlq5brjd" path="res://Scripts/SakugaEngine/Deprecated/Animation Events/TeleportAnimationEvent.cs" id="1_w2oei"]
-[ext_resource type="Resource" uid="uid://cgedrecaa57gh" path="res://Fighters/Kaede/AnimationData/63_Kaede_623C_seq_AnimData.tres" id="1_xp4fn"]
+[ext_resource type="Resource" uid="uid://cgedrecaa57gh" path="res://Fighters/Kaede/AnimationData/66_Kaede_236BC_seq_AnimData.tres" id="1_xp4fn"]
 [ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="2_8w8vb"]
 [ext_resource type="Script" uid="uid://bwm15ys7iwmfc" path="res://Scripts/SakugaEngine/Deprecated/AnimationEventsList.cs" id="2_d3rbs"]
 [ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Deprecated/StatePhysics.cs" id="3_c2hbl"]

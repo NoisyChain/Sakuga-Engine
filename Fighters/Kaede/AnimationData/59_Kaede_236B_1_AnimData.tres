@@ -4,66 +4,9 @@
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2_o46du"]
 [ext_resource type="Script" uid="uid://ddkya5wrb53ly" path="res://Scripts/SakugaEngine/Resources/AnimationData.cs" id="3_4vpyw"]
 
-[sub_resource type="Resource" id="Resource_fy1t4"]
+[sub_resource type="Resource" id="Resource_0ir4x"]
 script = ExtResource("1_lgopo")
-SourceAnimation = "Combat_j-5C"
-FrameStepping = 4
-LimitRange = true
-AnimationRange = Vector2i(0, 7)
-metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
-
-[sub_resource type="Resource" id="Resource_qma5b"]
-script = ExtResource("1_lgopo")
-AtFrame = 8
-SourceAnimation = "Combat_j-5C"
-FrameStepping = 4
-LimitRange = true
-AnimationRange = Vector2i(8, 8)
-metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
-
-[sub_resource type="Resource" id="Resource_i3ett"]
-script = ExtResource("1_lgopo")
-AtFrame = 11
-SourceAnimation = "Combat_j-5C"
-FrameStepping = 4
-LimitRange = true
-AnimationRange = Vector2i(12, 12)
-metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
-
-[sub_resource type="Resource" id="Resource_dexn0"]
-script = ExtResource("1_lgopo")
-AtFrame = 14
-SourceAnimation = "Combat_j-5C"
-FrameStepping = 4
-LimitRange = true
-AnimationRange = Vector2i(16, 16)
-metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
-
-[sub_resource type="Resource" id="Resource_08dyu"]
-script = ExtResource("1_lgopo")
-AtFrame = 17
-SourceAnimation = "Combat_j-5C"
-FrameStepping = 4
-LimitRange = true
-AnimationRange = Vector2i(20, 20)
-metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
-
-[sub_resource type="Resource" id="Resource_qttvc"]
-script = ExtResource("1_lgopo")
-AtFrame = 20
-SourceAnimation = "Combat_j-5C"
-FrameStepping = 4
-LimitRange = true
-AnimationRange = Vector2i(24, 24)
-metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
-
-[sub_resource type="Resource" id="Resource_pi3nx"]
-script = ExtResource("1_lgopo")
-AtFrame = 23
-SourceAnimation = "Combat_j-5C"
-FrameStepping = 4
-LimitRange = true
-AnimationRange = Vector2i(28, 28)
+SourceAnimation = "236C_1"
 metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
 
 [sub_resource type="Resource" id="2"]
@@ -82,6 +25,6 @@ animationStage = 2
 [resource]
 script = ExtResource("3_4vpyw")
 Duration = 27
-Animations = [SubResource("Resource_fy1t4"), SubResource("Resource_qma5b"), SubResource("Resource_i3ett"), SubResource("Resource_dexn0"), SubResource("Resource_08dyu"), SubResource("Resource_qttvc"), SubResource("Resource_pi3nx")]
+Animations = [SubResource("Resource_0ir4x")]
 Hitboxes = [SubResource("2"), SubResource("3"), SubResource("4")]
 metadata/_custom_type_script = "uid://ddkya5wrb53ly"

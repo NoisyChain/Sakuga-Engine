@@ -4,56 +4,9 @@
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2_kk7dh"]
 [ext_resource type="Script" uid="uid://ddkya5wrb53ly" path="res://Scripts/SakugaEngine/Resources/AnimationData.cs" id="3_c42t5"]
 
-[sub_resource type="Resource" id="Resource_g5woq"]
+[sub_resource type="Resource" id="Resource_80ny6"]
 script = ExtResource("1_6dflo")
-SourceAnimation = "Combat_2D"
-FrameStepping = 4
-LimitRange = true
-metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
-
-[sub_resource type="Resource" id="Resource_u1lqx"]
-script = ExtResource("1_6dflo")
-AtFrame = 4
-SourceAnimation = "Combat_2D"
-FrameStepping = 4
-LimitRange = true
-AnimationRange = Vector2i(4, 4)
-metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
-
-[sub_resource type="Resource" id="Resource_ynop8"]
-script = ExtResource("1_6dflo")
-AtFrame = 8
-SourceAnimation = "Combat_2D"
-FrameStepping = 4
-LimitRange = true
-AnimationRange = Vector2i(8, 8)
-metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
-
-[sub_resource type="Resource" id="Resource_3gk6v"]
-script = ExtResource("1_6dflo")
-AtFrame = 11
-SourceAnimation = "Combat_2D"
-FrameStepping = 4
-LimitRange = true
-AnimationRange = Vector2i(12, 12)
-metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
-
-[sub_resource type="Resource" id="Resource_o8hk1"]
-script = ExtResource("1_6dflo")
-AtFrame = 14
-SourceAnimation = "Combat_2D"
-FrameStepping = 4
-LimitRange = true
-AnimationRange = Vector2i(16, 16)
-metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
-
-[sub_resource type="Resource" id="Resource_56ohh"]
-script = ExtResource("1_6dflo")
-AtFrame = 20
-SourceAnimation = "Combat_2D"
-FrameStepping = 4
-LimitRange = true
-AnimationRange = Vector2i(20, 39)
+SourceAnimation = "j_5B"
 metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
 
 [sub_resource type="Resource" id="2"]
@@ -70,5 +23,5 @@ animationStage = 2
 [resource]
 script = ExtResource("3_c42t5")
 Duration = 40
-Animations = [SubResource("Resource_g5woq"), SubResource("Resource_u1lqx"), SubResource("Resource_ynop8"), SubResource("Resource_3gk6v"), SubResource("Resource_o8hk1"), SubResource("Resource_56ohh")]
+Animations = [SubResource("Resource_80ny6")]
 Hitboxes = [SubResource("2"), SubResource("Resource_rwvet"), SubResource("Resource_nnqmo")]
