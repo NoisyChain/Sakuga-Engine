@@ -12,6 +12,7 @@ namespace SakugaEngine.UI
         [Export] private FighterList fightersList;
         [Export] private StageList stagesList;
         [Export] private BGMList songsList;
+        [Export] private AudioStreamPlayer BGM;
         [Export] private CharacterSelectStyle PlayerSelection;
         [Export] private CharacterSelectMode SelectionMode;
         [Export] private Control CharSelectMode;
@@ -75,6 +76,9 @@ namespace SakugaEngine.UI
         public override void _Ready()
         {
             base._Ready();
+
+            P1Cursor.GetNode<Control>("Frame").Visible = false;
+            P2Cursor.GetNode<Control>("Frame").Visible = false;
 
             randomSelection = new System.Random();
 
@@ -508,6 +512,7 @@ namespace SakugaEngine.UI
 
         void MatchSetup()
         {
+            if (BGM != null) BGM.Stop();
             // Player 1 settings
             Match.P1SelectedCharacter = P1Selected;
             Match.P1SelectedColor = P1ColorSelected;

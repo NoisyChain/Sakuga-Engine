@@ -12,11 +12,14 @@ namespace SakugaEngine
         [Export] private bool CanReset = true;
         [Export] public int MaxValue;
         public int CurrentValue;
+        
 
         public void Initialize(DataContainer data)
         {
             if (UseDataContainer)
-                MaxValue = data.MaxHealth;
+            {
+                MaxValue = data.MaxSuperGauge;
+            }
             
             CurrentValue = StartFull ? MaxValue : 0;
         }
@@ -30,7 +33,7 @@ namespace SakugaEngine
 
         public void Tick()
         {
-            
+            if (CurrentValue > MaxValue) CurrentValue = MaxValue;
         }
 
         public void SetSuperGauge(int value)

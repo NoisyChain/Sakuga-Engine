@@ -3,7 +3,7 @@ using Godot;
 namespace SakugaEngine.Resources
 {
     [GlobalClass]
-    public partial class AddSuperGaugeAction : FrameDataAction
+    public partial class SetSuperGaugeAction : FrameDataAction
     {
         [Export] private int Value;
         [Export] private bool Absolute;

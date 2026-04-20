@@ -164,6 +164,7 @@ namespace SakugaEngine.Collision
         {
             FixedVelocity.X *= -intensity;
             FixedVelocity.X /= 100;
+            GD.Print($"{FixedVelocity.X}, {intensity}");
         }
 
         public void BounceY(int intensity)
@@ -194,7 +195,7 @@ namespace SakugaEngine.Collision
             {
                 Vector2I Side = new Vector2I(PlayerSide, 1);
 
-                Pushbox.UpdateCollider(FixedPosition + (CurrentHitbox.HitboxData.PushboxCenter * Side), CurrentHitbox.HitboxData.PushboxSize);
+                Pushbox.UpdateCollider(FixedPosition + (CurrentHitbox.HitboxData.Pushbox.Center * Side), CurrentHitbox.HitboxData.Pushbox.Size);
                 
                 for(int i = 0; i < Hitboxes.Length; i++)
                     if (i < CurrentHitbox.HitboxData.Hitboxes.Length)

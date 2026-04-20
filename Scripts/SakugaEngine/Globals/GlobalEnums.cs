@@ -4,7 +4,7 @@ namespace SakugaEngine.Global
     public enum ButtonMode { PRESS, HOLD, RELEASE, WAS_PRESSED, NOT_PRESSED }
     public enum MoveEndCondition { STATE_END, RELEASE_BUTTON, STATE_TYPE_CHANGE, ON_FALL }
     public enum SideChangeMode { NONE, CHANGE_SIDE, INTERRUPT }
-    public enum MasterStance { NEUTRAL, CROUCH }
+    public enum MasterStance { NEUTRAL, CROUCH, ON_THE_GROUND }
     public enum StanceSelect { GROUND, CROUCH, AIR }
     public enum StateType { NULL, MOVEMENT, COMBAT, BLOCKING, HIT_REACTION, LOCKED }
     public enum HitboxType { HURTBOX, HITBOX, PROXIMITY_BLOCK, PROJECTILE, THROW, COUNTER, DEFLECT }
@@ -27,6 +27,7 @@ namespace SakugaEngine.Global
     public enum CharacterSelectStyle : byte { VERSUS, PLAYER1, PLAYER2 }
     public enum CharacterSelectMode : byte { CHARACTER_SELECT, STAGE_SELECT }
     public enum CharacterSelectState : byte { SELECTING_CHARACTER, SELECTING_COLOR, DONE }
-    public enum CameraFocus : byte { SELF, PLAYER1, PLAYER2, ANIMATION }
+    public enum CameraFocus : byte { CENTER, PLAYER1, PLAYER2 }
+    public enum CameraSelectFocus : byte { CENTER, SELF, OPPONENT }
     public enum MatchState { INTRO, CATCHPHRASE, ROUND_START, ROUND_RUNNING, ROUND_END, ROUND_WINNER, ROUND_INTERLUDE, NEXT_ROUND_TRANSITION, MATCH_OUTRO, RESULTS }
 }

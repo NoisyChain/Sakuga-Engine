@@ -40,6 +40,7 @@ namespace SakugaEngine.Resources
         [Export] public bool AcceptHitReactionStates = false;
         [Export] public bool IgnoreHitstop = false;
         [Export] public bool IgnoreHitstun = false;
+        [Export] public bool IgnoreKnockdownHits = false;
         [Export] public bool UseOnGround, UseOnAir;
     }
 }

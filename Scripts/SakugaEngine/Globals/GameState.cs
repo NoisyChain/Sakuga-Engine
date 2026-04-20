@@ -194,9 +194,9 @@ namespace SakugaEngine.GameState
         [Key(1)] public int LostHealth;
         [Key(2)] public int RecoveryHealth;
         [Key(3)] public int CurrentSuperGauge;
-        [Key(4)] public int CurrentSuperArmor;
-        [Key(5)] public ProrationsState Prorations;
-        [Key(6)] public CombatTrackerState CombatTracker;
+        [Key(5)] public int CurrentSuperArmor;
+        [Key(6)] public ProrationsState Prorations;
+        [Key(7)] public CombatTrackerState CombatTracker;
         [Key(50)] public FrameTimerState[] Timers;
         [Key(51)] public CustomVariableState[] Variables;
         public void GetStateData(ref SakugaParameters reference)
@@ -212,7 +212,6 @@ namespace SakugaEngine.GameState
 
             if (reference.SuperGauge != null) CurrentSuperGauge = reference.SuperGauge.CurrentValue;
             if (reference.SuperArmor != null) CurrentSuperArmor = reference.SuperArmor.CurrentValue;
-
             if (reference.Prorations != null) Prorations.GetStateData(ref reference.Prorations);
             if (reference.Tracker != null) CombatTracker.GetStateData(ref reference.Tracker);
             
@@ -241,7 +240,6 @@ namespace SakugaEngine.GameState
 
             if (reference.SuperGauge != null) reference.SuperGauge.CurrentValue = CurrentSuperGauge;
             if (reference.SuperArmor != null) reference.SuperArmor.CurrentValue = CurrentSuperArmor;
-
             if (reference.Prorations != null) Prorations.SetStateData(ref reference.Prorations);
             if (reference.Tracker != null) CombatTracker.SetStateData(ref reference.Tracker);
             

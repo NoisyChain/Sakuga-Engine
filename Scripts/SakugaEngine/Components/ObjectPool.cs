@@ -44,6 +44,9 @@ namespace SakugaEngine
                     SpawnReferences[i].Objects[j].SetAllies(owner.GetAllies());
                     SpawnReferences[i].Objects[j].SetOpponents(owner.GetOpponents());
                     GameManager.Instance.AddActor(SpawnReferences[i].Objects[j]);
+                    //SpawnReferences[i].Objects[j].IsActive = false;
+                    
+                    //GD.Print("Element " + References[i].Objects[j].Name + " created");
                 }
             }
         }
@@ -68,6 +71,9 @@ namespace SakugaEngine
                     VFXReferences[i].Objects[j].Initialize();
                     VFXReferences[i].Objects[j].SetMaster(owner);
                     GameManager.Instance.AddActor(VFXReferences[i].Objects[j], false);
+                    //VFXReferences[i].Objects[j].IsActive = false;
+                    
+                    //GD.Print("VFX Element " + VFXReferences[i].Objects[j].Name + " created");
                 }
             }
         }
@@ -91,26 +97,26 @@ namespace SakugaEngine
             }
         }
 
-        public void SpawnObject(string key, Vector2I position)
+        public void SpawnObject(string key, int initialState, Vector2I position)
         {
             if (SpawnReferences.Count == 0) return;
             PoolReference spawnElement = GetSpawnReference(key);
-            SpawnObjectCommon(spawnElement, position);
+            SpawnObjectCommon(spawnElement, initialState, position);
             //GD.Print(objectToSpawn.Name + " Spawned!");
         }
 
-        public void SpawnObject(int index, Vector2I position)
+        public void SpawnObject(int index, int initialState, Vector2I position)
         {
             if (SpawnReferences.Count == 0) return;
             PoolReference spawnElement = GetSpawnReference(index);
-            SpawnObjectCommon(spawnElement, position);
+            SpawnObjectCommon(spawnElement, initialState, position);
             //GD.Print(objectToSpawn.Name + " Spawned!");
         }
 
-        private void SpawnObjectCommon(PoolReference reference, Vector2I position)
+        private void SpawnObjectCommon(PoolReference reference, int initialState, Vector2I position)
         {
             SakugaActor objectToSpawn = GetNextInactiveElement(reference);
-            objectToSpawn.StateManager.PlayState(0, true);
+            objectToSpawn.StateManager.PlayState(initialState, true);
             objectToSpawn.StateManager.CurrentStateFrame = -1;
             objectToSpawn.Body.MoveTo(position);
             objectToSpawn.Body.UpdateSide(objectToSpawn.GetMaster().Body.IsLeftSide);

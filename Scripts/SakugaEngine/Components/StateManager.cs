@@ -81,7 +81,7 @@ namespace SakugaEngine
             for (int i = 0; i < GetCurrentState().AnimationData.Animations.Length; i++)
             {
                 int nextFrame = (i == GetCurrentState().AnimationData.Animations.Length - 1) ?
-                                GetCurrentState().AnimationData.Duration - 1 :
+                                CurrentStateFrame :
                                 GetCurrentState().AnimationData.Animations[i + 1].AtFrame - 1;
                 
                 if (CurrentStateFrame >= GetCurrentState().AnimationData.Animations[i].AtFrame && CurrentStateFrame <= nextFrame)

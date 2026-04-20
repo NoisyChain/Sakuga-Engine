@@ -12,8 +12,8 @@ namespace SakugaEngine.Resources
         {
             if (GameManager.Instance == null) return false;
 
-            if (Not) return GameManager.Instance.Monitor.MatchState != Global.MatchState.ROUND_WINNER;
-            return GameManager.Instance.Monitor.MatchState == Global.MatchState.ROUND_WINNER;
+            if (Not) return GameManager.Instance.Monitor.MatchState != Global.MatchState.ROUND_RUNNING;
+            return GameManager.Instance.Monitor.MatchState == Global.MatchState.ROUND_RUNNING;
         }
     }
 }

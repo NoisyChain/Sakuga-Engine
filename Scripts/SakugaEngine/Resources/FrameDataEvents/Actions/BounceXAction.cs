@@ -10,11 +10,10 @@ namespace SakugaEngine.Resources
 
         public override void Execute(ref SakugaActor Actor)
         {
-            if (!Actor.CanBounce()) return;
-
             if (CustomIntensity) Actor.BounceXIntensity = Intensity;
 
             Actor.Body.BounceX(Actor.BounceXIntensity);
+            Actor.BounceXIntensity = 0;
             Actor.Bounce.Stop();
         }
     }

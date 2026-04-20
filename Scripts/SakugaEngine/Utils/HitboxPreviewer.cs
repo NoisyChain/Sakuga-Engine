@@ -99,11 +99,11 @@ namespace SakugaEngine.Utils
                 return;
             }
             
-            hitboxGraphics[collisionViewer].Visible = previewData.HitboxData.PushboxSize != Vector2I.Zero;
+            hitboxGraphics[collisionViewer].Visible = previewData.HitboxData.Pushbox.Size != Vector2I.Zero;
             hitboxGraphics[collisionViewer].SortingOffset = 3;
             hitboxGraphics[collisionViewer].Modulate = new Color(1.0f, 1.0f, 0.0f);
-            hitboxGraphics[collisionViewer].GlobalPosition = GlobalFunctions.ToScaledVector3(previewData.HitboxData.PushboxCenter);
-            hitboxGraphics[collisionViewer].Scale = GlobalFunctions.ToScaledVector3(previewData.HitboxData.PushboxSize, 1f);
+            hitboxGraphics[collisionViewer].GlobalPosition = GlobalFunctions.ToScaledVector3(previewData.HitboxData.Pushbox.Center);
+            hitboxGraphics[collisionViewer].Scale = GlobalFunctions.ToScaledVector3(previewData.HitboxData.Pushbox.Size, 1f);
         }
 
         public AnimationSettings GetCurrentAnimationSettings()

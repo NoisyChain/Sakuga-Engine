@@ -60,15 +60,15 @@ namespace SakugaEngine
 
         public void Tick()
         {
+            if (SuperGauge != null) SuperGauge.Tick();
+
             UpdateProrations();
             UpdateVariables();
             UpdateTimers();
         }
 
-        public void Reset(bool condition)
+        public void Clear()
         {
-            if (!condition) return;
-
             if (Tracker != null) Tracker.Reset();
             if (Health != null) Health.UpdateLostHealth();
             if (Prorations != null) Prorations.ResetProrations();
@@ -85,6 +85,16 @@ namespace SakugaEngine
             }
             if (SuperGauge != null)
                 SuperGauge.AddSuperGauge(superGaugeGain);
+            
+            ChangeVariablesBehavior(CustomVariableBehaviorTarget.ON_DAMAGE);
+        }
+
+        public void HitConfirm(int superGaugeGain)
+        {
+            if (SuperGauge != null)
+                SuperGauge.AddSuperGauge(superGaugeGain);
+            
+            ChangeVariablesBehavior(CustomVariableBehaviorTarget.ON_HIT);
         }
 
         public int CalculateProrations(int damage, int attack, int defense, ushort damageScalingLoss)

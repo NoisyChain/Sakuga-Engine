@@ -21,9 +21,9 @@ namespace SakugaEngine.Game
         [Export] public FighterList fightersList;
         [Export] public StageList stagesList;
         [Export] public BGMList songsList;
-        [Export] private CanvasLayer FighterUI;
-        [Export] private FighterCamera Camera;
-        [Export] private AudioStreamPlayer BGMSource;
+        [Export] public CanvasLayer FighterUI;
+        [Export] public FighterCamera Camera;
+        [Export] public AudioStreamPlayer BGMSource;
         private Label SeedViewer;
         private FadeScreen Curtain;
         public uint InputSize;

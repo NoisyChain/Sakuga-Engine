@@ -6,8 +6,7 @@ namespace SakugaEngine.Resources
     [Icon("res://Sprites/Icons/Icon_Hitbox.png")]
     public partial class HitboxSettings : Resource
     {
-        [Export] public Vector2I PushboxCenter = Vector2I.Zero;
-        [Export] public Vector2I PushboxSize = Vector2I.Zero;
+        [Export] public BoxShape Pushbox;
         [Export] public HitboxElement[] Hitboxes;
     }
 }

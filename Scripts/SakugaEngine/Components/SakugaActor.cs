@@ -138,7 +138,7 @@ namespace SakugaEngine
 #region Conditions
         public bool IsGroundState() => Body != null && Body.IsOnGround && StateManager.GetCurrentState().BaseStance == MasterStance.NEUTRAL;
         public bool IsCrouchState() => Body != null && Body.IsOnGround && StateManager.GetCurrentState().BaseStance == MasterStance.CROUCH;
-        public bool IsAirState() => Body != null && !Body.IsOnGround && StateManager.GetCurrentState().BaseStance == MasterStance.NEUTRAL;
+        public bool IsAirState() => Body != null && (!Body.IsOnGround || Body.IsOnGround && StateManager.GetCurrentState().BaseStance == MasterStance.ON_THE_GROUND);
         public bool IsKO() => Parameters != null && Parameters.Health != null && Parameters.Health.CurrentValue <= 0;
         public bool IsStunLocked() => OnHitstun() && StateManager.GetCurrentState().AnimationData != null && Hitstun.TimeLeft >= StateManager.GetCurrentState().AnimationData.Duration - StateManager.GetCurrentState().AnimationData.HitstunHold + 1 && StateManager.CurrentStateFrame >= StateManager.GetCurrentState().AnimationData.HitstunHold;
         public bool CanBlock() => StanceManager != null && StanceManager.GetCurrentStance().BlockReactions != null && StanceManager.GetCurrentStance().BlockReactions.Length > 0;
@@ -223,7 +223,13 @@ namespace SakugaEngine
                 Hitstun.Run();
 
             if (Parameters != null)
-                Parameters.Reset(!OnHitstun());
+            {
+                if (!OnHitstun() && StateManager.CurrentStateType() != StateType.HIT_REACTION)
+                {
+                    HitstunType = HitstunType.NONE; 
+                    Parameters.Clear();
+                }
+            }
 
             if (Parameters != null) Parameters.Tick();
             if (StateManager != null && !IsStunLocked()) StateManager.RunState();
@@ -294,7 +300,7 @@ namespace SakugaEngine
             // Change hit fighter layering
             LayerSorting = -1;
             // Select hit values
-            bool isGroundHit = !IsKO() && Body != null && IsGroundState() && !IsAirState();
+            bool isGroundHit = !IsKO() && Body != null && !IsAirState();
             var finalHitstun = isGroundHit ? box.GroundHitstun : box.AirHitstun;
             var finalKnockbackTime = isGroundHit ? box.GroundHitKnockbackTime : box.AirHitKnockbackTime;
             var finalDamageKnockback = isGroundHit ? box.GroundHitKnockback : box.AirHitKnockback;
@@ -314,7 +320,6 @@ namespace SakugaEngine
             int decayingKnockback = 0;
             if (Parameters != null)
             {
-                Parameters.ChangeVariablesBehavior(CustomVariableBehaviorTarget.ON_DAMAGE);
                 finalHitstunForReal = Mathf.Max(finalHitstun - Parameters.Prorations.HitstunDecayFactor, GlobalVariables.MinHitstun);
                 decayingKnockback = GlobalVariables.GravityDecay * Parameters.Prorations.GravityDecayFactor;
             }
@@ -375,9 +380,18 @@ namespace SakugaEngine
             }
             if (CanBounce())
             {
-                Bounce.Start((uint)box.BounceTime);
-                BounceYIntensity = box.BounceXIntensity;
-                BounceYIntensity = box.BounceYIntensity;
+                if (box.BounceTime > 0)
+                {
+                    Bounce.Start((uint)box.BounceTime);
+                    BounceXIntensity = box.BounceXIntensity;
+                    BounceYIntensity = box.BounceYIntensity;
+                }
+                else
+                {
+                    Bounce.Stop();
+                    BounceXIntensity = 0;
+                    BounceYIntensity = 0;
+                }
             }
         }
 
@@ -547,8 +561,7 @@ namespace SakugaEngine
             
             if (Parameters != null)
             {
-                if (Parameters.SuperGauge != null) Parameters.SuperGauge.AddSuperGauge(superGaugeGain);
-                Parameters.ChangeVariablesBehavior(CustomVariableBehaviorTarget.ON_HIT);
+                Parameters.HitConfirm(superGaugeGain);
             }
 
             if (GetMaster() != null && GetMaster().Parameters.SuperGauge != null)
@@ -709,13 +722,14 @@ namespace SakugaEngine
                     "\nBuffered Move: "+StanceManager.BufferedMove+
                     "\nFrame: "+StateManager.CurrentStateFrame+
                     "\nHitstun Type: "+HitstunType+
-                    "\nHitbox: "+Body.CurrentHitbox+
+                    //"\nHitbox: "+Body.CurrentHitbox+
                     "\nHealth: "+Parameters.Health.CurrentValue+"/"+Data.MaxHealth+
                     "\nSuper Gauge: "+Parameters.SuperGauge.CurrentValue+"/"+Data.MaxSuperGauge+
                     "\nSuper Armor: "+Parameters.SuperArmor.CurrentValue+
                     "\nHit Stop: ("+ Hitstop.IsRunning()+") "+Hitstop.TimeLeft+
                     "\nHit Stun: ("+ Hitstun.IsRunning()+") "+Hitstun.TimeLeft+
                     "\nMove Buffer: ("+ StanceManager.MoveBuffer.IsRunning()+") "+StanceManager.MoveBuffer.TimeLeft+
+                    "\nBounce: ("+Bounce.TimeLeft+", X:"+BounceXIntensity+", Y:"+BounceYIntensity+")"+
                     "\nCharge Buffers: "+Inputs.hCharge+" | "+Inputs.vCharge;//+
                     //"\nBlocking: "+IsBlocking();
         }

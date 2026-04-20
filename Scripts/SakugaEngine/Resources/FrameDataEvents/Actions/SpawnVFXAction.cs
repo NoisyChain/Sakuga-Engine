@@ -4,9 +4,8 @@ using SakugaEngine.Global;
 namespace SakugaEngine.Resources
 {
     [GlobalClass]
-    public partial class SpawnObjectAction : FrameDataAction
+    public partial class SpawnVFXAction : FrameDataAction
     {
-        [Export] private ObjectType ObjectType;
         [Export] private Vector2I TargetPosition = Vector2I.Zero;
         [Export] private RelativeTo xRelativeTo, yRelativeTo;
         [Export] private int Index;
@@ -14,7 +13,7 @@ namespace SakugaEngine.Resources
         [Export] private int Range;
         [Export] private string Key;
         [Export] private int FromExtraVariable = -1;
-        [Export] private bool AttachToParent; // Only works with VFX lel
+        [Export] private bool AttachToParent;
         public override void Execute(ref SakugaActor Actor)
         {
             if (Actor.Pool == null) return;
@@ -27,21 +26,11 @@ namespace SakugaEngine.Resources
                 ind = Actor.Parameters.Variables[FromExtraVariable].CurrentValue;
                 Actor.Parameters.Variables[FromExtraVariable].ChangeBehavior(CustomVariableBehaviorTarget.ON_USE);
             }
-            switch (ObjectType)
-            {
-                case ObjectType.SPAWNABLE:
-                    if (ind >= 0)
-                        Actor.Pool.SpawnObject(ind, dst);
-                    else if (Key != "")
-                        Actor.Pool.SpawnObject(Key, dst);
-                    break;
-                case ObjectType.VFX:
-                    if (ind >= 0)
-                        Actor.Pool.SpawnVFX(ind, dst, Actor.InputSide, AttachToParent);
-                    else if (Key != "")
-                        Actor.Pool.SpawnVFX(ind, dst, Actor.InputSide, AttachToParent);
-                    break;
-            }
+            
+            if (ind >= 0)
+                Actor.Pool.SpawnVFX(ind, dst, Actor.InputSide, AttachToParent);
+            else if (Key != "")
+                Actor.Pool.SpawnVFX(ind, dst, Actor.InputSide, AttachToParent);
         }
     }
 }

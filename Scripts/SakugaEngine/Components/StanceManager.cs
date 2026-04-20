@@ -25,7 +25,7 @@ namespace SakugaEngine
 
         public bool CheckMoveConditions(int index)
         {
-            if (_owner.ContainsFrameProperty(Global.FrameProperties.LOCK_MOVE)) return false;
+            if (_owner.ContainsFrameProperty(FrameProperties.LOCK_MOVE)) return false;
 
             if (!CheckAllowedStateType(index)) return false;
 
@@ -40,6 +40,13 @@ namespace SakugaEngine
 
                 if (GetMove(index).PriorityBuffer && GetMove(index).Priority < GetCurrentMove().Priority) return false;
             }
+            if (GetMove(index).AcceptHitReactionStates && GetMove(index).IgnoreKnockdownHits && _owner.HitstunType >= HitstunType.KNOCKDOWN) return false;
+
+            if (_owner.Parameters.SuperGauge.CurrentValue < GetMove(index).SuperGaugeRequired) return false;
+
+            bool isDesiredHealth = _owner.Parameters.Health.CurrentValue >= GetMove(index).HealthRequired.X &&
+                _owner.Parameters.Health.CurrentValue <= GetMove(index).HealthRequired.Y;
+            if (!isDesiredHealth) return false;
 
             int distance = GlobalFunctions.Distance(_owner.GetOpponent(0).Body.FixedPosition, _owner.Body.FixedPosition).X;
             bool isValidDistance = distance >= GetMove(index).DistanceArea.X && distance <= GetMove(index).DistanceArea.Y;
@@ -55,12 +62,6 @@ namespace SakugaEngine
 
             bool isCorrectState = CheckOwnerState(index);
             if (!isCorrectState) return false;
-
-            bool isDesiredHealth = _owner.Parameters.Health.CurrentValue >= GetMove(index).HealthRequired.X &&
-                _owner.Parameters.Health.CurrentValue <= GetMove(index).HealthRequired.Y;
-            if (!isDesiredHealth) return false;
-            
-            if (_owner.Parameters.SuperGauge.CurrentValue < GetMove(index).SuperGaugeRequired) return false;
 
             if (!_owner.Parameters.CompareVariables(GetMove(index).VariablesRequirement)) return false;
             
@@ -155,9 +156,9 @@ namespace SakugaEngine
                 return;
             }
             if (!CancelBuffer && _owner.StateManager.CurrentStateType() == StateType.COMBAT) return;
+
             if (!GetBufferedMove().IgnoreHitstop && _owner.Hitstop.IsRunning()) return;
             if (!GetBufferedMove().IgnoreHitstun && _owner.Hitstun.IsRunning()) return;
-
             
             bool CanOverride = CurrentMove < 0 || CancelBuffer || (GetCurrentMove().CanBeOverrided && 
                                 (GetCurrentMove().IgnoreSamePriority ? 
@@ -178,7 +179,7 @@ namespace SakugaEngine
             bool checkMovementState = GetMove(moveIndex).AcceptMovementStates && _owner.StateManager.GetCurrentState().Type == StateType.MOVEMENT;
             bool checkCombatState = GetMove(moveIndex).AcceptCombatStates && _owner.StateManager.GetCurrentState().Type == StateType.COMBAT;
             bool checkBlockingState = GetMove(moveIndex).AcceptBlockingStates && _owner.StateManager.GetCurrentState().Type == StateType.BLOCKING;
-            bool checkHitReactionState = GetMove(moveIndex).AcceptHitReactionStates && _owner.StateManager.GetCurrentState().Type == StateType.HIT_REACTION;
+            bool checkHitReactionState = GetMove(moveIndex).AcceptHitReactionStates && _owner.StateManager.GetCurrentState().Type == StateType.HIT_REACTION && _owner.HitstunType < HitstunType.HARD_KNOCKDOWN;
 
             return notLockedState && (checkNullState || checkMovementState || checkCombatState || checkBlockingState || checkHitReactionState);
         }
