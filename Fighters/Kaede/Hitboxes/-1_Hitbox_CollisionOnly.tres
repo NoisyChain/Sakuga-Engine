@@ -1,9 +1,9 @@
-[gd_resource type="Resource" script_class="HitboxSettings" load_steps=2 format=3 uid="uid://du8n0gtee4iwi"]
+[gd_resource type="Resource" script_class="HitboxSettings" format=3 uid="uid://du8n0gtee4iwi"]
 
 [ext_resource type="Script" uid="uid://dxuwyhds75mce" path="res://Scripts/SakugaEngine/Resources/HitboxSettings.cs" id="1"]
+[ext_resource type="Resource" uid="uid://bwffnan18ibt8" path="res://Fighters/Shared/HitboxPresets/Pushbox_Idle.tres" id="1_u33na"]
 
 [resource]
 script = ExtResource("1")
-PushboxCenter = Vector2i(0, 6000)
-PushboxSize = Vector2i(4000, 12000)
+Pushbox = ExtResource("1_u33na")
 Hitboxes = []

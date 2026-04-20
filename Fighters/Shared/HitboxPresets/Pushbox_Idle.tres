@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="BoxShape" format=3 uid="uid://bwffnan18ibt8"]
+
+[ext_resource type="Script" uid="uid://dqa207821fk83" path="res://Scripts/SakugaEngine/Resources/BoxShape.cs" id="1_fhfh8"]
+
+[resource]
+script = ExtResource("1_fhfh8")
+Center = Vector2i(0, 6000)
+Size = Vector2i(4000, 12000)
+metadata/_custom_type_script = "uid://dqa207821fk83"

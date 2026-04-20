@@ -38,10 +38,11 @@ namespace SakugaEngine.Utils
 
         public void PreviewHitboxes(HitboxState previewData)
         {
+            if (previewData == null || previewData.HitboxData == null) return;
+
             for(int j = 0; j < hitboxGraphics.Length; j++)
             {
-                if (previewData == null || previewData.HitboxData == null || 
-                    previewData.HitboxData.Hitboxes == null || previewData.HitboxData.Hitboxes.Length == 0 || 
+                if (previewData.HitboxData.Hitboxes == null || previewData.HitboxData.Hitboxes.Length == 0 || 
                     j >= previewData.HitboxData.Hitboxes.Length || previewData.HitboxData.Hitboxes[j] == null)
                     {
                         hitboxGraphics[j].Hide();
@@ -93,7 +94,7 @@ namespace SakugaEngine.Utils
         public void PreviewPushbox(HitboxState previewData)
         {
             int collisionViewer = hitboxGraphics.Length - 1;
-            if (previewData == null || previewData.HitboxData == null)
+            if (previewData == null || previewData.HitboxData == null || previewData.HitboxData.Pushbox == null )
             {
                 hitboxGraphics[collisionViewer].Visible = false;
                 return;

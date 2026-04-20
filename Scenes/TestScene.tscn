@@ -46,13 +46,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, -7)
 cull_mask = 1048557
 fov = 27.0
 script = ExtResource("2_dh05b")
-minBounds = Vector2(-7, 1.25)
-maxBounds = Vector2(7, 10)
-minOffset = Vector2(-6.5, 1.2)
-maxOffset = Vector2(-15.5, 3.16)
-maxDistance = 14.5
-boundsAdditionalNear = 1.86
-boundsAdditionalFar = 5.68
 
 [node name="BGM" type="AudioStreamPlayer" parent="." unique_id=1790037158]
 volume_db = -7.5

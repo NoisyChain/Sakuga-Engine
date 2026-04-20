@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c0y740kryylcs" path="res://Scripts/SakugaEngine/Resources/HitboxElement.cs" id="1"]
 [ext_resource type="Script" uid="uid://dxuwyhds75mce" path="res://Scripts/SakugaEngine/Resources/HitboxSettings.cs" id="2"]
+[ext_resource type="Resource" uid="uid://cu1ufqx7n6ab6" path="res://Fighters/Shared/HitboxPresets/Pushbox_Crouch.tres" id="2_ic3vs"]
 
 [sub_resource type="Resource" id="Resource_iklrc"]
 script = ExtResource("1")
@@ -37,6 +38,5 @@ BounceYIntensity = 0
 
 [resource]
 script = ExtResource("2")
-PushboxCenter = Vector2i(0, 3000)
-PushboxSize = Vector2i(4000, 6000)
+Pushbox = ExtResource("2_ic3vs")
 Hitboxes = [SubResource("Resource_iklrc"), SubResource("Resource_2q6fv")]

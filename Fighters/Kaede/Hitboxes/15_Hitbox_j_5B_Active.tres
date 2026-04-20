@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c0y740kryylcs" path="res://Scripts/SakugaEngine/Resources/HitboxElement.cs" id="1_1sp7l"]
 [ext_resource type="Script" uid="uid://dxuwyhds75mce" path="res://Scripts/SakugaEngine/Resources/HitboxSettings.cs" id="2_us4kw"]
+[ext_resource type="Resource" uid="uid://bwffnan18ibt8" path="res://Fighters/Shared/HitboxPresets/Pushbox_Idle.tres" id="2_xqoys"]
 
 [sub_resource type="Resource" id="Resource_j51j4"]
 script = ExtResource("1_1sp7l")
@@ -72,6 +73,5 @@ AirBlockstun = 12
 
 [resource]
 script = ExtResource("2_us4kw")
-PushboxCenter = Vector2i(0, 3000)
-PushboxSize = Vector2i(4000, 6000)
+Pushbox = ExtResource("2_xqoys")
 Hitboxes = [SubResource("Resource_j51j4"), SubResource("Resource_jkk4u"), SubResource("Resource_qdqbk"), SubResource("Resource_xorsx")]

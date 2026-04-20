@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="HitboxSettings" format=3 uid="uid://c5aa72i4vae85"]
 
 [ext_resource type="Script" uid="uid://c0y740kryylcs" path="res://Scripts/SakugaEngine/Resources/HitboxElement.cs" id="1_ig31l"]
+[ext_resource type="Resource" uid="uid://bwffnan18ibt8" path="res://Fighters/Shared/HitboxPresets/Pushbox_Idle.tres" id="2_2uqhp"]
 [ext_resource type="Script" uid="uid://dxuwyhds75mce" path="res://Scripts/SakugaEngine/Resources/HitboxSettings.cs" id="2_vpku5"]
 
 [sub_resource type="Resource" id="Resource_ag0vk"]
@@ -56,6 +57,5 @@ SelfPushbackDuration = 0
 
 [resource]
 script = ExtResource("2_vpku5")
-PushboxCenter = Vector2i(0, 6000)
-PushboxSize = Vector2i(4000, 12000)
+Pushbox = ExtResource("2_2uqhp")
 Hitboxes = [SubResource("Resource_ag0vk"), SubResource("Resource_oilei"), SubResource("Resource_y64oa")]

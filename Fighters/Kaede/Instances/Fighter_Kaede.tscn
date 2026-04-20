@@ -255,7 +255,7 @@
 [ext_resource type="Texture2D" uid="uid://d2avx3e3r24ud" path="res://Fighters/Kaede/Sprites/801-2.png" id="298_1qddw"]
 [ext_resource type="PackedScene" uid="uid://csdgicelabg4n" path="res://Scenes/Instances/HitboxPreviewer.tscn" id="299_wvg0r"]
 [ext_resource type="Texture2D" uid="uid://b7m1exkxvnhyk" path="res://Fighters/Kaede/Sprites/801-4.png" id="300_6xb7l"]
-[ext_resource type="Resource" uid="uid://bdkgtqjake1n5" path="res://Fighters/Kaede/AnimationData/11_Kaede_Landing_AnimData.tres" id="300_vyu0p"]
+[ext_resource type="Resource" uid="uid://bd0sl6j6k8l" path="res://Fighters/Kaede/AnimationData/15_Kaede_Crouching_AnimData.tres" id="300_wvg0r"]
 [ext_resource type="Texture2D" uid="uid://b1x3gj3gope4o" path="res://Fighters/Kaede/Sprites/801-5.png" id="301_j4lax"]
 [ext_resource type="Texture2D" uid="uid://mqv07djtd02x" path="res://Fighters/Kaede/Sprites/801-6.png" id="302_tku0h"]
 [ext_resource type="Texture2D" uid="uid://c0ynd6bdxxnbt" path="res://Fighters/Kaede/Sprites/801-7.png" id="303_w1usg"]
@@ -3071,6 +3071,7 @@ Behaviors = Array[Object]([SubResource("Resource_ww37y")])
 metadata/_custom_type_script = "uid://dqqr3jnsmcig6"
 
 [node name="HitboxPreviewer" parent="." unique_id=1572245311 node_paths=PackedStringArray("Animator") instance=ExtResource("299_wvg0r")]
+process_mode = 3
 Animator = NodePath("../Graphics/Mesh")
-Data = ExtResource("300_vyu0p")
-AutoRun = true
+Data = ExtResource("300_wvg0r")
+Frame = 6

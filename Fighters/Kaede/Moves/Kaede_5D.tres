@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="MoveSettings" format=3 uid="uid://cldflhcgautpo"]
+
+[ext_resource type="Resource" uid="uid://lvcahoav7546" path="res://Fighters/Shared/Inputs/14_Input_5D.tres" id="1_24usu"]
+[ext_resource type="Script" uid="uid://gk1rkw667o4n" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="1_p1fhq"]
+
+[resource]
+script = ExtResource("1_p1fhq")
+MoveName = "Kaede 5D lel"
+MoveState = 73
+Inputs = ExtResource("1_24usu")
+Priority = 7
+MoveEnd = 2
+CanCancelTo = null
+VariablesRequirement = null
+VariablesChange = null
+CanBeOverrided = true
+IgnoreSamePriority = false
+AcceptNullStates = true
+AcceptCombatStates = true
+UseOnGround = true
+metadata/_custom_type_script = "uid://gk1rkw667o4n"

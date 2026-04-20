@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="HitboxSettings" format=3 uid="uid://c3hl47hcg8rv4"]
 
 [ext_resource type="Script" uid="uid://c0y740kryylcs" path="res://Scripts/SakugaEngine/Resources/HitboxElement.cs" id="1_ssjs6"]
+[ext_resource type="Resource" uid="uid://cu1ufqx7n6ab6" path="res://Fighters/Shared/HitboxPresets/Pushbox_Crouch.tres" id="2_18viy"]
 [ext_resource type="Script" uid="uid://dxuwyhds75mce" path="res://Scripts/SakugaEngine/Resources/HitboxSettings.cs" id="2_wbdvr"]
 
 [sub_resource type="Resource" id="Resource_6kwmw"]
@@ -89,6 +90,5 @@ AirBlockstun = 22
 
 [resource]
 script = ExtResource("2_wbdvr")
-PushboxCenter = Vector2i(0, 3000)
-PushboxSize = Vector2i(4000, 6000)
+Pushbox = ExtResource("2_18viy")
 Hitboxes = [SubResource("Resource_6kwmw"), SubResource("Resource_ktv8f"), SubResource("Resource_n7ux2"), SubResource("Resource_igg1m"), SubResource("Resource_xorsx")]
