@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://sfkx0xq7oefy"]
+
+[ext_resource type="Script" uid="uid://c6wxil4vhylbx" path="res://Scripts/SakugaEngine/Utils/InputRemapperButton.cs" id="1_b2nnk"]
+
+[node name="InputButton" type="HBoxContainer" unique_id=814756605 node_paths=PackedStringArray("TitleLabel", "Field", "KeyLabel")]
+script = ExtResource("1_b2nnk")
+Title = "Burst"
+TitleLabel = NodePath("InputName")
+Field = NodePath("InputButton")
+KeyLabel = NodePath("InputButton/InputKey")
+
+[node name="InputName" type="Label" parent="." unique_id=1488863762]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Button"
+horizontal_alignment = 1
+
+[node name="InputButton" type="ColorRect" parent="." unique_id=525691620]
+custom_minimum_size = Vector2(150, 30)
+layout_mode = 2
+color = Color(0.20511743, 0.20511743, 0.20511743, 1)
+
+[node name="InputKey" type="Label" parent="InputButton" unique_id=731464612]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = " "
+horizontal_alignment = 1
+vertical_alignment = 1

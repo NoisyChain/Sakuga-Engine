@@ -20,9 +20,6 @@ namespace SakugaEngine
 
         public void ViewAnimations(AnimationSettings anim, int Frame)
         {
-            if (anim == null)
-                return;
-            
             if (anim == null) return;
             if (anim.SourceAnimation == "") return;
 
@@ -41,13 +38,15 @@ namespace SakugaEngine
                 targetFrame -= modTarget;
             }
 
+            if (anim.Inverse)
+                targetFrame = anim.AnimationRange.Y - targetFrame;
+
             for (int a = 0; a < players.Length; a++)
             {
                 string prfx = "";
                 if (prefix != null && prefix.Length > a) prfx = prefix[a];
-                players[a].SpeedScale = anim.Speed;
                 players[a].Play(prfx + anim.SourceAnimation);
-                players[a].Seek(targetFrame / (float)GlobalVariables.TicksPerSecond, true);
+                players[a].Seek((targetFrame * anim.Speed) / (float)GlobalVariables.TicksPerSecond, true);
             }
 
             if (OffsetNode != null)

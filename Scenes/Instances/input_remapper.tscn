@@ -1,0 +1,345 @@
+[gd_scene format=3 uid="uid://mjtj8aourb2p"]
+
+[ext_resource type="Script" uid="uid://dpl8ww8hi153n" path="res://Scripts/SakugaEngine/Utils/InputRemapper.cs" id="1_qd416"]
+[ext_resource type="Script" uid="uid://b2ke32x80t6c0" path="res://Scripts/SakugaEngine/Utils/InputRemapperWidget.cs" id="1_uolfa"]
+[ext_resource type="PackedScene" uid="uid://sfkx0xq7oefy" path="res://Scenes/Instances/input_button.tscn" id="2_lr70m"]
+
+[node name="InputRemapper" type="Control" unique_id=1679153397]
+layout_mode = 3
+anchor_right = 0.208
+anchor_bottom = 0.54700005
+offset_right = -0.23999023
+offset_bottom = 0.15997314
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qd416")
+
+[node name="WGT_Keyboard1" type="Control" parent="." unique_id=1154472671 node_paths=PackedStringArray("Remapper", "Buttons", "TimeFrame")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_uolfa")
+Remapper = NodePath("..")
+Prefix = "k1_"
+Buttons = [NodePath("VBoxContainer/InputButton_Up"), NodePath("VBoxContainer/InputButton_Down"), NodePath("VBoxContainer/InputButton_Left"), NodePath("VBoxContainer/InputButton_Right"), NodePath("VBoxContainer/InputButton_Weak"), NodePath("VBoxContainer/InputButton_Strong"), NodePath("VBoxContainer/InputButton_Magica"), NodePath("VBoxContainer/InputButton_Dash"), NodePath("VBoxContainer/InputButton_Cancel"), NodePath("VBoxContainer/InputButton_Burst")]
+DefaultColor = Color(0.20392157, 0.20392157, 0.20392157, 1)
+SelectedColor = Color(0.90311116, 0.57668877, 1.540184e-06, 1)
+RemappingColor = Color(0.047058824, 0.047058824, 0.047058824, 1)
+TimeFrame = NodePath("TimeFrame")
+metadata/_edit_group_ = true
+
+[node name="TimeFrame" type="Timer" parent="WGT_Keyboard1" unique_id=31164995]
+wait_time = 10.0
+one_shot = true
+
+[node name="Background" type="ColorRect" parent="WGT_Keyboard1" unique_id=1241018036]
+layout_mode = 0
+offset_right = 266.0
+offset_bottom = 394.0
+color = Color(0, 0, 0, 0.1254902)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="WGT_Keyboard1" unique_id=1265830030]
+layout_mode = 0
+offset_right = 266.0
+offset_bottom = 394.0
+
+[node name="Label" type="Label" parent="WGT_Keyboard1/VBoxContainer" unique_id=879078739]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Inputs: Keyboard 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Panel" type="Panel" parent="WGT_Keyboard1/VBoxContainer" unique_id=309876582]
+layout_mode = 2
+
+[node name="InputButton_Up" parent="WGT_Keyboard1/VBoxContainer" unique_id=814756605 instance=ExtResource("2_lr70m")]
+layout_mode = 2
+Title = "Up"
+Action = "up"
+
+[node name="InputButton_Down" parent="WGT_Keyboard1/VBoxContainer" unique_id=1795138446 instance=ExtResource("2_lr70m")]
+layout_mode = 2
+Title = "Down"
+Action = "down"
+
+[node name="InputButton_Left" parent="WGT_Keyboard1/VBoxContainer" unique_id=610921960 instance=ExtResource("2_lr70m")]
+layout_mode = 2
+Title = "Left"
+Action = "left"
+
+[node name="InputButton_Right" parent="WGT_Keyboard1/VBoxContainer" unique_id=265702271 instance=ExtResource("2_lr70m")]
+layout_mode = 2
+Title = "Right"
+Action = "right"
+
+[node name="InputButton_Weak" parent="WGT_Keyboard1/VBoxContainer" unique_id=959912726 instance=ExtResource("2_lr70m")]
+layout_mode = 2
+Title = "Weak"
+Action = "face_a"
+
+[node name="InputButton_Strong" parent="WGT_Keyboard1/VBoxContainer" unique_id=1790458388 instance=ExtResource("2_lr70m")]
+layout_mode = 2
+Title = "Strong"
+Action = "face_b"
+
+[node name="InputButton_Magica" parent="WGT_Keyboard1/VBoxContainer" unique_id=135919947 instance=ExtResource("2_lr70m")]
+layout_mode = 2
+Title = "Magica"
+Action = "face_c"
+
+[node name="InputButton_Dash" parent="WGT_Keyboard1/VBoxContainer" unique_id=1745083874 instance=ExtResource("2_lr70m")]
+layout_mode = 2
+Title = "Dash"
+Action = "dash"
+
+[node name="InputButton_Cancel" parent="WGT_Keyboard1/VBoxContainer" unique_id=1495223049 instance=ExtResource("2_lr70m")]
+layout_mode = 2
+Title = "X. Cancel"
+Action = "xcancel"
+
+[node name="InputButton_Burst" parent="WGT_Keyboard1/VBoxContainer" unique_id=1283776125 instance=ExtResource("2_lr70m")]
+layout_mode = 2
+Action = "burst"
+
+[node name="WGT_Keyboard2" type="Control" parent="." unique_id=1537957031 node_paths=PackedStringArray("Remapper", "Buttons", "TimeFrame")]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_uolfa")
+Remapper = NodePath("..")
+Prefix = "k2_"
+Buttons = [NodePath("VBoxContainer/InputButton_Up"), NodePath("VBoxContainer/InputButton_Down"), NodePath("VBoxContainer/InputButton_Left"), NodePath("VBoxContainer/InputButton_Right"), NodePath("VBoxContainer/InputButton_Weak"), NodePath("VBoxContainer/InputButton_Strong"), NodePath("VBoxContainer/InputButton_Magica"), NodePath("VBoxContainer/InputButton_Dash"), NodePath("VBoxContainer/InputButton_Cancel"), NodePath("VBoxContainer/InputButton_Burst")]
+DefaultColor = Color(0.20392157, 0.20392157, 0.20392157, 1)
+SelectedColor = Color(0.90311116, 0.57668877, 1.540184e-06, 1)
+RemappingColor = Color(0.047058824, 0.047058824, 0.047058824, 1)
+TimeFrame = NodePath("TimeFrame")
+metadata/_edit_group_ = true
+
+[node name="TimeFrame" type="Timer" parent="WGT_Keyboard2" unique_id=1067208141]
+wait_time = 10.0
+one_shot = true
+
+[node name="Background" type="ColorRect" parent="WGT_Keyboard2" unique_id=1485143303]
+layout_mode = 0
+offset_right = 266.0
+offset_bottom = 394.0
+color = Color(0, 0, 0, 0.1254902)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="WGT_Keyboard2" unique_id=1181453919]
+layout_mode = 0
+offset_right = 266.0
+offset_bottom = 394.0
+
+[node name="Label" type="Label" parent="WGT_Keyboard2/VBoxContainer" unique_id=598324754]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Inputs: Keyboard 2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Panel" type="Panel" parent="WGT_Keyboard2/VBoxContainer" unique_id=476352658]
+layout_mode = 2
+
+[node name="InputButton_Up" parent="WGT_Keyboard2/VBoxContainer" unique_id=1798799046 instance=ExtResource("2_lr70m")]
+layout_mode = 2
+Title = "Up"
+Action = "up"
+
+[node name="InputButton_Down" parent="WGT_Keyboard2/VBoxContainer" unique_id=68356191 instance=ExtResource("2_lr70m")]
+layout_mode = 2
+Title = "Down"
+Action = "down"
+
+[node name="InputButton_Left" parent="WGT_Keyboard2/VBoxContainer" unique_id=1589535956 instance=ExtResource("2_lr70m")]
+layout_mode = 2
+Title = "Left"
+Action = "left"
+
+[node name="InputButton_Right" parent="WGT_Keyboard2/VBoxContainer" unique_id=1474628831 instance=ExtResource("2_lr70m")]
+layout_mode = 2
+Title = "Right"
+Action = "right"
+
+[node name="InputButton_Weak" parent="WGT_Keyboard2/VBoxContainer" unique_id=1110789817 instance=ExtResource("2_lr70m")]
+layout_mode = 2
+Title = "Weak"
+Action = "face_a"
+
+[node name="InputButton_Strong" parent="WGT_Keyboard2/VBoxContainer" unique_id=453373295 instance=ExtResource("2_lr70m")]
+layout_mode = 2
+Title = "Strong"
+Action = "face_b"
+
+[node name="InputButton_Magica" parent="WGT_Keyboard2/VBoxContainer" unique_id=1804003187 instance=ExtResource("2_lr70m")]
+layout_mode = 2
+Title = "Magica"
+Action = "face_c"
+
+[node name="InputButton_Dash" parent="WGT_Keyboard2/VBoxContainer" unique_id=1477573662 instance=ExtResource("2_lr70m")]
+layout_mode = 2
+Title = "Dash"
+Action = "dash"
+
+[node name="InputButton_Cancel" parent="WGT_Keyboard2/VBoxContainer" unique_id=242927919 instance=ExtResource("2_lr70m")]
+layout_mode = 2
+Title = "X. Cancel"
+Action = "xcancel"
+
+[node name="InputButton_Burst" parent="WGT_Keyboard2/VBoxContainer" unique_id=1689992371 instance=ExtResource("2_lr70m")]
+layout_mode = 2
+Action = "burst"
+
+[node name="WGT_Gamepad1" type="Control" parent="." unique_id=1373467361 node_paths=PackedStringArray("Remapper", "Buttons", "TimeFrame")]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_uolfa")
+Remapper = NodePath("..")
+Prefix = "j1_"
+DeviceType = 1
+Buttons = [NodePath("VBoxContainer/InputButton_Weak"), NodePath("VBoxContainer/InputButton_Strong"), NodePath("VBoxContainer/InputButton_Magica"), NodePath("VBoxContainer/InputButton_Dash"), NodePath("VBoxContainer/InputButton_Cancel"), NodePath("VBoxContainer/InputButton_Burst")]
+DefaultColor = Color(0.20392157, 0.20392157, 0.20392157, 1)
+SelectedColor = Color(0.90311116, 0.57668877, 1.540184e-06, 1)
+RemappingColor = Color(0.047058824, 0.047058824, 0.047058824, 1)
+TimeFrame = NodePath("TimeFrame")
+metadata/_edit_group_ = true
+
+[node name="TimeFrame" type="Timer" parent="WGT_Gamepad1" unique_id=1551863060]
+wait_time = 10.0
+one_shot = true
+
+[node name="Background" type="ColorRect" parent="WGT_Gamepad1" unique_id=1153956436]
+layout_mode = 0
+offset_right = 266.0
+offset_bottom = 250.0
+color = Color(0, 0, 0, 0.1254902)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="WGT_Gamepad1" unique_id=71439209]
+layout_mode = 0
+offset_right = 266.0
+offset_bottom = 394.0
+
+[node name="Label" type="Label" parent="WGT_Gamepad1/VBoxContainer" unique_id=413902599]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Inputs: Gamepad 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Panel" type="Panel" parent="WGT_Gamepad1/VBoxContainer" unique_id=1880887990]
+layout_mode = 2
+
+[node name="InputButton_Weak" parent="WGT_Gamepad1/VBoxContainer" unique_id=387583944 instance=ExtResource("2_lr70m")]
+layout_mode = 2
+Title = "Weak"
+Action = "face_a"
+
+[node name="InputButton_Strong" parent="WGT_Gamepad1/VBoxContainer" unique_id=386516951 instance=ExtResource("2_lr70m")]
+layout_mode = 2
+Title = "Strong"
+Action = "face_b"
+
+[node name="InputButton_Magica" parent="WGT_Gamepad1/VBoxContainer" unique_id=8955910 instance=ExtResource("2_lr70m")]
+layout_mode = 2
+Title = "Magica"
+Action = "face_c"
+
+[node name="InputButton_Dash" parent="WGT_Gamepad1/VBoxContainer" unique_id=1166014489 instance=ExtResource("2_lr70m")]
+layout_mode = 2
+Title = "Dash"
+Action = "dash"
+
+[node name="InputButton_Cancel" parent="WGT_Gamepad1/VBoxContainer" unique_id=2076841169 instance=ExtResource("2_lr70m")]
+layout_mode = 2
+Title = "X. Cancel"
+Action = "xcancel"
+
+[node name="InputButton_Burst" parent="WGT_Gamepad1/VBoxContainer" unique_id=2075621962 instance=ExtResource("2_lr70m")]
+layout_mode = 2
+Action = "burst"
+
+[node name="WGT_Gamepad2" type="Control" parent="." unique_id=269925898 node_paths=PackedStringArray("Remapper", "Buttons", "TimeFrame")]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_uolfa")
+Remapper = NodePath("..")
+Prefix = "j2_"
+DeviceType = 1
+deviceID = 1
+Buttons = [NodePath("VBoxContainer/InputButton_Weak"), NodePath("VBoxContainer/InputButton_Strong"), NodePath("VBoxContainer/InputButton_Magica"), NodePath("VBoxContainer/InputButton_Dash"), NodePath("VBoxContainer/InputButton_Cancel"), NodePath("VBoxContainer/InputButton_Burst")]
+DefaultColor = Color(0.20392157, 0.20392157, 0.20392157, 1)
+SelectedColor = Color(0.90311116, 0.57668877, 1.540184e-06, 1)
+RemappingColor = Color(0.047058824, 0.047058824, 0.047058824, 1)
+TimeFrame = NodePath("TimeFrame")
+metadata/_edit_group_ = true
+
+[node name="TimeFrame" type="Timer" parent="WGT_Gamepad2" unique_id=125965034]
+wait_time = 10.0
+one_shot = true
+
+[node name="Background" type="ColorRect" parent="WGT_Gamepad2" unique_id=1386491379]
+layout_mode = 0
+offset_right = 266.0
+offset_bottom = 250.0
+color = Color(0, 0, 0, 0.1254902)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="WGT_Gamepad2" unique_id=1685119918]
+layout_mode = 0
+offset_right = 266.0
+offset_bottom = 394.0
+
+[node name="Label" type="Label" parent="WGT_Gamepad2/VBoxContainer" unique_id=534204598]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Inputs: Gamepad 2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Panel" type="Panel" parent="WGT_Gamepad2/VBoxContainer" unique_id=632985080]
+layout_mode = 2
+
+[node name="InputButton_Weak" parent="WGT_Gamepad2/VBoxContainer" unique_id=596452143 instance=ExtResource("2_lr70m")]
+layout_mode = 2
+Title = "Weak"
+Action = "face_a"
+
+[node name="InputButton_Strong" parent="WGT_Gamepad2/VBoxContainer" unique_id=1762601798 instance=ExtResource("2_lr70m")]
+layout_mode = 2
+Title = "Strong"
+Action = "face_b"
+
+[node name="InputButton_Magica" parent="WGT_Gamepad2/VBoxContainer" unique_id=1365366427 instance=ExtResource("2_lr70m")]
+layout_mode = 2
+Title = "Magica"
+Action = "face_c"
+
+[node name="InputButton_Dash" parent="WGT_Gamepad2/VBoxContainer" unique_id=182305040 instance=ExtResource("2_lr70m")]
+layout_mode = 2
+Title = "Dash"
+Action = "dash"
+
+[node name="InputButton_Cancel" parent="WGT_Gamepad2/VBoxContainer" unique_id=2131460608 instance=ExtResource("2_lr70m")]
+layout_mode = 2
+Title = "X. Cancel"
+Action = "xcancel"
+
+[node name="InputButton_Burst" parent="WGT_Gamepad2/VBoxContainer" unique_id=1325851380 instance=ExtResource("2_lr70m")]
+layout_mode = 2
+Action = "burst"
