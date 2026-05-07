@@ -1176,14 +1176,14 @@ layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
 offset_left = 6.0
-offset_right = 123.0
+offset_right = 141.0
 offset_bottom = 156.0
 grow_vertical = 2
 text = "Damage
 Current combo
 Highest combo
 Hit type
-Damage Scl.
+Damage scaling
 Frame data"
 vertical_alignment = 1
 
@@ -1203,7 +1203,7 @@ text = "0
 0
 HIGH
 100
-0(+0)"
+0(+0) "
 
 [node name="P2Info" type="Control" parent="GameHUD_Foreground/TrainingInfo" unique_id=1297068344]
 anchors_preset = 0
@@ -1232,14 +1232,14 @@ layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
 offset_left = 6.0
-offset_right = 123.0
+offset_right = 141.0
 offset_bottom = 156.0
 grow_vertical = 2
 text = "Damage
 Current combo
 Highest combo
 Hit type
-Damage Scl.
+Damage scaling
 Frame data"
 vertical_alignment = 1
 
@@ -1259,7 +1259,7 @@ text = "0
 0
 HIGH
 100
-0(+0)"
+0(+0) "
 
 [node name="InputHistory" type="Control" parent="GameHUD_Foreground" unique_id=1672551536]
 visible = false
@@ -1670,7 +1670,6 @@ text = "Player 2 name"
 horizontal_alignment = 2
 
 [node name="FadeScreen" type="ColorRect" parent="." unique_id=1110242483]
-visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -1753,6 +1752,79 @@ script = ExtResource("11_a8ejj")
 
 [node name="PleaseResync_UI" parent="." unique_id=1086814857 instance=ExtResource("14_16eh6")]
 
+[node name="PauseMenu" type="Control" parent="." unique_id=1973510996 node_paths=PackedStringArray("firstButton")]
+visible = false
+layout_mode = 3
+anchor_left = 0.25
+anchor_top = 0.354
+anchor_right = 0.748
+anchor_bottom = 0.646
+offset_left = 2.0
+offset_top = 0.11999512
+offset_right = 0.5599365
+offset_bottom = -0.120025635
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("20_4120v")
+firstButton = NodePath("HBoxContainer/Button_Resume")
+
+[node name="ColorRect" type="ColorRect" parent="PauseMenu" unique_id=982516498]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.3254902)
+
+[node name="Label" type="Label" parent="PauseMenu" unique_id=2114126437]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -83.0
+offset_right = 83.0
+offset_bottom = 42.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 32
+text = "PAUSED"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PauseMenu" unique_id=1784177611]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -306.0
+offset_top = -98.0
+offset_right = 306.0
+offset_bottom = -25.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Button_Resume" type="Button" parent="PauseMenu/HBoxContainer" unique_id=722141943]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Resume"
+
+[node name="Button_Restart" type="Button" parent="PauseMenu/HBoxContainer" unique_id=1223861225]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Restart"
+
+[node name="Button_CharSelect" type="Button" parent="PauseMenu/HBoxContainer" unique_id=333769532]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Character Select"
+
+[node name="Button_MainMenu" type="Button" parent="PauseMenu/HBoxContainer" unique_id=1396484205]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Main Menu"
+
 [node name="Seed" type="Label" parent="." unique_id=737444796]
 anchors_preset = 7
 anchor_left = 0.5
@@ -1769,9 +1841,7 @@ text = "Seed"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="PauseMenu" type="Control" parent="." unique_id=1973510996]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("20_4120v")
+[connection signal="pressed" from="PauseMenu/HBoxContainer/Button_Resume" to="PauseMenu" method="_on_button_resume_pressed"]
+[connection signal="pressed" from="PauseMenu/HBoxContainer/Button_Restart" to="PauseMenu" method="_on_button_restart_pressed"]
+[connection signal="pressed" from="PauseMenu/HBoxContainer/Button_CharSelect" to="PauseMenu" method="_on_button_char_select_pressed"]
+[connection signal="pressed" from="PauseMenu/HBoxContainer/Button_MainMenu" to="PauseMenu" method="_on_button_main_menu_pressed"]

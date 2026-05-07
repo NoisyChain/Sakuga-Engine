@@ -228,6 +228,8 @@ namespace SakugaEngine.UI
                 AudioManager.Instance.PlayMenuClip(0);
                 if (P1Selected % charactersContainer.Columns < charactersContainer.Columns - 1)
                     P1Selected++;
+                if (P1Selected >= fightersList.elements.Length)
+                    P1Selected = fightersList.elements.Length;
             }
             if (P1Confirm)
             {
@@ -317,6 +319,8 @@ namespace SakugaEngine.UI
                 AudioManager.Instance.PlayMenuClip(0);
                 if (P2Selected % charactersContainer.Columns < charactersContainer.Columns - 1)
                     P2Selected++;
+                if (P2Selected >= fightersList.elements.Length)
+                    P2Selected = fightersList.elements.Length;
             }
             if (P2Confirm)
             {
