@@ -38,11 +38,10 @@ namespace SakugaEngine.Utils
 
         public void PreviewHitboxes(HitboxState previewData)
         {
-            if (previewData == null || previewData.HitboxData == null) return;
-
             for(int j = 0; j < hitboxGraphics.Length; j++)
             {
-                if (previewData.HitboxData.Hitboxes == null || previewData.HitboxData.Hitboxes.Length == 0 || 
+                if (previewData == null || previewData.HitboxData == null || 
+                    previewData.HitboxData.Hitboxes == null || previewData.HitboxData.Hitboxes.Length == 0 || 
                     j >= previewData.HitboxData.Hitboxes.Length || previewData.HitboxData.Hitboxes[j] == null)
                     {
                         hitboxGraphics[j].Hide();
@@ -94,7 +93,7 @@ namespace SakugaEngine.Utils
         public void PreviewPushbox(HitboxState previewData)
         {
             int collisionViewer = hitboxGraphics.Length - 1;
-            if (previewData == null || previewData.HitboxData == null || previewData.HitboxData.Pushbox == null )
+            if (previewData == null || previewData.HitboxData == null || previewData.HitboxData.Pushbox == null)
             {
                 hitboxGraphics[collisionViewer].Visible = false;
                 return;
@@ -120,7 +119,7 @@ namespace SakugaEngine.Utils
             {
                 if (Data.Animations[i] == null) continue;
                 int nextFrame = (i >= Data.Animations.Length - 1 || Data.Animations[i + 1] == null) ?
-                                Data.Duration - 1 :
+                                Frame :
                                 Data.Animations[i + 1].AtFrame - 1;
                 
                 if (Frame >= Data.Animations[i].AtFrame && Frame <= nextFrame)
@@ -141,7 +140,7 @@ namespace SakugaEngine.Utils
 
             for (int i = 0; i < Data.Hitboxes.Length; i++)
             {
-                int nextFrame = (i >= Data.Hitboxes.Length - 1) ?
+                int nextFrame = (i >= Data.Hitboxes.Length - 1 || Data.Hitboxes[i + 1] == null) ?
                                 int.MaxValue :
                                 Data.Hitboxes[i + 1].AtFrame - 1;
                 

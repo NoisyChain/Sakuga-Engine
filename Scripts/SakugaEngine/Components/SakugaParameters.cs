@@ -60,11 +60,14 @@ namespace SakugaEngine
 
         public void Tick()
         {
-            if (SuperGauge != null) SuperGauge.Tick();
-
+            if (Game.GameManager.Instance.Monitor.MatchState == MatchState.ROUND_RUNNING)
+            {
+                if (SuperGauge != null) SuperGauge.Tick();
+            }
             UpdateProrations();
             UpdateVariables();
             UpdateTimers();
+            if (Tracker != null) Tracker.UpdateFrameData();
         }
 
         public void Clear()

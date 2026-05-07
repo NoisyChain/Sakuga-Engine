@@ -9,8 +9,10 @@ namespace SakugaEngine.Resources
         [Export] public string ModeName;
         [Export] public bool AutoStart;
         [Export] public Global.NetcodeMode NetcodeMode;
+        [Export] public Global.PauseMode PauseMode;
         [Export] public bool UseLAN;
         [Export] public bool CanKO;
+        [Export] public bool AutoFillResources;
         [Export] public bool ShowMatchIntro; // doesn't exist
         [Export] public bool ShowMatchCards; // doesn't exist
         [Export] public bool ShowTrainingInfo;

@@ -57,7 +57,9 @@ namespace SakugaEngine
         public void UpdateLostHealth()
         {
             if (LostValue > CurrentValue)
-                LostValue -= MaxValue / 200;
+                LostValue -= MaxValue / 100;
+            else if (LostValue < CurrentValue)
+                LostValue = CurrentValue;
         }
     }
 }

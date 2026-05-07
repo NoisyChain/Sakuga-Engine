@@ -36,7 +36,7 @@ namespace SakugaEngine
             Graphics.Scale = new Vector3(Side, 1, 1);
             
             Player.Play(AnimationName);
-            Player.Seek(Frame / (float)GlobalVariables.TicksPerSecond, true);
+            Player.Seek((Duration - Frame) / (float)GlobalVariables.TicksPerSecond, true);
         }
 
         public override void Initialize()

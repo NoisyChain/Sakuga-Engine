@@ -21,7 +21,7 @@ namespace SakugaEngine.Game
         [Export] public FighterList fightersList;
         [Export] public StageList stagesList;
         [Export] public BGMList songsList;
-        [Export] public CanvasLayer FighterUI;
+        [Export] private CanvasLayer FighterUI;
         [Export] public FighterCamera Camera;
         [Export] public AudioStreamPlayer BGMSource;
         private Label SeedViewer;
@@ -45,6 +45,9 @@ namespace SakugaEngine.Game
         public Vector3I randomTest = new Vector3I();
 
         private GameManagerState State;
+        private PauseMenu PauseScreen;
+
+        private bool paused;
         
         public override void _Ready()
         {
@@ -57,6 +60,8 @@ namespace SakugaEngine.Game
             Control InputHistory = (Control)metersHUD.GetNode("InputHistory");
             Control DebugWindow = (Control)FighterUI.GetNode("Debug");
             Control NetcodeHUD = (Control)FighterUI.GetNode("PleaseResync_UI");
+
+            PauseScreen = (PauseMenu)FighterUI.GetNode("PauseMenu");
             if (Monitor != null)
             {
                 Monitor.Cards = (MatchCardsController)FighterUI.GetNode("MatchCards");
@@ -68,7 +73,7 @@ namespace SakugaEngine.Game
             TrainingInfo.Visible = Match.SelectedModeSettings.ShowTrainingInfo;
             InputHistory.Visible = Match.SelectedModeSettings.AllowShowInputs;
             DebugWindow.Visible = Match.SelectedModeSettings.AllowShowDebugElements;
-            NetcodeHUD.Visible = Match.SelectedModeSettings.AllowShowDebugElements;
+            NetcodeHUD.Visible = Match.SelectedModeSettings.UseLAN;
             SeedViewer.Visible = Match.SelectedModeSettings.AllowShowDebugElements;
 
             if (Match.SelectedModeSettings.ShowOnlineInfo && OnlinePlayersInfo != null)
@@ -83,8 +88,11 @@ namespace SakugaEngine.Game
             if (Fighters == null) return;
             if (Monitor == null) return;
 
-            if (!BGMSource.Playing) BGMSource.Play();
             if (SeedViewer.Visible) SeedViewer.Text = finalSeed.ToString();
+            if (Input.IsActionJustPressed("pause") && Match.SelectedModeSettings.PauseMode != PauseMode.LOCK && Monitor.MatchState == MatchState.ROUND_RUNNING)
+           {
+                CallDeferred("PauseControl", !paused);
+            }
 
             DebugCommands();
         }
@@ -173,6 +181,7 @@ namespace SakugaEngine.Game
 
             healthHUD.Setup(Fighters);
             metersHUD.Setup(Fighters);
+            BGMSource.Play();
         }
 
         public void CreateFighter(int characterIndex, int playerIndex)
@@ -219,6 +228,8 @@ namespace SakugaEngine.Game
 
         public void GameLoop(byte[] playerInput)
         {
+            if (paused) return;
+
             finalSeed = CalculateSeed();
             RNG.Set(finalSeed);
             Frame++;
@@ -277,8 +288,15 @@ namespace SakugaEngine.Game
                 {
                     if (Fighters[i].Parameters.Health.CurrentValue <= 0)
                         Fighters[i].Parameters.Health.CurrentValue = 1;
-                    if (!Fighters[i].Hitstun.IsRunning())
+                    if (!Fighters[i].OnHitstun() && Fighters[i].StateManager.CurrentStateType() != StateType.HIT_REACTION)
                         Fighters[i].Parameters.Health.CurrentValue = Fighters[i].Data.MaxHealth;
+                }
+                if (Match.SelectedModeSettings.AutoFillResources)
+                {
+                    if (Fighters[i].StateManager.CurrentStateType() <= StateType.MOVEMENT)
+                    {
+                        Fighters[i].Parameters.SuperGauge.CurrentValue = Fighters[i].Data.MaxSuperGauge;
+                    }    
                 }
             }
             
@@ -343,8 +361,16 @@ namespace SakugaEngine.Game
             }
         }
 
+        public void PauseControl(bool pause)
+        {
+            if (Match.SelectedModeSettings.PauseMode == PauseMode.LOCK) return;
+            if (Monitor.MatchState != MatchState.ROUND_RUNNING) return;
+
+            paused = pause;
+            PauseScreen.CallPauseMenu(paused);
+        }
+
         // Generate inputs for your game
-        //NOTICE: for every 8 inputs you need to change the index
         public byte[] ReadInputs(int id, int inputSize)
         {
             if (id < 0) return new byte[inputSize];

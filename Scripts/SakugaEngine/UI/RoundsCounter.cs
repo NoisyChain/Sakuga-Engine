@@ -3,18 +3,16 @@ using System;
 
 namespace SakugaEngine.UI
 {
-    public partial class RoundsCounter : HBoxContainer
+    public partial class RoundsCounter : Control
     {
         [Export] private int RoundsLimit = 2;
-        public TextureRect[] RoundViews;
+        [Export] public Control[] RoundViews;
 
         // Called when the node enters the scene tree for the first time.
         public void Setup()
         {
-            RoundViews = new TextureRect[RoundsLimit];
             for (int i = 0; i < RoundsLimit; i++)
             {
-                RoundViews[i] = GetNode<TextureRect>("Round" + (i + 1));
                 RoundViews[i].Visible = false;
             }
         }

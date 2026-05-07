@@ -48,7 +48,6 @@ CanCancelTo = Array[Object]([SubResource("Resource_sjv4h"), SubResource("Resourc
 VariablesRequirement = null
 VariablesChange = null
 CanBeOverrided = true
-CanOverrideToSelf = true
 PriorityBuffer = true
 IgnoreSamePriority = false
 UseOnGround = true

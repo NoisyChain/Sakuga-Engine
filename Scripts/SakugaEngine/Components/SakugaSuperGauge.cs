@@ -1,6 +1,5 @@
 using Godot;
 using SakugaEngine.Resources;
-using System.IO;
 
 namespace SakugaEngine
 {

@@ -34,6 +34,8 @@ namespace SakugaEngine.UI
 
             matchSettings.P1SelectedDevice = -1;
             matchSettings.P2SelectedDevice = -1;
+
+            AudioManager.Instance.PlayAnnouncerClip(0);
         }
 
         public override void _Process(double delta)
@@ -50,6 +52,8 @@ namespace SakugaEngine.UI
             matchSettings.P1SelectedDevice = 10;
             matchSettings.P2SelectedDevice = -1;
             matchSettings.TimeLimit = 99;
+            AudioManager.Instance.PlayMenuClip(1);
+            AudioManager.Instance.PlayAnnouncerClip(1);
             LoadingScreenManager.Instance.LoadScene("res://Scenes/Lobby.tscn");
         }
 
@@ -59,6 +63,7 @@ namespace SakugaEngine.UI
             matchSettings.P1SelectedDevice = 10;
             matchSettings.P2SelectedDevice = -1;
             matchSettings.TimeLimit = 99;
+            AudioManager.Instance.PlayMenuClip(1);
             LoadingScreenManager.Instance.LoadScene("res://Scenes/SelectScreen.tscn");
         }
 
@@ -67,6 +72,8 @@ namespace SakugaEngine.UI
             matchSettings.SelectedMode = 1;
             matchSettings.TimeLimit = 99;
             InputSelectMenu.Visible = true;
+            AudioManager.Instance.PlayMenuClip(1);
+            AudioManager.Instance.PlayAnnouncerClip(2);
             //GetTree().ChangeSceneToFile("res://Scenes/SelectScreen.tscn");
         }
 
@@ -76,6 +83,8 @@ namespace SakugaEngine.UI
             matchSettings.P1SelectedDevice = 10;
             matchSettings.P2SelectedDevice = -1;
             matchSettings.TimeLimit = -1;
+            AudioManager.Instance.PlayMenuClip(1);
+            AudioManager.Instance.PlayAnnouncerClip(3);
             LoadingScreenManager.Instance.LoadScene("res://Scenes/SelectScreen.tscn");
         }
 
@@ -89,6 +98,8 @@ namespace SakugaEngine.UI
 
         public void _OnQuitButtonPressed()
         {
+            AudioManager.Instance.PlayMenuClip(2);
+            AudioManager.Instance.PlayAnnouncerClip(4);
             GetTree().Quit();
         }
 
@@ -97,44 +108,68 @@ namespace SakugaEngine.UI
             if (!InputSelectMenu.Visible) return;
 
             if (Input.IsActionJustPressed("k1_left"))
+            {
+                AudioManager.Instance.PlayMenuClip(0);
                 if (matchSettings.P2SelectedDevice == 0) matchSettings.P2SelectedDevice = -1;
                 else if (matchSettings.P1SelectedDevice == -1) matchSettings.P1SelectedDevice = 0;
+            }
             if (Input.IsActionJustPressed("k1_right"))
+            {
+                AudioManager.Instance.PlayMenuClip(0);
                 if (matchSettings.P1SelectedDevice == 0) matchSettings.P1SelectedDevice = -1;
                 else if (matchSettings.P2SelectedDevice == -1) matchSettings.P2SelectedDevice = 0;
+            }
             
             if (matchSettings.P2SelectedDevice == 0) DeviceWidgetKeyboard1.Position = PivotP2.Position;
             else if (matchSettings.P1SelectedDevice == 0) DeviceWidgetKeyboard1.Position = PivotP1.Position;
             else DeviceWidgetKeyboard1.Position = k1Pos;
 
             if (Input.IsActionJustPressed("k2_left"))
+            {
+                AudioManager.Instance.PlayMenuClip(0);
                 if (matchSettings.P2SelectedDevice == 1) matchSettings.P2SelectedDevice = -1;
                 else if (matchSettings.P1SelectedDevice == -1) matchSettings.P1SelectedDevice = 1;
+            }
             if (Input.IsActionJustPressed("k2_right"))
+            {
+                AudioManager.Instance.PlayMenuClip(0);
                 if (matchSettings.P1SelectedDevice == 1) matchSettings.P1SelectedDevice = -1;
                 else if (matchSettings.P2SelectedDevice == -1) matchSettings.P2SelectedDevice = 1;
+            }
             
             if (matchSettings.P2SelectedDevice == 1) DeviceWidgetKeyboard2.Position = PivotP2.Position;
             else if (matchSettings.P1SelectedDevice == 1) DeviceWidgetKeyboard2.Position = PivotP1.Position;
             else DeviceWidgetKeyboard2.Position = k2Pos;
 
             if (Input.IsActionJustPressed("j1_left"))
+            {
+                AudioManager.Instance.PlayMenuClip(0);
                 if (matchSettings.P2SelectedDevice == 2) matchSettings.P2SelectedDevice = -1;
                 else if (matchSettings.P1SelectedDevice == -1) matchSettings.P1SelectedDevice = 2;
+            }
             if (Input.IsActionJustPressed("j1_right"))
+            {
+                AudioManager.Instance.PlayMenuClip(0);
                 if (matchSettings.P1SelectedDevice == 2) matchSettings.P1SelectedDevice = -1;
                 else if (matchSettings.P2SelectedDevice == -1) matchSettings.P2SelectedDevice = 2;
+            }
             
             if (matchSettings.P2SelectedDevice == 2) DeviceWidgetController1.Position = PivotP2.Position;
             else if (matchSettings.P1SelectedDevice == 2) DeviceWidgetController1.Position = PivotP1.Position;
             else DeviceWidgetController1.Position = j1Pos;
 
             if (Input.IsActionJustPressed("j2_left"))
+            {
+                AudioManager.Instance.PlayMenuClip(0);
                 if (matchSettings.P2SelectedDevice == 3) matchSettings.P2SelectedDevice = -1;
                 else if (matchSettings.P1SelectedDevice == -1) matchSettings.P1SelectedDevice = 3;
+            }
             if (Input.IsActionJustPressed("j2_right"))
+            {
+                AudioManager.Instance.PlayMenuClip(0);
                 if (matchSettings.P1SelectedDevice == 3) matchSettings.P1SelectedDevice = -1;
                 else if (matchSettings.P2SelectedDevice == -1) matchSettings.P2SelectedDevice = 3;
+            }
             
             if (matchSettings.P2SelectedDevice == 3) DeviceWidgetController2.Position = PivotP2.Position;
             else if (matchSettings.P1SelectedDevice == 3) DeviceWidgetController2.Position = PivotP1.Position;
@@ -145,11 +180,18 @@ namespace SakugaEngine.UI
             bool joy1Confirm = (matchSettings.P1SelectedDevice == 2 || matchSettings.P2SelectedDevice == 2) && Input.IsActionJustPressed("j1_accept");
             bool joy2Confirm = (matchSettings.P1SelectedDevice == 3 || matchSettings.P2SelectedDevice == 3) && Input.IsActionJustPressed("j2_accept");
 
-            if (Input.IsActionJustPressed("general_return")) InputSelectMenu.Visible = false;
+            if (Input.IsActionJustPressed("general_return"))
+            {
+                AudioManager.Instance.PlayMenuClip(2);
+                InputSelectMenu.Visible = false;
+            }
 
-            if (key1Confirm || key2Confirm || joy1Confirm || joy2Confirm) 
+            if (key1Confirm || key2Confirm || joy1Confirm || joy2Confirm)
+            {
+                AudioManager.Instance.PlayMenuClip(3);
                 LoadingScreenManager.Instance.LoadScene("res://Scenes/SelectScreen.tscn");
                 //GetTree().ChangeSceneToFile("res://Scenes/SelectScreen.tscn");
+            }
         }
     }
 }

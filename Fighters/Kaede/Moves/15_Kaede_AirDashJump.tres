@@ -39,6 +39,5 @@ CanCancelTo = null
 VariablesRequirement = Array[Object]([SubResource("Resource_il8c1"), SubResource("Resource_7ceo4")])
 VariablesChange = Array[Object]([SubResource("Resource_8wung"), SubResource("Resource_hw4e5")])
 CanBeOverrided = true
-CanOverrideToSelf = true
 IgnoreSamePriority = false
 UseOnAir = true

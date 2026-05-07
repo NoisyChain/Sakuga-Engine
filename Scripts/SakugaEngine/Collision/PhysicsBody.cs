@@ -195,11 +195,10 @@ namespace SakugaEngine.Collision
             {
                 Vector2I Side = new Vector2I(PlayerSide, 1);
 
-                
-                if (CurrentHitbox.HitboxData.Pushbox != null)
-                    Pushbox.UpdateCollider(FixedPosition + (CurrentHitbox.HitboxData.Pushbox.Center * Side), CurrentHitbox.HitboxData.Pushbox.Size);
+                if (CurrentHitbox.HitboxData.Pushbox == null)
+                    Pushbox.UpdateCollider(FixedPosition + Vector2I.Zero, Vector2I.Zero);
                 else
-                    Pushbox.UpdateCollider(FixedPosition, Vector2I.Zero);
+                    Pushbox.UpdateCollider(FixedPosition + (CurrentHitbox.HitboxData.Pushbox.Center * Side), CurrentHitbox.HitboxData.Pushbox.Size);
                 
                 for(int i = 0; i < Hitboxes.Length; i++)
                     if (i < CurrentHitbox.HitboxData.Hitboxes.Length)

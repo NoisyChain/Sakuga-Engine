@@ -15,14 +15,14 @@ namespace SakugaEngine.Resources
             
             if (Absolute)
             {
-                Actor.Parameters.SuperGauge.SetSuperGauge(Value);
+                Actor.Parameters.SuperGauge.SetSuperGauge(Mathf.Abs(Value));
                 return;
             }
             
             if (Value > 0)
-                Actor.Parameters.SuperGauge.AddSuperGauge(Value);
+                Actor.Parameters.SuperGauge.AddSuperGauge(Mathf.Abs(Value));
             else if (Value < 0)
-                Actor.Parameters.SuperGauge.SpendSuperGauge(Value);
+                Actor.Parameters.SuperGauge.SpendSuperGauge(Mathf.Abs(Value));
         }
     }
 }

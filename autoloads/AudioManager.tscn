@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://bckwjkc5ciw5y"]
+
+[ext_resource type="Script" uid="uid://bl6rvsfvnqh8u" path="res://Scripts/SakugaEngine/Components/AudioManager.cs" id="1_eyf8d"]
+
+[node name="AudioManager" type="Node" unique_id=519106305 node_paths=PackedStringArray("Announcer", "Menu", "BGM")]
+script = ExtResource("1_eyf8d")
+Announcer = NodePath("Announcer")
+Menu = NodePath("Menu")
+BGM = NodePath("BGM")
+
+[node name="Announcer" type="AudioStreamPlayer" parent="." unique_id=1258603002]
+bus = &"Announcer"
+
+[node name="Menu" type="AudioStreamPlayer" parent="." unique_id=1866846115]
+bus = &"SFX"
+
+[node name="BGM" type="AudioStreamPlayer" parent="." unique_id=382217910]
+bus = &"BGM"

@@ -7,16 +7,16 @@ namespace SakugaEngine.Global
         public const int SubSteps = 2;
         public const int Delta = TicksPerSecond * SubSteps;
         public const int SimulationScale = 10000;
-        public const int WallLimit = 75000;
-        public const int CeilingLimit = 120000;
-        public const int StartingPosition = 12000;
-        public const int MaxPlayersDistance = 70000;
+        public const int WallLimit = 120000;
+        public const int CeilingLimit = 250000;
+        public const int StartingPosition = 12500;
+        public const int MaxPlayersDistance = 100000;
         public const int InputHistorySize = 16;
         public const int KaraCancelWindow = 3;
-        public const int DefaultGravity = 200000;
-        public const int DefaultAcceleration = 200000;
-        public const int DefaultDeceleration = 150000;
-        public const int DefaultFriction = 300000;
+        public const int DefaultGravity = 230000;
+        public const int DefaultAcceleration = 360000;
+        public const int DefaultDeceleration = 250000;
+        public const int DefaultFriction = 400000;
         public const int GravityDecay = 2500;
         public const int HitstunDecayMinCombo = 8;
         public const int MinHitstun = 8;
@@ -30,6 +30,6 @@ namespace SakugaEngine.Global
         public const ushort CornerMinDamageScaling = 45;
         public const ushort CornerMaxDamageScaling = 120;
         public const int MoveBufferLength = 10;
-        public const int DefaultVFXSoundChannel = 0;  
+        public const int DefaultVFXSoundChannel = 0;
     }
 }

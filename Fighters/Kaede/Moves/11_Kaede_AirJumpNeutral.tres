@@ -39,7 +39,6 @@ CanCancelTo = null
 VariablesRequirement = Array[Object]([SubResource("Resource_tmkpr")])
 VariablesChange = Array[Object]([SubResource("Resource_opnpq"), SubResource("Resource_jjsyd"), SubResource("Resource_op3mk")])
 CanBeOverrided = true
-CanOverrideToSelf = true
 IgnoreSamePriority = false
 AcceptCombatStates = true
 UseOnAir = true

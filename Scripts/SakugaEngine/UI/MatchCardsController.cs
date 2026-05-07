@@ -1,4 +1,5 @@
 using Godot;
+using SakugaEngine.Game;
 using SakugaEngine.Global;
 using SakugaEngine.Resources;
 
@@ -12,10 +13,6 @@ namespace SakugaEngine.UI
         [Export] private string RoundName = "Round";
         [Export] private RoundNamingOrder RoundNaming;
         [Export] private string[] KO_Names = ["K.O.", "PERFECT!", "Double K.O.", "Time Up!"];
-
-        /*[ExportGroup("Announcer")]
-        [Export] private SoundsList AnnouncerVoiceLines;
-        [Export] private SoundQueue AnnouncerSound;*/
 
         [ExportGroup("Animation References")]
         [Export] private MatchAnimation[] Animations;
@@ -38,6 +35,7 @@ namespace SakugaEngine.UI
                 animator.Play("RESET");
                 return;
             }
+            else if (CurrentAnimation == RoundStartAnimation && Frame == 100) AudioManager.Instance.PlayAnnouncerClip(GetCurrentAnimation().AnnouncerLineIndex + 6);
 
             animator.Play(GetCurrentAnimation().Name);
             animator.Seek(Frame / (float)GlobalVariables.TicksPerSecond, true);
@@ -60,14 +58,19 @@ namespace SakugaEngine.UI
             //animator.Play("RESET");
             CurrentAnimation = CatchPhraseAnimation;
             Frame = 0;
-            //PlayAnnouncerLine(GetCurrentAnimation().AnnouncerLineIndex);
+            AudioManager.Instance.PlayAnnouncerClip(GetCurrentAnimation().AnnouncerLineIndex);
         }
 
         public void PlayRoundStartAnimation(int currentRound, bool final)
         {
-            //animator.Play("RESET");
+            CurrentAnimation = RoundStartAnimation;
+            Frame = 0;
+
             if (final)
+            {
                 SetRoundLabel($"Final {RoundName}");
+                AudioManager.Instance.PlayAnnouncerClip(GetCurrentAnimation().AnnouncerLineIndex + 5);
+            }
             else
             {
                 switch (RoundNaming)
@@ -95,16 +98,12 @@ namespace SakugaEngine.UI
                         SetRoundLabel($"{currentRound + 1}{placing} {RoundName}");
                         break;
                 }
+                AudioManager.Instance.PlayAnnouncerClip(GetCurrentAnimation().AnnouncerLineIndex + currentRound);
             }
-            
-            CurrentAnimation = RoundStartAnimation;
-            Frame = 0;
-            //PlayAnnouncerLine(GetCurrentAnimation().AnnouncerLineIndex);
         }
 
         public void PlayKnockoutAnimation(int playerIndex, int koType)
         {
-            //animator.Play("RESET");
             SetKOLabel(KO_Names[koType]);
             switch (playerIndex)
             {
@@ -119,7 +118,7 @@ namespace SakugaEngine.UI
                     break;
             }
             Frame = 0;
-            //PlayAnnouncerLine(GetCurrentAnimation().AnnouncerLineIndex);
+            AudioManager.Instance.PlayAnnouncerClip(GetCurrentAnimation().AnnouncerLineIndex + koType);
         }
 
         private void SetRoundLabel(string text)
@@ -134,30 +133,23 @@ namespace SakugaEngine.UI
 
         public void PlayPlayerWinAnimation(int playerIndex)
         {
-            //animator.Play("RESET");
             switch (playerIndex)
             {
                 case 0:
                     CurrentAnimation = WinAnimationP1;
+                    AudioManager.Instance.PlayAnnouncerClip(GetCurrentAnimation().AnnouncerLineIndex + GameManager.Instance.Match.P1SelectedCharacter);
                     break;
                 case 1:
                     CurrentAnimation = WinAnimationP2;
+                    AudioManager.Instance.PlayAnnouncerClip(GetCurrentAnimation().AnnouncerLineIndex + GameManager.Instance.Match.P2SelectedCharacter);
                     break;
                 default:
                     CurrentAnimation = DrawAnimation;
+                    AudioManager.Instance.PlayAnnouncerClip(GetCurrentAnimation().AnnouncerLineIndex);
                     break;
             }
             Frame = 0;
-            //PlayAnnouncerLine(GetCurrentAnimation().AnnouncerLineIndex);
         }
-
-        /*public void PlayAnnouncerLine(int index)
-        {
-            if (AnnouncerVoiceLines == null) return;
-            if (index < 0) return;
-
-            AnnouncerSound.QueueSound(AnnouncerVoiceLines.Sounds[index]);
-        }*/
 
         public MatchAnimation GetCurrentAnimation() => Animations[CurrentAnimation];
         public bool AnimationEnded() => Frame >= GetCurrentAnimation().Duration;

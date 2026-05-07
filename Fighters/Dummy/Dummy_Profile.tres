@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="FighterProfile" load_steps=4 format=3 uid="uid://dfma5gqaldi8g"]
+[gd_resource type="Resource" script_class="FighterProfile" format=3 uid="uid://dfma5gqaldi8g"]
 
 [ext_resource type="Script" uid="uid://c5w04j5my3h8p" path="res://Scripts/SakugaEngine/Resources/FighterProfile.cs" id="1_hse2h"]
 [ext_resource type="Texture2D" uid="uid://6ctweo6uvot8" path="res://icon.svg" id="1_o44jh"]
@@ -10,5 +10,5 @@ FighterName = "Dummy Fighter"
 ShortName = "Dummy"
 Render = ExtResource("2_m2l3l")
 Portrait = ExtResource("1_o44jh")
-AutoStage = 0
-AutoBGM = 0
+VictoryRender = ExtResource("2_m2l3l")
+OnlineIcon = ExtResource("1_o44jh")

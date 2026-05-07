@@ -194,9 +194,9 @@ namespace SakugaEngine.GameState
         [Key(1)] public int LostHealth;
         [Key(2)] public int RecoveryHealth;
         [Key(3)] public int CurrentSuperGauge;
-        [Key(5)] public int CurrentSuperArmor;
-        [Key(6)] public ProrationsState Prorations;
-        [Key(7)] public CombatTrackerState CombatTracker;
+        [Key(6)] public int CurrentSuperArmor;
+        [Key(7)] public ProrationsState Prorations;
+        [Key(8)] public CombatTrackerState CombatTracker;
         [Key(50)] public FrameTimerState[] Timers;
         [Key(51)] public CustomVariableState[] Variables;
         public void GetStateData(ref SakugaParameters reference)

@@ -29,8 +29,9 @@ namespace SakugaEngine.Resources
         
         [ExportCategory("Move Flags")]
         [Export] public bool SkipCheck;
+        [Export] public bool Unlockable;
         [Export] public bool CanBeOverrided;
-        [Export] public bool CanOverrideToSelf;
+        [Export] public bool IgnoreSelf = true;
         [Export] public bool PriorityBuffer;
         [Export] public bool IgnoreSamePriority = true;
         [Export] public bool AcceptNullStates = false;

@@ -1,5 +1,4 @@
 using Godot;
-using SakugaEngine;
 using SakugaEngine.Global;
 using SakugaEngine.Resources;
 
@@ -12,7 +11,6 @@ namespace SakugaEngine.UI
         [Export] private FighterList fightersList;
         [Export] private StageList stagesList;
         [Export] private BGMList songsList;
-        [Export] private AudioStreamPlayer BGM;
         [Export] private CharacterSelectStyle PlayerSelection;
         [Export] private CharacterSelectMode SelectionMode;
         [Export] private Control CharSelectMode;
@@ -29,7 +27,6 @@ namespace SakugaEngine.UI
         [Export] private string returnTo = "res://Scenes/MainMenu.tscn";
 
         [ExportCategory("Character Select")]
-        
         [Export] private TextureRect P1SelectedRender;
         [Export] private TextureRect P2SelectedRender;
         [Export] private Label P1SelectedName;
@@ -105,6 +102,8 @@ namespace SakugaEngine.UI
                 }
                 characterButtons[i] = temp;
                 charactersContainer.AddChild(temp);
+
+                AudioManager.Instance.PlayAnnouncerClip(6);
             }
 
             stageButtons = new TextureRect[stagesList.elements.Length + 2];
@@ -163,6 +162,7 @@ namespace SakugaEngine.UI
                     {
                         case CharacterSelectState.SELECTING_CHARACTER:
                             SelectCharacterP2();
+                            
                             break;
                         case CharacterSelectState.SELECTING_COLOR:
                             SelectColorP2();
@@ -206,33 +206,38 @@ namespace SakugaEngine.UI
         {
             if (P1Up)
             {
+                AudioManager.Instance.PlayMenuClip(0);
                 P1Selected -= charactersContainer.Columns;
                 if (P1Selected < 0) P1Selected += charactersContainer.Columns;
             }
             if (P1Down)
             {
+                AudioManager.Instance.PlayMenuClip(0);
                 P1Selected += charactersContainer.Columns;
                 if (P1Selected > fightersList.elements.Length) 
                     P1Selected -= charactersContainer.Columns;
             }
             if (P1Left)
             {
-                
+                AudioManager.Instance.PlayMenuClip(0);
                 if (P1Selected % charactersContainer.Columns > 0)
                     P1Selected--;
             }
             if (P1Right)
             {
+                AudioManager.Instance.PlayMenuClip(0);
                 if (P1Selected % charactersContainer.Columns < charactersContainer.Columns - 1)
                     P1Selected++;
             }
             if (P1Confirm)
             {
+                AudioManager.Instance.PlayMenuClip(1);
                 if (P1Selected >= fightersList.elements.Length)
                     P1Selected = randomSelection.Next(0, fightersList.elements.Length);
                 
                 P1State = CharacterSelectState.SELECTING_COLOR;
                 CallColorSelectP1();
+                AudioManager.Instance.PlayAnnouncerClip(7 + P1Selected);
             }
             if (P1Return)
             {
@@ -256,12 +261,14 @@ namespace SakugaEngine.UI
         {
             if (P1Up)
             {
+                AudioManager.Instance.PlayMenuClip(0);
                 P1ColorSelected--;
                 if (P1ColorSelected < 0) P1ColorSelected = 0;
                 P1ColorSelect.SelectElement(P1ColorSelected);
             }
             if (P1Down)
             {
+                AudioManager.Instance.PlayMenuClip(0);
                 P1ColorSelected++;
                 if (P1ColorSelected >= fightersList.elements[P1Selected].ColorPalettes.Length)
                     P1ColorSelected = fightersList.elements[P1Selected].ColorPalettes.Length - 1;
@@ -269,7 +276,7 @@ namespace SakugaEngine.UI
             }
             if (P1Confirm)
             {
-
+                AudioManager.Instance.PlayMenuClip(3);
                 if (!P2Finished) isPlayer1SelectingStage = true;
                 P1State = CharacterSelectState.DONE;
                 if (SinglePlayerSelection) P2State = CharacterSelectState.DONE;
@@ -277,7 +284,7 @@ namespace SakugaEngine.UI
             }
             if (P1Return)
             {
-
+                AudioManager.Instance.PlayMenuClip(2);
                 P1State = CharacterSelectState.SELECTING_CHARACTER;
                 P1ColorSelect.Deactivate();
             }
@@ -288,35 +295,42 @@ namespace SakugaEngine.UI
             if (PlayerSelection > 0 && !P1Finished) return;
             if (P2Up)
             {
+                AudioManager.Instance.PlayMenuClip(0);
                 P2Selected -= charactersContainer.Columns;
                 if (P2Selected < 0) P2Selected += charactersContainer.Columns;
             }
             if (P2Down)
             {
+                AudioManager.Instance.PlayMenuClip(0);
                 P2Selected += charactersContainer.Columns;
                 if (P2Selected > fightersList.elements.Length)
                     P2Selected -= charactersContainer.Columns;
             }
             if (P2Left)
             {
+                AudioManager.Instance.PlayMenuClip(0);
                 if (P2Selected % charactersContainer.Columns > 0)
                     P2Selected--;
             }
             if (P2Right)
             {
+                AudioManager.Instance.PlayMenuClip(0);
                 if (P2Selected % charactersContainer.Columns < charactersContainer.Columns - 1)
                     P2Selected++;
             }
             if (P2Confirm)
             {
+                AudioManager.Instance.PlayMenuClip(1);
                 if (P2Selected >= fightersList.elements.Length)
                     P2Selected = randomSelection.Next(0, fightersList.elements.Length);
 
                 P2State = CharacterSelectState.SELECTING_COLOR;
+                AudioManager.Instance.PlayAnnouncerClip(7 + P2Selected);
                 CallColorSelectP2();
             }
             if (P2Return)
             {
+                AudioManager.Instance.PlayMenuClip(2);
                 ReturnToPrevious();
             }
         }
@@ -336,12 +350,14 @@ namespace SakugaEngine.UI
         {
             if (P2Up)
             {
+                AudioManager.Instance.PlayMenuClip(0);
                 P2ColorSelected--;
                 if (P2ColorSelected < 0) P2ColorSelected = 0;
                 P2ColorSelect.SelectElement(P2ColorSelected);
             }
             if (P2Down)
             {
+                AudioManager.Instance.PlayMenuClip(0);
                 P2ColorSelected++;
                 if (P2ColorSelected >= fightersList.elements[P2Selected].ColorPalettes.Length)
                     P2ColorSelected = fightersList.elements[P2Selected].ColorPalettes.Length - 1;
@@ -349,14 +365,14 @@ namespace SakugaEngine.UI
             }
             if (P2Confirm)
             {
-
+                AudioManager.Instance.PlayMenuClip(3);
                 if (!P1Finished) isPlayer1SelectingStage = false;
                 P2State = CharacterSelectState.DONE;
                 P2ColorSelect.Deactivate();
             }
             if (P2Return)
             {
-
+                AudioManager.Instance.PlayMenuClip(2);
                 P2State = CharacterSelectState.SELECTING_CHARACTER;
                 P2ColorSelect.Deactivate();
             }
@@ -404,22 +420,26 @@ namespace SakugaEngine.UI
                 
             if (Left)
             {
+                AudioManager.Instance.PlayMenuClip(0);
                 StageSelected--;
                 if (StageSelected < -2) StageSelected = -2;
             }
             if (Right)
             {
+                AudioManager.Instance.PlayMenuClip(0);
                 StageSelected++;
                 if (StageSelected >= stagesList.elements.Length) 
                     StageSelected = stagesList.elements.Length - 1;
             }
             if (Up)
             {
+                AudioManager.Instance.PlayMenuClip(0);
                 BGMSelected--;
                 if (BGMSelected < -2) BGMSelected = -2;
             }
             if (Down)
             {
+                AudioManager.Instance.PlayMenuClip(0);
                 BGMSelected++;
                 if (BGMSelected >= songsList.elements.Length) 
                     BGMSelected = songsList.elements.Length - 1;
@@ -441,6 +461,7 @@ namespace SakugaEngine.UI
             }
             if (Return)
             {
+                AudioManager.Instance.PlayMenuClip(2);
                 P1State = CharacterSelectState.SELECTING_CHARACTER;
                 P2State = CharacterSelectState.SELECTING_CHARACTER;
             }
@@ -512,7 +533,6 @@ namespace SakugaEngine.UI
 
         void MatchSetup()
         {
-            if (BGM != null) BGM.Stop();
             // Player 1 settings
             Match.P1SelectedCharacter = P1Selected;
             Match.P1SelectedColor = P1ColorSelected;

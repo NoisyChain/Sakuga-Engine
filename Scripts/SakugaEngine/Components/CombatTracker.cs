@@ -33,13 +33,13 @@ namespace SakugaEngine
             LastHitType = 0;
             invalidHit = false;
         }
-        public void UpdateTrackers(int damage, int hitFrame, int hitStun, int hitType, bool isInvalid)
+        public void UpdateTrackers(int damage, int hitFrame, int hitStun, int hitType, bool isInvalid = false, bool isCombo = true)
         {
             if (isInvalid)
                 invalidHit = true;
 
             if (HitCombo == 0) CurrentCombo = 0;
-            HitCombo++;
+            if (isCombo) HitCombo++;
             LastDamage = damage;
             CurrentCombo += damage;
             if (CurrentCombo > HighestCombo)
@@ -53,9 +53,9 @@ namespace SakugaEngine
 
         public void UpdateFrameData()
         {
-            int selectFrameOrigin = _owner.StateManager.CurrentStateType() == Global.StateType.HIT_REACTION?
+            int selectFrameOrigin = _owner.StateManager.CurrentStateType() == Global.StateType.HIT_REACTION ?
                                         (int)_owner.Hitstun.TimeLeft :
-                                        (_owner.StateManager.GetCurrentState().Duration - _owner.StateManager.CurrentStateFrame);
+                                        (_owner.StateManager.GetCurrentState().AnimationData.Duration - _owner.StateManager.CurrentStateFrame);
 
             FrameData = _owner.StateManager.CurrentStateType() <= Global.StateType.MOVEMENT ? 0 : selectFrameOrigin;
             //FrameData = Mathf.Clamp(FrameData, 0, owner.StateManager.GetCurrentState().Duration);

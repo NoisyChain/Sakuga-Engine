@@ -66,7 +66,7 @@ namespace SakugaEngine.UI
                     hitTypeText = "LOW";
                     break;
                 case 3:
-                    hitTypeText = "UNBLOCKABLE";
+                    hitTypeText = "UNBL.";
                     break;
             }
 

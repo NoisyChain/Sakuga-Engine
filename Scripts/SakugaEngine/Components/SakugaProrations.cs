@@ -30,6 +30,8 @@ namespace SakugaEngine
         {
             BaseAttack = data.BaseAttack;
             BaseDefense = data.BaseDefense;
+            CurrentAttack = BaseAttack;
+            CurrentDefense = BaseDefense;
 
             ResetProrations();
         }
@@ -58,9 +60,6 @@ namespace SakugaEngine
 
         public void ResetProrations()
         {
-            CurrentAttack = BaseAttack;
-            CurrentDefense = BaseDefense;
-
             ResetDamageScaling();
 
             CurrentSameMoveProration = 100;

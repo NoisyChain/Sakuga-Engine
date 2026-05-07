@@ -19,6 +19,7 @@
 [ext_resource type="Script" uid="uid://tduqq7pxgphg" path="res://Scripts/SakugaEngine/UI/MatchCardsController.cs" id="14_c0xn6"]
 [ext_resource type="Script" uid="uid://c74ackq5g2cbw" path="res://Scripts/SakugaEngine/Resources/MatchAnimation.cs" id="15_ysn3l"]
 [ext_resource type="Script" uid="uid://3uu6r0mhj3p3" path="res://Scripts/SakugaEngine/Components/SoundQueue.cs" id="17_fweai"]
+[ext_resource type="Script" uid="uid://cedml1i8ld8de" path="res://Scripts/SakugaEngine/UI/PauseMenu.cs" id="20_4120v"]
 
 [sub_resource type="Resource" id="Resource_4120v"]
 script = ExtResource("15_ysn3l")
@@ -718,7 +719,7 @@ texture_progress = ExtResource("3_quu14")
 tint_under = Color(0.509804, 0.509804, 0.509804, 1)
 tint_progress = Color(0.909804, 0.843137, 0.396078, 1)
 
-[node name="P1Rounds" type="HBoxContainer" parent="GameHUD_Background/HealthBars" unique_id=1236664845]
+[node name="P1Rounds" type="HBoxContainer" parent="GameHUD_Background/HealthBars" unique_id=1236664845 node_paths=PackedStringArray("RoundViews")]
 layout_mode = 0
 anchor_left = 0.5
 anchor_right = 0.5
@@ -730,6 +731,7 @@ scale = Vector2(0.4, 0.4)
 alignment = 2
 script = ExtResource("4_588f4")
 RoundsLimit = 5
+RoundViews = [NodePath("Round1"), NodePath("Round2"), NodePath("Round3"), NodePath("Round4"), NodePath("Round5")]
 
 [node name="Round5" type="TextureRect" parent="GameHUD_Background/HealthBars/P1Rounds" unique_id=481281020]
 layout_mode = 2
@@ -751,7 +753,7 @@ texture = ExtResource("2_h5vba")
 layout_mode = 2
 texture = ExtResource("2_h5vba")
 
-[node name="P2Rounds" type="HBoxContainer" parent="GameHUD_Background/HealthBars" unique_id=413745748]
+[node name="P2Rounds" type="HBoxContainer" parent="GameHUD_Background/HealthBars" unique_id=413745748 node_paths=PackedStringArray("RoundViews")]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -764,6 +766,7 @@ grow_horizontal = 2
 scale = Vector2(0.4, 0.4)
 script = ExtResource("4_588f4")
 RoundsLimit = 5
+RoundViews = [NodePath("Round1"), NodePath("Round2"), NodePath("Round3"), NodePath("Round4"), NodePath("Round5")]
 
 [node name="Round1" type="TextureRect" parent="GameHUD_Background/HealthBars/P2Rounds" unique_id=250745876]
 layout_mode = 2
@@ -1423,7 +1426,7 @@ anchor_bottom = 0.5
 offset_left = -241.5
 offset_top = -147.0
 offset_right = 414.5
-offset_bottom = 147.00024
+offset_bottom = 345.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(328, 147)
@@ -1589,6 +1592,20 @@ text = "Results"
 horizontal_alignment = 1
 vertical_alignment = 2
 
+[node name="Character" type="TextureRect" parent="ResultsScreen" unique_id=1653983617]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -331.0
+offset_top = -331.0
+offset_right = 331.0
+offset_bottom = 331.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="VictoryMessage" type="Label" parent="ResultsScreen" unique_id=419266798]
 layout_mode = 1
 anchors_preset = 12
@@ -1749,3 +1766,10 @@ size_flags_vertical = 8
 text = "Seed"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="PauseMenu" type="Control" parent="." unique_id=1973510996]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("20_4120v")

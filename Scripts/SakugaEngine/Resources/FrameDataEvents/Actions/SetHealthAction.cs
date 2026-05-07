@@ -16,7 +16,7 @@ namespace SakugaEngine.Resources
             
             if (Absolute)
             {
-                Actor.Parameters.Health.SetHealth(Value);
+                Actor.Parameters.Health.SetHealth(Mathf.Abs(Value));
                 return;
             }
             

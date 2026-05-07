@@ -2,12 +2,14 @@ using Godot;
 using SakugaEngine.Resources;
 using SakugaEngine.Global;
 using SakugaEngine.UI;
+using SakugaEngine.Game;
 
 namespace SakugaEngine
 {
     public partial class GameMonitor : Node
     {
         [Export] public FrameTimer DelayTimer;
+        [Export] private AudioStream VictoryJingle;
         public MatchCardsController Cards;
         public Control ResultsScreen;
         public int ClockLimit = 99;
@@ -102,7 +104,10 @@ namespace SakugaEngine
                 VictoryCounter[RoundWinner]++;
                 GD.Print($"Player {RoundWinner + 1} win the round {CurrentRound + 1}!");
                 if (VictoryCounter[RoundWinner] == RoundsToWin)
+                {
                     Winner = RoundWinner;
+                    GameManager.Instance.BGMSource.Stop();
+                }
             }
 
             CurrentRound++;
@@ -362,6 +367,7 @@ namespace SakugaEngine
 
             Control winP1 = ResultsScreen.GetNode<Control>("WinBannerP1");
             Control winP2 = ResultsScreen.GetNode<Control>("WinBannerP2");
+            TextureRect WinnerRender = ResultsScreen.GetNode<TextureRect>("Character");
             Label VictoryMessage = ResultsScreen.GetNode<Label>("VictoryMessage");
 
             if (Winner == 0) 
@@ -374,8 +380,12 @@ namespace SakugaEngine
                 winP2.GetNode<Label>("NamePlayer2").Text = _fighters[Winner].Data.Profile.ShortName;
                 winP1.Visible = false;
             }
+            WinnerRender.Texture = _fighters[Winner].Data.Profile.VictoryRender;
 
             VictoryMessage.Text = winnerMessage;
+
+            GameManager.Instance.BGMSource.Stream = VictoryJingle;
+            GameManager.Instance.BGMSource.Play();
             ResultsScreen.Visible = true;
         }
 

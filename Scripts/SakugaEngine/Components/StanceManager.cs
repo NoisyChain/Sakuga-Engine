@@ -25,19 +25,13 @@ namespace SakugaEngine
 
         public bool CheckMoveConditions(int index)
         {
-            if (_owner.ContainsFrameProperty(FrameProperties.LOCK_MOVE)) return false;
+            if (!GetMove(index).Unlockable && _owner.ContainsFrameProperty(FrameProperties.LOCK_MOVE)) return false;
 
             if (!CheckAllowedStateType(index)) return false;
 
             if (CurrentMove >= 0)
             {
-                if (CurrentMove == index)
-                {
-                    bool canOverride = !GetCurrentMove().CanBeOverrided || (GetCurrentMove().CanBeOverrided && GetCurrentMove().CanOverrideToSelf);
-
-                    if (!canOverride) return false;
-                }
-
+                if (CurrentMove == index && GetMove(index).IgnoreSelf) return false;
                 if (GetMove(index).PriorityBuffer && GetMove(index).Priority < GetCurrentMove().Priority) return false;
             }
             if (GetMove(index).AcceptHitReactionStates && GetMove(index).IgnoreKnockdownHits && _owner.HitstunType >= HitstunType.KNOCKDOWN) return false;
@@ -74,6 +68,7 @@ namespace SakugaEngine
         public void CheckMoves()
         {
             if (MoveBuffer == null) return;
+            if (!CanRun) return;
 
             for (int i = GetMoveListLength() - 1; i >= 0; i--)
             {
@@ -81,7 +76,6 @@ namespace SakugaEngine
                 if (!CheckMoveConditions(i)) continue;
                 if (_owner.Inputs.CheckMotionInputs(GetMove(i).Inputs, _owner.InputSide))
                 {
-                    if (!CanRun) continue;
                     BufferMove(i, false);
                     break;
                 }
@@ -129,6 +123,7 @@ namespace SakugaEngine
         private void CheckMoveCancel()
         {
             if (CurrentMove < 0) return;
+            if (!CanRun) return;
             if (GetCurrentMove().CanCancelTo == null) return;
             if (GetCurrentMove().CanCancelTo.Length <= 0) return;
 
@@ -137,9 +132,7 @@ namespace SakugaEngine
                 if (!CheckCancelConditions(cancel)) continue;
                 if (!CheckMoveConditions(cancel.MoveIndex)) continue;
                 if (_owner.Inputs.CheckMotionInputs(GetMove(cancel.MoveIndex).Inputs, _owner.InputSide))
-                {
-                    if (!CanRun) continue;
-                    
+                {                    
                     BufferMove(cancel.MoveIndex, true);
                     break;
                 }
@@ -149,6 +142,7 @@ namespace SakugaEngine
         public void ProcessMoveBuffer()
         {
             if (BufferedMove < 0) return;
+            //if (CurrentMove >= 0 && !GetCurrentMove().CanBeOverrided) return;
             if (!MoveBuffer.IsRunning())
             {
                 BufferedMove = -1;
@@ -273,13 +267,17 @@ namespace SakugaEngine
             return false;
         }
 
-        public int GetBlockState(StanceSelect stance, HitType Type, byte state)
+        public int GetBlockState(HitType Type, byte state)
         {
+            if (_owner.StateManager.CurrentStateType() == StateType.HIT_REACTION) return -1;
+            if (_owner.StateManager.CurrentStateType() == StateType.LOCKED) return -1;
+            if (_owner.StateManager.CurrentStateType() == StateType.COMBAT && _owner.StateManager.CurrentStateFrame >= GlobalVariables.KaraCancelWindow) return -1;
             if (GetCurrentStance().BlockReactions == null || GetCurrentStance().BlockReactions.Length == 0) return -1;
             for (int i = 0; i < GetCurrentStance().BlockReactions.Length; i++)
             {
                 BlockSettings block = GetCurrentStance().BlockReactions[i];
-                if (!IsValidStance(block.ReferenceStance, stance)) continue;
+                if (_owner.Body.IsOnGround && block.ReferenceStance == StanceSelect.AIR) continue;
+                if (!_owner.Body.IsOnGround && block.ReferenceStance != StanceSelect.AIR) continue;
                 if (!ValidHitType(Type, block.BlockType)) continue;
                 if (block.InputToCheck == null) continue;
                 if (!_owner.Inputs.CheckMotionInputs(block.InputToCheck, _owner.InputSide)) continue;

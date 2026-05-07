@@ -5,7 +5,7 @@ namespace SakugaEngine
 {
     public partial class FighterCamera : Camera3D
     {
-        private AudioListener3D Listener;
+        [Export] private AudioListener3D Listener;
         [Export] public CameraFocus CurrentFocus = CameraFocus.CENTER;
         //[Export] public Vector2 minBounds = new Vector2(-12.0f, 0.0f), maxBounds = new Vector2(12.0f, 20.0f);
         [Export] public Vector3 nearOffset = new Vector3(2.7f, 1.4f, 6.5f), farOffset = new Vector3(7.25f, 3.35f, 16.0f);
@@ -24,7 +24,6 @@ namespace SakugaEngine
         public override void _Ready()
         {
             charCam = GetNode<Camera3D>("../CanvasLayer/ViewportContainer/Viewport_Foreground/CharacterCamera");
-            //audioListener = GetNode<Listener>("Listener");
         }
 
         public void UpdateCamera(SakugaActor player1, SakugaActor player2)
