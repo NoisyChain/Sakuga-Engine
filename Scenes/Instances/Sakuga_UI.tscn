@@ -1145,7 +1145,6 @@ horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="TrainingInfo" type="Control" parent="GameHUD_Foreground" unique_id=108050585]
-visible = false
 anchors_preset = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -1178,7 +1177,7 @@ anchors_preset = 9
 anchor_bottom = 1.0
 offset_left = 6.0
 offset_right = 123.0
-offset_bottom = 153.0
+offset_bottom = 156.0
 grow_vertical = 2
 text = "Damage
 Current combo
@@ -1186,6 +1185,7 @@ Highest combo
 Hit type
 Damage Scl.
 Frame data"
+vertical_alignment = 1
 
 [node name="Information" type="Label" parent="GameHUD_Foreground/TrainingInfo/P1Info" unique_id=1033807718]
 layout_mode = 1
@@ -1194,8 +1194,8 @@ anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 141.0
-offset_right = 205.0
-offset_bottom = 153.0
+offset_right = 209.0
+offset_bottom = 156.0
 grow_horizontal = 0
 grow_vertical = 2
 text = "0
@@ -1233,7 +1233,7 @@ anchors_preset = 9
 anchor_bottom = 1.0
 offset_left = 6.0
 offset_right = 123.0
-offset_bottom = 153.0
+offset_bottom = 156.0
 grow_vertical = 2
 text = "Damage
 Current combo
@@ -1241,6 +1241,7 @@ Highest combo
 Hit type
 Damage Scl.
 Frame data"
+vertical_alignment = 1
 
 [node name="Information" type="Label" parent="GameHUD_Foreground/TrainingInfo/P2Info" unique_id=1961395200]
 layout_mode = 1
@@ -1249,8 +1250,8 @@ anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 141.0
-offset_right = 205.0
-offset_bottom = 153.0
+offset_right = 209.0
+offset_bottom = 156.0
 grow_horizontal = 0
 grow_vertical = 2
 text = "0
@@ -1669,6 +1670,7 @@ text = "Player 2 name"
 horizontal_alignment = 2
 
 [node name="FadeScreen" type="ColorRect" parent="." unique_id=1110242483]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
