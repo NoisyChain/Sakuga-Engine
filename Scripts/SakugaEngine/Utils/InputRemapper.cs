@@ -1,95 +1,110 @@
 using Godot;
 using Godot.Collections;
 
-public partial class InputRemapper : Node
+namespace SakugaEngine.Utils
 {
-	const string KeymapDir = "user://keymaps.dat";
-	const string DefaultDir = "user://keymaps_default.dat";
-	private Dictionary<StringName, Array<InputEvent>> Keymaps = new Dictionary<StringName, Array<InputEvent>>();
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
+	public partial class InputRemapper : Control
 	{
-		foreach(var action in InputMap.GetActions())
+		const string KeymapDir = "user://keymaps.dat";
+		const string DefaultDir = "user://keymaps_default.dat";
+		private Dictionary<StringName, Array<InputEvent>> Keymaps = new Dictionary<StringName, Array<InputEvent>>();
+
+		[Export] private Control[] InputMappingChildren;
+		[Export] private Control CurrentActiveInputMapping;
+
+		public bool IsRemapping => CurrentActiveInputMapping != null && CurrentActiveInputMapping.Visible;
+		// Called when the node enters the scene tree for the first time.
+		public override void _Ready()
 		{
-			if (InputMap.ActionGetEvents(action).Count != 0)
+			foreach(var action in InputMap.GetActions())
 			{
-				Keymaps.Add(action, InputMap.ActionGetEvents(action));
-			}
-		}
-
-		CreateDefaultKeymaps();
-		LoadKeymap();
-	}
-
-	public void CreateDefaultKeymaps()
-	{
-		if (FileAccess.FileExists(DefaultDir)) return;
-
-		var file = FileAccess.Open(DefaultDir, FileAccess.ModeFlags.Write);
-		file.StoreVar(Keymaps, true);
-		file.Close();
-	}
-
-	public void ReturnToDefaultKeymaps(Array<StringName> actions)
-	{
-		var file = FileAccess.Open(DefaultDir, FileAccess.ModeFlags.Read);
-		var tempKeymap = (Dictionary<StringName, Array<InputEvent>>)file.GetVar(true);
-		file.Close();
-
-		foreach(var action in actions)
-		{
-			if (tempKeymap.TryGetValue(action, out Array<InputEvent> ev))
-			{
-				Remap(action, ev);
-				InputMap.ActionEraseEvents(action);
-				foreach (InputEvent newEv in ev)
+				if (InputMap.ActionGetEvents(action).Count != 0)
 				{
-					InputMap.ActionAddEvent(action, newEv);
+					Keymaps.Add(action, InputMap.ActionGetEvents(action));
 				}
 			}
+
+			CreateDefaultKeymaps();
+			LoadKeymap();
 		}
 
-		SaveKeymap();
-	}
-
-	public void Remap(StringName action, Array<InputEvent> ev)
-	{
-		if (!Keymaps.ContainsKey(action))
+		public void ToggleInputMapper(int index)
 		{
-			Keymaps.Add(action, ev);
-			return;
+			InputMappingChildren[index].Visible = !InputMappingChildren[index].Visible;
+			CurrentActiveInputMapping = InputMappingChildren[index];
+			GD.Print(CurrentActiveInputMapping.Name);
 		}
 
-		Keymaps[action] = ev;
-	}
-
-	public void SaveKeymap()
-	{
-		var file = FileAccess.Open(KeymapDir, FileAccess.ModeFlags.Write);
-		file.StoreVar(Keymaps, true);
-		file.Close();
-	}
-
-	public void LoadKeymap()
-	{
-		if (!FileAccess.FileExists(KeymapDir))
+		public void CreateDefaultKeymaps()
 		{
-			SaveKeymap();
-			return;
+			if (FileAccess.FileExists(DefaultDir)) return;
+
+			var file = FileAccess.Open(DefaultDir, FileAccess.ModeFlags.Write);
+			file.StoreVar(Keymaps, true);
+			file.Close();
 		}
-		var file = FileAccess.Open(KeymapDir, FileAccess.ModeFlags.Read);
-		var tempKeymap = (Dictionary<StringName, Array<InputEvent>>)file.GetVar(true);
-		file.Close();
 
-		foreach(var action in InputMap.GetActions())
+		public void ReturnToDefaultKeymaps(Array<StringName> actions)
 		{
-			if (tempKeymap.TryGetValue(action, out Array<InputEvent> ev))
+			var file = FileAccess.Open(DefaultDir, FileAccess.ModeFlags.Read);
+			var tempKeymap = (Dictionary<StringName, Array<InputEvent>>)file.GetVar(true);
+			file.Close();
+
+			foreach(var action in actions)
 			{
-				Remap(action, ev);
-				InputMap.ActionEraseEvents(action);
-				foreach (InputEvent newEv in ev)
+				if (tempKeymap.TryGetValue(action, out Array<InputEvent> ev))
 				{
-					InputMap.ActionAddEvent(action, newEv);
+					Remap(action, ev);
+					InputMap.ActionEraseEvents(action);
+					foreach (InputEvent newEv in ev)
+					{
+						InputMap.ActionAddEvent(action, newEv);
+					}
+				}
+			}
+
+			SaveKeymap();
+		}
+
+		public void Remap(StringName action, Array<InputEvent> ev)
+		{
+			if (!Keymaps.ContainsKey(action))
+			{
+				Keymaps.Add(action, ev);
+				return;
+			}
+
+			Keymaps[action] = ev;
+		}
+
+		public void SaveKeymap()
+		{
+			var file = FileAccess.Open(KeymapDir, FileAccess.ModeFlags.Write);
+			file.StoreVar(Keymaps, true);
+			file.Close();
+		}
+
+		public void LoadKeymap()
+		{
+			if (!FileAccess.FileExists(KeymapDir))
+			{
+				SaveKeymap();
+				return;
+			}
+			var file = FileAccess.Open(KeymapDir, FileAccess.ModeFlags.Read);
+			var tempKeymap = (Dictionary<StringName, Array<InputEvent>>)file.GetVar(true);
+			file.Close();
+
+			foreach(var action in InputMap.GetActions())
+			{
+				if (tempKeymap.TryGetValue(action, out Array<InputEvent> ev))
+				{
+					Remap(action, ev);
+					InputMap.ActionEraseEvents(action);
+					foreach (InputEvent newEv in ev)
+					{
+						InputMap.ActionAddEvent(action, newEv);
+					}
 				}
 			}
 		}

@@ -26,7 +26,7 @@ namespace SakugaEngine.Global
     // Character Select enums
     public enum CharacterSelectStyle : byte { VERSUS, PLAYER1, PLAYER2 }
     public enum CharacterSelectMode : byte { CHARACTER_SELECT, STAGE_SELECT }
-    public enum CharacterSelectState : byte { SELECTING_CHARACTER, SELECTING_COLOR, DONE }
+    public enum CharacterSelectState : byte { SELECTING_CHARACTER, SELECTING_COLOR, REMAPPING_INPUTS, DONE }
     public enum CameraFocus : byte { CENTER, PLAYER1, PLAYER2 }
     public enum CameraSelectFocus : byte { CENTER, SELF, OPPONENT }
     public enum MatchState { INTRO, CATCHPHRASE, ROUND_START, ROUND_RUNNING, ROUND_END, ROUND_WINNER, ROUND_INTERLUDE, NEXT_ROUND_TRANSITION, MATCH_OUTRO, RESULTS }

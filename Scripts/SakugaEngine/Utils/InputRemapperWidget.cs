@@ -19,6 +19,8 @@ namespace SakugaEngine.Utils
 
 		private int Selected = 0;
 
+		public bool IsRemapping => remapping;
+
 		public override void _Ready()
 		{
 			for (int i = 0; i < Buttons.Length; i++)
@@ -70,6 +72,12 @@ namespace SakugaEngine.Utils
 					remapping = true;
 					TimeFrame.Start();
 					SetColors();
+				}
+				if (@event.IsActionPressed(Prefix + "return") || @event.IsActionPressed(Prefix + "options"))
+				{
+					AudioManager.Instance.PlayMenuClip(2);
+					remapping = false;
+					Visible = false;
 				}
 				if (@event.IsActionPressed(Prefix + "extra1"))
 				{

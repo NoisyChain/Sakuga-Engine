@@ -1,6 +1,7 @@
 using Godot;
 using SakugaEngine.Global;
 using SakugaEngine.Resources;
+using SakugaEngine.Utils;
 
 namespace SakugaEngine.UI
 {
@@ -39,6 +40,8 @@ namespace SakugaEngine.UI
         [Export] private Texture2D randomCharRender;
         [Export] private ColorSelectMenu P1ColorSelect;
         [Export] private ColorSelectMenu P2ColorSelect;
+        [Export] private InputRemapper P1Remapper;
+        [Export] private InputRemapper P2Remapper;
         
         [ExportCategory("Stage Select")]
         [Export] private TextureRect StageSelectedRender;
@@ -67,8 +70,8 @@ namespace SakugaEngine.UI
         string p1Prefix;
         string p2Prefix;
 
-        bool P1Up, P1Down, P1Left, P1Right, P1Confirm, P1Return;
-        bool P2Up, P2Down, P2Left, P2Right, P2Confirm, P2Return;
+        bool P1Up, P1Down, P1Left, P1Right, P1Confirm, P1Return, P1Menu, P1Options;
+        bool P2Up, P2Down, P2Left, P2Right, P2Confirm, P2Return, P2Menu, P2Options;
 
         public override void _Ready()
         {
@@ -146,6 +149,8 @@ namespace SakugaEngine.UI
             P1Right = Input.IsActionJustPressed(p1SelectPrefix + "_right");
             P1Confirm = Input.IsActionJustPressed(p1SelectPrefix + "_accept");
             P1Return = Input.IsActionJustPressed(p1SelectPrefix + "_return");
+            P1Menu = Input.IsActionJustPressed(p1SelectPrefix + "_menu");
+            P1Options = Input.IsActionJustPressed(p1SelectPrefix + "_options");
             //Player 2 inputs
             P2Up = Input.IsActionJustPressed(p2SelectPrefix + "_up");
             P2Down = Input.IsActionJustPressed(p2SelectPrefix + "_down");
@@ -153,6 +158,8 @@ namespace SakugaEngine.UI
             P2Right = Input.IsActionJustPressed(p2SelectPrefix + "_right");
             P2Confirm = Input.IsActionJustPressed(p2SelectPrefix + "_accept");
             P2Return = Input.IsActionJustPressed(p2SelectPrefix + "_return");
+            P2Menu = Input.IsActionJustPressed(p2SelectPrefix + "_menu");
+            P2Options = Input.IsActionJustPressed(p2SelectPrefix + "_options");
 
             switch (SelectionMode)
             {
@@ -162,10 +169,13 @@ namespace SakugaEngine.UI
                     {
                         case CharacterSelectState.SELECTING_CHARACTER:
                             SelectCharacterP2();
-                            
                             break;
                         case CharacterSelectState.SELECTING_COLOR:
                             SelectColorP2();
+                            break;
+                        case CharacterSelectState.REMAPPING_INPUTS:
+                            if (!P2Remapper.IsRemapping)
+                                HideInputRemapperP2();
                             break;
                         case CharacterSelectState.DONE:
                             if (P2Return)
@@ -180,6 +190,10 @@ namespace SakugaEngine.UI
                             break;
                         case CharacterSelectState.SELECTING_COLOR:
                             SelectColorP1();
+                            break;
+                        case CharacterSelectState.REMAPPING_INPUTS:
+                            if (!P1Remapper.IsRemapping)
+                                HideInputRemapperP1();
                             break;
                         case CharacterSelectState.DONE:
                             if (P1Return)
@@ -245,6 +259,10 @@ namespace SakugaEngine.UI
             {
                 ReturnToPrevious();   
             }
+            if (P1Options)
+            {
+                CallInputRemapperP1();
+            }
         }
 
         private void CallColorSelectP1()
@@ -292,6 +310,22 @@ namespace SakugaEngine.UI
             }
         }
 
+        private void CallInputRemapperP1()
+        {
+            P1Remapper.Visible = true;
+            P1Remapper.ToggleInputMapper(Match.P1SelectedDevice);
+            P1State = CharacterSelectState.REMAPPING_INPUTS;
+            GD.Print(P1State);
+        }
+
+        private void HideInputRemapperP1()
+        {
+            P1Remapper.Visible = false;
+            //P1Remapper.ToggleInputMapper(Match.P1SelectedDevice);
+            P1State = CharacterSelectState.SELECTING_CHARACTER;
+            GD.Print("Player 1: " + P1State);
+        }
+
         private void SelectCharacterP2()
         {
             if (PlayerSelection > 0 && !P1Finished) return;
@@ -337,6 +371,10 @@ namespace SakugaEngine.UI
                 AudioManager.Instance.PlayMenuClip(2);
                 ReturnToPrevious();
             }
+            if (P2Options)
+            {
+                CallInputRemapperP2();
+            }
         }
 
         private void CallColorSelectP2()
@@ -380,6 +418,22 @@ namespace SakugaEngine.UI
                 P2State = CharacterSelectState.SELECTING_CHARACTER;
                 P2ColorSelect.Deactivate();
             }
+        }
+
+        private void CallInputRemapperP2()
+        {
+            P2Remapper.Visible = true;
+            P2Remapper.ToggleInputMapper(Match.P2SelectedDevice);
+            P2State = CharacterSelectState.REMAPPING_INPUTS;
+            GD.Print(P2State);
+        }
+
+        private void HideInputRemapperP2()
+        {
+            P2Remapper.Visible = false;
+            //P2Remapper.ToggleInputMapper(Match.P2SelectedDevice);
+            P2State = CharacterSelectState.SELECTING_CHARACTER;
+            GD.Print("Player 2: " + P2State);
         }
 
         private void ReturnToPrevious()
