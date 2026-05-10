@@ -10,9 +10,13 @@ namespace SakugaEngine.Utils
 		private Dictionary<StringName, Array<InputEvent>> Keymaps = new Dictionary<StringName, Array<InputEvent>>();
 
 		[Export] private Control[] InputMappingChildren;
-		[Export] private Control CurrentActiveInputMapping;
+		[Export] private Control P1Pivot;
+		[Export] private Control P2Pivot;
+		[Export] private Control P1CurrentActiveInputMapping;
+		[Export] private Control P2CurrentActiveInputMapping;
 
-		public bool IsRemapping => CurrentActiveInputMapping != null && CurrentActiveInputMapping.Visible;
+		public bool IsP1Remapping => P1CurrentActiveInputMapping != null && P1CurrentActiveInputMapping.Visible;
+		public bool IsP2Remapping => P2CurrentActiveInputMapping != null && P2CurrentActiveInputMapping.Visible;
 		// Called when the node enters the scene tree for the first time.
 		public override void _Ready()
 		{
@@ -28,11 +32,20 @@ namespace SakugaEngine.Utils
 			LoadKeymap();
 		}
 
-		public void ToggleInputMapper(int index)
+		public void ToggleInputMapperP1(int index)
 		{
-			InputMappingChildren[index].Visible = !InputMappingChildren[index].Visible;
-			CurrentActiveInputMapping = InputMappingChildren[index];
-			GD.Print(CurrentActiveInputMapping.Name);
+			P1CurrentActiveInputMapping = InputMappingChildren[index];
+			P1CurrentActiveInputMapping.Position = P1Pivot.Position;
+			P1CurrentActiveInputMapping.Visible = !P1CurrentActiveInputMapping.Visible;
+			P1CurrentActiveInputMapping._Ready();
+		}
+
+		public void ToggleInputMapperP2(int index)
+		{
+			P2CurrentActiveInputMapping = InputMappingChildren[index];
+			P2CurrentActiveInputMapping.Position = P2Pivot.Position;
+			P2CurrentActiveInputMapping.Visible = !P2CurrentActiveInputMapping.Visible;
+			P2CurrentActiveInputMapping._Ready();
 		}
 
 		public void CreateDefaultKeymaps()

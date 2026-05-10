@@ -14,6 +14,7 @@ namespace SakugaEngine.Utils
 		[Export] private Color SelectedColor;
 		[Export] private Color RemappingColor;
 		[Export] private Timer TimeFrame;
+		[Export] private InputRemapperWidget WaitFor;
 
 		private bool remapping = false;
 
@@ -47,6 +48,7 @@ namespace SakugaEngine.Utils
 		public override void _UnhandledInput(InputEvent @event)
 		{
 			if (!Visible) return;
+			if (WaitFor != null && WaitFor.IsRemapping) return;
 
 			if (!remapping)
 			{

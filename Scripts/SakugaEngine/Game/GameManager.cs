@@ -90,11 +90,11 @@ namespace SakugaEngine.Game
 
             if (SeedViewer.Visible) SeedViewer.Text = finalSeed.ToString();
             if (Input.IsActionJustPressed("pause") && Match.SelectedModeSettings.PauseMode != PauseMode.LOCK && Monitor.MatchState == MatchState.ROUND_RUNNING)
-           {
+            {
                 CallDeferred("PauseControl", !paused);
             }
 
-            DebugCommands();
+            //DebugCommands();
         }
 
         public void SetBGM()
@@ -304,9 +304,71 @@ namespace SakugaEngine.Game
                 Nodes[i].LateTick();
         }
 
-        private void DebugCommands()
+        public override void _UnhandledInput(InputEvent @event)
+		{
+			if (@event is InputEventKey eventKey)
+            {
+                if (eventKey.Pressed && eventKey.Keycode == Key.F10 && Match.SelectedModeSettings.AllowShowHitboxes)
+                {
+                    ShowHitboxes = !ShowHitboxes;
+                }
+
+                if (!Match.SelectedModeSettings.AllowUseDebugCommands) return;
+
+                if (eventKey.Pressed && eventKey.Keycode == Key.F1)
+                {
+                    if (eventKey.ShiftPressed)
+                        Fighters[0].Parameters.Health.SetHealth(0);
+                    else
+                        Fighters[0].Parameters.Health.RemoveHealth(100);
+                }
+                if (eventKey.Pressed && eventKey.Keycode == Key.F2)
+                {
+                    if (eventKey.ShiftPressed)
+                        Fighters[1].Parameters.Health.SetHealth(0);
+                    else
+                        Fighters[1].Parameters.Health.RemoveHealth(100);
+                }
+                if (eventKey.Pressed && eventKey.Keycode == Key.F3)
+                {
+                    if (eventKey.ShiftPressed)
+                        Fighters[0].Parameters.Health.SetHealth(Fighters[0].Data.MaxHealth);
+                    else
+                        Fighters[0].Parameters.Health.AddHealth(100);
+                }
+                if (eventKey.Pressed && eventKey.Keycode == Key.F4)
+                {
+                    if (eventKey.ShiftPressed)
+                        Fighters[1].Parameters.Health.SetHealth(Fighters[1].Data.MaxHealth);
+                    else
+                        Fighters[1].Parameters.Health.AddHealth(100);
+                }
+                if (eventKey.Pressed && eventKey.Keycode == Key.F5)
+                {
+                    Fighters[0].Parameters.SuperGauge.SetSuperGauge(Fighters[0].Data.MaxSuperGauge);
+                }
+                if (eventKey.Pressed && eventKey.Keycode == Key.F6)
+                {
+                    Fighters[1].Parameters.SuperGauge.SetSuperGauge(Fighters[1].Data.MaxSuperGauge);
+                }
+                if (eventKey.Pressed && eventKey.Keycode == Key.F7)
+                {
+                    if (eventKey.ShiftPressed)
+                        Monitor.ResetTimer();
+                    else
+                        Monitor.Clock = 0;
+                }
+                if (eventKey.Pressed && eventKey.Keycode == Key.F11)
+                {
+                    Fighters[0].Reset();
+                    Fighters[1].Reset();
+                }
+            }
+        }
+
+        /*private void DebugCommands()
         {
-            if (Input.IsActionJustPressed("toggle_hitboxes") && Match.SelectedModeSettings.AllowShowHitboxes)
+            if (Input.IsActionJustPressed(toggle_hitboxes) && Match.SelectedModeSettings.AllowShowHitboxes)
                 ShowHitboxes = !ShowHitboxes;
             
             if (!Match.SelectedModeSettings.AllowUseDebugCommands) return;
@@ -359,7 +421,7 @@ namespace SakugaEngine.Game
                 Fighters[0].Reset();
                 Fighters[1].Reset();
             }
-        }
+        }*/
 
         public void PauseControl(bool pause)
         {

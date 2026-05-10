@@ -40,8 +40,7 @@ namespace SakugaEngine.UI
         [Export] private Texture2D randomCharRender;
         [Export] private ColorSelectMenu P1ColorSelect;
         [Export] private ColorSelectMenu P2ColorSelect;
-        [Export] private InputRemapper P1Remapper;
-        [Export] private InputRemapper P2Remapper;
+        [Export] private InputRemapper Remapper;
         
         [ExportCategory("Stage Select")]
         [Export] private TextureRect StageSelectedRender;
@@ -174,7 +173,7 @@ namespace SakugaEngine.UI
                             SelectColorP2();
                             break;
                         case CharacterSelectState.REMAPPING_INPUTS:
-                            if (!P2Remapper.IsRemapping)
+                            if (!Remapper.IsP2Remapping)
                                 HideInputRemapperP2();
                             break;
                         case CharacterSelectState.DONE:
@@ -192,7 +191,7 @@ namespace SakugaEngine.UI
                             SelectColorP1();
                             break;
                         case CharacterSelectState.REMAPPING_INPUTS:
-                            if (!P1Remapper.IsRemapping)
+                            if (!Remapper.IsP1Remapping)
                                 HideInputRemapperP1();
                             break;
                         case CharacterSelectState.DONE:
@@ -312,18 +311,13 @@ namespace SakugaEngine.UI
 
         private void CallInputRemapperP1()
         {
-            P1Remapper.Visible = true;
-            P1Remapper.ToggleInputMapper(Match.P1SelectedDevice);
+            Remapper.ToggleInputMapperP1(Match.P1SelectedDevice);
             P1State = CharacterSelectState.REMAPPING_INPUTS;
-            GD.Print(P1State);
         }
 
         private void HideInputRemapperP1()
         {
-            P1Remapper.Visible = false;
-            //P1Remapper.ToggleInputMapper(Match.P1SelectedDevice);
             P1State = CharacterSelectState.SELECTING_CHARACTER;
-            GD.Print("Player 1: " + P1State);
         }
 
         private void SelectCharacterP2()
@@ -422,18 +416,13 @@ namespace SakugaEngine.UI
 
         private void CallInputRemapperP2()
         {
-            P2Remapper.Visible = true;
-            P2Remapper.ToggleInputMapper(Match.P2SelectedDevice);
+            Remapper.ToggleInputMapperP2(Match.P2SelectedDevice);
             P2State = CharacterSelectState.REMAPPING_INPUTS;
-            GD.Print(P2State);
         }
 
         private void HideInputRemapperP2()
         {
-            P2Remapper.Visible = false;
-            //P2Remapper.ToggleInputMapper(Match.P2SelectedDevice);
             P2State = CharacterSelectState.SELECTING_CHARACTER;
-            GD.Print("Player 2: " + P2State);
         }
 
         private void ReturnToPrevious()

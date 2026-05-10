@@ -6,23 +6,30 @@
 
 [node name="InputRemapper" type="Control" unique_id=1679153397 node_paths=PackedStringArray("InputMappingChildren")]
 layout_mode = 3
-anchor_right = 0.208
-anchor_bottom = 0.54700005
-offset_right = -0.23999023
-offset_bottom = 0.15997314
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_qd416")
 InputMappingChildren = [NodePath("WGT_Keyboard1"), NodePath("WGT_Keyboard2"), NodePath("WGT_Gamepad1"), NodePath("WGT_Gamepad2")]
 
-[node name="WGT_Keyboard1" type="Control" parent="." unique_id=1154472671 node_paths=PackedStringArray("Remapper", "Buttons", "TimeFrame")]
+[node name="TimeFrame_Keyboard" type="Timer" parent="." unique_id=31164995]
+wait_time = 10.0
+one_shot = true
+
+[node name="WGT_Keyboard1" type="Control" parent="." unique_id=1154472671 node_paths=PackedStringArray("Remapper", "Buttons", "TimeFrame", "WaitFor")]
 visible = false
 layout_mode = 1
-anchor_right = 1.0
-anchor_bottom = 1.1650001
-offset_bottom = -0.010040283
+anchor_left = 0.104
+anchor_right = 0.104
+offset_left = -133.12
+offset_top = -0.0050201416
+offset_right = 132.88
+offset_bottom = 459.0
 grow_horizontal = 2
 grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0)
 script = ExtResource("1_uolfa")
 Remapper = NodePath("..")
 Prefix = "k1_"
@@ -30,12 +37,9 @@ Buttons = [NodePath("VBoxContainer/InputButton_Up"), NodePath("VBoxContainer/Inp
 DefaultColor = Color(0.20392157, 0.20392157, 0.20392157, 1)
 SelectedColor = Color(0.90311116, 0.57668877, 1.540184e-06, 1)
 RemappingColor = Color(0.047058824, 0.047058824, 0.047058824, 1)
-TimeFrame = NodePath("TimeFrame")
+TimeFrame = NodePath("../TimeFrame_Keyboard")
+WaitFor = NodePath("../WGT_Keyboard2")
 metadata/_edit_group_ = true
-
-[node name="TimeFrame" type="Timer" parent="WGT_Keyboard1" unique_id=31164995]
-wait_time = 10.0
-one_shot = true
 
 [node name="Background" type="ColorRect" parent="WGT_Keyboard1" unique_id=1241018036]
 layout_mode = 1
@@ -121,14 +125,18 @@ layout_mode = 2
 Title = "H"
 Action = "face_h"
 
-[node name="WGT_Keyboard2" type="Control" parent="." unique_id=1223534152 node_paths=PackedStringArray("Remapper", "Buttons", "TimeFrame")]
+[node name="WGT_Keyboard2" type="Control" parent="." unique_id=1223534152 node_paths=PackedStringArray("Remapper", "Buttons", "TimeFrame", "WaitFor")]
 visible = false
 layout_mode = 1
-anchor_right = 1.0
-anchor_bottom = 1.1650001
-offset_bottom = -0.010040283
+anchor_left = 0.104
+anchor_right = 0.104
+offset_left = -133.12
+offset_top = -0.0050201416
+offset_right = 132.88
+offset_bottom = 459.0
 grow_horizontal = 2
 grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0)
 script = ExtResource("1_uolfa")
 Remapper = NodePath("..")
 Prefix = "k2_"
@@ -136,12 +144,9 @@ Buttons = [NodePath("VBoxContainer/InputButton_Up"), NodePath("VBoxContainer/Inp
 DefaultColor = Color(0.20392157, 0.20392157, 0.20392157, 1)
 SelectedColor = Color(0.90311116, 0.57668877, 1.540184e-06, 1)
 RemappingColor = Color(0.047058824, 0.047058824, 0.047058824, 1)
-TimeFrame = NodePath("TimeFrame")
+TimeFrame = NodePath("../TimeFrame_Keyboard")
+WaitFor = NodePath("../WGT_Keyboard1")
 metadata/_edit_group_ = true
-
-[node name="TimeFrame" type="Timer" parent="WGT_Keyboard2" unique_id=1341122925]
-wait_time = 10.0
-one_shot = true
 
 [node name="Background" type="ColorRect" parent="WGT_Keyboard2" unique_id=520829830]
 layout_mode = 1
@@ -230,11 +235,14 @@ Action = "face_h"
 [node name="WGT_Gamepad1" type="Control" parent="." unique_id=1373467361 node_paths=PackedStringArray("Remapper", "Buttons", "TimeFrame")]
 visible = false
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_left = 0.104
+anchor_right = 0.104
+offset_left = -133.12
+offset_right = 132.88
+offset_bottom = 459.0
 grow_horizontal = 2
 grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0)
 script = ExtResource("1_uolfa")
 Remapper = NodePath("..")
 Prefix = "j1_"
@@ -317,11 +325,14 @@ Action = "face_h"
 [node name="WGT_Gamepad2" type="Control" parent="." unique_id=269925898 node_paths=PackedStringArray("Remapper", "Buttons", "TimeFrame")]
 visible = false
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_left = 0.104
+anchor_right = 0.104
+offset_left = -133.12
+offset_right = 132.88
+offset_bottom = 459.0
 grow_horizontal = 2
 grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0)
 script = ExtResource("1_uolfa")
 Remapper = NodePath("..")
 Prefix = "j2_"

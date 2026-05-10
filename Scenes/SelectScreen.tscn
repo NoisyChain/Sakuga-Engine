@@ -23,7 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://cw7llwhkqnheo" path="res://Sprites/Arrow.png" id="18_7p58r"]
 [ext_resource type="PackedScene" uid="uid://mjtj8aourb2p" path="res://Scenes/Instances/input_remapper.tscn" id="18_mk26h"]
 
-[node name="Control" type="Control" unique_id=464996932 node_paths=PackedStringArray("CharSelectMode", "StageSelectMode", "P1SelectedRender", "P2SelectedRender", "P1SelectedName", "P2SelectedName", "P1Cursor", "P2Cursor", "charactersContainer", "P1ColorSelect", "P2ColorSelect", "P1Remapper", "P2Remapper", "StageSelectedRender", "StageSelectedName", "SongSelectedName", "P1SelectingStage", "P2SelectingStage", "StageCursor", "stagesContainer")]
+[node name="Control" type="Control" unique_id=464996932 node_paths=PackedStringArray("CharSelectMode", "StageSelectMode", "P1SelectedRender", "P2SelectedRender", "P1SelectedName", "P2SelectedName", "P1Cursor", "P2Cursor", "charactersContainer", "P1ColorSelect", "P2ColorSelect", "Remapper", "StageSelectedRender", "StageSelectedName", "SongSelectedName", "P1SelectingStage", "P2SelectingStage", "StageCursor", "stagesContainer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -49,8 +49,7 @@ randomCharPortrait = ExtResource("6_pej5c")
 randomCharRender = ExtResource("7_7p58r")
 P1ColorSelect = NodePath("CharacterSelect/ColorSelectP1")
 P2ColorSelect = NodePath("CharacterSelect/ColorSelectP2")
-P1Remapper = NodePath("CharacterSelect/InputRemapperP1")
-P2Remapper = NodePath("CharacterSelect/InputRemapperP2")
+Remapper = NodePath("CharacterSelect/InputRemapper")
 StageSelectedRender = NodePath("StageSelect/StagePortrait")
 StageSelectedName = NodePath("StageSelect/StageName")
 SongSelectedName = NodePath("StageSelect/SongName")
@@ -228,8 +227,21 @@ horizontal_scroll_mode = 0
 [node name="Contents" type="VBoxContainer" parent="CharacterSelect/ColorSelectP2/ScrollContainer" unique_id=1840068908]
 layout_mode = 2
 
-[node name="InputRemapperP1" parent="CharacterSelect" unique_id=1679153397 instance=ExtResource("18_mk26h")]
-visible = false
+[node name="RemapperPivotP1" type="Control" parent="CharacterSelect" unique_id=850938423]
+anchors_preset = 0
+offset_left = 20.0
+offset_right = 20.0
+
+[node name="RemapperPivotP2" type="Control" parent="CharacterSelect" unique_id=360839896]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -286.0
+offset_right = -286.0
+grow_horizontal = 0
+
+[node name="InputRemapper" parent="CharacterSelect" unique_id=1679153397 node_paths=PackedStringArray("P1Pivot", "P2Pivot") instance=ExtResource("18_mk26h")]
 layout_mode = 1
 anchors_preset = 0
 anchor_right = 0.0
@@ -238,18 +250,8 @@ offset_right = 266.0
 offset_bottom = 394.0
 grow_horizontal = 1
 grow_vertical = 1
-
-[node name="InputRemapperP2" parent="CharacterSelect" unique_id=1038538785 instance=ExtResource("18_mk26h")]
-visible = false
-layout_mode = 1
-anchor_left = 1.001
-anchor_right = 1.001
-anchor_bottom = 0.0
-offset_left = -266.28003
-offset_right = -0.2800293
-offset_bottom = 394.0
-grow_horizontal = 0
-grow_vertical = 1
+P1Pivot = NodePath("../RemapperPivotP1")
+P2Pivot = NodePath("../RemapperPivotP2")
 
 [node name="StageSelect" type="Control" parent="." unique_id=928303259]
 visible = false
