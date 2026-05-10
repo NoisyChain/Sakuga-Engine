@@ -145,7 +145,7 @@ namespace SakugaEngine
 
             foreach (SakugaActor fighter in _fighters)
             {
-                fighter.StanceManager.CanRun = MatchState == MatchState.ROUND_RUNNING;
+                fighter.StanceManager.CanRun = MatchState == MatchState.ROUND_START || MatchState == MatchState.ROUND_RUNNING || MatchState == MatchState.ROUND_END;
             }
 
             switch (MatchState)

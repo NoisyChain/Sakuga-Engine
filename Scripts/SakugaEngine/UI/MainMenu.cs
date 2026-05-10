@@ -38,7 +38,6 @@ namespace SakugaEngine.UI
         {
             Manager.matchSettings.SelectedMode = 0;
             Manager.matchSettings.TimeLimit = 99;
-            //InputSelectMenu.Visible = true;
             Visible = false;
             Manager.inputMenu.GoTo();
             AudioManager.Instance.PlayMenuClip(1);
@@ -48,7 +47,6 @@ namespace SakugaEngine.UI
         {
             Manager.matchSettings.SelectedMode = 1;
             Manager.matchSettings.TimeLimit = 99;
-            //InputSelectMenu.Visible = true;
             Visible = false;
             Manager.matchMenu.GoTo();
             AudioManager.Instance.PlayMenuClip(1);
@@ -59,7 +57,6 @@ namespace SakugaEngine.UI
         {
             Manager.matchSettings.SelectedMode = 3;
             Manager.matchSettings.TimeLimit = -1;
-            //InputSelectMenu.Visible = true;
             Visible = false;
             Manager.inputMenu.GoTo();
             AudioManager.Instance.PlayMenuClip(1);

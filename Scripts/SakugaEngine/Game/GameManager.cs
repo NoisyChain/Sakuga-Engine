@@ -245,7 +245,7 @@ namespace SakugaEngine.Game
 
             for (int i = 0; i < Fighters.Length; i++)
             {
-                if (Monitor.MatchState == MatchState.ROUND_END)
+                if (Monitor.MatchState == MatchState.ROUND_START || Monitor.MatchState == MatchState.ROUND_END)
                 {
                     Inputs[i].InsertToHistory(0);
                     continue;
