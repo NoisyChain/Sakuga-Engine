@@ -60,11 +60,9 @@ namespace SakugaEngine.UI
         public void _OnArcadeButtonPressed()
         {
             matchSettings.SelectedMode = 0;
-            matchSettings.P1SelectedDevice = 10;
-            matchSettings.P2SelectedDevice = -1;
             matchSettings.TimeLimit = 99;
+            InputSelectMenu.Visible = true;
             AudioManager.Instance.PlayMenuClip(1);
-            LoadingScreenManager.Instance.LoadScene("res://Scenes/SelectScreen.tscn");
         }
 
         public void _OnVersusButtonPressed()
@@ -74,18 +72,15 @@ namespace SakugaEngine.UI
             InputSelectMenu.Visible = true;
             AudioManager.Instance.PlayMenuClip(1);
             AudioManager.Instance.PlayAnnouncerClip(2);
-            //GetTree().ChangeSceneToFile("res://Scenes/SelectScreen.tscn");
         }
 
         public void _OnTrainingButtonPressed()
         {
             matchSettings.SelectedMode = 3;
-            matchSettings.P1SelectedDevice = 10;
-            matchSettings.P2SelectedDevice = -1;
             matchSettings.TimeLimit = -1;
+            InputSelectMenu.Visible = true;
             AudioManager.Instance.PlayMenuClip(1);
             AudioManager.Instance.PlayAnnouncerClip(3);
-            LoadingScreenManager.Instance.LoadScene("res://Scenes/SelectScreen.tscn");
         }
 
         public void _OnReplayButtonPressed()
@@ -190,7 +185,6 @@ namespace SakugaEngine.UI
             {
                 AudioManager.Instance.PlayMenuClip(3);
                 LoadingScreenManager.Instance.LoadScene("res://Scenes/SelectScreen.tscn");
-                //GetTree().ChangeSceneToFile("res://Scenes/SelectScreen.tscn");
             }
         }
     }
