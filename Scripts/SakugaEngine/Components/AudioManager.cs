@@ -35,8 +35,16 @@ namespace SakugaEngine
 
 		public void PlayBGM(AudioStream song)
 		{
+			if (song == null) return;
+			if (BGM.Playing) StopBGM();
+
 			BGM.Stream = song;
             BGM.Play();
+		}
+
+		public void StopBGM()
+		{
+            BGM.Stop();
 		}
 	}
 }

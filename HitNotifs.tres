@@ -1,0 +1,63 @@
+[gd_resource type="Resource" script_class="HitNotificationList" format=3 uid="uid://c0c1ggbvua31f"]
+
+[ext_resource type="Script" uid="uid://bqear64xdcxwm" path="res://Scripts/SakugaEngine/Resources/HitNotificationElement.cs" id="1_apjgi"]
+[ext_resource type="Script" uid="uid://b6fu34fkx6cj7" path="res://Scripts/SakugaEngine/Resources/HitNotificationList.cs" id="1_wmhdv"]
+
+[sub_resource type="Resource" id="Resource_jobs6"]
+script = ExtResource("1_apjgi")
+NotificationName = "First Strike"
+Description = "When someone hits someone else for the firs time on the match"
+metadata/_custom_type_script = "uid://bqear64xdcxwm"
+
+[sub_resource type="Resource" id="Resource_xxvg2"]
+script = ExtResource("1_apjgi")
+NotificationName = "Counter"
+Description = "Basic counterattack"
+metadata/_custom_type_script = "uid://bqear64xdcxwm"
+
+[sub_resource type="Resource" id="Resource_l1fn6"]
+script = ExtResource("1_apjgi")
+NotificationName = "Punish"
+Description = "Counterattach when the opponent is recovering"
+metadata/_custom_type_script = "uid://bqear64xdcxwm"
+
+[sub_resource type="Resource" id="Resource_qokn8"]
+script = ExtResource("1_apjgi")
+NotificationName = "Just"
+Description = "Instant blocked a hit"
+metadata/_custom_type_script = "uid://bqear64xdcxwm"
+
+[sub_resource type="Resource" id="Resource_ccn70"]
+script = ExtResource("1_apjgi")
+NotificationName = "Escaped"
+Description = "Teched a throw"
+metadata/_custom_type_script = "uid://bqear64xdcxwm"
+
+[sub_resource type="Resource" id="Resource_xlgnu"]
+script = ExtResource("1_apjgi")
+NotificationName = "Recovered"
+Description = "Recovered from hitstun"
+metadata/_custom_type_script = "uid://bqear64xdcxwm"
+
+[sub_resource type="Resource" id="Resource_apjgi"]
+script = ExtResource("1_apjgi")
+NotificationName = "Knockdown"
+Description = "Can still recover on the ground"
+metadata/_custom_type_script = "uid://bqear64xdcxwm"
+
+[sub_resource type="Resource" id="Resource_oiim8"]
+script = ExtResource("1_apjgi")
+NotificationName = "Hard Knockdown"
+Description = "Can't recover"
+metadata/_custom_type_script = "uid://bqear64xdcxwm"
+
+[sub_resource type="Resource" id="Resource_7mfca"]
+script = ExtResource("1_apjgi")
+NotificationName = "Invalid"
+Description = "For invalid combos"
+metadata/_custom_type_script = "uid://bqear64xdcxwm"
+
+[resource]
+script = ExtResource("1_wmhdv")
+Elements = Array[Object]([SubResource("Resource_jobs6"), SubResource("Resource_xxvg2"), SubResource("Resource_l1fn6"), SubResource("Resource_qokn8"), SubResource("Resource_ccn70"), SubResource("Resource_xlgnu"), SubResource("Resource_apjgi"), SubResource("Resource_oiim8"), SubResource("Resource_7mfca")])
+metadata/_custom_type_script = "uid://b6fu34fkx6cj7"

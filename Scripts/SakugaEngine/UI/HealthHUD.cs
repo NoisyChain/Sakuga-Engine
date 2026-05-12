@@ -13,6 +13,7 @@ namespace SakugaEngine.UI
         [Export] private RoundsCounter P1Rounds;
         [Export] private ComboCounter P1Combo;
         [Export] private Label P1Name;
+        [Export] private HitNotificationController P1Notif;
         
         [ExportCategory("Player 2")]
         [Export] private TextureRect P2Portrait;
@@ -21,6 +22,7 @@ namespace SakugaEngine.UI
         [Export] private RoundsCounter P2Rounds;
         [Export] private ComboCounter P2Combo;
         [Export] private Label P2Name;
+        [Export] private HitNotificationController P2Notif;
 
         [ExportCategory("Extra")]
         [Export] private Label Timer;
@@ -65,6 +67,7 @@ namespace SakugaEngine.UI
 
             P1Combo.UpdateCounter((int)fighters[1].Hitstun.TimeLeft, fighters[1].Parameters.Tracker);
             P2Combo.UpdateCounter((int)fighters[0].Hitstun.TimeLeft, fighters[0].Parameters.Tracker);
+
             UpdateDebug(fighters);
         }
 
@@ -84,6 +87,12 @@ namespace SakugaEngine.UI
             int time = monitor.Clock / GlobalVariables.TicksPerSecond;
             time = Mathf.Clamp(time, 0, monitor.ClockLimit);
             Timer.Text = time.ToString();
+        }
+
+        public void UpdateHitNotifications(HitNotifications[] notifs)
+        {
+            P1Notif.View(notifs[0].Elements);
+            P2Notif.View(notifs[1].Elements);
         }
     }
 }

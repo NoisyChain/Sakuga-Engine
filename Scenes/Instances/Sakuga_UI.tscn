@@ -9,9 +9,13 @@
 [ext_resource type="Texture2D" uid="uid://df50nf7a0i58" path="res://Sprites/LobbyIcons/lobbyicons_platform_pc.png" id="5_j3lw1"]
 [ext_resource type="Script" uid="uid://bxtx4t4kufbsq" path="res://Scripts/SakugaEngine/UI/MetersHUD.cs" id="6_m7ri4"]
 [ext_resource type="Texture2D" uid="uid://0vthev3fa841" path="res://Sprites/meter_sprite.png" id="7_6huh3"]
+[ext_resource type="PackedScene" uid="uid://dmgys15jxs1pe" path="res://Scenes/Instances/HitNotifWidgetP1.tscn" id="8_lwnqj"]
 [ext_resource type="Texture2D" uid="uid://cirlpf1j23vao" path="res://Sprites/meter_sprite_fill.png" id="8_vbhb2"]
+[ext_resource type="Script" uid="uid://cgpiypqbc11wt" path="res://Scripts/SakugaEngine/UI/HitNotificationController.cs" id="8_xgp81"]
 [ext_resource type="Script" uid="uid://bxh004jlgsbbb" path="res://Scripts/SakugaEngine/UI/InputHistory.cs" id="9_vdd12"]
+[ext_resource type="Script" uid="uid://cmq3cp1n0copp" path="res://Scripts/SakugaEngine/Components/FrameTimer.cs" id="9_xgp81"]
 [ext_resource type="PackedScene" uid="uid://cjtsw7lf6uyuy" path="res://Scenes/Instances/InputHistory_Pref_P1.tscn" id="10_kbxok"]
+[ext_resource type="PackedScene" uid="uid://ckkwi0ny7hg01" path="res://Scenes/Instances/HitNotifWidgetP2.tscn" id="11_4gmwt"]
 [ext_resource type="Script" uid="uid://b6yldfeec8kg2" path="res://Scripts/SakugaEngine/Utils/ShowFPS.cs" id="11_a8ejj"]
 [ext_resource type="PackedScene" uid="uid://cljylybqkoasi" path="res://Scenes/Instances/InputHistory_Pref_P2.tscn" id="11_k2bmj"]
 [ext_resource type="Script" uid="uid://hm7bsfnod2vb" path="res://Scripts/SakugaEngine/UI/FadeScreen.cs" id="12_uu21w"]
@@ -593,7 +597,7 @@ _data = {
 
 [node name="CanvasLayer" type="CanvasLayer" unique_id=1639285127]
 
-[node name="GameHUD_Background" type="Control" parent="." unique_id=1728610067 node_paths=PackedStringArray("P1Portrait", "P1Health", "P1LostHealth", "P1Rounds", "P1Combo", "P1Name", "P2Portrait", "P2Health", "P2LostHealth", "P2Rounds", "P2Combo", "P2Name", "Timer", "P1Debug", "P2Debug")]
+[node name="GameHUD_Background" type="Control" parent="." unique_id=1728610067 node_paths=PackedStringArray("P1Portrait", "P1Health", "P1LostHealth", "P1Rounds", "P1Combo", "P1Name", "P1Notif", "P2Portrait", "P2Health", "P2LostHealth", "P2Rounds", "P2Combo", "P2Name", "P2Notif", "Timer", "P1Debug", "P2Debug")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -607,12 +611,14 @@ P1LostHealth = NodePath("HealthBars/P1LostHealth")
 P1Rounds = NodePath("HealthBars/P1Rounds")
 P1Combo = NodePath("ComboCounters/P1ComboCounter")
 P1Name = NodePath("HealthBars/P1Name")
+P1Notif = NodePath("P1HitNotifications")
 P2Portrait = NodePath("HealthBars/P2Portrait")
 P2Health = NodePath("HealthBars/P2Health")
 P2LostHealth = NodePath("HealthBars/P2LostHealth")
 P2Rounds = NodePath("HealthBars/P2Rounds")
 P2Combo = NodePath("ComboCounters/P2ComboCounter")
 P2Name = NodePath("HealthBars/P2Name")
+P2Notif = NodePath("P2HitNotifications")
 Timer = NodePath("HealthBars/Timer")
 P1Debug = NodePath("../Debug/P1Debug")
 P2Debug = NodePath("../Debug/P2Debug")
@@ -917,6 +923,8 @@ grow_vertical = 2
 [node name="P1ComboCounter" type="Control" parent="GameHUD_Background/ComboCounters" unique_id=491802711]
 anchors_preset = 0
 anchor_bottom = 1.0
+offset_top = -110.0
+offset_bottom = -110.0
 script = ExtResource("5_f6x8r")
 
 [node name="StunBar" type="TextureProgressBar" parent="GameHUD_Background/ComboCounters/P1ComboCounter" unique_id=2053226157]
@@ -966,6 +974,8 @@ anchors_preset = 0
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -110.0
+offset_bottom = -110.0
 script = ExtResource("5_f6x8r")
 
 [node name="StunBar" type="TextureProgressBar" parent="GameHUD_Background/ComboCounters/P2ComboCounter" unique_id=508411029]
@@ -1014,6 +1024,85 @@ offset_bottom = -27.0
 grow_vertical = 2
 scale = Vector2(1.5, 1.5)
 text = "Hit Combo"
+
+[node name="P1HitNotifications" type="VBoxContainer" parent="GameHUD_Background" unique_id=562175243 node_paths=PackedStringArray("Widgets", "Timer")]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_top = 266.0
+offset_right = 640.0
+offset_bottom = -160.0
+grow_vertical = 2
+theme_override_constants/separation = 60
+script = ExtResource("8_xgp81")
+Widgets = [NodePath("Widget1"), NodePath("Widget2"), NodePath("Widget3"), NodePath("Widget4"), NodePath("Widget5")]
+Timer = NodePath("FrameTimer")
+
+[node name="FrameTimer" type="Node" parent="GameHUD_Background/P1HitNotifications" unique_id=210636440]
+script = ExtResource("9_xgp81")
+Manual = true
+metadata/_custom_type_script = "uid://cmq3cp1n0copp"
+
+[node name="Widget1" parent="GameHUD_Background/P1HitNotifications" unique_id=196358421 instance=ExtResource("8_lwnqj")]
+visible = false
+layout_mode = 2
+
+[node name="Widget2" parent="GameHUD_Background/P1HitNotifications" unique_id=1408698525 instance=ExtResource("8_lwnqj")]
+visible = false
+layout_mode = 2
+
+[node name="Widget3" parent="GameHUD_Background/P1HitNotifications" unique_id=364389508 instance=ExtResource("8_lwnqj")]
+visible = false
+layout_mode = 2
+
+[node name="Widget4" parent="GameHUD_Background/P1HitNotifications" unique_id=250534370 instance=ExtResource("8_lwnqj")]
+visible = false
+layout_mode = 2
+
+[node name="Widget5" parent="GameHUD_Background/P1HitNotifications" unique_id=827158379 instance=ExtResource("8_lwnqj")]
+visible = false
+layout_mode = 2
+
+[node name="P2HitNotifications" type="VBoxContainer" parent="GameHUD_Background" unique_id=726157540 node_paths=PackedStringArray("Widgets", "Timer")]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -640.0
+offset_top = 266.0
+offset_bottom = -160.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/separation = 60
+script = ExtResource("8_xgp81")
+Widgets = [NodePath("Widget1"), NodePath("Widget2"), NodePath("Widget3"), NodePath("Widget4"), NodePath("Widget5")]
+Timer = NodePath("FrameTimer")
+
+[node name="FrameTimer" type="Node" parent="GameHUD_Background/P2HitNotifications" unique_id=931512844]
+script = ExtResource("9_xgp81")
+Manual = true
+metadata/_custom_type_script = "uid://cmq3cp1n0copp"
+
+[node name="Widget1" parent="GameHUD_Background/P2HitNotifications" unique_id=37838264 instance=ExtResource("11_4gmwt")]
+visible = false
+layout_mode = 2
+
+[node name="Widget2" parent="GameHUD_Background/P2HitNotifications" unique_id=295424057 instance=ExtResource("11_4gmwt")]
+visible = false
+layout_mode = 2
+
+[node name="Widget3" parent="GameHUD_Background/P2HitNotifications" unique_id=1757311440 instance=ExtResource("11_4gmwt")]
+visible = false
+layout_mode = 2
+
+[node name="Widget4" parent="GameHUD_Background/P2HitNotifications" unique_id=425140706 instance=ExtResource("11_4gmwt")]
+visible = false
+layout_mode = 2
+
+[node name="Widget5" parent="GameHUD_Background/P2HitNotifications" unique_id=84337932 instance=ExtResource("11_4gmwt")]
+visible = false
+layout_mode = 2
 
 [node name="ViewportContainer" type="SubViewportContainer" parent="." unique_id=616342288]
 anchors_preset = 15
@@ -1563,6 +1652,7 @@ script = ExtResource("17_fweai")
 metadata/_custom_type_script = "uid://3uu6r0mhj3p3"
 
 [node name="ResultsScreen" type="Control" parent="." unique_id=661745059]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

@@ -34,19 +34,16 @@ namespace SakugaEngine.Game
 
         public override void OnlineGame(bool spectate, uint players, uint spectators, uint ID)
         {
-            GameManager.SetBGM();
             StartOnlineGame(GameManager, spectate, players, spectators, ID);
         }
 
         public override void LocalGame(uint players)
         {
-            GameManager.SetBGM();
             StartOfflineGame(GameManager, players);
         }
 
         public override void ReplayMode(uint players)
         {
-            GameManager.SetBGM();
             StartReplay(GameManager, players);
         }
     }

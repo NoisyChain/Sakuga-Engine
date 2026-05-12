@@ -106,7 +106,7 @@ namespace SakugaEngine
                 if (VictoryCounter[RoundWinner] == RoundsToWin)
                 {
                     Winner = RoundWinner;
-                    GameManager.Instance.BGMSource.Stop();
+                    AudioManager.Instance.CallDeferred("StopBGM");
                 }
             }
 
@@ -384,8 +384,7 @@ namespace SakugaEngine
 
             VictoryMessage.Text = winnerMessage;
 
-            GameManager.Instance.BGMSource.Stream = VictoryJingle;
-            GameManager.Instance.BGMSource.Play();
+            AudioManager.Instance.PlayBGM(VictoryJingle);
             ResultsScreen.Visible = true;
         }
 

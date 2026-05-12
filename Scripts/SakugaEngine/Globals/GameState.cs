@@ -108,6 +108,7 @@ namespace SakugaEngine.GameState
         [Key(2)] public GameMonitorState GameMonitor;
         [Key(3)] public byte[][] SakugaNodes;
         [Key(4)] public Vector3IState RandomTest;
+        [Key(5)] public HitNotifications[] Notifs;
 
         public void GetStateData(ref Game.GameManager reference)
         {
@@ -126,6 +127,8 @@ namespace SakugaEngine.GameState
                 SakugaNodes[i] = reference.Nodes[i].GetStateData();
             }
             RandomTest.GetStateData(ref reference.randomTest);
+            Notifs = new HitNotifications[2];
+            Notifs = reference.Notifs;
         }
 
         public void SetStateData(ref Game.GameManager reference)
@@ -143,6 +146,7 @@ namespace SakugaEngine.GameState
                 reference.Nodes[i].SetStateData(SakugaNodes[i]);
             }
             RandomTest.SetStateData(ref reference.randomTest);
+            reference.Notifs = Notifs;
         }
     }
 

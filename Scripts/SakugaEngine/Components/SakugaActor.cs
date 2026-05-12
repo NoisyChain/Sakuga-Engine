@@ -5,6 +5,7 @@ using SakugaEngine.Global;
 using SakugaEngine.Resources;
 using SakugaEngine.GameState;
 using MessagePack;
+using SakugaEngine.Game;
 
 namespace SakugaEngine
 {
@@ -70,6 +71,22 @@ namespace SakugaEngine
         public SakugaActor GetOpponent(int index) => GetMaster() != null ? GetMaster().GetOpponent(index) : _opponents[index];
         public void SetOpponents(SakugaActor[] opponents) { if (opponents != _opponents) _opponents = opponents; }
 
+        public bool IsCounter(SakugaActor target)
+		{
+			return StateManager.CurrentStateType() == StateType.COMBAT && target.StateManager.CurrentStateType() == StateType.COMBAT &&
+				 	Body.CurrentHitbox.animationStage < AnimationStage.RECOVERY &&
+                    target.Body.CurrentHitbox.animationStage < AnimationStage.RECOVERY;
+		} 
+		public bool IsPunishCounter(SakugaActor target)
+        {
+			return StateManager.CurrentStateType() == StateType.COMBAT && target.StateManager.CurrentStateType() == StateType.COMBAT &&
+				 	Body.CurrentHitbox.animationStage < AnimationStage.RECOVERY &&
+                    target.Body.CurrentHitbox.animationStage == AnimationStage.RECOVERY;
+		}
+        public bool IsInstantBlock()
+        {
+            return StateManager.CurrentStateType() != StateType.BLOCKING;
+        }
         public bool CanHitTarget(SakugaActor target)
         {
             // Ignore if either one of the bodies is not active
@@ -428,6 +445,11 @@ namespace SakugaEngine
                 Body.FlipSide();
                 Body.IsMovable = false;
             }
+
+            if (IsInstantBlock())
+            {
+                GameManager.Instance.PlayHitNotificationByIndex((int)playerID, 3);
+            }
             
             if (StanceManager != null) StanceManager.Clear();
             if (StateManager != null) StateManager.PlayState(blockState, true);
@@ -546,6 +568,7 @@ namespace SakugaEngine
             {
                 HitstunType = 0;
                 ThrowEscapeAction();
+                GameManager.Instance.PlayHitNotificationByIndex((int)playerID, 4);
                 target.ThrowEscapeAction();
             }
         }
@@ -635,6 +658,14 @@ namespace SakugaEngine
                 else
                 {
                     hitFX = box.HitEffectIndex;
+                    if (IsCounter(target))
+                    {
+                        GameManager.Instance.PlayHitNotificationByIndex((int)playerID, 1);
+                    }
+                    else if (IsPunishCounter(target))
+                    {
+                        GameManager.Instance.PlayHitNotificationByIndex((int)playerID, 2);
+                    }
                     target.HitDamage(actor, box, false);
                     if (box.AllowSelfPushback)
                         HitPushback(target, box.SelfPushbackDuration, box.SelfPushbackForce);
@@ -648,6 +679,7 @@ namespace SakugaEngine
         }
         public void HitTrade(SakugaActor target, HitboxElement box, Vector2I contact)
         {
+            GameManager.Instance.PlayHitNotificationByIndex((int)playerID, 1);
             HitDamage(target, box, true);
             if (box.HitEffectIndex >= 0 && contact != Vector2I.Zero)
             {

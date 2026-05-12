@@ -21,9 +21,10 @@ namespace SakugaEngine.Game
         [Export] public FighterList fightersList;
         [Export] public StageList stagesList;
         [Export] public BGMList songsList;
+        [Export] public HitNotificationList notifications;
         [Export] private CanvasLayer FighterUI;
         [Export] public FighterCamera Camera;
-        [Export] public AudioStreamPlayer BGMSource;
+        //[Export] public AudioStreamPlayer BGMSource;
         private Label SeedViewer;
         private FadeScreen Curtain;
         public uint InputSize;
@@ -46,6 +47,8 @@ namespace SakugaEngine.Game
 
         private GameManagerState State;
         private PauseMenu PauseScreen;
+
+        public HitNotifications[] Notifs;
 
         private bool paused;
         
@@ -93,14 +96,6 @@ namespace SakugaEngine.Game
             {
                 CallDeferred("PauseControl", !paused);
             }
-
-            //DebugCommands();
-        }
-
-        public void SetBGM()
-        {
-            if (BGMSource != null && !BGMSource.Playing && songsList.elements[Match.SelectedBGM].clip != null)
-                BGMSource.Stream = songsList.elements[Match.SelectedBGM].clip;
         }
 
         public void Render()
@@ -108,6 +103,7 @@ namespace SakugaEngine.Game
             RenderNodes();
             Camera.UpdateCamera(Fighters[0], Fighters[1]);
             healthHUD.UpdateHealthBars(Fighters, Monitor);
+            healthHUD.UpdateHitNotifications(Notifs);
             metersHUD.UpdateMeters(Fighters);
             Curtain.FadeIntensity = Monitor.FadeScreenIntensity;
             Monitor.Render();
@@ -178,10 +174,16 @@ namespace SakugaEngine.Game
 
             GenerateBaseSeed();
             Monitor.Initialize(Fighters, Match);
+            Notifs = new HitNotifications[2]
+            {
+                new HitNotifications(5), 
+                new HitNotifications(5)
+            };
 
             healthHUD.Setup(Fighters);
             metersHUD.Setup(Fighters);
-            BGMSource.Play();
+            
+            AudioManager.Instance.PlayBGM(songsList.elements[Match.SelectedBGM].clip);
         }
 
         public void CreateFighter(int characterIndex, int playerIndex)
@@ -242,6 +244,11 @@ namespace SakugaEngine.Game
             );
 
             int center = (Fighters[0].Body.FixedPosition.X + Fighters[1].Body.FixedPosition.X) / 2;
+
+            foreach (var notif in Notifs)
+            {
+                notif.Tick();
+            }
 
             for (int i = 0; i < Fighters.Length; i++)
             {
@@ -366,63 +373,6 @@ namespace SakugaEngine.Game
             }
         }
 
-        /*private void DebugCommands()
-        {
-            if (Input.IsActionJustPressed(toggle_hitboxes) && Match.SelectedModeSettings.AllowShowHitboxes)
-                ShowHitboxes = !ShowHitboxes;
-            
-            if (!Match.SelectedModeSettings.AllowUseDebugCommands) return;
-
-            if (Input.IsActionJustPressed("debug_f1"))
-            {
-                if (Input.IsActionPressed("debug_shift"))
-                    Fighters[0].Parameters.Health.SetHealth(0);
-                else
-                    Fighters[0].Parameters.Health.RemoveHealth(100);
-            }
-            if (Input.IsActionJustPressed("debug_f2"))
-            {
-                if (Input.IsActionPressed("debug_shift"))
-                    Fighters[1].Parameters.Health.SetHealth(0);
-                else
-                    Fighters[1].Parameters.Health.RemoveHealth(100);
-            }
-            if (Input.IsActionJustPressed("debug_f3"))
-            {
-                if (Input.IsActionPressed("debug_shift"))
-                    Fighters[0].Parameters.Health.SetHealth(Fighters[0].Data.MaxHealth);
-                else
-                    Fighters[0].Parameters.Health.AddHealth(100);
-            }
-            if (Input.IsActionJustPressed("debug_f4"))
-            {
-                if (Input.IsActionPressed("debug_shift"))
-                    Fighters[1].Parameters.Health.SetHealth(Fighters[1].Data.MaxHealth);
-                else
-                    Fighters[1].Parameters.Health.AddHealth(100);
-            }
-            if (Input.IsActionJustPressed("debug_f5"))
-            {
-                Fighters[0].Parameters.SuperGauge.SetSuperGauge(Fighters[0].Data.MaxSuperGauge);
-            }
-            if (Input.IsActionJustPressed("debug_f6"))
-            {
-                Fighters[1].Parameters.SuperGauge.SetSuperGauge(Fighters[1].Data.MaxSuperGauge);
-            }
-            if (Input.IsActionJustPressed("debug_timer"))
-            {
-                if (Input.IsActionPressed("debug_shift"))
-                    Monitor.ResetTimer();
-                else
-                    Monitor.Clock = 0;
-            }
-            if (Input.IsActionJustPressed("debug_reset"))
-            {
-                Fighters[0].Reset();
-                Fighters[1].Reset();
-            }
-        }*/
-
         public void PauseControl(bool pause)
         {
             if (Match.SelectedModeSettings.PauseMode == PauseMode.LOCK) return;
@@ -430,6 +380,19 @@ namespace SakugaEngine.Game
 
             paused = pause;
             PauseScreen.CallPauseMenu(paused);
+        }
+
+        public void PlayHitNotificationByIndex(int playerIndex, int notifIndex)
+        {
+            HitNotificationElement hitNotif = notifications.Elements[notifIndex];
+            PlayHitNotification(playerIndex, hitNotif.NotificationName, hitNotif.AnnouncerVoiceLine);
+        }
+
+        public void PlayHitNotification(int playerIndex, string name, int announcerLine)
+        {
+            // Spawn notification on screen
+            Notifs[playerIndex].Notify(name);
+            AudioManager.Instance.PlayAnnouncerClip(announcerLine);
         }
 
         // Generate inputs for your game

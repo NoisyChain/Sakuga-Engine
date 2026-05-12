@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://ckkwi0ny7hg01"]
+
+[ext_resource type="Script" uid="uid://6dt4u2wdr2xx" path="res://Scripts/SakugaEngine/UI/HitNotificationWidget.cs" id="1_tdcuu"]
+[ext_resource type="Script" uid="uid://cmq3cp1n0copp" path="res://Scripts/SakugaEngine/Components/FrameTimer.cs" id="2_pxvdu"]
+
+[node name="HitNotifWidgetP2" type="Control" unique_id=37838264 node_paths=PackedStringArray("NotifLabel", "NotifTimer")]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_tdcuu")
+NotifLabel = NodePath("Label")
+NotifTimer = NodePath("FrameTimer")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=57579706]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -217.0
+offset_top = 24.0
+offset_bottom = 31.0
+grow_horizontal = 0
+grow_vertical = 0
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="." unique_id=573208634]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -424.0
+offset_bottom = 35.0
+grow_horizontal = 0
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 25
+text = "Notification"
+horizontal_alignment = 2
+
+[node name="FrameTimer" type="Node" parent="." unique_id=1254617954]
+script = ExtResource("2_pxvdu")
+metadata/_custom_type_script = "uid://cmq3cp1n0copp"
