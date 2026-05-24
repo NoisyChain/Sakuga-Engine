@@ -39,6 +39,7 @@ Camera = NodePath("../Camera3D")
 [node name="RollbackManager" type="Node" parent="." unique_id=1298643102 node_paths=PackedStringArray("GameManager")]
 script = ExtResource("6_jke5l")
 GameManager = NodePath("../GameManager")
+UseSeparateThread = true
 SpectatorDelay = 10
 InputSize = 2
 

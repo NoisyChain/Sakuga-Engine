@@ -3,6 +3,7 @@
 [ext_resource type="Resource" uid="uid://cj0xkomthsmec" path="res://Fighters/Kaede/AnimationData/58_Kaede_236A_AnimData.tres" id="1_d340o"]
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="1_e311h"]
 [ext_resource type="Script" uid="uid://gkg7v04bkm2y" path="res://Scripts/SakugaEngine/Deprecated/Animation Events/SpawnObjectAnimationEvent.cs" id="1_p455q"]
+[ext_resource type="Resource" uid="uid://nvkiyhr0b8sx" path="res://Fighters/Kaede/FrameDataEvents/Template_Trans_Idle.tres" id="2_0qfrh"]
 [ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="2_h2j8i"]
 [ext_resource type="Script" uid="uid://bwm15ys7iwmfc" path="res://Scripts/SakugaEngine/Deprecated/AnimationEventsList.cs" id="2_rdu17"]
 [ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Deprecated/StatePhysics.cs" id="3_gm7sg"]
@@ -40,10 +41,10 @@ Condition = 1
 
 [resource]
 script = ExtResource("2_h2j8i")
-StateName = "236C_3"
+StateName = "236A"
 Type = 2
 AnimationData = ExtResource("1_d340o")
-TransitionEvents = null
+TransitionEvents = Array[Object]([ExtResource("2_0qfrh")])
 OnEnterEvents = null
 OnTickEvents = null
 OnExitEvents = null

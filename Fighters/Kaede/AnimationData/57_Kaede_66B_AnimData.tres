@@ -2,7 +2,10 @@
 
 [ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_apoy8"]
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2_p873r"]
+[ext_resource type="Resource" uid="uid://ljds4bjiur1q" path="res://Fighters/Kaede/Hitboxes/13_Hitbox_j_5A_StUp.tres" id="2_tqm7q"]
 [ext_resource type="Script" uid="uid://ddkya5wrb53ly" path="res://Scripts/SakugaEngine/Resources/AnimationData.cs" id="3_m4ejh"]
+[ext_resource type="Resource" uid="uid://bvboyvfxta3jq" path="res://Fighters/Kaede/Hitboxes/17_Hitbox_66B_Active.tres" id="4_1xm2t"]
+[ext_resource type="Resource" uid="uid://t64afo7e4u1o" path="res://Fighters/Kaede/Hitboxes/0_Hitbox_Basic.tres" id="5_q0ba1"]
 
 [sub_resource type="Resource" id="Resource_vrmnw"]
 script = ExtResource("1_apoy8")
@@ -11,20 +14,23 @@ metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
 
 [sub_resource type="Resource" id="2"]
 script = ExtResource("2_p873r")
+HitboxData = ExtResource("2_tqm7q")
 
 [sub_resource type="Resource" id="3"]
 script = ExtResource("2_p873r")
 AtFrame = 7
 animationStage = 1
+HitboxData = ExtResource("4_1xm2t")
 
 [sub_resource type="Resource" id="4"]
 script = ExtResource("2_p873r")
 AtFrame = 11
 animationStage = 2
+HitboxData = ExtResource("5_q0ba1")
 
 [resource]
 script = ExtResource("3_m4ejh")
-Duration = 18
+Duration = 24
 Animations = [SubResource("Resource_vrmnw")]
 Hitboxes = [SubResource("2"), SubResource("3"), SubResource("4")]
 metadata/_custom_type_script = "uid://ddkya5wrb53ly"

@@ -84,27 +84,30 @@ namespace SakugaEngine
                 Mathf.Clamp(Mathf.Lerp(Position.Y, newCamPosition.Y, DELTA), _groundLimit + FinalYOffset, _ceilingLimit - FinalYOffset),
                 -FinalZOffset);
             
-            charCam.GlobalTransform = GlobalTransform;
-            
-            var dist = GlobalPosition.DistanceTo(clampedCamPosition);
-            switch (Projection)
+            if (charCam != null)
             {
-                case ProjectionType.Perspective:
-                    switch (charCam.Projection)
-                    {
-                        case ProjectionType.Perspective:
-                            charCam.Fov = Fov;
-                            break;
-                        default:
-                            charCam.Size = dist * Mathf.Tan(Mathf.DegToRad(Fov * 2) / 2) - FlatOffset;
-                            break;
-                    }
-                    break;
-                default:
-                    charCam.Projection = Projection;
-                    Size = Position.Z;
-                    charCam.Size = Size;
-                    break;
+                charCam.GlobalTransform = GlobalTransform;
+                
+                var dist = GlobalPosition.DistanceTo(clampedCamPosition);
+                switch (Projection)
+                {
+                    case ProjectionType.Perspective:
+                        switch (charCam.Projection)
+                        {
+                            case ProjectionType.Perspective:
+                                charCam.Fov = Fov;
+                                break;
+                            default:
+                                charCam.Size = dist * Mathf.Tan(Mathf.DegToRad(Fov * 2) / 2) - FlatOffset;
+                                break;
+                        }
+                        break;
+                    default:
+                        charCam.Projection = Projection;
+                        Size = Position.Z;
+                        charCam.Size = Size;
+                        break;
+                }
             }
             
             if (Listener != null) Listener.GlobalPosition = new Vector3(Position.X, Position.Y, 0);

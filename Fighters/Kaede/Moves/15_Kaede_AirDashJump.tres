@@ -19,7 +19,7 @@ metadata/_custom_type_script = "uid://dh03r2nvy3pmu"
 [sub_resource type="Resource" id="Resource_il8c1"]
 script = ExtResource("3_m5wp1")
 Value = 1
-CompareMode = 3
+CompareMode = 4
 metadata/_custom_type_script = "uid://cuch5yr7c7dag"
 
 [sub_resource type="Resource" id="Resource_7ceo4"]

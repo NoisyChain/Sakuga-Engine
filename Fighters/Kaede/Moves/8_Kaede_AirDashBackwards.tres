@@ -26,7 +26,7 @@ metadata/_custom_type_script = "uid://dh03r2nvy3pmu"
 script = ExtResource("2_xanao")
 ByIndex = 1
 Value = 1
-CompareMode = 3
+CompareMode = 4
 metadata/_custom_type_script = "uid://cuch5yr7c7dag"
 
 [resource]

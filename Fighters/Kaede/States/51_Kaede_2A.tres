@@ -4,8 +4,27 @@
 [ext_resource type="Resource" uid="uid://de7500uennp8t" path="res://Fighters/Kaede/AnimationData/51_Kaede_2A_AnimData.tres" id="1_ibkb2"]
 [ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_luvxg"]
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2"]
+[ext_resource type="Script" uid="uid://bgwrlqrhqb2a4" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Actions/MoveXAction.cs" id="2_vun8e"]
+[ext_resource type="Script" uid="uid://c076jc3huncn2" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/FrameDataEvent.cs" id="2_xyvjg"]
 [ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Deprecated/StatePhysics.cs" id="3"]
+[ext_resource type="Script" uid="uid://bw1835rb2hj7y" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Actions/MoveYAction.cs" id="3_qlvvj"]
 [ext_resource type="Script" uid="uid://bia88bspuvxd" path="res://Scripts/SakugaEngine/Deprecated/StateTransitionSettings.cs" id="4_isfww"]
+[ext_resource type="Resource" uid="uid://bo710qx800303" path="res://Fighters/Kaede/FrameDataEvents/Template_Trans_Crouch.tres" id="5_1l7j2"]
+
+[sub_resource type="Resource" id="Resource_d6v4n"]
+script = ExtResource("2_vun8e")
+UseInertia = true
+metadata/_custom_type_script = "uid://bgwrlqrhqb2a4"
+
+[sub_resource type="Resource" id="Resource_vdo40"]
+script = ExtResource("3_qlvvj")
+metadata/_custom_type_script = "uid://bw1835rb2hj7y"
+
+[sub_resource type="Resource" id="Resource_t3gxl"]
+script = ExtResource("2_xyvjg")
+Conditions = null
+Actions = Array[Object]([SubResource("Resource_d6v4n"), SubResource("Resource_vdo40")])
+metadata/_custom_type_script = "uid://c076jc3huncn2"
 
 [sub_resource type="Resource" id="Resource_ibkb2"]
 script = ExtResource("1_luvxg")
@@ -41,9 +60,9 @@ StateName = "2A"
 BaseStance = 1
 Type = 2
 AnimationData = ExtResource("1_ibkb2")
-TransitionEvents = null
+TransitionEvents = Array[Object]([ExtResource("5_1l7j2")])
 OnEnterEvents = null
-OnTickEvents = null
+OnTickEvents = Array[Object]([SubResource("Resource_t3gxl")])
 OnExitEvents = null
 OnHitConfirmEvents = null
 OnHitReactionEvents = null

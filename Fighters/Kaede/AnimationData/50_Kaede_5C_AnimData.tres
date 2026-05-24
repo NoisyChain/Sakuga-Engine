@@ -30,6 +30,6 @@ HitboxData = ExtResource("5_fdmiq")
 
 [resource]
 script = ExtResource("3_7axjo")
-Duration = 34
+Duration = 40
 Animations = [SubResource("Resource_868mb")]
 Hitboxes = [SubResource("2"), SubResource("3"), SubResource("4")]

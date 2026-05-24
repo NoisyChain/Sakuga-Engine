@@ -20,3 +20,4 @@ Scenes/Test
 Scenes/ChecksumCalculator.tscn
 interpolation_editor.gd
 interpolation_editor.gd.uid
+*.lscache

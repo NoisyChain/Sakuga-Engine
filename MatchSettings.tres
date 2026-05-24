@@ -13,6 +13,7 @@ script = ExtResource("1_oyneo")
 GameModes = Array[Object]([ExtResource("1_nhb7f"), ExtResource("2_xs2pd"), ExtResource("3_lmfa8"), ExtResource("4_wa1jn"), ExtResource("5_j0byi"), ExtResource("6_xldqt")])
 SelectedMode = 5
 TimeLimit = 99
+SelectedStage = 1
 P1SelectedDevice = 0
 P2SelectedColor = 1
 P2SelectedDevice = 1

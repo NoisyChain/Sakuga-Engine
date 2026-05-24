@@ -4,10 +4,10 @@
 [ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_lvb1n"]
 [ext_resource type="Resource" uid="uid://cixk0mdi5e4c8" path="res://Fighters/Kaede/AnimationData/48_Kaede_5A_AnimData.tres" id="1_ynb4b"]
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2"]
-[ext_resource type="Script" uid="uid://da4kqpf635oin" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Actions/PlayStateAction.cs" id="2_1m68e"]
 [ext_resource type="Script" uid="uid://bgwrlqrhqb2a4" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Actions/MoveXAction.cs" id="2_pm4w0"]
 [ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Deprecated/StatePhysics.cs" id="3"]
-[ext_resource type="Script" uid="uid://bho4h38y7suxk" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Conditions/StateEndedCondition.cs" id="3_pm4w0"]
+[ext_resource type="Script" uid="uid://bw1835rb2hj7y" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Actions/MoveYAction.cs" id="3_pm4w0"]
+[ext_resource type="Resource" uid="uid://nvkiyhr0b8sx" path="res://Fighters/Kaede/FrameDataEvents/Template_Trans_Idle.tres" id="4_1m68e"]
 [ext_resource type="Script" uid="uid://c076jc3huncn2" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/FrameDataEvent.cs" id="4_btvbr"]
 [ext_resource type="Script" uid="uid://bia88bspuvxd" path="res://Scripts/SakugaEngine/Deprecated/StateTransitionSettings.cs" id="4_oarr7"]
 
@@ -16,24 +16,14 @@ script = ExtResource("2_pm4w0")
 UseInertia = true
 metadata/_custom_type_script = "uid://bgwrlqrhqb2a4"
 
+[sub_resource type="Resource" id="Resource_6aa6g"]
+script = ExtResource("3_pm4w0")
+metadata/_custom_type_script = "uid://bw1835rb2hj7y"
+
 [sub_resource type="Resource" id="Resource_pempn"]
 script = ExtResource("4_btvbr")
 Conditions = null
-Actions = Array[Object]([SubResource("Resource_btvbr")])
-metadata/_custom_type_script = "uid://c076jc3huncn2"
-
-[sub_resource type="Resource" id="Resource_6aa6g"]
-script = ExtResource("2_1m68e")
-metadata/_custom_type_script = "uid://da4kqpf635oin"
-
-[sub_resource type="Resource" id="Resource_uhin5"]
-script = ExtResource("3_pm4w0")
-metadata/_custom_type_script = "uid://bho4h38y7suxk"
-
-[sub_resource type="Resource" id="Resource_q8i2b"]
-script = ExtResource("4_btvbr")
-Conditions = Array[Object]([SubResource("Resource_uhin5")])
-Actions = Array[Object]([SubResource("Resource_6aa6g")])
+Actions = Array[Object]([SubResource("Resource_btvbr"), SubResource("Resource_6aa6g")])
 metadata/_custom_type_script = "uid://c076jc3huncn2"
 
 [sub_resource type="Resource" id="Resource_ynb4b"]
@@ -68,7 +58,7 @@ script = ExtResource("1")
 StateName = "5A"
 Type = 2
 AnimationData = ExtResource("1_ynb4b")
-TransitionEvents = Array[Object]([SubResource("Resource_q8i2b")])
+TransitionEvents = Array[Object]([ExtResource("4_1m68e")])
 OnEnterEvents = null
 OnTickEvents = Array[Object]([SubResource("Resource_pempn")])
 OnExitEvents = null

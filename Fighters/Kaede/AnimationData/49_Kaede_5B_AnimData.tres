@@ -30,7 +30,7 @@ HitboxData = ExtResource("5_x2ba2")
 
 [resource]
 script = ExtResource("3_1bhhu")
-Duration = 26
+Duration = 24
 Animations = [SubResource("Resource_prnwj")]
 Hitboxes = [SubResource("2"), SubResource("3"), SubResource("4")]
 metadata/_custom_type_script = "uid://ddkya5wrb53ly"
