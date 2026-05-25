@@ -2,86 +2,37 @@
 
 [ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_hcb6p"]
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2_dlbjy"]
+[ext_resource type="Resource" uid="uid://bjm6llkfwtv0w" path="res://Fighters/Kaede/Hitboxes/18_Hitbox_Grab_stUp.tres" id="2_ur470"]
 [ext_resource type="Script" uid="uid://ddkya5wrb53ly" path="res://Scripts/SakugaEngine/Resources/AnimationData.cs" id="3_7251p"]
+[ext_resource type="Resource" uid="uid://c5aa72i4vae85" path="res://Fighters/Kaede/Hitboxes/19_Hitbox_Grab.tres" id="4_k5555"]
+[ext_resource type="Resource" uid="uid://t64afo7e4u1o" path="res://Fighters/Kaede/Hitboxes/0_Hitbox_Basic.tres" id="5_c1uwa"]
 
-[sub_resource type="Resource" id="Resource_6f846"]
+[sub_resource type="Resource" id="Resource_i8e7y"]
 script = ExtResource("1_hcb6p")
-SourceAnimation = "Combat_j-5D"
-FrameStepping = 4
-LimitRange = true
-AnimationRange = Vector2i(0, 11)
+SourceAnimation = "Throw_Enter"
 metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
 
-[sub_resource type="Resource" id="Resource_golga"]
-script = ExtResource("1_hcb6p")
-AtFrame = 12
-SourceAnimation = "Combat_j-5D"
-FrameStepping = 4
-LimitRange = true
-AnimationRange = Vector2i(12, 12)
-metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
-
-[sub_resource type="Resource" id="Resource_g07l6"]
-script = ExtResource("1_hcb6p")
-AtFrame = 18
-SourceAnimation = "Combat_j-5D"
-FrameStepping = 4
-LimitRange = true
-AnimationRange = Vector2i(16, 16)
-metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
-
-[sub_resource type="Resource" id="Resource_js106"]
-script = ExtResource("1_hcb6p")
-AtFrame = 22
-SourceAnimation = "Combat_j-5D"
-FrameStepping = 4
-LimitRange = true
-AnimationRange = Vector2i(20, 20)
-metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
-
-[sub_resource type="Resource" id="Resource_242ht"]
-script = ExtResource("1_hcb6p")
-AtFrame = 25
-SourceAnimation = "Combat_j-5D"
-FrameStepping = 4
-LimitRange = true
-AnimationRange = Vector2i(24, 24)
-metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
-
-[sub_resource type="Resource" id="Resource_gk1su"]
-script = ExtResource("1_hcb6p")
-AtFrame = 28
-SourceAnimation = "Combat_j-5D"
-FrameStepping = 4
-LimitRange = true
-AnimationRange = Vector2i(28, 28)
-metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
-
-[sub_resource type="Resource" id="Resource_uels0"]
-script = ExtResource("1_hcb6p")
-AtFrame = 31
-SourceAnimation = "Combat_j-5D"
-FrameStepping = 4
-LimitRange = true
-AnimationRange = Vector2i(32, 32)
-metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
-
-[sub_resource type="Resource" id="2"]
+[sub_resource type="Resource" id="Resource_m7h3g"]
 script = ExtResource("2_dlbjy")
-
-[sub_resource type="Resource" id="Resource_rwvet"]
-script = ExtResource("2_dlbjy")
-AtFrame = 16
 animationStage = 1
+HitboxData = ExtResource("2_ur470")
+metadata/_custom_type_script = "uid://5qrsoteskjym"
 
-[sub_resource type="Resource" id="Resource_nnqmo"]
+[sub_resource type="Resource" id="Resource_w3ec0"]
 script = ExtResource("2_dlbjy")
-AtFrame = 22
-animationStage = 2
+AtFrame = 2
+HitboxData = ExtResource("4_k5555")
+metadata/_custom_type_script = "uid://5qrsoteskjym"
+
+[sub_resource type="Resource" id="Resource_xkgaq"]
+script = ExtResource("2_dlbjy")
+AtFrame = 6
+HitboxData = ExtResource("5_c1uwa")
+metadata/_custom_type_script = "uid://5qrsoteskjym"
 
 [resource]
 script = ExtResource("3_7251p")
-Duration = 34
-Animations = [SubResource("Resource_6f846"), SubResource("Resource_golga"), SubResource("Resource_g07l6"), SubResource("Resource_js106"), SubResource("Resource_242ht"), SubResource("Resource_gk1su"), SubResource("Resource_uels0")]
-Hitboxes = [SubResource("2"), SubResource("Resource_rwvet"), SubResource("Resource_nnqmo")]
+Duration = 19
+Animations = [SubResource("Resource_i8e7y")]
+Hitboxes = [SubResource("Resource_m7h3g"), SubResource("Resource_w3ec0"), SubResource("Resource_xkgaq")]
 metadata/_custom_type_script = "uid://ddkya5wrb53ly"

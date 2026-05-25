@@ -6,7 +6,7 @@
 
 [sub_resource type="Resource" id="Resource_cbf4k"]
 script = ExtResource("1_8c5f4")
-StateIndex = 12
+StateIndex = 8
 metadata/_custom_type_script = "uid://da4kqpf635oin"
 
 [sub_resource type="Resource" id="Resource_bitvo"]

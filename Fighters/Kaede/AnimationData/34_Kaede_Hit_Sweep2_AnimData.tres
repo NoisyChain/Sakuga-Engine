@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="AnimationData" format=3 uid="uid://bmnv5lw5c4ejc"]
+
+[ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_yq3gr"]
+[ext_resource type="Resource" uid="uid://b6kiyox8tjef2" path="res://Fighters/Kaede/Hitboxes/1_Hitbox_Crouch.tres" id="2_ya5b2"]
+[ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="3_dbjf4"]
+[ext_resource type="Script" uid="uid://ddkya5wrb53ly" path="res://Scripts/SakugaEngine/Resources/AnimationData.cs" id="4_ck2uc"]
+
+[sub_resource type="Resource" id="Resource_yq3gr"]
+script = ExtResource("1_yq3gr")
+SourceAnimation = "Hit_Sweep_2"
+metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
+
+[sub_resource type="Resource" id="Resource_7hlnw"]
+script = ExtResource("3_dbjf4")
+HitboxData = ExtResource("2_ya5b2")
+metadata/_custom_type_script = "uid://5qrsoteskjym"
+
+[resource]
+script = ExtResource("4_ck2uc")
+Duration = 20
+Animations = [SubResource("Resource_yq3gr")]
+Hitboxes = [SubResource("Resource_7hlnw")]
+metadata/_custom_type_script = "uid://ddkya5wrb53ly"

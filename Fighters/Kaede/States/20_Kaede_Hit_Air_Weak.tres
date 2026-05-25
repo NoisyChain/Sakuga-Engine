@@ -1,10 +1,33 @@
 [gd_resource type="Resource" script_class="FighterState" format=3 uid="uid://0rhwue7oiqke"]
 
 [ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="1"]
+[ext_resource type="Resource" uid="uid://04a4bhxrfvo6" path="res://Fighters/Kaede/FrameDataEvents/Template_Trans_Airborne.tres" id="1_1uogu"]
+[ext_resource type="Resource" uid="uid://by0323usogp0b" path="res://Fighters/Kaede/AnimationData/25_Kaede_Hit_Air_Weak_AnimData.tres" id="1_nuirk"]
+[ext_resource type="Resource" uid="uid://cbi8x63eu0l5i" path="res://Fighters/Kaede/FrameDataEvents/Template_Gravity_Hitstun.tres" id="1_ogt3y"]
 [ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_sd7yn"]
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2"]
+[ext_resource type="Resource" uid="uid://bvxyesd7vmtp" path="res://Fighters/Kaede/FrameDataEvents/Template_Trans_Landing.tres" id="2_ogt3y"]
 [ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Deprecated/StatePhysics.cs" id="3"]
 [ext_resource type="Script" uid="uid://bia88bspuvxd" path="res://Scripts/SakugaEngine/Deprecated/StateTransitionSettings.cs" id="4_i4iwo"]
+[ext_resource type="Script" uid="uid://da4kqpf635oin" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Actions/PlayStateAction.cs" id="5_kbrg2"]
+[ext_resource type="Script" uid="uid://b36gpjs1umb3b" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Conditions/CheckHealthCondition.cs" id="6_7qwtx"]
+[ext_resource type="Script" uid="uid://c076jc3huncn2" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/FrameDataEvent.cs" id="7_be10c"]
+
+[sub_resource type="Resource" id="Resource_78160"]
+script = ExtResource("5_kbrg2")
+StateIndex = 21
+metadata/_custom_type_script = "uid://da4kqpf635oin"
+
+[sub_resource type="Resource" id="Resource_7wlq1"]
+script = ExtResource("6_7qwtx")
+CompareMode = 5
+metadata/_custom_type_script = "uid://b36gpjs1umb3b"
+
+[sub_resource type="Resource" id="Resource_g2f3r"]
+script = ExtResource("7_be10c")
+Conditions = Array[Object]([SubResource("Resource_7wlq1")])
+Actions = Array[Object]([SubResource("Resource_78160")])
+metadata/_custom_type_script = "uid://c076jc3huncn2"
 
 [sub_resource type="Resource" id="Resource_klx2d"]
 script = ExtResource("1_sd7yn")
@@ -39,9 +62,10 @@ script = ExtResource("1")
 StateName = "Hit_Air_Weak"
 BaseStance = 2
 Type = 4
-TransitionEvents = null
+AnimationData = ExtResource("1_nuirk")
+TransitionEvents = Array[Object]([ExtResource("1_1uogu"), ExtResource("2_ogt3y"), SubResource("Resource_g2f3r")])
 OnEnterEvents = null
-OnTickEvents = null
+OnTickEvents = Array[Object]([ExtResource("1_ogt3y")])
 OnExitEvents = null
 OnHitConfirmEvents = null
 OnHitReactionEvents = null

@@ -253,9 +253,7 @@
 [ext_resource type="Texture2D" uid="uid://dadyrj4blbd4m" path="res://Fighters/Kaede/Sprites/801-0.png" id="296_f7ky3"]
 [ext_resource type="Texture2D" uid="uid://dw5t5ql75xou8" path="res://Fighters/Kaede/Sprites/801-1.png" id="297_ybkmr"]
 [ext_resource type="Texture2D" uid="uid://d2avx3e3r24ud" path="res://Fighters/Kaede/Sprites/801-2.png" id="298_1qddw"]
-[ext_resource type="PackedScene" uid="uid://csdgicelabg4n" path="res://Scenes/Instances/HitboxPreviewer.tscn" id="299_wvg0r"]
 [ext_resource type="Texture2D" uid="uid://b7m1exkxvnhyk" path="res://Fighters/Kaede/Sprites/801-4.png" id="300_6xb7l"]
-[ext_resource type="Resource" uid="uid://bd0sl6j6k8l" path="res://Fighters/Kaede/AnimationData/15_Kaede_Crouching_AnimData.tres" id="300_wvg0r"]
 [ext_resource type="Texture2D" uid="uid://b1x3gj3gope4o" path="res://Fighters/Kaede/Sprites/801-5.png" id="301_j4lax"]
 [ext_resource type="Texture2D" uid="uid://mqv07djtd02x" path="res://Fighters/Kaede/Sprites/801-6.png" id="302_tku0h"]
 [ext_resource type="Texture2D" uid="uid://c0ynd6bdxxnbt" path="res://Fighters/Kaede/Sprites/801-7.png" id="303_w1usg"]
@@ -2106,7 +2104,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="27"]
 resource_name = "Hit_Sweep_2"
-length = 0.333333
+length = 0.33333564
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -2813,7 +2811,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1, 0.15, 0.2, 0.25, 0.3),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(-123, 19), Vector2(-133, 19), Vector2(-133, 26), Vector2(-128, 103), Vector2(-133, 70), Vector2(-140, 68), Vector2(-111, 31), Vector2(-79, -9)]
+"values": [Vector2(-123, 19), Vector2(-133, 19), Vector2(-133, 26), Vector2(-128, 70), Vector2(-133, 70), Vector2(-140, 68), Vector2(-111, 31), Vector2(-79, -9)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -3069,9 +3067,3 @@ script = ExtResource("294_608rl")
 MaxValue = 1
 Behaviors = Array[Object]([SubResource("Resource_ww37y")])
 metadata/_custom_type_script = "uid://dqqr3jnsmcig6"
-
-[node name="HitboxPreviewer" parent="." unique_id=1572245311 node_paths=PackedStringArray("Animator") instance=ExtResource("299_wvg0r")]
-process_mode = 3
-Animator = NodePath("../Graphics/Mesh")
-Data = ExtResource("300_wvg0r")
-Frame = 6

@@ -1,26 +1,34 @@
 [gd_resource type="Resource" script_class="AnimationData" format=3 uid="uid://dhxlnxhmp3v2t"]
 
 [ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_7jmcd"]
+[ext_resource type="Resource" uid="uid://b6kiyox8tjef2" path="res://Fighters/Kaede/Hitboxes/1_Hitbox_Crouch.tres" id="2_a5ry6"]
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2_rbldy"]
 [ext_resource type="Script" uid="uid://ddkya5wrb53ly" path="res://Scripts/SakugaEngine/Resources/AnimationData.cs" id="3_hsss0"]
+[ext_resource type="Resource" uid="uid://do4rbierxdm3u" path="res://Fighters/Kaede/Hitboxes/2_Hitbox_Jump.tres" id="4_sijdw"]
+[ext_resource type="Resource" uid="uid://t64afo7e4u1o" path="res://Fighters/Kaede/Hitboxes/0_Hitbox_Basic.tres" id="5_w1kt0"]
 
-[sub_resource type="Resource" id="Resource_hoxp6"]
+[sub_resource type="Resource" id="Resource_w1mbf"]
 script = ExtResource("1_7jmcd")
-SourceAnimation = "Jump_Forward"
+SourceAnimation = "Jump_Backwards"
 metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
 
 [sub_resource type="Resource" id="2"]
 script = ExtResource("2_rbldy")
+HitboxData = ExtResource("2_a5ry6")
 
 [sub_resource type="Resource" id="5"]
 script = ExtResource("2_rbldy")
+AtFrame = 4
+HitboxData = ExtResource("4_sijdw")
 
 [sub_resource type="Resource" id="6"]
 script = ExtResource("2_rbldy")
+AtFrame = 18
+HitboxData = ExtResource("5_w1kt0")
 
 [resource]
 script = ExtResource("3_hsss0")
 Duration = 22
-Animations = [SubResource("Resource_hoxp6")]
+Animations = [SubResource("Resource_w1mbf")]
 Hitboxes = [SubResource("2"), SubResource("5"), SubResource("6")]
 metadata/_custom_type_script = "uid://ddkya5wrb53ly"

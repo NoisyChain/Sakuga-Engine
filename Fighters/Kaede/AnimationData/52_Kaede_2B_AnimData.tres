@@ -18,13 +18,13 @@ HitboxData = ExtResource("2_c76yt")
 
 [sub_resource type="Resource" id="3"]
 script = ExtResource("2_p406i")
-AtFrame = 7
+AtFrame = 6
 animationStage = 1
 HitboxData = ExtResource("4_56uay")
 
 [sub_resource type="Resource" id="4"]
 script = ExtResource("2_p406i")
-AtFrame = 11
+AtFrame = 10
 animationStage = 2
 HitboxData = ExtResource("5_2r63s")
 

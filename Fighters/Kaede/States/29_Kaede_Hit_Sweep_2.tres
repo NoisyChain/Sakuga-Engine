@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="1"]
 [ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_ce4la"]
+[ext_resource type="Resource" uid="uid://bmnv5lw5c4ejc" path="res://Fighters/Kaede/AnimationData/34_Kaede_Hit_Sweep2_AnimData.tres" id="1_dkalb"]
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2"]
 
 [sub_resource type="Resource" id="Resource_dkalb"]
@@ -16,6 +17,7 @@ script = ExtResource("2")
 script = ExtResource("1")
 StateName = "Hit_Sweep_2"
 Type = 4
+AnimationData = ExtResource("1_dkalb")
 TransitionEvents = null
 OnEnterEvents = null
 OnTickEvents = null

@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="AnimationData" format=3 uid="uid://bwb7upikhh86d"]
+
+[ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_g2j33"]
+[ext_resource type="Resource" uid="uid://t64afo7e4u1o" path="res://Fighters/Kaede/Hitboxes/0_Hitbox_Basic.tres" id="2_g2j33"]
+[ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="3_tdat8"]
+[ext_resource type="Script" uid="uid://ddkya5wrb53ly" path="res://Scripts/SakugaEngine/Resources/AnimationData.cs" id="4_x5dhq"]
+
+[sub_resource type="Resource" id="Resource_swd5v"]
+script = ExtResource("1_g2j33")
+SourceAnimation = "Hit_Dizzy"
+metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
+
+[sub_resource type="Resource" id="Resource_tdat8"]
+script = ExtResource("3_tdat8")
+HitboxData = ExtResource("2_g2j33")
+metadata/_custom_type_script = "uid://5qrsoteskjym"
+
+[resource]
+script = ExtResource("4_x5dhq")
+Duration = 24
+Animations = [SubResource("Resource_swd5v")]
+Hitboxes = [SubResource("Resource_tdat8")]
+metadata/_custom_type_script = "uid://ddkya5wrb53ly"

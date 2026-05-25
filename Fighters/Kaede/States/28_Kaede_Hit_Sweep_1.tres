@@ -1,8 +1,53 @@
 [gd_resource type="Resource" script_class="FighterState" format=3 uid="uid://dlgxfcj320njw"]
 
 [ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="1"]
+[ext_resource type="Resource" uid="uid://dabxkstsi7vk3" path="res://Fighters/Kaede/AnimationData/33_Kaede_Hit_Sweep1_AnimData.tres" id="1_h1iem"]
 [ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_o6jg8"]
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2"]
+[ext_resource type="Script" uid="uid://da4kqpf635oin" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Actions/PlayStateAction.cs" id="2_w858d"]
+[ext_resource type="Script" uid="uid://bho4h38y7suxk" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Conditions/StateEndedCondition.cs" id="3_iydc6"]
+[ext_resource type="Script" uid="uid://b36gpjs1umb3b" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Conditions/CheckHealthCondition.cs" id="4_51mg5"]
+[ext_resource type="Script" uid="uid://c076jc3huncn2" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/FrameDataEvent.cs" id="5_numj3"]
+
+[sub_resource type="Resource" id="Resource_y4uqe"]
+script = ExtResource("2_w858d")
+StateIndex = 26
+metadata/_custom_type_script = "uid://da4kqpf635oin"
+
+[sub_resource type="Resource" id="Resource_b4ya0"]
+script = ExtResource("3_iydc6")
+metadata/_custom_type_script = "uid://bho4h38y7suxk"
+
+[sub_resource type="Resource" id="Resource_iuv87"]
+script = ExtResource("4_51mg5")
+CompareMode = 2
+metadata/_custom_type_script = "uid://b36gpjs1umb3b"
+
+[sub_resource type="Resource" id="Resource_mf1p7"]
+script = ExtResource("5_numj3")
+Conditions = Array[Object]([SubResource("Resource_b4ya0"), SubResource("Resource_iuv87")])
+Actions = Array[Object]([SubResource("Resource_y4uqe")])
+metadata/_custom_type_script = "uid://c076jc3huncn2"
+
+[sub_resource type="Resource" id="Resource_2p4bu"]
+script = ExtResource("2_w858d")
+StateIndex = 32
+metadata/_custom_type_script = "uid://da4kqpf635oin"
+
+[sub_resource type="Resource" id="Resource_b0cil"]
+script = ExtResource("3_iydc6")
+metadata/_custom_type_script = "uid://bho4h38y7suxk"
+
+[sub_resource type="Resource" id="Resource_08qhk"]
+script = ExtResource("4_51mg5")
+CompareMode = 5
+metadata/_custom_type_script = "uid://b36gpjs1umb3b"
+
+[sub_resource type="Resource" id="Resource_u4l6b"]
+script = ExtResource("5_numj3")
+Conditions = Array[Object]([SubResource("Resource_b0cil"), SubResource("Resource_08qhk")])
+Actions = Array[Object]([SubResource("Resource_2p4bu")])
+metadata/_custom_type_script = "uid://c076jc3huncn2"
 
 [sub_resource type="Resource" id="Resource_qkek5"]
 script = ExtResource("1_o6jg8")
@@ -16,7 +61,8 @@ script = ExtResource("2")
 script = ExtResource("1")
 StateName = "Hit_Sweep_1"
 Type = 4
-TransitionEvents = null
+AnimationData = ExtResource("1_h1iem")
+TransitionEvents = Array[Object]([SubResource("Resource_mf1p7"), SubResource("Resource_u4l6b")])
 OnEnterEvents = null
 OnTickEvents = null
 OnExitEvents = null

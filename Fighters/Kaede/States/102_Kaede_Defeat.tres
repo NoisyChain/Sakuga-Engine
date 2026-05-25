@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="FighterState" format=3 uid="uid://cod2qq8sw6usp"]
 
 [ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_gamch"]
+[ext_resource type="Resource" uid="uid://bwb7upikhh86d" path="res://Fighters/Kaede/AnimationData/36_Kaede_Dizzy_AnimData.tres" id="1_vxddt"]
 [ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="2_vxddt"]
 [ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Deprecated/StatePhysics.cs" id="3_bux6k"]
 
@@ -19,6 +20,7 @@ metadata/_custom_type_script = "uid://5you05l2efnd"
 script = ExtResource("2_vxddt")
 StateName = "Defeat"
 Type = 5
+AnimationData = ExtResource("1_vxddt")
 TransitionEvents = null
 OnEnterEvents = null
 OnTickEvents = null

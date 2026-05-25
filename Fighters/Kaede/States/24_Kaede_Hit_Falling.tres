@@ -2,9 +2,29 @@
 
 [ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="1"]
 [ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_kmbpk"]
+[ext_resource type="Resource" uid="uid://ch0tikfuwtv0a" path="res://Fighters/Kaede/AnimationData/29_Kaede_Hit_Falling_AnimData.tres" id="1_sdpcj"]
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2"]
+[ext_resource type="Resource" uid="uid://cbi8x63eu0l5i" path="res://Fighters/Kaede/FrameDataEvents/Template_Gravity_Hitstun.tres" id="2_khdnx"]
+[ext_resource type="Script" uid="uid://da4kqpf635oin" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Actions/PlayStateAction.cs" id="3_44ksq"]
 [ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Deprecated/StatePhysics.cs" id="3_ofjc4"]
 [ext_resource type="Script" uid="uid://bia88bspuvxd" path="res://Scripts/SakugaEngine/Deprecated/StateTransitionSettings.cs" id="3_v0l56"]
+[ext_resource type="Script" uid="uid://baguhnol5ww4w" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Conditions/OnGroundCondition.cs" id="4_b8cpb"]
+[ext_resource type="Script" uid="uid://c076jc3huncn2" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/FrameDataEvent.cs" id="5_q3iqp"]
+
+[sub_resource type="Resource" id="Resource_s638q"]
+script = ExtResource("3_44ksq")
+StateIndex = 25
+metadata/_custom_type_script = "uid://da4kqpf635oin"
+
+[sub_resource type="Resource" id="Resource_3q8iq"]
+script = ExtResource("4_b8cpb")
+metadata/_custom_type_script = "uid://baguhnol5ww4w"
+
+[sub_resource type="Resource" id="Resource_t2qwu"]
+script = ExtResource("5_q3iqp")
+Conditions = Array[Object]([SubResource("Resource_3q8iq")])
+Actions = Array[Object]([SubResource("Resource_s638q")])
+metadata/_custom_type_script = "uid://c076jc3huncn2"
 
 [sub_resource type="Resource" id="Resource_sdpcj"]
 script = ExtResource("1_kmbpk")
@@ -29,9 +49,10 @@ script = ExtResource("1")
 StateName = "Hit_Falling"
 BaseStance = 2
 Type = 4
-TransitionEvents = null
+AnimationData = ExtResource("1_sdpcj")
+TransitionEvents = Array[Object]([SubResource("Resource_t2qwu")])
 OnEnterEvents = null
-OnTickEvents = null
+OnTickEvents = Array[Object]([ExtResource("2_khdnx")])
 OnExitEvents = null
 OnHitConfirmEvents = null
 OnHitReactionEvents = null

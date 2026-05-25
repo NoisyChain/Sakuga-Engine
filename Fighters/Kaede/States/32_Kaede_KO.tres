@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="FighterState" format=3 uid="uid://cqldypu3kwqtg"]
 
 [ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="1"]
+[ext_resource type="Resource" uid="uid://ciwsfe2tjpvf" path="res://Fighters/Kaede/AnimationData/31_Kaede_Hit_Down_AnimData.tres" id="1_ngrvk"]
 [ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_s8ams"]
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="1_vlvpd"]
 [ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Deprecated/StatePhysics.cs" id="2_jfctq"]
@@ -23,6 +24,7 @@ UseGravity = true
 script = ExtResource("1")
 StateName = "Hit_Down"
 Type = 4
+AnimationData = ExtResource("1_ngrvk")
 TransitionEvents = null
 OnEnterEvents = null
 OnTickEvents = null

@@ -84,19 +84,21 @@ GuardCrushEffectIndex = 1
 GroundHitstunType = 3
 GroundHitReaction = 5
 CrouchHitReaction = 5
-GroundHitKnockback = Vector2i(-80000, 30000)
+GroundHitKnockback = Vector2i(-80000, 40000)
 GroundHitKnockbackGravity = 200000
 GroundHitstun = 30
 GroundBlockKnockback = Vector2i(-80000, 0)
 GroundBlockstun = 18
 AirHitstunType = 3
 AirHitReaction = 5
-AirHitKnockback = Vector2i(-80000, 30000)
+AirHitKnockback = Vector2i(-80000, 40000)
 AirHitstun = 30
 AirBlockKnockback = Vector2i(-80000, 0)
 AirBlockstun = 18
 SelfPushbackForce = -45000
-BounceXIntensity = 40
+BounceTime = 20
+BounceXIntensity = 70
+BounceYIntensity = 0
 
 [resource]
 script = ExtResource("2_tmmwm")

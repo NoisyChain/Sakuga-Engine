@@ -24,7 +24,7 @@ animationStage = 2
 
 [resource]
 script = ExtResource("3_x8uh6")
-Duration = 34
+Duration = 30
 Animations = [SubResource("Resource_q4nhu")]
 Hitboxes = [SubResource("2"), SubResource("Resource_rwvet"), SubResource("Resource_nnqmo")]
 metadata/_custom_type_script = "uid://ddkya5wrb53ly"

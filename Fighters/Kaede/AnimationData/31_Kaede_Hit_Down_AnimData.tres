@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="AnimationData" format=3 uid="uid://ciwsfe2tjpvf"]
+
+[ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_7gyh0"]
+[ext_resource type="Resource" uid="uid://blwsq22i0tggk" path="res://Fighters/Kaede/Hitboxes/-2_Hitbox_CollisionOnly_Low.tres" id="2_7gyh0"]
+[ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="3_7hlnw"]
+[ext_resource type="Script" uid="uid://ddkya5wrb53ly" path="res://Scripts/SakugaEngine/Resources/AnimationData.cs" id="4_2ou2e"]
+
+[sub_resource type="Resource" id="Resource_d73fw"]
+script = ExtResource("1_7gyh0")
+SourceAnimation = "Hit_Down"
+metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
+
+[sub_resource type="Resource" id="Resource_7hlnw"]
+script = ExtResource("3_7hlnw")
+HitboxData = ExtResource("2_7gyh0")
+metadata/_custom_type_script = "uid://5qrsoteskjym"
+
+[resource]
+script = ExtResource("4_2ou2e")
+Duration = 60
+Animations = [SubResource("Resource_d73fw")]
+Hitboxes = [SubResource("Resource_7hlnw")]
+metadata/_custom_type_script = "uid://ddkya5wrb53ly"

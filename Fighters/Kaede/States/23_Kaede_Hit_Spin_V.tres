@@ -2,9 +2,28 @@
 
 [ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="1"]
 [ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_ca2wk"]
+[ext_resource type="Resource" uid="uid://do2ajov6e6fwl" path="res://Fighters/Kaede/AnimationData/28_Kaede_Hit_Spin_V_AnimData.tres" id="1_xo0au"]
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2"]
+[ext_resource type="Script" uid="uid://da4kqpf635oin" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Actions/PlayStateAction.cs" id="2_vuatc"]
 [ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Deprecated/StatePhysics.cs" id="3"]
+[ext_resource type="Script" uid="uid://bo4ex6rdwh1kk" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Conditions/IsFallingCondition.cs" id="3_ouns8"]
 [ext_resource type="Script" uid="uid://bia88bspuvxd" path="res://Scripts/SakugaEngine/Deprecated/StateTransitionSettings.cs" id="4_7xum3"]
+[ext_resource type="Script" uid="uid://c076jc3huncn2" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/FrameDataEvent.cs" id="4_bfqir"]
+
+[sub_resource type="Resource" id="Resource_5j3pn"]
+script = ExtResource("2_vuatc")
+StateIndex = 24
+metadata/_custom_type_script = "uid://da4kqpf635oin"
+
+[sub_resource type="Resource" id="Resource_0oxji"]
+script = ExtResource("3_ouns8")
+metadata/_custom_type_script = "uid://bo4ex6rdwh1kk"
+
+[sub_resource type="Resource" id="Resource_rip5s"]
+script = ExtResource("4_bfqir")
+Conditions = Array[Object]([SubResource("Resource_0oxji")])
+Actions = Array[Object]([SubResource("Resource_5j3pn")])
+metadata/_custom_type_script = "uid://c076jc3huncn2"
 
 [sub_resource type="Resource" id="Resource_xo0au"]
 script = ExtResource("1_ca2wk")
@@ -28,7 +47,8 @@ script = ExtResource("1")
 StateName = "Hit_Spin_2"
 BaseStance = 2
 Type = 4
-TransitionEvents = null
+AnimationData = ExtResource("1_xo0au")
+TransitionEvents = Array[Object]([SubResource("Resource_rip5s")])
 OnEnterEvents = null
 OnTickEvents = null
 OnExitEvents = null
