@@ -1,0 +1,37 @@
+[gd_resource type="Resource" script_class="AnimationData" format=3 uid="uid://c8yyel38e2wc0"]
+
+[ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_dnoic"]
+[ext_resource type="Resource" uid="uid://du8n0gtee4iwi" path="res://Fighters/Kaede/Hitboxes/-1_Hitbox_CollisionOnly.tres" id="2_cyetq"]
+[ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="3_th4u7"]
+[ext_resource type="Resource" uid="uid://bxmkahv2308i0" path="res://Fighters/Kaede/Hitboxes/26_Hitbox_623C_Sequence.tres" id="4_th4u7"]
+[ext_resource type="Resource" uid="uid://t64afo7e4u1o" path="res://Fighters/Kaede/Hitboxes/0_Hitbox_Basic.tres" id="5_k6nsy"]
+[ext_resource type="Script" uid="uid://ddkya5wrb53ly" path="res://Scripts/SakugaEngine/Resources/AnimationData.cs" id="5_t7s47"]
+
+[sub_resource type="Resource" id="Resource_t7s47"]
+script = ExtResource("1_dnoic")
+SourceAnimation = "623B_2"
+metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
+
+[sub_resource type="Resource" id="Resource_j7qn7"]
+script = ExtResource("3_th4u7")
+HitboxData = ExtResource("2_cyetq")
+
+[sub_resource type="Resource" id="Resource_cq6um"]
+script = ExtResource("3_th4u7")
+AtFrame = 6
+animationStage = 1
+HitboxData = ExtResource("4_th4u7")
+
+[sub_resource type="Resource" id="Resource_kcq33"]
+script = ExtResource("3_th4u7")
+AtFrame = 20
+animationStage = 2
+HitboxData = ExtResource("5_k6nsy")
+metadata/_custom_type_script = "uid://5qrsoteskjym"
+
+[resource]
+script = ExtResource("5_t7s47")
+Duration = 30
+Animations = [SubResource("Resource_t7s47")]
+Hitboxes = [SubResource("Resource_j7qn7"), SubResource("Resource_cq6um"), SubResource("Resource_kcq33")]
+metadata/_custom_type_script = "uid://ddkya5wrb53ly"

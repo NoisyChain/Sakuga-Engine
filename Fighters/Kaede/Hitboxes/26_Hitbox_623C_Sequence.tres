@@ -38,12 +38,14 @@ BounceYIntensity = 0
 
 [sub_resource type="Resource" id="Resource_aqr4w"]
 script = ExtResource("1_x7a0d")
-Center = Vector2i(6200, 2200)
-Size = Vector2i(3000, 3000)
+Center = Vector2i(5000, 3000)
+Size = Vector2i(5000, 5000)
 HitboxType = 1
 HitType = 3
 BaseDamage = 300
 GuardCrushDamage = 0
+SelfHitStopDuration = 10
+OpponentHitStopDuration = 10
 GroundHitstunType = 2
 GroundHitReaction = 8
 CrouchHitReaction = 8
