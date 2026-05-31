@@ -16,7 +16,6 @@ MoveName = "Dash Jump"
 MoveState = 6
 Inputs = ExtResource("1_hdl2k")
 Priority = 3
-DistanceArea = Vector2i(0, 99999)
 IsSequenceFromStates = PackedInt32Array(13)
 CanCancelTo = null
 VariablesRequirement = null

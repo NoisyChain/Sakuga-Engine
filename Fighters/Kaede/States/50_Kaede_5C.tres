@@ -13,7 +13,6 @@
 [ext_resource type="Script" uid="uid://c42r1mjvviuhg" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Conditions/AtFrameRangeCondition.cs" id="4_ritnm"]
 [ext_resource type="Script" uid="uid://bia88bspuvxd" path="res://Scripts/SakugaEngine/Deprecated/StateTransitionSettings.cs" id="4_w2dw3"]
 [ext_resource type="Script" uid="uid://c076jc3huncn2" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/FrameDataEvent.cs" id="5_g4pmr"]
-[ext_resource type="Script" uid="uid://50grsd2r3wl8" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Conditions/AtFrameCondition.cs" id="6_askm3"]
 
 [sub_resource type="Resource" id="Resource_0358y"]
 script = ExtResource("2_n4hul")
@@ -39,14 +38,15 @@ metadata/_custom_type_script = "uid://c076jc3huncn2"
 script = ExtResource("2_n4hul")
 metadata/_custom_type_script = "uid://bgwrlqrhqb2a4"
 
-[sub_resource type="Resource" id="Resource_ogmt1"]
-script = ExtResource("6_askm3")
-Frame = 16
-metadata/_custom_type_script = "uid://50grsd2r3wl8"
+[sub_resource type="Resource" id="Resource_e3r4e"]
+script = ExtResource("4_ritnm")
+MinFrame = 16
+MaxFrame = 39
+metadata/_custom_type_script = "uid://c42r1mjvviuhg"
 
 [sub_resource type="Resource" id="Resource_om0dl"]
 script = ExtResource("5_g4pmr")
-Conditions = Array[Object]([SubResource("Resource_ogmt1")])
+Conditions = Array[Object]([SubResource("Resource_e3r4e")])
 Actions = Array[Object]([SubResource("Resource_fmily")])
 metadata/_custom_type_script = "uid://c076jc3huncn2"
 

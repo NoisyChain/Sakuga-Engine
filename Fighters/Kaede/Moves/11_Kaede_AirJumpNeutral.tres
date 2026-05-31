@@ -34,7 +34,6 @@ MoveName = "Neutral Air Jump"
 MoveState = 3
 Inputs = ExtResource("1_ji7lf")
 Priority = 4
-DistanceArea = Vector2i(0, 99999)
 CanCancelTo = null
 VariablesRequirement = Array[Object]([SubResource("Resource_tmkpr")])
 VariablesChange = Array[Object]([SubResource("Resource_opnpq"), SubResource("Resource_jjsyd"), SubResource("Resource_op3mk")])
