@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="MoveSettings" load_steps=3 format=3 uid="uid://bpa40mmb2hyor"]
+[gd_resource type="Resource" script_class="MoveSettings" format=3 uid="uid://bpa40mmb2hyor"]
 
 [ext_resource type="Script" uid="uid://gk1rkw667o4n" path="res://Scripts/SakugaEngine/Resources/MoveSettings.cs" id="1"]
 [ext_resource type="Resource" uid="uid://bii142i8da7oq" path="res://Fighters/Shared/Inputs/13_Input_5C.tres" id="1_e584u"]
@@ -8,12 +8,13 @@ script = ExtResource("1")
 MoveName = "j.5C"
 MoveState = 56
 Inputs = ExtResource("1_e584u")
-CanCancelTo = null
-ExtraVariablesRequirement = null
-ExtraVariablesChange = null
-MoveEnd = 2
 Priority = 5
+MoveEnd = 2
+CanCancelTo = null
+VariablesRequirement = null
+VariablesChange = null
 CanBeOverrided = true
+IgnoreSelf = false
 IgnoreSamePriority = false
 AcceptNullStates = true
 AcceptCombatStates = true

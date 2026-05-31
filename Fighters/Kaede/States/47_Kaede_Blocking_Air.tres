@@ -1,10 +1,30 @@
 [gd_resource type="Resource" script_class="FighterState" format=3 uid="uid://blkdvkjys4axh"]
 
 [ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="1"]
+[ext_resource type="Resource" uid="uid://sn5k2t5qmq2d" path="res://Fighters/Kaede/AnimationData/47_Kaede_Block_Air_Hold_AnimData.tres" id="1_b23hh"]
 [ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_tctu1"]
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2"]
+[ext_resource type="Resource" uid="uid://dciieeb78vr5v" path="res://Fighters/Kaede/FrameDataEvents/Template_Gravity.tres" id="2_ca310"]
+[ext_resource type="Script" uid="uid://da4kqpf635oin" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Actions/PlayStateAction.cs" id="2_v4w3a"]
 [ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Deprecated/StatePhysics.cs" id="3"]
+[ext_resource type="Script" uid="uid://baguhnol5ww4w" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Conditions/OnGroundCondition.cs" id="3_ca310"]
+[ext_resource type="Script" uid="uid://c076jc3huncn2" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/FrameDataEvent.cs" id="4_216ol"]
 [ext_resource type="Script" uid="uid://bia88bspuvxd" path="res://Scripts/SakugaEngine/Deprecated/StateTransitionSettings.cs" id="4_m02uh"]
+
+[sub_resource type="Resource" id="Resource_khqse"]
+script = ExtResource("2_v4w3a")
+StateIndex = 37
+metadata/_custom_type_script = "uid://da4kqpf635oin"
+
+[sub_resource type="Resource" id="Resource_co12h"]
+script = ExtResource("3_ca310")
+metadata/_custom_type_script = "uid://baguhnol5ww4w"
+
+[sub_resource type="Resource" id="Resource_3ei6q"]
+script = ExtResource("4_216ol")
+Conditions = Array[Object]([SubResource("Resource_co12h")])
+Actions = Array[Object]([SubResource("Resource_khqse")])
+metadata/_custom_type_script = "uid://c076jc3huncn2"
 
 [sub_resource type="Resource" id="Resource_b23hh"]
 script = ExtResource("1_tctu1")
@@ -28,11 +48,11 @@ DistanceArea = Vector2i(0, 99999)
 [resource]
 script = ExtResource("1")
 StateName = "Blocking_Air"
-BaseStance = 2
 Type = 3
-TransitionEvents = null
+AnimationData = ExtResource("1_b23hh")
+TransitionEvents = Array[Object]([SubResource("Resource_3ei6q")])
 OnEnterEvents = null
-OnTickEvents = null
+OnTickEvents = Array[Object]([ExtResource("2_ca310")])
 OnExitEvents = null
 OnHitConfirmEvents = null
 OnHitReactionEvents = null

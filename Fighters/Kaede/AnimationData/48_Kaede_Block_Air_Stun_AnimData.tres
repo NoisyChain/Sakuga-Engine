@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="AnimationData" format=3 uid="uid://c4k57yi3vu7rq"]
+
+[ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_g0do5"]
+[ext_resource type="Resource" uid="uid://t64afo7e4u1o" path="res://Fighters/Kaede/Hitboxes/0_Hitbox_Basic.tres" id="2_08ue4"]
+[ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="3_jlotd"]
+[ext_resource type="Script" uid="uid://ddkya5wrb53ly" path="res://Scripts/SakugaEngine/Resources/AnimationData.cs" id="4_l1i4s"]
+
+[sub_resource type="Resource" id="Resource_dohlc"]
+script = ExtResource("1_g0do5")
+SourceAnimation = "Blockstun_Air"
+metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
+
+[sub_resource type="Resource" id="Resource_hokrv"]
+script = ExtResource("3_jlotd")
+HitboxData = ExtResource("2_08ue4")
+metadata/_custom_type_script = "uid://5qrsoteskjym"
+
+[resource]
+script = ExtResource("4_l1i4s")
+Duration = 8
+HitstunHold = 2
+Animations = [SubResource("Resource_dohlc")]
+Hitboxes = [SubResource("Resource_hokrv")]
+metadata/_custom_type_script = "uid://ddkya5wrb53ly"

@@ -1,9 +1,13 @@
 [gd_resource type="Resource" script_class="FighterState" format=3 uid="uid://cnfw0q0boce6u"]
 
 [ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="1"]
+[ext_resource type="Resource" uid="uid://dq8kq3ljexa4x" path="res://Fighters/Kaede/AnimationData/46_Kaede_Block_Air_Exit_AnimData.tres" id="1_ovf6p"]
 [ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_w56vw"]
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2"]
+[ext_resource type="Resource" uid="uid://dciieeb78vr5v" path="res://Fighters/Kaede/FrameDataEvents/Template_Gravity.tres" id="2_rmyb5"]
 [ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Deprecated/StatePhysics.cs" id="3"]
+[ext_resource type="Resource" uid="uid://04a4bhxrfvo6" path="res://Fighters/Kaede/FrameDataEvents/Template_Trans_Airborne.tres" id="3_owshh"]
+[ext_resource type="Resource" uid="uid://bvxyesd7vmtp" path="res://Fighters/Kaede/FrameDataEvents/Template_Trans_Landing.tres" id="4_5raiu"]
 [ext_resource type="Script" uid="uid://bia88bspuvxd" path="res://Scripts/SakugaEngine/Deprecated/StateTransitionSettings.cs" id="4_grymb"]
 
 [sub_resource type="Resource" id="Resource_ovf6p"]
@@ -34,10 +38,10 @@ DistanceArea = Vector2i(0, 99999)
 [resource]
 script = ExtResource("1")
 StateName = "Block_Air_Exit"
-BaseStance = 2
-TransitionEvents = null
+AnimationData = ExtResource("1_ovf6p")
+TransitionEvents = Array[Object]([ExtResource("3_owshh"), ExtResource("4_5raiu")])
 OnEnterEvents = null
-OnTickEvents = null
+OnTickEvents = Array[Object]([ExtResource("2_rmyb5")])
 OnExitEvents = null
 OnHitConfirmEvents = null
 OnHitReactionEvents = null

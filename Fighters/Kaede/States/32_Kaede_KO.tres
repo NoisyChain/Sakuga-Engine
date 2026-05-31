@@ -22,8 +22,7 @@ UseGravity = true
 
 [resource]
 script = ExtResource("1")
-StateName = "Hit_Down"
-Type = 4
+StateName = "Hit_Ded"
 AnimationData = ExtResource("1_ngrvk")
 TransitionEvents = null
 OnEnterEvents = null

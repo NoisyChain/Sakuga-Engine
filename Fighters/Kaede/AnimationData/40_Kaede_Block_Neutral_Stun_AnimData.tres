@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="AnimationData" format=3 uid="uid://ch1qneft8273m"]
+
+[ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_dohlc"]
+[ext_resource type="Resource" uid="uid://t64afo7e4u1o" path="res://Fighters/Kaede/Hitboxes/0_Hitbox_Basic.tres" id="2_yyeev"]
+[ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="3_yb20t"]
+[ext_resource type="Script" uid="uid://ddkya5wrb53ly" path="res://Scripts/SakugaEngine/Resources/AnimationData.cs" id="4_inhls"]
+
+[sub_resource type="Resource" id="Resource_dohlc"]
+script = ExtResource("1_dohlc")
+SourceAnimation = "Blockstun_Neutral"
+metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
+
+[sub_resource type="Resource" id="Resource_hokrv"]
+script = ExtResource("3_yb20t")
+HitboxData = ExtResource("2_yyeev")
+metadata/_custom_type_script = "uid://5qrsoteskjym"
+
+[resource]
+script = ExtResource("4_inhls")
+Duration = 8
+HitstunHold = 2
+Animations = [SubResource("Resource_dohlc")]
+Hitboxes = [SubResource("Resource_hokrv")]
+metadata/_custom_type_script = "uid://ddkya5wrb53ly"

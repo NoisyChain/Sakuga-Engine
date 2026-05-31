@@ -14,6 +14,7 @@
 [ext_resource type="Script" uid="uid://b4st7jmqq1vph" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Conditions/CheckSideChangeCondition.cs" id="6_xxutx"]
 [ext_resource type="Script" uid="uid://da4kqpf635oin" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Actions/PlayStateAction.cs" id="7_xxutx"]
 [ext_resource type="Script" uid="uid://bo4ex6rdwh1kk" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Conditions/IsFallingCondition.cs" id="8_ojmr7"]
+[ext_resource type="Script" uid="uid://b36gpjs1umb3b" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Conditions/CheckHealthCondition.cs" id="10_xxutx"]
 
 [sub_resource type="Resource" id="Resource_xxutx"]
 script = ExtResource("2_4uuaa")
@@ -58,6 +59,22 @@ Conditions = Array[Object]([SubResource("Resource_hrtdk")])
 Actions = Array[Object]([SubResource("Resource_7w3ym")])
 metadata/_custom_type_script = "uid://c076jc3huncn2"
 
+[sub_resource type="Resource" id="Resource_ojmr7"]
+script = ExtResource("7_xxutx")
+StateIndex = 30
+metadata/_custom_type_script = "uid://da4kqpf635oin"
+
+[sub_resource type="Resource" id="Resource_ivawy"]
+script = ExtResource("10_xxutx")
+CompareMode = 5
+metadata/_custom_type_script = "uid://b36gpjs1umb3b"
+
+[sub_resource type="Resource" id="Resource_ntobl"]
+script = ExtResource("4_4uuaa")
+Conditions = Array[Object]([SubResource("Resource_ivawy")])
+Actions = Array[Object]([SubResource("Resource_ojmr7")])
+metadata/_custom_type_script = "uid://c076jc3huncn2"
+
 [sub_resource type="Resource" id="Resource_dqgeq"]
 script = ExtResource("1_845cb")
 SourceAnimation = "Idle"
@@ -82,7 +99,7 @@ script = ExtResource("2")
 StateName = "Idle"
 Type = 1
 AnimationData = ExtResource("1_dqgeq")
-TransitionEvents = Array[Object]([ExtResource("5_xxutx"), SubResource("Resource_vevmb"), SubResource("Resource_s07ds")])
+TransitionEvents = Array[Object]([ExtResource("5_xxutx"), SubResource("Resource_vevmb"), SubResource("Resource_s07ds"), SubResource("Resource_ntobl")])
 OnEnterEvents = null
 OnTickEvents = Array[Object]([SubResource("Resource_r6o2x")])
 OnExitEvents = null

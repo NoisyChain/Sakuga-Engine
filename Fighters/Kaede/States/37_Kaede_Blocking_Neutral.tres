@@ -1,9 +1,22 @@
 [gd_resource type="Resource" script_class="FighterState" format=3 uid="uid://mad3gwoapb24"]
 
+[ext_resource type="Resource" uid="uid://cvwoqsftuci56" path="res://Fighters/Kaede/AnimationData/39_Kaede_Block_Neutral_Hold_AnimData.tres" id="1_10w7k"]
 [ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_hnly5"]
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="1_qwocc"]
+[ext_resource type="Script" uid="uid://bgwrlqrhqb2a4" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Actions/MoveXAction.cs" id="2_7gd4e"]
 [ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="2_jkl2h"]
 [ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Deprecated/StatePhysics.cs" id="3_1igkm"]
+[ext_resource type="Script" uid="uid://c076jc3huncn2" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/FrameDataEvent.cs" id="3_m0qq4"]
+
+[sub_resource type="Resource" id="Resource_kyx6y"]
+script = ExtResource("2_7gd4e")
+metadata/_custom_type_script = "uid://bgwrlqrhqb2a4"
+
+[sub_resource type="Resource" id="Resource_lnetd"]
+script = ExtResource("3_m0qq4")
+Conditions = null
+Actions = Array[Object]([SubResource("Resource_kyx6y")])
+metadata/_custom_type_script = "uid://c076jc3huncn2"
 
 [sub_resource type="Resource" id="Resource_10w7k"]
 script = ExtResource("1_hnly5")
@@ -22,9 +35,10 @@ UseVerticalSpeed = true
 script = ExtResource("2_jkl2h")
 StateName = "Blocking_Neutral"
 Type = 3
+AnimationData = ExtResource("1_10w7k")
 TransitionEvents = null
 OnEnterEvents = null
-OnTickEvents = null
+OnTickEvents = Array[Object]([SubResource("Resource_lnetd")])
 OnExitEvents = null
 OnHitConfirmEvents = null
 OnHitReactionEvents = null

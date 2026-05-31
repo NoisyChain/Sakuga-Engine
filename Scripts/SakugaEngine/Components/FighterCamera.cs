@@ -33,8 +33,6 @@ namespace SakugaEngine
             Vector3 _p1Position = GlobalFunctions.ToScaledVector3(player1.Body.FixedPosition);
             Vector3 _p2Position = GlobalFunctions.ToScaledVector3(player2.Body.FixedPosition);
 
-            //bool canSmooth = Mathf.Abs(_p2Position.X - _p1Position.X) > minSmoothDistance;
-
             float playerDistance = Mathf.Clamp(Mathf.Abs(_p2Position.X - _p1Position.X), nearDistance, farDistance);
             float pl = (playerDistance - nearDistance) / (farDistance - nearDistance);
 

@@ -2946,6 +2946,7 @@ region_rect = Rect2(711.25, 46.25, 2, 0)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Graphics/Mesh/KaedeGraphics" unique_id=2069111782]
 libraries/ = SubResource("AnimationLibrary_n2gjo")
+speed_scale = 0.0
 
 [node name="Sounds" type="Node3D" parent="Graphics" unique_id=1869837634]
 

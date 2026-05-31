@@ -75,6 +75,7 @@ CanCancelTo = Array[Object]([SubResource("Resource_fvkjy"), SubResource("Resourc
 VariablesRequirement = null
 VariablesChange = null
 CanBeOverrided = true
+IgnoreSelf = false
 IgnoreSamePriority = false
 AcceptNullStates = true
 AcceptCombatStates = true

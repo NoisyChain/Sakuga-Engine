@@ -10,6 +10,9 @@
 [ext_resource type="Script" uid="uid://c076jc3huncn2" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/FrameDataEvent.cs" id="4_6d2tx"]
 [ext_resource type="Script" uid="uid://b1wnmgsdqaa50" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Actions/GoToFrameActions.cs" id="5_6d2tx"]
 [ext_resource type="Script" uid="uid://bho4h38y7suxk" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Conditions/StateEndedCondition.cs" id="6_qyi6i"]
+[ext_resource type="Script" uid="uid://da4kqpf635oin" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Actions/PlayStateAction.cs" id="7_x4kqg"]
+[ext_resource type="Script" uid="uid://b36gpjs1umb3b" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Conditions/CheckHealthCondition.cs" id="8_y3nlb"]
+[ext_resource type="Script" uid="uid://s53aw2yll8fo" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Conditions/RoundRunningCondition.cs" id="9_y3nlb"]
 
 [sub_resource type="Resource" id="Resource_35cc3"]
 script = ExtResource("2_07brp")
@@ -39,6 +42,38 @@ Conditions = Array[Object]([SubResource("Resource_y3nlb")])
 Actions = Array[Object]([SubResource("Resource_x4kqg")])
 metadata/_custom_type_script = "uid://c076jc3huncn2"
 
+[sub_resource type="Resource" id="Resource_7ke33"]
+script = ExtResource("7_x4kqg")
+StateIndex = 25
+metadata/_custom_type_script = "uid://da4kqpf635oin"
+
+[sub_resource type="Resource" id="Resource_nsemq"]
+script = ExtResource("8_y3nlb")
+CompareMode = 5
+metadata/_custom_type_script = "uid://b36gpjs1umb3b"
+
+[sub_resource type="Resource" id="Resource_hhk6y"]
+script = ExtResource("4_6d2tx")
+Conditions = Array[Object]([SubResource("Resource_nsemq")])
+Actions = Array[Object]([SubResource("Resource_7ke33")])
+metadata/_custom_type_script = "uid://c076jc3huncn2"
+
+[sub_resource type="Resource" id="Resource_ssqlj"]
+script = ExtResource("7_x4kqg")
+StateIndex = 8
+metadata/_custom_type_script = "uid://da4kqpf635oin"
+
+[sub_resource type="Resource" id="Resource_dedbv"]
+script = ExtResource("9_y3nlb")
+Not = true
+metadata/_custom_type_script = "uid://s53aw2yll8fo"
+
+[sub_resource type="Resource" id="Resource_a2kya"]
+script = ExtResource("4_6d2tx")
+Conditions = Array[Object]([SubResource("Resource_dedbv")])
+Actions = Array[Object]([SubResource("Resource_ssqlj")])
+metadata/_custom_type_script = "uid://c076jc3huncn2"
+
 [sub_resource type="Resource" id="Resource_yqrgc"]
 script = ExtResource("1_kcag2")
 SourceAnimation = "Crouching"
@@ -58,7 +93,7 @@ StateName = "Crouching"
 BaseStance = 1
 Type = 1
 AnimationData = ExtResource("1_yqrgc")
-TransitionEvents = Array[Object]([SubResource("Resource_o8vxy")])
+TransitionEvents = Array[Object]([SubResource("Resource_o8vxy"), SubResource("Resource_hhk6y"), SubResource("Resource_a2kya")])
 OnEnterEvents = Array[Object]([SubResource("Resource_idqlt")])
 OnTickEvents = null
 OnExitEvents = null
