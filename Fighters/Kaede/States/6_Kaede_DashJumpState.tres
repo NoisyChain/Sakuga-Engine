@@ -15,6 +15,7 @@
 [ext_resource type="Script" uid="uid://cikljrwpapajp" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Conditions/OnKnockbackCondition.cs" id="6_ilj1k"]
 [ext_resource type="Script" uid="uid://50grsd2r3wl8" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Conditions/AtFrameCondition.cs" id="6_muff5"]
 [ext_resource type="Script" uid="uid://dcnb575mw2hwp" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Actions/AddGravityAction.cs" id="7_7xlwn"]
+[ext_resource type="Script" uid="uid://cfq32y8apqltb" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Actions/SetFramePropertiesAction.cs" id="7_muff5"]
 [ext_resource type="Script" uid="uid://c42r1mjvviuhg" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Conditions/AtFrameRangeCondition.cs" id="8_pjap4"]
 [ext_resource type="Script" uid="uid://da4kqpf635oin" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Actions/PlayStateAction.cs" id="9_ilj1k"]
 [ext_resource type="Script" uid="uid://bho4h38y7suxk" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Conditions/StateEndedCondition.cs" id="10_m63u7"]
@@ -59,6 +60,18 @@ metadata/_custom_type_script = "uid://bnjqge5r5or28"
 script = ExtResource("3_34o0w")
 Conditions = Array[Object]([])
 Actions = Array[Object]([SubResource("Resource_eq1ik"), SubResource("Resource_bv0os"), SubResource("Resource_xac1r"), SubResource("Resource_8nes5"), SubResource("Resource_ifsbs")])
+metadata/_custom_type_script = "uid://c076jc3huncn2"
+
+[sub_resource type="Resource" id="Resource_7r3ow"]
+script = ExtResource("7_muff5")
+Properties = 16
+ChangeMode = 2
+metadata/_custom_type_script = "uid://cfq32y8apqltb"
+
+[sub_resource type="Resource" id="Resource_tgspn"]
+script = ExtResource("3_34o0w")
+Conditions = Array[Object]([])
+Actions = Array[Object]([SubResource("Resource_7r3ow")])
 metadata/_custom_type_script = "uid://c076jc3huncn2"
 
 [sub_resource type="Resource" id="Resource_6fxyi"]
@@ -168,7 +181,7 @@ AnimationData = ExtResource("1_xpdaa")
 TransitionEvents = Array[Object]([SubResource("Resource_7lq8a")])
 OnEnterEvents = Array[Object]([SubResource("Resource_jjvg2"), SubResource("Resource_f3e2y")])
 OnTickEvents = Array[Object]([SubResource("Resource_lofxe"), SubResource("Resource_ibjfm")])
-OnExitEvents = null
+OnExitEvents = Array[Object]([SubResource("Resource_tgspn")])
 OnHitConfirmEvents = null
 OnHitReactionEvents = null
 Duration = 22

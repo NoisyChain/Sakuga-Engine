@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://da4kqpf635oin" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Actions/PlayStateAction.cs" id="1_8c5f4"]
 [ext_resource type="Script" uid="uid://c076jc3huncn2" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/FrameDataEvent.cs" id="1_wg7sr"]
 [ext_resource type="Script" uid="uid://baguhnol5ww4w" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Conditions/OnGroundCondition.cs" id="2_8c5f4"]
+[ext_resource type="Script" uid="uid://bjhfta73s6pqs" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Conditions/CheckYVelocityCondition.cs" id="3_bitvo"]
 
 [sub_resource type="Resource" id="Resource_cbf4k"]
 script = ExtResource("1_8c5f4")
@@ -13,8 +14,13 @@ metadata/_custom_type_script = "uid://da4kqpf635oin"
 script = ExtResource("2_8c5f4")
 metadata/_custom_type_script = "uid://baguhnol5ww4w"
 
+[sub_resource type="Resource" id="Resource_2m0k5"]
+script = ExtResource("3_bitvo")
+CompareMode = 4
+metadata/_custom_type_script = "uid://bjhfta73s6pqs"
+
 [resource]
 script = ExtResource("1_wg7sr")
-Conditions = Array[Object]([SubResource("Resource_bitvo")])
+Conditions = Array[Object]([SubResource("Resource_bitvo"), SubResource("Resource_2m0k5")])
 Actions = Array[Object]([SubResource("Resource_cbf4k")])
 metadata/_custom_type_script = "uid://c076jc3huncn2"

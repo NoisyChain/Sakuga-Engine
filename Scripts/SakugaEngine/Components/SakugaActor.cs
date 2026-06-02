@@ -157,7 +157,7 @@ namespace SakugaEngine
                 case InputSideCheck.ABSOLUTE:
                     return 1;
                 case InputSideCheck.SIDE_RELATIVE:
-                    return Body.IsLeftSide ? -1 : 1;
+                    return Body.IsLeftSide ? 1 : -1;
                 case InputSideCheck.CHARACTER_RELATIVE:
                     return Body.PlayerSide;
             }

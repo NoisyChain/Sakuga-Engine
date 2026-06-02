@@ -11,6 +11,8 @@
 [ext_resource type="Script" uid="uid://bw1835rb2hj7y" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Actions/MoveYAction.cs" id="3_mp00y"]
 [ext_resource type="Script" uid="uid://c076jc3huncn2" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/FrameDataEvent.cs" id="3_progq"]
 [ext_resource type="Script" uid="uid://bia88bspuvxd" path="res://Scripts/SakugaEngine/Deprecated/StateTransitionSettings.cs" id="4_j2nxn"]
+[ext_resource type="Script" uid="uid://cfq32y8apqltb" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Actions/SetFramePropertiesAction.cs" id="4_mp00y"]
+[ext_resource type="Script" uid="uid://50grsd2r3wl8" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Conditions/AtFrameCondition.cs" id="6_sikox"]
 
 [sub_resource type="Resource" id="Resource_sikox"]
 script = ExtResource("2_x62a2")
@@ -20,10 +22,28 @@ metadata/_custom_type_script = "uid://bgwrlqrhqb2a4"
 script = ExtResource("3_mp00y")
 metadata/_custom_type_script = "uid://bw1835rb2hj7y"
 
+[sub_resource type="Resource" id="Resource_c3gmo"]
+script = ExtResource("4_mp00y")
+Properties = 16
+ChangeMode = 1
+metadata/_custom_type_script = "uid://cfq32y8apqltb"
+
 [sub_resource type="Resource" id="Resource_lu0xe"]
 script = ExtResource("3_progq")
 Conditions = null
-Actions = Array[Object]([SubResource("Resource_sikox"), SubResource("Resource_p3vgl")])
+Actions = Array[Object]([SubResource("Resource_sikox"), SubResource("Resource_p3vgl"), SubResource("Resource_c3gmo")])
+metadata/_custom_type_script = "uid://c076jc3huncn2"
+
+[sub_resource type="Resource" id="Resource_7r3ow"]
+script = ExtResource("4_mp00y")
+Properties = 16
+ChangeMode = 2
+metadata/_custom_type_script = "uid://cfq32y8apqltb"
+
+[sub_resource type="Resource" id="Resource_tgspn"]
+script = ExtResource("3_progq")
+Conditions = Array[Object]([])
+Actions = Array[Object]([SubResource("Resource_7r3ow")])
 metadata/_custom_type_script = "uid://c076jc3huncn2"
 
 [sub_resource type="Resource" id="Resource_2inp6"]
@@ -31,10 +51,21 @@ script = ExtResource("2_x62a2")
 Velocity = -28000
 metadata/_custom_type_script = "uid://bgwrlqrhqb2a4"
 
+[sub_resource type="Resource" id="Resource_uhdqy"]
+script = ExtResource("4_mp00y")
+Properties = 16
+ChangeMode = 2
+metadata/_custom_type_script = "uid://cfq32y8apqltb"
+
+[sub_resource type="Resource" id="Resource_65gl7"]
+script = ExtResource("6_sikox")
+Frame = 4
+metadata/_custom_type_script = "uid://50grsd2r3wl8"
+
 [sub_resource type="Resource" id="Resource_ecovm"]
 script = ExtResource("3_progq")
-Conditions = null
-Actions = Array[Object]([SubResource("Resource_2inp6")])
+Conditions = Array[Object]([SubResource("Resource_65gl7")])
+Actions = Array[Object]([SubResource("Resource_2inp6"), SubResource("Resource_uhdqy")])
 metadata/_custom_type_script = "uid://c076jc3huncn2"
 
 [sub_resource type="Resource" id="Resource_kc2vs"]
@@ -92,7 +123,7 @@ AnimationData = ExtResource("1_kc2vs")
 TransitionEvents = Array[Object]([SubResource("Resource_mp00y")])
 OnEnterEvents = Array[Object]([SubResource("Resource_lu0xe")])
 OnTickEvents = Array[Object]([SubResource("Resource_ecovm")])
-OnExitEvents = null
+OnExitEvents = Array[Object]([SubResource("Resource_tgspn")])
 OnHitConfirmEvents = null
 OnHitReactionEvents = null
 Duration = 22

@@ -25,8 +25,6 @@ namespace SakugaEngine
 
         public bool CheckMoveConditions(int index)
         {
-            if (!GetMove(index).Unlockable && _owner.ContainsFrameProperty(FrameProperties.LOCK_MOVE)) return false;
-
             if (!CheckAllowedStateType(index)) return false;
 
             if (CurrentMove >= 0)
@@ -46,10 +44,7 @@ namespace SakugaEngine
             bool isValidDistance = distance >= GetMove(index).DistanceArea.X && distance <= GetMove(index).DistanceArea.Y;
             if (!isValidDistance) return false;
 
-            bool isCorrectSurface = (GetMove(index).UseOnGround && _owner.Body.IsOnGround) ||
-                (GetMove(index).UseOnAir && !_owner.Body.IsOnGround && _owner.Body.FixedPosition.Y >= GetMove(index).MinimumHeight) ||
-                (GetMove(index).UseOnGround && GetMove(index).UseOnAir);
-            if (!isCorrectSurface) return false;
+            if (!IsCorrectSurface(index)) return false;
 
             bool isValidState = CheckStatesToIgnore(index);
             if (!isValidState) return false;
@@ -142,7 +137,7 @@ namespace SakugaEngine
         {
             if (BufferedMove < 0) return;
             //if (CurrentMove >= 0 && !GetCurrentMove().CanBeOverrided) return;
-            if (!MoveBuffer.IsRunning())
+            if (!MoveBuffer.IsRunning() || !IsCorrectSurface(BufferedMove))
             {
                 BufferedMove = -1;
                 GD.Print("Buffer Cleaned!");
@@ -150,6 +145,7 @@ namespace SakugaEngine
             }
             if (!CancelBuffer && _owner.StateManager.CurrentStateType() == StateType.COMBAT) return;
 
+            if (!GetBufferedMove().Unlockable && _owner.ContainsFrameProperty(FrameProperties.LOCK_MOVE)) return;
             if (!GetBufferedMove().IgnoreHitstop && _owner.Hitstop.IsRunning()) return;
             if (!GetBufferedMove().IgnoreHitstun && _owner.Hitstun.IsRunning()) return;
             
@@ -163,6 +159,13 @@ namespace SakugaEngine
                 ExecuteMove(BufferedMove);
             }
             else GD.Print("Move " + GetBufferedMove().MoveName + " Buffered!");
+        }
+
+        public bool IsCorrectSurface(int index)
+        {
+            return (GetMove(index).UseOnGround && _owner.Body.IsOnGround) ||
+                (GetMove(index).UseOnAir && !_owner.Body.IsOnGround && _owner.Body.FixedPosition.Y >= GetMove(index).MinimumHeight) ||
+                (GetMove(index).UseOnGround && GetMove(index).UseOnAir);
         }
 
         public bool CheckAllowedStateType(int moveIndex)
