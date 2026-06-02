@@ -18,6 +18,7 @@ namespace SakugaEngine.Global
     public enum RelativeTo { WORLD, SELF, OPPONENT, FIGHTER, SPAWNABLE }
     public enum SoundType { SFX, VOICE }
     public enum ObjectType { SPAWNABLE, VFX }
+    public enum InputSideCheck { ABSOLUTE, SIDE_RELATIVE, CHARACTER_RELATIVE }
     public enum PauseMode { PRESS, HOLD, LOCK }
     public enum NetcodeMode { LOCAL, ONLINE, REPLAY }
     public enum BotDifficulty { BEGINNER, EASY, MEDIUM, HARD, VERY_HARD, PRO }

@@ -1,4 +1,5 @@
 using Godot;
+using SakugaEngine.Global;
 
 namespace SakugaEngine.Resources
 {
@@ -9,11 +10,12 @@ namespace SakugaEngine.Resources
         [ExportCategory("Move Parameters")]
         [Export] public string MoveName;
         [Export] public int MoveState;
+        [Export] public InputSideCheck SideCheck = InputSideCheck.CHARACTER_RELATIVE;
         [Export] public MotionInputs Inputs;
         [Export] public int FrameLimit = -1;
         [Export] public int SuperFlash = 0;
         [Export] public int Priority = 0;
-        [Export] public Global.MoveEndCondition MoveEnd;
+        [Export] public MoveEndCondition MoveEnd;
         [Export] public int MoveEndState = -1;
 
         [ExportCategory("Move Conditions")]

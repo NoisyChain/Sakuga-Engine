@@ -4,9 +4,21 @@
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="1_236vv"]
 [ext_resource type="Resource" uid="uid://dh5rtsrrh7tbh" path="res://Fighters/Kaede/AnimationData/64_Kaede_BC_AnimData.tres" id="1_r2883"]
 [ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_xjnw5"]
+[ext_resource type="Script" uid="uid://n7xih8pqfpwo" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/Actions/ChangeSideAction.cs" id="2_ct3pg"]
 [ext_resource type="Resource" uid="uid://nvkiyhr0b8sx" path="res://Fighters/Kaede/FrameDataEvents/Template_Trans_Idle.tres" id="2_s6jlt"]
+[ext_resource type="Script" uid="uid://c076jc3huncn2" path="res://Scripts/SakugaEngine/Resources/FrameDataEvents/FrameDataEvent.cs" id="3_2n5ka"]
 [ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Deprecated/StatePhysics.cs" id="3_qb2lk"]
 [ext_resource type="Script" uid="uid://bia88bspuvxd" path="res://Scripts/SakugaEngine/Deprecated/StateTransitionSettings.cs" id="5_5rp4v"]
+
+[sub_resource type="Resource" id="Resource_uhin5"]
+script = ExtResource("2_ct3pg")
+metadata/_custom_type_script = "uid://n7xih8pqfpwo"
+
+[sub_resource type="Resource" id="Resource_q8i2b"]
+script = ExtResource("3_2n5ka")
+Conditions = null
+Actions = Array[Object]([SubResource("Resource_uhin5")])
+metadata/_custom_type_script = "uid://c076jc3huncn2"
 
 [sub_resource type="Resource" id="Resource_5rp4v"]
 script = ExtResource("1_xjnw5")
@@ -33,7 +45,7 @@ StateName = "Taunt"
 Type = 2
 AnimationData = ExtResource("1_r2883")
 TransitionEvents = Array[Object]([ExtResource("2_s6jlt")])
-OnEnterEvents = null
+OnEnterEvents = Array[Object]([SubResource("Resource_q8i2b")])
 OnTickEvents = null
 OnExitEvents = null
 OnHitConfirmEvents = null

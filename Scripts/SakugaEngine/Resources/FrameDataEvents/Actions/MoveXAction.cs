@@ -32,9 +32,9 @@ namespace SakugaEngine.Resources
             }
 
             if (UseInertia)
-                Actor.Body.AddLateralAcceleration(Velocity * Actor.InputSide);
+                Actor.Body.AddLateralAcceleration(Velocity * Actor.InputSide());
             else
-                Actor.Body.SetLateralVelocity(Velocity * Actor.InputSide);
+                Actor.Body.SetLateralVelocity(Velocity * Actor.InputSide());
         }
     }
 }

@@ -150,7 +150,19 @@ namespace SakugaEngine
             return (FrameProperties & CompareTo) != 0;
         }
 
-        public int InputSide => GetMaster() != null ? GetMaster().Body.PlayerSide : Body.PlayerSide;
+        public int InputSide(InputSideCheck sideCheck = InputSideCheck.CHARACTER_RELATIVE)
+        {
+            switch (sideCheck)
+            {
+                case InputSideCheck.ABSOLUTE:
+                    return 1;
+                case InputSideCheck.SIDE_RELATIVE:
+                    return Body.IsLeftSide ? -1 : 1;
+                case InputSideCheck.CHARACTER_RELATIVE:
+                    return Body.PlayerSide;
+            }
+            return 1;
+        }
 
 #region Conditions
         public bool IsGroundState() => Body != null && Body.IsOnGround && StateManager.GetCurrentState().BaseStance == MasterStance.NEUTRAL;
@@ -233,14 +245,16 @@ namespace SakugaEngine
 
             if (CanHitstop()) Hitstop.Run();
             if (Body != null) Body.IsMovable = !OnHitstop();
+            if (SuperFlashing && !OnHitstop()) SuperFlashing = false;
             
             if (OnHitstop()) return;
 
             if (CanHitstun() && HitstunType < HitstunType.HARD_KNOCKDOWN)
                 Hitstun.Run();
 
-            if (!OnHitstun() && StateManager.CurrentStateType() != StateType.HIT_REACTION)
+            if (StateManager.CurrentStateType() != StateType.HIT_REACTION)
             {
+                Hitstun.Stop();
                 HitstunType = HitstunType.NONE;
                 BlockStun = false;
                 if (Parameters != null) Parameters.Clear();
@@ -326,6 +340,12 @@ namespace SakugaEngine
             }
             
             return validTech;
+        }
+
+        public void StartSuperFlash(uint duration)
+        {
+            SuperFlashing = true;
+            Hitstop.Start(duration);
         }
 #region Hit logic
         public void HitDamage(SakugaActor target, HitboxElement box, bool isTrade)
@@ -765,7 +785,7 @@ namespace SakugaEngine
                     "\nStance: "+StanceManager.CurrentStance+
                     "\nCurrent State: "+StateManager.CurrentState+
                     "\nState Name: "+StateManager.GetCurrentState().StateName+
-                    //"\nAnimation Name: "+(StateManager.GetCurrentAnimationSettings() == null ? "" : StateManager.GetCurrentAnimationSettings().SourceAnimation)+
+                    "\nAnimation Name: "+(StateManager.GetCurrentAnimationSettings() == null ? "" : StateManager.GetCurrentAnimationSettings().SourceAnimation)+
                     "\nCurrent Move: "+StanceManager.CurrentMove+
                     "\nBuffered Move: "+StanceManager.BufferedMove+
                     "\nFrame: "+StateManager.CurrentStateFrame+
@@ -775,14 +795,14 @@ namespace SakugaEngine
                     "\nSuper Gauge: "+Parameters.SuperGauge.CurrentValue+"/"+Data.MaxSuperGauge+
                     "\nSuper Armor: "+Parameters.SuperArmor.CurrentValue+
                     "\nOn Blockstun: "+BlockStun+
-                    "\nInput Side: "+InputSide+
+                    "\nInput Side: "+InputSide()+
                     "\nFrame Properties: "+FrameProperties+
                     "\nHit Stop: ("+ Hitstop.IsRunning()+") "+Hitstop.TimeLeft+
                     "\nHit Stun: ("+ Hitstun.IsRunning()+") "+Hitstun.TimeLeft+
                     "\nMove Buffer: ("+ StanceManager.MoveBuffer.IsRunning()+") "+StanceManager.MoveBuffer.TimeLeft+
                     "\nBounce: ("+Bounce.TimeLeft+", X:"+BounceXIntensity+", Y:"+BounceYIntensity+")"+
-                    "\nCharge Buffers: "+Inputs.hCharge+" | "+Inputs.vCharge;//+
-                    //"\nBlocking: "+IsBlocking();
+                    "\nCharge Buffers: "+Inputs.hCharge+" | "+Inputs.vCharge+
+                    "\nBlocking: "+BlockStun;
         }
 
         public Vector2I GenerateTargetPosition(Vector2I Target, int index, RelativeTo xRelative, RelativeTo yRelative)

@@ -11,8 +11,8 @@ namespace SakugaEngine.Resources
         {
             if (Actor.Body == null) return false;
 
-            if (Not) return (Actor.Body.IsLeftSide && Actor.InputSide > 0) || (!Actor.Body.IsLeftSide && Actor.InputSide < 0);
-            return (Actor.Body.IsLeftSide && Actor.InputSide < 0) || (!Actor.Body.IsLeftSide && Actor.InputSide > 0);
+            if (Not) return (Actor.Body.IsLeftSide && Actor.InputSide() > 0) || (!Actor.Body.IsLeftSide && Actor.InputSide() < 0);
+            return (Actor.Body.IsLeftSide && Actor.InputSide() < 0) || (!Actor.Body.IsLeftSide && Actor.InputSide() > 0);
         }
     }
 }

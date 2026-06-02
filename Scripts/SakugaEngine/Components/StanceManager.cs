@@ -74,7 +74,7 @@ namespace SakugaEngine
             {
                 if (GetMove(i).SkipCheck) continue;
                 if (!CheckMoveConditions(i)) continue;
-                if (_owner.Inputs.CheckMotionInputs(GetMove(i).Inputs, _owner.InputSide))
+                if (_owner.Inputs.CheckMotionInputs(GetMove(i).Inputs, _owner.InputSide(GetMove(i).SideCheck)))
                 {
                     BufferMove(i, false);
                     break;
@@ -102,8 +102,7 @@ namespace SakugaEngine
 
             if (GetMove(moveIndex).SuperFlash > 0 && !_owner.SuperFlashing)
             {
-                _owner.GetOpponent(0).SuperFlashing = true;
-                _owner.GetOpponent(0).Hitstop.Start((uint)GetMove(moveIndex).SuperFlash);
+                _owner.GetOpponent(0).StartSuperFlash((uint)GetMove(moveIndex).SuperFlash);
             }
 
             if (GetMove(moveIndex).MoveState >= 0) 
@@ -131,7 +130,7 @@ namespace SakugaEngine
             {
                 if (!CheckCancelConditions(cancel)) continue;
                 if (!CheckMoveConditions(cancel.MoveIndex)) continue;
-                if (_owner.Inputs.CheckMotionInputs(GetMove(cancel.MoveIndex).Inputs, _owner.InputSide))
+                if (_owner.Inputs.CheckMotionInputs(GetMove(cancel.MoveIndex).Inputs, _owner.InputSide(GetMove(cancel.MoveIndex).SideCheck)))
                 {                    
                     BufferMove(cancel.MoveIndex, true);
                     break;
@@ -189,7 +188,7 @@ namespace SakugaEngine
                         EndMove();
                     break;
                 case MoveEndCondition.RELEASE_BUTTON:
-                    if (_owner.Inputs.CheckInputEnd(GetCurrentMove().Inputs, _owner.InputSide))
+                    if (_owner.Inputs.CheckInputEnd(GetCurrentMove().Inputs, _owner.InputSide(GetCurrentMove().SideCheck)))
                         EndMove();
                     break;
                 case MoveEndCondition.STATE_TYPE_CHANGE:
@@ -280,7 +279,7 @@ namespace SakugaEngine
                 if (!_owner.Body.IsOnGround && block.ReferenceStance != StanceSelect.AIR) continue;
                 if (!ValidHitType(Type, block.BlockType)) continue;
                 if (block.InputToCheck == null) continue;
-                if (!_owner.Inputs.CheckMotionInputs(block.InputToCheck, _owner.InputSide)) continue;
+                if (!_owner.Inputs.CheckMotionInputs(block.InputToCheck, _owner.InputSide(InputSideCheck.SIDE_RELATIVE))) continue;
 
                 switch (state)
                 {

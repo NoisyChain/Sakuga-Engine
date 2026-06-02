@@ -28,9 +28,9 @@ namespace SakugaEngine.Resources
             }
             
             if (ind >= 0)
-                Actor.Pool.SpawnVFX(ind, dst, Actor.InputSide, AttachToParent);
+                Actor.Pool.SpawnVFX(ind, dst, Actor.InputSide(), AttachToParent);
             else if (Key != "")
-                Actor.Pool.SpawnVFX(ind, dst, Actor.InputSide, AttachToParent);
+                Actor.Pool.SpawnVFX(ind, dst, Actor.InputSide(), AttachToParent);
         }
     }
 }
