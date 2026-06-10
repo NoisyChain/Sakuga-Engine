@@ -250,7 +250,7 @@ namespace SakugaEngine
 
             if (StateManager.CurrentStateType() != StateType.HIT_REACTION)
             {
-                if (OnHitstun()) Hitstun.Stop();
+                if (CanHitstun()) Hitstun.Stop();
                 HitstunType = HitstunType.NONE;
                 BlockStun = false;
                 if (Parameters != null) Parameters.Clear();
@@ -420,7 +420,12 @@ namespace SakugaEngine
                 );
                 
                 Parameters.Tracker.UpdateTrackers(finalDamage, stunFrame, finalHitstunForReal, (int)box.HitType, canTech);
-                if (target.Parameters.Tracker != null) target.Parameters.Tracker.FrameAdvantage = -(stunFrame - finalHitstunForReal);
+
+                if (target.Parameters.Tracker != null)
+                    if (isTrade)
+                        Parameters.Tracker.FrameAdvantage = -finalHitstunForReal;
+                    else
+                        target.Parameters.Tracker.FrameAdvantage = -(stunFrame - finalHitstunForReal);
                 
                 if (Parameters.Tracker.HitCombo >= GlobalVariables.HitstunDecayMinCombo)
                     Parameters.Prorations.HitstunDecayFactor++;
@@ -495,6 +500,9 @@ namespace SakugaEngine
                 );
 
                 Parameters.Tracker.UpdateTrackers(finalDamage, stunFrame, finalHitstun, (int)box.HitType, false, false);
+                
+                if (target.Parameters.Tracker != null)
+                    target.Parameters.Tracker.FrameAdvantage = -(stunFrame - finalHitstun);
             }
         }
         public void GuardCrush(SakugaActor target, HitboxElement box, int crushState)
@@ -674,14 +682,14 @@ namespace SakugaEngine
                 else
                 {
                     hitFX = box.HitEffectIndex;
+                    if (GameManager.Instance.WaitingForFirstStrike())
+                        GameManager.Instance.PlayHitNotificationByIndex((int)playerID, 0);
+
                     if (IsCounter(target))
-                    {
                         GameManager.Instance.PlayHitNotificationByIndex((int)playerID, 1);
-                    }
                     else if (IsPunishCounter(target))
-                    {
                         GameManager.Instance.PlayHitNotificationByIndex((int)playerID, 2);
-                    }
+
                     target.HitDamage(actor, box, false);
                     if (box.AllowSelfPushback)
                         HitPushback(target, box.SelfPushbackDuration, box.SelfPushbackForce);

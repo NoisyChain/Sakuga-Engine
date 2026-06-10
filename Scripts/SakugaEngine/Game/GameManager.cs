@@ -96,6 +96,11 @@ namespace SakugaEngine.Game
             {
                 CallDeferred("PauseControl", !paused);
             }
+            // Return to menu for now
+            if (Monitor.MatchState == MatchState.RESULTS && (Input.IsActionJustPressed("ui_accept") || Input.IsActionJustPressed("ui_cancel")))
+            {
+                LoadingScreenManager.Instance.LoadScene(Monitor.sceneToReturn);
+            }
         }
 
         public void Render()
@@ -386,6 +391,13 @@ namespace SakugaEngine.Game
         {
             HitNotificationElement hitNotif = notifications.Elements[notifIndex];
             PlayHitNotification(playerIndex, hitNotif.NotificationName, hitNotif.AnnouncerVoiceLine);
+        }
+
+        public bool WaitingForFirstStrike()
+        {
+            return Monitor.CurrentRound == 0 && Match.SelectedModeSettings.CanKO && 
+                Fighters[0].Parameters.Health.CurrentValue == Fighters[0].Data.MaxHealth && 
+                Fighters[1].Parameters.Health.CurrentValue == Fighters[1].Data.MaxHealth;
         }
 
         public void PlayHitNotification(int playerIndex, string name, int announcerLine)

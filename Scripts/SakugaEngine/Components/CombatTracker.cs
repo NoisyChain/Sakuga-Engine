@@ -53,12 +53,11 @@ namespace SakugaEngine
 
         public void UpdateFrameData()
         {
-            int selectFrameOrigin = _owner.StateManager.CurrentStateType() == Global.StateType.HIT_REACTION ?
-                                        (int)_owner.Hitstun.TimeLeft :
-                                        (_owner.StateManager.GetCurrentState().AnimationData.Duration - _owner.StateManager.CurrentStateFrame);
+            bool corectStateType = _owner.StateManager.CurrentStateType() == Global.StateType.HIT_REACTION || _owner.StateManager.CurrentStateType() == Global.StateType.BLOCKING;
+            int selectFrameOrigin = corectStateType ? (int)_owner.Hitstun.TimeLeft :
+                                    (_owner.StateManager.GetCurrentState().AnimationData.Duration - _owner.StateManager.CurrentStateFrame);
 
             FrameData = _owner.StateManager.CurrentStateType() <= Global.StateType.MOVEMENT ? 0 : selectFrameOrigin;
-            //FrameData = Mathf.Clamp(FrameData, 0, owner.StateManager.GetCurrentState().Duration);
         }
 
         public void Reset()

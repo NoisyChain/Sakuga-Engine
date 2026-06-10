@@ -26,12 +26,11 @@ namespace SakugaEngine.UI
         public void _OnOnlineButtonPressed()
         {
             Manager.matchSettings.SelectedMode = 2;
-            Manager.matchSettings.P1SelectedDevice = 10;
             Manager.matchSettings.P2SelectedDevice = -1;
-            Manager.matchSettings.TimeLimit = 99;
+            Visible = false;
+            Manager.inputMenu.GoTo();
             AudioManager.Instance.PlayMenuClip(1);
             AudioManager.Instance.PlayAnnouncerClip(1);
-            LoadingScreenManager.Instance.LoadScene("res://Scenes/Lobby.tscn");
         }
 
         public void _OnArcadeButtonPressed()

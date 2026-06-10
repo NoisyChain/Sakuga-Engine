@@ -19,6 +19,8 @@ namespace SakugaEngine
 
         public void SimpleQueueSound()
         {
+            if (Queued) return;
+            
             BufferedSound = DefaultSound;
             Queued = true;
         }

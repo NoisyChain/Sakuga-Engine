@@ -31,7 +31,7 @@ namespace SakugaEngine
 
         private SakugaActor[] _fighters;
 
-        string sceneToReturn;
+        public string sceneToReturn;
         string winnerMessage;
 
         bool canReturn;
@@ -232,11 +232,6 @@ namespace SakugaEngine
                     }
                     break;
                 case MatchState.RESULTS:
-                    // Return to menu for now
-                    if (AnyButtonPressed())
-                    {
-                        LoadingScreenManager.Instance.LoadScene(sceneToReturn);
-                    }
                     break;
             }
         }

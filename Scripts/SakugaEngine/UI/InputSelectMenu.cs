@@ -127,7 +127,10 @@ namespace SakugaEngine.UI
             if (key1Confirm || key2Confirm || joy1Confirm || joy2Confirm)
             {
                 AudioManager.Instance.PlayMenuClip(3);
-                LoadingScreenManager.Instance.LoadScene("res://Scenes/SelectScreen.tscn");
+                if (Manager.matchSettings.SelectedModeSettings.NetcodeMode == Global.NetcodeMode.ONLINE)
+                    LoadingScreenManager.Instance.LoadScene("res://Scenes/Lobby.tscn");
+                else
+                    LoadingScreenManager.Instance.LoadScene("res://Scenes/SelectScreen.tscn");
             }
         }
 	}
