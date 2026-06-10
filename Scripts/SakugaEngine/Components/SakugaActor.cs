@@ -145,25 +145,6 @@ namespace SakugaEngine
             return _opponents[index];
         }
 
-        public bool ContainsFrameProperty(Global.FrameProperties CompareTo)
-        {
-            return (FrameProperties & CompareTo) != 0;
-        }
-
-        public int InputSide(InputSideCheck sideCheck = InputSideCheck.CHARACTER_RELATIVE)
-        {
-            switch (sideCheck)
-            {
-                case InputSideCheck.ABSOLUTE:
-                    return 1;
-                case InputSideCheck.SIDE_RELATIVE:
-                    return Body.IsLeftSide ? 1 : -1;
-                case InputSideCheck.CHARACTER_RELATIVE:
-                    return Body.PlayerSide;
-            }
-            return 1;
-        }
-
 #region Conditions
         public bool IsGroundState() => Body != null && Body.IsOnGround && StateManager.GetCurrentState().BaseStance == MasterStance.NEUTRAL;
         public bool IsCrouchState() => Body != null && Body.IsOnGround && StateManager.GetCurrentState().BaseStance == MasterStance.CROUCH;
@@ -181,6 +162,21 @@ namespace SakugaEngine
         public bool CanBounce() => Bounce != null;
         public bool IsBouncingX() => CanBounce() && Bounce.IsRunning() && BounceXIntensity > 0;
         public bool IsBouncingY() => CanBounce() && Bounce.IsRunning() && BounceYIntensity > 0;
+        public bool ContainsFrameProperty(FrameProperties CompareTo) => (FrameProperties & CompareTo) != 0;
+
+        public int InputSide(InputSideCheck sideCheck = InputSideCheck.CHARACTER_RELATIVE)
+        {
+            switch (sideCheck)
+            {
+                case InputSideCheck.ABSOLUTE:
+                    return 1;
+                case InputSideCheck.SIDE_RELATIVE:
+                    return Body.IsLeftSide ? 1 : -1;
+                case InputSideCheck.CHARACTER_RELATIVE:
+                    return Body.PlayerSide;
+            }
+            return 1;
+        }
 
         public StanceSelect SelectBlockStance()
         {
@@ -254,7 +250,7 @@ namespace SakugaEngine
 
             if (StateManager.CurrentStateType() != StateType.HIT_REACTION)
             {
-                Hitstun.Stop();
+                if (OnHitstun()) Hitstun.Stop();
                 HitstunType = HitstunType.NONE;
                 BlockStun = false;
                 if (Parameters != null) Parameters.Clear();
