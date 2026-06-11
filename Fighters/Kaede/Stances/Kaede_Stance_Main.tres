@@ -43,6 +43,7 @@
 [ext_resource type="Resource" uid="uid://ds7v65wp010cw" path="res://Fighters/Kaede/Moves/36_Kaede_236B_3.tres" id="37_t24cr"]
 [ext_resource type="Resource" uid="uid://d05yefknp8o8a" path="res://Fighters/Kaede/Moves/37_Kaede_623C.tres" id="38_ikbmw"]
 [ext_resource type="Resource" uid="uid://cp44wcvfgrkue" path="res://Fighters/Kaede/Moves/38_Kaede_236BC.tres" id="39_7g1w4"]
+[ext_resource type="Resource" uid="uid://w0r203fl4j14" path="res://Fighters/Shared/Inputs/23_Input_AB.tres" id="43_3wthg"]
 
 [sub_resource type="Resource" id="Resource_3wthg"]
 script = ExtResource("2_d5xpn")
@@ -91,5 +92,6 @@ GroundBackwardsRecoveryState = 71
 AirForwardRecoveryState = 72
 AirBackwardsRecoveryState = 72
 OffTheGroundRecoveryState = 72
+ThrowEscapeInput = ExtResource("43_3wthg")
 GroundThrowEscapeState = 69
 AirThrowEscapeState = 70

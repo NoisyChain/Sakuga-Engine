@@ -24,6 +24,7 @@ namespace SakugaEngine.GameState
         [Key(12)] public FrameProperties FrameProperties;
         [Key(13)] public HitChecker HitCheck;
         [Key(14)] public CancelCondition CancelConditions;
+        [Key(15)] public int CurrentGrabbedNodeID;
 
         public void GetStateData(ref SakugaActor reference)
         {
@@ -44,6 +45,7 @@ namespace SakugaEngine.GameState
             FrameProperties = reference.FrameProperties;
             HitCheck = reference.HitCheck;
             CancelConditions = reference.CancelConditions;
+            CurrentGrabbedNodeID = reference.CurrentGrabbedNodeID;
         }
 
         public void SetStateData(ref SakugaActor reference)
@@ -65,6 +67,7 @@ namespace SakugaEngine.GameState
             reference.FrameProperties = FrameProperties;
             reference.HitCheck = HitCheck;
             reference.CancelConditions = CancelConditions;
+            reference.CurrentGrabbedNodeID = CurrentGrabbedNodeID;
         }
     }
 

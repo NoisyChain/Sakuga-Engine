@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="1_ggqvs"]
 [ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_gmu35"]
+[ext_resource type="Resource" uid="uid://bdpv1hnn4wwh6" path="res://Fighters/Kaede/AnimationData/70_Kaede_ThrowEscape_AnimData.tres" id="1_iky1s"]
 [ext_resource type="Resource" uid="uid://04a4bhxrfvo6" path="res://Fighters/Kaede/FrameDataEvents/Template_Trans_Airborne.tres" id="1_u5px2"]
 [ext_resource type="Script" uid="uid://bf60srwkccsm8" path="res://Scripts/SakugaEngine/Resources/FighterState.cs" id="2_qh4pd"]
 [ext_resource type="Script" uid="uid://5you05l2efnd" path="res://Scripts/SakugaEngine/Deprecated/StatePhysics.cs" id="3_dgmp6"]
@@ -30,6 +31,7 @@ Condition = 1
 script = ExtResource("2_qh4pd")
 StateName = "Throw Escape Air"
 Type = 5
+AnimationData = ExtResource("1_iky1s")
 TransitionEvents = Array[Object]([ExtResource("1_u5px2")])
 OnEnterEvents = null
 OnTickEvents = null

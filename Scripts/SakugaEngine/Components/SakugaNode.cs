@@ -5,9 +5,11 @@ namespace SakugaEngine
     public partial class SakugaNode : Node
 	{
         [Export] protected bool StartActive;
+        public uint NodeID;
         public bool IsActive;
-        public virtual void Initialize()
+        public virtual void Initialize(uint id)
         {
+            NodeID = id;
             IsActive = StartActive;
         }
         /// <summary>

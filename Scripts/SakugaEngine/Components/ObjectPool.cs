@@ -34,16 +34,18 @@ namespace SakugaEngine
                 for (int j = 0; j < SpawnReferences[i].Objects.Length; j++)
                 {   
                     Node node = SpawnsPool.SpawnObjects[i].Instance.Instantiate();
-                    node.Name = owner.playerID + "_" + SpawnsPool.SpawnObjects[i].Key + "_" + j;
                     SpawnReferences[i].Objects[j] = node as SakugaActor;
                     
-                    SpawnReferences[i].Objects[j].Inputs = owner.Inputs;
                     SpawnReferences[i].Objects[j].playerID = owner.playerID;
-                    SpawnReferences[i].Objects[j].Initialize();
+                    GameManager.Instance.AddActor(SpawnReferences[i].Objects[j]);
+
+                    SpawnReferences[i].Objects[j].Inputs = owner.Inputs;
+                    //SpawnReferences[i].Objects[j].Initialize();
                     SpawnReferences[i].Objects[j].SetMaster(owner);
                     SpawnReferences[i].Objects[j].SetAllies(owner.GetAllies());
                     SpawnReferences[i].Objects[j].SetOpponents(owner.GetOpponents());
-                    GameManager.Instance.AddActor(SpawnReferences[i].Objects[j]);
+                    SpawnReferences[i].Objects[j].Name = $"{owner.playerID}_{SpawnsPool.SpawnObjects[i].Key}_{j}";
+                    
                     //SpawnReferences[i].Objects[j].IsActive = false;
                     
                     //GD.Print("Element " + References[i].Objects[j].Name + " created");
@@ -65,12 +67,14 @@ namespace SakugaEngine
                 for (int j = 0; j < VFXReferences[i].Objects.Length; j++)
                 {   
                     Node node = vfxPool.SpawnObjects[i].Instance.Instantiate();
-                    node.Name = owner.playerID + "_" + vfxPool.SpawnObjects[i].Key + "_" + j;
                     VFXReferences[i].Objects[j] = node as SakugaVFX;
                     
-                    VFXReferences[i].Objects[j].Initialize();
-                    VFXReferences[i].Objects[j].SetMaster(owner);
                     GameManager.Instance.AddActor(VFXReferences[i].Objects[j], false);
+
+                    //VFXReferences[i].Objects[j].Initialize();
+                    VFXReferences[i].Objects[j].SetMaster(owner);
+                    VFXReferences[i].Objects[j].Name = $"{owner.playerID}_{vfxPool.SpawnObjects[i].Key}_{j}";
+                    
                     //VFXReferences[i].Objects[j].IsActive = false;
                     
                     //GD.Print("VFX Element " + VFXReferences[i].Objects[j].Name + " created");

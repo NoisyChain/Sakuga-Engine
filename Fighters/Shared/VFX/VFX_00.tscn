@@ -86,6 +86,7 @@ metadata/_custom_type_script = "uid://d4e1sv1gy8i8a"
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Graphics/Visuals" unique_id=2025607681]
 root_node = NodePath("../../..")
 libraries/ = SubResource("AnimationLibrary_bmuae")
+speed_scale = 0.0
 
 [node name="Sprite3D" type="Sprite3D" parent="Graphics/Visuals" unique_id=85979567]
 layers = 2

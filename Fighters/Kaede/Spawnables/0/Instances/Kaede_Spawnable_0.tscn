@@ -160,6 +160,7 @@ region_rect = Rect2(711.25, 46.25, 2, 0)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Graphics/Mesh/ProjectileGraphics" unique_id=1192341850]
 libraries/ = SubResource("AnimationLibrary_efsgm")
+speed_scale = 0.0
 
 [node name="Body" type="Node" parent="." unique_id=50196351]
 script = ExtResource("282_or0ge")

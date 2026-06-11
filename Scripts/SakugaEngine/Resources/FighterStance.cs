@@ -27,6 +27,7 @@ namespace SakugaEngine.Resources
         [Export] public int OffTheGroundRecoveryState = -1;
 
         [ExportCategory("Throw Escape")]
+        [Export] public MotionInputs ThrowEscapeInput;
         [Export] public int GroundThrowEscapeState = -1;
         [Export] public int AirThrowEscapeState = -1;
     }

@@ -51,6 +51,7 @@ namespace SakugaEngine
         public FrameProperties FrameProperties = 0;
         public HitChecker HitCheck;
         public CancelCondition CancelConditions;
+        public int CurrentGrabbedNodeID = -1;
 
         // References
         private SakugaActor actor;
@@ -64,7 +65,6 @@ namespace SakugaEngine
 
         public SakugaActor[] GetAllies() => GetMaster() != null ? GetMaster().GetAllies() : _allies;
         public SakugaActor GetAlly(int index) => GetMaster() != null ? GetMaster().GetAlly(index) : _allies[index];
-
         public void SetAllies(SakugaActor[] allies) { if (allies != _allies) _allies = allies; }
 
         public SakugaActor[] GetOpponents() => GetMaster() != null ? GetMaster().GetOpponents() : _opponents;
@@ -186,9 +186,9 @@ namespace SakugaEngine
         }
 #endregion
 
-        public override void Initialize()
+        public override void Initialize(uint id)
         {
-            base.Initialize();
+            base.Initialize(id);
             actor = this;
             if (Body != null)
             {
@@ -200,10 +200,14 @@ namespace SakugaEngine
             if (StanceManager != null) StanceManager.Initialize(this);
             if (StateManager != null) StateManager.Initialize(this);
             if (Parameters != null) Parameters.Initialize(this);
-            if (Pool != null) Pool.Initialize(this);
 
             FrameProperties = InitialProperties;
             HitCheck = AllowHit;
+        }
+        
+        public void InitializePool()
+        {
+            if (Pool != null) Pool.Initialize(this);
         }
 
         public void InitializeBrain(bool active, BotDifficulty diff)
@@ -267,6 +271,7 @@ namespace SakugaEngine
         {
             if (!IsActive) return;
 
+            ThrowEscape(GetOpponent(0));
             if (StanceManager != null) StanceManager.CheckMoves();
 
             if (OnHitstop()) return;
@@ -432,21 +437,8 @@ namespace SakugaEngine
                 if (IsAirState())
                     Parameters.Prorations.GravityDecayFactor++;
             }
-            if (CanBounce())
-            {
-                if (box.BounceTime > 0)
-                {
-                    Bounce.Start((uint)box.BounceTime);
-                    BounceXIntensity = box.BounceXIntensity;
-                    BounceYIntensity = box.BounceYIntensity;
-                }
-                else
-                {
-                    Bounce.Stop();
-                    BounceXIntensity = 0;
-                    BounceYIntensity = 0;
-                }
-            }
+
+            StartBounce((uint)box.BounceTime, box.BounceXIntensity, box.BounceYIntensity);
         }
 
         public void BlockHit(SakugaActor target, HitboxElement box, int blockState) 
@@ -588,7 +580,7 @@ namespace SakugaEngine
         {
             if (!Hitstop.IsRunning()) return;
             if (HitstunType < HitstunType.GRABBED) return;
-            if (Inputs.IsBeingPressed(Inputs.CurrentHistory, PlayerInputs.ANY_BUTTON))
+            if (Inputs.CheckMotionInputs(StanceManager.GetCurrentStance().ThrowEscapeInput, InputSide(InputSideCheck.SIDE_RELATIVE)))
             {
                 HitstunType = 0;
                 ThrowEscapeAction();
@@ -604,6 +596,7 @@ namespace SakugaEngine
                                         StanceManager.GetCurrentStance().AirThrowEscapeState;
             if (CanHitstop()) Hitstop.Stop();
             if (StateManager != null) StateManager.PlayState(selfSelectThrowEscape);
+            CurrentGrabbedNodeID = -1;
             PushActor(10, -40000 * Body.PlayerSide, 0, 0);
         }
         public void HitConfirm(SakugaActor target, int superGaugeGain, uint hitStopDuration, int hitEffect, Vector2I VFXSpawn)
@@ -637,8 +630,11 @@ namespace SakugaEngine
         }
         public void BaseDamage(SakugaActor target, HitboxElement box, Vector2I contact)
         {
-            bool isHitAllowed = !target.ContainsFrameProperty(Global.FrameProperties.DAMAGE_IMUNITY);
+            bool isHitAllowed = !target.ContainsFrameProperty(FrameProperties.DAMAGE_IMUNITY);
             if (!isHitAllowed) return;
+
+            CurrentGrabbedNodeID = -1;
+            target.CurrentGrabbedNodeID = -1;
 
             bool HitPosition = box.HitType == HitType.UNBLOCKABLE || 
                                 box.HitType == HitType.HIGH && target.Body.IsOnGround && target.IsCrouchState() || 
@@ -716,7 +712,7 @@ namespace SakugaEngine
         }
         public void ThrowDamage(SakugaActor target, HitboxElement box, Vector2I contact)
         {
-            bool isThrowAllowed = !target.ContainsFrameProperty(Global.FrameProperties.THROW_IMUNITY) && 
+            bool isThrowAllowed = !target.ContainsFrameProperty(FrameProperties.THROW_IMUNITY) && 
                                     ((target.Body.IsOnGround && box.GroundThrow) || 
                                     (target.IsAirState() && box.AirThrow) ||
                                     (box.GroundThrow && box.AirThrow));
@@ -725,7 +721,10 @@ namespace SakugaEngine
             uint finalHitstop = (uint)box.ThrowHitstop;
             if (target.StateManager.CurrentStateType() == StateType.HIT_REACTION) finalHitstop = (uint)box.ThrowHitstopAfterHit;
             
-            target.ThrowHit(target, box, finalHitstop);
+            CurrentGrabbedNodeID = (int)target.NodeID;
+            target.CurrentGrabbedNodeID = -1;
+
+            target.ThrowHit(actor, box, finalHitstop);
             HitConfirm(target, 0, finalHitstop, -1, Vector2I.Zero);
             //if (Brain != null && UseAI) Brain.canAdvance = true;
             GD.Print("Fighter: Throw!");
@@ -807,6 +806,23 @@ namespace SakugaEngine
                     "\nBounce: ("+Bounce.TimeLeft+", X:"+BounceXIntensity+", Y:"+BounceYIntensity+")"+
                     "\nCharge Buffers: "+Inputs.hCharge+" | "+Inputs.vCharge+
                     "\nBlocking: "+BlockStun;
+        }
+
+        public void StartBounce(uint bounceTime, int bounceX = 100, int bounceY = 100)
+        {
+            if (!CanBounce()) return;
+
+            if (bounceTime == 0)
+            {
+                Bounce.Stop();
+                BounceXIntensity = 0;
+                BounceYIntensity = 0;
+                return;
+            }
+
+            Bounce.Start(bounceTime);
+            BounceXIntensity = bounceX;
+            BounceYIntensity = bounceY;
         }
 
         public Vector2I GenerateTargetPosition(Vector2I Target, int index, RelativeTo xRelative, RelativeTo yRelative)

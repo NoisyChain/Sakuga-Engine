@@ -213,11 +213,12 @@ namespace SakugaEngine.Game
             
             Node temp = fightersList.elements[characterIndex].ColorPalettes[selectedColor].Instance.Instantiate();
             Fighters[playerIndex] = temp as SakugaActor;
-            AddActor(Fighters[playerIndex]);
             Fighters[playerIndex].playerID = (uint)playerIndex;
+            AddActor(Fighters[playerIndex]);
+            Fighters[playerIndex].Name = playerIndex + "_Fighter_" + Fighters[playerIndex].Data.Profile.ShortName;
             Fighters[playerIndex].Inputs = Inputs[playerIndex];
-            Fighters[playerIndex].Initialize();
             Fighters[playerIndex].InitializeBrain(AIcontrolled, Match.Difficulty);
+            Fighters[playerIndex].InitializePool();
         }
 
         public void CreateStage(int stageIndex)
@@ -228,9 +229,15 @@ namespace SakugaEngine.Game
 
         public void AddActor(SakugaNode newNode, bool isPhysicsBody = true)
         {
+            newNode.Initialize((uint)Nodes.Count);
             AddChild(newNode);
             Nodes.Add(newNode);
             if (isPhysicsBody) World.AddBody((newNode as SakugaActor).Body);
+        }
+
+        public SakugaNode GetActor(int nodeID)
+        {
+            return Nodes[nodeID];
         }
 
         public void GameLoop(byte[] playerInput)

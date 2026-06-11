@@ -39,9 +39,9 @@ namespace SakugaEngine
             Player.Seek((Duration - Frame) / (float)GlobalVariables.TicksPerSecond, true);
         }
 
-        public override void Initialize()
+        public override void Initialize(uint id)
         {
-            base.Initialize();
+            base.Initialize(id);
             actor = this;
             FixedPosition = Vector2I.Zero;
             Side = 0;
