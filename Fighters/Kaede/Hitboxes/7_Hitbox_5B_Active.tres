@@ -30,12 +30,14 @@ script = ExtResource("2")
 Center = Vector2i(5200, 10000)
 Size = Vector2i(4500, 7000)
 HitboxType = 1
+SelectedAttackProfile = 0
 
 [sub_resource type="Resource" id="Resource_bfmxh"]
 script = ExtResource("2")
 Center = Vector2i(-2960, 10000)
 Size = Vector2i(4500, 7000)
 HitboxType = 1
+SelectedAttackProfile = 0
 
 [resource]
 script = ExtResource("1")

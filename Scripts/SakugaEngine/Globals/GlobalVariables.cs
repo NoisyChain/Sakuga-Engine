@@ -14,7 +14,7 @@ namespace SakugaEngine.Global
         public const int InputHistorySize = 16;
         public const int KaraCancelWindow = 3;
         public const int InstantBlockWindow = 3;
-        public const int DefaultGravity = 4500;
+        public const int DefaultGravity = 3800;
         public const int DefaultAcceleration = 6000;
         public const int DefaultDeceleration = 4200;
         public const int DefaultFriction = 6700;

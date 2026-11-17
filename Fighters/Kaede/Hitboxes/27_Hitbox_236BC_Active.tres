@@ -14,6 +14,7 @@ script = ExtResource("1_hrecp")
 Center = Vector2i(6200, 7000)
 Size = Vector2i(12000, 15000)
 HitboxType = 1
+SelectedAttackProfile = 0
 
 [resource]
 script = ExtResource("2_nex5t")

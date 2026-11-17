@@ -21,15 +21,15 @@ namespace SakugaEngine.Resources
         [ExportGroup("Ground Hit Settings")]
         [Export] public HitstunType GroundHitstunType = HitstunType.BASIC;
         [Export] public int GroundHitReaction = 0;
-        [Export] public int CrouchHitReaction = 1;
+        [Export] public int CrouchHitReaction = 2;
         [Export] public Vector2I GroundHitKnockback = new (-30000, 0);
         [Export] public Vector2I GroundBlockKnockback = new (-30000, 0);
 
         //Air Hitstun settings
         [ExportGroup("Air Hit Settings")]
         [Export] public HitstunType AirHitstunType = HitstunType.BASIC;
-        [Export] public int AirHitReaction = 2;
-        [Export] public Vector2I AirHitKnockback = new (-25000, 30000);
+        [Export] public int AirHitReaction = 3;
+        [Export] public Vector2I AirHitKnockback = new (-25000, 35000);
         [Export] public Vector2I AirBlockKnockback = new (-25000, 20000);
         
         //Throw settings

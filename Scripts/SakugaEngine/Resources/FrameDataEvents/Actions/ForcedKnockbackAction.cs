@@ -21,6 +21,8 @@ namespace SakugaEngine.Resources
         {
             if (Actor.Body == null) return;
 
+            Actor.CurrentGrabbedNodeID = -1;
+
             Actor.HitstunType = HitstunType;
 
             if (Actor.CanHitstop() && Hitstop > 0) Actor.Hitstop.Start((uint)Hitstop);

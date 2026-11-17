@@ -13,6 +13,7 @@ HitboxType = 2
 script = ExtResource("2")
 Size = Vector2i(6000, 6000)
 HitboxType = 3
+SelectedAttackProfile = 0
 
 [resource]
 script = ExtResource("1")

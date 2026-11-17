@@ -19,6 +19,7 @@ script = ExtResource("1_ig31l")
 Center = Vector2i(5900, 10000)
 Size = Vector2i(3000, 1500)
 HitboxType = 4
+SelectedAttackProfile = 0
 
 [resource]
 script = ExtResource("2_vpku5")

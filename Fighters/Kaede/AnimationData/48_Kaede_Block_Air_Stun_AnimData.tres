@@ -21,5 +21,5 @@ Duration = 8
 HitstunHold = 2
 Animations = [SubResource("Resource_dohlc")]
 Hitboxes = [SubResource("Resource_hokrv")]
-AttackProfiles = null
+AttackProfiles = []
 metadata/_custom_type_script = "uid://ddkya5wrb53ly"

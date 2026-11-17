@@ -30,6 +30,7 @@ script = ExtResource("1_yvmbx")
 Center = Vector2i(8600, 11200)
 Size = Vector2i(6500, 2500)
 HitboxType = 1
+SelectedAttackProfile = 0
 
 [resource]
 script = ExtResource("1_p53q8")

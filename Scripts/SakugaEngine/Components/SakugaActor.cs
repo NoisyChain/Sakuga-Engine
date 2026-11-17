@@ -731,7 +731,10 @@ namespace SakugaEngine
                 
             }
 
-            if (target.Parameters.Health.CurrentValue <= 0 || Parameters.Health.CurrentValue <= 0)
+            bool targetKOed = target.Parameters.Health != null && target.Parameters.Health.CurrentValue <= 0;
+            bool selfKOed = Parameters.Health != null && Parameters.Health.CurrentValue <= 0;
+
+            if (targetKOed || selfKOed)
             {
                 Hitstop.Stop();
                 target.Hitstop.Stop();

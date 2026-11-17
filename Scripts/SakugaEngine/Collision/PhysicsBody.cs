@@ -191,7 +191,7 @@ namespace SakugaEngine.Collision
                 FixedPosition.Y = Mathf.Clamp(FixedPosition.Y, 0, GlobalVariables.CeilingLimit);
             }
 
-            if (!GlobalFunctions.Assert(CurrentHitbox != null && CurrentHitbox.HitboxData != null, "The current AnimationData does not contain any hitboxes. Ignoring for now...")) //If there's no hitbox active, remove all boxes
+            if (CurrentHitbox == null || CurrentHitbox.HitboxData == null) //If there's no hitbox active, remove all boxes
             {
                 Pushbox.UpdateCollider(FixedPosition, Vector2I.Zero);
 
@@ -208,10 +208,12 @@ namespace SakugaEngine.Collision
                     Pushbox.UpdateCollider(FixedPosition + (CurrentHitbox.HitboxData.Pushbox.Center * Side), CurrentHitbox.HitboxData.Pushbox.Size);
                 
                 for(int i = 0; i < Hitboxes.Length; i++)
+                {
                     if (i < CurrentHitbox.HitboxData.Hitboxes.Length && CurrentHitbox.HitboxData.Hitboxes[i] != null)
                         Hitboxes[i].UpdateCollider(FixedPosition + (CurrentHitbox.HitboxData.Hitboxes[i].Center * Side), CurrentHitbox.HitboxData.Hitboxes[i].Size);
                     else
                         Hitboxes[i].UpdateCollider(FixedPosition, Vector2I.Zero);
+                }
             }
         }
 

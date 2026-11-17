@@ -3,7 +3,9 @@
 [ext_resource type="Script" uid="uid://b8vqwkv52qq3e" path="res://Scripts/SakugaEngine/Resources/AnimationSettings.cs" id="1_nyjq5"]
 [ext_resource type="Script" uid="uid://5qrsoteskjym" path="res://Scripts/SakugaEngine/Resources/HitboxState.cs" id="2_dnrhe"]
 [ext_resource type="Resource" uid="uid://dy23ho6aepysm" path="res://Fighters/Kaede/Hitboxes/5_Hitbox_5A_StUp.tres" id="2_dq48g"]
+[ext_resource type="Resource" uid="uid://brlsh2vbyc1xl" path="res://Fighters/Shared/Attack Levels/AttackLvl_2.tres" id="2_x2ba2"]
 [ext_resource type="Script" uid="uid://ddkya5wrb53ly" path="res://Scripts/SakugaEngine/Resources/AnimationData.cs" id="3_1bhhu"]
+[ext_resource type="Script" uid="uid://diafndij7pkla" path="res://Scripts/SakugaEngine/Resources/AttackProfile.cs" id="3_n0vw5"]
 [ext_resource type="Resource" uid="uid://cwbj5esglv2om" path="res://Fighters/Kaede/Hitboxes/7_Hitbox_5B_Active.tres" id="4_m7l6o"]
 [ext_resource type="Resource" uid="uid://t64afo7e4u1o" path="res://Fighters/Kaede/Hitboxes/0_Hitbox_Basic.tres" id="5_x2ba2"]
 
@@ -11,6 +13,12 @@
 script = ExtResource("1_nyjq5")
 SourceAnimation = "5B"
 metadata/_custom_type_script = "uid://b8vqwkv52qq3e"
+
+[sub_resource type="Resource" id="Resource_x2ba2"]
+script = ExtResource("3_n0vw5")
+AttackLevel = ExtResource("2_x2ba2")
+OverrideGroundHitstun = 24
+metadata/_custom_type_script = "uid://diafndij7pkla"
 
 [sub_resource type="Resource" id="2"]
 script = ExtResource("2_dnrhe")
@@ -33,5 +41,5 @@ script = ExtResource("3_1bhhu")
 Duration = 24
 Animations = [SubResource("Resource_prnwj")]
 Hitboxes = [SubResource("2"), SubResource("3"), SubResource("4")]
-AttackProfiles = null
+AttackProfiles = [SubResource("Resource_x2ba2")]
 metadata/_custom_type_script = "uid://ddkya5wrb53ly"
