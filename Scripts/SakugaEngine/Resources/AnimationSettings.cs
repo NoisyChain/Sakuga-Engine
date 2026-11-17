@@ -7,6 +7,7 @@ namespace SakugaEngine.Resources
     public partial class AnimationSettings : Resource
     {
         [Export] public int AtFrame;
+        [Export] public string AnimationGroup;
         [Export] public string SourceAnimation;
         [Export] public float Speed = 1f;
         [Export] public bool Inverse = false;

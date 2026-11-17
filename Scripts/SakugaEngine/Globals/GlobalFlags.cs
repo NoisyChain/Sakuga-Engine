@@ -72,10 +72,13 @@ namespace SakugaEngine.Global
     [Flags]
     public enum FrameProperties : byte
     {
-        DAMAGE_IMUNITY = 1 << 0,
-        THROW_IMUNITY = 1 << 1,
-        PROJECTILE_IMUNITY = 1 << 2,
-        LOCK_MOVE = 1 << 4
+        DAMAGE_IMMUNITY = 1 << 0,
+        THROW_IMMUNITY = 1 << 1,
+        PROJECTILE_IMMUNITY = 1 << 2,
+        SUPER_FLASH_IMMUNITY = 1 << 3,
+        LOCK_MOVE = 1 << 4,
+        BLOCK_DISABLED = 1 << 5,
+        
     }
     [Flags]
     public enum TransitionCondition : byte

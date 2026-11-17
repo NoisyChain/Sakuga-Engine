@@ -29,6 +29,8 @@ namespace SakugaEngine
         public override void Render()
         {
             Graphics.Visible = IsActive;
+            if (!IsActive) return;
+            
             Vector2I pos = FixedPosition;
             if (AttachedToOwner) pos = _master.Body.FixedPosition + new Vector2I(FixedPosition.X, FixedPosition.Y);
             Graphics.GlobalPosition = GlobalFunctions.ToScaledVector3(pos);

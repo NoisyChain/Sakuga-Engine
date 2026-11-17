@@ -93,5 +93,13 @@ namespace SakugaEngine.Global
                     return "general";
             }
         }
+
+        public static bool Assert(bool condition, string message)
+        {
+            if (!condition)
+                GD.PrintErr("SAKUGA ENGINE: " + message);
+            
+            return condition;
+        }
     }
 }

@@ -10,16 +10,18 @@ namespace SakugaEngine.Resources
         [ExportCategory("Move Parameters")]
         [Export] public string MoveName;
         [Export] public int MoveState;
+        [Export] public int MoveOverride = -1;
         [Export] public InputSideCheck SideCheck = InputSideCheck.CHARACTER_RELATIVE;
         [Export] public MotionInputs Inputs;
         [Export] public int FrameLimit = -1;
-        [Export] public int SuperFlash = 0;
         [Export] public int Priority = 0;
         [Export] public MoveEndCondition MoveEnd;
         [Export] public int MoveEndState = -1;
 
         [ExportCategory("Move Conditions")]
         [Export] public int SuperGaugeRequired = 0;
+        [Export] public int BurstRequired = 0;
+        [Export] public bool SpendBurst;
         [Export] public Vector2I HealthRequired = new Vector2I(0, 99999);
         [Export] public Vector2I DistanceArea = new Vector2I(0, 999999);
         [Export] public int MinimumHeight = 0;

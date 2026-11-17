@@ -12,10 +12,13 @@ namespace SakugaEngine.Utils
         [Export] public AnimationData Data;
         [Export] public bool AutoRun;
         [Export(PropertyHint.Range, "0, 99999")] public int Frame;
+
+        private double dlt;
         
         public override void _Process(double delta)
         {
             if (!Engine.IsEditorHint()) return;
+            if (!Visible) return;
             if (Animator == null || Data == null)
             {
                 for(int j = 0; j < hitboxGraphics.Length; j++)
@@ -25,8 +28,13 @@ namespace SakugaEngine.Utils
 
             if (AutoRun)
             {
-                Frame++;
-                if (Frame >= Data.Duration) Frame = 0;
+                dlt += delta;
+                if (dlt >= 1.0f / 60.0f)
+                {
+                    Frame++;
+                    if (Frame >= Data.Duration) Frame = 0;
+                    dlt = 0.0;
+                }
             }
 
             Animator.ViewAnimations(GetCurrentAnimationSettings(), Frame);
@@ -144,7 +152,7 @@ namespace SakugaEngine.Utils
                                 int.MaxValue :
                                 Data.Hitboxes[i + 1].AtFrame - 1;
                 
-                if (Frame >= Data.Hitboxes[i].AtFrame && Frame <= nextFrame)
+                if (Data.Hitboxes[i] != null && Frame >= Data.Hitboxes[i].AtFrame && Frame <= nextFrame)
                     anim = i;
             }
 

@@ -597,7 +597,7 @@ _data = {
 
 [node name="CanvasLayer" type="CanvasLayer" unique_id=1639285127]
 
-[node name="GameHUD_Background" type="Control" parent="." unique_id=1728610067 node_paths=PackedStringArray("P1Portrait", "P1Health", "P1LostHealth", "P1Rounds", "P1Combo", "P1Name", "P1Notif", "P2Portrait", "P2Health", "P2LostHealth", "P2Rounds", "P2Combo", "P2Name", "P2Notif", "Timer", "P1Debug", "P2Debug")]
+[node name="GameHUD_Background" type="Control" parent="." unique_id=1728610067 node_paths=PackedStringArray("P1Portrait", "P1Health", "P1LostHealth", "P1RecoveryHealth", "P1Burst", "P1Rounds", "P1Combo", "P1Name", "P1Notif", "P2Portrait", "P2Health", "P2LostHealth", "P2RecoveryHealth", "P2Burst", "P2Rounds", "P2Combo", "P2Name", "P2Notif", "Timer", "P1Debug", "P2Debug")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -608,6 +608,8 @@ script = ExtResource("1_ulr1j")
 P1Portrait = NodePath("HealthBars/P1Portrait")
 P1Health = NodePath("HealthBars/P1Health")
 P1LostHealth = NodePath("HealthBars/P1LostHealth")
+P1RecoveryHealth = NodePath("HealthBars/P1RecovHealth")
+P1Burst = NodePath("HealthBars/P1Burst")
 P1Rounds = NodePath("HealthBars/P1Rounds")
 P1Combo = NodePath("ComboCounters/P1ComboCounter")
 P1Name = NodePath("HealthBars/P1Name")
@@ -615,6 +617,8 @@ P1Notif = NodePath("P1HitNotifications")
 P2Portrait = NodePath("HealthBars/P2Portrait")
 P2Health = NodePath("HealthBars/P2Health")
 P2LostHealth = NodePath("HealthBars/P2LostHealth")
+P2RecoveryHealth = NodePath("HealthBars/P2RecovHealth")
+P2Burst = NodePath("HealthBars/P2Burst")
 P2Rounds = NodePath("HealthBars/P2Rounds")
 P2Combo = NodePath("ComboCounters/P2ComboCounter")
 P2Name = NodePath("HealthBars/P2Name")
@@ -648,6 +652,25 @@ offset_bottom = 128.0
 texture = ExtResource("2_h5vba")
 expand_mode = 1
 stretch_mode = 4
+
+[node name="P1RecovHealth" type="TextureProgressBar" parent="GameHUD_Background/HealthBars" unique_id=1367760829]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -590.0
+offset_top = 90.0
+offset_right = 1410.0
+offset_bottom = 225.0
+grow_horizontal = 2
+scale = Vector2(0.27, 0.27)
+max_value = 10000.0
+step = 0.0
+value = 8000.0
+fill_mode = 1
+texture_under = ExtResource("3_quu14")
+texture_progress = ExtResource("3_quu14")
+tint_under = Color(0.509804, 0.509804, 0.509804, 1)
 
 [node name="P1LostHealth" type="TextureProgressBar" parent="GameHUD_Background/HealthBars" unique_id=997365537]
 layout_mode = 1
@@ -688,6 +711,44 @@ texture_progress = ExtResource("3_quu14")
 tint_under = Color(0.509804, 0.509804, 0.509804, 1)
 tint_progress = Color(0.909804, 0.843137, 0.396078, 1)
 
+[node name="P1Burst" type="TextureProgressBar" parent="GameHUD_Background/HealthBars" unique_id=1320670393]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -290.00003
+offset_top = 128.0
+offset_right = 1710.0
+offset_bottom = 263.0
+grow_horizontal = 2
+scale = Vector2(0.12, 0.15)
+max_value = 10000.0
+step = 0.0
+value = 8000.0
+fill_mode = 1
+texture_under = ExtResource("3_quu14")
+texture_progress = ExtResource("3_quu14")
+tint_under = Color(0.509804, 0.509804, 0.509804, 1)
+tint_progress = Color(0.4117647, 1, 1, 1)
+
+[node name="P2RecovHealth" type="TextureProgressBar" parent="GameHUD_Background/HealthBars" unique_id=1123147423]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 46.0
+offset_top = 90.0
+offset_right = 2046.0
+offset_bottom = 225.0
+grow_horizontal = 2
+scale = Vector2(0.27, 0.27)
+max_value = 10000.0
+step = 0.0
+value = 8000.0
+texture_under = ExtResource("3_quu14")
+texture_progress = ExtResource("3_quu14")
+tint_under = Color(0.509804, 0.509804, 0.509804, 1)
+
 [node name="P2LostHealth" type="TextureProgressBar" parent="GameHUD_Background/HealthBars" unique_id=1499953177]
 layout_mode = 1
 anchors_preset = 5
@@ -724,6 +785,25 @@ value = 7000.0
 texture_progress = ExtResource("3_quu14")
 tint_under = Color(0.509804, 0.509804, 0.509804, 1)
 tint_progress = Color(0.909804, 0.843137, 0.396078, 1)
+
+[node name="P2Burst" type="TextureProgressBar" parent="GameHUD_Background/HealthBars" unique_id=321582934]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 46.0
+offset_top = 128.0
+offset_right = 2046.0
+offset_bottom = 263.0
+grow_horizontal = 2
+scale = Vector2(0.12, 0.15)
+max_value = 10000.0
+step = 0.0
+value = 5000.0
+texture_under = ExtResource("3_quu14")
+texture_progress = ExtResource("3_quu14")
+tint_under = Color(0.509804, 0.509804, 0.509804, 1)
+tint_progress = Color(0.4117647, 1, 1, 1)
 
 [node name="P1Rounds" type="HBoxContainer" parent="GameHUD_Background/HealthBars" unique_id=1236664845 node_paths=PackedStringArray("RoundViews")]
 layout_mode = 0

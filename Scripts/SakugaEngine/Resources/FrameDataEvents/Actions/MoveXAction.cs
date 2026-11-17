@@ -6,6 +6,7 @@ namespace SakugaEngine.Resources
     [GlobalClass]
     public partial class MoveXAction : FrameDataAction
     {
+        [Export] private string FromConstants;
         [Export] private int Velocity;
         [Export] public bool UseInertia;
         [Export] public bool UseInput;
@@ -13,6 +14,16 @@ namespace SakugaEngine.Resources
         {
             if (Actor.Body == null) return;
             if (Actor.OnKnockback()) return;
+
+            int FinalValue = Velocity;
+
+            if (FromConstants != null && FromConstants.Trim() != "")
+            {
+                bool hasKey = Actor.Data.CustomConstants.ContainsKey(FromConstants);
+                if (GlobalFunctions.Assert(hasKey, "Constant value not found: " + FromConstants))
+                    FinalValue = (int)Actor.Data.CustomConstants[FromConstants];
+            }
+                
 
             if (UseInput && Actor.Inputs != null)
             {
@@ -24,17 +35,17 @@ namespace SakugaEngine.Resources
                     InputSide = -1;
 
                 if (UseInertia)
-                    Actor.Body.AddLateralAcceleration(Velocity * InputSide);
+                    Actor.Body.AddLateralAcceleration((int)FinalValue * InputSide);
                 else
-                    Actor.Body.SetLateralVelocity(Velocity * InputSide);
+                    Actor.Body.SetLateralVelocity((int)FinalValue * InputSide);
                 
                 return;
             }
 
             if (UseInertia)
-                Actor.Body.AddLateralAcceleration(Velocity * Actor.InputSide());
+                Actor.Body.AddLateralAcceleration((int)FinalValue * Actor.InputSide());
             else
-                Actor.Body.SetLateralVelocity(Velocity * Actor.InputSide());
+                Actor.Body.SetLateralVelocity((int)FinalValue * Actor.InputSide());
         }
     }
 }

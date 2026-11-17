@@ -21,20 +21,26 @@ namespace SakugaEngine.Collision
 
         public Vector2I FixedPosition;
         public Vector2I FixedVelocity;
-        public bool IsLeftSide;
-        public int PlayerSide;
-        public bool IsMovable = true;
-        public List<uint> HitBodies = new List<uint>();
-        public bool ProximityBlocked;
-        public HitboxState CurrentHitbox = null;
-        public int CurrentGravity = GlobalVariables.DefaultGravity;
         
+        public int PlayerSide;
+        public int CurrentGravity = GlobalVariables.DefaultGravity;
+
+        public HitboxState CurrentHitbox = null;
+        public List<uint> HitBodies = new List<uint>();
+        public bool IsMovable = true;
+        public bool IsLeftSide;
+        public bool ProximityBlocked;
+        public bool HitConfirmed;
+        
+        public bool ParentActive => _owner != null && _owner.IsActive;
         public bool IsOnGround => FixedPosition.Y <= 0;
         public bool IsOnLeftWall => FixedPosition.X <= -GlobalVariables.WallLimit;
         public bool IsOnRightWall => FixedPosition.X >= GlobalVariables.WallLimit;
         public bool IsFalling => !IsOnGround && FixedVelocity.Y <= 0;
         public bool JustLanded => IsOnGround && FixedVelocity.Y < 0;
         public bool IsOnWall => IsOnLeftWall || IsOnRightWall;
+
+        public int CurrentHitboxSettings;
 
         public void Initialize(SakugaActor newOwner, IDamage newParent)
         {
@@ -76,9 +82,9 @@ namespace SakugaEngine.Collision
             if (newVelocity != 0 && Mathf.Sign(newVelocity) > 0)
             {
                 if (FixedVelocity.X < 0)
-                    FixedVelocity.X += GlobalVariables.DefaultFriction / GlobalVariables.TicksPerSecond;
+                    FixedVelocity.X += GlobalVariables.DefaultFriction;
                 else if (FixedVelocity.X < absVelocity)
-                    FixedVelocity.X += GlobalVariables.DefaultAcceleration / GlobalVariables.TicksPerSecond;
+                    FixedVelocity.X += GlobalVariables.DefaultAcceleration;
                 else
                     FixedVelocity.X = absVelocity;
                     
@@ -86,14 +92,14 @@ namespace SakugaEngine.Collision
             else if (newVelocity != 0 && Mathf.Sign(newVelocity) < 0)
             {
                 if (FixedVelocity.X > 0)
-                    FixedVelocity.X -= GlobalVariables.DefaultFriction / GlobalVariables.TicksPerSecond;
+                    FixedVelocity.X -= GlobalVariables.DefaultFriction;
                 else if (FixedVelocity.X > -absVelocity)
-                    FixedVelocity.X -= GlobalVariables.DefaultAcceleration / GlobalVariables.TicksPerSecond;
+                    FixedVelocity.X -= GlobalVariables.DefaultAcceleration;
                 else
                     FixedVelocity.X = -absVelocity;
             }
             else
-                FixedVelocity.X -= Mathf.Min(Mathf.Abs(FixedVelocity.X), GlobalVariables.DefaultDeceleration / GlobalVariables.TicksPerSecond) * Mathf.Sign(FixedVelocity.X);
+                FixedVelocity.X -= Mathf.Min(Mathf.Abs(FixedVelocity.X), GlobalVariables.DefaultDeceleration) * Mathf.Sign(FixedVelocity.X);
         }
         public void AddVerticalAcceleration(int newVelocity)
         {
@@ -101,9 +107,9 @@ namespace SakugaEngine.Collision
             if (newVelocity != 0 && Mathf.Sign(newVelocity) > 0)
             {
                 if (FixedVelocity.Y < 0)
-                    FixedVelocity.Y += GlobalVariables.DefaultFriction / GlobalVariables.TicksPerSecond;
+                    FixedVelocity.Y += GlobalVariables.DefaultFriction;
                 else if (FixedVelocity.Y < absVelocity)
-                    FixedVelocity.Y += GlobalVariables.DefaultAcceleration / GlobalVariables.TicksPerSecond;
+                    FixedVelocity.Y += GlobalVariables.DefaultAcceleration;
                 else
                     FixedVelocity.Y = absVelocity;
                     
@@ -111,18 +117,18 @@ namespace SakugaEngine.Collision
             else if (newVelocity != 0 && Mathf.Sign(newVelocity) < 0)
             {
                 if (FixedVelocity.Y > 0)
-                    FixedVelocity.Y -= GlobalVariables.DefaultFriction / GlobalVariables.TicksPerSecond;
+                    FixedVelocity.Y -= GlobalVariables.DefaultFriction;
                 else if (FixedVelocity.Y > -absVelocity)
-                    FixedVelocity.Y -= GlobalVariables.DefaultAcceleration / GlobalVariables.TicksPerSecond;
+                    FixedVelocity.Y -= GlobalVariables.DefaultAcceleration;
                 else
                     FixedVelocity.Y = -absVelocity;
             }
             else
-                FixedVelocity.Y -= Mathf.Min(Mathf.Abs(FixedVelocity.Y), GlobalVariables.DefaultDeceleration / GlobalVariables.TicksPerSecond) * Mathf.Sign(FixedVelocity.Y);
+                FixedVelocity.Y -= Mathf.Min(Mathf.Abs(FixedVelocity.Y), GlobalVariables.DefaultDeceleration) * Mathf.Sign(FixedVelocity.Y);
         }
         public void AddGravity()
         {
-            FixedVelocity.Y -= CurrentGravity / GlobalVariables.TicksPerSecond;
+            FixedVelocity.Y -= CurrentGravity;
         }
         public void MoveTo(Vector2I destination)
         {
@@ -175,8 +181,9 @@ namespace SakugaEngine.Collision
 
         public void UpdateColliders()
         {
+            AdvanceHitboxData();
             CurrentHitbox = GetCurrentHitboxSettings();
-            //Lock collider on bounds
+            //Lock actor within bounds
             if (StayOnBounds)
             {
                 if (!IgnoreWalls)
@@ -184,7 +191,7 @@ namespace SakugaEngine.Collision
                 FixedPosition.Y = Mathf.Clamp(FixedPosition.Y, 0, GlobalVariables.CeilingLimit);
             }
 
-            if (CurrentHitbox == null || CurrentHitbox.HitboxData == null) //If there's no hitbox active, remove all boxes
+            if (!GlobalFunctions.Assert(CurrentHitbox != null && CurrentHitbox.HitboxData != null, "The current AnimationData does not contain any hitboxes. Ignoring for now...")) //If there's no hitbox active, remove all boxes
             {
                 Pushbox.UpdateCollider(FixedPosition, Vector2I.Zero);
 
@@ -201,34 +208,49 @@ namespace SakugaEngine.Collision
                     Pushbox.UpdateCollider(FixedPosition + (CurrentHitbox.HitboxData.Pushbox.Center * Side), CurrentHitbox.HitboxData.Pushbox.Size);
                 
                 for(int i = 0; i < Hitboxes.Length; i++)
-                    if (i < CurrentHitbox.HitboxData.Hitboxes.Length)
+                    if (i < CurrentHitbox.HitboxData.Hitboxes.Length && CurrentHitbox.HitboxData.Hitboxes[i] != null)
                         Hitboxes[i].UpdateCollider(FixedPosition + (CurrentHitbox.HitboxData.Hitboxes[i].Center * Side), CurrentHitbox.HitboxData.Hitboxes[i].Size);
                     else
                         Hitboxes[i].UpdateCollider(FixedPosition, Vector2I.Zero);
             }
         }
 
+        public void AdvanceHitboxData()
+        {
+            CurrentHitboxSettings = -1;
+            var animData = _owner.StateManager.GetCurrentState().AnimationData;
+
+            if (!GlobalFunctions.Assert(animData != null, $"State '{_owner.StateManager.GetCurrentState().StateName}' does not contain an AnimationData.")) return;
+            if (animData.Hitboxes == null || animData.Hitboxes.Length <= 0) return;
+            if (animData.Hitboxes.Length == 1) { CurrentHitboxSettings = 0; return; }
+
+            for (int i = 0; i < animData.Hitboxes.Length; i++)
+            {
+                int nextFrame = (i == animData.Hitboxes.Length - 1) ?
+                                _owner.StateManager.CurrentStateFrame :
+                                animData.Hitboxes[i + 1].AtFrame - 1;
+                
+                if (_owner.StateManager.CurrentStateFrame >= animData.Hitboxes[i].AtFrame && _owner.StateManager.CurrentStateFrame <= nextFrame)
+                {
+                    CurrentHitboxSettings = i;
+                    break;
+                }
+            }
+        }
+
         public HitboxState GetCurrentHitboxSettings()
         {
+            if (CurrentHitboxSettings >= 0)
+                return _owner.StateManager.GetCurrentState().AnimationData.Hitboxes[CurrentHitboxSettings];
+            else return null;
+        }
+
+        public AttackProfile GetAttackProfile(int index = -1)
+        {
             var State = _owner.StateManager.GetCurrentState();
-            if (State.AnimationData == null) return null;
-            if (State.AnimationData.Hitboxes == null || State.AnimationData.Hitboxes.Length <= 0) return null;
-            if (State.AnimationData.Hitboxes.Length == 1)
-                return State.AnimationData.Hitboxes[0];
-
-            int anim = 0;
-
-            for (int i = 0; i < State.AnimationData.Hitboxes.Length; i++)
-            {
-                int nextFrame = (i == State.AnimationData.Hitboxes.Length - 1) ?
-                                int.MaxValue :
-                                State.AnimationData.Hitboxes[i + 1].AtFrame - 1;
-                
-                if (_owner.StateManager.CurrentStateFrame >= State.AnimationData.Hitboxes[i].AtFrame && _owner.StateManager.CurrentStateFrame <= nextFrame)
-                    anim = i;
-            }
-
-            return State.AnimationData.Hitboxes[anim];
+            if (index < 0) return null;
+            if (State.AnimationData.AttackProfiles == null || State.AnimationData.AttackProfiles.Length <= 0) return null;
+            return State.AnimationData.AttackProfiles[index];
         }
     }
 }

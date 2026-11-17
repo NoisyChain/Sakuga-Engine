@@ -17,14 +17,12 @@ namespace SakugaEngine.GameState
         [Key(5)] public int LayerSorting;
         [Key(6)] public int BounceXIntensity;
         [Key(7)] public int BounceYIntensity;
-        [Key(8)] public bool SuperFlashing;
-        [Key(9)] public bool CinematicState;
-        [Key(10)] public bool BlockStun;
-        [Key(11)] public HitstunType HitstunType;
-        [Key(12)] public FrameProperties FrameProperties;
-        [Key(13)] public HitChecker HitCheck;
-        [Key(14)] public CancelCondition CancelConditions;
-        [Key(15)] public int CurrentGrabbedNodeID;
+        [Key(8)] public bool CinematicState;
+        [Key(9)] public HitstunType HitstunType;
+        [Key(10)] public FrameProperties FrameProperties;
+        [Key(11)] public HitChecker HitCheck;
+        [Key(12)] public CancelCondition CancelConditions;
+        [Key(13)] public int CurrentGrabbedNodeID;
 
         public void GetStateData(ref SakugaActor reference)
         {
@@ -38,9 +36,8 @@ namespace SakugaEngine.GameState
             LayerSorting = reference.LayerSorting;
             BounceXIntensity = reference.LayerSorting;
             BounceYIntensity = reference.LayerSorting;
-            SuperFlashing = reference.SuperFlashing;
+            //SuperFlashing = reference.SuperFlashing;
             CinematicState = reference.CinematicState;
-            BlockStun = reference.BlockStun;
             HitstunType = reference.HitstunType;
             FrameProperties = reference.FrameProperties;
             HitCheck = reference.HitCheck;
@@ -60,9 +57,8 @@ namespace SakugaEngine.GameState
             reference.LayerSorting = LayerSorting;
             reference.BounceXIntensity = LayerSorting;
             reference.BounceYIntensity = LayerSorting;
-            reference.SuperFlashing = SuperFlashing;
+            //reference.SuperFlashing = SuperFlashing;
             reference.CinematicState = CinematicState;
-            reference.BlockStun = BlockStun;
             reference.HitstunType = HitstunType;
             reference.FrameProperties = FrameProperties;
             reference.HitCheck = HitCheck;
@@ -112,6 +108,7 @@ namespace SakugaEngine.GameState
         [Key(3)] public byte[][] SakugaNodes;
         [Key(4)] public Vector3IState RandomTest;
         [Key(5)] public HitNotifications[] Notifs;
+        [Key(6)] public ushort superFlashTimer;
 
         public void GetStateData(ref Game.GameManager reference)
         {
@@ -132,6 +129,7 @@ namespace SakugaEngine.GameState
             RandomTest.GetStateData(ref reference.randomTest);
             Notifs = new HitNotifications[2];
             Notifs = reference.Notifs;
+            superFlashTimer = reference.superFlashTimer;
         }
 
         public void SetStateData(ref Game.GameManager reference)
@@ -150,6 +148,7 @@ namespace SakugaEngine.GameState
             }
             RandomTest.SetStateData(ref reference.randomTest);
             reference.Notifs = Notifs;
+            reference.superFlashTimer = superFlashTimer;
         }
     }
 
@@ -164,6 +163,8 @@ namespace SakugaEngine.GameState
         [Key(5)] public List<uint> HitBodies;
         [Key(6)] public bool ProximityBlocked;
         [Key(7)] public int CurrentGravity;
+        [Key(8)] public int CurrentHitboxSettings;
+        [Key(9)] public bool HitConfirmed;
 
         public void GetStateData(ref PhysicsBody reference)
         {
@@ -177,6 +178,8 @@ namespace SakugaEngine.GameState
             HitBodies = reference.HitBodies;
             ProximityBlocked = reference.ProximityBlocked;
             CurrentGravity = reference.CurrentGravity;
+            CurrentHitboxSettings = reference.CurrentHitboxSettings;
+            HitConfirmed = reference.HitConfirmed;
         }
 
         public void SetStateData(ref PhysicsBody reference)
@@ -191,6 +194,8 @@ namespace SakugaEngine.GameState
             reference.HitBodies = HitBodies;
             reference.ProximityBlocked = ProximityBlocked;
             reference.CurrentGravity = CurrentGravity;
+            reference.CurrentHitboxSettings = CurrentHitboxSettings;
+            reference.HitConfirmed = HitConfirmed;
         }
     }
 
@@ -201,9 +206,11 @@ namespace SakugaEngine.GameState
         [Key(1)] public int LostHealth;
         [Key(2)] public int RecoveryHealth;
         [Key(3)] public int CurrentSuperGauge;
-        [Key(6)] public int CurrentSuperArmor;
-        [Key(7)] public ProrationsState Prorations;
-        [Key(8)] public CombatTrackerState CombatTracker;
+        [Key(4)] public int CurrentSuperArmor;
+        [Key(5)] public int CurrentBurstGauge;
+        [Key(6)] public bool BurstLocked;
+        [Key(48)] public ProrationsState Prorations;
+        [Key(49)] public CombatTrackerState CombatTracker;
         [Key(50)] public FrameTimerState[] Timers;
         [Key(51)] public CustomVariableState[] Variables;
         public void GetStateData(ref SakugaParameters reference)
@@ -215,6 +222,11 @@ namespace SakugaEngine.GameState
                 CurrentHealth = reference.Health.CurrentValue;
                 LostHealth = reference.Health.LostValue;
                 RecoveryHealth = reference.Health.RecoverableValue;
+            }
+            if (reference.BurstGauge != null)
+            {
+                CurrentBurstGauge = reference.BurstGauge.CurrentValue;
+                BurstLocked = reference.BurstGauge.Locked;
             }
 
             if (reference.SuperGauge != null) CurrentSuperGauge = reference.SuperGauge.CurrentValue;
@@ -244,6 +256,11 @@ namespace SakugaEngine.GameState
                 reference.Health.LostValue = LostHealth;
                 reference.Health.RecoverableValue = RecoveryHealth;
             }
+            if (reference.BurstGauge != null)
+            {
+                reference.BurstGauge.CurrentValue = CurrentBurstGauge;
+                reference.BurstGauge.Locked = BurstLocked;
+            }
 
             if (reference.SuperGauge != null) reference.SuperGauge.CurrentValue = CurrentSuperGauge;
             if (reference.SuperArmor != null) reference.SuperArmor.CurrentValue = CurrentSuperArmor;
@@ -264,8 +281,9 @@ namespace SakugaEngine.GameState
     [MessagePackObject]
     public struct StateManagerState
     {
-        [Key (0)] public int CurrentState;
-        [Key (1)] public int CurrentStateFrame;
+        [Key(0)] public int CurrentState;
+        [Key(1)] public int CurrentStateFrame;
+        [Key(2)] public int CurrentAnimationSettings;
 
         public void GetStateData(ref StateManager reference)
         {
@@ -273,6 +291,7 @@ namespace SakugaEngine.GameState
             
             CurrentState = reference.CurrentState;
             CurrentStateFrame = reference.CurrentStateFrame;
+            CurrentAnimationSettings = reference.CurrentAnimationSettings;
         }
 
         public void SetStateData(ref StateManager reference)
@@ -281,16 +300,17 @@ namespace SakugaEngine.GameState
             
             reference.CurrentState = CurrentState;
             reference.CurrentStateFrame = CurrentStateFrame;
+            reference.CurrentAnimationSettings = CurrentAnimationSettings;
         }
     }
 
     [MessagePackObject]
     public struct StanceManagerState
     {
-        [Key (0)] public int CurrentStance;
-        [Key (1)] public int BufferedMove;
-        [Key (2)] public int CurrentMove;
-        [Key (3)] public bool CancelBuffer;
+        [Key(0)] public int CurrentStance;
+        [Key(1)] public int BufferedMove;
+        [Key(2)] public int CurrentMove;
+        [Key(3)] public bool CancelBuffer;
 
         public void GetStateData(ref StanceManager reference)
         {

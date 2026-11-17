@@ -133,5 +133,70 @@ namespace SakugaEngine.UI
                     LoadingScreenManager.Instance.LoadScene("res://Scenes/SelectScreen.tscn");
             }
         }
+
+        public void _onButton_P1_Pressed()
+        {
+            bool key2Confirm = Manager.matchSettings.P1SelectedDevice == 1;
+
+            if (key2Confirm)
+            {
+                AudioManager.Instance.PlayMenuClip(3);
+                if (Manager.matchSettings.SelectedModeSettings.NetcodeMode == Global.NetcodeMode.ONLINE)
+                    LoadingScreenManager.Instance.LoadScene("res://Scenes/Lobby.tscn");
+                else
+                    LoadingScreenManager.Instance.LoadScene("res://Scenes/SelectScreen.tscn");
+            }
+            else
+            {
+                AudioManager.Instance.PlayMenuClip(0);
+                if (Manager.matchSettings.P1SelectedDevice == -1)
+                {
+                    if (Manager.matchSettings.P2SelectedDevice == 1) Manager.matchSettings.P2SelectedDevice = -1;
+                    Manager.matchSettings.P1SelectedDevice = 1;
+                }
+            }
+        }
+
+        public void _onButton_P2_Pressed()
+        {
+            bool key2Confirm = Manager.matchSettings.P2SelectedDevice == 1;
+
+            if (key2Confirm)
+            {
+                AudioManager.Instance.PlayMenuClip(3);
+                if (Manager.matchSettings.SelectedModeSettings.NetcodeMode == Global.NetcodeMode.ONLINE)
+                    LoadingScreenManager.Instance.LoadScene("res://Scenes/Lobby.tscn");
+                else
+                    LoadingScreenManager.Instance.LoadScene("res://Scenes/SelectScreen.tscn");
+            }
+            else
+            {
+                AudioManager.Instance.PlayMenuClip(0);
+                if (Manager.matchSettings.P2SelectedDevice == -1)
+                {
+                    if (Manager.matchSettings.P1SelectedDevice == 1) Manager.matchSettings.P1SelectedDevice = -1;
+                    Manager.matchSettings.P2SelectedDevice = 1;
+                }
+            }
+        }
+
+        public void _onButton_Back_Pressed()
+        {
+            bool key2Confirm = Manager.matchSettings.P1SelectedDevice == 1 || Manager.matchSettings.P2SelectedDevice == 1;
+
+            if (key2Confirm)
+            {
+                AudioManager.Instance.PlayMenuClip(2);
+                if (Manager.matchSettings.P1SelectedDevice == 1) Manager.matchSettings.P1SelectedDevice = -1;
+                if (Manager.matchSettings.P2SelectedDevice == 1) Manager.matchSettings.P2SelectedDevice = -1;
+            }
+            else
+            {
+                AudioManager.Instance.PlayMenuClip(2);
+                Visible = false;
+                Manager.mainMenu.GoTo();
+                
+            }
+        }
 	}
 }

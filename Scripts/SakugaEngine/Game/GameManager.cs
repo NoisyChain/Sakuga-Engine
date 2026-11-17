@@ -18,13 +18,9 @@ namespace SakugaEngine.Game
         public InputManager[] Inputs = [];
         [Export] public MatchSettings Match;
         [Export] public GameMonitor Monitor;
-        [Export] public FighterList fightersList;
-        [Export] public StageList stagesList;
-        [Export] public BGMList songsList;
         [Export] public HitNotificationList notifications;
         [Export] private CanvasLayer FighterUI;
         [Export] public FighterCamera Camera;
-        //[Export] public AudioStreamPlayer BGMSource;
         private Label SeedViewer;
         private FadeScreen Curtain;
         public uint InputSize;
@@ -51,6 +47,10 @@ namespace SakugaEngine.Game
         public HitNotifications[] Notifs;
 
         private bool paused;
+        public ushort superFlashTimer;
+
+        public bool IsSuperFlashing => superFlashTimer > 0;
+        public void SetSuperFlash(ushort duration) => superFlashTimer = duration;
         
         public override void _Ready()
         {
@@ -99,8 +99,13 @@ namespace SakugaEngine.Game
             // Return to menu for now
             if (Monitor.MatchState == MatchState.RESULTS && (Input.IsActionJustPressed("ui_accept") || Input.IsActionJustPressed("ui_cancel")))
             {
-                LoadingScreenManager.Instance.LoadScene(Monitor.sceneToReturn);
+                CallDeferred("ReturnToMenu");
             }
+        }
+
+        private void ReturnToMenu()
+        {
+            LoadingScreenManager.Instance.LoadScene(Monitor.sceneToReturn);
         }
 
         public void Render()
@@ -157,20 +162,22 @@ namespace SakugaEngine.Game
                 }
             }
 
+            Monitor.ResultsScreen.Visible = false;
+
             Inputs = new InputManager[2];
             Inputs[0] = new InputManager();
             Inputs[1] = new InputManager();
 
             Frame = 0;
 
-            CreateStage(Match.SelectedStage);
+            CreateStage();
 
             World = new PhysicsWorld();
             Nodes.Clear();
             Fighters = new SakugaActor[2];
 
-            CreateFighter(Match.P1SelectedCharacter, 0);
-            CreateFighter(Match.P2SelectedCharacter, 1);
+            CreateFighter(0);
+            CreateFighter(1);
 
             Fighters[0].SetAllies([Fighters[0]]);
             Fighters[1].SetAllies([Fighters[1]]);
@@ -188,30 +195,25 @@ namespace SakugaEngine.Game
             healthHUD.Setup(Fighters);
             metersHUD.Setup(Fighters);
             
-            AudioManager.Instance.PlayBGM(songsList.elements[Match.SelectedBGM].clip);
+            AudioManager.Instance.PlayBGM(Match.SelectedBGM);
         }
 
-        public void CreateFighter(int characterIndex, int playerIndex)
+        public void CreateFighter(int playerIndex)
         {
             bool AIcontrolled = false;
-            int selectedColor = 0;
+            Node temp = null;
             switch (playerIndex)
             {
                 case 0:
                     AIcontrolled = !Match.SelectedModeSettings.NoAI && Match.P1SelectedDevice == -1;
-                    selectedColor = Match.P1SelectedColor;
+                    temp = Match.P1SelectedCharacter.Instantiate();
                     break;
                 case 1:
                     AIcontrolled = !Match.SelectedModeSettings.NoAI && Match.P2SelectedDevice == -1;
-                    selectedColor = Match.P2SelectedColor;
-                    if (characterIndex == Match.P1SelectedCharacter && Match.P1SelectedColor == Match.P2SelectedColor)
-                        selectedColor++;
-                    if (selectedColor >= fightersList.elements[characterIndex].ColorPalettes.Length)
-                        selectedColor = 0;
+                    temp = Match.P2SelectedCharacter.Instantiate();
                     break;
             }
             
-            Node temp = fightersList.elements[characterIndex].ColorPalettes[selectedColor].Instance.Instantiate();
             Fighters[playerIndex] = temp as SakugaActor;
             Fighters[playerIndex].playerID = (uint)playerIndex;
             AddActor(Fighters[playerIndex]);
@@ -221,9 +223,9 @@ namespace SakugaEngine.Game
             Fighters[playerIndex].InitializePool();
         }
 
-        public void CreateStage(int stageIndex)
+        public void CreateStage()
         {
-            Node temp = stagesList.elements[stageIndex].Instance.Instantiate();
+            Node temp = Match.SelectedStage.Instantiate();
             AddChild(temp);
         }
 
@@ -256,6 +258,8 @@ namespace SakugaEngine.Game
             );
 
             int center = (Fighters[0].Body.FixedPosition.X + Fighters[1].Body.FixedPosition.X) / 2;
+
+            if (IsSuperFlashing) superFlashTimer--;
 
             foreach (var notif in Notifs)
             {
@@ -365,10 +369,12 @@ namespace SakugaEngine.Game
                 if (eventKey.Pressed && eventKey.Keycode == Key.F5)
                 {
                     Fighters[0].Parameters.SuperGauge.SetSuperGauge(Fighters[0].Data.MaxSuperGauge);
+                    Fighters[0].Parameters.BurstGauge.SetBurstGauge(Fighters[0].Data.MaxBurst);
                 }
                 if (eventKey.Pressed && eventKey.Keycode == Key.F6)
                 {
                     Fighters[1].Parameters.SuperGauge.SetSuperGauge(Fighters[1].Data.MaxSuperGauge);
+                    Fighters[1].Parameters.BurstGauge.SetBurstGauge(Fighters[1].Data.MaxBurst);
                 }
                 if (eventKey.Pressed && eventKey.Keycode == Key.F7)
                 {

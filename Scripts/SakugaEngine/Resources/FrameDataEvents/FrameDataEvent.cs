@@ -1,4 +1,5 @@
 using Godot;
+using SakugaEngine.Global;
 
 namespace SakugaEngine.Resources
 {
@@ -21,6 +22,9 @@ namespace SakugaEngine.Resources
 
             foreach(FrameDataCondition condition in Conditions)
             {
+                if (!GlobalFunctions.Assert(condition != null, "Null FrameDataCondition found"))
+                    return false;
+                
                 if (!condition.Check(ref Actor))
                     return false;
             }
@@ -32,7 +36,8 @@ namespace SakugaEngine.Resources
         {
             foreach(FrameDataAction action in Actions)
             {
-                action.Execute(ref Actor);
+                if (GlobalFunctions.Assert(action != null, "Null FrameDataAction found"))
+                    action.Execute(ref Actor);
             }
         }
     }

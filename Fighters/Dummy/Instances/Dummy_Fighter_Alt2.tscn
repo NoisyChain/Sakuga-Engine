@@ -19,6 +19,7 @@
 [ext_resource type="Script" uid="uid://7t4e8g74liln" path="res://Scripts/SakugaEngine/Components/SakugaParameters.cs" id="16_w7how"]
 [ext_resource type="Script" uid="uid://c46mwhea4j37w" path="res://Scripts/SakugaEngine/Components/SakugaHealth.cs" id="17_agvmn"]
 [ext_resource type="Script" uid="uid://d2q1lo1hfn7ry" path="res://Scripts/SakugaEngine/Components/SakugaSuperGauge.cs" id="18_aoh8p"]
+[ext_resource type="Script" uid="uid://b1tvvb85k5pdh" path="res://Scripts/SakugaEngine/Components/SakugaBurstGauge.cs" id="18_dfk5o"]
 [ext_resource type="Script" uid="uid://baq33nsqdvp4m" path="res://Scripts/SakugaEngine/Components/SakugaSuperArmor.cs" id="19_jk458"]
 [ext_resource type="Script" uid="uid://bfptd6jyxtdng" path="res://Scripts/SakugaEngine/Components/SakugaProrations.cs" id="20_erm8s"]
 [ext_resource type="Script" uid="uid://dqqr3jnsmcig6" path="res://Scripts/SakugaEngine/Components/CustomVariable.cs" id="23_wuc03"]
@@ -144,10 +145,11 @@ metadata/_custom_type_script = "uid://c4xvc7cu6we4e"
 script = ExtResource("15_agvmn")
 metadata/_custom_type_script = "uid://dvqrejewx20e3"
 
-[node name="Parameters" type="Node" parent="." unique_id=1202219006 node_paths=PackedStringArray("Health", "SuperGauge", "SuperArmor", "Prorations", "Tracker", "Timers", "Variables", "SoundSources")]
+[node name="Parameters" type="Node" parent="." unique_id=1202219006 node_paths=PackedStringArray("Health", "SuperGauge", "BurstGauge", "SuperArmor", "Prorations", "Tracker", "Timers", "Variables", "SoundSources")]
 script = ExtResource("16_w7how")
 Health = NodePath("Health")
 SuperGauge = NodePath("SuperGauge")
+BurstGauge = NodePath("BurstGauge")
 SuperArmor = NodePath("SuperArmor")
 Prorations = NodePath("Prorations")
 Tracker = NodePath("CombatTracker")
@@ -165,6 +167,11 @@ metadata/_custom_type_script = "uid://c46mwhea4j37w"
 script = ExtResource("18_aoh8p")
 UseDataContainer = true
 metadata/_custom_type_script = "uid://d2q1lo1hfn7ry"
+
+[node name="BurstGauge" type="Node" parent="Parameters" unique_id=505785058]
+script = ExtResource("18_dfk5o")
+UseDataContainer = true
+metadata/_custom_type_script = "uid://b1tvvb85k5pdh"
 
 [node name="SuperArmor" type="Node" parent="Parameters" unique_id=1057809833]
 script = ExtResource("19_jk458")

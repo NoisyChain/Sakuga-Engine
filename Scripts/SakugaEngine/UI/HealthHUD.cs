@@ -10,6 +10,8 @@ namespace SakugaEngine.UI
         [Export] private TextureRect P1Portrait;
         [Export] private TextureProgressBar P1Health;
         [Export] private TextureProgressBar P1LostHealth;
+        [Export] private TextureProgressBar P1RecoveryHealth;
+        [Export] private TextureProgressBar P1Burst;
         [Export] private RoundsCounter P1Rounds;
         [Export] private ComboCounter P1Combo;
         [Export] private Label P1Name;
@@ -19,6 +21,8 @@ namespace SakugaEngine.UI
         [Export] private TextureRect P2Portrait;
         [Export] private TextureProgressBar P2Health;
         [Export] private TextureProgressBar P2LostHealth;
+        [Export] private TextureProgressBar P2RecoveryHealth;
+        [Export] private TextureProgressBar P2Burst;
         [Export] private RoundsCounter P2Rounds;
         [Export] private ComboCounter P2Combo;
         [Export] private Label P2Name;
@@ -33,6 +37,13 @@ namespace SakugaEngine.UI
         {
             P1Health.MaxValue = fighters[0].Data.MaxHealth;
             P2Health.MaxValue = fighters[1].Data.MaxHealth;
+            P1LostHealth.MaxValue = fighters[0].Data.MaxHealth;
+            P2LostHealth.MaxValue = fighters[1].Data.MaxHealth;
+            P1RecoveryHealth.MaxValue = fighters[0].Data.MaxHealth;
+            P2RecoveryHealth.MaxValue = fighters[1].Data.MaxHealth;
+
+            P1Burst.MaxValue = fighters[0].Data.MaxBurst;
+            P2Burst.MaxValue = fighters[1].Data.MaxBurst;
             
             if (fighters[0].Data.Profile.Portrait != null)
             {
@@ -52,10 +63,19 @@ namespace SakugaEngine.UI
 
         public void UpdateHealthBars(SakugaActor[] fighters, GameMonitor monitor)
         {
-            P1Health.Value = fighters[0].Parameters.Health.CurrentValue;
-            P2Health.Value = fighters[1].Parameters.Health.CurrentValue;
-            P1LostHealth.Value = fighters[0].Parameters.Health.LostValue;
-            P2LostHealth.Value = fighters[1].Parameters.Health.LostValue;
+            var P1HealthComp = fighters[0].Parameters.Health;
+            var P2HealthComp = fighters[1].Parameters.Health;
+            var P1BurstComp = fighters[0].Parameters.BurstGauge;
+            var P2BurstComp = fighters[1].Parameters.BurstGauge;
+
+            P1Health.Value = P1HealthComp.CurrentValue;
+            P2Health.Value = P2HealthComp.CurrentValue;
+            P1LostHealth.Value = P1HealthComp.LostValue;
+            P2LostHealth.Value = P2HealthComp.LostValue;
+            P1RecoveryHealth.Value = P1HealthComp.CurrentValue + P1HealthComp.RecoverableValue;
+            P2RecoveryHealth.Value = P2HealthComp.CurrentValue + P2HealthComp.RecoverableValue;
+            P1Burst.Value = P1BurstComp.CurrentValue;
+            P2Burst.Value = P2BurstComp.CurrentValue;
 
             UpdateTimer(monitor);
 
@@ -73,8 +93,8 @@ namespace SakugaEngine.UI
 
         public void UpdateDebug(SakugaActor[] fighters)
         {
-            P1Debug.Text = fighters[0].DebugInfo();
-            P2Debug.Text = fighters[1].DebugInfo();
+            if (P1Debug.Visible) P1Debug.Text = fighters[0].DebugInfo();
+            if (P2Debug.Visible) P2Debug.Text = fighters[1].DebugInfo();
         }
 
         public void UpdateTimer(GameMonitor monitor)

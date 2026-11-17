@@ -8,34 +8,12 @@
 script = ExtResource("1_kjeb5")
 Center = Vector2i(1200, 11500)
 Size = Vector2i(7000, 7000)
-SelfSuperGaugeGain = 25
-OpponentSuperGaugeGain = 10
-HitEffectIndex = 1
-BlockEffectIndex = 2
-ClashEffectIndex = 3
-AirHitKnockbackGravity = 300000
-AirBlockKnockbackGravity = 30
-SelfPushbackForce = 0
-SelfPushbackDuration = 0
-BounceXIntensity = 0
-BounceYIntensity = 0
 
 [sub_resource type="Resource" id="Resource_ohqyl"]
 script = ExtResource("1_kjeb5")
 Center = Vector2i(10000, 5000)
 Size = Vector2i(15000, 8000)
 HitboxType = 2
-SelfSuperGaugeGain = 25
-OpponentSuperGaugeGain = 10
-HitEffectIndex = 1
-BlockEffectIndex = 2
-ClashEffectIndex = 3
-AirHitKnockbackGravity = 300000
-AirBlockKnockbackGravity = 30
-SelfPushbackForce = 0
-SelfPushbackDuration = 0
-BounceXIntensity = 0
-BounceYIntensity = 0
 
 [resource]
 script = ExtResource("2_ksbx1")

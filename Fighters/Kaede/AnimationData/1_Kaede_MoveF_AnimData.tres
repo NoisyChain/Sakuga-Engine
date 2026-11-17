@@ -19,3 +19,4 @@ script = ExtResource("3_g3xtc")
 Duration = 30
 Animations = [SubResource("Resource_mjtro")]
 Hitboxes = [SubResource("Resource_dpo3q")]
+AttackProfiles = null

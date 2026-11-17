@@ -2,6 +2,7 @@ using Godot;
 using SakugaEngine.Global;
 using SakugaEngine.Resources;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace SakugaEngine.Collision
 {
@@ -62,9 +63,11 @@ namespace SakugaEngine.Collision
                 for (int i = 0; i < bodies.Count; i++)
                 {
                     PhysicsBody bodyA = bodies[i];
+                    if (!bodyA.ParentActive) continue;
                     for (int j = i + 1; j < bodies.Count; j++)
                     {
                         PhysicsBody bodyB = bodies[j];
+                        if (!bodyB.ParentActive) continue;
                         
                         if (bodyA.IsStatic && bodyB.IsStatic) continue;
                         
@@ -135,6 +138,9 @@ namespace SakugaEngine.Collision
                 p2HitType = -1
             };
 
+            if (!bodyA.ParentActive) return;
+            if (!bodyB.ParentActive) return;
+
 			for (int i = 0; i < bodyA.Hitboxes.Length; i++)
 			{	
 				Collider hitboxA = bodyA.Hitboxes[i];
@@ -152,119 +158,131 @@ namespace SakugaEngine.Collision
 						HitboxType myType = boxSettingsA.HitboxType;
 						HitboxType otType = boxSettingsB.HitboxType;
 
-                        if (myType == 0 && otType == 0) continue;
+                        if (myType == 0 && otType == 0) continue; // Ignore if both are hurtboxes
+
+                        AttackProfile profileA = bodyA.GetAttackProfile(boxSettingsA.SelectedAttackProfile);
+                        AttackProfile profileB = bodyB.GetAttackProfile(boxSettingsB.SelectedAttackProfile);
+
+                        //Debug.Assert(profileA != null || profileB != null, "No Attack Profile found. Hit interaction cancelled");
 
                         Vector2I ContactPoint = GetContactPoint(hitboxA, hitboxB);
 
                         //Basic damage
 						if (myType == HitboxType.HITBOX && otType == HitboxType.HURTBOX)
                         {
+                            if (!GlobalFunctions.Assert(profileA != null, "Player 1: Attack Profile not found. Hit detection cancelled.")) return;
                             if (!bodyA.CanHitBody(bodyB)) return;
                             
                             if (currentHit.p1HitType < 0)
                             {
                                 currentHit.p1HitType = 0;
-                                currentHit.p1Hitbox = boxSettingsA;
-                                currentHit.p1ContactPoint = ContactPoint;
+                                currentHit.p1Attack = profileA;
+                                currentHit.ContactPoint = ContactPoint;
                             }
 						}
                         else if (otType == HitboxType.HITBOX && myType == HitboxType.HURTBOX)
                         {
+                            if (!GlobalFunctions.Assert(profileB != null, "Player 2: Attack Profile not found. Hit detection cancelled.")) return;
                             if (!bodyB.CanHitBody(bodyA)) return;
 
                             if (currentHit.p2HitType < 0)
                             {
                                 currentHit.p2HitType = 0;
-                                currentHit.p2Hitbox = boxSettingsB;
-                                currentHit.p2ContactPoint = ContactPoint;
+                                currentHit.p2Attack = profileB;
+                                currentHit.ContactPoint = ContactPoint;
                             }
                         }
                         
                         //Hitboxes clash
 						if (myType == HitboxType.HITBOX && otType == HitboxType.HITBOX)
                         {
-                            if (!bodyA.CanHitBody(bodyB) || !bodyB.CanHitBody(bodyA)) return;
+                            if (profileA.CurrentPriority != profileB.CurrentPriority) continue;
+                            if (!GlobalFunctions.Assert(profileA != null, "Player 1: Attack Profile not found. Hit detection cancelled.")) return;
+                            if (!GlobalFunctions.Assert(profileB != null, "Player 2: Attack Profile not found. Hit detection cancelled.")) return;
 
-							if (boxSettingsA.Priority != boxSettingsB.Priority) return;
-
-                            if (currentHit.p1HitType < 0)
+                            if (bodyA.CanHitBody(bodyB) && currentHit.p1HitType < 0)
                             {
                                 currentHit.p1HitType = 11;
-                                currentHit.p1Hitbox = boxSettingsA;
-                                currentHit.p1ContactPoint = ContactPoint;
+                                currentHit.p1Attack = profileA;
+                                currentHit.ContactPoint = ContactPoint;
                             }
-                            if (currentHit.p2HitType < 0)
+                            if (bodyB.CanHitBody(bodyA) && currentHit.p2HitType < 0)
                             {
                                 currentHit.p2HitType = 11;
-                                currentHit.p2Hitbox = boxSettingsB;
-                                currentHit.p2ContactPoint = ContactPoint;
+                                currentHit.p2Attack = profileB;
+                                currentHit.ContactPoint = ContactPoint;
                             }
 						}
 
                         //Projectile damage
                         if (myType == HitboxType.PROJECTILE && otType == HitboxType.HURTBOX)
                         {
+                            if (!GlobalFunctions.Assert(profileA != null, "Player 1: Attack Profile not found. Hit detection cancelled.")) return;
                             if (!bodyA.CanHitBody(bodyB)) return;
 
                             if (currentHit.p1HitType < 0)
                             {
                                 currentHit.p1HitType = 0;
-                                currentHit.p1Hitbox = boxSettingsA;
-                                currentHit.p1ContactPoint = ContactPoint;
+                                currentHit.p1Attack = profileA;
+                                currentHit.ContactPoint = ContactPoint;
                             }
                         }
                         else if (otType == HitboxType.PROJECTILE && myType == HitboxType.HURTBOX)
                         {
+                            if (!GlobalFunctions.Assert(profileB != null, "Player 2: Attack Profile not found. Hit detection cancelled.")) return;
                             if (!bodyB.CanHitBody(bodyA)) return;
                             
                             if (currentHit.p2HitType < 0)
                             {
                                 currentHit.p2HitType = 0;
-                                currentHit.p2Hitbox = boxSettingsB;
-                                currentHit.p2ContactPoint = ContactPoint;
+                                currentHit.p2Attack = profileB;
+                                currentHit.ContactPoint = ContactPoint;
                             }
                         }
 
                         //Projectile clash
                         if (myType == HitboxType.PROJECTILE && otType == HitboxType.PROJECTILE)
                         {
-                            if (!bodyA.CanHitBody(bodyB) || !bodyB.CanHitBody(bodyA)) return;
+                            if (!GlobalFunctions.Assert(profileA != null, "Player 1: Attack Profile not found. Hit detection cancelled.")) return;
+                            if (!GlobalFunctions.Assert(profileB != null, "Player 2: Attack Profile not found. Hit detection cancelled.")) return;
 
-                            if (currentHit.p1HitType < 0)
+                            if (bodyA.CanHitBody(bodyB) && currentHit.p1HitType < 0)
                             {
                                 currentHit.p1HitType = 12;
-                                currentHit.p1Hitbox = boxSettingsA;
-                                currentHit.p1ContactPoint = ContactPoint;
+                                currentHit.p1Attack = profileA;
+                                currentHit.ContactPoint = ContactPoint;
                             }
-                            if (currentHit.p2HitType < 0)
+                            if (bodyB.CanHitBody(bodyA) && currentHit.p2HitType < 0)
                             {
                                 currentHit.p2HitType = 12;
-                                currentHit.p2Hitbox = boxSettingsB;
-                                currentHit.p2ContactPoint = ContactPoint;
+                                currentHit.p2Attack = profileB;
+                                currentHit.ContactPoint = ContactPoint;
                             }
                         }
 
                         //Deflect projectiles
                         if (myType == HitboxType.PROJECTILE && otType == HitboxType.DEFLECT)
                         {
+                            if (!GlobalFunctions.Assert(profileA != null, "Player 1: Attack Profile not found. Hit detection cancelled.")) return;
                             if (!bodyA.CanHitBody(bodyB)) return;
 
                             if (currentHit.p1HitType < 0)
                             {
                                 currentHit.p1HitType = 10;
-                                currentHit.p1Hitbox = boxSettingsA;
-                                currentHit.p1ContactPoint = ContactPoint;
+                                currentHit.p1Attack = profileA;
+                                currentHit.ContactPoint = ContactPoint;
                             }
                         }
                         else if (otType == HitboxType.PROJECTILE && myType == HitboxType.DEFLECT)
                         {
+                            if (!GlobalFunctions.Assert(profileB != null, "Player 2: Attack Profile not found. Hit detection cancelled.")) return;
                             if (!bodyB.CanHitBody(bodyA)) return;
                             
                             if (currentHit.p2HitType < 0)
                             {
                                 currentHit.p2HitType = 10;
-                                currentHit.p2Hitbox = boxSettingsB;
-                                currentHit.p2ContactPoint = ContactPoint;
+                                currentHit.p2Attack = profileB;
+                                currentHit.ContactPoint = ContactPoint;
                             }
                         }
                         
@@ -273,60 +291,64 @@ namespace SakugaEngine.Collision
                         {
                             if (!bodyA.CanHitBody(bodyB)) return;
 
-                            bodyB.Parent.ProximityBlock(boxSettingsA);
+                            bodyB.Parent.ProximityBlock();
                         }
                         else if (otType == HitboxType.PROXIMITY_BLOCK && myType == HitboxType.HURTBOX)
                         {
                             if (!bodyB.CanHitBody(bodyA)) return;
 
-                            bodyA.Parent.ProximityBlock(boxSettingsB);
+                            bodyA.Parent.ProximityBlock();
                         }
 
 						//Throws
                         if (myType == HitboxType.THROW && otType == HitboxType.HURTBOX)
                         {
+                            if (!GlobalFunctions.Assert(profileA != null, "Player 1: Attack Profile not found. Hit detection cancelled.")) return;
                             if (!bodyA.CanHitBody(bodyB)) return;
 
                             if (currentHit.p1HitType < 0)
                             {
                                 currentHit.p1HitType = 2;
-                                currentHit.p1Hitbox = boxSettingsA;
-                                currentHit.p1ContactPoint = ContactPoint;
+                                currentHit.p1Attack = profileA;
+                                currentHit.ContactPoint = ContactPoint;
                             }
                         }
                         else if (otType == HitboxType.THROW && myType == HitboxType.HURTBOX)
                         {
+                            if (!GlobalFunctions.Assert(profileB != null, "Player 2: Attack Profile not found. Hit detection cancelled.")) return;
                             if (!bodyB.CanHitBody(bodyA)) return;
 
                             if (currentHit.p2HitType < 0)
                             {
                                 currentHit.p2HitType = 2;
-                                currentHit.p2Hitbox = boxSettingsB;
-                                currentHit.p2ContactPoint = ContactPoint;
+                                currentHit.p2Attack = profileB;
+                                currentHit.ContactPoint = ContactPoint;
                             }
                         }
 
                         //Counterattack (Needs some testing)
                         if (myType == HitboxType.COUNTER && otType == HitboxType.HITBOX)
                         {
+                            if (!GlobalFunctions.Assert(profileA != null, "Player 1: Attack Profile not found. Hit detection cancelled.")) return;
                             if (!bodyA.CanHitBody(bodyB)) return;
 
                             if (currentHit.p1HitType < 0)
                             {
                                 currentHit.p1HitType = 3;
-                                currentHit.p1Hitbox = boxSettingsA;
-                                currentHit.p1ContactPoint = ContactPoint;
+                                currentHit.p1Attack = profileA;
+                                currentHit.ContactPoint = ContactPoint;
                             }
                         }
                         else if (otType == HitboxType.COUNTER && myType == HitboxType.HITBOX)
                         {
+                            if (!GlobalFunctions.Assert(profileB != null, "Player 2: Attack Profile not found. Hit detection cancelled.")) return;
                             if (!bodyB.CanHitBody(bodyA)) return;
 
                             if (currentHit.p2HitType < 0)
                             {
                                 currentHit.p2HitType = 3;
-                                currentHit.p2Hitbox = boxSettingsB;
-                                currentHit.p2ContactPoint = ContactPoint;
+                                currentHit.p2Attack = profileB;
+                                currentHit.ContactPoint = ContactPoint;
                             }
                         }
 					}
@@ -351,29 +373,29 @@ namespace SakugaEngine.Collision
                 
                 //Basic damage
                 if (currentHit.p1HitType == 0 && currentHit.p2HitType != 0) {
-                    currentHit.p1.BaseDamage(currentHit.p2 as SakugaActor, currentHit.p1Hitbox, currentHit.p1ContactPoint);
+                    currentHit.p1.BaseDamage(currentHit.p2 as SakugaActor, currentHit.p1Attack, currentHit.ContactPoint);
                 }
                 else if (currentHit.p1HitType != 0 && currentHit.p2HitType == 0) {
-                    currentHit.p2.BaseDamage(currentHit.p1 as SakugaActor, currentHit.p2Hitbox, currentHit.p2ContactPoint);
+                    currentHit.p2.BaseDamage(currentHit.p1 as SakugaActor, currentHit.p2Attack, currentHit.ContactPoint);
                 }
                 else if (currentHit.p1HitType == 0 && currentHit.p2HitType == 0) {
                     //Hit trades
-                    currentHit.p1.HitTrade(currentHit.p2 as SakugaActor, currentHit.p2Hitbox, currentHit.p1ContactPoint);
-                    currentHit.p2.HitTrade(currentHit.p1 as SakugaActor, currentHit.p1Hitbox, currentHit.p2ContactPoint);
+                    currentHit.p1.HitTrade(currentHit.p2 as SakugaActor, currentHit.p2Attack, currentHit.ContactPoint);
+                    currentHit.p2.HitTrade(currentHit.p1 as SakugaActor, currentHit.p1Attack, currentHit.ContactPoint);
                 }
                 else if (currentHit.p1HitType == 11 && currentHit.p2HitType == 11) {
                     //Hitboxes clash
-                    if (currentHit.p1Hitbox.Priority != currentHit.p2Hitbox.Priority) return;
+                    if (currentHit.p1Attack.CurrentPriority != currentHit.p2Attack.CurrentPriority) return;
 
-                    currentHit.p1.HitboxClash(currentHit.p2 as SakugaActor, currentHit.p1Hitbox, currentHit.p1ContactPoint);
-                    currentHit.p2.HitboxClash(currentHit.p1 as SakugaActor, currentHit.p2Hitbox, Vector2I.Zero);
+                    currentHit.p1.HitboxClash(currentHit.p2 as SakugaActor, currentHit.p1Attack, currentHit.ContactPoint);
+                    currentHit.p2.HitboxClash(currentHit.p1 as SakugaActor, currentHit.p2Attack, Vector2I.Zero);
                 }
                 else if (currentHit.p1HitType == 12 && currentHit.p2HitType == 12) {
                     //Projectile clash
-                    if (currentHit.p2Hitbox.Priority >= currentHit.p1Hitbox.Priority)
-                        currentHit.p1.ProjectileClash(currentHit.p2 as SakugaActor, currentHit.p1Hitbox, currentHit.p1ContactPoint);
-                    if (currentHit.p1Hitbox.Priority >= currentHit.p2Hitbox.Priority)
-                        currentHit.p2.ProjectileClash(currentHit.p1 as SakugaActor, currentHit.p2Hitbox, currentHit.p2ContactPoint);
+                    if (currentHit.p2Attack.CurrentPriority >= currentHit.p1Attack.CurrentPriority)
+                        currentHit.p1.ProjectileClash(currentHit.p2 as SakugaActor, currentHit.p1Attack, currentHit.ContactPoint);
+                    if (currentHit.p1Attack.CurrentPriority >= currentHit.p2Attack.CurrentPriority)
+                        currentHit.p2.ProjectileClash(currentHit.p1 as SakugaActor, currentHit.p2Attack, currentHit.ContactPoint);
                 }
 
                 /*//Projectile damage
@@ -385,18 +407,18 @@ namespace SakugaEngine.Collision
                 }*/
                 //Deflect projectiles
                 if (currentHit.p1HitType == 12 && currentHit.p2HitType == -1) {
-                    currentHit.p1.ProjectileDeflect(currentHit.p2 as SakugaActor, currentHit.p1Hitbox, currentHit.p1ContactPoint);
+                    currentHit.p1.ProjectileDeflect(currentHit.p2 as SakugaActor, currentHit.p1Attack, currentHit.ContactPoint);
                 }
                 else if (currentHit.p1HitType == -1 && currentHit.p2HitType == 12) {
-                    currentHit.p2.ProjectileDeflect(currentHit.p1 as SakugaActor, currentHit.p2Hitbox, currentHit.p2ContactPoint);
+                    currentHit.p2.ProjectileDeflect(currentHit.p1 as SakugaActor, currentHit.p2Attack, currentHit.ContactPoint);
                 }
 
                 //Throws
                 if (currentHit.p1HitType == 2 && currentHit.p2HitType == -1) {
-                    currentHit.p1.ThrowDamage(currentHit.p2 as SakugaActor, currentHit.p1Hitbox, currentHit.p1ContactPoint);
+                    currentHit.p1.ThrowDamage(currentHit.p2 as SakugaActor, currentHit.p1Attack, currentHit.ContactPoint);
                 }
                 else if (currentHit.p1HitType == -1 && currentHit.p2HitType == 2) {
-                    currentHit.p2.ThrowDamage(currentHit.p1 as SakugaActor, currentHit.p2Hitbox, currentHit.p2ContactPoint);
+                    currentHit.p2.ThrowDamage(currentHit.p1 as SakugaActor, currentHit.p2Attack, currentHit.ContactPoint);
                 }
                 else if (currentHit.p1HitType == 2 && currentHit.p2HitType == 2) {
                     //Throw trades
@@ -406,10 +428,10 @@ namespace SakugaEngine.Collision
 
                 //Counterattack (Needs some testing)
                 if (currentHit.p1HitType == 3 && currentHit.p2HitType == -1) {
-                    currentHit.p1.CounterHit(currentHit.p2 as SakugaActor, currentHit.p1Hitbox, currentHit.p1ContactPoint);
+                    currentHit.p1.CounterHit(currentHit.p2 as SakugaActor, currentHit.p1Attack, currentHit.ContactPoint);
                 }
                 else if (currentHit.p1HitType == -1 && currentHit.p2HitType == 3) {
-                    currentHit.p2.CounterHit(currentHit.p1 as SakugaActor, currentHit.p2Hitbox, currentHit.p2ContactPoint);
+                    currentHit.p2.CounterHit(currentHit.p1 as SakugaActor, currentHit.p2Attack, currentHit.ContactPoint);
                 }
             }
         }
@@ -448,11 +470,10 @@ namespace SakugaEngine.Collision
     {
         public IDamage p1;
         public int p1HitType;
-        public HitboxElement p1Hitbox;
-        public Vector2I p1ContactPoint;
+        public AttackProfile p1Attack;
         public IDamage p2;
         public int p2HitType;
-        public HitboxElement p2Hitbox;
-        public Vector2I p2ContactPoint;
+        public AttackProfile p2Attack;
+        public Vector2I ContactPoint;
     }
 }

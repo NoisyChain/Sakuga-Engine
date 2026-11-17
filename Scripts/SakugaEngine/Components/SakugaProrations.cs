@@ -75,7 +75,9 @@ namespace SakugaEngine
             var damageFactor = attackValue + (defenseValue - 100);
             var scaledDamage = (damage * CurrentDamageScaling) / 100;
             var finalDamage = (scaledDamage * damageFactor) / 100;
-            if (finalDamage > 0) RemoveDamageScaling(damageScalingLoss);
+            if (finalDamage == 0) return finalDamage;
+
+            RemoveDamageScaling(damageScalingLoss);
             return finalDamage;
         }
     }

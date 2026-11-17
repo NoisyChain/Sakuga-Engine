@@ -8,31 +8,11 @@ script = ExtResource("2")
 Center = Vector2i(10000, -2000)
 Size = Vector2i(25000, 3000)
 HitboxType = 2
-SelfSuperGaugeGain = 25
-OpponentSuperGaugeGain = 10
-AirHitKnockbackGravity = 300000
-AirBlockKnockbackGravity = 300000
-SelfPushbackForce = 0
-SelfPushbackDuration = 0
 
 [sub_resource type="Resource" id="1"]
 script = ExtResource("2")
 Size = Vector2i(6000, 6000)
 HitboxType = 3
-CrouchHitReaction = 1
-GroundHitKnockback = Vector2i(-30000, 0)
-GroundHitstun = 20
-GroundBlockKnockback = Vector2i(-30000, 0)
-GroundBlockstun = 20
-AirHitReaction = 3
-AirHitKnockback = Vector2i(-20000, 40000)
-AirHitstun = 20
-AirBlockKnockback = Vector2i(-20000, 0)
-AirBlockstun = 20
-SelfPushbackForce = 0
-SelfPushbackDuration = 0
-BounceXIntensity = 0
-BounceYIntensity = 0
 
 [resource]
 script = ExtResource("1")

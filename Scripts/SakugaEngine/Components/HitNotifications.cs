@@ -8,7 +8,7 @@ namespace SakugaEngine
 	public class HitNotifications
 	{
 		[Key(0)] public bool Notifying;
-		[Key(1)] public int Timer;
+		[Key(1)] public uint Timer;
 		[Key(2)] public HitNotificationPiece[] Elements;
 
 		public HitNotifications(){}

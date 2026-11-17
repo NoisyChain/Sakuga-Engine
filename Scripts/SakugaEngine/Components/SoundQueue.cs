@@ -20,6 +20,7 @@ namespace SakugaEngine
         public void SimpleQueueSound()
         {
             if (Queued) return;
+            //if (QueueTimer > 0) return;
             
             BufferedSound = DefaultSound;
             Queued = true;
@@ -28,6 +29,7 @@ namespace SakugaEngine
         public void QueueSound(AudioStream sound)
         {
             if (Queued && Stream == sound) return;
+            //if (QueueTimer > 0) return;
 
             BufferedSound = sound;
             QueueTimer = 0;
@@ -38,7 +40,12 @@ namespace SakugaEngine
         {
             if (!Queued) return;
             if (BufferedSound == null) return;
-            if (QueueTimer > 0) return;
+            if (QueueTimer > 0)
+            {
+                Queued = false;
+                BufferedSound = null;
+                return;
+            }
 
             Stream = BufferedSound;
             

@@ -8,85 +8,28 @@
 script = ExtResource("1_ssjs6")
 Center = Vector2i(1400, 2500)
 Size = Vector2i(7000, 5000)
-SelfSuperGaugeGain = 25
-OpponentSuperGaugeGain = 10
-HitEffectIndex = 1
-BlockEffectIndex = 2
-ClashEffectIndex = 3
-AirHitKnockbackGravity = 300000
-AirBlockKnockbackGravity = 30
-SelfPushbackForce = 0
-SelfPushbackDuration = 0
-BounceXIntensity = 0
-BounceYIntensity = 0
 
 [sub_resource type="Resource" id="Resource_ktv8f"]
 script = ExtResource("1_ssjs6")
 Center = Vector2i(-3400, 1500)
 Size = Vector2i(5000, 3000)
-SelfSuperGaugeGain = 25
-OpponentSuperGaugeGain = 10
-HitEffectIndex = 1
-BlockEffectIndex = 2
-ClashEffectIndex = 3
-AirHitKnockbackGravity = 300000
-AirBlockKnockbackGravity = 30
-SelfPushbackForce = 0
-SelfPushbackDuration = 0
-BounceXIntensity = 0
-BounceYIntensity = 0
 
 [sub_resource type="Resource" id="Resource_n7ux2"]
 script = ExtResource("1_ssjs6")
 Center = Vector2i(6300, 4600)
 Size = Vector2i(3000, 3000)
-SelfSuperGaugeGain = 25
-OpponentSuperGaugeGain = 10
-HitEffectIndex = 1
-BlockEffectIndex = 2
-ClashEffectIndex = 3
-AirHitKnockbackGravity = 300000
-AirBlockKnockbackGravity = 30
-SelfPushbackForce = 0
-SelfPushbackDuration = 0
-BounceXIntensity = 0
-BounceYIntensity = 0
 
 [sub_resource type="Resource" id="Resource_igg1m"]
 script = ExtResource("1_ssjs6")
 Center = Vector2i(10000, 2700)
 Size = Vector2i(15000, 2000)
 HitboxType = 2
-SelfSuperGaugeGain = 25
-OpponentSuperGaugeGain = 10
-HitEffectIndex = 1
-BlockEffectIndex = 2
-ClashEffectIndex = 3
-AirHitKnockbackGravity = 300000
-AirBlockKnockbackGravity = 30
-SelfPushbackForce = 0
-SelfPushbackDuration = 0
-BounceXIntensity = 0
-BounceYIntensity = 0
 
 [sub_resource type="Resource" id="Resource_xorsx"]
 script = ExtResource("1_ssjs6")
 Center = Vector2i(4600, 4800)
 Size = Vector2i(10000, 4000)
 HitboxType = 1
-HitType = 1
-BaseDamage = 220
-GroundHitReaction = 1
-CrouchHitReaction = 2
-GroundHitKnockback = Vector2i(-35000, 0)
-GroundHitstun = 22
-GroundBlockKnockback = Vector2i(-35000, 0)
-GroundBlockstun = 22
-AirHitReaction = 3
-AirHitKnockback = Vector2i(-18000, 40000)
-AirHitstun = 22
-AirBlockKnockback = Vector2i(-18000, 0)
-AirBlockstun = 22
 
 [resource]
 script = ExtResource("2_wbdvr")

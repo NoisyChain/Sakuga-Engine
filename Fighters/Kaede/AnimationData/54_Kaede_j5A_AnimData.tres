@@ -33,4 +33,5 @@ script = ExtResource("3_6ue3w")
 Duration = 15
 Animations = [SubResource("Resource_6d5rq")]
 Hitboxes = [SubResource("2"), SubResource("3"), SubResource("4")]
+AttackProfiles = null
 metadata/_custom_type_script = "uid://ddkya5wrb53ly"

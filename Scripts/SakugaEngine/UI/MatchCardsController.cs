@@ -137,11 +137,11 @@ namespace SakugaEngine.UI
             {
                 case 0:
                     CurrentAnimation = WinAnimationP1;
-                    AudioManager.Instance.PlayAnnouncerClip(GetCurrentAnimation().AnnouncerLineIndex + GameManager.Instance.Match.P1SelectedCharacter);
+                    //AudioManager.Instance.PlayAnnouncerClip(GetCurrentAnimation().AnnouncerLineIndex + GameManager.Instance.Match.P1SelectedCharacter);
                     break;
                 case 1:
                     CurrentAnimation = WinAnimationP2;
-                    AudioManager.Instance.PlayAnnouncerClip(GetCurrentAnimation().AnnouncerLineIndex + GameManager.Instance.Match.P2SelectedCharacter);
+                    //AudioManager.Instance.PlayAnnouncerClip(GetCurrentAnimation().AnnouncerLineIndex + GameManager.Instance.Match.P2SelectedCharacter);
                     break;
                 default:
                     CurrentAnimation = DrawAnimation;

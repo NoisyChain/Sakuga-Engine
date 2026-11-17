@@ -10,5 +10,6 @@ namespace SakugaEngine.Resources
         [Export] public int HitstunHold = -1;
         [Export] public AnimationSettings[] Animations;
         [Export] public HitboxState[] Hitboxes;
+        [Export] public AttackProfile[] AttackProfiles;
     }
 }

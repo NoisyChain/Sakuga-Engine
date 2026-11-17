@@ -11,6 +11,9 @@ namespace SakugaEngine
         [Export] private bool CanReset = true;
         [Export] public int MaxValue;
         public int CurrentValue;
+
+        public bool _IsFull => CurrentValue >= MaxValue;
+        public bool _IsHalfFull => CurrentValue >= MaxValue / 2;
         
 
         public void Initialize(DataContainer data)

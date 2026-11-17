@@ -6,6 +6,7 @@ namespace SakugaEngine.Resources
     [GlobalClass]
     public partial class MoveYAction : FrameDataAction
     {
+        [Export] private string FromConstants;
         [Export] private int Velocity;
         [Export] public bool UseInertia;
         [Export] public bool UseInput;
@@ -13,6 +14,15 @@ namespace SakugaEngine.Resources
         {
             if (Actor.Body == null) return;
             if (Actor.OnKnockback()) return;
+
+            int FinalValue = Velocity;
+
+            if (FromConstants != null && FromConstants.Trim() != "")
+            {
+                bool hasKey = Actor.Data.CustomConstants.ContainsKey(FromConstants);
+                if (GlobalFunctions.Assert(hasKey, "Constant value not found: " + FromConstants))
+                    FinalValue = (int)Actor.Data.CustomConstants[FromConstants];
+            }
 
             if (UseInput && Actor.Inputs != null)
             {
@@ -24,17 +34,17 @@ namespace SakugaEngine.Resources
                     InputSide = -1;
 
                 if (UseInertia)
-                    Actor.Body.AddVerticalAcceleration(Velocity * InputSide);
+                    Actor.Body.AddVerticalAcceleration((int)FinalValue * InputSide);
                 else
-                    Actor.Body.SetVerticalVelocity(Velocity * InputSide);
+                    Actor.Body.SetVerticalVelocity((int)FinalValue * InputSide);
                 
                 return;
             }
 
             if (UseInertia)
-                Actor.Body.AddVerticalAcceleration(Velocity);
+                Actor.Body.AddVerticalAcceleration((int)FinalValue);
             else
-                Actor.Body.SetVerticalVelocity(Velocity);
+                Actor.Body.SetVerticalVelocity((int)FinalValue);
         }
     }
 }

@@ -44,9 +44,7 @@ namespace SakugaEngine
         public int LayerSorting = -1;
         public int BounceXIntensity = 0;
         public int BounceYIntensity = 0;
-        public bool SuperFlashing;
         public bool CinematicState;
-        public bool BlockStun;
         public HitstunType HitstunType;
         public FrameProperties FrameProperties = 0;
         public HitChecker HitCheck;
@@ -150,7 +148,7 @@ namespace SakugaEngine
         public bool IsCrouchState() => Body != null && Body.IsOnGround && StateManager.GetCurrentState().BaseStance == MasterStance.CROUCH;
         public bool IsAirState() => Body != null && (!Body.IsOnGround || Body.IsOnGround && StateManager.GetCurrentState().BaseStance == MasterStance.ON_THE_GROUND);
         public bool IsKO() => Parameters != null && Parameters.Health != null && Parameters.Health.CurrentValue <= 0;
-        public bool IsStunLocked() => OnHitstun() && StateManager.GetCurrentState().AnimationData != null && StateManager.GetCurrentState().AnimationData.HitstunHold >= 0 && Hitstun.TimeLeft >= StateManager.GetCurrentState().AnimationData.Duration - StateManager.GetCurrentState().AnimationData.HitstunHold && StateManager.CurrentStateFrame >= StateManager.GetCurrentState().AnimationData.HitstunHold;
+        public bool IsStunLocked() => OnHitstun() && StateManager.GetCurrentState().AnimationData != null && StateManager.GetCurrentState().AnimationData.HitstunHold >= 0 && Hitstun.TimeLeft >= StateManager.GetCurrentState().AnimationData.Duration - StateManager.GetCurrentState().AnimationData.HitstunHold + 1 && StateManager.CurrentStateFrame >= StateManager.GetCurrentState().AnimationData.HitstunHold;
         public bool CanBlock() => StanceManager != null && StanceManager.GetCurrentStance().BlockReactions != null && StanceManager.GetCurrentStance().BlockReactions.Length > 0;
         public bool IsGrabbed() => HitstunType == HitstunType.GRABBED;
         public bool CanHitstop() => Hitstop != null;
@@ -228,6 +226,7 @@ namespace SakugaEngine
                 Body.SetVelocity(Vector2I.Zero);
                 Body.UpdateSide(Mathf.Sign(Body.FixedPosition.X) < 0);
                 Body.FlipSide();
+                Body.IsMovable = true;
             }
 
             if (StanceManager != null) StanceManager.CallStance(0);
@@ -244,27 +243,24 @@ namespace SakugaEngine
             if (!IsActive) return;
 
             if (CanHitstop()) Hitstop.Run();
-            if (Body != null) Body.IsMovable = !OnHitstop();
-            if (SuperFlashing && !OnHitstop()) SuperFlashing = false;
+            if (Body != null) Body.IsMovable = !OnHitstop() && !IsSuperFlashing();
             
-            if (OnHitstop()) return;
+            if (OnHitstop() || IsSuperFlashing()) return;
 
             if (CanHitstun() && HitstunType < HitstunType.HARD_KNOCKDOWN)
                 Hitstun.Run();
 
-            if (StateManager.CurrentStateType() != StateType.HIT_REACTION)
+            if (StateManager.CurrentStateType() < StateType.BLOCKING || StateManager.CurrentStateType() == StateType.LOCKED)
             {
                 if (CanHitstun()) Hitstun.Stop();
                 HitstunType = HitstunType.NONE;
-                BlockStun = false;
                 if (Parameters != null) Parameters.Clear();
             }
 
             if (Parameters != null) Parameters.Tick();
             if (StateManager != null && !IsStunLocked()) StateManager.RunState();
 
-            foreach(FrameDataEvent transitionEvent in StateManager.GetCurrentState().TransitionEvents)
-                transitionEvent.RunEvent(ref actor);
+            StateManager.GetCurrentState().RunTransitionEvents(ref actor);
         }
 
         public override void Tick()
@@ -275,16 +271,15 @@ namespace SakugaEngine
                 ThrowEscape(GameManager.Instance.GetActor(CurrentGrabbedNodeID) as SakugaActor);
             if (StanceManager != null) StanceManager.CheckMoves();
 
-            if (OnHitstop()) return;
+            if (OnHitstop() || IsSuperFlashing()) return;
 
-            foreach(FrameDataEvent tickEvent in StateManager.GetCurrentState().OnTickEvents)
-                tickEvent.RunEvent(ref actor);
+            StateManager.GetCurrentState().RunOnTickEvents(ref actor);
         }
 
         public override void LateTick()
         {
             if (!IsActive) return;
-            if (OnHitstop()) return;
+            if (OnHitstop() || IsSuperFlashing()) return;
         }
 
         public override void Render()
@@ -313,6 +308,8 @@ namespace SakugaEngine
 
         public void HitPushback(SakugaActor target, int duration, int velX)
         {
+            if (velX == 0) return;
+            
             int pushbackSide = Body.FixedPosition.X > 0 ? 1 : -1;
             if (Body.IsOnGround)
                 if (target.Body.IsOnWall)
@@ -344,24 +341,33 @@ namespace SakugaEngine
             return validTech;
         }
 
-        public void StartSuperFlash(uint duration)
+        public bool IsSuperFlashing() => GameManager.Instance.IsSuperFlashing && !ContainsFrameProperty(FrameProperties.SUPER_FLASH_IMMUNITY);
+
+        public void StartSuperFlash(ushort duration, bool immune)
         {
-            SuperFlashing = true;
-            Hitstop.Start(duration);
+            if (immune) FrameProperties |= FrameProperties.SUPER_FLASH_IMMUNITY;
+            GameManager.Instance.SetSuperFlash(duration);
+        }
+
+        public void StopSuperFlash()
+        {
+            if (ContainsFrameProperty(FrameProperties.SUPER_FLASH_IMMUNITY))
+                FrameProperties &= ~FrameProperties.SUPER_FLASH_IMMUNITY;
+            GameManager.Instance.SetSuperFlash(0);
         }
 #region Hit logic
-        public void HitDamage(SakugaActor target, HitboxElement box, bool isTrade)
+        public void HitDamage(SakugaActor target, AttackProfile profile, bool isTrade)
         {
             // Change hit fighter layering
             LayerSorting = -1;
             // Select hit values
             bool isGroundHit = !IsKO() && Body != null && !IsAirState();
-            var finalHitstun = isGroundHit ? box.GroundHitstun : box.AirHitstun;
-            var finalKnockbackTime = isGroundHit ? box.GroundHitKnockbackTime : box.AirHitKnockbackTime;
-            var finalDamageKnockback = isGroundHit ? box.GroundHitKnockback : box.AirHitKnockback;
-            var finalKnockbackGravity = isGroundHit ? box.GroundHitKnockbackGravity : box.AirHitKnockbackGravity;
-            var finalHitReaction = isGroundHit ? (IsCrouchState() ? box.CrouchHitReaction : box.GroundHitReaction) : box.AirHitReaction;
-            HitstunType = isGroundHit ? box.GroundHitstunType : box.AirHitstunType;
+            var finalHitstun = isGroundHit ? profile.CurrentGroundHitstun : profile.CurrentAirHitstun;
+            var finalKnockbackTime = profile.CurrentHitKnockbackDuration;
+            var finalDamageKnockback = isGroundHit ? profile.GroundHitKnockback : profile.AirHitKnockback;
+            var finalKnockbackGravity = isGroundHit ? profile.CurrentGroundKnockbackGravity : profile.CurrentAirKnockbackGravity;
+            var finalHitReaction = isGroundHit ? (IsCrouchState() ? profile.CrouchHitReaction : profile.GroundHitReaction) : profile.AirHitReaction;
+            HitstunType = isGroundHit ? profile.GroundHitstunType : profile.AirHitstunType;
             bool canTech = StateManager != null && StateManager.CurrentStateType() == StateType.HIT_REACTION && !OnHitstun() && ValidTechState();
             
             if (Body != null)
@@ -371,26 +377,28 @@ namespace SakugaEngine
                 Body.IsMovable = false;
             }
 
-            int finalHitstunForReal = Mathf.Max(finalHitstun, GlobalVariables.MinHitstun);
+            //int finalHitstunForReal = Mathf.Max((int)finalHitstun, (int)GlobalVariables.MinHitstun);
             int decayingKnockback = 0;
             if (Parameters != null)
             {
-                finalHitstunForReal = Mathf.Max(finalHitstun - Parameters.Prorations.HitstunDecayFactor, GlobalVariables.MinHitstun);
+                //finalHitstunForReal = Mathf.Max((int)finalHitstun - Parameters.Prorations.HitstunDecayFactor, (int)GlobalVariables.MinHitstun);
+                finalHitstun -= Parameters.Prorations.HitstunDecayFactor;
                 decayingKnockback = GlobalVariables.GravityDecay * Parameters.Prorations.GravityDecayFactor;
             }
+
+            int finalHitstunForReal = Mathf.Max((int)finalHitstun, (int)GlobalVariables.MinHitstun);
 
             if (CanHitstop())
             {
                 if (!isTrade)
-                    Hitstop.Start((uint)box.OpponentHitStopDuration);
+                    Hitstop.Start(profile.CurrentOpponentHitstop);
                 else 
                     Hitstop.Stop();
             }
 
             if (CanHitstun()) Hitstun.Start((uint)finalHitstunForReal);
 
-            foreach(FrameDataEvent hitEvent in StateManager.GetCurrentState().OnHitReactionEvents)
-                hitEvent.RunEvent(ref actor);
+            StateManager.GetCurrentState().RunOnHitReactionEvents(ref actor);
 
             if (StanceManager != null)
             {
@@ -414,18 +422,20 @@ namespace SakugaEngine
             {
                 int stunFrame = target.StateManager == null ? 0 : target.StateManager.GetCurrentState().AnimationData.Duration - target.StateManager.CurrentStateFrame;
                 int finalAttack = target.Parameters.Prorations != null ? target.Parameters.Prorations.CurrentAttack : target.Data.BaseAttack;
+                ushort finalDamageScaling = profile.CurrentDamageScaling;
+                if (!profile.MultiHitDamageScaling && target.Body.HitConfirmed) finalDamageScaling = 0;
                 int finalDamage = Parameters.CalculateProrations(
-                    box.BaseDamage, finalAttack,
+                    profile.BaseDamage, finalAttack,
                     Parameters.Prorations.CurrentDefense,
-                    (ushort)box.DamageScalingSubtract
+                    finalDamageScaling
                 );
                 Parameters.TakeDamage(
                     finalDamage,
-                    box.OpponentSuperGaugeGain,
-                    box.KillingBlow
+                    profile.CurrentSuperGainOpp,
+                    profile.KillingBlow
                 );
                 
-                Parameters.Tracker.UpdateTrackers(finalDamage, stunFrame, finalHitstunForReal, (int)box.HitType, canTech);
+                Parameters.Tracker.UpdateTrackers(finalDamage, stunFrame, finalHitstunForReal, (int)profile.HitType, canTech);
 
                 if (target.Parameters.Tracker != null)
                     if (isTrade)
@@ -439,19 +449,17 @@ namespace SakugaEngine
                     Parameters.Prorations.GravityDecayFactor++;
             }
 
-            StartBounce((uint)box.BounceTime, box.BounceXIntensity, box.BounceYIntensity);
+            StartBounce((uint)profile.BounceTime, profile.BounceXIntensity, profile.BounceYIntensity);
         }
 
-        public void BlockHit(SakugaActor target, HitboxElement box, int blockState) 
+        public void BlockHit(SakugaActor target, AttackProfile profile, int blockState) 
         {
             LayerSorting = -1;
             bool isGroundHit = !IsKO() && Body != null && IsGroundState() && !IsAirState();
-            var finalHitstun = isGroundHit ? box.GroundBlockstun : box.AirBlockstun;
-            var finalKnockbackTime = isGroundHit ? box.GroundBlockKnockbackTime : box.AirBlockKnockbackTime;
-            var finalDamageKnockback = isGroundHit ? box.GroundBlockKnockback : box.AirBlockKnockback;
-            var finalKnockbackGravity = isGroundHit ? box.GroundBlockKnockbackGravity : box.AirBlockKnockbackGravity;
-
-            BlockStun = true;
+            var finalHitstun = isGroundHit ? profile.CurrentGroundBlockstun : profile.CurrentAirBlockstun;
+            var finalKnockbackTime = profile.CurrentBlockKnockbackDuration;
+            var finalDamageKnockback = isGroundHit ? profile.GroundBlockKnockback : profile.AirBlockKnockback;
+            var finalKnockbackGravity = isGroundHit ? 0 : GlobalVariables.DefaultGravity;
 
             if (Body != null)
             {
@@ -468,8 +476,8 @@ namespace SakugaEngine
             if (StanceManager != null) StanceManager.Clear();
             if (StateManager != null) StateManager.PlayState(blockState, true);
 
-            if (CanHitstun()) Hitstun.Start((uint)finalHitstun);
-            if (CanHitstop()) Hitstop.Start((uint)box.BlockStopDuration);
+            if (CanHitstun()) Hitstun.Start(finalHitstun);
+            if (CanHitstop()) Hitstop.Start(profile.CurrentBlockstop);
             
             PushActor(
                 finalKnockbackTime,
@@ -482,24 +490,29 @@ namespace SakugaEngine
                 int stunFrame = target.StateManager == null ? 0 : target.StateManager.GetCurrentState().AnimationData.Duration - target.StateManager.CurrentStateFrame;
                 int finalAttack = target.Parameters.Prorations != null ? target.Parameters.Prorations.CurrentAttack : target.Data.BaseAttack;
                 int finalDamage = Parameters.CalculateProrations(
-                    box.ChipDamage, finalAttack,
+                    profile.ChipDamage, finalAttack,
                     Parameters.Prorations.CurrentDefense,
                     0
                 );
                 Parameters.TakeDamage(
                     finalDamage,
-                    box.OpponentSuperGaugeGain,
-                    box.ChipDeath
+                    profile.CurrentSuperGainOpp,
+                    profile.ChipDeath
                 );
 
-                Parameters.Tracker.UpdateTrackers(finalDamage, stunFrame, finalHitstun, (int)box.HitType, false, false);
+                Parameters.Tracker.UpdateTrackers(finalDamage, stunFrame, (int)finalHitstun, (int)profile.HitType, false, false);
                 
                 if (target.Parameters.Tracker != null)
-                    target.Parameters.Tracker.FrameAdvantage = -(stunFrame - finalHitstun);
+                    target.Parameters.Tracker.FrameAdvantage = -(stunFrame - (int)finalHitstun);
             }
         }
-        public void GuardCrush(SakugaActor target, HitboxElement box, int crushState)
+        public void GuardCrush(SakugaActor target, AttackProfile profile, int crushState)
         {
+            bool isGroundHit = !IsKO() && Body != null && IsGroundState() && !IsAirState();
+            var finalKnockbackTime = profile.CurrentBlockKnockbackDuration;
+            var finalDamageKnockback = isGroundHit ? profile.GroundBlockKnockback : profile.AirBlockKnockback;
+            var finalKnockbackGravity = isGroundHit ? 0 : GlobalVariables.DefaultGravity;
+
             if (Body != null)
             {
                 Body.UpdateSide(!target.Body.IsLeftSide);
@@ -510,44 +523,52 @@ namespace SakugaEngine
             if (StateManager != null) StateManager.PlayState(crushState, true);
 
             if (CanHitstun()) Hitstun.Start(GlobalVariables.GuardCrushHitstun);
-            if (CanHitstop()) Hitstop.Start((uint)box.BlockStopDuration);
+            if (CanHitstop()) Hitstop.Start(GlobalVariables.DefaultBaseHitstop);
+
+            PushActor(
+                finalKnockbackTime,
+                finalDamageKnockback.X * (-target.Body.PlayerSide),
+                finalDamageKnockback.X,
+                finalKnockbackGravity
+            );
 
             if (Parameters != null)
             {
                 int stunFrame = target.StateManager.GetCurrentState().AnimationData.Duration - target.StateManager.CurrentStateFrame;
                 int finalAttack = target.Parameters.Prorations != null ? target.Parameters.Prorations.CurrentAttack : target.Data.BaseAttack;
                 int finalDamage = Parameters.CalculateProrations(
-                    box.GuardCrushDamage, finalAttack,
+                    profile.GuardCrushDamage, finalAttack,
                     Parameters.Prorations.CurrentDefense,
-                    (ushort)box.DamageScalingSubtract
+                    profile.CurrentDamageScaling
                 );
                 Parameters.TakeDamage(
                     finalDamage,
-                    box.OpponentSuperGaugeGain,
-                    box.KillingBlow
+                    GlobalVariables.DefaultOpponentSuperGaugeGain,
+                    profile.KillingBlow
                 );
 
-                Parameters.Tracker.UpdateTrackers(finalDamage, stunFrame, GlobalVariables.GuardCrushHitstun, (int)box.HitType, false);
+                Parameters.Tracker.UpdateTrackers(finalDamage, stunFrame, (int)GlobalVariables.GuardCrushHitstun, (int)profile.HitType, false);
             }
         }
-        public void ArmorHit(SakugaActor target, HitboxElement box)
+        public void ArmorHit(SakugaActor target, AttackProfile profile)
         {
             //Armor hit
             LayerSorting = -1;
-            HitConfirm(target, box.OpponentSuperGaugeGain, (uint)box.ClashHitStopDuration, -1, Vector2I.Zero);
+            HitConfirm(target, profile.CurrentSuperGainOpp, GlobalVariables.DefaultClashHitstop, -1, Vector2I.Zero);
+            Body.ResetHits();
             if (Parameters != null)
             {
                 int finalAttack = target.Parameters.Prorations != null ? target.Parameters.Prorations.CurrentAttack : target.Data.BaseAttack;
                 int finalDamage = Parameters.CalculateProrations(
-                    box.BaseDamage, finalAttack,
+                    profile.BaseDamage, finalAttack,
                     Parameters.Prorations.CurrentDefense,
-                    (ushort)box.DamageScalingSubtract
+                    profile.CurrentDamageScaling
                 );
 
-                Parameters.ArmorDamage(box.ArmorDamage, finalDamage / 2);
+                Parameters.ArmorDamage(profile.CurrentArmorDamage, finalDamage / 2);
             }
         }
-        public void ThrowHit(SakugaActor target, HitboxElement box, uint finalHitStop)
+        public void ThrowHit(SakugaActor target, AttackProfile profile, uint finalHitStop)
         {
             LayerSorting = -1;
             HitstunType = HitstunType.GRABBED;
@@ -568,7 +589,7 @@ namespace SakugaEngine
                 {
                     if (StateManager != null)
                     {
-                        int finalHitReaction = Mathf.Clamp(box.ThrowHitReaction, 0, StanceManager.GetCurrentStance().HitReactions.Length - 1);
+                        int finalHitReaction = Mathf.Clamp(profile.ThrowHitReaction, 0, StanceManager.GetCurrentStance().HitReactions.Length - 1);
                         StateManager.PlayState(StanceManager.GetCurrentStance().HitReactions[finalHitReaction], true);
                     }
                 }
@@ -604,7 +625,11 @@ namespace SakugaEngine
         {
             LayerSorting = 1;
 
-            if (Body != null) Body.IsMovable = false;
+            if (Body != null)
+            {
+                Body.IsMovable = false;
+                Body.HitConfirmed = true;
+            }
             
             if (CanHitstop()) Hitstop.Start(hitStopDuration);
 
@@ -626,106 +651,122 @@ namespace SakugaEngine
             
             if (Body != null) Body.AddHitBody(target.Body);
 
-            foreach(FrameDataEvent hitEvent in StateManager.GetCurrentState().OnHitConfirmEvents)
-                hitEvent.RunEvent(ref actor);
+            StateManager.GetCurrentState().RunOnHitConfirmEvents(ref actor);
         }
-        public void BaseDamage(SakugaActor target, HitboxElement box, Vector2I contact)
+        public void BaseDamage(SakugaActor target, AttackProfile profile, Vector2I contact)
         {
-            bool isHitAllowed = !target.ContainsFrameProperty(FrameProperties.DAMAGE_IMUNITY);
+            bool isHitAllowed = !target.ContainsFrameProperty(FrameProperties.DAMAGE_IMMUNITY);
             if (!isHitAllowed) return;
 
             CurrentGrabbedNodeID = -1;
             target.CurrentGrabbedNodeID = -1;
 
-            bool HitPosition = box.HitType == HitType.UNBLOCKABLE || 
-                                box.HitType == HitType.HIGH && target.Body.IsOnGround && target.IsCrouchState() || 
-                                box.HitType == HitType.LOW && (target.Body.IsOnGround && target.IsGroundState() || target.IsAirState());
+            bool HitPosition = profile.HitType == HitType.UNBLOCKABLE || 
+                                profile.HitType == HitType.HIGH && target.Body.IsOnGround && target.IsCrouchState() || 
+                                profile.HitType == HitType.LOW && (target.Body.IsOnGround && target.IsGroundState() || target.IsAirState());
 
             CancelConditions &= ~CancelCondition.WHIFF_CANCEL;
             CancelConditions &= ~CancelCondition.KARA_CANCEL;
 
-            int blockState = target.StanceManager.GetBlockState(box.HitType, (byte)(box.GuardCrush ? 2 : 1));
+            int blockState = target.StanceManager.GetBlockState(profile.HitType, (byte)(profile.GuardCrush ? 2 : 1));
             GD.Print(blockState);
 
             if (target.Parameters.SuperArmor != null && target.Parameters.SuperArmor.CurrentValue > 0)
             {
-                target.ArmorHit(actor, box);
-                HitConfirm(target, box.SelfSuperGaugeGain, (uint)box.ClashHitStopDuration, box.ArmorEffectIndex, contact);
+                target.ArmorHit(actor, profile);
+                HitConfirm(target, profile.CurrentSuperGainOpp, GlobalVariables.DefaultArmorHitstop, GlobalVariables.DefaultArmorVFX, contact);
                 CancelConditions |= CancelCondition.HIT_CANCEL;
                 GD.Print("Fighter: Armor Hit");
             }
             else
             {
-                int hitFX;
                 if (target.CanBlock() && blockState >= 0)
                 {
-                    if (box.GuardCrush)
+                    if (profile.GuardCrush)
                     {
-                        hitFX = box.GuardCrushEffectIndex;
-                        target.GuardCrush(actor, box, blockState);
+                        target.GuardCrush(actor, profile, blockState);
+                        GameManager.Instance.PlayHitNotificationByIndex((int)playerID, 10);
                         GD.Print("Fighter: Guard Crushed!");
                         CancelConditions |= CancelCondition.HIT_CANCEL;
                     }
                     else
                     {
-                        hitFX = box.BlockEffectIndex;
-                        target.BlockHit(actor, box, blockState);
-                        if (box.AllowSelfPushback)
-                            HitPushback(target, box.SelfPushbackDuration, box.SelfPushbackForce);
+                        target.BlockHit(actor, profile, blockState);
+                        HitPushback(target, GlobalVariables.DefaultKnockbackDuration, profile.CurrentCornerPushback);
                         GD.Print("Fighter: Blocked!");
                     }
                     CancelConditions |= CancelCondition.BLOCK_CANCEL;
+                    HitConfirm(
+                        target, profile.CurrentSuperGainSelf, profile.CurrentBlockstop, 
+                        profile.GuardCrush ? GlobalVariables.DefaultGuardCrushVFX : GlobalVariables.DefaultBlockVFX, 
+                        contact
+                    );
                 }
                 else
                 {
-                    hitFX = box.HitEffectIndex;
+                    bool isCounter = IsCounter(target);
                     if (GameManager.Instance.WaitingForFirstStrike())
                         GameManager.Instance.PlayHitNotificationByIndex((int)playerID, 0);
 
-                    if (IsCounter(target))
+                    if (isCounter)
                         GameManager.Instance.PlayHitNotificationByIndex((int)playerID, 1);
                     else if (IsPunishCounter(target))
                         GameManager.Instance.PlayHitNotificationByIndex((int)playerID, 2);
 
-                    target.HitDamage(actor, box, false);
-                    if (box.AllowSelfPushback)
-                        HitPushback(target, box.SelfPushbackDuration, box.SelfPushbackForce);
+                    target.HitDamage(actor, profile, false);
+                    HitPushback(target, GlobalVariables.DefaultKnockbackDuration, profile.CurrentCornerPushback);
                     CancelConditions |= CancelCondition.HIT_CANCEL;
                     GD.Print("Fighter: Hit!");
+
+                    HitConfirm(target, profile.CurrentSuperGainSelf, profile.CurrentSeftHitstop, profile.CurrentHitVFX, contact);
+
+                    if (isCounter)
+                    {
+                        Hitstop.Start(GlobalVariables.DefaultCounterHitstop);
+                        target.Hitstop.Start(GlobalVariables.DefaultCounterHitstop);
+                    }
                 }
                 //if (Brain != null && UseAI) Brain.canAdvance = true;
                 //if (target.Brain != null && target.UseAI) target.Brain.Reset();
-                HitConfirm(target, box.SelfSuperGaugeGain, (uint)box.SelfHitStopDuration, hitFX, contact);
+                
+            }
+
+            if (target.Parameters.Health.CurrentValue <= 0 || Parameters.Health.CurrentValue <= 0)
+            {
+                Hitstop.Stop();
+                target.Hitstop.Stop();
+                StartSuperFlash((ushort)GlobalVariables.FinalBlowHitstop, false);
             }
         }
-        public void HitTrade(SakugaActor target, HitboxElement box, Vector2I contact)
+        public void HitTrade(SakugaActor target, AttackProfile profile, Vector2I contact)
         {
             GameManager.Instance.PlayHitNotificationByIndex((int)playerID, 1);
-            HitDamage(target, box, true);
-            if (box.HitEffectIndex >= 0 && contact != Vector2I.Zero)
+            HitDamage(target, profile, true);
+            if (contact != Vector2I.Zero)
             {
                 if (Pool != null)
-                    Pool.SpawnVFX(box.HitEffectIndex, contact, Body.PlayerSide, false);
+                    Pool.SpawnVFX(GlobalVariables.DefaultHitVFX, contact, Body.PlayerSide, false);
                 else if (GetMaster().Pool != null)
-                    GetMaster().Pool.SpawnVFX(box.HitEffectIndex, contact, Body.PlayerSide, false);
+                    GetMaster().Pool.SpawnVFX(GlobalVariables.DefaultHitVFX, contact, Body.PlayerSide, false);
             }
             GD.Print("Fighter: Traded!");
         }
-        public void ThrowDamage(SakugaActor target, HitboxElement box, Vector2I contact)
+        public void ThrowDamage(SakugaActor target, AttackProfile profile, Vector2I contact)
         {
-            bool isThrowAllowed = !target.ContainsFrameProperty(FrameProperties.THROW_IMUNITY) && 
-                                    ((target.Body.IsOnGround && box.GroundThrow) || 
-                                    (target.IsAirState() && box.AirThrow) ||
-                                    (box.GroundThrow && box.AirThrow));
+            bool isThrowAllowed = !target.ContainsFrameProperty(FrameProperties.THROW_IMMUNITY) && 
+                                    ((target.Body.IsOnGround && profile.GroundThrow) || 
+                                    (target.IsAirState() && profile.AirThrow) ||
+                                    (profile.GroundThrow && profile.AirThrow));
             if (!isThrowAllowed) return;
-
-            uint finalHitstop = (uint)box.ThrowHitstop;
-            if (target.StateManager.CurrentStateType() == StateType.HIT_REACTION) finalHitstop = (uint)box.ThrowHitstopAfterHit;
+            
+            uint finalHitstop = GlobalVariables.DefaultThrowHitstop;
+            if (target.StateManager.CurrentStateType() == StateType.HIT_REACTION) finalHitstop = GlobalVariables.DefaultLongThrowHitstop;
+            if (profile.Immediate) finalHitstop = 0;
             
             CurrentGrabbedNodeID = (int)target.NodeID;
             target.CurrentGrabbedNodeID = (int)NodeID;
 
-            target.ThrowHit(actor, box, finalHitstop);
+            target.ThrowHit(actor, profile, finalHitstop);
             HitConfirm(target, 0, finalHitstop, -1, Vector2I.Zero);
             //if (Brain != null && UseAI) Brain.canAdvance = true;
             GD.Print("Fighter: Throw!");
@@ -734,32 +775,32 @@ namespace SakugaEngine
         {
             ThrowEscapeAction();
         }
-        public void HitboxClash(SakugaActor target, HitboxElement box, Vector2I contact)
+        public void HitboxClash(SakugaActor target, AttackProfile profile, Vector2I contact)
         {
-            HitConfirm(target, 0, (uint)box.ClashHitStopDuration, box.ClashEffectIndex, contact);
+            HitConfirm(target, 0, GlobalVariables.DefaultClashHitstop, GlobalVariables.DefaultClashVFX, contact);
             CancelConditions |= CancelCondition.HIT_CANCEL;
             //if (Brain != null && UseAI) Brain.canAdvance = true;
         }
-        public void ProjectileClash(SakugaActor target, HitboxElement box, Vector2I contact)
+        public void ProjectileClash(SakugaActor target, AttackProfile profile, Vector2I contact)
         {
-            HitConfirm(target, 0, 0, box.ClashEffectIndex, contact);
+            HitConfirm(target, 0, 0, GlobalVariables.DefaultClashVFX, contact);
             //if (Brain != null && UseAI) Brain.canAdvance = true;
         }
-        public void ProjectileDeflect(SakugaActor target, HitboxElement box, Vector2I contact){}
-        public void CounterHit(SakugaActor target, HitboxElement box, Vector2I contact)
+        public void ProjectileDeflect(SakugaActor target, AttackProfile profile, Vector2I contact){}
+        public void CounterHit(SakugaActor target, AttackProfile profile, Vector2I contact)
         {
-            HitConfirm(target, box.SelfSuperGaugeGain, (uint)box.SelfHitStopDuration, box.HitEffectIndex, contact);
-            target.HitConfirm(target, box.OpponentSuperGaugeGain, (uint)box.OpponentHitStopDuration, -1, Vector2I.Zero);
+            HitConfirm(target, profile.CurrentSuperGainSelf, profile.CurrentSeftHitstop, profile.CurrentHitVFX, contact);
+            target.HitConfirm(target, profile.CurrentSuperGainOpp, profile.CurrentOpponentHitstop, -1, Vector2I.Zero);
             //if (Brain != null && UseAI) Brain.canAdvance = true;
         }
-        public void ProximityBlock(HitboxElement box)
+        public void ProximityBlock(HitType type = HitType.MEDIUM)
         {
             if (StanceManager == null) return;
             if (StateManager == null) return;
-            int blockState = StanceManager.GetBlockState(box.HitType, 0);
+            int blockState = StanceManager.GetBlockState(type, 0);
             if (blockState < 0) return;
 
-            if (UseAI && Brain != null) Brain.proximityHit = box.HitType;
+            if (UseAI && Brain != null) Brain.proximityHit = type;
             if (Body != null) Body.ProximityBlocked = true;
 
             if (CanBlock() && StateManager.CurrentStateType() != StateType.BLOCKING)
@@ -773,7 +814,7 @@ namespace SakugaEngine
             if (StanceManager == null) return;
             if (StateManager == null) return;
             
-            if (!BlockStun && StateManager.CurrentStateType() == StateType.BLOCKING)
+            if (!OnHitstun() && StateManager.CurrentStateType() == StateType.BLOCKING)
             {
                 int blockState = StanceManager.ExitBlockState(SelectBlockStance());
                 if (blockState < 0) return;
@@ -784,21 +825,24 @@ namespace SakugaEngine
 
         public string DebugInfo()
         {
-            return "Position: "+Body.FixedPosition+
+            return "Match State: "+GameManager.Instance.Monitor.MatchState+
+                    "\nPosition: "+Body.FixedPosition+
                     "\nVelocity: "+Body.FixedVelocity+
                     "\nStance: "+StanceManager.CurrentStance+
                     "\nCurrent State: "+StateManager.CurrentState+
                     "\nState Name: "+StateManager.GetCurrentState().StateName+
+                    "\nAnimation Index: "+StateManager.CurrentAnimationSettings+
                     "\nAnimation Name: "+(StateManager.GetCurrentAnimationSettings() == null ? "None" : StateManager.GetCurrentAnimationSettings().SourceAnimation)+
                     "\nCurrent Move: "+StanceManager.CurrentMove+
                     "\nBuffered Move: "+StanceManager.BufferedMove+
                     "\nFrame: "+StateManager.CurrentStateFrame+
                     "\nHitstun Type: "+HitstunType+
-                    //"\nHitbox: "+Body.CurrentHitbox+
+                    "\nHitbox Index: "+Body.CurrentHitboxSettings+
                     "\nHealth: "+Parameters.Health.CurrentValue+"/"+Data.MaxHealth+
+                    "\nRecov. Health: "+Parameters.Health.RecoverableValue+
                     "\nSuper Gauge: "+Parameters.SuperGauge.CurrentValue+"/"+Data.MaxSuperGauge+
+                    "\nBurst Gauge: "+Parameters.BurstGauge.CurrentValue+"/"+Data.MaxBurst+
                     "\nSuper Armor: "+Parameters.SuperArmor.CurrentValue+
-                    "\nOn Blockstun: "+BlockStun+
                     "\nInput Side: "+InputSide()+
                     "\nFrame Properties: "+FrameProperties+
                     "\nHit Stop: ("+ Hitstop.IsRunning()+") "+Hitstop.TimeLeft+
@@ -894,83 +938,30 @@ namespace SakugaEngine
 
         public void PlayIntro(string opponentName)
         {
-            if (Data.Intros == null || Data.Intros.Length == 0) return;
+            var intro = Data.GetIntro(opponentName);
+            if (!GlobalFunctions.Assert(intro != null, "This fighter doesn't contain intro states. Skipping...")) return;
 
-            if (Data.Intros.Length == 1)
-            {
-                StateManager.PlayState(Data.Intros[0].StateIndex);
-                return;
-            }
-
-            FighterIntro introToPlay = null;
-
-            for (int i = 0; i < Data.VictoryPoses.Length; i++)
-            {
-                if (Data.VictoryPoses[i].ForOpponent == opponentName)
-                {
-                    introToPlay = Data.VictoryPoses[i];
-                    break;
-                }
-                else if (Data.VictoryPoses[i].ForOpponent == "") introToPlay = Data.VictoryPoses[i];
-            }
-
-            StateManager.PlayState(introToPlay.StateIndex);
+            StateManager.PlayState(intro.StateIndex);
         }
         public void PlayOutro(string opponentName, out string VictoryMessage)
         {
-            VictoryMessage = $"{Data.Profile.ShortName} is winner!";
-            if (Data.Outros == null || Data.Outros.Length == 0) return;
+            var outro = Data.GetOutro(opponentName, out VictoryMessage);
+            if (!GlobalFunctions.Assert(outro != null, "This fighter doesn't contain outro states. Skipping...")) return;
 
-            if (Data.Outros.Length == 1)
-            {
-                StateManager.PlayState(Data.Outros[0].StateIndex);
-                VictoryMessage = Data.Outros[0].FinalMessage;
-                return;
-            }
-
-            FighterOutro outroToPlay = null;
-
-            for (int i = 0; i < Data.Outros.Length; i++)
-            {
-                if (Data.Outros[i].ForOpponent == opponentName)
-                {
-                    outroToPlay = Data.Outros[i];
-                    break;
-                }
-                else if (Data.Outros[i].ForOpponent == "") outroToPlay = Data.Outros[i];
-            }
-
-            StateManager.PlayState(outroToPlay.StateIndex);
-            VictoryMessage = outroToPlay.FinalMessage;
+            StateManager.PlayState(outro.StateIndex);
         }
 
         public void PlayVictoryPose(string opponentName)
         {
-            if (Data.VictoryPoses == null || Data.VictoryPoses.Length == 0) return;
+            var victory = Data.GetVictoryPose(opponentName);
+            if (!GlobalFunctions.Assert(victory != null, "This fighter doesn't contain victory poses. Skipping...")) return;
 
-            if (Data.VictoryPoses.Length == 1)
-            {
-                StateManager.PlayState(Data.VictoryPoses[0].StateIndex);
-                return;
-            }
-
-            FighterIntro introToPlay = null;
-
-            for (int i = 0; i < Data.VictoryPoses.Length; i++)
-            {
-                if (Data.VictoryPoses[i].ForOpponent == opponentName)
-                {
-                    introToPlay = Data.VictoryPoses[i];
-                    break;
-                }
-                else if (Data.VictoryPoses[i].ForOpponent == "") introToPlay = Data.VictoryPoses[i];
-            }
-
-            StateManager.PlayState(introToPlay.StateIndex);
+            StateManager.PlayState(victory.StateIndex);
         }
 
         public void PlayDefeatPose()
         {
+            if (!GlobalFunctions.Assert(Data.DefeatPose >= 0, "This fighter doesn't contain defeat poses. Skipping...")) return;
             StateManager.PlayState(Data.DefeatPose);
         }
 
@@ -978,7 +969,6 @@ namespace SakugaEngine
         {
             State.GetStateData(ref actor);
             return MessagePackSerializer.Serialize(State);
-            
         }
 		public override void SetStateData(byte[] stateBuffer)
         {

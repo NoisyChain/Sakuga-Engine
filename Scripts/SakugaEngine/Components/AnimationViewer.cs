@@ -20,9 +20,9 @@ namespace SakugaEngine
 
         public void ViewAnimations(AnimationSettings anim, int Frame)
         {
-            if (anim == null) return;
-            if (anim.SourceAnimation == "") return;
-
+            if (!GlobalFunctions.Assert(anim != null, "AnimationViewer: Null/Invalid AnimationData detected!")) return;
+            if (!GlobalFunctions.Assert(anim.SourceAnimation != null && anim.SourceAnimation.Trim() != "", "AnimationViewer: AnimationData does not contain a valid animation string!")) return;
+            
             int modTarget = (Frame - anim.AtFrame) % anim.FrameStepping;
 
             if (anim.LimitRange)
@@ -45,8 +45,11 @@ namespace SakugaEngine
             {
                 string prfx = "";
                 if (prefix != null && prefix.Length > a) prfx = prefix[a];
-                players[a].Play(prfx + anim.SourceAnimation);
-                players[a].Seek((targetFrame * anim.Speed) / (float)GlobalVariables.TicksPerSecond, true);
+                string finalGroupName = prfx + anim.AnimationGroup;
+                string finalAnimName = prfx + anim.SourceAnimation;
+                string finalAnimReference = anim.AnimationGroup == null || anim.AnimationGroup.Trim() == "" ? finalAnimName : (finalGroupName + "/" + finalAnimName);
+                players[a].Play(finalAnimReference);
+                players[a].Seek((targetFrame * anim.Speed) / (float)GlobalVariables.TicksPerSecond);
             }
 
             if (OffsetNode != null)

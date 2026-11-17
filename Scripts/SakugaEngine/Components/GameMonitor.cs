@@ -145,7 +145,7 @@ namespace SakugaEngine
 
             foreach (SakugaActor fighter in _fighters)
             {
-                fighter.StanceManager.CanRun = MatchState == MatchState.ROUND_START || MatchState == MatchState.ROUND_RUNNING || MatchState == MatchState.ROUND_END;
+                fighter.StanceManager.CanRun = MatchState == MatchState.ROUND_RUNNING;
             }
 
             switch (MatchState)
@@ -201,19 +201,24 @@ namespace SakugaEngine
                     }
                     break;
                 case MatchState.ROUND_WINNER:
+                    if (AnyButtonPressed())
+                    {
+                        DelayTimer.Stop();
+                        MatchState = MatchState.ROUND_INTERLUDE;
+                    }
                     if (!DelayTimer.IsRunning())
                     {
                         Cards.PlayPlayerWinAnimation(RoundWinner);
                         DelayTimer.Start(Cards.GetStateDelay());
                         MatchState = MatchState.ROUND_INTERLUDE;
                     }
+                    break;
+                case MatchState.ROUND_INTERLUDE:
                     if (AnyButtonPressed())
                     {
                         DelayTimer.Stop();
-                        MatchState = MatchState.ROUND_INTERLUDE;
+                        ResetRound();
                     }
-                    break;
-                case MatchState.ROUND_INTERLUDE:
                     if (!DelayTimer.IsRunning())
                     {
                         ResetRound();
@@ -238,8 +243,8 @@ namespace SakugaEngine
 
         private void MatchLoop()
         {
-            bool p1TimeStop = _fighters[0].SuperFlashing || _fighters[0].CinematicState;
-            bool p2TimeStop = _fighters[1].SuperFlashing || _fighters[1].CinematicState;
+            bool p1TimeStop = _fighters[0].IsSuperFlashing() || _fighters[0].CinematicState;
+            bool p2TimeStop = _fighters[1].IsSuperFlashing() || _fighters[1].CinematicState;
 
             if (!p1TimeStop && !p2TimeStop)
             {

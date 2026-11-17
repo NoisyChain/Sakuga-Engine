@@ -7,14 +7,20 @@
 [ext_resource type="Resource" uid="uid://dtmnvy5026dqe" path="res://GameModes/GM_Training.tres" id="4_wa1jn"]
 [ext_resource type="Resource" uid="uid://bfdtyaj07885k" path="res://GameModes/GM_Replay.tres" id="5_j0byi"]
 [ext_resource type="Resource" uid="uid://cowlfyoj6rfoj" path="res://GameModes/GM_Debug.tres" id="6_xldqt"]
+[ext_resource type="PackedScene" uid="uid://b1ggpw8ltpaid" path="res://Fighters/Kaede/Instances/Fighter_Kaede.tscn" id="7_j0byi"]
+[ext_resource type="PackedScene" uid="uid://ccpxqtpspsog5" path="res://Fighters/Kaede/Instances/Fighter_Kaede_Alt.tscn" id="8_xldqt"]
+[ext_resource type="AudioStream" uid="uid://bo6naqlsneles" path="res://Songs/Xrd_High_Voltage.mp3" id="9_342xe"]
+[ext_resource type="PackedScene" uid="uid://dk22qgaiwdb7k" path="res://Stages/Sakuga Default/sakuga_stage_basic.tscn" id="10_u4pfe"]
 
 [resource]
 script = ExtResource("1_oyneo")
 GameModes = Array[Object]([ExtResource("1_nhb7f"), ExtResource("2_xs2pd"), ExtResource("3_lmfa8"), ExtResource("4_wa1jn"), ExtResource("5_j0byi"), ExtResource("6_xldqt")])
 SelectedMode = 5
 TimeLimit = 99
-SelectedStage = 1
+P1SelectedCharacter = ExtResource("7_j0byi")
 P1SelectedDevice = 0
-P2SelectedColor = 1
+P2SelectedCharacter = ExtResource("8_xldqt")
 P2SelectedDevice = 1
+SelectedStage = ExtResource("10_u4pfe")
+SelectedBGM = ExtResource("9_342xe")
 metadata/_custom_type_script = "uid://uuxc0vny3l5x"

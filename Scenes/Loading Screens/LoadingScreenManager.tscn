@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://da7nwu5by5b62"]
+
+[ext_resource type="Script" uid="uid://cejbemt1addi4" path="res://autoloads/LoadingScreenManager.cs" id="1_fnr8k"]
+[ext_resource type="PackedScene" uid="uid://cdgv3p8fgvlib" path="res://Scenes/Loading Screens/LoadingScreen_Simple.tscn" id="1_io1al"]
+[ext_resource type="PackedScene" uid="uid://b1pcm06y24etn" path="res://Scenes/Loading Screens/LoadingScreen_Match.tscn" id="2_fnr8k"]
+
+[node name="LoadingScreenManager" type="CanvasLayer" unique_id=433953320 node_paths=PackedStringArray("LoadingScreenSimple", "LoadingScreenMatchStart")]
+script = ExtResource("1_fnr8k")
+LoadingScreenSimple = NodePath("LoadingScreenSimple")
+LoadingScreenMatchStart = NodePath("LoadingScreenMatch")
+
+[node name="LoadingScreenSimple" parent="." unique_id=189240448 instance=ExtResource("1_io1al")]
+visible = false
+
+[node name="LoadingScreenMatch" parent="." unique_id=481125358 instance=ExtResource("2_fnr8k")]
+visible = false

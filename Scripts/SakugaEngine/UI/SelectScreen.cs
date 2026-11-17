@@ -580,15 +580,15 @@ namespace SakugaEngine.UI
 
         void MatchSetup()
         {
-            // Player 1 settings
-            Match.P1SelectedCharacter = P1Selected;
-            Match.P1SelectedColor = P1ColorSelected;
-            // Player 2 settings
-            Match.P2SelectedCharacter = P2Selected;
-            Match.P2SelectedColor = P2ColorSelected;
-            //Other settings
-            Match.SelectedStage = StageSelected;
-            Match.SelectedBGM = BGMSelected;
+            if (P2Selected == P1Selected && P2ColorSelected == P1ColorSelected)
+                P2ColorSelected++;
+            if (P2ColorSelected >= fightersList.elements[P2Selected].ColorPalettes.Length)
+                P2ColorSelected = 0;
+
+            Match.P1SelectedCharacter = fightersList.elements[P1Selected].ColorPalettes[P1ColorSelected].Instance;
+            Match.P2SelectedCharacter = fightersList.elements[P2Selected].ColorPalettes[P2ColorSelected].Instance;
+            Match.SelectedStage = stagesList.elements[StageSelected].Instance;
+            Match.SelectedBGM = songsList.elements[BGMSelected].clip;
 
             if (destination == null)
             {

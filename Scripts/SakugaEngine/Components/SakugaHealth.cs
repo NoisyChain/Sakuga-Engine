@@ -13,6 +13,8 @@ namespace SakugaEngine
         public int LostValue;
         public int RecoverableValue;
 
+        public int DangerousHealth => (MaxValue * 20) / 100;
+
         public void Initialize(DataContainer data)
         {
             if (UseDataContainer)
@@ -20,6 +22,14 @@ namespace SakugaEngine
             
             CurrentValue = MaxValue;
             LostValue = CurrentValue;
+            RecoverableValue = 0;
+        }
+
+        public void Reset()
+        {
+            CurrentValue = MaxValue;
+            LostValue = CurrentValue;
+            RecoverableValue = 0;
         }
 
         public void Tick()
@@ -60,6 +70,19 @@ namespace SakugaEngine
                 LostValue -= MaxValue / 100;
             else if (LostValue < CurrentValue)
                 LostValue = CurrentValue;
+        }
+
+        public void SetRecoveryHealth(int value)
+        {
+            RecoverableValue = value;
+        }
+
+        public void RecoverHealth()
+        {
+            if (RecoverableValue == 0) return;
+
+            AddHealth(1);
+            RecoverableValue--;
         }
     }
 }

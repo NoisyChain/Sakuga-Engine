@@ -7,11 +7,6 @@
 script = ExtResource("1_a68yr")
 Center = Vector2i(5000, 5000)
 Size = Vector2i(12000, 10000)
-AirBlockKnockbackGravity = 300000
-SelfPushbackForce = 0
-SelfPushbackDuration = 0
-BounceXIntensity = 0
-BounceYIntensity = 0
 
 [resource]
 script = ExtResource("1_7s4vp")

@@ -245,6 +245,7 @@
 [ext_resource type="Script" uid="uid://bfptd6jyxtdng" path="res://Scripts/SakugaEngine/Components/SakugaProrations.cs" id="290_vyu0p"]
 [ext_resource type="Texture2D" uid="uid://qhdc3v5lmegt" path="res://Fighters/Kaede/Sprites/800-0.png" id="291_fjuot"]
 [ext_resource type="Texture2D" uid="uid://c3b237c0j7ul1" path="res://Fighters/Kaede/Sprites/800-1.png" id="292_7j8nm"]
+[ext_resource type="Script" uid="uid://b1tvvb85k5pdh" path="res://Scripts/SakugaEngine/Components/SakugaBurstGauge.cs" id="293_esk6n"]
 [ext_resource type="Texture2D" uid="uid://t1oaw6uluweb" path="res://Fighters/Kaede/Sprites/800-2.png" id="293_ftt01"]
 [ext_resource type="Script" uid="uid://dqqr3jnsmcig6" path="res://Scripts/SakugaEngine/Components/CustomVariable.cs" id="294_608rl"]
 [ext_resource type="Texture2D" uid="uid://dqggf6agsucii" path="res://Fighters/Kaede/Sprites/800-3.png" id="294_nq2ts"]
@@ -2991,10 +2992,11 @@ metadata/_custom_type_script = "uid://c4xvc7cu6we4e"
 script = ExtResource("394_myc48")
 metadata/_custom_type_script = "uid://dvqrejewx20e3"
 
-[node name="Parameters" type="Node" parent="." unique_id=1440383066 node_paths=PackedStringArray("Health", "SuperGauge", "SuperArmor", "Prorations", "Tracker", "Timers", "Variables", "SoundSources")]
+[node name="Parameters" type="Node" parent="." unique_id=1440383066 node_paths=PackedStringArray("Health", "SuperGauge", "BurstGauge", "SuperArmor", "Prorations", "Tracker", "Timers", "Variables", "SoundSources")]
 script = ExtResource("286_m774i")
 Health = NodePath("Health")
 SuperGauge = NodePath("SuperGauge")
+BurstGauge = NodePath("BurstGauge")
 SuperArmor = NodePath("SuperArmor")
 Prorations = NodePath("Prorations")
 Tracker = NodePath("CombatTracker")
@@ -3012,6 +3014,11 @@ metadata/_custom_type_script = "uid://c46mwhea4j37w"
 script = ExtResource("288_esk6n")
 UseDataContainer = true
 metadata/_custom_type_script = "uid://d2q1lo1hfn7ry"
+
+[node name="BurstGauge" type="Node" parent="Parameters" unique_id=122249870]
+script = ExtResource("293_esk6n")
+UseDataContainer = true
+metadata/_custom_type_script = "uid://b1tvvb85k5pdh"
 
 [node name="SuperArmor" type="Node" parent="Parameters" unique_id=2110248997]
 script = ExtResource("289_wvg0r")

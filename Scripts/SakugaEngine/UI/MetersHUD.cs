@@ -4,6 +4,7 @@ namespace SakugaEngine.UI
 {
     public partial class MetersHUD : Control
     {
+        [ExportCategory("Components")]
         [Export] private TextureProgressBar P1Meter;
         [Export] private TextureProgressBar P2Meter;
         [Export] private Label P1TrainingInfo;
@@ -13,14 +14,6 @@ namespace SakugaEngine.UI
 
         private int CurrentFrameAdvantage;
 
-        /*public override void _Ready()
-        {
-            P1Meter = GetNode<TextureProgressBar>("Meters/P1Meter");
-            P2Meter = GetNode<TextureProgressBar>("Meters/P2Meter");
-            P1TrainingInfo = GetNode<Label>("TrainingInfo/P1Info/Information");
-            P2TrainingInfo = GetNode<Label>("TrainingInfo/P2Info/Information");
-        }*/
-
         public void Setup(SakugaActor[] fighters)
         {
             P1Meter.MaxValue = fighters[0].Data.MaxSuperGauge;
@@ -29,16 +22,19 @@ namespace SakugaEngine.UI
 
         public void UpdateMeters(SakugaActor[] fighters)
         {
-            P1Meter.Value = fighters[0].Parameters.SuperGauge.CurrentValue;
-            P2Meter.Value = fighters[1].Parameters.SuperGauge.CurrentValue;
+            var P1SuperComp = fighters[0].Parameters.SuperGauge;
+            var P2SuperComp = fighters[1].Parameters.SuperGauge;
+
+            P1Meter.Value = P1SuperComp.CurrentValue;
+            P2Meter.Value = P2SuperComp.CurrentValue;
 
             GetFrameAdvantage(fighters);
 
-            P1InputHistory.SetHistoryList(fighters[0].Inputs);
-            P2InputHistory.SetHistoryList(fighters[1].Inputs);
+            if (P1InputHistory.Visible)  P1InputHistory.SetHistoryList(fighters[0].Inputs);
+            if (P2InputHistory.Visible)  P2InputHistory.SetHistoryList(fighters[1].Inputs);
 
-            P1TrainingInfo.Text = TrainingInfoText(fighters[0], fighters[1]);
-            P2TrainingInfo.Text = TrainingInfoText(fighters[1], fighters[0]);
+            if (P1TrainingInfo.Visible) P1TrainingInfo.Text = TrainingInfoText(fighters[0], fighters[1]);
+            if (P2TrainingInfo.Visible) P2TrainingInfo.Text = TrainingInfoText(fighters[1], fighters[0]);
         }
 
         void GetFrameAdvantage(SakugaActor[] fighters)

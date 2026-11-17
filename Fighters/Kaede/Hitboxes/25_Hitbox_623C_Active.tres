@@ -8,73 +8,23 @@
 script = ExtResource("1_s5b1t")
 Center = Vector2i(2600, 7800)
 Size = Vector2i(5000, 9000)
-SelfSuperGaugeGain = 25
-OpponentSuperGaugeGain = 10
-HitEffectIndex = 1
-BlockEffectIndex = 2
-ClashEffectIndex = 3
-AirHitKnockbackGravity = 300000
-AirBlockKnockbackGravity = 30
-SelfPushbackForce = 0
-SelfPushbackDuration = 0
-BounceXIntensity = 0
-BounceYIntensity = 0
 
 [sub_resource type="Resource" id="Resource_24boc"]
 script = ExtResource("1_s5b1t")
 Center = Vector2i(0, 14000)
 Size = Vector2i(3000, 3000)
-SelfSuperGaugeGain = 25
-OpponentSuperGaugeGain = 10
-HitEffectIndex = 1
-BlockEffectIndex = 2
-ClashEffectIndex = 3
-AirHitKnockbackGravity = 300000
-AirBlockKnockbackGravity = 30
-SelfPushbackForce = 0
-SelfPushbackDuration = 0
-BounceXIntensity = 0
-BounceYIntensity = 0
 
 [sub_resource type="Resource" id="Resource_b4af1"]
 script = ExtResource("1_s5b1t")
 Center = Vector2i(10000, 1220)
 Size = Vector2i(15000, 8000)
 HitboxType = 2
-SelfSuperGaugeGain = 25
-OpponentSuperGaugeGain = 10
-HitEffectIndex = 1
-BlockEffectIndex = 2
-ClashEffectIndex = 3
-AirHitKnockbackGravity = 300000
-AirBlockKnockbackGravity = 30
-SelfPushbackForce = 0
-SelfPushbackDuration = 0
-BounceXIntensity = 0
-BounceYIntensity = 0
 
 [sub_resource type="Resource" id="Resource_aqr4w"]
 script = ExtResource("1_s5b1t")
 Center = Vector2i(6200, 2200)
 Size = Vector2i(3000, 3000)
 HitboxType = 1
-HitType = 1
-BaseDamage = 125
-GuardCrushDamage = 0
-SelfHitStopDuration = 10
-OpponentHitStopDuration = 30
-GroundHitKnockbackTime = 0
-GroundHitstun = 12
-GroundBlockKnockbackTime = 0
-GroundBlockstun = 12
-AirHitReaction = 3
-AirHitKnockbackGravity = 0
-AirHitKnockbackTime = 0
-AirHitstun = 12
-AirBlockKnockbackGravity = 0
-AirBlockKnockbackTime = 0
-AirBlockstun = 12
-AllowSelfPushback = false
 
 [resource]
 script = ExtResource("2_k228y")

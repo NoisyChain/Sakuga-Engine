@@ -8,83 +8,28 @@
 script = ExtResource("2")
 Center = Vector2i(0, 6250)
 Size = Vector2i(5000, 12500)
-SelfSuperGaugeGain = 25
-OpponentSuperGaugeGain = 10
-HitEffectIndex = 1
-BlockEffectIndex = 2
-ClashEffectIndex = 3
-AirHitKnockbackGravity = 300000
-AirBlockKnockbackGravity = 30
-SelfPushbackForce = 0
-SelfPushbackDuration = 0
-BounceXIntensity = 0
-BounceYIntensity = 0
 
 [sub_resource type="Resource" id="Resource_blamb"]
 script = ExtResource("2")
 Center = Vector2i(650, 14000)
 Size = Vector2i(3000, 3000)
-SelfSuperGaugeGain = 25
-OpponentSuperGaugeGain = 10
-HitEffectIndex = 1
-BlockEffectIndex = 2
-ClashEffectIndex = 3
-AirHitKnockbackGravity = 300000
-AirBlockKnockbackGravity = 30
-SelfPushbackForce = 0
-SelfPushbackDuration = 0
-BounceXIntensity = 0
-BounceYIntensity = 0
 
 [sub_resource type="Resource" id="9"]
 script = ExtResource("2")
 Center = Vector2i(4400, 12000)
 Size = Vector2i(4000, 1400)
-SelfSuperGaugeGain = 25
-OpponentSuperGaugeGain = 10
-HitEffectIndex = 1
-BlockEffectIndex = 2
-ClashEffectIndex = 3
-AirHitKnockbackGravity = 300000
-AirBlockKnockbackGravity = 30
-SelfPushbackForce = 0
-SelfPushbackDuration = 0
-BounceXIntensity = 0
-BounceYIntensity = 0
 
 [sub_resource type="Resource" id="Resource_sx17e"]
 script = ExtResource("2")
 Center = Vector2i(10000, 10605)
 Size = Vector2i(15000, 2000)
 HitboxType = 2
-SelfSuperGaugeGain = 25
-OpponentSuperGaugeGain = 10
-HitEffectIndex = 1
-BlockEffectIndex = 2
-ClashEffectIndex = 3
-AirHitKnockbackGravity = 300000
-AirBlockKnockbackGravity = 30
-SelfPushbackForce = 0
-SelfPushbackDuration = 0
-BounceXIntensity = 0
-BounceYIntensity = 0
 
 [sub_resource type="Resource" id="7"]
 script = ExtResource("2")
 Center = Vector2i(5770, 12500)
 Size = Vector2i(4200, 2000)
 HitboxType = 1
-HitType = 1
-CrouchHitReaction = 2
-GroundHitKnockback = Vector2i(-30000, 0)
-GroundHitstun = 14
-GroundBlockKnockback = Vector2i(-30000, 0)
-GroundBlockstun = 14
-AirHitReaction = 3
-AirHitKnockback = Vector2i(-12000, 40000)
-AirHitstun = 14
-AirBlockKnockback = Vector2i(-12000, 0)
-AirBlockstun = 14
 
 [resource]
 script = ExtResource("1")

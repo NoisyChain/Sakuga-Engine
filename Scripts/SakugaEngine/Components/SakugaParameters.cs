@@ -10,6 +10,7 @@ namespace SakugaEngine
         protected SakugaActor _owner;
         [Export] public SakugaHealth Health;
         [Export] public SakugaSuperGauge SuperGauge;
+        [Export] public SakugaBurstGauge BurstGauge;
         [Export] public SakugaSuperArmor SuperArmor;
         [Export] public SakugaProrations Prorations;
         [Export] public CombatTracker Tracker;
@@ -22,6 +23,7 @@ namespace SakugaEngine
             _owner = owner;
             if (Health != null) Health.Initialize(_owner.Data);
             if (SuperGauge != null) SuperGauge.Initialize(_owner.Data);
+            if (BurstGauge != null) BurstGauge.Initialize(_owner.Data);
             if (SuperArmor != null) SuperArmor.Initialize();
             if (Prorations != null) Prorations.Initialize(_owner.Data);
             if (Tracker != null) Tracker.Initialize(_owner);
@@ -35,8 +37,9 @@ namespace SakugaEngine
 
         public void Reset()
         {
-            if (Health != null) Health.Initialize(_owner.Data);
-            if (SuperGauge != null) SuperGauge.Initialize(_owner.Data);
+            if (Health != null) Health.Reset();
+            if (SuperGauge != null) SuperGauge.Reset();
+            if (BurstGauge != null) BurstGauge.Reset();
             if (SuperArmor != null) SuperArmor.Initialize();
             if (Prorations != null) Prorations.Initialize(_owner.Data);
             if (Tracker != null) Tracker.Reset();
@@ -62,7 +65,9 @@ namespace SakugaEngine
         {
             if (Game.GameManager.Instance.Monitor.MatchState == MatchState.ROUND_RUNNING)
             {
+                if (Health != null) Health.RecoverHealth();
                 if (SuperGauge != null) SuperGauge.Tick();
+                if (BurstGauge != null) BurstGauge.Tick();
             }
             UpdateProrations();
             UpdateVariables();
@@ -113,6 +118,7 @@ namespace SakugaEngine
         {
             SuperArmor.RemoveArmor(damage);
             Health.RemoveHealth(healthDamage);
+            Health.SetRecoveryHealth(healthDamage);
         }
 
         public FrameTimer GetTimer(int index) => Timers[index];

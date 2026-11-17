@@ -8,7 +8,6 @@ namespace SakugaEngine.Resources
         [Export] private int Value;
         public override void Execute(ref SakugaActor Actor)
         {
-            if (Value == 0) return;
             if (Actor.Parameters == null) return;
             if (Actor.Parameters.SuperArmor == null) return;
 

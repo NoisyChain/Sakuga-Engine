@@ -25,23 +25,30 @@ namespace SakugaEngine
 
         public bool CheckMoveConditions(int index)
         {
-            if (!CheckAllowedStateType(index)) return false;
+            if (!GlobalFunctions.Assert(index >= 0, "Move index is too low. Only positive move indices are supported.")) return false;
+            if (!GlobalFunctions.Assert(index < GetMoveListLength(), "Move index is too high. Please call an existing move or add a new move to your character.")) return false;
+            
+            var nextMove = GetMove(index);
+            if (!GlobalFunctions.Assert(nextMove != null, $"Null/invalid move found at index {index}.")) return false;
 
+            if (!CheckAllowedStateType(index)) return false;
+            
             if (CurrentMove >= 0)
             {
-                if (CurrentMove == index && GetMove(index).IgnoreSelf) return false;
-                if (GetMove(index).PriorityBuffer && GetMove(index).Priority < GetCurrentMove().Priority) return false;
+                if (CurrentMove == index && nextMove.IgnoreSelf) return false;
+                if (nextMove.PriorityBuffer && nextMove.Priority < GetCurrentMove().Priority) return false;
             }
-            if (GetMove(index).AcceptHitReactionStates && GetMove(index).IgnoreKnockdownHits && _owner.HitstunType >= HitstunType.KNOCKDOWN) return false;
+            if (nextMove.AcceptHitReactionStates && nextMove.IgnoreKnockdownHits && _owner.HitstunType >= HitstunType.KNOCKDOWN) return false;
 
-            if (_owner.Parameters.SuperGauge.CurrentValue < GetMove(index).SuperGaugeRequired) return false;
+            if (_owner.Parameters.SuperGauge.CurrentValue < nextMove.SuperGaugeRequired) return false;
+            if (!_owner.Parameters.BurstGauge.Locked && _owner.Parameters.BurstGauge.CurrentValue < nextMove.BurstRequired) return false;
 
-            bool isDesiredHealth = _owner.Parameters.Health.CurrentValue >= GetMove(index).HealthRequired.X &&
-                _owner.Parameters.Health.CurrentValue <= GetMove(index).HealthRequired.Y;
+            bool isDesiredHealth = _owner.Parameters.Health.CurrentValue >= nextMove.HealthRequired.X &&
+                _owner.Parameters.Health.CurrentValue <= nextMove.HealthRequired.Y;
             if (!isDesiredHealth) return false;
 
             int distance = GlobalFunctions.Distance(_owner.GetOpponent(0).Body.FixedPosition, _owner.Body.FixedPosition).X;
-            bool isValidDistance = distance >= GetMove(index).DistanceArea.X && distance <= GetMove(index).DistanceArea.Y;
+            bool isValidDistance = distance >= nextMove.DistanceArea.X && distance <= nextMove.DistanceArea.Y;
             if (!isValidDistance) return false;
 
             if (!IsCorrectSurface(index)) return false;
@@ -52,10 +59,10 @@ namespace SakugaEngine
             bool isCorrectState = CheckOwnerState(index);
             if (!isCorrectState) return false;
 
-            if (!_owner.Parameters.CompareVariables(GetMove(index).VariablesRequirement)) return false;
+            if (!_owner.Parameters.CompareVariables(nextMove.VariablesRequirement)) return false;
             
-            bool AllowedFrameWindow = _owner.StateManager.CurrentStateFrame < GetMove(index).FrameLimit;
-            if (GetMove(index).FrameLimit > 0 && !AllowedFrameWindow) return false;
+            bool AllowedFrameWindow = _owner.StateManager.CurrentStateFrame < nextMove.FrameLimit;
+            if (nextMove.FrameLimit > 0 && !AllowedFrameWindow) return false;
             
             return true;
         }
@@ -63,10 +70,10 @@ namespace SakugaEngine
         public void CheckMoves()
         {
             if (MoveBuffer == null) return;
-            if (!CanRun) return;
 
             for (int i = GetMoveListLength() - 1; i >= 0; i--)
             {
+                if (!CanRun) break;
                 if (GetMove(i).SkipCheck) continue;
                 if (!CheckMoveConditions(i)) continue;
                 if (_owner.Inputs.CheckMotionInputs(GetMove(i).Inputs, _owner.InputSide(GetMove(i).SideCheck)))
@@ -75,9 +82,6 @@ namespace SakugaEngine
                     break;
                 }
             }
-
-            //if (CurrentMove >= 0)
-                //_owner.Parameters.SuperGauge.AddSuperGauge(GetCurrentMove().BuildSuperGauge);
 
             CheckMoveEndCondition();
             CheckMoveCancel();
@@ -93,18 +97,16 @@ namespace SakugaEngine
 
         public void ExecuteMove(int moveIndex)
         {
-            _owner.Parameters.SuperGauge.CurrentValue -= GetMove(moveIndex).SuperGaugeRequired;
+            MoveSettings moveToExecute = GetMove(moveIndex);
 
-            if (GetMove(moveIndex).SuperFlash > 0 && !_owner.SuperFlashing)
-            {
-                _owner.GetOpponent(0).StartSuperFlash((uint)GetMove(moveIndex).SuperFlash);
-            }
+            _owner.Parameters.SuperGauge.SpendSuperGauge(moveToExecute.SuperGaugeRequired);
+            if (moveToExecute.SpendBurst) _owner.Parameters.BurstGauge.SpendBurstGauge(moveToExecute.BurstRequired);
 
-            if (GetMove(moveIndex).MoveState >= 0) 
-                _owner.StateManager.PlayState(GetMove(moveIndex).MoveState, true);
+            if (moveToExecute.MoveState >= 0) 
+                _owner.StateManager.PlayState(moveToExecute.MoveState, true);
             
             _owner.Parameters.ChangeVariablesBehavior(CustomVariableBehaviorTarget.ON_MOVE_ENTER);
-            _owner.Parameters.SetVariables(GetMove(moveIndex).VariablesChange);
+            _owner.Parameters.SetVariables(moveToExecute.VariablesChange);
 
             CurrentMove = moveIndex;
             BufferedMove = -1;
@@ -117,16 +119,16 @@ namespace SakugaEngine
         private void CheckMoveCancel()
         {
             if (CurrentMove < 0) return;
-            if (!CanRun) return;
-            if (GetCurrentMove().CanCancelTo == null) return;
-            if (GetCurrentMove().CanCancelTo.Length <= 0) return;
+            MoveSettings currentMove = GetCurrentMove();
+            if (currentMove.CanCancelTo == null) return;
+            if (currentMove.CanCancelTo.Length <= 0) return;
 
-            foreach (MoveCancelSettings cancel in GetCurrentMove().CanCancelTo)
+            foreach (MoveCancelSettings cancel in currentMove.CanCancelTo)
             {
                 if (!CheckCancelConditions(cancel)) continue;
                 if (!CheckMoveConditions(cancel.MoveIndex)) continue;
                 if (_owner.Inputs.CheckMotionInputs(GetMove(cancel.MoveIndex).Inputs, _owner.InputSide(GetMove(cancel.MoveIndex).SideCheck)))
-                {                    
+                {
                     BufferMove(cancel.MoveIndex, true);
                     break;
                 }
@@ -136,46 +138,43 @@ namespace SakugaEngine
         public void ProcessMoveBuffer()
         {
             if (BufferedMove < 0) return;
-            //if (CurrentMove >= 0 && !GetCurrentMove().CanBeOverrided) return;
-            if (!MoveBuffer.IsRunning() || !IsCorrectSurface(BufferedMove))
-            {
-                BufferedMove = -1;
-                GD.Print("Buffer Cleaned!");
-                return;
-            }
-            if (!CancelBuffer && _owner.StateManager.CurrentStateType() == StateType.COMBAT) return;
-
-            if (!GetBufferedMove().Unlockable && _owner.ContainsFrameProperty(FrameProperties.LOCK_MOVE)) return;
-            if (!GetBufferedMove().IgnoreHitstop && _owner.Hitstop.IsRunning()) return;
-            if (!GetBufferedMove().IgnoreHitstun && _owner.Hitstun.IsRunning()) return;
+            MoveSettings bufferedMove = GetBufferedMove();
             
-            bool CanOverride = CurrentMove < 0 || CancelBuffer || (GetCurrentMove().CanBeOverrided && 
-                                (GetCurrentMove().IgnoreSamePriority ? 
-                                GetBufferedMove().Priority > GetCurrentMove().Priority : 
-                                GetBufferedMove().Priority >= GetCurrentMove().Priority));
+            if (!CancelBuffer && _owner.StateManager.CurrentStateType() == StateType.COMBAT) return;
+            if (!CheckAllowedStateType(BufferedMove)) MoveBuffer.Stop();
+            if (!MoveBuffer.IsRunning()) { BufferedMove = -1; GD.Print("Buffer Cleaned!"); return; }
+            if (!IsCorrectSurface(BufferedMove)) { BufferedMove = bufferedMove.MoveOverride; GD.Print("Buffer Overrided!"); return; }
 
-            if (CanOverride)
-            {
-                ExecuteMove(BufferedMove);
-            }
-            else GD.Print("Move " + GetBufferedMove().MoveName + " Buffered!");
+            if (!bufferedMove.Unlockable && _owner.ContainsFrameProperty(FrameProperties.LOCK_MOVE)) return;
+            if (!bufferedMove.IgnoreHitstop && _owner.Hitstop.IsRunning()) return;
+            if (!bufferedMove.IgnoreHitstun && _owner.Hitstun.IsRunning()) return;
+            
+            bool CanOverride = CurrentMove < 0 || CancelBuffer || (GetCurrentMove().CanBeOverrided && (GetCurrentMove().IgnoreSamePriority ? 
+                                                                    bufferedMove.Priority > GetCurrentMove().Priority :
+                                                                    bufferedMove.Priority >= GetCurrentMove().Priority));
+
+            if (CanOverride) ExecuteMove(BufferedMove);
+            else GD.Print("Move " + bufferedMove.MoveName + " Buffered!");
         }
 
-        public bool IsCorrectSurface(int index)
+        public bool IsCorrectSurface(int moveIndex)
         {
-            return (GetMove(index).UseOnGround && _owner.Body.IsOnGround) ||
-                (GetMove(index).UseOnAir && !_owner.Body.IsOnGround && _owner.Body.FixedPosition.Y >= GetMove(index).MinimumHeight) ||
-                (GetMove(index).UseOnGround && GetMove(index).UseOnAir);
+            MoveSettings nextMove = GetMove(moveIndex);
+            return (nextMove.UseOnGround && _owner.Body.IsOnGround) ||
+                (nextMove.UseOnAir && !_owner.Body.IsOnGround && _owner.Body.FixedPosition.Y >= nextMove.MinimumHeight) ||
+                (nextMove.UseOnGround && nextMove.UseOnAir);
         }
 
         public bool CheckAllowedStateType(int moveIndex)
         {
-            bool notLockedState =  _owner.StateManager.GetCurrentState().Type != StateType.LOCKED;
-            bool checkNullState = GetMove(moveIndex).AcceptNullStates && _owner.StateManager.GetCurrentState().Type == StateType.NULL;
-            bool checkMovementState = GetMove(moveIndex).AcceptMovementStates && _owner.StateManager.GetCurrentState().Type == StateType.MOVEMENT;
-            bool checkCombatState = GetMove(moveIndex).AcceptCombatStates && _owner.StateManager.GetCurrentState().Type == StateType.COMBAT;
-            bool checkBlockingState = GetMove(moveIndex).AcceptBlockingStates && _owner.StateManager.GetCurrentState().Type == StateType.BLOCKING;
-            bool checkHitReactionState = GetMove(moveIndex).AcceptHitReactionStates && _owner.StateManager.GetCurrentState().Type == StateType.HIT_REACTION && _owner.HitstunType < HitstunType.HARD_KNOCKDOWN;
+            MoveSettings nextMove = GetMove(moveIndex);
+            StateType currentStateType = _owner.StateManager.GetCurrentState().Type;
+            bool notLockedState = currentStateType != StateType.LOCKED;
+            bool checkNullState = nextMove.AcceptNullStates && currentStateType == StateType.NULL;
+            bool checkMovementState = nextMove.AcceptMovementStates && currentStateType == StateType.MOVEMENT;
+            bool checkCombatState = nextMove.AcceptCombatStates && currentStateType == StateType.COMBAT;
+            bool checkBlockingState = nextMove.AcceptBlockingStates && currentStateType == StateType.BLOCKING;
+            bool checkHitReactionState = nextMove.AcceptHitReactionStates && currentStateType == StateType.HIT_REACTION && _owner.HitstunType < HitstunType.HARD_KNOCKDOWN;
 
             return notLockedState && (checkNullState || checkMovementState || checkCombatState || checkBlockingState || checkHitReactionState);
         }
@@ -184,18 +183,20 @@ namespace SakugaEngine
         {
             if (CurrentMove < 0) return;
 
-            switch (GetCurrentMove().MoveEnd)
+            MoveSettings currentMove = GetCurrentMove();
+
+            switch (currentMove.MoveEnd)
             {
                 case MoveEndCondition.STATE_END:
-                    if (_owner.StateManager.CurrentState != GetCurrentMove().MoveState)
+                    if (_owner.StateManager.CurrentState != currentMove.MoveState || _owner.StateManager.StateEnded())
                         EndMove();
                     break;
                 case MoveEndCondition.RELEASE_BUTTON:
-                    if (_owner.Inputs.CheckInputEnd(GetCurrentMove().Inputs, _owner.InputSide(GetCurrentMove().SideCheck)))
+                    if (_owner.Inputs.CheckInputEnd(currentMove.Inputs, _owner.InputSide(currentMove.SideCheck)))
                         EndMove();
                     break;
                 case MoveEndCondition.STATE_TYPE_CHANGE:
-                    if (_owner.StateManager.CurrentStateType() != _owner.Data.States[GetCurrentMove().MoveState].Type)
+                    if (_owner.StateManager.CurrentStateType() != _owner.Data.States[currentMove.MoveState].Type)
                         EndMove();
                     break;
                 case MoveEndCondition.ON_FALL:
@@ -207,16 +208,21 @@ namespace SakugaEngine
 
         public void EndMove()
         {
-            if (GetCurrentMove().MoveEndState >= 0)
-                _owner.StateManager.PlayState(GetCurrentMove().MoveEndState, false);
+            MoveSettings currentMove = GetCurrentMove();
+            if (currentMove.MoveEndState >= 0)
+                _owner.StateManager.PlayState(currentMove.MoveEndState, false);
 
             CurrentMove = -1;
             _owner.Parameters.ChangeVariablesBehavior(CustomVariableBehaviorTarget.ON_MOVE_EXIT);
         }
 
-        public void CallStance(int NextStance)
+        public void CallStance(int nextStance)
         {
-            CurrentStance = NextStance;
+            if (!GlobalFunctions.Assert(nextStance >= 0, "Stance index is too low. Only positive stance indices are supported.")) return;
+            if (!GlobalFunctions.Assert(nextStance < _owner.Data.Stances.Length, "Stance index is too high. Please call an existing stance or add a new stance to your character.")) return;
+            if (!GlobalFunctions.Assert(GetStance(nextStance) != null, $"Null/invalid stance found at index {nextStance}.")) return;
+            
+            CurrentStance = nextStance;
             CurrentMove = -1;
             BufferedMove = -1;
             CancelBuffer = false;
@@ -274,6 +280,8 @@ namespace SakugaEngine
             if (_owner.StateManager.CurrentStateType() == StateType.HIT_REACTION) return -1;
             if (_owner.StateManager.CurrentStateType() == StateType.LOCKED) return -1;
             if (_owner.StateManager.CurrentStateType() == StateType.COMBAT && _owner.StateManager.CurrentStateFrame >= GlobalVariables.KaraCancelWindow) return -1;
+            if (_owner.ContainsFrameProperty(FrameProperties.BLOCK_DISABLED)) return -1;
+            if (_owner.ContainsFrameProperty(FrameProperties.LOCK_MOVE)) return -1;
             if (GetCurrentStance().BlockReactions == null || GetCurrentStance().BlockReactions.Length == 0) return -1;
             for (int i = 0; i < GetCurrentStance().BlockReactions.Length; i++)
             {

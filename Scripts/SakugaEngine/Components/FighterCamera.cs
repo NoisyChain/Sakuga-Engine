@@ -7,9 +7,7 @@ namespace SakugaEngine
     {
         [Export] private AudioListener3D Listener;
         [Export] public CameraFocus CurrentFocus = CameraFocus.CENTER;
-        //[Export] public Vector2 minBounds = new Vector2(-12.0f, 0.0f), maxBounds = new Vector2(12.0f, 20.0f);
         [Export] public Vector3 nearOffset = new Vector3(2.7f, 1.4f, 6.5f), farOffset = new Vector3(7.25f, 3.35f, 16.0f);
-        //[Export] public float minSmoothDistance = 4;
         [Export] public float nearDistance = 4.0f, farDistance = 16.0f;
         [Export] public float nearFlatOffset = 0.25f, farFlatOffset = 0.62f;
 

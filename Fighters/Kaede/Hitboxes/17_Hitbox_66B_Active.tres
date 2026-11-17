@@ -8,97 +8,28 @@
 script = ExtResource("1_ydq7x")
 Center = Vector2i(0, 6000)
 Size = Vector2i(5000, 12000)
-SelfSuperGaugeGain = 25
-OpponentSuperGaugeGain = 10
-HitEffectIndex = 1
-BlockEffectIndex = 2
-ClashEffectIndex = 3
-GuardCrushEffectIndex = 1
-AirHitKnockbackGravity = 300000
-AirBlockKnockbackGravity = 30
-SelfPushbackForce = 0
-SelfPushbackDuration = 0
-BounceXIntensity = 0
-BounceYIntensity = 0
 
 [sub_resource type="Resource" id="Resource_t5ux6"]
 script = ExtResource("1_ydq7x")
 Center = Vector2i(0, 12300)
 Size = Vector2i(3000, 3000)
-SelfSuperGaugeGain = 25
-OpponentSuperGaugeGain = 10
-HitEffectIndex = 1
-BlockEffectIndex = 2
-ClashEffectIndex = 3
-GuardCrushEffectIndex = 1
-AirHitKnockbackGravity = 300000
-AirBlockKnockbackGravity = 30
-SelfPushbackForce = 0
-SelfPushbackDuration = 0
-BounceXIntensity = 0
-BounceYIntensity = 0
 
 [sub_resource type="Resource" id="Resource_wdtdg"]
 script = ExtResource("1_ydq7x")
 Center = Vector2i(-4000, 2000)
 Size = Vector2i(3200, 4000)
-SelfSuperGaugeGain = 25
-OpponentSuperGaugeGain = 10
-HitEffectIndex = 1
-BlockEffectIndex = 2
-ClashEffectIndex = 3
-GuardCrushEffectIndex = 1
-AirHitKnockbackGravity = 300000
-AirBlockKnockbackGravity = 30
-SelfPushbackForce = 0
-SelfPushbackDuration = 0
-BounceXIntensity = 0
-BounceYIntensity = 0
 
 [sub_resource type="Resource" id="Resource_0xb4u"]
 script = ExtResource("1_ydq7x")
 Center = Vector2i(10000, 10605)
 Size = Vector2i(15000, 2000)
 HitboxType = 2
-SelfSuperGaugeGain = 25
-OpponentSuperGaugeGain = 10
-HitEffectIndex = 1
-BlockEffectIndex = 2
-ClashEffectIndex = 3
-GuardCrushEffectIndex = 1
-AirHitKnockbackGravity = 300000
-AirBlockKnockbackGravity = 30
-SelfPushbackForce = 0
-SelfPushbackDuration = 0
-BounceXIntensity = 0
-BounceYIntensity = 0
 
 [sub_resource type="Resource" id="Resource_lxnao"]
 script = ExtResource("1_ydq7x")
 Center = Vector2i(6400, 8000)
 Size = Vector2i(7500, 3200)
 HitboxType = 1
-HitType = 1
-GuardCrush = true
-GuardCrushEffectIndex = 1
-GroundHitstunType = 3
-GroundHitReaction = 5
-CrouchHitReaction = 5
-GroundHitKnockback = Vector2i(-80000, 40000)
-GroundHitKnockbackGravity = 200000
-GroundHitstun = 30
-GroundBlockKnockback = Vector2i(-80000, 0)
-GroundBlockstun = 18
-AirHitstunType = 3
-AirHitReaction = 5
-AirHitKnockback = Vector2i(-80000, 40000)
-AirHitstun = 30
-AirBlockKnockback = Vector2i(-80000, 0)
-AirBlockstun = 18
-SelfPushbackForce = -45000
-BounceTime = 20
-BounceXIntensity = 70
-BounceYIntensity = 0
 
 [resource]
 script = ExtResource("2_tmmwm")
