@@ -277,16 +277,18 @@ namespace SakugaEngine
 
         public int GetBlockState(HitType Type, byte state)
         {
+            if (GetCurrentStance().BlockReactions == null || GetCurrentStance().BlockReactions.Length == 0) return -1;
             if (_owner.StateManager.CurrentStateType() == StateType.HIT_REACTION) return -1;
             if (_owner.StateManager.CurrentStateType() == StateType.LOCKED) return -1;
             if (_owner.StateManager.CurrentStateType() == StateType.COMBAT && _owner.StateManager.CurrentStateFrame >= GlobalVariables.KaraCancelWindow) return -1;
             if (_owner.ContainsFrameProperty(FrameProperties.BLOCK_DISABLED)) return -1;
             if (_owner.ContainsFrameProperty(FrameProperties.LOCK_MOVE)) return -1;
-            if (GetCurrentStance().BlockReactions == null || GetCurrentStance().BlockReactions.Length == 0) return -1;
+            
             for (int i = 0; i < GetCurrentStance().BlockReactions.Length; i++)
             {
                 BlockSettings block = GetCurrentStance().BlockReactions[i];
-                if (_owner.Body.IsOnGround && block.ReferenceStance == StanceSelect.AIR) continue;
+                if (_owner.IsGroundState() && block.ReferenceStance != StanceSelect.GROUND) continue;
+                if (_owner.IsCrouchState() && block.ReferenceStance != StanceSelect.CROUCH) continue;
                 if (!_owner.Body.IsOnGround && block.ReferenceStance != StanceSelect.AIR) continue;
                 if (!ValidHitType(Type, block.BlockType)) continue;
                 if (block.InputToCheck == null) continue;

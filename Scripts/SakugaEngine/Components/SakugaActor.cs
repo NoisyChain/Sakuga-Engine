@@ -455,7 +455,7 @@ namespace SakugaEngine
         public void BlockHit(SakugaActor target, AttackProfile profile, int blockState) 
         {
             LayerSorting = -1;
-            bool isGroundHit = !IsKO() && Body != null && IsGroundState() && !IsAirState();
+            bool isGroundHit = !IsKO() && Body != null && !IsAirState();
             var finalHitstun = isGroundHit ? profile.CurrentGroundBlockstun : profile.CurrentAirBlockstun;
             var finalKnockbackTime = profile.CurrentBlockKnockbackDuration;
             var finalDamageKnockback = isGroundHit ? profile.GroundBlockKnockback : profile.AirBlockKnockback;
@@ -482,7 +482,7 @@ namespace SakugaEngine
             PushActor(
                 finalKnockbackTime,
                 finalDamageKnockback.X * (-target.Body.PlayerSide),
-                finalDamageKnockback.X,
+                finalDamageKnockback.Y,
                 finalKnockbackGravity
             );
             if (Parameters != null)
@@ -660,10 +660,6 @@ namespace SakugaEngine
 
             CurrentGrabbedNodeID = -1;
             target.CurrentGrabbedNodeID = -1;
-
-            bool HitPosition = profile.HitType == HitType.UNBLOCKABLE || 
-                                profile.HitType == HitType.HIGH && target.Body.IsOnGround && target.IsCrouchState() || 
-                                profile.HitType == HitType.LOW && (target.Body.IsOnGround && target.IsGroundState() || target.IsAirState());
 
             CancelConditions &= ~CancelCondition.WHIFF_CANCEL;
             CancelConditions &= ~CancelCondition.KARA_CANCEL;
